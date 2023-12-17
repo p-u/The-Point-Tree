@@ -7,20 +7,24 @@ let modInfo = {
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 10,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.1",
+	num: "0.1",
 	name: "One upgrade.",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+    <h3>v0.2</h3><br>
+		- Decrease BU2's cost.<br>
+		- Added 3 more upgrades.<br>
+		- Made changelog work.<br>
+	<h3>v0.1</h3><br>
+		- One upgrade.<br>
+		- Added Basic Points and Point Fragments.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -43,7 +47,9 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade('basic', 12)) gain = gain.times(upgradeEffect('basic', 12))
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
+	if (hasUpgrade('basic', 14)) gain = gain.times(1.35)
 	return gain
 }
 
