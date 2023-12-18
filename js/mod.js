@@ -13,11 +13,24 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.0",
-	name: "6 NEW ACHIEVEMENTS",
+	num: "3.1",
+	name: "Passive Generation",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.1</h3><br>
+		- Changed BSU3 Desc (Bug).<br>
+		- Added 1 new rebirth upgrades.<br>
+		- One new milestone [Passive Generation!]: 2K RP.<br>
+		- Current Endgame: 1e40 Point Fragments<br>
+<h3>v3.0</h3><br>
+- 2 new Rebirth Upgrades.<br>
+- Max is now 4 upgrades a row.<br>
+- Rebirth Milestone! <br>
+- 2 new achievements <br>
+- 4 OP Basic Point UPGs. <br>
+- Rebirth BOOSTS Point Fragments! <br>
+- Current Endgame: 1E30 Point Fragments, or 10K RP <br>
 <h3>v2.0</h3><br>
 - 6 NEW ACHIEVEMENTS.<br>
 <h3>v1.0</h3><br>
@@ -78,6 +91,7 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 13)) gain = gain.times(1.28)
+	if (hasUpgrade('rebirth', 14)) gain = gain.times(50)
 
 
 	// power

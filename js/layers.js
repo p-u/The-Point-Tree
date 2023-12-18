@@ -179,7 +179,7 @@ addLayer("basic", {
         },
         43: {
             title: "Super Upgrade 3: EXPONENTS!",
-            description: "Basic Points +^0.01, Point Fragments +^0.025",
+            description: "Basic Points +^0.02, Point Fragments +^0.05",
             cost: new Decimal(8e10),
             unlocked() { return hasMilestone("rebirth", 1) },
         },
@@ -197,6 +197,10 @@ addLayer("basic", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
+    passiveGeneration() {
+        if (hasMilestone('rebirth', 2)) return 100
+        return 0
+    },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (hasUpgrade('basic', 13)) mult = mult.times(upgradeEffect('basic', 13))
@@ -251,12 +255,23 @@ addLayer("rebirth", {
             cost: new Decimal(5000),
             unlocked() { return hasUpgrade("rebirth", 12) },
         },
+        14: {
+            title: "Rebirth Upgrade 4: Point Fragmenting",
+            description: "AN INSANE X50 BOOST TO Point Fragments",
+            cost: new Decimal(12500),
+            unlocked() { return hasUpgrade("rebirth", 12) },
+        },
     },
     milestones: {
         1: {
             requirementDescription: "3 RP",
             effectDescription: "4 New Basic Point Upgrades",
             done() { return player["rebirth"].points.gte(3) }
+        },
+        2: {
+            requirementDescription: "2,000 RP",
+            effectDescription: "Passive Generation of Basic Points",
+            done() { return player["rebirth"].points.gte(2000) }
         },
     },
     color: "#00008b",
