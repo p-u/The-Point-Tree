@@ -1,3 +1,58 @@
+addLayer("a", {
+    startData() { return {
+        unlocked: true,
+    }},
+    color: "yellow",
+    row: "side",
+    layerShown() {return true}, 
+    tooltip() { // Optional, tooltip displays when the layer is locked
+        return ("Achievements")
+    },
+    achievements: {
+        rows: 16,
+        cols: 5,
+        11: {
+            name: "The first boost",
+            done() { return (hasUpgrade('basic', 11)) },
+            tooltip: "Get Basic Upgrade 1.",
+        },
+        12: {
+            name: "Boosting each other",
+            done() { return (hasUpgrade('basic', 12)) },
+            tooltip: "Get Basic Upgrade 2.",
+        },
+        13: {
+            name: "Point Fragmentation",
+            done() { return player.points.gte(1000) },
+            tooltip: "Reach 1,000 Points.",
+        },
+        14: {
+            name: "More than a double",
+            done() { return (hasUpgrade('basic', 24)) },
+            tooltip: "Get basic Upgrade 9.",
+        },
+        15: {
+            name: "Going to reset",
+            done() { return (hasUpgrade('basic', 32)) },
+            tooltip: "Have basic Upgrade 12.",
+        },
+        21: {
+            name: "Rebirth Upgrades are OP",
+            done() { return (hasUpgrade('rebirth', 11)) },
+            tooltip: "Get Rebirth Upgrade 1!",
+        },
+    tabFormat: [
+        "blank", 
+        ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
+        "blank", "blank",
+        "achievements",
+    ],
+    update(diff) {    // Added this section to call adjustNotificationTime every tick, to reduce notification timers
+        adjustNotificationTime(diff);
+    },
+}, 
+})
+
 addLayer("basic", {
     name: "Basic Points", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "B", // This appears on the layer's node. Default is the id with the first letter capitalized
