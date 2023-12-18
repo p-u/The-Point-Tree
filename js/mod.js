@@ -1,7 +1,7 @@
 let modInfo = {
 	name: "The Point Tree",
-	id: "p-u:thepointtree",
-	author: "'p-u'",
+	id: "ThepointTreeRD82",
+	author: "randim82",
 	pointsName: "Point Fragments",
 	modFiles: ["layers.js", "tree.js"],
 
@@ -13,11 +13,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "One upgrade.",
+	num: "0.3",
+	name: "3 more upgrades, up to 8 total!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v0.3</h3><br>
+- Decrease BU2's scaling by a lot.<br>
+- Added 3 more upgrades, again.<br>
+- Changed ID.<br>
     <h3>v0.2</h3><br>
 		- Decrease BU2's cost.<br>
 		- Added 3 more upgrades.<br>
@@ -48,7 +52,9 @@ function getPointGen() {
 
 	let gain = new Decimal(1)
 	if (hasUpgrade('basic', 12)) gain = gain.times(upgradeEffect('basic', 12))
+	if (hasUpgrade('basic', 23)) gain = gain.times(upgradeEffect('basic', 23))
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
+	if (hasUpgrade('basic', 21)) gain = gain.times(2)
 	if (hasUpgrade('basic', 14)) gain = gain.times(1.35)
 	return gain
 }

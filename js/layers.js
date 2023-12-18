@@ -18,9 +18,10 @@ addLayer("basic", {
             description: "Basic points boost point fragments.",
             cost: new Decimal(2),
             effect() {
-                return player[this.layer].points.add(1).pow(0.5)
+                return player[this.layer].points.add(1).pow(0.35)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            unlocked() { return hasUpgrade("basic", 11) },
 
         },
         13: {
@@ -28,15 +29,16 @@ addLayer("basic", {
             description: "Point Fragments boost basic points.",
             cost: new Decimal(5),
             effect() {
-                return player.points.add(1).pow(0.15)
+                return player.points.add(1).pow(0.185)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
-
+            unlocked() { return hasUpgrade("basic", 12) },
         },
         14: {
             title: "Upgrade 4",
             description: "Boost basic points and point fragments by 1.35x.",
             cost: new Decimal(10),
+            unlocked() { return hasUpgrade("basic", 13) },
         },
         15: {
             title: "Upgrade 5",
@@ -46,6 +48,29 @@ addLayer("basic", {
                 return player[this.layer].points.add(1).pow(0.2)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            unlocked() { return hasUpgrade("basic", 14) },
+        },
+        21: {
+            title: "Upgrade 6",
+            description: "Point Fragments are doubled again!",
+            cost: new Decimal(100),
+            unlocked() { return hasUpgrade("basic", 15) },
+        },
+        22: {
+            title: "Upgrade 7",
+            description: "Basic Points are multiplied by 1.22",
+            cost: new Decimal(250),
+            unlocked() { return hasUpgrade("basic", 21) },
+        },
+        23: {
+            title: "Upgrade 8",
+            description: "Point Fragments boosts itself slightly",
+            cost: new Decimal(500),
+            effect() {
+                return player.points.add(1).pow(0.125)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            unlocked() { return hasUpgrade("basic", 22) },
         },
     },
     color: "#add8e6",
