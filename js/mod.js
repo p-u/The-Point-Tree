@@ -5,19 +5,21 @@ let modInfo = {
 	pointsName: "Point Fragments",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "",
+	discordName: "SR46A",
 	discordLink: "",
-	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	initialStartPoints: new Decimal (100000000), // Used for hard resets and new players
 	offlineLimit: 10,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0",
-	name: "Rebirth + 5 New upgrades (13 Total)",
+	num: "2.0",
+	name: "6 NEW ACHIEVEMENTS",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v2.0</h3><br>
+- 6 NEW ACHIEVEMENTS.<br>
 <h3>v1.0</h3><br>
 - Decrease BU3 and BU5 Scaling.<br>
 - Increase BU7 and BU8 Scaling.<br>
@@ -60,16 +62,26 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (layers.rebirth.effect().gte(1)) gain = gain.times(layers.rebirth.effect())
 	if (hasUpgrade('basic', 12)) gain = gain.times(upgradeEffect('basic', 12))
-	if (hasUpgrade('basic', 23)) gain = gain.times(upgradeEffect('basic', 23))
-	if (hasUpgrade('basic', 25)) gain = gain.times(upgradeEffect('basic', 25))
+	if (hasUpgrade('basic', 24)) gain = gain.times(upgradeEffect('basic', 24))
+	if (hasUpgrade('basic', 32)) gain = gain.times(upgradeEffect('basic', 32))
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
-	if (hasUpgrade('basic', 21)) gain = gain.times(2)
-	if (hasUpgrade('basic', 24)) gain = gain.times(3)
-	if (hasUpgrade('basic', 31)) gain = gain.times(2.5)
-	if (hasUpgrade('basic', 32)) gain = gain.times(5)
+	if (hasUpgrade('basic', 22)) gain = gain.times(2)
+	if (hasUpgrade('basic', 31)) gain = gain.times(3)
+	if (hasUpgrade('basic', 33)) gain = gain.times(2.5)
+	if (hasUpgrade('basic', 34)) gain = gain.times(5)
 	if (hasUpgrade('basic', 14)) gain = gain.times(1.35)
+	if (hasUpgrade('basic', 41)) gain = gain.times(9.11)
+	if (hasUpgrade('basic', 42)) gain = gain.times(7.77)
+	if (hasUpgrade('basic', 44)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
+	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
+	if (hasUpgrade('rebirth', 13)) gain = gain.times(1.28)
+
+
+	// power
+	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
 	return gain
 }
 
@@ -83,7 +95,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("e100"))
 }
 
 
