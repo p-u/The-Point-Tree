@@ -51,6 +51,16 @@ addLayer("a", {
             done() { return (hasUpgrade('rebirth', 12)) },
             tooltip: "Get Rebirth Upgrade 2",
         },
+        24: {
+            name: "The second row!",
+            done() { return (hasUpgrade('rebirth', 21)) },
+            tooltip: "Get Rebirth Upgrade 5",
+        },
+        25: {
+            name: "88888888",
+            done() { return (hasUpgrade('rebirth', 24)) },
+            tooltip: "Get Rebirth Upgrade 8",
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
@@ -179,7 +189,7 @@ addLayer("basic", {
         },
         43: {
             title: "Super Upgrade 3: EXPONENTS!",
-            description: "Basic Points +^0.02, Point Fragments +^0.05",
+            description: "Basic Points +^0.02, Point Fragments ^1.05",
             cost: new Decimal(8e10),
             unlocked() { return hasMilestone("rebirth", 1) },
         },
@@ -211,11 +221,14 @@ addLayer("basic", {
         if (hasUpgrade('basic', 44)) mult = mult.times(4)
         if (hasUpgrade('rebirth', 12)) mult = mult.times(5)
         if (hasUpgrade('rebirth', 13)) mult = mult.times(1.28)
+        if (hasUpgrade('rebirth', 21)) mult = mult.times(2)
+        if (hasUpgrade('rebirth', 24)) mult = mult.times(2.22)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('basic', 43)) exp = exp.add(0.02)
+        if (hasUpgrade('rebirth', 22)) exp = exp.add(0.01)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -259,7 +272,31 @@ addLayer("rebirth", {
             title: "Rebirth Upgrade 4: Point Fragmenting",
             description: "AN INSANE X50 BOOST TO Point Fragments",
             cost: new Decimal(12500),
-            unlocked() { return hasUpgrade("rebirth", 12) },
+            unlocked() { return hasUpgrade("rebirth", 13) },
+        },
+        21: {
+            title: "Rebirth Upgrade 5: Booster",
+            description: "X1.36 RP (Rebirth Point), X2 BP (Basic Point), X10 PF (Point Fragment)",
+            cost: new Decimal(300000),
+            unlocked() { return hasUpgrade("rebirth", 14) },
+        },
+        22: {
+            title: "Rebirth Upgrade 6: Another Exponent?",
+            description: "+^0.01 BP, ^1.02 PF",
+            cost: new Decimal(5000000),
+            unlocked() { return hasUpgrade("rebirth", 21) },
+        },
+        23: {
+            title: "Rebirth Upgrade 7",
+            description: "X2 RP, X10 PF",
+            cost: new Decimal(12500000),
+            unlocked() { return hasUpgrade("rebirth", 22) },
+        },
+        24: {
+            title: "Rebirth Upgrade 8",
+            description: "X1.28 RP, X2.22 BP, X20 PF",
+            cost: new Decimal(150000000),
+            unlocked() { return hasUpgrade("rebirth", 22) },
         },
     },
     milestones: {
@@ -272,6 +309,11 @@ addLayer("rebirth", {
             requirementDescription: "2,000 RP",
             effectDescription: "Passive Generation of Basic Points",
             done() { return player["rebirth"].points.gte(2000) }
+        },
+        3: {
+            requirementDescription: "RP Millionaire",
+            effectDescription: "Another 10x to Point Fragments",
+            done() { return player["rebirth"].points.gte(1000000) }
         },
     },
     color: "#00008b",
@@ -287,6 +329,9 @@ addLayer("rebirth", {
         if (hasUpgrade('basic', 42)) mult = mult.times(1.277)
         if (hasUpgrade('basic', 44)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 13)) mult = mult.times(1.28)
+        if (hasUpgrade('rebirth', 21)) mult = mult.times(1.36)
+        if (hasUpgrade('rebirth', 23)) mult = mult.times(2)
+        if (hasUpgrade('rebirth', 24)) mult = mult.times(1.28)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

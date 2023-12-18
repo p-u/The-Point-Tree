@@ -92,10 +92,15 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 13)) gain = gain.times(1.28)
 	if (hasUpgrade('rebirth', 14)) gain = gain.times(50)
+	if (hasUpgrade('rebirth', 21)) gain = gain.times(10)
+	if (hasMilestone('rebirth', 3)) gain = gain.times(10)
+	if (hasUpgrade('rebirth', 23)) gain = gain.times(10)
+	if (hasUpgrade('rebirth', 24)) gain = gain.times(20)
 
 
 	// power
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
+	if (hasUpgrade('rebirth', 22)) gain = gain.pow(1.02)
 	return gain
 }
 
