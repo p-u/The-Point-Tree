@@ -10,7 +10,7 @@ addLayer("a", {
     },
     achievements: {
         rows: 16,
-        cols: 5,
+        cols: 6,
         11: {
             name: "The first boost",
             done() { return (hasUpgrade('basic', 11)) },
@@ -60,6 +60,16 @@ addLayer("a", {
             name: "88888888",
             done() { return (hasUpgrade('rebirth', 24)) },
             tooltip: "Get Rebirth Upgrade 8",
+        },
+        26: {
+            name: "1e100!",
+            done() { return player.points.gte(1e100) },
+            tooltip: "Get Rebirth Upgrade 8",
+        },
+        31: {
+            name: "PRESTIGE",
+            done() { return player.prestige.points.gte(1) },
+            tooltip: "Prestige!",
         },
     tabFormat: [
         "blank", 
@@ -199,6 +209,30 @@ addLayer("basic", {
             cost: new Decimal(2e15),
             unlocked() { return hasMilestone("rebirth", 1) },
         },
+        51: {
+            title: "Super Upgrade 5",
+            description: "Point Fragments x100",
+            cost: new Decimal(2e66),
+            unlocked() { return hasMilestone("rebirth", 4) },
+        },
+        52: {
+            title: "Super Upgrade 6",
+            description: "PF X100, RP X2.5, BP X10",
+            cost: new Decimal(2.5e71),
+            unlocked() { return hasUpgrade("basic", 51) },
+        },
+        53: {
+            title: "Super Upgrade 7: RP Exponent!",
+            description: "PF X10K, BP +^0.02, RP +^0.005",
+            cost: new Decimal(1.2e82),
+            unlocked() { return hasUpgrade("basic", 52) },
+        },
+        54: {
+            title: "Super Upgrade 8: Final before NEXT RESET LAYER!",
+            description: "PF X1K, PF^1.04, BP X100, BP+^0.02, RP X5, RP+^0.005",
+            cost: new Decimal(1e101),
+            unlocked() { return hasUpgrade("basic", 53) },
+        },
     },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -213,21 +247,27 @@ addLayer("basic", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (layers.prestige.effect().gte(1)) mult = mult.times(layers.prestige.effect())
         if (hasUpgrade('basic', 13)) mult = mult.times(upgradeEffect('basic', 13))
         if (hasUpgrade('basic', 21)) mult = mult.times(upgradeEffect('basic', 21))
         if (hasUpgrade('basic', 14)) mult = mult.times(1.35)
         if (hasUpgrade('basic', 23)) mult = mult.times(1.39)
         if (hasUpgrade('basic', 41)) mult = mult.times(1.91)
         if (hasUpgrade('basic', 44)) mult = mult.times(4)
+        if (hasUpgrade('basic', 52)) mult = mult.times(10)
+        if (hasUpgrade('basic', 54)) mult = mult.times(100)
         if (hasUpgrade('rebirth', 12)) mult = mult.times(5)
         if (hasUpgrade('rebirth', 13)) mult = mult.times(1.28)
         if (hasUpgrade('rebirth', 21)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 24)) mult = mult.times(2.22)
+        if (hasUpgrade('prestige', 11)) mult = mult.times(5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('basic', 43)) exp = exp.add(0.02)
+        if (hasUpgrade('basic', 53)) exp = exp.add(0.02)
+        if (hasUpgrade('basic', 54)) exp = exp.add(0.02)
         if (hasUpgrade('rebirth', 22)) exp = exp.add(0.01)
         return exp
     },
@@ -243,7 +283,7 @@ addLayer("rebirth", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: new Decimal(4),
+		points: new Decimal(0),
     }},
     layerShown(){
         let visible = false
@@ -315,6 +355,11 @@ addLayer("rebirth", {
             effectDescription: "Another 10x to Point Fragments",
             done() { return player["rebirth"].points.gte(1000000) }
         },
+        4: {
+            requirementDescription: "RP Billionaire",
+            effectDescription: "4 MOAR BP Upgrades",
+            done() { return player["rebirth"].points.gte(1000000000) }
+        },
     },
     color: "#00008b",
     requires: new Decimal(50000000), // Can be a function that takes requirement increases into account
@@ -328,14 +373,20 @@ addLayer("rebirth", {
         if (hasUpgrade('basic', 41)) mult = mult.times(1.19)
         if (hasUpgrade('basic', 42)) mult = mult.times(1.277)
         if (hasUpgrade('basic', 44)) mult = mult.times(2)
+        if (hasUpgrade('basic', 52)) mult = mult.times(2.5)
+        if (hasUpgrade('basic', 54)) mult = mult.times(5)
         if (hasUpgrade('rebirth', 13)) mult = mult.times(1.28)
         if (hasUpgrade('rebirth', 21)) mult = mult.times(1.36)
         if (hasUpgrade('rebirth', 23)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 24)) mult = mult.times(1.28)
+        if (hasUpgrade('prestige', 11)) mult = mult.times(1.4)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        let exp = new Decimal(1)
+        if (hasUpgrade('basic', 53)) exp = exp.add(0.005)
+        if (hasUpgrade('basic', 54)) exp = exp.add(0.005)
+        return exp
     },
     effect(){
         let eff = player.rebirth.points.add(1).pow(1.57)
@@ -349,6 +400,57 @@ addLayer("rebirth", {
     row: 1, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "r", description: "R: Reset for Rebirth points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){return true}
+
+}),
+addLayer("prestige", {
+    name: "Prestige Points", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: false,
+		points: new Decimal(0),
+    }},
+    layerShown(){
+        let visible = false
+        if (hasUpgrade('basic', 54)) visible = true
+       return visible
+     },
+    upgrades: {
+        11: {
+            title: "You Prestiged! This is the first upgrade.",
+            description: "x20 PF, x5 BP, x1.4 RP",
+            cost: new Decimal(1),
+        },
+    },
+    color: "#005a00",
+    requires: new Decimal(1e150), // Can be a function that takes requirement increases into account
+    resource: "Prestige Points", // Name of currency
+    baseResource: "Basic Points", // Name of resource prestige is based on
+    baseAmount() {return player.basic.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.01, // Prestige currency exponent
+    gainMult() { // Prestige multiplier
+        let mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        let exp = new Decimal(1)
+        return exp
+    },
+    effect(){
+        let eff = player.prestige.points.add(1).pow(2.5)
+       return eff
+       },
+        effectDescription() {
+            let desc = "which is boosting basic points and point fragments by x" + format(tmp[this.layer].effect);
+            return desc;
+        },
+        
+    row: 2, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "p", description: "P: Reset for Prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true}
 
