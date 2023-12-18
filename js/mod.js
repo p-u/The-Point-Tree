@@ -18,6 +18,12 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.2</h3><br>
+- 4 new Rebirth Upgrades.<br>
+- First milestone that boosts stats!<br>
+- 1 Rebirth Milestone! <br>
+- 2 new achievements <br>
+- Current Endgame: 1e70 PF, 1B RP <br>
 <h3>v3.1</h3><br>
 		- Changed BSU3 Desc (Bug).<br>
 		- Added 1 new rebirth upgrades.<br>
