@@ -18,6 +18,10 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v4.1</h3><br>
+- 1 new Prestige UPG.<br>
+- 1 new prestige milestone.<br>
+- Current Endgame: 5-8 PP.<br>
 <h3>v4.0</h3><br>
 - 4 OP BP Upgrades.<br>
 - PRESTIGE! 1 Upgrade<br>
@@ -114,6 +118,7 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 23)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 24)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
+	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
 
 
 	// power

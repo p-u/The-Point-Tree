@@ -242,6 +242,7 @@ addLayer("basic", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
     passiveGeneration() {
+        if (hasMilestone('prestige', 1)) return 10000
         if (hasMilestone('rebirth', 2)) return 100
         return 0
     },
@@ -269,6 +270,7 @@ addLayer("basic", {
         if (hasUpgrade('basic', 53)) exp = exp.add(0.02)
         if (hasUpgrade('basic', 54)) exp = exp.add(0.02)
         if (hasUpgrade('rebirth', 22)) exp = exp.add(0.01)
+        if (hasUpgrade('prestige', 12)) exp = exp.add(0.01)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -347,7 +349,7 @@ addLayer("rebirth", {
         },
         2: {
             requirementDescription: "2,000 RP",
-            effectDescription: "Passive Generation of Basic Points",
+            effectDescription: "Generate 100% of Basic Points a sec",
             done() { return player["rebirth"].points.gte(2000) }
         },
         3: {
@@ -380,6 +382,7 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 23)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 24)) mult = mult.times(1.28)
         if (hasUpgrade('prestige', 11)) mult = mult.times(1.4)
+        if (hasUpgrade('prestige', 12)) mult = mult.times(2.5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -422,6 +425,18 @@ addLayer("prestige", {
             title: "You Prestiged! This is the first upgrade.",
             description: "x20 PF, x5 BP, x1.4 RP",
             cost: new Decimal(1),
+        },
+        12: {
+            title: "Prestige Upgrade 2",
+            description: "+^0.01 BP, x10 PF, x2.5 RP",
+            cost: new Decimal(2),
+        },
+    },
+    milestones: {
+        1: {
+            requirementDescription: "3 PP",
+            effectDescription: "Generate 10,000% of Basic Points a second",
+            done() { return player["rebirth"].points.gte(3) }
         },
     },
     color: "#005a00",
