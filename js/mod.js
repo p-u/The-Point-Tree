@@ -7,7 +7,7 @@ let modInfo = {
 
 	discordName: "SR46A",
 	discordLink: "",
-	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	initialStartPoints: new Decimal("e1500"), // Used for hard resets and new players
 	offlineLimit: 10,  // In hours
 }
 
@@ -18,6 +18,13 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v7.0</h3><br>
+- Mega Points! (10T PP) <br>
+- 1 New UPG <br>
+- 1 new achievement <br>
+- Info Boxes! <br>
+- Changelog Fix <br>
+- Current Endgame: Mega Upg 1 or 1e1,600 PF <br>
 <h3>v6.0</h3><br>
 - Rebirth Points Generation. Unlocks at 500K PP (Milestone).<br>
 - 2 brand new achievements.<br>
@@ -83,7 +90,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Current Endgame: 20 points a sec.<br>
 	<h3>v0.1</h3><br>
 		- One upgrade.<br>
-		- Added Basic Points and Point Fragments.
+		- Added Basic Points and Point Fragments. <br>
 		- Current Endgame: 6 points a sec.<br>`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
@@ -109,6 +116,7 @@ function getPointGen() {
 	let gain = new Decimal(1)
 	if (layers.rebirth.effect().gte(1)) gain = gain.times(layers.rebirth.effect())
 	if (layers.prestige.effect().gte(1)) gain = gain.times(layers.prestige.effect())
+	if (layers.mega.effect().gte(1)) gain = gain.times(layers.mega.effect())
 	if (hasUpgrade('basic', 12)) gain = gain.times(upgradeEffect('basic', 12))
 	if (hasUpgrade('basic', 24)) gain = gain.times(upgradeEffect('basic', 24))
 	if (hasUpgrade('basic', 32)) gain = gain.times(upgradeEffect('basic', 32))
@@ -141,6 +149,7 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 21)) gain = gain.times(25)
 	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
+	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
 
 
 	// power

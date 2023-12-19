@@ -96,6 +96,11 @@ addLayer("a", {
             done() { return  player.points.gte(new Decimal("e1000")) },
             tooltip: "Get 1e1000 point fragments.",
         },
+        41: {
+            name: "Layer 4: MEGA!",
+            done() { return  player.mega.points.gte(1) },
+            tooltip: "Get 1 mega point.",
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
@@ -262,6 +267,12 @@ addLayer("basic", {
             unlocked() { return hasUpgrade("basic", 53) },
         },
     },
+    infoboxes: {
+        info: {
+            title: "Welcome to The Point Tree!",
+            body() { return "Explore many unique upgrades, and get the biggest numbers possible!" },
+        },
+    },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Basic Points", // Name of currency
@@ -282,6 +293,7 @@ addLayer("basic", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (layers.prestige.effect().gte(1)) mult = mult.times(layers.prestige.effect())
+        if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
         if (hasUpgrade('basic', 13)) mult = mult.times(upgradeEffect('basic', 13))
         if (hasUpgrade('basic', 21)) mult = mult.times(upgradeEffect('basic', 21))
         if (hasUpgrade('basic', 14)) mult = mult.times(1.35)
@@ -298,6 +310,7 @@ addLayer("basic", {
         if (hasUpgrade('prestige', 11)) mult = mult.times(5)
         if (hasUpgrade('prestige', 21)) mult = mult.times(25)
         if (hasUpgrade('prestige', 21)) mult = mult.times(1e8)
+        if (hasUpgrade('mega', 11)) mult = mult.times(1000)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -424,8 +437,15 @@ addLayer("rebirth", {
         if (hasMilestone('prestige', 3)) return 100
         return 0
     },
+    infoboxes: {
+        info: {
+            title: "Welcome to the Rebirth Layer",
+            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF)." },
+        },
+    },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
         if (hasUpgrade('prestige', 22)) mult = mult.times(upgradeEffect('prestige', 22))
         if (hasUpgrade('basic', 41)) mult = mult.times(1.19)
         if (hasUpgrade('basic', 42)) mult = mult.times(1.277)
@@ -444,6 +464,7 @@ addLayer("rebirth", {
         if (hasUpgrade('prestige', 21)) mult = mult.times(25)
         if (hasMilestone('prestige', 3)) mult = mult.times(1000)
         if (hasUpgrade('prestige', 31)) mult = mult.times(1000)
+        if (hasUpgrade('mega', 11)) mult = mult.times(10)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -554,6 +575,12 @@ addLayer("prestige", {
             done() { return player["prestige"].points.gte(500000) }
         },
     },
+    infoboxes: {
+        info: {
+            title: "Welcome to the Prestige Layer",
+            body() { return "In here, you can get numbers up to e1,500! You also can automate layers. For now, choose whether you want to buy the upgrade." },
+        },
+    },
     color: "#005a00",
     requires: new Decimal(1e150), // Can be a function that takes requirement increases into account
     resource: "Prestige Points", // Name of currency
@@ -563,6 +590,7 @@ addLayer("prestige", {
     exponent: 0.01, // Prestige currency exponent
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
         if (hasUpgrade('rebirth', 32)) mult = mult.times(1.11)
         if (hasUpgrade('prestige', 31)) mult = mult.times(0.1)
         return mult
@@ -583,6 +611,63 @@ addLayer("prestige", {
     row: 2, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "p", description: "P: Reset for Prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){return true}
+
+}),
+addLayer("mega", {
+    name: "Mega Points", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "M", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: false,
+		points: new Decimal(0),
+    }},
+    layerShown(){
+        let visible = false
+        if (hasUpgrade('prestige', 32)) visible = true
+       return visible
+     },
+    upgrades: {
+        11: {
+            title: "Mega upgrades come with MEGA boosts.",
+            description: "x10M PF, x1K BP, x10 RP",
+            cost: new Decimal(1),
+        },
+    },
+    infoboxes: {
+        info: {
+            title: "Welcome to the Mega Layer",
+            body() { return "This is the newest layer!" },
+        },
+    },
+    color: "#FF5733",
+    requires: new Decimal(1e13), // Can be a function that takes requirement increases into account
+    resource: "Mega Points", // Name of currency
+    baseResource: "Prestige Points", // Name of resource prestige is based on
+    baseAmount() {return player.prestige.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.1, // Prestige currency exponent
+    gainMult() { // Prestige multiplier
+        let mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        let exp = new Decimal(1)
+        return exp
+    },
+    effect(){
+        let eff = player.mega.points.add(1).pow(0.6)
+       return eff
+       },
+        effectDescription() {
+            let desc = "which is boosting all previous reset layers by x" + format(tmp[this.layer].effect);
+            return desc;
+        },
+        
+    row: 3, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "m", description: "M: Reset for MEGA points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true}
 
