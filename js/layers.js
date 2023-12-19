@@ -64,12 +64,27 @@ addLayer("a", {
         26: {
             name: "1e100!",
             done() { return player.points.gte(1e100) },
-            tooltip: "Get Rebirth Upgrade 8",
+            tooltip: "Get 1e100 point fragments.",
         },
         31: {
             name: "PRESTIGE",
             done() { return player.prestige.points.gte(1) },
             tooltip: "Prestige!",
+        },
+        32: {
+            name: "1e100 2X!",
+            done() { return player.points.gte(1e200) },
+            tooltip: "Get 1e200 point fragments.",
+        },
+        33: {
+            name: "AUTOMATION!!",
+            done() { return (hasMilestone('prestige', 2)) },
+            tooltip: "Get Prestige Milestone 2.",
+        },
+        34: {
+            name: "Last of Rebirths",
+            done() { return (hasUpgrade('rebirth', 32)) },
+            tooltip: "Get the last Extended-Rebirth Upgrade (RU10).",
         },
     tabFormat: [
         "blank", 
@@ -168,7 +183,9 @@ addLayer("basic", {
             description: "Point fragments boost itself, again, but less",
             cost: new Decimal(5500),
             effect() {
-                return player.points.add(500000).pow(0.055)
+                let expu10 = 0.055
+                if (hasUpgrade('rebirth', 31)) expu10 = 0.075
+                return player.points.add(500000).pow(expu10)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             unlocked() { return hasUpgrade("basic", 31) },
@@ -246,6 +263,11 @@ addLayer("basic", {
         if (hasMilestone('rebirth', 2)) return 100
         return 0
     },
+    autoUpgrade() {
+        let auto = false
+        if (hasMilestone('prestige', 2)) auto = true
+        return auto
+    },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (layers.prestige.effect().gte(1)) mult = mult.times(layers.prestige.effect())
@@ -261,7 +283,9 @@ addLayer("basic", {
         if (hasUpgrade('rebirth', 13)) mult = mult.times(1.28)
         if (hasUpgrade('rebirth', 21)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 24)) mult = mult.times(2.22)
+        if (hasUpgrade('rebirth', 32)) mult = mult.times(1111.11)
         if (hasUpgrade('prestige', 11)) mult = mult.times(5)
+        if (hasUpgrade('prestige', 21)) mult = mult.times(25)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -332,13 +356,25 @@ addLayer("rebirth", {
             title: "Rebirth Upgrade 7",
             description: "X2 RP, X10 PF",
             cost: new Decimal(12500000),
-            unlocked() { return hasUpgrade("rebirth", 22) },
+            unlocked() { return hasUpgrade("rebirth", 21) },
         },
         24: {
             title: "Rebirth Upgrade 8",
             description: "X1.28 RP, X2.22 BP, X20 PF",
             cost: new Decimal(150000000),
-            unlocked() { return hasUpgrade("rebirth", 22) },
+            unlocked() { return hasUpgrade("rebirth", 23) },
+        },
+        31: {
+            title: "Rebirth Upgrade 9",
+            description: "Basic Upgrade 10 is boosted.",
+            cost: new Decimal(6.9e42),
+            unlocked() { return hasUpgrade("prestige", 21) },
+        },
+        32: {
+            title: "Rebirth Upgrade 10",
+            description: "x1.11 PP, x11.11 RP, x1111.11 BP, x1111111.11 PF",
+            cost: new Decimal(1e48),
+            unlocked() { return hasUpgrade("rebirth", 31) },
         },
     },
     milestones: {
@@ -381,8 +417,12 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 21)) mult = mult.times(1.36)
         if (hasUpgrade('rebirth', 23)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 24)) mult = mult.times(1.28)
+        if (hasUpgrade('rebirth', 32)) mult = mult.times(11.11)
         if (hasUpgrade('prestige', 11)) mult = mult.times(1.4)
         if (hasUpgrade('prestige', 12)) mult = mult.times(2.5)
+        if (hasUpgrade('prestige', 13)) mult = mult.times(10)
+        if (hasUpgrade('prestige', 14)) mult = mult.times(10)
+        if (hasUpgrade('prestige', 21)) mult = mult.times(25)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -431,12 +471,32 @@ addLayer("prestige", {
             description: "+^0.01 BP, x10 PF, x2.5 RP",
             cost: new Decimal(2),
         },
+        13: {
+            title: "Prestige Upgrade 3",
+            description: "x10 RP, x100 PF",
+            cost: new Decimal(5),
+        },
+        14: {
+            title: "Prestige Upgrade 4",
+            description: "x10 RP, x100K PF",
+            cost: new Decimal(25),
+        },
+        21: {
+            title: "Prestige Upgrade 5",
+            description: "x25 RP, BP and PF. Unlock 2 new RP Upgrades.",
+            cost: new Decimal(50),
+        },
     },
     milestones: {
         1: {
             requirementDescription: "3 PP",
             effectDescription: "Generate 10,000% of Basic Points a second",
-            done() { return player["rebirth"].points.gte(3) }
+            done() { return player["prestige"].points.gte(3) }
+        },
+        2: {
+            requirementDescription: "10 PP",
+            effectDescription: "Automation time! Automate all Basic Points Upgrades.",
+            done() { return player["prestige"].points.gte(10) }
         },
     },
     color: "#005a00",
@@ -448,6 +508,7 @@ addLayer("prestige", {
     exponent: 0.01, // Prestige currency exponent
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (hasUpgrade('rebirth', 32)) mult = mult.times(1.11)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

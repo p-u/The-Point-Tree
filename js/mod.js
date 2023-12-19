@@ -18,6 +18,16 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v5.0</h3><br>
+- Automation! Unlocks at 10 PP (Milestone).<br>
+- 3 brand new achievements.<br>
+- The first extension which is not a milestone! <br>
+- 2 new OP Rebirth Upgrades <br>
+- Fixed RU8 appearing with RU7. <br>
+- Fixed achievement 11 description <br>
+- 3 new prestige upgrades <br>
+- First upgrade that boosts another upgrade <br>
+- Current Endgame: 500 PP or 1e400 PF <br>
 <h3>v4.1</h3><br>
 - 1 new Prestige UPG.<br>
 - 1 new prestige milestone.<br>
@@ -117,8 +127,12 @@ function getPointGen() {
 	if (hasMilestone('rebirth', 3)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 23)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 24)) gain = gain.times(20)
+	if (hasUpgrade('rebirth', 32)) gain = gain.times(1111111.11)
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
+	if (hasUpgrade('prestige', 13)) gain = gain.times(100)
+	if (hasUpgrade('prestige', 14)) gain = gain.times(100000)
+	if (hasUpgrade('prestige', 21)) gain = gain.times(25)
 
 
 	// power
