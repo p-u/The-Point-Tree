@@ -18,6 +18,12 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v6.0</h3><br>
+- Rebirth Points Generation. Unlocks at 500K PP (Milestone).<br>
+- 2 brand new achievements.<br>
+- 5 new prestige upgrades <br>
+- Mega Points coming soon, at 1T PP! <br>
+- Current Endgame: 1T PP or 1e1,500 PF <br>
 <h3>v5.0</h3><br>
 - Automation! Unlocks at 10 PP (Milestone).<br>
 - 3 brand new achievements.<br>
@@ -133,12 +139,15 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 13)) gain = gain.times(100)
 	if (hasUpgrade('prestige', 14)) gain = gain.times(100000)
 	if (hasUpgrade('prestige', 21)) gain = gain.times(25)
+	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
+	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
 
 
 	// power
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
 	if (hasUpgrade('basic', 54)) gain = gain.pow(1.04)
 	if (hasUpgrade('rebirth', 22)) gain = gain.pow(1.02)
+	if (hasUpgrade('prestige', 24)) gain = gain.pow(1.02)
 	return gain
 }
 
@@ -152,7 +161,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e1000"))
+	return player.points.gte(new Decimal("e1000000"))
 }
 
 
