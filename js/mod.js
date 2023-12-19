@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "5.0",
-	name: "Automation!",
+	num: "7.0",
+	name: "Mega Reset Layer!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
