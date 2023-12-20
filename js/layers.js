@@ -222,7 +222,7 @@ addLayer("basic", {
             title: "Super Upgrade 1",
             description: "Rebirth Points x1.19, Basic Points x1.91, Point Fragments x9.11",
             cost: new Decimal(100e6),
-            unlocked() { return hasMilestone("rebirth", 1) },
+            unlocked() { return hasMilestone("rebirth", 1) && hasUpgrade("basic", 34)},
         },
         42: {
             title: "Super Upgrade 2",
@@ -246,7 +246,7 @@ addLayer("basic", {
             title: "Super Upgrade 5",
             description: "Point Fragments x100",
             cost: new Decimal(2e66),
-            unlocked() { return hasMilestone("rebirth", 5) },
+            unlocked() { return hasMilestone("rebirth", 5) && hasUpgrade("basic", 44)},
         },
         52: {
             title: "Super Upgrade 6",
@@ -501,7 +501,6 @@ addLayer("rebirth", {
     hotkeys: [
         {key: "r", description: "R: Reset for Rebirth points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
 
 }),
 addLayer("prestige", {
@@ -637,7 +636,6 @@ addLayer("prestige", {
     hotkeys: [
         {key: "p", description: "P: Reset for Prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
 
 }),
 addLayer("mega", {
@@ -706,6 +704,5 @@ addLayer("mega", {
     hotkeys: [
         {key: "m", description: "M: Reset for MEGA points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
 
 })
