@@ -246,7 +246,7 @@ addLayer("basic", {
             title: "Super Upgrade 5",
             description: "Point Fragments x100",
             cost: new Decimal(2e66),
-            unlocked() { return hasMilestone("rebirth", 4) },
+            unlocked() { return hasMilestone("rebirth", 5) },
         },
         52: {
             title: "Super Upgrade 6",
@@ -281,14 +281,15 @@ addLayer("basic", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
     passiveGeneration() {
-        if (hasMilestone('mega', 1)) return 100000
-        if (hasMilestone('prestige', 1)) return 100
+        if (hasMilestone('mega', 1)) return 10000000
+        if (hasMilestone('prestige', 1)) return 10000
+        if (hasMilestone('rebirth', 3)) return 100
         if (hasMilestone('rebirth', 2)) return 1
         return 0
     },
     autoUpgrade() {
         let auto = false
-        if (hasMilestone('rebirth', 3)) auto = true
+        if (hasMilestone('rebirth', 4)) auto = true
         return auto
     },
     gainMult() { // Prestige multiplier
@@ -412,16 +413,21 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte(3) }
         },
         2: {
-            requirementDescription: "2,000 RP",
+            requirementDescription: "20 RP",
             effectDescription: "Generate 100% of Basic Points a sec",
             done() { return player["rebirth"].points.gte(2000) }
         },
         3: {
+            requirementDescription: "2,000 RP",
+            effectDescription: "Generate 10,000% of Basic Points a sec",
+            done() { return player["rebirth"].points.gte(2000) }
+        },
+        4: {
             requirementDescription: "RP Millionaire",
             effectDescription: "Automation! Autobuy all Basic Point Upgs",
             done() { return player["rebirth"].points.gte(1000000) }
         },
-        4: {
+        5: {
             requirementDescription: "RP Billionaire",
             effectDescription: "4 MOAR BP Upgrades",
             done() { return player["rebirth"].points.gte(1000000000) }
@@ -435,8 +441,9 @@ addLayer("rebirth", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.12, // Prestige currency exponent
     passiveGeneration() {
-        if (hasMilestone('mega', 1)) return 100
-        if (hasMilestone('prestige', 3)) return 1
+        if (hasMilestone('mega', 1)) return 10000
+        if (hasMilestone('prestige', 3)) return 100
+        if (hasMilestone('prestige', 77)) return 1
         return 0
     },
     autoUpgrade() {
@@ -577,9 +584,14 @@ addLayer("prestige", {
             effectDescription: "x100 PF.",
             done() { return player["prestige"].points.gte(10) }
         },
+        77: {
+            requirementDescription: "400 PP",
+            effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
+            done() { return player["prestige"].points.gte(500000) }
+        },
         3: {
             requirementDescription: "500,000 PP",
-            effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
+            effectDescription: "Generate 10,000% of Rebirth Points a second. Also x1,000 RP.",
             done() { return player["prestige"].points.gte(500000) }
         },
         4: {
