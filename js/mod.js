@@ -18,6 +18,9 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v8.1, v8.2</h3><br>
+- Added 2 new milestones (V8.1)<br>
+- Made basic SU1 AND SU5 show after prev upg, reset layer show only when unlock (V8.2) <br>
 <h3>v8.0</h3><br>
 - Changed autobuy basic points to be 1M RP instead of 10 PP <br>
 - 1 new Mega Upgrade <br>

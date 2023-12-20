@@ -77,24 +77,24 @@ addLayer("a", {
             tooltip: "Get 1e200 point fragments.",
         },
         33: {
-            name: "AUTOMATION!!",
-            done() { return (hasMilestone('prestige', 2)) },
-            tooltip: "Get Prestige Milestone 2.",
-        },
-        34: {
             name: "Last of Rebirths",
             done() { return (hasUpgrade('rebirth', 32)) },
             tooltip: "Get the last Extended-Rebirth Upgrade (RU10).",
         },
-        35: {
+        34: {
             name: "Fiver Hundo",
             done() { return  player.points.gte(new Decimal("e500")) },
             tooltip: "Get 1e500 point fragments.",
         },
-        36: {
+        35: {
             name: "10 to the power of Ten Hundred?",
             done() { return  player.points.gte(new Decimal("e1000")) },
             tooltip: "Get 1e1000 point fragments.",
+        },
+        36: {
+            name: "Even More?",
+            done() { return  player.points.gte(new Decimal("e1500")) },
+            tooltip: "Get 1e1500 point fragments.",
         },
         41: {
             name: "Layer 4: MEGA!",
@@ -342,7 +342,7 @@ addLayer("rebirth", {
     }},
     layerShown(){
         let visible = false
-        if (hasUpgrade('basic', 34)) visible = true
+        if (hasUpgrade('basic', 34) || player.rebirth.unlocked) visible = true
        return visible
      },
     upgrades: {
@@ -513,7 +513,7 @@ addLayer("prestige", {
     }},
     layerShown(){
         let visible = false
-        if (hasUpgrade('basic', 54)) visible = true
+        if (hasUpgrade('basic', 54) || player.prestige.unlocked) visible = true
        return visible
      },
     upgrades: {
@@ -534,7 +534,7 @@ addLayer("prestige", {
         },
         14: {
             title: "Prestige Upgrade 4",
-            description: "x10 RP, x100K PF",
+            description: "x10 RP, x1K PF",
             cost: new Decimal(25),
         },
         21: {
@@ -586,7 +586,7 @@ addLayer("prestige", {
         77: {
             requirementDescription: "400 PP",
             effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
-            done() { return player["prestige"].points.gte(500000) }
+            done() { return player["prestige"].points.gte(400) }
         },
         3: {
             requirementDescription: "500,000 PP",
@@ -648,7 +648,7 @@ addLayer("mega", {
     }},
     layerShown(){
         let visible = false
-        if (hasUpgrade('prestige', 32)) visible = true
+        if (hasUpgrade('prestige', 32) || player.mega.unlocked) visible = true
        return visible
      },
     upgrades: {
@@ -692,7 +692,7 @@ addLayer("mega", {
         return exp
     },
     effect(){
-        let eff = player.mega.points.add(1).pow(0.6)
+        let eff = player.mega.points.add(1).pow(1)
        return eff
        },
         effectDescription() {
