@@ -7,17 +7,28 @@ let modInfo = {
 
 	discordName: "SR46A",
 	discordLink: "",
-	initialStartPoints: new Decimal("0"), // Used for hard resets and new players
+	initialStartPoints: new Decimal("1e1500"), // Used for hard resets and new players
 	offlineLimit: 10,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "7.0",
-	name: "Mega Reset Layer!",
+	num: "9.0",
+	name: "Many QoL improvements",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v9.0</h3><br>
+- Changed autobuy basic points to be 1M RP instead of 10 PP <br>
+- 1 new Mega Upgrade <br>
+- 1 new mega milestone <br>
+- Added Rebirth Autobuy at 1e10 RP <br>
+- Fixed Basic Super Upgrades appearing at once <br>
+- Reset layers are easier to see <br>
+- Current Endgame: Mega Upg 1 or 1e1,600 PF <br>
+<h3>v8.0: A change</h3><br>
+- Made Rebirth and Prestige layers easier to see <br>
+- 1 New UPG <br>
 <h3>v7.0</h3><br>
 - Mega Points! (10T PP) <br>
 - 1 New UPG <br>
@@ -137,7 +148,7 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 13)) gain = gain.times(1.28)
 	if (hasUpgrade('rebirth', 14)) gain = gain.times(50)
-	if (hasUpgrade('rebirth', 21)) gain = gain.times(10)
+	if (hasUpgrade('rebirth', 21)) gain = gain.times(100)
 	if (hasMilestone('rebirth', 3)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 23)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 24)) gain = gain.times(20)
@@ -145,11 +156,13 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
 	if (hasUpgrade('prestige', 13)) gain = gain.times(100)
-	if (hasUpgrade('prestige', 14)) gain = gain.times(100000)
+	if (hasUpgrade('prestige', 14)) gain = gain.times(1000)
 	if (hasUpgrade('prestige', 21)) gain = gain.times(25)
+	if (hasMilestone('prestige', 2)) gain = gain.times(100)
 	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
 	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
+	if (hasUpgrade('mega', 12)) gain = gain.times(1e9)
 
 
 	// power
