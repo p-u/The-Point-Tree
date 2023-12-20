@@ -13,11 +13,21 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "8.0",
-	name: "Many QoL improvements",
+	num: "9.0",
+	name: "9 Upgrades, 4 achievements and 5 milestones, with a softcap!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v9.0: THE BIGGEST UPDATE</h3><br>
+- Fixed 20 PP Milestone <br>
+- 2 new milestones (Pres and mega): Keep Milestones <br>
+- 4 achievements, with 2 giving rewards <br>
+- 4 new BP Upgs <br>
+- 5 new mega upgrades <br>
+- 3 mega milestones <br>
+- Rebirth Softcap <br>
+- Change of desc <br>
+- Current Endgame: Seemingly random achievement or 1e10,500 PF <br>
 <h3>v8.1, v8.2</h3><br>
 - Added 2 new milestones (V8.1)<br>
 - Made basic SU1 AND SU5 show after prev upg, reset layer show only when unlock (V8.2) <br>
@@ -144,6 +154,8 @@ function getPointGen() {
 	if (hasUpgrade('basic', 52)) gain = gain.times(100)
 	if (hasUpgrade('basic', 53)) gain = gain.times(10000)
 	if (hasUpgrade('basic', 54)) gain = gain.times(1000)
+	if (hasUpgrade('basic', 61)) gain = gain.times(1e25)
+	if (hasUpgrade('basic', 64)) gain = gain.times(1e50)
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 13)) gain = gain.times(1.28)
@@ -162,7 +174,10 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
 	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
-	if (hasUpgrade('mega', 12)) gain = gain.times(1e9)
+	if (hasUpgrade('mega', 12)) gain = gain.times(10e9)
+	if (hasUpgrade('mega', 21)) gain = gain.times(1e50)
+	if (hasAchievement('a', 43)) gain = gain.times(1e30)
+	if (hasAchievement('a', 45)) gain = gain.times(1e38)
 
 
 	// power
@@ -170,6 +185,8 @@ function getPointGen() {
 	if (hasUpgrade('basic', 54)) gain = gain.pow(1.04)
 	if (hasUpgrade('rebirth', 22)) gain = gain.pow(1.02)
 	if (hasUpgrade('prestige', 24)) gain = gain.pow(1.02)
+	if (hasUpgrade('mega', 13)) gain = gain.pow(1.02)
+	if (hasUpgrade('mega', 23)) gain = gain.pow(1.03)
 	return gain
 }
 
@@ -183,7 +200,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e1000000"))
+	return player.points.gte(new Decimal("e10500"))
 }
 
 

@@ -101,6 +101,26 @@ addLayer("a", {
             done() { return  player.mega.points.gte(1) },
             tooltip: "Get 1 mega point.",
         },
+        42: {
+            name: "Keep Prestige Milestone!!",
+            done() { return  (hasMilestone('mega', 2)) },
+            tooltip: "Get the second mega milestone",
+        },
+        43: {
+            name: "Tres thou.",
+            done() { return player.points.gte(new Decimal("e3000")) },
+            tooltip: "Get 1e3,000 points. Reward: x1e30 points.",
+        },
+        44: {
+            name: "Are you kidding me?",
+            done() { return (hasUpgrade('mega', 21)) },
+            tooltip: "Get the fifth mega upgrade. ",
+        },
+        45: {
+            name: "Seemingly random",
+            done() { return player.points.gte(new Decimal("e10218")) },
+            tooltip: "A mystery... But it is over e10,000 points. Reward: x1e38 PF.",
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
@@ -133,7 +153,9 @@ addLayer("basic", {
             description: "Basic points boost point fragments.",
             cost: new Decimal(2),
             effect() {
-                return player[this.layer].points.add(1).pow(0.35)
+                let expu2 = 0.35
+                if (hasUpgrade("basic", 62)) expu2 = 0.3575
+                return player[this.layer].points.add(1).pow(expu2)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             unlocked() { return hasUpgrade("basic", 11) },
@@ -266,6 +288,30 @@ addLayer("basic", {
             cost: new Decimal(1e101),
             unlocked() { return hasUpgrade("basic", 53) },
         },
+        61: {
+            title: "MEGA UPGRADE 01",
+            description: "Multiply point fragments by...1e25...",
+            cost: new Decimal("e4000"),
+            unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 54) },
+        },
+        62: {
+            title: "MEGA UPGRADE 02",
+            description: "Basic Upgrade 2 is boosted.",
+            cost: new Decimal("e4545"),
+            unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 61) },
+        },
+        63: {
+            title: "MEGA UPGRADE 03",
+            description: "Mega Upgrade 4 is boosted.",
+            cost: new Decimal("e5700"),
+            unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 62) },
+        },
+        64: {
+            title: "MEGA UPGRADE 04",
+            description: "Point fragments x1e50",
+            cost: new Decimal("e6625"),
+            unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 63) },
+        },
     },
     infoboxes: {
         info: {
@@ -324,6 +370,7 @@ addLayer("basic", {
         if (hasUpgrade('prestige', 12)) exp = exp.add(0.01)
         if (hasUpgrade('prestige', 24)) exp = exp.add(0.02)
         if (hasUpgrade('prestige', 32)) exp = exp.add(0.025)
+        if (hasUpgrade('mega', 22)) exp = exp.add(0.03)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -415,7 +462,7 @@ addLayer("rebirth", {
         2: {
             requirementDescription: "20 RP",
             effectDescription: "Generate 100% of Basic Points a sec",
-            done() { return player["rebirth"].points.gte(2000) }
+            done() { return player["rebirth"].points.gte(20) }
         },
         3: {
             requirementDescription: "2,000 RP",
@@ -442,21 +489,39 @@ addLayer("rebirth", {
     exponent: 0.12, // Prestige currency exponent
     passiveGeneration() {
         if (hasMilestone('mega', 1)) return 10000
-        if (hasMilestone('prestige', 3)) return 100
-        if (hasMilestone('prestige', 77)) return 1
+        if (hasMilestone('prestige', 5)) return 100
+        if (hasMilestone('prestige', 3)) return 1
         return 0
     },
     autoUpgrade() {
         let auto = false
-        if (hasMilestone('prestige', 4)) auto = true
+        if (hasMilestone('prestige', 6)) auto = true
         return auto
     },
     infoboxes: {
         info: {
             title: "Welcome to the Rebirth Layer",
-            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF)." },
+            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500." },
         },
     },
+    doReset(prestige) {
+        // Stage 1, almost always needed, makes resetting this layer not delete your progress
+        if (layers[prestige].row <= this.row) return;
+    
+        // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
+        let keptUpgrades = [];
+        if (hasMilestone('prestige', 4) && hasUpgrade(this.layer, 31)) keptUpgrades.push(31);
+    
+        // Stage 3, track which main features you want to keep - milestones
+        let keep = [];
+        if (hasMilestone('prestige', 4)) keep.push("milestones");
+    
+        // Stage 4, do the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5, add back in the specific subfeatures you saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    },    
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
@@ -487,11 +552,14 @@ addLayer("rebirth", {
         if (hasUpgrade('basic', 53)) exp = exp.add(0.005)
         if (hasUpgrade('basic', 54)) exp = exp.add(0.005)
         if (hasUpgrade('prestige', 32)) exp = exp.add(0.01)
+        if (hasUpgrade('mega', 13)) exp = exp.add(0.01)
+        if (hasUpgrade('mega', 22)) exp = exp.add(0.02)
         return exp
     },
     effect(){
         let eff = player.rebirth.points.add(1).pow(1.57)
-       return eff
+        softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(0.35))
+        return softcappedEffect
        },
         effectDescription() {
             let des = "which is boosting point fragments by x" + format(tmp[this.layer].effect);
@@ -516,6 +584,10 @@ addLayer("prestige", {
         if (hasUpgrade('basic', 54) || player.prestige.unlocked) visible = true
        return visible
      },
+     passiveGeneration() {
+        if (hasMilestone('mega', 4)) return 1
+        return 0
+    },
     upgrades: {
         11: {
             title: "You Prestiged! This is the first upgrade.",
@@ -575,7 +647,7 @@ addLayer("prestige", {
     milestones: {
         1: {
             requirementDescription: "3 PP",
-            effectDescription: "Generate 10,000% of Basic Points a second",
+            effectDescription: "Generate 1,000,000% of Basic Points a second",
             done() { return player["prestige"].points.gte(3) }
         },
         2: {
@@ -583,17 +655,22 @@ addLayer("prestige", {
             effectDescription: "x100 PF.",
             done() { return player["prestige"].points.gte(10) }
         },
-        77: {
+        3: {
             requirementDescription: "400 PP",
             effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
             done() { return player["prestige"].points.gte(400) }
         },
-        3: {
+        4: {
+            requirementDescription: "20K PP",
+            effectDescription: "Keep Rebirth Milestone and Rebirth Upgrade 9.",
+            done() { return player["prestige"].points.gte(20000) }
+        },
+        5: {
             requirementDescription: "500,000 PP",
             effectDescription: "Generate 10,000% of Rebirth Points a second. Also x1,000 RP.",
             done() { return player["prestige"].points.gte(500000) }
         },
-        4: {
+        6: {
             requirementDescription: "1e10 PP",
             effectDescription: "You asked for this. Autobuy all RP upgrades.",
             done() { return player["prestige"].points.gte(1e10) }
@@ -605,6 +682,24 @@ addLayer("prestige", {
             body() { return "In here, you can get numbers up to e1,500! You also can automate layers. For now, choose whether you want to buy the upgrade." },
         },
     },
+    doReset(prestige) {
+        // Stage 1, almost always needed, makes resetting this layer not delete your progress
+        if (layers[prestige].row <= this.row) return;
+      
+        // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 11, Challenge 32, Buyable 12
+        let keptUpgrades = []
+        if ((hasMilestone('mega', 2)) && hasUpgrade(this.layer, 21)) keptUpgrades.push(21)
+      
+        // Stage 3, track which main features you want to keep - all upgrades, total points, specific toggles, etc.
+        let keep = [];
+        if ((hasMilestone('mega', 2))) keep.push("milestones");
+      
+        // Stage 4, do the actual data reset
+        layerDataReset(this.layer, keep);
+      
+        // Stage 5, add back in the specific subfeatures you saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades)
+      },
     color: "#338333",
     requires: new Decimal(1e150), // Can be a function that takes requirement increases into account
     resource: "Prestige Points", // Name of currency
@@ -615,12 +710,14 @@ addLayer("prestige", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
+        if (hasUpgrade('mega', 14)) mult = mult.times(upgradeEffect('mega', 14))
         if (hasUpgrade('rebirth', 32)) mult = mult.times(1.11)
         if (hasUpgrade('prestige', 31)) mult = mult.times(0.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
+        if (hasUpgrade('mega', 22)) exp = exp.add(0.01)
         return exp
     },
     effect(){
@@ -659,15 +756,61 @@ addLayer("mega", {
         },
         12: {
             title: "How about another upgrade?",
-            description: "x250 RP and x1B PF",
+            description: "x250 RP and x10B PF",
             cost: new Decimal(2),
+        },
+        13: {
+            title: "Is it a pain to grind?",
+            description: "^1.02 PF, +^0.01 RP",
+            cost: new Decimal(6),
+        },
+        14: {
+            title: "More upgrades?",
+            description: "Prestige Points gets boosted based on itself.",
+            cost: new Decimal(500),
+            effect() {
+                let mu4exp = 0.055
+                if (hasUpgrade('basic', 63)) mu4exp = 0.08
+                return player["prestige"].points.add(1).pow(mu4exp)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        21: {
+            title: "Mega Upgrade 5: THE PRICE...",
+            description: "x1e50 PF",
+            cost: new Decimal(60e6),
+        },
+        22: {
+            title: "Mega Upgrade 6",
+            description: "+^0.01 PP, +^0.02 RP, +^0.03 BP",
+            cost: new Decimal(250e6),
+        },
+        23: {
+            title: "Mega Upgrade 7",
+            description: "^1.03 Point Fragments...",
+            cost: new Decimal(6e9),
         },
     },
     milestones: {
         1: {
-            requirementDescription: "3 PP",
-            effectDescription: "Generate 10M% of Basic Points a second AND 10K% of Rebirth Points a second",
+            requirementDescription: "3 MP",
+            effectDescription: "Generate 1B% of Basic Points a second AND 1M% of Rebirth Points a second",
             done() { return player["mega"].points.gte(3) }
+        },
+        2: {
+            requirementDescription: "15 MP",
+            effectDescription: "Keep Prestige Milestones and Prestige upgrade 21",
+            done() { return player["mega"].points.gte(15) }
+        },
+        3: {
+            requirementDescription: "2,500 MP",
+            effectDescription: "Get an extension to Basic Upgrades.",
+            done() { return player["mega"].points.gte(2500) }
+        },
+        4: {
+            requirementDescription: "250,000 MP",
+            effectDescription: "Gain 100% of Prestige Points every second.",
+            done() { return player["mega"].points.gte(250000) }
         },
     },
     infoboxes: {
