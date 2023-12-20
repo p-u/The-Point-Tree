@@ -13,12 +13,12 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "9.0",
+	num: "8.0",
 	name: "Many QoL improvements",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h3>v9.0</h3><br>
+<h3>v8.0</h3><br>
 - Changed autobuy basic points to be 1M RP instead of 10 PP <br>
 - 1 new Mega Upgrade <br>
 - 1 new mega milestone <br>
@@ -26,9 +26,6 @@ let changelog = `<h1>Changelog:</h1><br>
 - Fixed Basic Super Upgrades appearing at once <br>
 - Reset layers are easier to see <br>
 - Current Endgame: Mega Upg 1 or 1e1,600 PF <br>
-<h3>v8.0: A change</h3><br>
-- Made Rebirth and Prestige layers easier to see <br>
-- 1 New UPG <br>
 <h3>v7.0</h3><br>
 - Mega Points! (10T PP) <br>
 - 1 New UPG <br>
