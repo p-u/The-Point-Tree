@@ -13,11 +13,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "9.0",
-	name: "9 Upgrades, 4 achievements and 5 milestones, with a softcap!",
+	num: "9.1",
+	name: "fix",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v9.1</h3><br>
+- Fixed Prestige and Mega Upgrades showing without the previous being bought <br>
+- Fixed RU9 Showing without RU8 being bought. MU4 Price decreased by e25. <br>
 <h3>v9.0: THE BIGGEST UPDATE</h3><br>
 - Fixed 20 PP Milestone <br>
 - 2 new milestones (Pres and mega): Keep Milestones <br>

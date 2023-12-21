@@ -309,7 +309,7 @@ addLayer("basic", {
         64: {
             title: "MEGA UPGRADE 04",
             description: "Point fragments x1e50",
-            cost: new Decimal("e6625"),
+            cost: new Decimal("e6600"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 63) },
         },
     },
@@ -444,7 +444,7 @@ addLayer("rebirth", {
             title: "Rebirth Upgrade 9",
             description: "Basic Upgrade 10 is boosted.",
             cost: new Decimal(6.9e42),
-            unlocked() { return hasUpgrade("prestige", 21) },
+            unlocked() { return hasUpgrade("prestige", 21) && hasUpgrade("rebirth", 24) },
         },
         32: {
             title: "Rebirth Upgrade 10",
@@ -598,26 +598,31 @@ addLayer("prestige", {
             title: "Prestige Upgrade 2",
             description: "+^0.01 BP, x10 PF, x2.5 RP",
             cost: new Decimal(2),
+            unlocked() { return hasUpgrade("prestige", 11) },
         },
         13: {
             title: "Prestige Upgrade 3",
             description: "x10 RP, x100 PF",
             cost: new Decimal(5),
+            unlocked() { return hasUpgrade("prestige", 12) },
         },
         14: {
             title: "Prestige Upgrade 4",
             description: "x10 RP, x1K PF",
             cost: new Decimal(25),
+            unlocked() { return hasUpgrade("prestige", 13) },
         },
         21: {
             title: "Prestige Upgrade 5",
             description: "x25 RP, BP and PF. Unlock 2 new RP Upgrades.",
             cost: new Decimal(50),
+            unlocked() { return hasUpgrade("prestige", 14) },
         },
         22: {
             title: "Prestige Upgrade 6: A big one!",
             description: "Rebirth Points boosts itself.",
             cost: new Decimal(500),
+            unlocked() { return hasUpgrade("prestige", 21) },
             effect() {
                 return player["rebirth"].points.add(1).pow(0.05)
             },
@@ -627,21 +632,25 @@ addLayer("prestige", {
             title: "Prestige Upgrade 7",
             description: "x10^10 PF",
             cost: new Decimal(2500),
+            unlocked() { return hasUpgrade("prestige", 22) },
         },
         24: {
             title: "Prestige Upgrade 8",
             description: "+^0.02 BP, ^1.02 PF",
             cost: new Decimal(20000),
+            unlocked() { return hasUpgrade("prestige", 23) },
         },
         31: {
             title: "Prestige Upgrade 9: Insanely OP, but with a catch",
             description: "x1e20 PF, x1e8 BP, x1e3 RP, BUT /10 PP",
             cost: new Decimal(10000000),
+            unlocked() { return hasUpgrade("prestige", 24) },
         },
         32: {
             title: "Prestige Upgrade 10: The last Upgrade before the reset",
             description: "Basic Upgrade 10 is buffed, and +^0.01 RP, +^0.03 BP",
             cost: new Decimal(200e6),
+            unlocked() { return hasUpgrade("prestige", 31) },
         },
     },
     milestones: {
@@ -758,16 +767,19 @@ addLayer("mega", {
             title: "How about another upgrade?",
             description: "x250 RP and x10B PF",
             cost: new Decimal(2),
+            unlocked() { return hasUpgrade("mega", 11) },
         },
         13: {
             title: "Is it a pain to grind?",
             description: "^1.02 PF, +^0.01 RP",
             cost: new Decimal(6),
+            unlocked() { return hasUpgrade("mega", 12) },
         },
         14: {
             title: "More upgrades?",
             description: "Prestige Points gets boosted based on itself.",
             cost: new Decimal(500),
+            unlocked() { return hasUpgrade("mega", 13) },
             effect() {
                 let mu4exp = 0.055
                 if (hasUpgrade('basic', 63)) mu4exp = 0.08
@@ -779,16 +791,19 @@ addLayer("mega", {
             title: "Mega Upgrade 5: THE PRICE...",
             description: "x1e50 PF",
             cost: new Decimal(60e6),
+            unlocked() { return hasUpgrade("mega", 14) },
         },
         22: {
             title: "Mega Upgrade 6",
             description: "+^0.01 PP, +^0.02 RP, +^0.03 BP",
             cost: new Decimal(250e6),
+            unlocked() { return hasUpgrade("mega", 21) },
         },
         23: {
             title: "Mega Upgrade 7",
             description: "^1.03 Point Fragments...",
             cost: new Decimal(6e9),
+            unlocked() { return hasUpgrade("mega", 22) },
         },
     },
     milestones: {
