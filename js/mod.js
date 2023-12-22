@@ -13,11 +13,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "9.1",
-	name: "fix",
+	num: "10.0",
+	name: "Mega Update: Part 2!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v10.0 (Mega Part 2)</h3><br>
+- 3 New mega milestones <br>
+- 5 achievements, with 2 giving rewards <br>
+- 2 new RP Upgs <br>
+- 5 new mega upgrades <br>
+- Buyables! <br>
+- Tabs! <br>
+- Current Endgame: 1e37,373 PF or 5e44 Mega Points <br>
 <h3>v9.1</h3><br>
 - Fixed Prestige and Mega Upgrades showing without the previous being bought <br>
 - Fixed RU9 Showing without RU8 being bought. MU4 Price decreased by e25. <br>
@@ -138,12 +146,20 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+
+	// layer effect
+
 	if (layers.rebirth.effect().gte(1)) gain = gain.times(layers.rebirth.effect())
 	if (layers.prestige.effect().gte(1)) gain = gain.times(layers.prestige.effect())
 	if (layers.mega.effect().gte(1)) gain = gain.times(layers.mega.effect())
+
+	// upgrade effect
+
 	if (hasUpgrade('basic', 12)) gain = gain.times(upgradeEffect('basic', 12))
 	if (hasUpgrade('basic', 24)) gain = gain.times(upgradeEffect('basic', 24))
 	if (hasUpgrade('basic', 32)) gain = gain.times(upgradeEffect('basic', 32))
+	if (hasUpgrade('mega', 31)) gain = gain.times(upgradeEffect('mega', 31))
+	// basic
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
 	if (hasUpgrade('basic', 22)) gain = gain.times(2)
 	if (hasUpgrade('basic', 31)) gain = gain.times(3)
@@ -159,6 +175,7 @@ function getPointGen() {
 	if (hasUpgrade('basic', 54)) gain = gain.times(1000)
 	if (hasUpgrade('basic', 61)) gain = gain.times(1e25)
 	if (hasUpgrade('basic', 64)) gain = gain.times(1e50)
+	// reb
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 13)) gain = gain.times(1.28)
@@ -168,6 +185,8 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 23)) gain = gain.times(10)
 	if (hasUpgrade('rebirth', 24)) gain = gain.times(20)
 	if (hasUpgrade('rebirth', 32)) gain = gain.times(1111111.11)
+	if (hasUpgrade('rebirth', 34)) gain = gain.times(1e200)
+	// pres
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
 	if (hasUpgrade('prestige', 13)) gain = gain.times(100)
@@ -176,20 +195,32 @@ function getPointGen() {
 	if (hasMilestone('prestige', 2)) gain = gain.times(100)
 	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
+	// mega
 	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
 	if (hasUpgrade('mega', 12)) gain = gain.times(10e9)
 	if (hasUpgrade('mega', 21)) gain = gain.times(1e50)
+	if (hasUpgrade('mega', 24)) gain = gain.times(1e15)
+	if (hasMilestone('mega', 7)) gain = gain.times(1e111)
+
+	// achievement
+
 	if (hasAchievement('a', 43)) gain = gain.times(1e30)
-	if (hasAchievement('a', 45)) gain = gain.times(1e38)
+	if (hasAchievement('a', 45)) gain = gain.times(1e68)
+	if (hasAchievement('a', 55)) gain = gain.times(2.72e272)
+
+	// buyables
+	gain = gain.times(buyableEffect('mega', 11))
 
 
 	// power
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
 	if (hasUpgrade('basic', 54)) gain = gain.pow(1.04)
 	if (hasUpgrade('rebirth', 22)) gain = gain.pow(1.02)
+	if (hasUpgrade('rebirth', 34)) gain = gain.pow(1.06)
 	if (hasUpgrade('prestige', 24)) gain = gain.pow(1.02)
 	if (hasUpgrade('mega', 13)) gain = gain.pow(1.02)
 	if (hasUpgrade('mega', 23)) gain = gain.pow(1.03)
+	if (hasUpgrade('mega', 32)) gain = gain.pow(1.025)
 	return gain
 }
 
