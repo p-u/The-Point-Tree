@@ -146,6 +146,11 @@ addLayer("a", {
             done() { return  player.points.gte(new Decimal("e32872")) },
             tooltip: "A mystery... But it is over e32,500 points and below e33,000. Reward: x2.72e272 PF.",
         },
+        56: {
+            name: "e70.6 Thousand",
+            done() { return  player.points.gte(new Decimal("e70600")) },
+            tooltip: "Get e70,600 Point Fragments. Reward: Rebirth Softcap is less strong. (^0.375 to ^0.4)",
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
@@ -383,6 +388,7 @@ addLayer("basic", {
         if (hasUpgrade('prestige', 11)) mult = mult.times(5)
         if (hasUpgrade('prestige', 21)) mult = mult.times(25)
         if (hasUpgrade('prestige', 21)) mult = mult.times(1e8)
+        if (hasUpgrade('prestige', 33)) mult = mult.times(1e200)
         if (hasUpgrade('mega', 11)) mult = mult.times(1000)
         if (hasUpgrade('mega', 24)) mult = mult.times(1e15)
         return mult
@@ -582,6 +588,7 @@ addLayer("rebirth", {
         if (hasUpgrade('prestige', 21)) mult = mult.times(25)
         if (hasMilestone('prestige', 3)) mult = mult.times(1000)
         if (hasUpgrade('prestige', 31)) mult = mult.times(1000)
+        if (hasUpgrade('prestige', 33)) mult = mult.times(1e100)
         if (hasUpgrade('mega', 11)) mult = mult.times(10)
         if (hasUpgrade('mega', 12)) mult = mult.times(250)
         if (hasUpgrade('mega', 24)) mult = mult.times(1e15)
@@ -600,6 +607,7 @@ addLayer("rebirth", {
         let eff = player.rebirth.points.add(1).pow(1.57)
         let sc = 0.35
         if (hasUpgrade('rebirth', 33)) sc = 0.375
+        if (hasAchievement('a', 56)) sc = 0.4
         softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
         return softcappedEffect
        },
@@ -700,6 +708,18 @@ addLayer("prestige", {
             cost: new Decimal(200e6),
             unlocked() { return hasUpgrade("prestige", 31) },
         },
+        33: {
+            title: "Prestige Upgrade 11: Era 2",
+            description: "x1e300 PF, x1e200 BP, x1e100 RP, x1e50 PP",
+            cost: new Decimal("4.46e446"),
+            unlocked() { return hasMilestone("mega", 8) && hasUpgrade("prestige", 32) },
+        },
+        34: {
+            title: "Prestige Upgrade 12: The devil has awakened...",
+            description: "x6.66e666 PF, x6.6e66 PP, x6e6 MP",
+            cost: new Decimal("6.66e666"),
+            unlocked() { return hasMilestone("mega", 8) && hasUpgrade("prestige", 33) },
+        },
     },
     milestones: {
         1: {
@@ -770,6 +790,8 @@ addLayer("prestige", {
         if (hasUpgrade('mega', 14)) mult = mult.times(upgradeEffect('mega', 14))
         if (hasUpgrade('rebirth', 32)) mult = mult.times(1.11)
         if (hasUpgrade('prestige', 31)) mult = mult.times(0.1)
+        if (hasUpgrade('prestige', 33)) mult = mult.times(1e50)
+        if (hasUpgrade('prestige', 34)) mult = mult.times(6.6e66)
         if (hasAchievement('a', 52)) mult = mult.times(1e18)
         return mult
     },
@@ -799,7 +821,7 @@ addLayer("mega", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: new Decimal(0),
+		points: new Decimal(1e13),
     }},
     layerShown(){
         let visible = false
@@ -874,19 +896,19 @@ addLayer("mega", {
         23: {
             title: "Mega Upgrade 7",
             description: "^1.03 Point Fragments...",
-            cost: new Decimal(6e9),
+            cost: new Decimal(5e9),
             unlocked() { return hasUpgrade("mega", 22) },
         },
         24: {
             title: "Mega Upgrade 8",
             description: "x1 Qi Rebirth Points to Point Fragments",
-            cost: new Decimal(3e12),
+            cost: new Decimal(2e12),
             unlocked() { return hasUpgrade("mega", 23) },
         },
         31: {
             title: "Mega is useful at achieving big numbers.",
             description: "Mega boosts point fragments heavily.",
-            cost: new Decimal(3e13),
+            cost: new Decimal(2e13),
             unlocked() { return hasUpgrade("mega", 24) },
             effect() {
                 let mu9exp = 8.5
@@ -898,19 +920,19 @@ addLayer("mega", {
         32: {
             title: "Mega Upgrade X",
             description: "Point fragments ^1.025.",
-            cost: new Decimal(5.5e14),
+            cost: new Decimal(1.9e14),
             unlocked() { return hasUpgrade("mega", 31) },
         },
         33: {
             title: "Mega Upgrade XI",
             description: "Unlock Mega Buyable 1! MU9 is also stronger.",
-            cost: new Decimal(5.5e14),
+            cost: new Decimal(2e17),
             unlocked() { return hasUpgrade("mega", 32) },
         },
         34: {
             title: "Mega Upgrade 12",
             description: "Buyables are 2 TIMES AS STRONG!",
-            cost: new Decimal(5e32),
+            cost: new Decimal(4e32),
             unlocked() { return hasUpgrade("mega", 33) },
         },
     },
@@ -936,9 +958,9 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(250000) }
         },
         5: {
-            requirementDescription: "7e12 MP",
+            requirementDescription: "1e9 MP",
             effectDescription: "Gain 5,000% of Prestige Points every second AND Autobuy Prestige Upgrades.",
-            done() { return player["mega"].points.gte(7e12) }
+            done() { return player["mega"].points.gte(1e9) }
         },
         6: {
             requirementDescription: "8e24 MP",
@@ -949,6 +971,11 @@ addLayer("mega", {
             requirementDescription: "4e37 MP",
             effectDescription: "x1e111 Point Fragments.",
             done() { return player["mega"].points.gte(4e37) }
+        },
+        8: {
+            requirementDescription: "8e44 MP",
+            effectDescription: "Extend Prestige Upgrades.",
+            done() { return player["mega"].points.gte(8e44) }
         },
     },
     buyables: {
@@ -996,6 +1023,7 @@ addLayer("mega", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (hasUpgrade('rebirth', 34)) mult = mult.times(10)
+        if (hasUpgrade('prestige', 34)) mult = mult.times(6e6)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

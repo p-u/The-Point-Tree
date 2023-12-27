@@ -5,19 +5,24 @@ let modInfo = {
 	pointsName: "Point Fragments",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "SR46A",
+	discordName: "RD82",
 	discordLink: "",
-	initialStartPoints: new Decimal("0"), // Used for hard resets and new players
+	initialStartPoints: new Decimal("1e1000"), // Used for hard resets and new players
 	offlineLimit: 10,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "10.0",
-	name: "Mega Update: Part 2",
+	num: "10.1",
+	name: "Mega Update: Part 2.1",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v10.1</h3><br>
+- 1 new achievement <br>
+- Prices of Mega Upgrade 7-12 is reduced <br>
+- Mega Milestone 5 is nerfed severely <br>
+- 2 new prestige upgrades <br>
 <h3>v10.0 (Mega Part 2)</h3><br>
 - 3 New mega milestones <br>
 - 5 achievements, with 2 giving rewards <br>
@@ -195,6 +200,8 @@ function getPointGen() {
 	if (hasMilestone('prestige', 2)) gain = gain.times(100)
 	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
+	if (hasUpgrade('prestige', 33)) gain = gain.times(1e300)
+	if (hasUpgrade('prestige', 34)) gain = gain.times("6.66e666")
 	// mega
 	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
 	if (hasUpgrade('mega', 12)) gain = gain.times(10e9)
