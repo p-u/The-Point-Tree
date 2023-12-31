@@ -7,17 +7,26 @@ let modInfo = {
 
 	discordName: "RD82",
 	discordLink: "",
-	initialStartPoints: new Decimal("0"), // Used for hard resets and new players
-	offlineLimit: 10,  // In hours
+	initialStartPoints: new Decimal(0), // Used for hard resets and new players
+	offlineLimit: 100,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "10.1",
-	name: "Mega Update: Part 2.1",
+	num: "11.0",
+	name: "Sacrifice: Part 1",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v11.0 (Sacrifice Part 1)</h3><br>
+- Balanced to Sacrifice 5 <br>
+- Sacrifices give insane boosts. <br>
+- 3 new achievements <br>
+- 1 new mega upgrade <br>
+- Mega Automation <br>
+- 1 new mega milestone <br>
+- X10 Offline limit!! <br>
+- Current Endgame: 1e103,103 PF or 2.5e155 Mega Points or 5 Sacrifices <br>
 <h3>v10.1</h3><br>
 - 1 new achievement <br>
 - Prices of Mega Upgrade 7-12 is reduced <br>
@@ -208,6 +217,10 @@ function getPointGen() {
 	if (hasUpgrade('mega', 21)) gain = gain.times(1e50)
 	if (hasUpgrade('mega', 24)) gain = gain.times(1e15)
 	if (hasMilestone('mega', 7)) gain = gain.times(1e111)
+
+	// sacrifice + energy
+	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
+	if (hasMilestone('sac', 4)) gain = gain.times(1e250)
 
 	// achievement
 

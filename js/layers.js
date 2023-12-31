@@ -151,6 +151,21 @@ addLayer("a", {
             done() { return  player.points.gte(new Decimal("e70600")) },
             tooltip: "Get e70,600 Point Fragments. Reward: Rebirth Softcap is less strong. (^0.375 to ^0.4)",
         },
+        61: {
+            name: "Sacrifice!!",
+            done() { return  player.sac.points.gte(1) },
+            tooltip: "Get Sacrifice 1. Reward: You love passive generation, right? Gain 1.84% of Mega Points a second.",
+        },
+        62: {
+            name: "Stronger than ever!",
+            done() { return  player.sac.points.gte(2) },
+            tooltip: "Get Sacrifice 2.",
+        },
+        63: {
+            name: "Pentac",
+            done() { return  player.sac.points.gte(5) },
+            tooltip: "Get Sacrifice 5!",
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
@@ -391,6 +406,7 @@ addLayer("basic", {
         if (hasUpgrade('prestige', 33)) mult = mult.times(1e200)
         if (hasUpgrade('mega', 11)) mult = mult.times(1000)
         if (hasUpgrade('mega', 24)) mult = mult.times(1e15)
+        if (hasMilestone('sac', 2)) mult = mult.times(1e30)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -592,6 +608,7 @@ addLayer("rebirth", {
         if (hasUpgrade('mega', 11)) mult = mult.times(10)
         if (hasUpgrade('mega', 12)) mult = mult.times(250)
         if (hasUpgrade('mega', 24)) mult = mult.times(1e15)
+        if (hasMilestone('sac', 1)) mult = mult.times(1e15)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -680,7 +697,9 @@ addLayer("prestige", {
             cost: new Decimal(500),
             unlocked() { return hasUpgrade("prestige", 21) },
             effect() {
-                return player["rebirth"].points.add(1).pow(0.05)
+                let pu6exp = 0.05
+                if (hasUpgrade("mega", 41)) pu6exp = 0.08
+                return player["rebirth"].points.add(1).pow(pu6exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
@@ -792,6 +811,7 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 31)) mult = mult.times(0.1)
         if (hasUpgrade('prestige', 33)) mult = mult.times(1e50)
         if (hasUpgrade('prestige', 34)) mult = mult.times(6.6e66)
+        if (hasMilestone('sac', 2)) mult = mult.times(10000)
         if (hasAchievement('a', 52)) mult = mult.times(1e18)
         return mult
     },
@@ -823,6 +843,12 @@ addLayer("mega", {
         unlocked: false,
 		points: new Decimal(0),
     }},
+    passiveGeneration() {
+        if (hasMilestone('sac', 4)) return 0.251712
+        if (hasMilestone('sac', 3)) return 0.1104
+        if (hasMilestone('sac', 1)) return 0.0184
+        return 0
+    },
     layerShown(){
         let visible = false
         if (hasUpgrade('prestige', 32) || player.mega.unlocked) visible = true
@@ -877,6 +903,7 @@ addLayer("mega", {
             effect() {
                 let mu4exp = 0.055
                 if (hasUpgrade('basic', 63)) mu4exp = 0.08
+                if (hasUpgrade('mega', 41)) mu4exp = 0.1
                 return player["prestige"].points.add(1).pow(mu4exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -935,6 +962,12 @@ addLayer("mega", {
             cost: new Decimal(4e32),
             unlocked() { return hasUpgrade("mega", 33) },
         },
+        41: {
+            title: "Mega Upgrade 13",
+            description: "Prestige upgrade 6 and mega upgrade 4 is boosted.",
+            cost: new Decimal(5e141),
+            unlocked() { return hasMilestone("sac", 4) && hasUpgrade("mega", 34) },
+        },
     },
     milestones: {
         1: {
@@ -977,6 +1010,16 @@ addLayer("mega", {
             effectDescription: "Extend Prestige Upgrades.",
             done() { return player["mega"].points.gte(8e44) }
         },
+        9: {
+            requirementDescription: "1e65 MP",
+            effectDescription: "X2.2 Mega Points",
+            done() { return player["mega"].points.gte(1e65) }
+        },
+        10: {
+            requirementDescription: "1e110 MP",
+            effectDescription: "Unlock the next reset layer!",
+            done() { return player["mega"].points.gte(1e110) }
+        },
     },
     buyables: {
         // Formula and title done, but no effect yet. The effect is also not finalised.
@@ -984,7 +1027,9 @@ addLayer("mega", {
             title: "Mega Buyable 1 (1e10 PF/buy, amount of PF increases as you buy)",
             unlocked() { return hasUpgrade("mega", 33) },
             cost(x) {
-                return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(1.1 , x))).floor()
+                let exp2 = 1.1
+                if (hasMilestone('sac', 3)) exp2 = 1.09125
+                return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
                 return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Point Fragments gain by x" + format(buyableEffect(this.layer, this.id))
@@ -1001,6 +1046,7 @@ addLayer("mega", {
                 let base1 = new Decimal(1e10)
                 let base2 = x
                 if (hasUpgrade('mega', 34)) base2 = x.mul(new Decimal(2))
+                if (hasMilestone('sac', 3)) base2 = x.mul(new Decimal(3))
                 let expo = new Decimal(1.005)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -1010,7 +1056,7 @@ addLayer("mega", {
     infoboxes: {
         info: {
             title: "Welcome to the Mega Layer",
-            body() { return "This is the newest layer!" },
+            body() { return "Legend says that this layer is super OP." },
         },
     },   
     color: "#FF5733",
@@ -1024,6 +1070,9 @@ addLayer("mega", {
         let mult = new Decimal(1)
         if (hasUpgrade('rebirth', 34)) mult = mult.times(10)
         if (hasUpgrade('prestige', 34)) mult = mult.times(6e6)
+        if (hasMilestone('mega', 9)) mult = mult.times(2.2)
+        if (hasMilestone('sac', 1)) mult = mult.times(10)
+        if (hasMilestone('sac', 4)) mult = mult.times(2.5e6)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -1042,6 +1091,68 @@ addLayer("mega", {
     row: 3, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "m", description: "M: Reset for MEGA points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+
+}),
+addLayer("sac", {
+    name: "Sacrifice", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "S", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: false,
+		points: new Decimal(2),
+    }},
+    layerShown(){
+        let visible = false
+        if (hasMilestone('mega', 10) || player.sac.unlocked) visible = true
+       return visible
+    },
+    milestones: {
+        1: {
+            requirementDescription: "The First Sacrifice",
+            effectDescription: "x1e100 Point Fragments, x1e15 Rebirth Points, x10 Mega Points",
+            done() { return player["sac"].points.gte(1) }
+        },
+        2: {
+            requirementDescription: "The Second Sacrifice",
+            effectDescription: "x1e30 Basic Points, x10K Prestige Points",
+            done() { return player["sac"].points.gte(2) }
+        },
+        3: {
+            requirementDescription: "The Third Sacrifice",
+            effectDescription: "x6 Mega Passive Generation, Sac Formula is weaker and boost is stronger",
+            done() { return player["sac"].points.gte(3) }
+        },
+        4: {
+            requirementDescription: "The Fourth Sacrifice",
+            effectDescription: "x2.28 Mega Passive Gen, 1 new mega upgrade, x2.5M MP and x1e250 PF.",
+            done() { return player["sac"].points.gte(4) }
+        },
+    },
+    infoboxes: {
+        info: {
+            title: "Welcome to the Sacrifice Layer",
+            body() { return "A static layer, you will have to buy sacrifices to progress. Each one is more powerful and gives unique milestones." },
+        },
+    },   
+    color: "#79029b",
+    requires: new Decimal(1.11e111), // Can be a function that takes requirement increases into account
+    resource: "Sacrifice", // Name of currency
+    baseResource: "Mega Points", // Name of resource prestige is based on
+    baseAmount() {return player.mega.points}, // Get the current amount of baseResource
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 3.6,  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
+    gainMult() { // Prestige multiplier
+        let mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        let exp = new Decimal(1)
+        return exp
+    },
+    row: 4, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "s", description: "S: Sacrifice!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 
 })
