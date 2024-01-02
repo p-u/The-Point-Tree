@@ -19,15 +19,15 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
 <h3>v11.1 (Sacrifice Part 2)</h3><br>
-- 5 new sacrifices, 5 new boosts! Balanced to Sac 10. <br>
+- 5 new sacrifices, 7 new boosts! Balanced to Sac 10. <br>
 - This is where points rise insanely, costing e930 MP in Sac 10. <br>
 - 3 new achievements <br>
 - 3 new mega upgrades <br>
 - 1 new layer of prestige upgrades <br>
-- 1 new mega achievement <br>
+- 1 new mega milestone <br>
 - 1 new mega buyable <br>
 - Rebalanced Basic Upgrade costs <br>
-- Current Endgame: Sac 10 or e539,000 PF. <br>
+- Current Endgame: e592,500 PF. <br>
 <h3>v11.0 (Sacrifice Part 1)</h3><br>
 - Balanced to Sacrifice 5 <br>
 - Sacrifices give insane boosts. <br>
