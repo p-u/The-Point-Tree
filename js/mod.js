@@ -13,11 +13,21 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "11.0",
-	name: "Sacrifice: Part 1",
+	num: "11.1",
+	name: "Sacrifice: Part 2",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v11.1 (Sacrifice Part 2)</h3><br>
+- 5 new sacrifices, 5 new boosts! Balanced to Sac 10. <br>
+- This is where points rise insanely, costing e930 MP in Sac 10. <br>
+- 3 new achievements <br>
+- 3 new mega upgrades <br>
+- 1 new layer of prestige upgrades <br>
+- 1 new mega achievement <br>
+- 1 new mega buyable <br>
+- Rebalanced Basic Upgrade costs <br>
+- Current Endgame: Sac 10 or e539,000 PF. <br>
 <h3>v11.0 (Sacrifice Part 1)</h3><br>
 - Balanced to Sacrifice 5 <br>
 - Sacrifices give insane boosts. <br>
@@ -189,6 +199,9 @@ function getPointGen() {
 	if (hasUpgrade('basic', 54)) gain = gain.times(1000)
 	if (hasUpgrade('basic', 61)) gain = gain.times(1e25)
 	if (hasUpgrade('basic', 64)) gain = gain.times(1e50)
+	if (hasUpgrade('basic', 71)) gain = gain.times("7e777")
+	if (hasUpgrade('basic', 72)) gain = gain.times("1e500")
+
 	// reb
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
@@ -200,6 +213,7 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 24)) gain = gain.times(20)
 	if (hasUpgrade('rebirth', 32)) gain = gain.times(1111111.11)
 	if (hasUpgrade('rebirth', 34)) gain = gain.times(1e200)
+	if (hasUpgrade('rebirth', 41)) gain = gain.times("1e2000")
 	// pres
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
@@ -221,12 +235,16 @@ function getPointGen() {
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
 	if (hasMilestone('sac', 4)) gain = gain.times(1e250)
+	if (hasMilestone('sac', 6)) gain = gain.times("1e1000")
+	if (hasMilestone('sac', 7)) gain = gain.times("8e888")
+	if (hasMilestone('sac', 8)) gain = gain.times("1e400")
 
 	// achievement
 
 	if (hasAchievement('a', 43)) gain = gain.times(1e30)
 	if (hasAchievement('a', 45)) gain = gain.times(1e68)
 	if (hasAchievement('a', 55)) gain = gain.times(2.72e272)
+	if (hasAchievement('a', 66)) gain = gain.times("1e500")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -235,12 +253,15 @@ function getPointGen() {
 	// power
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
 	if (hasUpgrade('basic', 54)) gain = gain.pow(1.04)
+	if (hasUpgrade('basic', 72)) gain = gain.pow(1.015)
 	if (hasUpgrade('rebirth', 22)) gain = gain.pow(1.02)
 	if (hasUpgrade('rebirth', 34)) gain = gain.pow(1.06)
 	if (hasUpgrade('prestige', 24)) gain = gain.pow(1.02)
 	if (hasUpgrade('mega', 13)) gain = gain.pow(1.02)
 	if (hasUpgrade('mega', 23)) gain = gain.pow(1.03)
 	if (hasUpgrade('mega', 32)) gain = gain.pow(1.025)
+	if (hasMilestone('sac', 5)) gain = gain.pow(1.02)
+	if (hasMilestone('sac', 10)) gain = gain.pow(1.006)
 	return gain
 }
 
@@ -254,7 +275,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e103103"))
+	return player.points.gte(new Decimal("e592500"))
 }
 
 
