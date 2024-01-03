@@ -557,13 +557,13 @@ addLayer("rebirth", {
             title: "Rebirth Upgrade 13: Extension, again.",
             description: "Point Fragments x1e2,000, Mega Points x1e10",
             cost: new Decimal("e63200"),
-            unlocked() { return hasMilestone("mega", 9) && hasUpgrade("rebirth", 34) },
+            unlocked() { return hasMilestone("sac", 9) && hasUpgrade("rebirth", 34) },
         },
         42: {
             title: "Rebirth Extension 3: Finale",
             description: "Rebirth Softcap is less.",
             cost: new Decimal("e69250"),
-            unlocked() { return hasMilestone("mega", 9) && hasUpgrade("rebirth", 41) },
+            unlocked() { return hasMilestone("sac", 9) && hasUpgrade("rebirth", 41) },
         },
     },
     milestones: {
@@ -1255,7 +1255,6 @@ addLayer("mega", {
     hotkeys: [
         {key: "m", description: "M: Reset for MEGA points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-
 }),
 addLayer("sac", {
     name: "Sacrifice", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -1298,7 +1297,7 @@ addLayer("sac", {
         },
         6: {
             requirementDescription: "Sacrifice 6",
-            effectDescription: "Mega Upgrade 14 is stronger. Also... x1e1,000 points...",
+            effectDescription: "Mega Upgrade 14 is stronger. Also... x1e1,000 points... and 1 more mega upgrade.",
             done() { return player["sac"].points.gte(6) }
         },
         7: {
@@ -1347,5 +1346,4 @@ addLayer("sac", {
     hotkeys: [
         {key: "s", description: "S: Sacrifice!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-
 })

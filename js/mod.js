@@ -177,6 +177,7 @@ function getPointGen() {
 	if (layers.prestige.effect().gte(1)) gain = gain.times(layers.prestige.effect())
 	if (layers.mega.effect().gte(1)) gain = gain.times(layers.mega.effect())
 
+
 	// upgrade effect
 
 	if (hasUpgrade('basic', 12)) gain = gain.times(upgradeEffect('basic', 12))
