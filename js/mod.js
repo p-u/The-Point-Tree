@@ -8,16 +8,26 @@ let modInfo = {
 	discordName: "RD82",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 100,  // In hours
+	offlineLimit: 240,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "11.1",
-	name: "Sacrifice: Part 2",
+	num: "12.0",
+	name: "Energy Part 1 + e1M!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v12.0 (Energy Part 1)</h3><br>
+- NEW energy layer with boosts to PF! <br>
+- 2 new OP Sacrifices <br>
+- Changed description of Sac 10. <br>
+- 3 new achievements <br>
+- 8 new energy upgrades <br>
+- 2 new mega upgrades <br>
+- 3 new energy milestone <br>
+- New Feature: Supercap <br>
+- Current Endgame: e1,062,750 PF. <br>
 <h3>v11.1 (Sacrifice Part 2)</h3><br>
 - 5 new sacrifices, 7 new boosts! Balanced to Sac 10. <br>
 - This is where points rise insanely, costing e930 MP in Sac 10. <br>
@@ -176,6 +186,7 @@ function getPointGen() {
 	if (layers.rebirth.effect().gte(1)) gain = gain.times(layers.rebirth.effect())
 	if (layers.prestige.effect().gte(1)) gain = gain.times(layers.prestige.effect())
 	if (layers.mega.effect().gte(1)) gain = gain.times(layers.mega.effect())
+	if (layers.e.effect().gte(1)) gain = gain.times(layers.mega.effect())
 
 
 	// upgrade effect
@@ -239,6 +250,10 @@ function getPointGen() {
 	if (hasMilestone('sac', 6)) gain = gain.times("1e1000")
 	if (hasMilestone('sac', 7)) gain = gain.times("8e888")
 	if (hasMilestone('sac', 8)) gain = gain.times("1e400")
+	if (hasUpgrade('e', 11)) gain = gain.times(1e250)
+	if (hasUpgrade('e', 23)) gain = gain.times("1e1500")
+	if (hasMilestone('e', 1)) gain = gain.times("1e1000")
+	if (hasMilestone('e', 3)) gain = gain.times("1e1500")
 
 	// achievement
 
@@ -246,6 +261,7 @@ function getPointGen() {
 	if (hasAchievement('a', 45)) gain = gain.times(1e68)
 	if (hasAchievement('a', 55)) gain = gain.times(2.72e272)
 	if (hasAchievement('a', 66)) gain = gain.times("1e500")
+	if (hasAchievement('a', 73)) gain = gain.times("1e5000")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -263,6 +279,8 @@ function getPointGen() {
 	if (hasUpgrade('mega', 32)) gain = gain.pow(1.025)
 	if (hasMilestone('sac', 5)) gain = gain.pow(1.02)
 	if (hasMilestone('sac', 10)) gain = gain.pow(1.006)
+	if (hasMilestone('sac', 11)) gain = gain.pow(1.005)
+	if (hasMilestone('sac', 12)) gain = gain.pow(1.0015)
 	return gain
 }
 
@@ -276,7 +294,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e592500"))
+	return player.points.gte(new Decimal("e1062750"))
 }
 
 
