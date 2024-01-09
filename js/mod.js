@@ -18,6 +18,16 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v12.1</h3><br>
+- BIG Fix: Energy boost is based on mega <br>
+- Changed prices of Mega Upgs 17 and 18 <br>
+- Buffed achievement eMillionaire <br>
+- Buffed Mega Upg 18 boost <br>
+- Changed Sac 12 desc <br>
+- 1 mega upg, 1 energy milestone <br>
+- Nerfed EU2,3,7 Price <br>
+- Buffed EU5 effect <br>
+- Buffed EU6, EU8, EM2, EM3 <br>
 <h3>v12.0 (Energy Part 1)</h3><br>
 - NEW energy layer with boosts to PF! <br>
 - 2 new OP Sacrifices <br>
@@ -186,7 +196,7 @@ function getPointGen() {
 	if (layers.rebirth.effect().gte(1)) gain = gain.times(layers.rebirth.effect())
 	if (layers.prestige.effect().gte(1)) gain = gain.times(layers.prestige.effect())
 	if (layers.mega.effect().gte(1)) gain = gain.times(layers.mega.effect())
-	if (layers.e.effect().gte(1)) gain = gain.times(layers.mega.effect())
+	if (layers.e.effect().gte(1)) gain = gain.times(layers.e.effect())
 
 
 	// upgrade effect
@@ -253,7 +263,7 @@ function getPointGen() {
 	if (hasUpgrade('e', 11)) gain = gain.times(1e250)
 	if (hasUpgrade('e', 23)) gain = gain.times("1e1500")
 	if (hasMilestone('e', 1)) gain = gain.times("1e1000")
-	if (hasMilestone('e', 3)) gain = gain.times("1e1500")
+	if (hasMilestone('e', 4)) gain = gain.times("1e7500")
 
 	// achievement
 
@@ -261,7 +271,7 @@ function getPointGen() {
 	if (hasAchievement('a', 45)) gain = gain.times(1e68)
 	if (hasAchievement('a', 55)) gain = gain.times(2.72e272)
 	if (hasAchievement('a', 66)) gain = gain.times("1e500")
-	if (hasAchievement('a', 73)) gain = gain.times("1e5000")
+	if (hasAchievement('a', 73)) gain = gain.times("1e10000")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -294,7 +304,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e1062750"))
+	return player.points.gte(new Decimal("e1200000"))
 }
 
 

@@ -194,7 +194,7 @@ addLayer("a", {
         73: {
             name: "eMilillionaire",
             done() { return player.points.gte(new Decimal("e1000000")) },
-            tooltip: "E1M POINTS!! Reward: xe5,000 Points.",
+            tooltip: "E1M POINTS!! Reward: xe10,000 Points.",
         },
     tabFormat: [
         "blank", 
@@ -697,7 +697,8 @@ addLayer("rebirth", {
         if (hasMilestone('sac', 8)) sc = 0.43
         if (hasUpgrade('rebirth', 42)) sc = 0.445
         softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(0.4))
+        let sprcap = 0.4
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
         return softcappedEffect
        },
         effectDescription() {
@@ -1100,7 +1101,7 @@ addLayer("mega", {
                 if (hasUpgrade("basic", 73)) mbiupgexp = 0.07
                 if (hasUpgrade("basic", 74)) mbiupgexp = 0.094
                 if (hasMilestone("sac", 9)) mbiupgexp = 0.115
-                if (hasUpgrade("mega", 52)) mbiupgexp = 0.1425
+                if (hasUpgrade("mega", 52)) mbiupgexp = 0.1515
                 return player["mega"].points.add(1).pow(mbiupgexp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -1120,14 +1121,20 @@ addLayer("mega", {
         51: {
             title: "Mega Upgrade 17",
             description: "8x Energy, Mega Buyables 1 and 2 are stronger.",
-            cost: new Decimal("5e1463"),
+            cost: new Decimal("2e1424"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 44) },
         },
         52: {
             title: "Mega Upgrade 18",
             description: "Mega Upgrade 14 is stronger.",
-            cost: new Decimal("2.5e1691"),
+            cost: new Decimal("5e1637"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 51) },
+        },
+        53: {
+            title: "Mega Upgrade 19",
+            description: "x50 Energy.",
+            cost: new Decimal("1e2037"),
+            unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 52) },
         },
     },
     milestones: {
@@ -1370,9 +1377,9 @@ addLayer("sac", {
         },
         12: {
             requirementDescription: "Sacrifice 12",
-            effectDescription: "x10 Energy, energy boost is stronger and Autobuy Mega Buyable 2",
+            effectDescription: "x10 Energy, energy boost is stronger and Autobuy Mega Buyable 2. More Mega Upgrades.",
             done() { return player["sac"].points.gte(12) }
-        },
+        }
     },
     infoboxes: {
         info: {
@@ -1461,14 +1468,16 @@ addLayer("e", {
         if (hasUpgrade('e', 12)) mult = mult.times(1.3)
         if (hasUpgrade('e', 13)) mult = mult.times(3)
         if (hasUpgrade('e', 14)) mult = mult.times(upgradeEffect('e', 14))
-        if (hasUpgrade('e', 21)) mult = mult.times(2)
+        if (hasUpgrade('e', 21)) mult = mult.times(4)
         if (hasUpgrade('e', 22)) mult = mult.times(1.38)
         if (hasUpgrade('e', 23)) mult = mult.times(4)
+        if (hasUpgrade('e', 24)) mult = mult.times(upgradeEffect('e', 24))
         if (hasMilestone('sac', 11)) mult = mult.times(5)
         if (hasUpgrade('mega', 51)) mult = mult.times(8)
         if (hasMilestone('e', 1)) mult = mult.times(3.5)
-        if (hasUpgrade('e', 24)) mult = mult.times(upgradeEffect('e', 24))
-        if (hasMilestone('sac', 11)) mult = mult.times(10)
+        if (hasMilestone('sac', 12)) mult = mult.times(10)
+        if (hasUpgrade('mega', 53)) mult = mult.times(25)
+        if (hasMilestone('e', 4)) mult = mult.times(9)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -1484,13 +1493,13 @@ addLayer("e", {
             12: {
                 title: "Energy 2",
                 description: "x1.3 Energy, and x1e250 BP",
-                cost: new Decimal(1200),
+                cost: new Decimal(1000),
                 unlocked() { return hasUpgrade("e", 11) },
             },
             13: {
                 title: "Energy 3",
                 description: "x3 Energy, and x1e25 MP",
-                cost: new Decimal(1800),
+                cost: new Decimal(1300),
                 unlocked() { return hasUpgrade("e", 12) },
             },
             14: {
@@ -1506,33 +1515,33 @@ addLayer("e", {
             },
             21: {
                 title: "Energy 5",
-                description: "x2 Energy, and x1e100 PP",
+                description: "x4 Energy, and x1e100 PP",
                 cost: new Decimal(22222),
                 unlocked() { return hasUpgrade("e", 14) },
             },
             22: {
                 title: "Energy 6",
                 description: "Mega Buyable 2 formula is weaker. Also x1.38 Energy.",
-                cost: new Decimal(150e3),
+                cost: new Decimal(300e3),
                 unlocked() { return hasUpgrade("e", 21) },
             },
             23: {
                 title: "Energy 7",
-                description: "x4 Energy, x1e1500 PF",
-                cost: new Decimal(2.75e6),
+                description: "x4 Energy, x1e700 PF",
+                cost: new Decimal(450e3),
                 unlocked() { return hasUpgrade("e", 22) },
             },
             24: {
                 title: "Energy 8",
                 description: "A gigawatt of energy. That can power 750K Homes. That's a lot. Anyways, Mega Points now boost energy, by a little. x1e40 MP.",
-                cost: new Decimal(1e9),
+                cost: new Decimal(1.75e9),
                 effect() {
-                    let e8exp = 0.0006
+                    let e8exp = 0.00075
                     return player["mega"].points.add(1).pow(e8exp)
                 },
                 effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
                 unlocked() { return hasUpgrade("e", 23) },
-            },
+            }
     },
     milestones: {
         1: {
@@ -1541,20 +1550,26 @@ addLayer("e", {
             done() { return player["e"].points.gte(100000) }
         },
         2: {
-            requirementDescription: "150 MW Energy, or 150M energy.",
+            requirementDescription: "400 MW Energy, or 400M energy.",
             effectDescription: "x3.5 Energy. Energy Effect is also stronger.",
-            done() { return player["e"].points.gte(150e6) }
+            done() { return player["e"].points.gte(400e6) }
         },
         3: {
-            requirementDescription: "10B Watts, or 10 GW of energy.",
-            effectDescription: "x1e1,500 PF",
-            done() { return player["e"].points.gte(10e9) }
+            requirementDescription: "25B Watts, or 25 GW of energy.",
+            effectDescription: "Energy effect is stronger.",
+            done() { return player["e"].points.gte(25e9) }
+        },
+        4: {
+            requirementDescription: "175 TW of Energy - 1.75e14",
+            effectDescription: "1e7,500 PF, x9 Energy",
+            done() { return player["e"].points.gte(1.75e14) }
         },
     },
     effect(){
     let enpow = 50
-    if (hasMilestone('e', 2)) enpow = 75
-    if (hasMilestone('sac', 12)) enpow = 120
+    if (hasMilestone('e', 2)) enpow = 90
+    if (hasMilestone('e', 3)) enpow = 200
+    if (hasMilestone('sac', 12)) enpow = 250
         let eff = player.e.points.add(1).pow(enpow)
        return eff
        },
