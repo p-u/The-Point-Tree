@@ -13,11 +13,23 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "12.1",
-	name: "Energy Part 1.1",
+	num: "14.0",
+	name: "Major Update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v14.0: The TRUE BIGGEST UPDATE</h3><br>
+- Rebalanced Rebirth Stage [Increased Prices] <br>
+- New Layer: Info Layer! Puts info on different features. <br>
+- New Feature: Dimensional Shift + Bars <br>
+- New Feature: Rep Upgrades <br>
+Content Updates <br>
+- 8 New Sacs, from Sac 13 to 20 <br>
+- 9 new achievements <br>
+- 24 new upgrades <br>
+- 4 new milestones <br>
+- 1 new buyable <br>
+- Current Endgame: e9,000,000 PF. <br>
 <h3>v12.1</h3><br>
 - BIG Fix: Energy boost is based on mega <br>
 - Changed prices of Mega Upgs 17 and 18 <br>
@@ -223,6 +235,8 @@ function getPointGen() {
 	if (hasUpgrade('basic', 64)) gain = gain.times(1e50)
 	if (hasUpgrade('basic', 71)) gain = gain.times("7e777")
 	if (hasUpgrade('basic', 72)) gain = gain.times("1e500")
+	if (hasUpgrade('basic', 15)) gain = gain.times("1e10000")
+	if (hasUpgrade('basic', 55)) gain = gain.times("1e30000")
 
 	// reb
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
@@ -253,6 +267,11 @@ function getPointGen() {
 	if (hasUpgrade('mega', 21)) gain = gain.times(1e50)
 	if (hasUpgrade('mega', 24)) gain = gain.times(1e15)
 	if (hasMilestone('mega', 7)) gain = gain.times(1e111)
+	if (hasUpgrade('mega', 54)) gain = gain.times("1e40000")
+	if (hasUpgrade('mega', 61)) gain = gain.times("1e4000")
+	if (hasUpgrade('mega', 62)) gain = gain.times("1e4000")
+	if (hasUpgrade('mega', 63)) gain = gain.times("1e4000")
+	if (hasUpgrade('mega', 64)) gain = gain.times("1e4000")
 
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
@@ -262,8 +281,15 @@ function getPointGen() {
 	if (hasMilestone('sac', 8)) gain = gain.times("1e400")
 	if (hasUpgrade('e', 11)) gain = gain.times(1e250)
 	if (hasUpgrade('e', 23)) gain = gain.times("1e1500")
+	if (hasUpgrade('e', 32)) gain = gain.times("1e7500")
 	if (hasMilestone('e', 1)) gain = gain.times("1e1000")
 	if (hasMilestone('e', 4)) gain = gain.times("1e7500")
+	if (hasMilestone('e', 5)) gain = gain.times("1e10000")
+	if (hasMilestone('sac', 14)) gain = gain.times("1e10000")
+	if (hasUpgrade('e', 41)) gain = gain.times("1e10000")
+	if (hasMilestone('sac', 15)) gain = gain.times("1e15000")
+	if (hasMilestone('sac', 16)) gain = gain.times("1e20000")
+	if (hasUpgrade('e', 43)) gain = gain.times("1e25000")
 
 	// achievement
 
@@ -272,6 +298,7 @@ function getPointGen() {
 	if (hasAchievement('a', 55)) gain = gain.times(2.72e272)
 	if (hasAchievement('a', 66)) gain = gain.times("1e500")
 	if (hasAchievement('a', 73)) gain = gain.times("1e10000")
+	if (hasAchievement('a', 75)) gain = gain.times("1e10000")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -291,6 +318,12 @@ function getPointGen() {
 	if (hasMilestone('sac', 10)) gain = gain.pow(1.006)
 	if (hasMilestone('sac', 11)) gain = gain.pow(1.005)
 	if (hasMilestone('sac', 12)) gain = gain.pow(1.0015)
+	if (hasMilestone('sac', 13)) gain = gain.pow(1.005)
+	if (hasMilestone('sac', 14)) gain = gain.pow(1.005)
+	if (hasMilestone('sac', 15)) gain = gain.pow(1.005)
+	if (hasMilestone('sac', 18)) gain = gain.pow(1.0375)
+	if (hasMilestone('sac', 19)) gain = gain.pow(1.002)
+	if (hasUpgrade('basic', 75)) gain = gain.pow(1.00525)
 	return gain
 }
 
@@ -304,7 +337,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e1200000"))
+	return player.points.gte(new Decimal("e9000000"))
 }
 
 

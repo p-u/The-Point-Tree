@@ -174,7 +174,7 @@ addLayer("a", {
         65: {
             name: "Buyable 2",
             done() { return  (hasMilestone('mega', 11)) },
-            tooltip: "Get mega buyable 2",
+            tooltip: "Get mega buyable 2 [Elusive Rarity]",
         },
         66: {
             name: "Seemingly random III",
@@ -196,6 +196,51 @@ addLayer("a", {
             done() { return player.points.gte(new Decimal("e1000000")) },
             tooltip: "E1M POINTS!! Reward: xe10,000 Points.",
         },
+        74: {
+            name: "Era 3 Pres Upgs",
+            done() { return (hasUpgrade('prestige', 41))},
+            tooltip: "Prestige Upgrade 13 [Elusive Rarity].",
+        },
+        75: {
+            name: "e(1x2)M",
+            done() { return player.points.gte(new Decimal("e2000000")) },
+            tooltip: "E2M POINTS!! Reward: xe10,000 Points and x100 energy",
+        },
+        76: {
+            name: "Extension 4 - Rebirth Upgs",
+            done() { return (hasUpgrade('rebirth', 41)) },
+            tooltip: "Rebirth Upgrade 13 [Elusive Rarity]",
+        },
+        81: {
+            name: "Dimensional Shift 1 Upgrade 1",
+            done() { return (hasUpgrade('basic', 15)) },
+            tooltip: "BUS 1 [Exclusive Rarity]",
+        },
+        82: {
+            name: "Power Crazily Increase",
+            done() { return (hasUpgrade('basic', 45)) },
+            tooltip: "x1B Energy? That's insane!",
+        },
+        83: {
+            name: "e8100 Mega Points",
+            done() { return player.mega.points.gte(new Decimal("e8100")) },
+            tooltip: "e8,100 MP. Reward: x1e81 MP",
+        },
+        84: {
+            name: "Mega Buyable 3",
+            done() { return (hasMilestone('mega', 12)) },
+            tooltip: "Mega Buyable 3",
+        },
+        85: {
+            name: "Mega Rep Upgrades",
+            done() { return (hasUpgrade('mega', 61)) },
+            tooltip: "Rep Upgrades [Exclusive Rarity]",
+        },
+        86: {
+            name: "The last of it all",
+            done() { return (hasUpgrade('basic', 75)) },
+            tooltip: "The final Basic Upgrade S.",
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
@@ -206,7 +251,146 @@ addLayer("a", {
         adjustNotificationTime(diff);
     },
 }, 
-})
+}),
+
+addLayer("i", {
+    startData() { return {
+        unlocked: true,
+    }},
+    color: "blue",
+    row: "side",
+    layerShown() {return true}, 
+    tooltip() { // Optional, tooltip displays when the layer is locked
+        return ("Info")
+    },
+    tabFormat: {
+        "Main": {
+            content: [
+                ["infobox", "main"],
+                "blank",
+                "blank",
+                ["infobox", "ext"],
+                "blank",
+                "blank",
+                ["infobox", "auto"],
+                "blank",
+                "blank",
+                ["infobox", "cap"],
+                "blank",
+                "blank",
+                ["infobox", "buyable"],
+                "blank",
+                "blank",
+                ["infobox", "repupg"],
+            ],
+        },
+        "Basic Layer": {
+            content: [
+                ["infobox", "basic"],
+                "blank",
+                "blank",
+                ["infobox", "NSU"],
+            ],
+        },
+        "Rebirth Layer": {
+            content: [
+                ["infobox", "reb"],
+            ],
+        },
+        "Prestige Layer": {
+            content: [
+                ["infobox", "pres"],
+            ],
+        },
+        "Mega Layer": {
+            content: [
+                ["infobox", "mega"],
+            ],
+        },
+        "Sacrifice and Energy Layer": {
+            content: [
+                ["infobox", "sac"],
+                "blank",
+                "blank",
+                ["infobox", "energy"],
+                "blank",
+                "blank",
+                ["infobox", "dimshift"],
+            ],
+        },
+    },
+    infoboxes: {
+        main: {
+            title: "Welcome to The Point Tree!",
+            body() { return "Explore many unique upgrades, and get the biggest numbers possible! In this game, you will go through many different layers, unlock new and unique features like upgrades, milestones and buyables. Please visit this layer often." },
+        },
+        basic: {
+            title: "The Basic layer",
+            body() { return "The first layer of the game, requires 10 Point Fragments. The start to big numbers." },
+        },
+        NSU: {
+            title: "Non-static Upgrades",
+            body() { return "Upgrade 2 and 3 is the first of the upgrades that changes by a currency" },
+            unlocked() { return (hasUpgrade('basic', 11))}
+        },
+        reb: {
+            title: "The rebirth Layer",
+            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000" },
+            unlocked() { return (hasUpgrade('basic', 34))}
+        },
+        ext: {
+            title: "Extensions",
+            body() { return "The first extension is at Rebirth Milestone 3. This adds new upgrades to previous layers" },
+            unlocked() { return (hasUpgrade('basic', 34))}
+        },
+        auto: {
+            title: "Automation and Passive Generation",
+            body() { return "At 20 RP, Passive Generation is unlocked. Likewise, at 1M RP, Automation is unlocked." },
+            unlocked() { return (hasMilestone('rebirth', 2))}
+        },
+        cap: {
+            title: "Softcaps and Supercaps",
+            body() { return "Softcaps and Supercaps nerfs the boost. There are upgrades to reduce the nerf." },
+            unlocked() { return player.rebirth.points.gte(new Decimal(1))}
+        },
+        pres: {
+            title: "Prestige Layer",
+            body() { return "In here, you can get numbers up to e1,500! For now, choose whether you want to buy the upgrade. Prestige effect softcaps at xe6,500." },
+            unlocked() { return player.prestige.points.gte(new Decimal("1"))}
+        },
+        mega: {
+            title: "Mega Layer",
+            body() { return "Legend says that this layer is super OP." },
+            unlocked() { return player.mega.points.gte(new Decimal("1"))}
+        },
+        buyable: {
+            title: "About Buyables",
+            body() { return "Buyables are a way to gain boosts, but unlike upgrades, they can be bought more than one time." },
+            unlocked() { return (hasUpgrade('mega', 33))}
+        },
+        sac: {
+            title: "Sacrifice Layer",
+            body() { return "Sacrifice is the first static layer, which means that the price will change based on how many sacrifices you have. Anyways, this is the MOST OP Layer, and it is used to provide insane boosts." },
+            unlocked() { return player.sac.points.gte(new Decimal("1"))}
+        },
+        dimshift: {
+            title: "Dimensional Shift",
+            body() { return "At 15 Sacrifices, you will unlock a new row of upgrades [Row 5]. This is the most OP row." },
+            unlocked() { return player.sac.points.gte(new Decimal("10"))}
+        },
+        energy: {
+            title: "Energy Layer",
+            body() { return "Energy is the first resource that can be passively generated by its own. This layer boosts Point Fragments immensely!" },
+            unlocked() { return player.e.points.gte(new Decimal("1"))}
+        },
+        repupg: {
+            title: "Rep Upgs [Not very common]",
+            body() { return "Rep Upgs do the same upgrade effect again and again. For example, the first Mega Rep Upgrade Series gives xe4K PF per Upg. Can be a formula as well (like e(4k*1.5^upg))" },
+            unlocked() { return (hasUpgrade('mega', 61))}
+        },
+    },
+}, 
+),
 
 addLayer("basic", {
     name: "Basic Points", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -324,43 +508,43 @@ addLayer("basic", {
         42: {
             title: "Super Upgrade 2",
             description: "Rebirth Points x1.277, Point Fragments x7.77",
-            cost: new Decimal(2.5e9),
+            cost: new Decimal(1e10),
             unlocked() { return hasUpgrade("basic", 41) },
         },
         43: {
             title: "Super Upgrade 3: EXPONENTS!",
             description: "Basic Points +^0.02, Point Fragments ^1.05",
-            cost: new Decimal(8e10),
+            cost: new Decimal(4e12),
             unlocked() { return hasUpgrade("basic", 42) },
         },
         44: {
             title: "Super Upgrade 4",
             description: "Rebirth Points x2, Basic Points x4, Point Fragments x10",
-            cost: new Decimal(2e15),
+            cost: new Decimal(7e17),
             unlocked() { return hasUpgrade("basic", 43) },
         },
         51: {
             title: "Super Upgrade 5",
             description: "Point Fragments x100",
-            cost: new Decimal(2e66),
+            cost: new Decimal(2.5e67),
             unlocked() { return hasMilestone("rebirth", 5) && hasUpgrade("basic", 44)},
         },
         52: {
             title: "Super Upgrade 6",
             description: "PF X100, RP X2.5, BP X10",
-            cost: new Decimal(2.5e71),
+            cost: new Decimal(2.5e72),
             unlocked() { return hasUpgrade("basic", 51) },
         },
         53: {
             title: "Super Upgrade 7: RP Exponent!",
             description: "PF X10K, BP +^0.02, RP +^0.005",
-            cost: new Decimal(1.2e82),
+            cost: new Decimal(5e83),
             unlocked() { return hasUpgrade("basic", 52) },
         },
         54: {
             title: "Super Upgrade 8: Final before NEXT RESET LAYER!",
             description: "PF X1K, PF^1.04, BP X100, BP+^0.02, RP X5, RP+^0.005",
-            cost: new Decimal(1e101),
+            cost: new Decimal(1e102),
             unlocked() { return hasUpgrade("basic", 53) },
         },
         61: {
@@ -411,11 +595,51 @@ addLayer("basic", {
             cost: new Decimal("e274525"),
             unlocked() { return hasMilestone("sac", 7) && hasUpgrade("basic", 73) },
         },
-    },
-    infoboxes: {
-        info: {
-            title: "Welcome to The Point Tree!",
-            body() { return "Explore many unique upgrades, and get the biggest numbers possible!" },
+
+
+        // dimensional shift
+
+        15: {
+            title: "Row 5 of the basic upgrades / BU:Supreme",
+            description: "That was a bit of a timewall. x1e10,000 PF",
+            cost: new Decimal("e2580000"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 74) },
+        },
+        25: {
+            title: "BU:S 2",
+            description: "x1e10,000 Basic Points",
+            cost: new Decimal("e2702250"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 15) },
+        },
+        35: {
+            title: "BU:S 3",
+            description: "Rebirth Softcap is much weaker, but Prestige softcap is slightly stronger",
+            cost: new Decimal("e3095000"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 25) },
+        },
+        45: {
+            title: "BU:S 4",
+            description: "x1B Energy",
+            cost: new Decimal("e3300000"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 35) },
+        },
+        55: {
+            title: "BU:S 5",
+            description: "Rebirth Softcap is much weaker, x1e30K PF, Energy effect stronger, but -^0.03 Basic Exponent",
+            cost: new Decimal("e4261500"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 45) },
+        },
+        65: {
+            title: "BU:S 6",
+            description: "Rebirth Supercap is much weaker, but Prestige softcap is much stronger",
+            cost: new Decimal("e4730000"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 55) },
+        },
+        75: {
+            title: "BU:S 7",
+            description: "^1.00525 PF.",
+            cost: new Decimal("e6810000"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 65) },
         },
     },
     color: "#add8e6",
@@ -463,6 +687,7 @@ addLayer("basic", {
         if (hasMilestone('sac', 2)) mult = mult.times(1e30)
         if (hasMilestone('sac', 8)) mult = mult.times("1e400")
         if (hasUpgrade('e', 12)) mult = mult.times(1e250)
+        if (hasUpgrade('basic', 25)) mult = mult.times("1e10000")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -476,6 +701,8 @@ addLayer("basic", {
         if (hasUpgrade('prestige', 32)) exp = exp.add(0.025)
         if (hasUpgrade('mega', 22)) exp = exp.add(0.03)
         if (hasUpgrade('rebirth', 34)) exp = exp.sub(0.08)
+        if (hasUpgrade('basic', 55)) exp = exp.sub(0.03)
+        if (hasMilestone('sac', 18)) exp = exp.sub(0.05)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -506,19 +733,19 @@ addLayer("rebirth", {
         12: {
             title: "That's a while since the last one. How about some Point boosts?",
             description: "X5 Basic Points, X10 Point Fragments",
-            cost: new Decimal(250),
+            cost: new Decimal(400),
             unlocked() { return hasUpgrade("rebirth", 11) },
         },
         13: {
             title: "Rebirth Upgrade 3: Boosts to all",
             description: "X1.28 Rebirth Points, Basic Points and Point Fragments",
-            cost: new Decimal(5000),
+            cost: new Decimal(12000),
             unlocked() { return hasUpgrade("rebirth", 12) },
         },
         14: {
             title: "Rebirth Upgrade 4: Point Fragmenting",
             description: "AN INSANE X50 BOOST TO Point Fragments",
-            cost: new Decimal(12500),
+            cost: new Decimal(40000),
             unlocked() { return hasUpgrade("rebirth", 13) },
         },
         21: {
@@ -530,19 +757,19 @@ addLayer("rebirth", {
         22: {
             title: "Rebirth Upgrade 6: Another Exponent?",
             description: "+^0.01 BP, ^1.02 PF",
-            cost: new Decimal(5000000),
+            cost: new Decimal(12500000),
             unlocked() { return hasUpgrade("rebirth", 21) },
         },
         23: {
             title: "Rebirth Upgrade 7",
             description: "X2 RP, X10 PF",
-            cost: new Decimal(12500000),
+            cost: new Decimal(50000000),
             unlocked() { return hasUpgrade("rebirth", 21) },
         },
         24: {
             title: "Rebirth Upgrade 8",
             description: "X1.28 RP, X2.22 BP, X20 PF",
-            cost: new Decimal(150000000),
+            cost: new Decimal(600000000),
             unlocked() { return hasUpgrade("rebirth", 23) },
         },
         31: {
@@ -580,6 +807,18 @@ addLayer("rebirth", {
             description: "Rebirth Softcap is less.",
             cost: new Decimal("e69250"),
             unlocked() { return hasMilestone("sac", 9) && hasUpgrade("rebirth", 41) },
+        },
+        43: {
+            title: "Rebirth Extension 4: Energy Edition",
+            description: "Rebirth Softcap is less",
+            cost: new Decimal("e303000"),
+            unlocked() { return hasMilestone("sac", 14) && hasUpgrade("rebirth", 42) },
+        },
+        44: {
+            title: "Rebirth Extension 4: End",
+            description: "Rebirth Supercap is less",
+            cost: new Decimal("e313150"),
+            unlocked() { return hasMilestone("sac", 14) && hasUpgrade("rebirth", 43) },
         },
     },
     milestones: {
@@ -627,12 +866,6 @@ addLayer("rebirth", {
         if (hasMilestone('prestige', 6)) auto = true
         return auto
     },
-    infoboxes: {
-        info: {
-            title: "Welcome to the Rebirth Layer",
-            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000" },
-        },
-    },
     doReset(prestige) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
         if (layers[prestige].row <= this.row) return;
@@ -665,8 +898,8 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 23)) mult = mult.times(2)
         if (hasUpgrade('rebirth', 24)) mult = mult.times(1.28)
         if (hasUpgrade('rebirth', 32)) mult = mult.times(11.11)
-        if (hasUpgrade('prestige', 11)) mult = mult.times(1.4)
-        if (hasUpgrade('prestige', 12)) mult = mult.times(2.5)
+        if (hasUpgrade('prestige', 11)) mult = mult.times(2)
+        if (hasUpgrade('prestige', 12)) mult = mult.times(1.75)
         if (hasUpgrade('prestige', 13)) mult = mult.times(10)
         if (hasUpgrade('prestige', 14)) mult = mult.times(10)
         if (hasUpgrade('prestige', 21)) mult = mult.times(25)
@@ -686,6 +919,7 @@ addLayer("rebirth", {
         if (hasUpgrade('prestige', 32)) exp = exp.add(0.01)
         if (hasUpgrade('mega', 13)) exp = exp.add(0.01)
         if (hasUpgrade('mega', 22)) exp = exp.add(0.02)
+        if (hasMilestone('sac', 18)) exp = exp.add(0.01)
         return exp
     },
     effect(){
@@ -696,8 +930,15 @@ addLayer("rebirth", {
         if (hasAchievement('a', 64)) sc = 0.42
         if (hasMilestone('sac', 8)) sc = 0.43
         if (hasUpgrade('rebirth', 42)) sc = 0.445
+        if (hasUpgrade('rebirth', 43)) sc = 0.475
+        if (hasMilestone('sac', 16)) sc = 0.49
+        if (hasUpgrade('basic', 35)) sc = 0.55
+        if (hasMilestone('sac', 17)) sc = 0.58
+        if (hasUpgrade('basic', 55)) sc = 0.64
         softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
         let sprcap = 0.4
+        if (hasUpgrade('rebirth', 44)) sprcap = 0.45
+        if (hasUpgrade('basic', 65)) sprcap = 0.5
         softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
         return softcappedEffect
        },
@@ -737,12 +978,12 @@ addLayer("prestige", {
     upgrades: {
         11: {
             title: "You Prestiged! This is the first upgrade.",
-            description: "x20 PF, x5 BP, x1.4 RP",
+            description: "x20 PF, x5 BP, x2 RP",
             cost: new Decimal(1),
         },
         12: {
             title: "Prestige Upgrade 2",
-            description: "+^0.01 BP, x10 PF, x2.5 RP",
+            description: "+^0.01 BP, x10 PF, x1.75 RP",
             cost: new Decimal(2),
             unlocked() { return hasUpgrade("prestige", 11) },
         },
@@ -812,6 +1053,18 @@ addLayer("prestige", {
             cost: new Decimal("6.66e666"),
             unlocked() { return hasMilestone("mega", 8) && hasUpgrade("prestige", 33) },
         },
+        41: {
+            title: "Prestige Upgrade 13: ERA III",
+            description: "For reaching e19,323 PP, you get x1e1,000 PP",
+            cost: new Decimal("1e19323"),
+            unlocked() { return hasMilestone("sac", 13) && hasUpgrade("prestige", 34) },
+        },
+        42: {
+            title: "Prestige Upgrade 14: Booster",
+            description: "x1,000 Energy, Prestige Softcap is weaker",
+            cost: new Decimal("1e21240"),
+            unlocked() { return hasMilestone("sac", 13) && hasUpgrade("prestige", 41) },
+        },
     },
     milestones: {
         1: {
@@ -843,12 +1096,6 @@ addLayer("prestige", {
             requirementDescription: "1e10 PP",
             effectDescription: "You asked for this. Autobuy all RP upgrades.",
             done() { return player["prestige"].points.gte(1e10) }
-        },
-    },
-    infoboxes: {
-        info: {
-            title: "Welcome to the Prestige Layer",
-            body() { return "In here, you can get numbers up to e1,500! You also can automate layers. For now, choose whether you want to buy the upgrade. Softcaps at xe6,500." },
         },
     },
     doReset(prestige) {
@@ -887,6 +1134,7 @@ addLayer("prestige", {
         if (hasMilestone('sac', 2)) mult = mult.times(10000)
         if (hasAchievement('a', 52)) mult = mult.times(1e18)
         if (hasUpgrade('e', 21)) mult = mult.times(1e100)
+        if (hasUpgrade('prestige', 41)) mult = mult.times("1e1000")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -899,6 +1147,10 @@ addLayer("prestige", {
         let eff = player.prestige.points.add(1).pow(2.5)
         let cap = 0.3
         if (hasMilestone('sac', 8)) cap = 0.31
+        if (hasUpgrade('prestige', 42)) cap = 0.4
+        if (hasUpgrade('basic', 35)) cap = 0.37
+        if (hasMilestone('sac', 17)) cap = 0.41
+        if (hasUpgrade('basic', 65)) cap = 0.35
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
         return softcappedEffect
        },
@@ -979,7 +1231,6 @@ addLayer("mega", {
      tabFormat: {
         "Main tab": {
             content: [
-                ["infobox", "info"],
                 "main-display",
                 "blank",
                 "prestige-button",
@@ -994,7 +1245,10 @@ addLayer("mega", {
         },
         "Buyables": {
             content: [
+                ["infobox", "buyable"],
                 "main-display",
+                "blank",
+                "blank",
                 "buyables"
             ],
         },
@@ -1133,9 +1387,40 @@ addLayer("mega", {
         53: {
             title: "Mega Upgrade 19",
             description: "x50 Energy.",
-            cost: new Decimal("1e2037"),
+            cost: new Decimal("1e2036"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 52) },
         },
+        54: {
+            title: "Mega Upgrade 20",
+            description: "x1e40K PF",
+            cost: new Decimal("1.11e11011"),
+            unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 53) },
+        },
+        61: {
+            title: "Mega Rep Upgrade 1",
+            description: "Each Rep Upgrade gives xe4K to PF",
+            cost: new Decimal("1e12000"),
+            unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 54) },
+        },
+        62: {
+            title: "Mega Rep Upgrade 2",
+            description: "Each Rep Upgrade gives xe4K to PF",
+            cost: new Decimal("1e12100"),
+            unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 61) },
+        },
+        63: {
+            title: "Mega Rep Upgrade 3",
+            description: "Each Rep Upgrade gives xe4K to PF",
+            cost: new Decimal("1e12300"),
+            unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 62) },
+        },
+        64: {
+            title: "Mega Rep Upgrade 4",
+            description: "Each Rep Upgrade gives xe4K to PF",
+            cost: new Decimal("1e12400"),
+            unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 62) },
+        },
+        // done with mega rep upg, left is to do the last basic upg s and to write changelog
     },
     milestones: {
         1: {
@@ -1154,13 +1439,13 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(2500) }
         },
         4: {
-            requirementDescription: "250,000 MP",
+            requirementDescription: "100,000 MP",
             effectDescription: "Gain 100% of Prestige Points every second.",
-            done() { return player["mega"].points.gte(250000) }
+            done() { return player["mega"].points.gte(100000) }
         },
         5: {
             requirementDescription: "1e9 MP",
-            effectDescription: "Gain 5,000% of Prestige Points every second AND Autobuy Prestige Upgrades.",
+            effectDescription: "Gain 5,000% of Prestige Points every second and autobuy Prestige Upgrades",
             done() { return player["mega"].points.gte(1e9) }
         },
         6: {
@@ -1193,6 +1478,11 @@ addLayer("mega", {
             effectDescription: "Unlock the second mega buyable!",
             done() { return player["mega"].points.gte("4.74e474") }
         },
+        12: {
+            requirementDescription: "1e9065 MP",
+            effectDescription: "Unlock the third mega buyable!",
+            done() { return player["mega"].points.gte("1e9065") }
+        },
     },
     buyables: {
         11: {
@@ -1202,6 +1492,7 @@ addLayer("mega", {
                 let exp2 = 1.1
                 if (hasMilestone('sac', 3)) exp2 = 1.09125
                 if (hasUpgrade('mega', 43)) exp2 = 1.069
+                if (hasUpgrade('e', 31)) exp2 = 1.035
                 return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -1223,6 +1514,8 @@ addLayer("mega", {
                 if (hasUpgrade('mega', 43)) base2 = x.mul(new Decimal(4))
                 if (hasUpgrade('mega', 44)) base2 = x.mul(new Decimal(8))
                 if (hasUpgrade('mega', 51)) base2 = x.mul(new Decimal(10))
+                if (hasUpgrade('e', 34)) base2 = x.mul(new Decimal(14))
+                if (hasUpgrade('e', 44)) base2 = x.mul(new Decimal(20))
                 let expo = new Decimal(1.005)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -1234,6 +1527,7 @@ addLayer("mega", {
             cost(x) {
                 let exp2 = 1.1
                 if (hasUpgrade('e', 22)) exp2 = 1.085
+                if (hasUpgrade('e', 42)) exp2 = 1.05
                 return new Decimal("1e474").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -1251,19 +1545,46 @@ addLayer("mega", {
                 let base1 = new Decimal(10)
                 let base2 = x
                 if (hasUpgrade('mega', 34)) base2 = x.mul(new Decimal(2))
+                if (hasUpgrade('e', 44)) base2 = x.mul(new Decimal(4))
                 let expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
             },
         },
+        13: {
+            title: "Mega Buyable 3 (X2 Energy a buy, amount of energy increases as you buy)",
+            unlocked() { return hasMilestone("mega", 12) },
+            cost(x) {
+                let exp3 = 1.2
+                return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp3 , x))).floor()
+            },
+            display() {
+                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + format(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                let base1 = new Decimal(2)
+                let base2 = x
+                let expo = new Decimal(1.015)
+                let eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+        },
     },
     infoboxes: {
-        info: {
-            title: "Welcome to the Mega Layer",
-            body() { return "Legend says that this layer is super OP." },
+        buyable: {
+            title: "Buyables info",
+            body() { return "Buyables can be bought more than once and gives OP effects" },
         },
-    },   
+    }, 
     color: "#FF5733",
     requires: new Decimal(1e13), // Can be a function that takes requirement increases into account
     resource: "Mega Points", // Name of currency
@@ -1284,6 +1605,7 @@ addLayer("mega", {
         if (hasUpgrade('mega', 44)) mult = mult.times(0.0075)
         if (hasUpgrade('e', 13)) mult = mult.times(1e25)
         if (hasUpgrade('e', 24)) mult = mult.times(1e40)
+        if (hasAchievement('a', 83)) mult = mult.times(1e81)
         mult = mult.times(buyableEffect('mega', 12))
         return mult
     },
@@ -1318,6 +1640,32 @@ addLayer("sac", {
         let visible = false
         if (hasMilestone('mega', 10) || player.sac.unlocked || player["sac"].points.gte(1)) visible = true
        return visible
+    },
+    tabFormat: {
+        "Main tab": {
+            content: [
+                "main-display",
+                "blank",
+                "prestige-button",
+                "blank",
+                "blank",
+                "milestones",
+            ],
+        },
+        "Dimensional Shift": {
+            content: [
+                "main-display",
+                "blank",
+                "blank",
+                ["bar", "DS1"],
+                "blank",
+                ["bar", "DS2"],
+                "blank",
+                "blank",
+                "blank",
+                "upgrades",
+            ],
+        },
     },
     milestones: {
         1: {
@@ -1372,19 +1720,92 @@ addLayer("sac", {
         },
         11: {
             requirementDescription: "Sacrifice 11",
-            effectDescription: "x5 Energy, ^1.005 PF, 2 new mega upgrades and a few energy upgrades",
+            effectDescription: "x5 Energy, ^1.005 PF, 2 new mega upgrades",
             done() { return player["sac"].points.gte(11) }
         },
         12: {
             requirementDescription: "Sacrifice 12",
-            effectDescription: "x10 Energy, energy boost is stronger and Autobuy Mega Buyable 2. More Mega Upgrades.",
+            effectDescription: "x10 Energy, energy boost is stronger and Autobuy Mega Buyable 2. More Mega Upgrades. ^1.0015 PF.",
             done() { return player["sac"].points.gte(12) }
+        },
+        13: {
+            requirementDescription: "Sacrifice 13",
+            effectDescription: "More Prestige Upgrades, ^1.005 PF, x25 Energy",
+            done() { return player["sac"].points.gte(13) }
+        },
+        14: {
+            requirementDescription: "Sacrifice 14",
+            effectDescription: "^1.005 PF, x1,000 Energy, x1e10K PF, 2 new rebirth upgrades",
+            done() { return player["sac"].points.gte(14) }
+        },
+        15: {
+            requirementDescription: "Sacrifice 15",
+            effectDescription: "^1.005 PF, x10,000 Energy, x1e15K PF, UNLOCK DIMENSIONAL SHIFT",
+            done() { return player["sac"].points.gte(15) }
+        },
+        16: {
+            requirementDescription: "Sacrifice 16",
+            effectDescription: "Rebirth softcap is weaker, x1e20K PF, Energy Upg 8 is stronger",
+            done() { return player["sac"].points.gte(16) }
+        },
+        17: {
+            requirementDescription: "Sacrifice 17",
+            effectDescription: "Rebirth and Prestige softcap is weaker, x1M Energy",
+            done() { return player["sac"].points.gte(17) }
+        },
+        18: {
+            requirementDescription: "Sacrifice 18",
+            effectDescription: "^1.0375 PF, -^0.05 BP, +^0.01 RP",
+            done() { return player["sac"].points.gte(18) }
+        },
+        19: {
+            requirementDescription: "Sacrifice 19",
+            effectDescription: "^1.02 PF, x100 Energy, more mega upgrades",
+            done() { return player["sac"].points.gte(19) }
+        },
+        20: {
+            requirementDescription: "Sacrifice 20",
+            effectDescription: "Unlock Sacrifice Challenges [SOON], More Mega Upgrades, x1,000 Energy",
+            done() { return player["sac"].points.gte(20) }
         }
     },
-    infoboxes: {
-        info: {
-            title: "Welcome to the Sacrifice Layer",
-            body() { return "A static layer, you will have to buy sacrifices to progress. Each one is more powerful and gives unique milestones." },
+    bars: {
+        DS1: {
+            direction: RIGHT,
+            width: 650,
+            height: 40,
+            fillStyle: { 'background-color': "#79029b" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(15)
+                if (player.sac.best.gte(15)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(14))
+                    return "Unlock dimensional shift 1: " + format(player.sac.points) + "/15 sacrifices."
+                else
+                    return "You have unlocked Dimensional Shift 1. Dimensional Shifts add another row to the upgrades (Row 5). Adds another row to Basic Upgrades."
+            }
+        },
+        DS2: {
+            direction: RIGHT,
+            width: 650,
+            height: 40,
+            fillStyle: { 'background-color': "#79029b" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(1e100)
+                if (player.sac.best.gte(1e100)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(1e100))
+                    return "Unlock dimensional shift 2: " + format(player.sac.points) + "/?? sacrifices. [COMING SOON]"
+                else
+                    return "You have unlocked Dimensional Shift 2"
+            },
+            unlocked() { return player.sac.best.gte(15) }
         },
     },   
     color: "#79029b",
@@ -1421,6 +1842,7 @@ addLayer("e", {
        return visible
     },
     passiveGeneration() {
+        if (hasUpgrade('e', 33)) return 100
         if (hasMilestone('sac', 10)) return 20
         return 0
     },
@@ -1451,8 +1873,8 @@ addLayer("e", {
     },
     infoboxes: {
         info: {
-            title: "Welcome to the Energy Layer",
-            body() { return "Energy gives milestones, effects and upgrades. Click energy reset button once to be able to buy upgrades (don't worry, it won't reset sacrifices)" },
+            title: "NOTE",
+            body() { return "Click energy button to be able to buy upgrades. [Won't reset sacs]" },
         },
     },   
     color: "yellow",
@@ -1478,6 +1900,18 @@ addLayer("e", {
         if (hasMilestone('sac', 12)) mult = mult.times(10)
         if (hasUpgrade('mega', 53)) mult = mult.times(25)
         if (hasMilestone('e', 4)) mult = mult.times(9)
+        if (hasMilestone('sac', 13)) mult = mult.times(25)
+        if (hasUpgrade('prestige', 42)) mult = mult.times(1000)
+        if (hasUpgrade('e', 34)) mult = mult.times(250)
+        if (hasMilestone('sac', 14)) mult = mult.times(1000)
+        if (hasAchievement('a', 75)) mult = mult.times(100)
+        if (hasMilestone('sac', 15)) mult = mult.times(10000)
+        if (hasUpgrade('e', 42)) mult = mult.times(10000)
+        if (hasMilestone('basic', 45)) mult = mult.times(1e9)
+        if (hasMilestone('sac', 17)) mult = mult.times(1e6)
+        if (hasMilestone('sac', 19)) mult = mult.times(100)
+        if (hasMilestone('sac', 20)) mult = mult.times(1000)
+        mult = mult.times(buyableEffect('mega', 13))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -1509,6 +1943,7 @@ addLayer("e", {
                 unlocked() { return hasUpgrade("e", 13) },
                 effect() {
                     let e4exp = 0.125
+                    if (hasUpgrade('e', 33)) e4exp = 0.16
                     return player["e"].points.add(1).pow(e4exp)
                 },
                 effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -1537,11 +1972,62 @@ addLayer("e", {
                 cost: new Decimal(1.75e9),
                 effect() {
                     let e8exp = 0.00075
+                    if (hasMilestone('e', 5)) e8exp = 0.001
+                    if (hasMilestone('e', 6)) e8exp = 0.00125
+                    if (hasMilestone('sac', 16)) e8exp = 0.00165
                     return player["mega"].points.add(1).pow(e8exp)
                 },
                 effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
                 unlocked() { return hasUpgrade("e", 23) },
-            }
+            },
+            31: {
+                title: "Energy 9",
+                description: "Mega Buyable 1 cost is less.",
+                cost: new Decimal(1.7e15),
+                unlocked() { return hasUpgrade("e", 24) },
+            },
+            32: {
+                title: "Energy 10",
+                description: "xe7500 More PF",
+                cost: new Decimal(3.5e15),
+                unlocked() { return hasUpgrade("e", 31) },
+            },
+            33: {
+                title: "Energy 11",
+                description: "Energy Passive Generation is now 100x, and Energy Upgrade 4 is stronger.",
+                cost: new Decimal(6e17),
+                unlocked() { return hasUpgrade("e", 32) },
+            },
+            34: {
+                title: "Energy 12",
+                description: "x250 Energy, and mega buyable 1 is stronger",
+                cost: new Decimal(1.5e24),
+                unlocked() { return hasUpgrade("e", 33) },
+            },
+            41: {
+                title: "Energy 13",
+                description: "x1e10K PF",
+                cost: new Decimal(1e36),
+                unlocked() { return hasUpgrade("e", 34) },
+            },
+            42: {
+                title: "Energy 14",
+                description: "Mega Buyable 2 formula is weaker and x10,000 energy",
+                cost: new Decimal(7.65e41),
+                unlocked() { return hasUpgrade("e", 41) },
+            },
+            43: {
+                title: "Energy 15",
+                description: "xe25K PF",
+                cost: new Decimal(1.8e52),
+                unlocked() { return hasUpgrade("e", 42) },
+            },
+            44: {
+                title: "Energy 16",
+                description: "Mega Buyables 1 and 2 are much stronger",
+                cost: new Decimal(2.31e82),
+                unlocked() { return hasUpgrade("e", 43) },
+            },
     },
     milestones: {
         1: {
@@ -1564,12 +2050,30 @@ addLayer("e", {
             effectDescription: "1e7,500 PF, x9 Energy",
             done() { return player["e"].points.gte(1.75e14) }
         },
+        5: {
+            requirementDescription: "1.4E19 Energy [14 Qt Energy]",
+            effectDescription: "x1e10,000 PF, Energy Upgrade 8 is stronger",
+            done() { return player["e"].points.gte(1.4e19) }
+        },
+        6: {
+            requirementDescription: "1.45E34 Energy [14.5 Decillion Energy]",
+            effectDescription: "Energy boost is stronger, Energy Upgrade 8 is stronger",
+            done() { return player["e"].points.gte(1.45e34) }
+        },
+        7: {
+            requirementDescription: "5e61 Energy",
+            effectDescription: "Energy boost is ^2 stronger",
+            done() { return player["e"].points.gte(5e61) }
+        },
     },
     effect(){
     let enpow = 50
     if (hasMilestone('e', 2)) enpow = 90
     if (hasMilestone('e', 3)) enpow = 200
     if (hasMilestone('sac', 12)) enpow = 250
+    if (hasMilestone('e', 6)) enpow = 350
+    if (hasMilestone('e', 7)) enpow = 700
+    if (hasUpgrade('basic', 55)) enpow = 1200
         let eff = player.e.points.add(1).pow(enpow)
        return eff
        },
