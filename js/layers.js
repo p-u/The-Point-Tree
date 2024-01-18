@@ -1983,49 +1983,49 @@ addLayer("e", {
             31: {
                 title: "Energy 9",
                 description: "Mega Buyable 1 cost is less.",
-                cost: new Decimal(1.7e15),
+                cost: new Decimal(1.2e15),
                 unlocked() { return hasUpgrade("e", 24) },
             },
             32: {
                 title: "Energy 10",
                 description: "xe7500 More PF",
-                cost: new Decimal(3.5e15),
+                cost: new Decimal(3e15),
                 unlocked() { return hasUpgrade("e", 31) },
             },
             33: {
                 title: "Energy 11",
                 description: "Energy Passive Generation is now 100x, and Energy Upgrade 4 is stronger.",
-                cost: new Decimal(6e17),
+                cost: new Decimal(5e17),
                 unlocked() { return hasUpgrade("e", 32) },
             },
             34: {
                 title: "Energy 12",
                 description: "x250 Energy, and mega buyable 1 is stronger",
-                cost: new Decimal(1.5e24),
+                cost: new Decimal(1.2e24),
                 unlocked() { return hasUpgrade("e", 33) },
             },
             41: {
                 title: "Energy 13",
                 description: "x1e10K PF",
-                cost: new Decimal(1e36),
+                cost: new Decimal(8e35),
                 unlocked() { return hasUpgrade("e", 34) },
             },
             42: {
                 title: "Energy 14",
                 description: "Mega Buyable 2 formula is weaker and x10,000 energy",
-                cost: new Decimal(7.65e41),
+                cost: new Decimal(6e41),
                 unlocked() { return hasUpgrade("e", 41) },
             },
             43: {
                 title: "Energy 15",
                 description: "xe25K PF",
-                cost: new Decimal(1.8e52),
+                cost: new Decimal(1.4e52),
                 unlocked() { return hasUpgrade("e", 42) },
             },
             44: {
                 title: "Energy 16",
                 description: "Mega Buyables 1 and 2 are much stronger",
-                cost: new Decimal(2.31e82),
+                cost: new Decimal(1.77e82),
                 unlocked() { return hasUpgrade("e", 43) },
             },
     },
@@ -2051,19 +2051,19 @@ addLayer("e", {
             done() { return player["e"].points.gte(1.75e14) }
         },
         5: {
-            requirementDescription: "1.4E19 Energy [14 Qt Energy]",
+            requirementDescription: "1.2E19 Energy [12 Qt Energy]",
             effectDescription: "x1e10,000 PF, Energy Upgrade 8 is stronger",
-            done() { return player["e"].points.gte(1.4e19) }
+            done() { return player["e"].points.gte(1.2e19) }
         },
         6: {
-            requirementDescription: "1.45E34 Energy [14.5 Decillion Energy]",
+            requirementDescription: "1.25E34 Energy [12.5 Decillion Energy]",
             effectDescription: "Energy boost is stronger, Energy Upgrade 8 is stronger",
-            done() { return player["e"].points.gte(1.45e34) }
+            done() { return player["e"].points.gte(1.25e34) }
         },
         7: {
-            requirementDescription: "5e61 Energy",
+            requirementDescription: "3e61 Energy",
             effectDescription: "Energy boost is ^2 stronger",
-            done() { return player["e"].points.gte(5e61) }
+            done() { return player["e"].points.gte(3e61) }
         },
     },
     effect(){

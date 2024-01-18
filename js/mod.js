@@ -5,7 +5,7 @@ let modInfo = {
 	pointsName: "Point Fragments",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "RD82",
+	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
 	offlineLimit: 240,  // In hours
@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "14.0",
+	num: "1.0.0",
 	name: "Major Update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v1.0.0: True Release (on Galaxy.click)</h3><br>
+- Decreased Prices of all new (v14.0) energy upgrades <br>
 <h3>v14.0: The TRUE BIGGEST UPDATE</h3><br>
 - Rebalanced Rebirth Stage [Increased Prices] <br>
 - New Layer: Info Layer! Puts info on different features. <br>
