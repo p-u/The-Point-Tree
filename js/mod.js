@@ -13,11 +13,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0.0",
-	name: "Major Update",
+	num: "1.1.0",
+	name: "Challenge and QoL",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v1.1.0</h3><br>
+Renamed all Upgrades <br>
+Added Branches <br>
+Decreased price of Energy Upg 4 to 16 <br>
+Decreased price of Mega Upg 18 to 20 <br>
+Added 3 new sacs <br>
+Added 2 new challenges <br>
+Added 4 new achievements <br>
+Added 5 new upgrades <br>
+Added a new milestone <br>
+Added 3 new infoboxes <br>
 <h3>v1.0.0: True Release (on Galaxy.click)</h3><br>
 - Decreased Prices of all new (v14.0) energy upgrades <br>
 <h3>v14.0: The TRUE BIGGEST UPDATE</h3><br>
@@ -292,6 +303,9 @@ function getPointGen() {
 	if (hasMilestone('sac', 15)) gain = gain.times("1e15000")
 	if (hasMilestone('sac', 16)) gain = gain.times("1e20000")
 	if (hasUpgrade('e', 43)) gain = gain.times("1e25000")
+	if (hasUpgrade('e', 52)) gain = gain.times("1e10000")
+	if (hasMilestone('e', 8)) gain = gain.times("1e100000")
+	if (hasMilestone('sac', 22)) gain = gain.times("1e40000")
 
 	// achievement
 
@@ -301,9 +315,15 @@ function getPointGen() {
 	if (hasAchievement('a', 66)) gain = gain.times("1e500")
 	if (hasAchievement('a', 73)) gain = gain.times("1e10000")
 	if (hasAchievement('a', 75)) gain = gain.times("1e10000")
+	if (hasAchievement('a', 93)) gain = gain.times("1e54000")
+	if (hasAchievement('a', 94)) gain = gain.times("1e100000")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
+
+	// challenges
+	if (hasChallenge('sac', 11)) gain = gain.times("1e25000")
+	if (hasChallenge('sac', 12)) gain = gain.times("1e75000")
 
 
 	// power
@@ -326,6 +346,9 @@ function getPointGen() {
 	if (hasMilestone('sac', 18)) gain = gain.pow(1.0375)
 	if (hasMilestone('sac', 19)) gain = gain.pow(1.002)
 	if (hasUpgrade('basic', 75)) gain = gain.pow(1.00525)
+	if (inChallenge('sac', 11)) gain = gain.pow(0.5)
+	if (hasMilestone('sac', 21)) gain = gain.pow(1.063)
+	if (hasUpgrade('prestige', 44)) gain = gain.pow(1.007)
 	return gain
 }
 
@@ -339,7 +362,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e9000000"))
+	return player.points.gte(new Decimal("e15511500"))
 }
 
 
