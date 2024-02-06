@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "basic.js", "tree.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -13,11 +13,23 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.1.0",
-	name: "Challenge and QoL",
+	num: "v1.2.0: Rebalancing Sacs and Challenges",
+	name: "Each item has own unique layer.",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v1.2.0 - The TRUE Biggest Update</h3><br>
+Added names to Mega Buyables <br>
+The FULL Rebalance <br>
+Rebalanced prices of all upgrades, from Sac 10 to Sac 22. <br>
+Mega Buyable 3 will now get automated in sac 21 instead of 22. <br>
+Sacrifice now RESETS energy and Energy upgrades (some sacs can keep certain rows of energy upgrades) <br>
+Rebalanced Challenges - Now resets energy upgrades, and new Challenge-Specific Upgrades. <br>
+Added 15 upgrades <br>
+Added 12 challenge-specific upgrades <br>
+Added 1 milestone and 1 challenge <br>
+Added 2 achievements <br>
+Endgame: e26022000 PF <br>
 <h3>v1.1.0</h3><br>
 Renamed all Upgrades <br>
 Added Branches <br>
@@ -29,6 +41,7 @@ Added 4 new achievements <br>
 Added 5 new upgrades <br>
 Added a new milestone <br>
 Added 3 new infoboxes <br>
+Endgame: e15511500 PF <br>
 <h3>v1.0.0: True Release (on Galaxy.click)</h3><br>
 - Decreased Prices of all new (v14.0) energy upgrades <br>
 <h3>v14.0: The TRUE BIGGEST UPDATE</h3><br>
@@ -306,6 +319,9 @@ function getPointGen() {
 	if (hasUpgrade('e', 52)) gain = gain.times("1e10000")
 	if (hasMilestone('e', 8)) gain = gain.times("1e100000")
 	if (hasMilestone('sac', 22)) gain = gain.times("1e40000")
+	if (hasUpgrade('e', 61)) gain = gain.times("1e126500")
+	if (hasUpgrade('e', 62)) gain = gain.times("1e100000")
+	if (hasUpgrade('e', 63)) gain = gain.times("1e100000")
 
 	// achievement
 
@@ -317,6 +333,7 @@ function getPointGen() {
 	if (hasAchievement('a', 75)) gain = gain.times("1e10000")
 	if (hasAchievement('a', 93)) gain = gain.times("1e54000")
 	if (hasAchievement('a', 94)) gain = gain.times("1e100000")
+	if (hasAchievement('a', 95)) gain = gain.times("1e95000")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -324,6 +341,7 @@ function getPointGen() {
 	// challenges
 	if (hasChallenge('sac', 11)) gain = gain.times("1e25000")
 	if (hasChallenge('sac', 12)) gain = gain.times("1e75000")
+	if (hasChallenge('sac', 13)) gain = gain.times("1e400000")
 
 
 	// power
@@ -345,10 +363,17 @@ function getPointGen() {
 	if (hasMilestone('sac', 15)) gain = gain.pow(1.005)
 	if (hasMilestone('sac', 18)) gain = gain.pow(1.0375)
 	if (hasMilestone('sac', 19)) gain = gain.pow(1.002)
-	if (hasUpgrade('basic', 75)) gain = gain.pow(1.00525)
+	if (hasUpgrade('basic', 75)) gain = gain.pow(1.005)
 	if (inChallenge('sac', 11)) gain = gain.pow(0.5)
 	if (hasMilestone('sac', 21)) gain = gain.pow(1.063)
 	if (hasUpgrade('prestige', 44)) gain = gain.pow(1.007)
+	if (hasAchievement('a', 86)) gain = gain.pow(1.00025)
+	if (hasMilestone('sac', 24)) gain = gain.pow(1.01)
+	if (inChallenge('sac', 13)) gain = gain.pow(0.1)
+	if (inChallenge("sac", 13)) {
+		if (hasUpgrade('e', 133)) gain = gain.pow(1.1)
+	}
+	if (hasMilestone('sac', 25)) gain = gain.pow(1.01)
 	return gain
 }
 
@@ -362,7 +387,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e15511500"))
+	return player.points.gte(new Decimal("e26022000"))
 }
 
 
