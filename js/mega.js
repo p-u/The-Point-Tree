@@ -195,9 +195,18 @@ addLayer("mega", {
                 if (hasUpgrade("basic", 74)) mbiupgexp = 0.094
                 if (hasMilestone("sac", 9)) mbiupgexp = 0.115
                 if (hasUpgrade("mega", 52)) mbiupgexp = 0.1515
-                return player["mega"].points.add(1).pow(mbiupgexp)
+                let eff = player["mega"].points.add(1).pow(mbiupgexp)
+                eff = softcap(eff, new Decimal("1e8000"), 0.4)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e8000")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Mega Points by " + format(upgEffect)+"x" + softcapDescription
+            },
         },
         43: {
             title: "Buyable Boost Boost",
@@ -257,9 +266,32 @@ addLayer("mega", {
             title: "Mega Rep Upgrade 4",
             description: "Each Rep Upgrade gives xe4K to PF",
             cost: new Decimal("1e12400"),
-            unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 62) },
+            unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 63) },
         },
-        // done with mega rep upg, left is to do the last basic upg s and to write changelog
+        71: {
+            title: "HYPER MASSIVE BOOST",
+            description: "x1e180K PF",
+            cost: new Decimal("2.5e32835"),
+            unlocked() { return hasMilestone("mega", 13) && hasUpgrade("mega", 64) },
+        },
+        72: {
+            title: "Boost to Previous Upgrade",
+            description: "Mega Upgrade 71 effect is ^1.8.",
+            cost: new Decimal("1e33509"),
+            unlocked() { return hasMilestone("mega", 13) && hasUpgrade("mega", 71) },
+        },
+        73: {
+            title: "Prestigating",
+            description: "Mega Upgrade 71 boosts prestige by ^0.015 of the PF boost.",
+            cost: new Decimal("1e33509"),
+            unlocked() { return hasMilestone("mega", 13) && hasUpgrade("mega", 72) },
+        },
+        74: {
+            title: "Boost again",
+            description: "Mega Upgrade 71 effect is ^1.5.",
+            cost: new Decimal("2e34942"),
+            unlocked() { return hasMilestone("mega", 13) && hasUpgrade("mega", 73) },
+        },
     },
     milestones: {
         1: {
@@ -315,12 +347,20 @@ addLayer("mega", {
         11: {
             requirementDescription: "4.74e474 MP",
             effectDescription: "Unlock the second mega buyable!",
+            unlocked() {return player["mega"].points.gte("2e17")},
             done() { return player["mega"].points.gte("4.74e474") }
         },
         12: {
             requirementDescription: "1e9065 MP",
             effectDescription: "Unlock the third mega buyable!",
+            unlocked() {return player["mega"].points.gte("4.74e474")},
             done() { return player["mega"].points.gte("1e9065") }
+        },
+        13: {
+            requirementDescription: "1e32835 MP",
+            effectDescription: "Unlock one more row of mega upgrades!",
+            unlocked() {return player["sac"].points.gte(26)},
+            done() { return player["mega"].points.gte("1e32835") }
         },
     },
     buyables: {
@@ -333,6 +373,7 @@ addLayer("mega", {
                 if (hasUpgrade('mega', 43)) exp2 = 1.069
                 if (hasUpgrade('e', 31)) exp2 = 1.035
                 if (hasMilestone('sac', 23)) exp2 = 1.35
+                if (hasMilestone('sac', 26)) exp2 = 1.225
                 return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -399,9 +440,9 @@ addLayer("mega", {
             title: "Mega Buyable 3: Energy Duplication",
             unlocked() { return hasMilestone("mega", 12) },
             cost(x) {
-                let exp3 = 1.2
-                if (hasMilestone('sac', 23)) exp3 = 1.5
-                return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp3 , x))).floor()
+                let exp3 = 0.2
+                if (hasMilestone('sac', 23)) exp3 = 0.5
+                return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(1 + exp3 , x))).floor()
             },
             display() {
                 return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + format(buyableEffect(this.layer, this.id))
@@ -440,6 +481,7 @@ addLayer("mega", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (hasUpgrade('mega', 42)) mult = mult.times(upgradeEffect('mega', 42))
+        if (hasUpgrade('basic', 83)) mult = mult.times(upgradeEffect('basic', 83))
         if (hasUpgrade('basic', 71)) mult = mult.times(7.77e7)
         if (hasUpgrade('rebirth', 34)) mult = mult.times(10)
         if (hasUpgrade('rebirth', 41)) mult = mult.times(1e10)
@@ -457,9 +499,14 @@ addLayer("mega", {
         if (hasAchievement('a', 95)) mult = mult.times(1e195)
         if (hasUpgrade('e', 73)) mult = mult.times("1e300")
         if (hasUpgrade('e', 74)) mult = mult.times("1e150")
+        if (hasUpgrade('e', 83)) mult = mult.times("1e700")
         if (inChallenge("sac", 13)) {
             if (hasUpgrade('e', 131)) mult = mult.times(7.77e77)
         }
+        if (inChallenge("sac", 14)) {
+            if (hasUpgrade('e', 142)) mult = mult.times("1e1600")
+        }
+        if (hasUpgrade('prestige', 54)) mult = mult.div("e800")
         mult = mult.times(buyableEffect('mega', 12))
         return mult
     },
@@ -467,6 +514,11 @@ addLayer("mega", {
         let exp = new Decimal(1)
         if (hasMilestone('e', 1)) exp = exp.add(0.02)
         if (hasUpgrade('e', 64)) exp = exp.sub(0.025)
+        if (hasUpgrade('rebirth', 25)) exp = exp.sub(0.08)
+        if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.09)
+        if (hasUpgrade('rebirth', 35)) exp = exp.add(0.05)
+        if (hasMilestone('e', 12)) exp = exp.sub(0.1)
+        if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         return exp
     },
     effect(){
@@ -476,7 +528,12 @@ addLayer("mega", {
         return softcappedEffect
        },
         effectDescription() {
-            let desc = "which is boosting all previous reset layers by x" + format(tmp[this.layer].effect);
+            let softcapDescription = ""
+            let layerEffect = tmp[this.layer].effect
+            if (layerEffect.gte(new Decimal("e30000")) ) {
+                softcapDescription = " (Softcapped)"
+            }
+            let desc = "which is boosting all previous reset layers by x" + format(tmp[this.layer].effect) + softcapDescription;
             return desc;
         },
     branches: ["prestige"], 

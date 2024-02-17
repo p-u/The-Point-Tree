@@ -32,9 +32,18 @@ addLayer("basic", {
             cost: new Decimal(5),
             effect() {
                 let expu3 = 0.16
-                return player.points.add(1).pow(expu3)
+                let eff = player.points.add(1).pow(expu3)
+                eff = softcap(eff, new Decimal("1e5000000"), 0.5)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e5000000")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Basic Points by " + format(upgEffect)+"x" + softcapDescription
+            },
             unlocked() { return hasUpgrade("basic", 12) },
         },
         14: {
@@ -50,9 +59,18 @@ addLayer("basic", {
             effect() {
                 let expu5 = 0.175
                 if (inChallenge("sac", 12)) expu5 = 0.111
-                return player[this.layer].points.add(1).pow(expu5)
+                let eff = player.basic.points.add(1).pow(expu5)
+                eff = softcap(eff, new Decimal("1e5000000"), 0.5)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e5000000")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Basic Points by " + format(upgEffect)+"x" + softcapDescription
+            },
             unlocked() { return hasUpgrade("basic", 14) },
         },
         22: {
@@ -213,6 +231,7 @@ addLayer("basic", {
             cost: new Decimal("e13610000"),
             effect() {
                 let bb1exp = 0.006
+                if (hasUpgrade('basic', 85)) bb1exp = 0.009
                 return player.points.add(1).pow(bb1exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -220,14 +239,39 @@ addLayer("basic", {
         },
         82: {
             title: "Basic Boost 2.",
-            description: "Basic Points boosts Prestige Points, by a little",
+            description: "Basic Points boosts Prestige Points, by very little",
             cost: new Decimal("e13842250"),
             effect() {
                 let bb2exp = 0.0004
+                if (hasUpgrade('basic', 85)) bb2exp = 0.0006
                 return player.points.add(1).pow(bb2exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 81) },
+        },
+        83: {
+            title: "Basic Boost 3.",
+            description: "Basic Points boosts Mega Points, by very very little",
+            cost: new Decimal("e14019250"),
+            effect() {
+                let bb3exp = 0.0000175
+                if (hasUpgrade('basic', 85)) bb3exp = 0.0000225
+                return player.points.add(1).pow(bb3exp)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 82) },
+        },
+        84: {
+            title: "Basic Boost 4.",
+            description: "Basic Points boosts Energy, by insanely little",
+            cost: new Decimal("e14151000"),
+            effect() {
+                let bb3exp = 0.0000007
+                if (hasUpgrade('basic', 85)) bb3exp = 0.00000088
+                return player.points.add(1).pow(bb3exp)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 83) },
         },
 
 
@@ -274,6 +318,12 @@ addLayer("basic", {
             description: "^1.005 PF.",
             cost: new Decimal("e6810000"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 65) },
+        },
+        85: {
+            title: "Basic Boost PLUS",
+            description: "Basic Boost 1-4 is Stronger.",
+            cost: new Decimal("e22290000"),
+            unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 84) },
         },
     },
     color: "#add8e6",
@@ -327,6 +377,7 @@ addLayer("basic", {
             if (hasUpgrade('e', 111)) mult = mult.times("1e2500")
             if (hasUpgrade('e', 113)) mult = mult.times("1e4000")
         }
+        if (hasUpgrade('rebirth', 45)) mult = mult.times("e30103")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -343,6 +394,9 @@ addLayer("basic", {
         if (hasUpgrade('basic', 55)) exp = exp.sub(0.03)
         if (hasMilestone('sac', 18)) exp = exp.sub(0.05)
         if (hasMilestone('sac', 21)) exp = exp.sub(0.1)
+        if (hasUpgrade('rebirth', 25)) exp = exp.sub(0.03)
+        if (hasMilestone('e', 12)) exp = exp.sub(0.1)
+        if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)

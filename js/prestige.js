@@ -59,9 +59,18 @@ addLayer("prestige", {
             effect() {
                 let pu6exp = 0.05
                 if (hasUpgrade("mega", 41)) pu6exp = 0.08
-                return player["rebirth"].points.add(1).pow(pu6exp)
+                let eff = player["rebirth"].points.add(1).pow(pu6exp)
+                eff = softcap(eff, new Decimal("1e1111111"), 0.35)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e1111111")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Rebirth Points by " + format(upgEffect)+"x" + softcapDescription
+            },
         },
         23: {
             title: "10^^2",
@@ -122,6 +131,30 @@ addLayer("prestige", {
             description: "Prestige Softcap is weaker, ^1.0025 PF",
             cost: new Decimal("1e143912"),
             unlocked() { return hasMilestone("sac", 22) && hasUpgrade("prestige", 43) },
+        },
+        51: {
+            title: "MOAR PP",
+            description: "+^0.02 PP, xe5K PP",
+            cost: new Decimal("e536430"),
+            unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 44) },
+        },
+        52: {
+            title: "MOAR PF",
+            description: "xe400K PF",
+            cost: new Decimal("e557923"),
+            unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 51) },
+        },
+        53: {
+            title: "Softcapper",
+            description: "PP Softcap is less",
+            cost: new Decimal("e576100"),
+            unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 52) },
+        },
+        54: {
+            title: "PP Wow",
+            description: "xe25K PP, /e500 MP",
+            cost: new Decimal("e581346"),
+            unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 53) },
         },
     },
     milestones: {
@@ -197,7 +230,14 @@ addLayer("prestige", {
         if (inChallenge("sac", 12)) {
             if (hasUpgrade('e', 123)) mult = mult.times("1e1500")
         }
+        if (hasUpgrade('e', 81)) mult = mult.times("1e5500")
         if (hasMilestone('sac', 24)) mult = mult.times("1e10000")
+        if (hasUpgrade('mega', 73)) mult = mult.times("1e5160")
+        if (hasUpgrade('mega', 73)) mult = mult.times("1e2580")
+        if (hasMilestone('e', 11)) mult = mult.times("1e10000")
+        if (hasUpgrade('e', 91)) mult = mult.times("1e400")
+        if (hasUpgrade('prestige', 51)) mult = mult.times("e5000")
+        if (hasUpgrade('prestige', 54)) mult = mult.times("e25000")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -205,11 +245,17 @@ addLayer("prestige", {
         if (hasUpgrade('mega', 22)) exp = exp.add(0.01)
         if (hasMilestone('e', 1)) exp = exp.add(0.02)
         if (hasUpgrade('prestige', 43)) exp = exp.add(0.03)
+        if (hasMilestone('sac', 27)) exp = exp.add(0.025)
+        if (hasUpgrade('rebirth', 25)) exp = exp.add(0.12)
+        if (hasUpgrade('prestige', 51)) exp = exp.add(0.02)
+        if (hasMilestone('e', 12)) exp = exp.sub(0.1)
+        if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         return exp
     },
     effect(){
         let eff = player.prestige.points.add(1).pow(2.5)
         let cap = 0.3
+        let spreff = 0.5
         if (hasMilestone('sac', 8)) cap = 0.31
         if (hasUpgrade('prestige', 42)) cap = 0.4
         if (hasUpgrade('basic', 35)) cap = 0.37
@@ -218,11 +264,22 @@ addLayer("prestige", {
         if (hasUpgrade('e', 53)) cap = 0.375
         if (hasUpgrade('prestige', 43)) cap = 0.45
         if (hasUpgrade('prestige', 44)) cap = 0.551
+        if (hasMilestone('sac', 29)) cap = 0.65
+        if (hasUpgrade('prestige', 53)) cap = 0.78
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
         return softcappedEffect
        },
         effectDescription() {
-            let desc = "which is boosting basic points and point fragments by x" + format(tmp[this.layer].effect);
+            let softcapDescription = ""
+            let layerEffect = tmp[this.layer].effect
+            if (layerEffect.gte(new Decimal("e6500")) ) {
+                softcapDescription = " (Softcapped)"
+            }
+            if (layerEffect.gte(new Decimal("e1000000")) ) {
+                softcapDescription = " (Supercapped)"
+            }
+            let desc = "which is boosting basic points and point fragments by x" + format(tmp[this.layer].effect) + softcapDescription;
             return desc;
         },
     branches: ["rebirth"],  

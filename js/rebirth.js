@@ -131,6 +131,38 @@ addLayer("rebirth", {
             cost: new Decimal("e2863400"),
             unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 52) },
         },
+
+        // dimensional shift
+        15: {
+            title: "Rebirthing Master",
+            description: "+^0.025 RP, Rebirth Softcap is weaker",
+            cost: new Decimal("e5260250"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 14) },
+        },
+        25: {
+            title: "Exponent Switcheroo",
+            description: "-^0.03 BP, -^0.08 MP, +^0.12 PP",
+            cost: new Decimal("e5594600"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 15) },
+        },
+        35: {
+            title: "Rebirth Exponent Decrease?",
+            description: "-^0.15 RP, -^0.09 MP, Rebirth Supercap is stronger",
+            cost: new Decimal("e6238238"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 25) },
+        },
+        45: {
+            title: "Most Insane Boost",
+            description: "Rebirth Upgrade 'Booster' (Upgrade 21) is ^100,001 stronger!!",
+            cost: new Decimal("e6547000"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 35) },
+        },
+        55: {
+            title: "Mega Back Again!",
+            description: "Mega Points +^0.05",
+            cost: new Decimal("e6815150"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 35) },
+        },
     },
     milestones: {
         1: {
@@ -223,6 +255,7 @@ addLayer("rebirth", {
         if (hasUpgrade('mega', 24)) mult = mult.times(1e15)
         if (hasMilestone('sac', 1)) mult = mult.times(1e15)
         if (hasAchievement("a", 93)) mult = mult.times("1e9000")
+        if (hasUpgrade('rebirth', 45)) mult = mult.times("e13353")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -237,6 +270,12 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 52)) exp = exp.add(0.015)
         if (hasUpgrade('rebirth', 53)) exp = exp.add(0.02)
         if (hasUpgrade('rebirth', 54)) exp = exp.add(0.025)
+        if (hasMilestone('sac', 27)) exp = exp.add(0.025)
+        if (hasUpgrade('rebirth', 15)) exp = exp.add(0.025)
+        if (hasUpgrade('rebirth', 25)) exp = exp.add(0.08)
+        if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.15)
+        if (hasMilestone('e', 12)) exp = exp.sub(0.2)
+        if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         return exp
     },
     effect(){
@@ -256,15 +295,25 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 52)) sc = 0.7
         if (hasUpgrade('rebirth', 53)) sc = 0.73
         if (hasUpgrade('rebirth', 54)) sc = 0.77
+        if (hasUpgrade('rebirth', 15)) sc = 0.8
         softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
         let sprcap = 0.4
         if (hasUpgrade('rebirth', 44)) sprcap = 0.45
         if (hasUpgrade('basic', 65)) sprcap = 0.5
+        if (hasUpgrade('rebirth', 35)) sprcap = 0.725
         softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
         return softcappedEffect
        },
         effectDescription() {
-            let des = "which is boosting point fragments by x" + format(tmp[this.layer].effect);
+            let softcapDescription = ""
+            let layerEffect = tmp[this.layer].effect
+            if (layerEffect.gte(new Decimal("e1500")) ) {
+                softcapDescription = " (Softcapped)"
+            }
+            if (layerEffect.gte(new Decimal("e100000")) ) {
+                softcapDescription = " (Supercapped)"
+            }
+            let des = "which is boosting point fragments by x" + format(layerEffect) + softcapDescription
             return des;
         },
     branches: ["basic"], 

@@ -13,11 +13,23 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v1.2.0: Rebalancing Sacs and Challenges",
+	num: "1.3.0: Achievement Row X",
 	name: "Each item has own unique layer.",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v1.3.0 - Achievement Row 10</h3><br>
+Sacrifice and Mega Buyable Milestones are hidden until you get the previous mega buyable/sac milestone<br>
+Upgrade Effect Softcap <br>
+In layer effect/upg effect, shows (Softcapped) / (Supercapped) when reaching softcap or supercap <br>
+Prestige Supercap, Mega Softcap <br>
+Dim Shift 2 <br>
+Other Extensions: (contd) Basic Upgrades, Prestige and Rebirth <br>
+Added 24 upgrades <br>
+Added 4 challenge-specific upgrades <br>
+Added 4 milestones and 1 challenge <br>
+Added 6 achievements, 2 giving boosts <br>
+Endgame: e151,551,551 PF <br>
 <h3>v1.2.0 - The TRUE Biggest Update</h3><br>
 Added names to Mega Buyables <br>
 The FULL Rebalance <br>
@@ -276,6 +288,7 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 32)) gain = gain.times(1111111.11)
 	if (hasUpgrade('rebirth', 34)) gain = gain.times(1e200)
 	if (hasUpgrade('rebirth', 41)) gain = gain.times("1e2000")
+	if (hasUpgrade('rebirth', 45)) gain = gain.times("1e200000")
 	// pres
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
@@ -287,6 +300,7 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
 	if (hasUpgrade('prestige', 33)) gain = gain.times(1e300)
 	if (hasUpgrade('prestige', 34)) gain = gain.times("6.66e666")
+	if (hasUpgrade('prestige', 51)) gain = gain.times("e600000")
 	// mega
 	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
 	if (hasUpgrade('mega', 12)) gain = gain.times(10e9)
@@ -298,6 +312,9 @@ function getPointGen() {
 	if (hasUpgrade('mega', 62)) gain = gain.times("1e4000")
 	if (hasUpgrade('mega', 63)) gain = gain.times("1e4000")
 	if (hasUpgrade('mega', 64)) gain = gain.times("1e4000")
+	if (hasUpgrade('mega', 71)) gain = gain.times("1e180000")
+	if (hasUpgrade('mega', 72)) gain = gain.times("1e144000")
+	if (hasUpgrade('mega', 74)) gain = gain.times("1e172000")
 
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
@@ -322,6 +339,16 @@ function getPointGen() {
 	if (hasUpgrade('e', 61)) gain = gain.times("1e126500")
 	if (hasUpgrade('e', 62)) gain = gain.times("1e100000")
 	if (hasUpgrade('e', 63)) gain = gain.times("1e100000")
+	if (hasMilestone('e', 10)) gain = gain.times("1e142500")
+	if (hasUpgrade('e', 84)) gain = gain.times("1e222222")
+	if (inChallenge("sac", 14)) {
+		if (hasUpgrade('e', 143)) gain = gain.times("1e125000")
+	}
+	if (hasMilestone('sac', 29)) gain = gain.times("e292929")
+	if (hasMilestone('sac', 30)) gain = gain.times("e300000")
+	if (hasUpgrade('e', 92)) gain = gain.times("e350000")
+	if (hasUpgrade('e', 93)) gain = gain.times("e500000")
+	if (hasUpgrade('e', 94)) gain = gain.times("e657281")
 
 	// achievement
 
@@ -334,6 +361,8 @@ function getPointGen() {
 	if (hasAchievement('a', 93)) gain = gain.times("1e54000")
 	if (hasAchievement('a', 94)) gain = gain.times("1e100000")
 	if (hasAchievement('a', 95)) gain = gain.times("1e95000")
+	if (hasAchievement('a', 104)) gain = gain.times("1e250000")
+	if (hasAchievement('a', 106)) gain = gain.times("1e150000")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -374,6 +403,17 @@ function getPointGen() {
 		if (hasUpgrade('e', 133)) gain = gain.pow(1.1)
 	}
 	if (hasMilestone('sac', 25)) gain = gain.pow(1.01)
+	if (hasMilestone('sac', 27)) gain = gain.pow(1.006)
+	if (hasMilestone('sac', 28)) gain = gain.pow(1.008)
+	if (inChallenge('sac', 14)) gain = gain.pow(0.5)
+	if (inChallenge("sac", 14)) {
+		if (hasUpgrade('e', 144)) gain = gain.pow(1.1)
+	}
+	if (hasChallenge('sac', 14)) gain = gain.pow(1.015)
+	if (hasMilestone('sac', 30)) gain = gain.pow(1.01)
+	if (hasMilestone('sac', 31)) gain = gain.pow(1.001)
+	if (hasMilestone('e', 12)) gain = gain.pow(1.22)
+	if (hasMilestone('sac', 32)) gain = gain.pow(1.01)
 	return gain
 }
 
@@ -387,7 +427,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e26022000"))
+	return player.points.gte(new Decimal("e151551551"))
 }
 
 

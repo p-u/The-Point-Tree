@@ -9,7 +9,7 @@ addLayer("a", {
         return ("Achievements")
     },
     achievements: {
-        rows: 16,
+        rows: 25,
         cols: 6,
         11: {
             name: "The first boost",
@@ -270,6 +270,36 @@ addLayer("a", {
             name: "25 Million Digits",
             done() { return player.points.gte(new Decimal("e25000000")) },
             tooltip: "E25,000,000 Point Fragments.",
+        },
+        101: {
+            name: "Basic Points boosts all currencies (except sac)",
+            done() { return (hasUpgrade('basic', 84)) },
+            tooltip: "Get Basic Boost 4. [Exclusive Rarity]",
+        },
+        102: {
+            name: "30 Million Digits",
+            done() { return player.points.gte(new Decimal("e30000000")) },
+            tooltip: "E30,000,000 Point Fragments.",
+        },
+        103: {
+            name: "Completion of Dimensional Shift 2",
+            done() { return (hasUpgrade('rebirth', 55)) },
+            tooltip: "Get the fifth upgrade in the Dimensional Shift Series! [Insane Rarity]",
+        },
+        104: {
+            name: "PP Madness",
+            done() { return player.prestige.points.gte(new Decimal("e500000")) },
+            tooltip: "Get e500,000 PP. Reward: xe250K PF.",
+        },
+        105: {
+            name: "Another Extension...",
+            done() { return (hasUpgrade('prestige', 51)) },
+            tooltip: "Get e500,000 PP. Reward: xe250K PF.",
+        },
+        106: {
+            name: "150 Million Digits",
+            done() { return player.points.gte(new Decimal("e150000000")) },
+            tooltip: "E150,000,000 Point Fragments. Reward: xe150K PF",
         },
     tabFormat: [
         "blank", 

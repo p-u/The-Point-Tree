@@ -119,7 +119,7 @@ addLayer("i", {
         },
         pres: {
             title: "Prestige Layer",
-            body() { return "In here, you can get numbers up to e1,500! For now, choose whether you want to buy the upgrade. Prestige effect softcaps at xe6,500." },
+            body() { return "In here, you can get numbers up to e1,500! For now, choose whether you want to buy the upgrade. Prestige effect softcaps at xe6,500 and supercaps at xe1M." },
             unlocked() { return player.prestige.points.gte(new Decimal("1"))}
         },
         mega: {
