@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.3.0: Achievement Row X",
+	num: "1.3.1: Mega Price Decrease",
 	name: "Each item has own unique layer.",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v1.3.1 - Mega Price DECREASE</h3><br>
+Some upgrades are decreased in price <br>
 <h3>v1.3.0 - Achievement Row 10</h3><br>
 Sacrifice and Mega Buyable Milestones are hidden until you get the previous mega buyable/sac milestone<br>
 Upgrade Effect Softcap <br>
