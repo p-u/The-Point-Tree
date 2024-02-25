@@ -180,7 +180,7 @@ addLayer("basic", {
         61: {
             title: "Already a lot",
             description: "Multiply point fragments by...1e25...",
-            cost: new Decimal("e4000"),
+            cost: new Decimal("e3975"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 54) },
         },
         62: {
@@ -198,7 +198,7 @@ addLayer("basic", {
         64: {
             title: "Quite a lot",
             description: "Point fragments x1e50",
-            cost: new Decimal("e6600"),
+            cost: new Decimal("e6400"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 63) },
         },
         71: {

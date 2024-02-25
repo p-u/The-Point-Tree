@@ -99,7 +99,7 @@ addLayer("prestige", {
         33: {
             title: "Era 2",
             description: "x1e300 PF, x1e200 BP, x1e100 RP, x1e50 PP",
-            cost: new Decimal("4.46e446"),
+            cost: new Decimal("1.46e446"),
             unlocked() { return hasMilestone("mega", 8) && hasUpgrade("prestige", 32) },
         },
         34: {

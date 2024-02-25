@@ -144,13 +144,13 @@ addLayer("mega", {
         24: {
             title: "'To' upgrades",
             description: "x1 Qi Rebirth Points to Point Fragments",
-            cost: new Decimal(2e12),
+            cost: new Decimal(1.5e12),
             unlocked() { return hasUpgrade("mega", 23) },
         },
         31: {
             title: "Mega is useful at achieving big numbers.",
             description: "Mega boosts point fragments heavily.",
-            cost: new Decimal(2e13),
+            cost: new Decimal(1.2e13),
             unlocked() { return hasUpgrade("mega", 24) },
             effect() {
                 let mu9exp = 8.5
@@ -168,13 +168,13 @@ addLayer("mega", {
         33: {
             title: "Buyablility",
             description: "Unlock Mega Buyable 1! MU9 is also stronger.",
-            cost: new Decimal(2e17),
+            cost: new Decimal(4e17),
             unlocked() { return hasUpgrade("mega", 32) },
         },
         34: {
             title: "Strength Plus",
             description: "Buyables are 2 TIMES AS STRONG!",
-            cost: new Decimal(4e32),
+            cost: new Decimal(2.5e32),
             unlocked() { return hasUpgrade("mega", 33) },
         },
         41: {
@@ -305,9 +305,9 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(15) }
         },
         3: {
-            requirementDescription: "2,500 MP",
+            requirementDescription: "2,000 MP",
             effectDescription: "Get an extension to Basic Upgrades.",
-            done() { return player["mega"].points.gte(2500) }
+            done() { return player["mega"].points.gte(2000) }
         },
         4: {
             requirementDescription: "100,000 MP",
@@ -320,19 +320,19 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(1e9) }
         },
         6: {
-            requirementDescription: "8e24 MP",
+            requirementDescription: "5e24 MP",
             effectDescription: "Extend Rebirth Upgrades.",
-            done() { return player["mega"].points.gte(8e24) }
+            done() { return player["mega"].points.gte(5e24) }
         },
         7: {
-            requirementDescription: "4e37 MP",
+            requirementDescription: "3e37 MP",
             effectDescription: "x1e111 Point Fragments.",
-            done() { return player["mega"].points.gte(4e37) }
+            done() { return player["mega"].points.gte(3e37) }
         },
         8: {
-            requirementDescription: "8e44 MP",
+            requirementDescription: "6e44 MP",
             effectDescription: "Extend Prestige Upgrades.",
-            done() { return player["mega"].points.gte(8e44) }
+            done() { return player["mega"].points.gte(6e44) }
         },
         9: {
             requirementDescription: "1e65 MP",

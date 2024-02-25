@@ -74,7 +74,7 @@ addLayer("rebirth", {
         33: {
             title: "Rebirth Upgrade 11: Mega Edition",
             description: "Rebirth softcap after e1,500 is less. (^0.35 to ^0.375)",
-            cost: new Decimal("e2570"),
+            cost: new Decimal("e2568"),
             unlocked() { return hasMilestone("mega", 6) && hasUpgrade("rebirth", 32) },
         },
         34: {
