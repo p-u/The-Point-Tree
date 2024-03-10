@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.0.0: Supreme and Water",
+	num: "2.01: Supreme and Water Hotfix 1",
 	name: "Its over e500,000,000!",
 }
 
