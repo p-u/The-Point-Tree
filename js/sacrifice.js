@@ -169,7 +169,7 @@ addLayer("sac", {
         },
         20: {
             requirementDescription: "Sacrifice 20",
-            effectDescription: "Unlock Challenge tab, More Mega Upgrades, x2,000 Energy",
+            effectDescription: "Unlock Challenge tab, More Mega Upgrades, x2,000 Energy. Keep Energy Milestones.",
             unlocked() {return player["sac"].points.gte(19)},
             done() { return player["sac"].points.gte(20) }
         },

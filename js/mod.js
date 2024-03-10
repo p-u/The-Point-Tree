@@ -18,7 +18,9 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h3>v2.0.0 - Supreme and Water</h3><br>
+<h3>v2.00 - Supreme and Water</h3><br>
+Hotfixes</h3><br>
+v2.01: Added keep energy milestone milestone in sac</h3><br>
 Existing Changes</h3><br>
 Bye Bye Autobuy… Hello Keep Upgrades! No more autobuying of upgrades! Milestones will keep the upgrades! Added 6 achievements (keep upgs) <br>
 Added 1 Sac Challenge 4 Upg <br>

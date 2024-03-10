@@ -76,6 +76,7 @@ addLayer("e", {
     
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
+        if (hasMilestone('sac', 20)) keep.push("milestones");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
