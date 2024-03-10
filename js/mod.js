@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "basic.js", "tree.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "basic.js", "supreme.js", "water.js", "secretAchievement.js", "tree.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -13,11 +13,25 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.3.1: Mega Price Decrease",
-	name: "Each item has own unique layer.",
+	num: "2.0.0: Supreme and Water",
+	name: "Its over e500,000,000!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v2.0.0 - Supreme and Water</h3><br>
+Existing Changes</h3><br>
+Bye Bye Autobuy… Hello Keep Upgrades! No more autobuying of upgrades! Milestones will keep the upgrades! Added 6 achievements (keep upgs) <br>
+Added 1 Sac Challenge 4 Upg <br>
+
+New Content</h3><br>
+Added 12 achievements, with 5 having rewards! <br>
+Added 10 milestones <br>
+Added 2 layers! <br>
+Added 3 buyables! <br>
+Added 46 upgrades (yes, 46) <br>
+Added 13 Secret Achievements (Most of them gives boosts, but most are not that big) <br>
+Added the 3rd Dimensional Shift <br>
+Endgame: e511.3e6 PF <br>
 <h3>v1.3.1 - Mega Price DECREASE</h3><br>
 Some upgrades are decreased in price <br>
 <h3>v1.3.0 - Achievement Row 10</h3><br>
@@ -303,12 +317,13 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 33)) gain = gain.times(1e300)
 	if (hasUpgrade('prestige', 34)) gain = gain.times("6.66e666")
 	if (hasUpgrade('prestige', 51)) gain = gain.times("e600000")
+	if (hasUpgrade('prestige', 55)) gain = gain.times("e2.8e6")
 	// mega
 	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
 	if (hasUpgrade('mega', 12)) gain = gain.times(10e9)
 	if (hasUpgrade('mega', 21)) gain = gain.times(1e50)
 	if (hasUpgrade('mega', 24)) gain = gain.times(1e15)
-	if (hasMilestone('mega', 7)) gain = gain.times(1e111)
+	if (hasMilestone('mega', 8)) gain = gain.times(1e111)
 	if (hasUpgrade('mega', 54)) gain = gain.times("1e40000")
 	if (hasUpgrade('mega', 61)) gain = gain.times("1e4000")
 	if (hasUpgrade('mega', 62)) gain = gain.times("1e4000")
@@ -345,12 +360,14 @@ function getPointGen() {
 	if (hasUpgrade('e', 84)) gain = gain.times("1e222222")
 	if (inChallenge("sac", 14)) {
 		if (hasUpgrade('e', 143)) gain = gain.times("1e125000")
+		if (hasUpgrade('e', 145)) gain = gain.times("e300000")
 	}
 	if (hasMilestone('sac', 29)) gain = gain.times("e292929")
 	if (hasMilestone('sac', 30)) gain = gain.times("e300000")
 	if (hasUpgrade('e', 92)) gain = gain.times("e350000")
 	if (hasUpgrade('e', 93)) gain = gain.times("e500000")
 	if (hasUpgrade('e', 94)) gain = gain.times("e657281")
+	if (hasMilestone('e', 13)) gain = gain.times("e2e6")
 
 	// achievement
 
@@ -365,6 +382,8 @@ function getPointGen() {
 	if (hasAchievement('a', 95)) gain = gain.times("1e95000")
 	if (hasAchievement('a', 104)) gain = gain.times("1e250000")
 	if (hasAchievement('a', 106)) gain = gain.times("1e150000")
+	if (hasAchievement('a', 125)) gain = gain.times("e2.8e6")
+	if (hasAchievement('a', 126)) gain = gain.times("e4.51e6")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -374,8 +393,28 @@ function getPointGen() {
 	if (hasChallenge('sac', 12)) gain = gain.times("1e75000")
 	if (hasChallenge('sac', 13)) gain = gain.times("1e400000")
 
+	// supreme
+	if (hasUpgrade('s', 11)) gain = gain.times("e300000")
+	if (hasUpgrade('s', 13)) gain = gain.times("e600000")
+	if (hasUpgrade('s', 22)) gain = gain.times("e1.5e6")
+	if (hasUpgrade('w', 11)) gain = gain.times("e250000")
+	if (hasUpgrade('s', 41)) gain = gain.times("e1e6")
+	if (hasUpgrade('s', 43)) gain = gain.times("e1e6")
+	if (hasMilestone('s', 6)) gain = gain.times("e1e6")
+	if (hasUpgrade('w', 34)) gain = gain.times("e2e6")
+	if (hasUpgrade('s', 44)) gain = gain.times("e2.1e6")
+	if (hasUpgrade('w', 42)) gain = gain.times("e1.5e6")
+	if (hasUpgrade('w', 44)) gain = gain.times("e5e6")
+	if (hasUpgrade('s', 54)) gain = gain.times("e2e6")
 
-	// power
+	// secret achievements
+	if (hasAchievement('sa', 13)) gain = gain.times(1.1)
+	if (hasAchievement('sa', 14)) gain = gain.times(1.05)
+	if (hasAchievement('sa', 15)) gain = gain.times(1.1)
+	if (hasAchievement('sa', 16)) gain = gain.times(1.1)
+
+
+	// power (^)
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
 	if (hasUpgrade('basic', 54)) gain = gain.pow(1.04)
 	if (hasUpgrade('basic', 72)) gain = gain.pow(1.015)
@@ -416,6 +455,15 @@ function getPointGen() {
 	if (hasMilestone('sac', 31)) gain = gain.pow(1.001)
 	if (hasMilestone('e', 12)) gain = gain.pow(1.22)
 	if (hasMilestone('sac', 32)) gain = gain.pow(1.01)
+	if (hasUpgrade('s', 12)) gain = gain.pow(1.01)
+	if (hasUpgrade('s', 14)) gain = gain.pow(1.01)
+	if (hasUpgrade('s', 24)) gain = gain.pow(1.004)
+	if (hasUpgrade('w', 32)) gain = gain.pow(1.01)
+	if (hasMilestone('sac', 33)) gain = gain.pow(1.004)
+	if (hasAchievement('a', 122)) gain = gain.pow(1.015)
+	if (hasMilestone('sac', 34)) gain = gain.pow(1.012)
+	if (hasUpgrade('prestige', 35)) gain = gain.pow(1.015)
+	if (hasAchievement('a', 124)) gain = gain.pow(1.014074)
 	return gain
 }
 
@@ -429,7 +477,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e151551551"))
+	return player.points.gte(new Decimal("e511300000"))
 }
 
 

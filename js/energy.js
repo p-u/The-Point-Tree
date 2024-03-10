@@ -46,6 +46,33 @@ addLayer("e", {
         if (hasMilestone('sac', 31)) keptUpgrades.push(62);
         if (hasMilestone('sac', 31)) keptUpgrades.push(63);
         if (hasMilestone('sac', 31)) keptUpgrades.push(64);
+        for(i=1;i<5;i++){ //rows
+            for(v=1;v<3;v++){ //columns
+              if ((hasMilestone('sac', 13)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=3;v<4;v++){ //columns
+                if ((hasMilestone('sac', 17)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            for(v=4;v<5;v++){ //columns
+                if ((hasMilestone('sac', 22)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=5;v<6;v++){ //columns
+                if ((hasMilestone('sac', 29)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=6;v<7;v++){ //columns
+                if ((hasMilestone('sac', 31)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=7;v<9;v++){ //columns
+                if ((hasMilestone('s', 2)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=9;v<10;v++){ //columns
+                if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+          }
+            for(v=9;v<10;v++){ //columns
+                if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
+            }
+    
     
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
@@ -96,6 +123,7 @@ addLayer("e", {
     exponent: 10,  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (layers.w.effect().gte(1)) mult = mult.times(layers.w.effect())
         if (hasUpgrade('basic', 84)) mult = mult.times(upgradeEffect('basic', 84))
         if (hasUpgrade('e', 11)) mult = mult.times(2)
         if (hasUpgrade('e', 13)) mult = mult.times(3)
@@ -148,8 +176,9 @@ addLayer("e", {
         if (hasMilestone('sac', 27)) mult = mult.times(2727)
         if (hasMilestone('sac', 28)) mult = mult.times(2828282828)
         if (inChallenge("sac", 14)) {
-            if (hasUpgrade('e', 141)) mult = mult.times(111)
+            if (hasUpgrade('e', 141)) mult = mult.times(11111)
             if (hasUpgrade('e', 143)) mult = mult.times(10e15)
+            if (hasUpgrade('e', 144)) mult = mult.times(100e6)
         }
     	if (hasChallenge('sac', 14)) mult = mult.times(1e20)
         if (hasMilestone('e', 11)) mult = mult.times(1e10)
@@ -157,6 +186,21 @@ addLayer("e", {
         if (hasUpgrade('e', 91)) mult = mult.times(1e3)
         if (hasMilestone('sac', 31)) mult = mult.times(2)
         mult = mult.times(buyableEffect('mega', 13))
+
+        // supreme
+        if (hasMilestone('s', 1)) mult = mult.times(5)
+        if (hasUpgrade('s', 21)) mult = mult.times(upgradeEffect('s', 21))
+        if (hasUpgrade('s', 31)) mult = mult.times(1e15)
+        if (hasUpgrade('s', 32)) mult = mult.times(1e25)
+        if (hasUpgrade('s', 33)) mult = mult.times(1e30)
+        if (hasUpgrade('s', 34)) mult = mult.times(1e30)
+        if (hasUpgrade('w', 14)) mult = mult.times(1e10)
+        if (hasUpgrade('w', 23)) mult = mult.times(1e25)
+        if (hasUpgrade('s', 54)) mult = mult.times(1e20)
+
+        // secret achievement
+        if (hasAchievement('sa', 24)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -166,6 +210,7 @@ addLayer("e", {
         if (inChallenge("sac", 14)) {
             if (hasUpgrade('e', 144)) exp = exp.mul(1.1)
         }
+        if (hasMilestone('e', 13)) exp = exp.add(0.01)
         return exp
     },
     upgrades: {
@@ -195,9 +240,18 @@ addLayer("e", {
                     let e4exp = 0.125
                     if (hasUpgrade('e', 33)) e4exp = 0.16
                     if (hasMilestone('e', 9)) e4exp = 0.195
-                    return player["e"].points.add(1).pow(e4exp)
+                    let eff = player["e"].points.add(1).pow(e4exp)
+                    eff = softcap(eff, new Decimal("1e700"), 0.5)
+                    return eff
                 },
-                effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e700")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+            },
             },
             21: {
                 title: "Quadra Energy",
@@ -230,9 +284,18 @@ addLayer("e", {
                         if (hasUpgrade('e', 134)) e8exp = 0.005
                     }
                     if (hasUpgrade('e', 82)) e8exp = 0.001825
-                    return player["mega"].points.add(1).pow(e8exp)
+                    let eff = player["mega"].points.add(1).pow(e8exp)
+                    eff = softcap(eff, new Decimal("1e5000"), 0.3)
+                    return eff
                 },
-                effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e500")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+            },
                 unlocked() { return hasUpgrade("e", 23) },
             },
             31: {
@@ -286,13 +349,13 @@ addLayer("e", {
             51: {
                 title: "EneX",
                 description: "x100K Energy",
-                cost: new Decimal(1.9e112),
+                cost: new Decimal(1.7e112),
                 unlocked() { return hasUpgrade("e", 44) },
             },
             52: {
                 title: "A nerf?",
                 description: "/e50 MP, BUT xe20K PF",
-                cost: new Decimal(4.2e118),
+                cost: new Decimal(3.8e118),
                 unlocked() { return hasUpgrade("e", 51) },
             },
             53: {
@@ -408,101 +471,113 @@ addLayer("e", {
                 cost: new Decimal("1.5e694"),
                 unlocked() { return hasUpgrade("e", 93) },
             },
+            95: {
+                title: "Fifth Column?",
+                description: "MU9 is stronger. Faster! Go! Don't get spotted by the devs!",
+                cost: new Decimal("1e714"),
+                unlocked() { return hasUpgrade("e", 94) },
+            },
             111: {
                 title: "Challenge 1-Specific Upgrades (Only can be get in Challenge 1, only boosts Challenge 1)",
-                description: "xe2.5K BP",
-                cost: new Decimal(4e49),
+                description: "xe5K BP",
+                cost: new Decimal(1.75e57),
                 unlocked() { return inChallenge("sac", 11) || hasUpgrade("e", 141) },
             },
             112: {
                 title: "Energy Bar Increase",
                 description: "x5000 Energy",
-                cost: new Decimal(5.5e49),
+                cost: new Decimal(2.3e57),
                 unlocked() { return hasUpgrade("e", 111) },
             },
             113: {
                 title: "Basically",
                 description: "xe4K BP",
-                cost: new Decimal(1.4e54),
+                cost: new Decimal(6e61),
                 unlocked() { return hasUpgrade("e", 112) },
             },
             121: {
                 title: "Challenge 2-Specific Upgrades (Only can be get in Challenge 2, only boosts Challenge 2)",
                 description: "x25,000 Energy",
-                cost: new Decimal(7.5e76),
+                cost: new Decimal(3.3e84),
                 unlocked() { return inChallenge("sac", 12)  },
             },
             122: {
                 title: "Power Surge",
                 description: "x175,000 Energy",
-                cost: new Decimal(6e84),
+                cost: new Decimal(6e89),
                 unlocked() { return inChallenge("sac", 12) && hasUpgrade("e", 121) },
             },
             123: {
                 title: "Prestiging Mastery",
                 description: "xe1.5K PP",
-                cost: new Decimal(1.5e91),
+                cost: new Decimal(7e95),
                 unlocked() { return inChallenge("sac", 12) && hasUpgrade("e", 122) },
             },
             124: {
                 title: "Energy Hunting",
                 description: "After this successful hunt, you multiplied your energy gain by 4.8M!",
-                cost: new Decimal(6.5e91),
+                cost: new Decimal(3.8e96),
                 unlocked() { return inChallenge("sac", 12) && hasUpgrade("e", 123) },
             },
             131: {
                 title: "Challenge 3-Specific Upgrades (Only can be get in Challenge 3, only boosts Challenge 3)",
                 description: "x7777 Energy, x7.77e77 MP",
-                cost: new Decimal(3.5e84),
+                cost: new Decimal(4.8e88),
                 unlocked() { return inChallenge("sac", 13) },
             },
             132: {
                 title: "Drilling for extra energy",
                 description: "You multiplied your energy production by 250M!!",
-                cost: new Decimal(2.5e89),
+                cost: new Decimal(3.5e93),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 131) },
             },
             133: {
                 title: "PF Power UP!",
                 description: "^1.05 PF",
-                cost: new Decimal(3.33e99),
+                cost: new Decimal(2.4e103),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 132) },
             },
             134: {
                 title: "Mega boosts energy GREATLY!",
                 description: "Energy Upgrade 8 is MUCH stronger",
-                cost: new Decimal(4.44e99),
+                cost: new Decimal(2.7e103),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 133) },
             },
             135: {
                 title: "Energy Reserves",
                 description: "Take some energy from the energy reserves. This leads to a x800K Energy.",
-                cost: new Decimal(1e122),
+                cost: new Decimal(6e126),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 134) },
             },
             141: {
                 title: "Energy Small Boost",
-                description: "x111 Energy, AND Unlock Sac Challenge 1 upgrades.",
-                cost: new Decimal(4e48),
+                description: "x11,111 Energy, AND Unlock Sac Challenge 1 upgrades.",
+                cost: new Decimal(2.5e53),
                 unlocked() { return inChallenge("sac", 14) },
             },
             142: {
                 title: "Mega MEGA BOOST",
                 description: "xe1,600 MP",
-                cost: new Decimal(6e51),
-                unlocked() { return inChallenge("sac", 14) },
+                cost: new Decimal(6.5e55),
+                unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 141) },
             },
             143: {
                 title: "Rocket Fuel",
                 description: "x10 Qd Energy, xe125K PF",
-                cost: new Decimal(9e53),
-                unlocked() { return inChallenge("sac", 14) },
+                cost: new Decimal(3.6e56),
+                unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 142) },
             },
             144: {
                 title: "Here we go.",
                 description: "^1.1 PF, ^1.1 Energy",
-                cost: new Decimal(5e62),
-                unlocked() { return inChallenge("sac", 14) },
+                cost: new Decimal(2.25e67),
+                unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 143) },
+            },
+            145: {
+                title: "Point Plus",
+                description: "xe300K PF, x100K Energy",
+                cost: new Decimal(3e74),
+                unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 143) },
             },
     },
     milestones: {
@@ -565,6 +640,11 @@ addLayer("e", {
             requirementDescription: "8e575 Energy: MASSIVE CHANGE",
             effectDescription: "-^0.1 BP, -^0.2 RP, -^0.1 PP, -^0.15 MP",
             done() { return player["e"].points.gte("8e575") }
+        },
+        13: {
+            requirementDescription: "The Power Milestone (5e2,463 Energy)",
+            effectDescription: "x2.5 SP, xe2e6 PF, x10 Water, +^0.01 Energy",
+            done() { return player["e"].points.gte("5e2463") }
         },
     },
     branches: ["sac", "mega"],

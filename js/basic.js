@@ -6,6 +6,48 @@ addLayer("basic", {
         unlocked: true,
 		points: new Decimal(0),
     }},
+    doReset(basic) {
+        // Stage 1, almost always needed, makes resetting this layer not delete your progress
+        if (layers[basic].row <= this.row) return;
+    
+        // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
+        let keptUpgrades = [];
+        for(i=1;i<5;i++){ //rows
+            for(v=1;v<4;v++){ //columns
+              if ((hasMilestone('rebirth', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=4;v<5;v++){ //columns
+                if ((hasMilestone('rebirth', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            for(v=5;v<6;v++){ //columns
+                if ((hasMilestone('prestige', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=6;v<7;v++){ //columns
+                if ((hasMilestone('mega', 6)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=7;v<8;v++){ //columns
+                if ((hasMilestone('sac', 11)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=8;v<9;v++){ //columns
+                if ((hasMilestone('sac', 27)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+          }
+            for(v=1;v<8;v++){ //columns
+              if ((hasMilestone('sac', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
+            }
+            for(v=8;v<9;v++){ //columns
+                if ((hasMilestone('sac', 31)) && hasUpgrade(this.layer, 85)) keptUpgrades.push(85)
+            }
+    
+        // Stage 3, track which main features you want to keep - milestones
+        let keep = [];
+    
+        // Stage 4, do the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5, add back in the specific subfeatures you saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    },  
     upgrades: {
         11: {
             title: "The first upgrade!",
@@ -20,7 +62,9 @@ addLayer("basic", {
             effect() {
                 let expu2 = 0.35
                 if (hasUpgrade("basic", 62)) expu2 = 0.3575
-                return player[this.layer].points.add(1).pow(expu2)
+                let eff = player[this.layer].points.add(1).pow(expu2)
+                eff = softcap(eff, new Decimal("1e50000000"), 0.5)
+                return eff
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             unlocked() { return hasUpgrade("basic", 11) },
@@ -34,6 +78,7 @@ addLayer("basic", {
                 let expu3 = 0.16
                 let eff = player.points.add(1).pow(expu3)
                 eff = softcap(eff, new Decimal("1e5000000"), 0.5)
+                eff = softcap(eff, new Decimal("1e25000000"), 0.3)
                 return eff
             },
             effectDisplay() {
@@ -41,6 +86,9 @@ addLayer("basic", {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 if (upgEffect.gte(new Decimal("e5000000")) ) {
                     softcapDescription = " (Softcapped)"
+                }
+                if (upgEffect.gte(new Decimal("e25000000")) ) {
+                    softcapDescription = " (Supercapped)"
                 }
                 return "This upgrade boosts Basic Points by " + format(upgEffect)+"x" + softcapDescription
             },
@@ -92,9 +140,18 @@ addLayer("basic", {
             effect() {
                 let expu8 = 0.1625
                 if (inChallenge("sac", 12)) expu8 = 0
-                return player.points.add(1).pow(expu8)
+                let eff = player.points.add(1).pow(expu8)
+                eff = softcap(eff, new Decimal("1e40000000"), 0.5)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e40000000")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Point Fragments by " + format(upgEffect)+"x" + softcapDescription
+            },
             unlocked() { return hasUpgrade("basic", 23) },
         },
         31: {
@@ -112,9 +169,18 @@ addLayer("basic", {
                 if (hasUpgrade('rebirth', 31)) expu10 = 0.075
                 if (hasUpgrade('prestige', 32)) expu10 = 0.09
                 if (inChallenge("sac", 12)) expu10 = 0
-                return player.points.add(500000).pow(expu10)
+                let eff = player.points.add(500000).pow(expu10)
+                eff = softcap(eff, new Decimal("1e100000000"), 0.5)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e100000000")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Point Fragments by " + format(upgEffect)+"x" + softcapDescription
+            },
             unlocked() { return hasUpgrade("basic", 31) },
         },
         33: {
@@ -157,7 +223,7 @@ addLayer("basic", {
             title: "Big Boost",
             description: "Point Fragments x100",
             cost: new Decimal(2.5e67),
-            unlocked() { return hasMilestone("rebirth", 5) && hasUpgrade("basic", 44)},
+            unlocked() { return hasMilestone("rebirth", 6) && hasUpgrade("basic", 44)},
         },
         52: {
             title: "Tri-boost III",
@@ -268,9 +334,18 @@ addLayer("basic", {
             effect() {
                 let bb3exp = 0.0000007
                 if (hasUpgrade('basic', 85)) bb3exp = 0.00000088
-                return player.points.add(1).pow(bb3exp)
+                let eff = player.points.add(1).pow(bb3exp)
+                eff = softcap(eff, new Decimal("e175"), 0.3)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e175")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+            },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 83) },
         },
 
@@ -336,14 +411,9 @@ addLayer("basic", {
     passiveGeneration() {
         if (hasMilestone('mega', 1)) return 10000000
         if (hasMilestone('prestige', 1)) return 10000
-        if (hasMilestone('rebirth', 3)) return 100
+        if (hasMilestone('rebirth', 4)) return 100
         if (hasMilestone('rebirth', 2)) return 1
         return 0
-    },
-    autoUpgrade() {
-        let auto = false
-        if (hasMilestone('rebirth', 4)) auto = true
-        return auto
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
@@ -374,10 +444,15 @@ addLayer("basic", {
         if (hasUpgrade('basic', 25)) mult = mult.times("1e10000")
         if (hasAchievement("a", 93)) mult = mult.times("1e27000")
         if (inChallenge("sac", 11)) {
-            if (hasUpgrade('e', 111)) mult = mult.times("1e2500")
+            if (hasUpgrade('e', 111)) mult = mult.times("1e5000")
             if (hasUpgrade('e', 113)) mult = mult.times("1e4000")
         }
         if (hasUpgrade('rebirth', 45)) mult = mult.times("e30103")
+        if (hasUpgrade('w', 41)) mult = mult.times("e1e6")
+        if (hasUpgrade('s', 54)) mult = mult.times("e500000")
+        if (hasAchievement('sa', 14)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 15)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

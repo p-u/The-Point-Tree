@@ -173,7 +173,7 @@ addLayer("a", {
         },
         65: {
             name: "Buyable 2",
-            done() { return  (hasMilestone('mega', 11)) },
+            done() { return  (hasMilestone('mega', 13)) },
             tooltip: "Get mega buyable 2 [Elusive Rarity]",
         },
         66: {
@@ -228,7 +228,7 @@ addLayer("a", {
         },
         84: {
             name: "Mega Buyable 3",
-            done() { return (hasMilestone('mega', 12)) },
+            done() { return (hasMilestone('mega', 14)) },
             tooltip: "Mega Buyable 3",
         },
         85: {
@@ -294,12 +294,72 @@ addLayer("a", {
         105: {
             name: "Another Extension...",
             done() { return (hasUpgrade('prestige', 51)) },
-            tooltip: "Get e500,000 PP. Reward: xe250K PF.",
+            tooltip: "Another Prestige Extension.",
         },
         106: {
             name: "150 Million Digits",
             done() { return player.points.gte(new Decimal("e150000000")) },
             tooltip: "E150,000,000 Point Fragments. Reward: xe150K PF",
+        },
+        111: {
+            name: "Supreme",
+            done() { return player.s.points.gte(new Decimal(1)) },
+            tooltip: "1 Supreme Point [Super Exclusive Rarity]",
+        },
+        112: {
+            name: "More Supreme",
+            done() { return player.s.points.gte(new Decimal(15)) },
+            tooltip: "15 Supreme Points [Super Exclusive Rarity]",
+        },
+        113: {
+            name: "Many Supreme",
+            done() { return player.s.points.gte(new Decimal(500)) },
+            tooltip: "400 Supreme Point [Super Exclusive Rarity]. Reward: Unlock 'Supreme Buyable' tab.",
+        },
+        114: {
+            name: "Water",
+            done() { return player.w.points.gte(new Decimal(1)) },
+            tooltip: "1 Water [Super Exclusive Rarity]",
+        },
+        115: {
+            name: "Passively Supreme",
+            done() { return (hasUpgrade('s', 42)) },
+            tooltip: "Supreme Buyable 2 [Super Exclusive Rarity]. ",
+        },
+        116: {
+            name: "Finally, a milestone",
+            done() { return (hasMilestone('sac', 33)) },
+            tooltip: "Get Sac Milestone 33. ",
+        },
+        121: {
+            name: "Get Loads of Water",
+            done() { return player.w.points.gte(new Decimal(1e10)) },
+            tooltip: "Get 10^10 Water [Mega Exclusive Rarity]. ",
+        },
+        122: {
+            name: "How big is that?",
+            done() { return player.points.gte(new Decimal("e290000000")) },
+            tooltip: "Get e290M PF. Reward: ^1.015 PF",
+        },
+        123: {
+            name: "Get Insanely Many Water",
+            done() { return player.w.points.gte(new Decimal(1e30)) },
+            tooltip: "Get 10^30 Water [Mega Exclusive Rarity]. ",
+        },
+        124: {
+            name: "How big is that+?",
+            done() { return player.points.gte(new Decimal("e407.4e6")) },
+            tooltip: "Get e407.4M PF. Reward: ^1.014074 PF",
+        },
+        125: {
+            name: "Mega a lot",
+            done() { return player.mega.points.gte(new Decimal("e280000")) },
+            tooltip: "Get e280K MP. Reward: xe2.8M PF, xe2.94K MP",
+        },
+        126: {
+            name: "[Warning] Too Much Water!",
+            done() { return player.w.points.gte(new Decimal(4e51)) },
+            tooltip: "Get 4e51 Water. Reward: xe4.51M PF, x45.1 Water, x4.51 SP",
         },
     tabFormat: [
         "blank", 

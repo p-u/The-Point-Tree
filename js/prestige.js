@@ -16,11 +16,6 @@ addLayer("prestige", {
         if (hasMilestone('mega', 4)) return 1
         return 0
     },
-    autoUpgrade() {
-        let auto = false
-        if (hasMilestone('mega', 5)) auto = true
-        return auto
-    },
     upgrades: {
         11: {
             title: "You Prestiged! This is the first upgrade.",
@@ -100,13 +95,13 @@ addLayer("prestige", {
             title: "Era 2",
             description: "x1e300 PF, x1e200 BP, x1e100 RP, x1e50 PP",
             cost: new Decimal("1.46e446"),
-            unlocked() { return hasMilestone("mega", 8) && hasUpgrade("prestige", 32) },
+            unlocked() { return hasMilestone("mega", 10) && hasUpgrade("prestige", 32) },
         },
         34: {
             title: "The devil has awakened...",
             description: "x6.66e666 PF, x6.6e66 PP, x6e6 MP",
             cost: new Decimal("6.66e666"),
-            unlocked() { return hasMilestone("mega", 8) && hasUpgrade("prestige", 33) },
+            unlocked() { return hasMilestone("mega", 10) && hasUpgrade("prestige", 33) },
         },
         41: {
             title: "ERA III",
@@ -156,6 +151,38 @@ addLayer("prestige", {
             cost: new Decimal("e581346"),
             unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 53) },
         },
+
+
+        15: {
+            title: "PP!",
+            description: "xe100K PP",
+            cost: new Decimal("e1928250"),
+            unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 14) },
+        },
+        25: {
+            title: "PP Cap-Power",
+            description: "PP Effect Softcap is weaker, PP +^0.02",
+            cost: new Decimal("e2092300"),
+            unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 15) },
+        },
+        35: {
+            title: "PP PF Power-Up",
+            description: "PF ^1.015, PP +^0.05",
+            cost: new Decimal("e2155150"),
+            unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 25) },
+        },
+        45: {
+            title: "Advanced Layer Boost",
+            description: "SP x3, Water x5, PP xe100K",
+            cost: new Decimal("e2366200"),
+            unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 35) },
+        },
+        55: {
+            title: "Progressively more UNSTABLE",
+            description: "SP x10, Water x35, PF xe2.8M",
+            cost: new Decimal("e2547000"),
+            unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 45) },
+        },
     },
     milestones: {
         1: {
@@ -174,18 +201,23 @@ addLayer("prestige", {
             done() { return player["prestige"].points.gte(400) }
         },
         4: {
+            requirementDescription: "1,500 PP",
+            effectDescription: "Keep Row 5 Basic Point Upgs on Reset",
+            done() { return player["prestige"].points.gte(1500) }
+        },
+        5: {
             requirementDescription: "20K PP",
             effectDescription: "Keep Rebirth Milestone and Rebirth Upgrade 9.",
             done() { return player["prestige"].points.gte(20000) }
         },
-        5: {
+        6: {
             requirementDescription: "500,000 PP",
-            effectDescription: "Generate 10,000% of Rebirth Points a second. Also x1,000 RP.",
+            effectDescription: "Generate 10,000% of Rebirth Points a second.",
             done() { return player["prestige"].points.gte(500000) }
         },
-        6: {
+        7: {
             requirementDescription: "1e10 PP",
-            effectDescription: "You asked for this. Autobuy all RP upgrades.",
+            effectDescription: "Keep all Rebirth Upgrades (Row 1 and 2) and RU32",
             done() { return player["prestige"].points.gte(1e10) }
         },
     },
@@ -196,6 +228,26 @@ addLayer("prestige", {
         // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 11, Challenge 32, Buyable 12
         let keptUpgrades = []
         if ((hasMilestone('mega', 2)) && hasUpgrade(this.layer, 21)) keptUpgrades.push(21)
+        if (hasMilestone('mega', 5) && hasUpgrade(this.layer, 32)) keptUpgrades.push(32);
+
+        for(i=1;i<5;i++){ //rows
+            for(v=1;v<2;v++){ //columns
+              if ((hasMilestone('mega', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=2;v<3;v++){ //columns
+                if ((hasMilestone('mega', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            for(v=3;v<4;v++){ //columns
+                if ((hasMilestone('sac', 2)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+              for(v=5;v<6;v++){ //columns
+                if ((hasMilestone('sac', 32)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+              if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 41)) keptUpgrades.push(41)
+              if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 42)) keptUpgrades.push(42)
+              if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 43)) keptUpgrades.push(43)
+              if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 44)) keptUpgrades.push(44)
+          }
       
         // Stage 3, track which main features you want to keep - all upgrades, total points, specific toggles, etc.
         let keep = [];
@@ -238,6 +290,14 @@ addLayer("prestige", {
         if (hasUpgrade('e', 91)) mult = mult.times("1e400")
         if (hasUpgrade('prestige', 51)) mult = mult.times("e5000")
         if (hasUpgrade('prestige', 54)) mult = mult.times("e25000")
+        if (hasUpgrade('w', 12)) mult = mult.times("e2000")
+        if (hasUpgrade('w', 33)) mult = mult.times("e70000")
+        if (hasUpgrade('prestige', 15)) mult = mult.times("e100000")
+        if (hasUpgrade('prestige', 45)) mult = mult.times("e100000")
+        if (hasUpgrade('s', 54)) mult = mult.times("e40000")
+        // secret achievement
+        if (hasAchievement('sa', 15)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -250,6 +310,10 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 51)) exp = exp.add(0.02)
         if (hasMilestone('e', 12)) exp = exp.sub(0.1)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
+        if (hasUpgrade('s', 14)) exp = exp.add(0.01)
+        if (hasUpgrade('mega', 83)) exp = exp.add(0.02)
+        if (hasUpgrade('prestige', 25)) exp = exp.add(0.02)
+        if (hasUpgrade('prestige', 35)) exp = exp.add(0.05)
         return exp
     },
     effect(){
@@ -266,6 +330,7 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 44)) cap = 0.551
         if (hasMilestone('sac', 29)) cap = 0.65
         if (hasUpgrade('prestige', 53)) cap = 0.78
+        if (hasUpgrade('prestige', 25)) cap = 0.89
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
         softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
         return softcappedEffect

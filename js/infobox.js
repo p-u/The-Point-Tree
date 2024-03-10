@@ -23,7 +23,10 @@ addLayer("i", {
                 ["infobox", "ext"],
                 "blank",
                 "blank",
-                ["infobox", "auto"],
+                ["infobox", "passive"],
+                "blank",
+                "blank",
+                ["infobox", "keep"],
                 "blank",
                 "blank",
                 ["infobox", "cap"],
@@ -73,6 +76,14 @@ addLayer("i", {
                 ["infobox", "dimshift"],
             ],
         },
+        "Supreme and Water Layer": {
+            unlocked() { return player.s.points.gte(1)},
+            content: [
+                ["infobox", "supreme"],
+                "blank",
+                "blank",
+            ],
+        },
     },
     infoboxes: {
         main: {
@@ -102,15 +113,20 @@ addLayer("i", {
             body() { return "The first extension is at Rebirth Milestone 1. This adds new upgrades to previous layers" },
             unlocked() { return (hasUpgrade('basic', 34))}
         },
-        auto: {
-            title: "Automation and Passive Generation",
-            body() { return "At 20 RP, Passive Generation is unlocked. Likewise, at 1M RP, Automation is unlocked." },
+        passive: {
+            title: "Passive Generation",
+            body() { return "At 20 RP, Passive Generation is unlocked." },
             unlocked() { return (hasMilestone('rebirth', 2))}
         },
         milestone: {
             title: "Milestones",
             body() { return "Milestones are like upgrades, but they do not take away your currency." },
             unlocked() { return (hasMilestone('rebirth', 1))}
+        },
+        keep: {
+            title: "Keeping Upgrades",
+            body() { return "At 100 RP, Upgrade Keeping is unlocked. This allows you to click less for a new layer." },
+            unlocked() { return (hasMilestone('rebirth', 3))}
         },
         cap: {
             title: "Softcaps and Supercaps",
@@ -151,6 +167,11 @@ addLayer("i", {
             title: "Challenges",
             body() { return "Challenges nerfs progression by a few ways. It also gives unique challenge-specific upgrades which only can be bought in that challenge. Method 1: ^x of a particular currency. x is lower than 1. Method 2: Nerfing upgrade boost, or even removing it entirely. Method 3: [Most Time Consuming] Disabling passive generation and/or automation." },
             unlocked() { return player.sac.points.gte(new Decimal("20"))}
+        },
+        supreme: {
+            title: "The SUPREME Layer",
+            body() { return "Remember the MEGA LAYER? It is OP, alright. But, this requires e82,500 Mega Points to unlock. That's how OP it is! And, sacrifice milestones will not come every 1 sac." },
+            unlocked() { return player.s.points.gte(new Decimal("1"))}
         },
     },
 }, 

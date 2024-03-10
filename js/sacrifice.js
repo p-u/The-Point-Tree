@@ -1,14 +1,14 @@
 addLayer("sac", {
     name: "Sacrifice", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "S", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    position: 3, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: new Decimal(0),
+		points: new Decimal(32),
     }},
     layerShown(){
         let visible = false
-        if (hasMilestone('mega', 10) || player.sac.unlocked || player["sac"].points.gte(1)) visible = true
+        if (hasMilestone('mega', 12) || player.sac.unlocked || player["sac"].points.gte(1)) visible = true
        return visible
     },
     tabFormat: {
@@ -31,6 +31,7 @@ addLayer("sac", {
                 "blank",
                 ["bar", "DS2"],
                 "blank",
+                ["bar", "DS3"],
                 "blank",
                 "blank",
                 "upgrades",
@@ -47,21 +48,26 @@ addLayer("sac", {
             unlocked() {return player.sac.points.gte(20)}
         },
     },
+    canBuyMax(){
+        let buyMaxSac = false
+        if (hasMilestone("sac", 35)) buyMaxSac = true
+       return buyMaxSac
+     },
     milestones: {
         1: {
             requirementDescription: "The First Sacrifice",
-            effectDescription: "x1e100 Point Fragments, x1e15 Rebirth Points, x10 Mega Points",
+            effectDescription: "x1e100 Point Fragments, x1e15 Rebirth Points, x10 Mega Points.",
             done() { return player["sac"].points.gte(1) }
         },
         2: {
             requirementDescription: "The Second Sacrifice",
-            effectDescription: "x1e30 Basic Points, x10K Prestige Points",
+            effectDescription: "x1e30 Basic Points, x10K Prestige Points. Keep PU33 and PU34 on reset.",
             unlocked() {return player["sac"].points.gte(1)},
             done() { return player["sac"].points.gte(2) }
         },
         3: {
             requirementDescription: "The Third Sacrifice",
-            effectDescription: "x6 Mega Passive Generation, Mega Buyable is weaker and boost is way stronger",
+            effectDescription: "x6 Mega Passive Generation, Mega Buyable is weaker and boost is way stronger. Also keep mega milestones.",
             unlocked() {return player["sac"].points.gte(2)},
             done() { return player["sac"].points.gte(3) }
         },
@@ -85,7 +91,7 @@ addLayer("sac", {
         },
         7: {
             requirementDescription: "Sacrifice 7",
-            effectDescription: "1 new row of basic upgrades. X10 Mega Passive Gen. x8e888 PF.",
+            effectDescription: "1 new row of basic upgrades. X10 Mega Passive Gen. x8e888 PF. Keep Mega Upgs Rows 1 and 2",
             unlocked() {return player["sac"].points.gte(6)},
             done() { return player["sac"].points.gte(7) }
         },
@@ -97,19 +103,19 @@ addLayer("sac", {
         },
         9: {
             requirementDescription: "Sacrifice 9",
-            effectDescription: "Autobuy Mega Upgrades, Mega Buyable 2 is 2x as strong, Mega Upgrade 14 is stronger, unlock 2 new rebirth upgrades",
+            effectDescription: "Mega Buyable 2 is 2x as strong, Mega Upgrade 14 is stronger, unlock 2 new rebirth upgrades",
             unlocked() {return player["sac"].points.gte(8)},
             done() { return player["sac"].points.gte(9) }
         },
         10: {
             requirementDescription: "Sacrifice 10",
-            effectDescription: "Keep Mega Milestones and Upgrades 1-8. ^1.006 PF. Unlock Energy. Energy is boosted by sacrifice. Clicking for energy gives 1 energy, but passively generating energy gives 20 times the energy.",
+            effectDescription: "Keep Mega Row 3 Upgs. ^1.006 PF. Unlock Energy. Energy is boosted by sacrifice. Clicking for energy gives 1 energy, but passively generating energy gives 20 times the energy.",
             unlocked() {return player["sac"].points.gte(9)},
             done() { return player["sac"].points.gte(10) }
         },
         11: {
             requirementDescription: "Sacrifice 11",
-            effectDescription: "x5 Energy, ^1.005 PF, 2 new mega upgrades, x10 Mega Points",
+            effectDescription: "x5 Energy, ^1.005 PF, 2 new mega upgrades, x10 Mega Points. Keep Row 7 Basic Upgs.",
             unlocked() {return player["sac"].points.gte(10)},
             done() { return player["sac"].points.gte(11) }
         },
@@ -127,19 +133,19 @@ addLayer("sac", {
         },
         14: {
             requirementDescription: "Sacrifice 14",
-            effectDescription: "^1.005 PF, x1,000 Energy, x1e10K PF, extend rebirth upgrades",
+            effectDescription: "^1.005 PF, x1,000 Energy, x1e10K PF, extend rebirth upgrades. Keep Row 4 Mega Upgs and Keep RU41 and 42",
             unlocked() {return player["sac"].points.gte(13)},
             done() { return player["sac"].points.gte(14) }
         },
         15: {
             requirementDescription: "Sacrifice 15",
-            effectDescription: "^1.005 PF, x10,000 Energy, x1e15K PF, UNLOCK DIMENSIONAL SHIFT",
+            effectDescription: "^1.005 PF, x10,000 Energy, x1e15K PF, UNLOCK DIMENSIONAL SHIFT. Keep PU41 and 42",
             unlocked() {return player["sac"].points.gte(14)},
             done() { return player["sac"].points.gte(15) }
         },
         16: {
             requirementDescription: "Sacrifice 16",
-            effectDescription: "Rebirth softcap is weaker, x1e20K PF, Energy Upg 8 is stronger",
+            effectDescription: "Rebirth softcap is weaker, x1e20K PF, Energy Upg 8 is stronger. Keep Row 5 mega upgs",
             unlocked() {return player["sac"].points.gte(15)},
             done() { return player["sac"].points.gte(16) }
         },
@@ -151,13 +157,13 @@ addLayer("sac", {
         },
         18: {
             requirementDescription: "Sacrifice 18",
-            effectDescription: "^1.0375 PF, -^0.05 BP, +^0.01 RP",
+            effectDescription: "^1.0375 PF, -^0.05 BP, +^0.01 RP. Keep RU43 and 44",
             unlocked() {return player["sac"].points.gte(17)},
             done() { return player["sac"].points.gte(18) }
         },
         19: {
             requirementDescription: "Sacrifice 19",
-            effectDescription: "^1.02 PF, x100 Energy, more mega upgrades",
+            effectDescription: "^1.02 PF, x100 Energy, more mega upgrades, Keep Basic Upgrades S on Reset",
             unlocked() {return player["sac"].points.gte(18)},
             done() { return player["sac"].points.gte(19) }
         },
@@ -175,7 +181,7 @@ addLayer("sac", {
         },
         22: {
             requirementDescription: "Sacrifice 22",
-            effectDescription: "More Prestige Upgrades, Keep Row 4 energy upgrades. xe40K PF.",
+            effectDescription: "More Prestige Upgrades, Keep Row 4 energy upgrades. xe40K PF. Also Keep Row 6 mega upgs",
             unlocked() {return player["sac"].points.gte(21)},
             done() { return player["sac"].points.gte(22) }
         },
@@ -199,19 +205,19 @@ addLayer("sac", {
         },
         26: {
             requirementDescription: "Sacrifice 26",
-            effectDescription: "x100M Energy. Mega Buyable 1 scaling is weaker. Unlock 1 new mega milestone.",
+            effectDescription: "x100M Energy. Mega Buyable 1 scaling is weaker. Unlock 1 new mega milestone. Keep PU43 and 44",
             unlocked() {return player["sac"].points.gte(25)},
             done() { return player["sac"].points.gte(26) }
         },
         27: {
             requirementDescription: "Sacrifice 27",
-            effectDescription: "Unlock Dimensional Shift 2. ^1.006 PF, +^0.025 RP and PP, x2727 Energy",
+            effectDescription: "Unlock Dimensional Shift 2. ^1.006 PF, +^0.025 RP and PP, x2727 Energy. Keep BU81-84",
             unlocked() {return player["sac"].points.gte(26)},
             done() { return player["sac"].points.gte(27) }
         },
         28: {
             requirementDescription: "Sacrifice 28",
-            effectDescription: "^1.008 PF, x2828282828 Energy",
+            effectDescription: "^1.008 PF, x2828282828 Energy. Keep Rebirth Row 5.",
             unlocked() {return player["sac"].points.gte(27)},
             done() { return player["sac"].points.gte(28) }
         },
@@ -229,46 +235,64 @@ addLayer("sac", {
         },
         31: {
             requirementDescription: "Sacrifice 31",
-            effectDescription: "^1.001 PF, x2 Energy, Keep Row 6 Energy Upgs",
+            effectDescription: "^1.001 PF, x2 Energy, Keep Row 6 Energy Upgs, Keep BU85",
             unlocked() {return player["sac"].points.gte(30)},
             done() { return player["sac"].points.gte(31) }
         },
         32: {
             requirementDescription: "Sacrifice 32",
-            effectDescription: "^1.01 PF, Unlocks a new RESET LAYER!! (V2.0.0)",
+            effectDescription: "^1.01 PF, Unlocks a new RESET LAYER!! (V2.0.0), Keep Pres Row 5 Upgs on Reset",
             unlocked() {return player["sac"].points.gte(31)},
             done() { return player["sac"].points.gte(32) }
+        },
+        33: {
+            requirementDescription: "Sacrifice 38 - Finally, a new milestone",
+            effectDescription: "Unlock a row of Mega Upgrades, ^1.004 PF",
+            unlocked() {return player["sac"].points.gte(36)},
+            done() { return player["sac"].points.gte(38) }
+        },
+        34: {
+            requirementDescription: "Sacrifice 41",
+            effectDescription: "Dimensional Shift 3 unlock, x5 SP, Water, ^1.012 PF",
+            unlocked() {return player["sac"].points.gte(38)},
+            done() { return player["sac"].points.gte(41) }
+        },
+        35: {
+            requirementDescription: "Sacrifice 45",
+            effectDescription: "Able to buy max sacrifices.",
+            unlocked() {return player["sac"].points.gte(42)},
+            done() { return player["sac"].points.gte(45) }
         },
     },
     challenges: {
         11: {
             name: "Sac Challenge 1 [Recommended Having 'The last of it all' achievement",
             challengeDescription: "^0.5 Point Fragments",
-            canComplete: function() {return player.points.gte("e291250")},
-            goalDescription: "Get e291.25K PF.",
+            canComplete: function() {return player.points.gte("e516500")},
+            goalDescription: "Get e516.5K PF.",
             rewardDescription: "x10B Energy and xe25K PF"
         },
         12: {
             name: "Sac Challenge 2",
             challengeDescription: "Basic Upgrades 8,10 gives no boost. [Recommended Sac 21]",
-            canComplete: function() {return player.points.gte("e1097000")},
-            goalDescription: "Get e1,097,000 PF.",
+            canComplete: function() {return player.points.gte("e1552500")},
+            goalDescription: "Get e1,552,500 PF.",
             rewardDescription: "xe75K PF",
             unlocked() { return hasChallenge("sac", 11) },
         },
         13: {
             name: "Sac Challenge 3",
             challengeDescription: "^0.1 PF. [Recommended Sac 24]",
-            canComplete: function() {return player.points.gte("e166000")},
-            goalDescription: "Get e166,000 PF.",
+            canComplete: function() {return player.points.gte("e190750")},
+            goalDescription: "Get e190,750 PF.",
             rewardDescription: "xe400K PF",
             unlocked() { return hasChallenge("sac", 12) },
         },
         14: {
             name: "Sac Challenge 4",
             challengeDescription: "All layers ^0.5. [Recommended Sac 28]",
-            canComplete: function() {return player.points.gte("e1753753")}, // change and add upg
-            goalDescription: "Get e1,753,753 PF.", // change this
+            canComplete: function() {return player.points.gte("e3153153")}, // change and add upg
+            goalDescription: "Get e3,153,153 PF.", // change this
             rewardDescription: "^1.015 PF, xe20 Energy",
             unlocked() { return hasChallenge("sac", 13) },
         },
@@ -308,6 +332,25 @@ addLayer("sac", {
                     return "Unlock dimensional shift 2: " + format(player.sac.points) + "/27 sacrifices. [COMING SOON]"
                 else
                     return "You have unlocked Dimensional Shift 2. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Rebirth Upgrades."
+            },
+            unlocked() { return player.sac.best.gte(15) }
+        },
+        DS3: {
+            direction: RIGHT,
+            width: 650,
+            height: 40,
+            fillStyle: { 'background-color': "#79029b" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(41)
+                if (player.sac.best.gte(41)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(40))
+                    return "Unlock dimensional shift 2: " + format(player.sac.points) + "/41 sacrifices. [COMING SOON]"
+                else
+                    return "You have unlocked Dimensional Shift 3. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Prestige Upgrades."
             },
             unlocked() { return player.sac.best.gte(15) }
         },

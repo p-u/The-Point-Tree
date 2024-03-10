@@ -75,13 +75,13 @@ addLayer("rebirth", {
             title: "Rebirth Upgrade 11: Mega Edition",
             description: "Rebirth softcap after e1,500 is less. (^0.35 to ^0.375)",
             cost: new Decimal("e2568"),
-            unlocked() { return hasMilestone("mega", 6) && hasUpgrade("rebirth", 32) },
+            unlocked() { return hasMilestone("mega", 7) && hasUpgrade("rebirth", 32) },
         },
         34: {
             title: "THE BIG TRADE-OFF",
             description: "Basic Point Exponent -^0.08, BUT Point Fragments ^1.06, Mega Points x10, Point Fragments x1e200",
             cost: new Decimal("e2700"),
-            unlocked() { return hasMilestone("mega", 6) && hasUpgrade("rebirth", 33) },
+            unlocked() { return hasMilestone("mega", 7) && hasUpgrade("rebirth", 33) },
         },
         41: {
             title: "Extension, again.",
@@ -129,7 +129,7 @@ addLayer("rebirth", {
             title: "Rebirth Rep Upgrades 4/4",
             description: "Softcap is less, +^(0.01 * (1 + ((RepUpgNo - 1) / 2))) RP",
             cost: new Decimal("e2863400"),
-            unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 52) },
+            unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 53) },
         },
 
         // dimensional shift
@@ -161,7 +161,7 @@ addLayer("rebirth", {
             title: "Mega Back Again!",
             description: "Mega Points +^0.05",
             cost: new Decimal("e6815150"),
-            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 35) },
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 45) },
         },
     },
     milestones: {
@@ -176,16 +176,21 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte(20) }
         },
         3: {
+            requirementDescription: "100 RP",
+            effectDescription: "Keep Row 1-3 Basic Point Upgrades",
+            done() { return player["rebirth"].points.gte(100) }
+        },
+        4: {
             requirementDescription: "2,000 RP",
             effectDescription: "Generate 10,000% of Basic Points a sec",
             done() { return player["rebirth"].points.gte(2000) }
         },
-        4: {
-            requirementDescription: "RP Millionaire",
-            effectDescription: "Automation! Autobuy all Basic Point Upgs",
-            done() { return player["rebirth"].points.gte(1000000) }
-        },
         5: {
+            requirementDescription: "4M RP",
+            effectDescription: "Keep Row 4 Basic Point Upgrades",
+            done() { return player["rebirth"].points.gte(4000000) }
+        },
+        6: {
             requirementDescription: "RP Billionaire",
             effectDescription: "4 MOAR BP Upgrades",
             done() { return player["rebirth"].points.gte(1000000000) }
@@ -204,22 +209,35 @@ addLayer("rebirth", {
         if (hasMilestone('prestige', 3)) return 1
         return 0
     },
-    autoUpgrade() {
-        let auto = false
-        if (hasMilestone('prestige', 6)) auto = true
-        return auto
-    },
     doReset(prestige) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
         if (layers[prestige].row <= this.row) return;
     
         // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
         let keptUpgrades = [];
-        if (hasMilestone('prestige', 4) && hasUpgrade(this.layer, 31)) keptUpgrades.push(31);
+        if (hasMilestone('prestige', 5) && hasUpgrade(this.layer, 31)) keptUpgrades.push(31);
+        if (hasMilestone('prestige', 7) && hasUpgrade(this.layer, 32)) keptUpgrades.push(32);
+        if (hasMilestone('mega', 9) && hasUpgrade(this.layer, 33)) keptUpgrades.push(33);
+        if (hasMilestone('mega', 9) && hasUpgrade(this.layer, 34)) keptUpgrades.push(34);
+        if (hasMilestone('sac', 14) && hasUpgrade(this.layer, 41)) keptUpgrades.push(41);
+        if (hasMilestone('sac', 14) && hasUpgrade(this.layer, 42)) keptUpgrades.push(42);
+        if (hasMilestone('sac', 18) && hasUpgrade(this.layer, 43)) keptUpgrades.push(43);
+        if (hasMilestone('sac', 18) && hasUpgrade(this.layer, 44)) keptUpgrades.push(44);
+        for(i=1;i<5;i++){ //rows
+            for(v=1;v<3;v++){ //columns
+              if ((hasMilestone('prestige', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=5;v<6;v++){ //columns
+                if ((hasMilestone('sac', 28)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            for(v=1;v<6;v++){ //columns
+                if ((hasMilestone('s', 1)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
+            }
+          }
     
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
-        if (hasMilestone('prestige', 4)) keep.push("milestones");
+        if (hasMilestone('prestige', 5)) keep.push("milestones");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -256,6 +274,15 @@ addLayer("rebirth", {
         if (hasMilestone('sac', 1)) mult = mult.times(1e15)
         if (hasAchievement("a", 93)) mult = mult.times("1e9000")
         if (hasUpgrade('rebirth', 45)) mult = mult.times("e13353")
+        if (hasUpgrade('w', 42)) mult = mult.times("e50000")
+        if (hasUpgrade('s', 54)) mult = mult.times("e120000")
+
+        // secret achievement
+        if (hasAchievement('sa', 14)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 15)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 21)) mult = mult.times(1.2)
+        if (hasAchievement('sa', 22)) mult = mult.times(2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
