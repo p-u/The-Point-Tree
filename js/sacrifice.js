@@ -4,7 +4,7 @@ addLayer("sac", {
     position: 3, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: new Decimal(32),
+		points: new Decimal(0),
     }},
     layerShown(){
         let visible = false
