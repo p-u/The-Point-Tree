@@ -339,6 +339,7 @@ addLayer("s", {
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)
         if (hasAchievement('sa', 26)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 31)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

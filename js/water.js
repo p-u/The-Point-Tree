@@ -8,7 +8,7 @@ addLayer("w", {
     }},
     layerShown(){
         let visible = false
-        if (hasMilestone('s', 5) || player.w.unlocked || player["e"].points.gte("1e1000")) visible = true
+        if (hasMilestone('s', 5) || player.w.unlocked) visible = true
        return visible
     },
     passiveGeneration() {

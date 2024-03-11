@@ -133,7 +133,7 @@ addLayer("sa", {
            tooltip: "no supreme just stall (Reward: x1.05 SP)",
         },
         26: {
-            name: "Yay! We completed...when are we going to complete 3Ds.",
+            name: "Something to do with DS3, well, we gotta wait and see",
             done() {
                 if(!(hasUpgrade('prestige', 55))) {
                    if (player.points.gte("e388100000")) {
@@ -141,7 +141,7 @@ addLayer("sa", {
                    }
                 }
                },
-           tooltip: "no ds3 lpu (Reward: x1.05 SP)",
+           tooltip: "(Reward: x1.05 SP)",
         },
         31: {
             name: "True Endgame [Changes Every Update]",
@@ -150,7 +150,7 @@ addLayer("sa", {
                        return true
                    }
                },
-           tooltip: "Absolute Endgame",
+           tooltip: "Absolute Endgame (Reward: x1.1 SP)",
         },
     tabFormat: [
         "blank", 
