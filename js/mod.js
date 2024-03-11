@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.01: Supreme and Water Hotfix 1",
+	num: "2.02: Supreme and Water (Hotfix 2)",
 	name: "Its over e500,000,000!",
 }
 
@@ -21,7 +21,13 @@ let changelog = `<h1>Changelog:</h1><br>
 <h3>v2.00 - Supreme and Water</h3><br>
 Hotfixes</h3><br>
 v2.01: Added keep energy milestone milestone in sac</h3><br>
-Existing Changes</h3><br>
+v2.02</h3><br>
+Changed Secret Achievement 26 description <br>
+Added reward to Secret Achievement 31 <br>
+Fixed being able to reset water when energy is above e1000 <br>
+Added infobox for water. <br>
+
+Changes (v2.0.0) </h3><br>
 Bye Bye Autobuy… Hello Keep Upgrades! No more autobuying of upgrades! Milestones will keep the upgrades! Added 6 achievements (keep upgs) <br>
 Added 1 Sac Challenge 4 Upg <br>
 

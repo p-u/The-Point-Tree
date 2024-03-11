@@ -173,6 +173,11 @@ addLayer("i", {
             body() { return "Remember the MEGA LAYER? It is OP, alright. But, this requires e82,500 Mega Points to unlock. That's how OP it is! And, sacrifice milestones will not come every 1 sac." },
             unlocked() { return player.s.points.gte(new Decimal("1"))}
         },
+        water: {
+            title: "The Water Layer",
+            body() { return "Basically, a more advanced version of energy. Boosts energy." },
+            unlocked() { return player.w.points.gte(new Decimal("1"))}
+        },
     },
 }, 
 )
