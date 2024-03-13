@@ -116,7 +116,7 @@ addLayer("mega", {
         13: {
             title: "Is it a pain to grind?",
             description: "^1.02 PF, +^0.01 RP",
-            cost: new Decimal(6),
+            cost: new Decimal(5),
             unlocked() { return hasUpgrade("mega", 12) },
         },
         14: {
@@ -136,31 +136,31 @@ addLayer("mega", {
         21: {
             title: "THE PRICE...",
             description: "x1e50 PF",
-            cost: new Decimal(40e6),
+            cost: new Decimal(35e6),
             unlocked() { return hasUpgrade("mega", 14) },
         },
         22: {
             title: "123 Exponent",
             description: "+^0.01 PP, +^0.02 RP, +^0.03 BP",
-            cost: new Decimal(250e6),
+            cost: new Decimal(225e6),
             unlocked() { return hasUpgrade("mega", 21) },
         },
         23: {
             title: "Exponents",
             description: "^1.03 Point Fragments...",
-            cost: new Decimal(5e9),
+            cost: new Decimal(4.5e9),
             unlocked() { return hasUpgrade("mega", 22) },
         },
         24: {
             title: "'To' upgrades",
             description: "x1 Qi Rebirth Points to Point Fragments",
-            cost: new Decimal(1.5e12),
+            cost: new Decimal(1.2e12),
             unlocked() { return hasUpgrade("mega", 23) },
         },
         31: {
             title: "Mega is useful at achieving big numbers.",
             description: "Mega boosts point fragments heavily.",
-            cost: new Decimal(1.2e13),
+            cost: new Decimal(1e13),
             unlocked() { return hasUpgrade("mega", 24) },
             effect() {
                 let mu9exp = 8.5
@@ -173,19 +173,19 @@ addLayer("mega", {
         32: {
             title: "Exponents 2",
             description: "Point fragments ^1.025.",
-            cost: new Decimal(1.9e14),
+            cost: new Decimal(1.8e14),
             unlocked() { return hasUpgrade("mega", 31) },
         },
         33: {
             title: "Buyablility",
             description: "Unlock Mega Buyable 1! MU9 is also stronger.",
-            cost: new Decimal(4e17),
+            cost: new Decimal(3.5e17),
             unlocked() { return hasUpgrade("mega", 32) },
         },
         34: {
             title: "Strength Plus",
             description: "Buyables are 2 TIMES AS STRONG!",
-            cost: new Decimal(2.5e32),
+            cost: new Decimal(2e32),
             unlocked() { return hasUpgrade("mega", 33) },
         },
         41: {
@@ -364,9 +364,9 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(100000) }
         },
         5: {
-            requirementDescription: "1e9 MP",
+            requirementDescription: "8e8 MP",
             effectDescription: "Gain 5,000% of Prestige Points every second and keep PU21-24",
-            done() { return player["mega"].points.gte(1e9) }
+            done() { return player["mega"].points.gte(8e8) }
         },
         6: {
             requirementDescription: "1e10 MP",
@@ -379,9 +379,9 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(5e24) }
         },
         8: {
-            requirementDescription: "3e37 MP",
+            requirementDescription: "2.5e37 MP",
             effectDescription: "x1e111 Point Fragments.",
-            done() { return player["mega"].points.gte(3e37) }
+            done() { return player["mega"].points.gte(2.5e37) }
         },
         9: {
             requirementDescription: "1e40 MP",
@@ -395,7 +395,7 @@ addLayer("mega", {
         },
         11: {
             requirementDescription: "1e65 MP",
-            effectDescription: "X2.7 Mega Points",
+            effectDescription: "X2.9 Mega Points",
             done() { return player["mega"].points.gte(1e65) }
         },
         12: {
@@ -561,7 +561,7 @@ addLayer("mega", {
         if (hasUpgrade('rebirth', 34)) mult = mult.times(10)
         if (hasUpgrade('rebirth', 41)) mult = mult.times(1e10)
         if (hasUpgrade('prestige', 34)) mult = mult.times(6e6)
-        if (hasMilestone('mega', 11)) mult = mult.times(2.7)
+        if (hasMilestone('mega', 11)) mult = mult.times(2.9)
         if (hasMilestone('sac', 1)) mult = mult.times(10)
         if (hasMilestone('sac', 11)) mult = mult.times(10)
         if (hasMilestone('sac', 4)) mult = mult.times(2.5e6)

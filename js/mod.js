@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.02: Supreme and Water (Hotfix 2)",
+	num: "2.03: Supreme and Water (Hotfix 3)",
 	name: "Its over e500,000,000!",
 }
 
@@ -26,6 +26,11 @@ Changed Secret Achievement 26 description <br>
 Added reward to Secret Achievement 31 <br>
 Fixed being able to reset water when energy is above e1000 <br>
 Added infobox for water. <br>
+v2.03</h3><br>
+Decreased MU13, MU21-34 price, MM5 and 8. <br>
+Increased MU11 Effect, to x2.9 <br>
+Decreased SU22-SU42 price <br>
+Decreased SM5 Price <br>
 
 Changes (v2.0.0) </h3><br>
 Bye Bye Autobuy… Hello Keep Upgrades! No more autobuying of upgrades! Milestones will keep the upgrades! Added 6 achievements (keep upgs) <br>

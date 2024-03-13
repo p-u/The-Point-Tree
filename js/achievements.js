@@ -313,8 +313,8 @@ addLayer("a", {
         },
         113: {
             name: "Many Supreme",
-            done() { return player.s.points.gte(new Decimal(500)) },
-            tooltip: "400 Supreme Point [Super Exclusive Rarity]. Reward: Unlock 'Supreme Buyable' tab.",
+            done() { return player.s.points.gte(new Decimal(1000)) },
+            tooltip: "1,000 Supreme Point [Super Exclusive Rarity]. Reward: Unlock 'Supreme Buyable' tab.",
         },
         114: {
             name: "Water",
