@@ -31,12 +31,18 @@ addLayer("basic", {
             for(v=8;v<9;v++){ //columns
                 if ((hasMilestone('sac', 27)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
+            for(v=9;v<10;v++){ //columns
+                if ((hasMilestone('sac', 39)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
           }
             for(v=1;v<8;v++){ //columns
               if ((hasMilestone('sac', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
             }
             for(v=8;v<9;v++){ //columns
                 if ((hasMilestone('sac', 31)) && hasUpgrade(this.layer, 85)) keptUpgrades.push(85)
+            }
+            for(v=9;v<10;v++){ //columns
+                if ((hasMilestone('sac', 39)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
             }
     
         // Stage 3, track which main features you want to keep - milestones
@@ -348,6 +354,30 @@ addLayer("basic", {
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 83) },
         },
+        91: {
+            title: "How OP can the 9TH ROW GET??",
+            description: "xe9.99M PF, xe999.99K RP, xe99.99 Energy, x99.99 SP",
+            cost: new Decimal("e279004000"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 85) },
+        },
+        92: {
+            title: "BExp Again",
+            description: "+^0.025 BP",
+            cost: new Decimal("e291288888"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 91) },
+        },
+        93: {
+            title: "PFExp Again",
+            description: "^1.02 PF",
+            cost: new Decimal("e303272500"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 92) },
+        },
+        94: {
+            title: "Multiplicative BP",
+            description: "xe10M BP",
+            cost: new Decimal("e316648000"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 93) },
+        },
 
 
         // dimensional shift
@@ -400,6 +430,12 @@ addLayer("basic", {
             cost: new Decimal("e22290000"),
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 84) },
         },
+        95: {
+            title: "Biggest PF BOOST!!",
+            description: "xe18.2M PF",
+            cost: new Decimal("e322159400"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
+        },
     },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -450,7 +486,10 @@ addLayer("basic", {
         if (hasUpgrade('rebirth', 45)) mult = mult.times("e30103")
         if (hasUpgrade('w', 41)) mult = mult.times("e1e6")
         if (hasUpgrade('s', 54)) mult = mult.times("e500000")
-        if (hasAchievement('sa', 14)) mult = mult.times(1.05)
+        if (hasUpgrade('s', 91)) mult = mult.times("e1e7")
+        if (hasUpgrade('basic', 94)) mult = mult.times("e1e7")
+        if (hasAchievement('sa', 13)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 14)) mult = mult.times(1.1)
         if (hasAchievement('sa', 15)) mult = mult.times(1.1)
         if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
@@ -471,7 +510,10 @@ addLayer("basic", {
         if (hasMilestone('sac', 21)) exp = exp.sub(0.1)
         if (hasUpgrade('rebirth', 25)) exp = exp.sub(0.03)
         if (hasMilestone('e', 12)) exp = exp.sub(0.1)
+        if (hasAchievement("a", 134)) exp = exp.add(0.01)
+        if (hasMilestone('sac', 38)) exp = exp.add(0.02)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
+        if (hasUpgrade('basic', 92)) exp = exp.add(0.025)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)

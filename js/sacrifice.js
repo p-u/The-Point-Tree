@@ -248,7 +248,7 @@ addLayer("sac", {
         33: {
             requirementDescription: "Sacrifice 38 - Finally, a new milestone",
             effectDescription: "Unlock a row of Mega Upgrades, ^1.004 PF",
-            unlocked() {return player["sac"].points.gte(36)},
+            unlocked() {return player["sac"].points.gte(35)},
             done() { return player["sac"].points.gte(38) }
         },
         34: {
@@ -262,6 +262,30 @@ addLayer("sac", {
             effectDescription: "Able to buy max sacrifices.",
             unlocked() {return player["sac"].points.gte(42)},
             done() { return player["sac"].points.gte(45) }
+        },
+        36: {
+            requirementDescription: "Sacrifice 47",
+            effectDescription: "Keep DS3 on reset.",
+            unlocked() {return player["sac"].points.gte(45)},
+            done() { return player["sac"].points.gte(47) }
+        },
+        37: {
+            requirementDescription: "Sacrifice 54",
+            effectDescription: "Unlock a row of Rebirth Upgrades, +^0.02 RP-MP",
+            unlocked() {return player["sac"].points.gte(50)},
+            done() { return player["sac"].points.gte(54) }
+        },
+        38: {
+            requirementDescription: "Sacrifice 59",
+            effectDescription: "Unlock a row of Basic Upgrades, +^0.02 BP, Unlock 1 new RP Milestone",
+            unlocked() {return player["sac"].points.gte(54)},
+            done() { return player["sac"].points.gte(59) }
+        },
+        39: {
+            requirementDescription: "Sacrifice 63",
+            effectDescription: "Keep Row 9 Basic Upgrades, ^1.02 PF",
+            unlocked() {return player["sac"].points.gte(59)},
+            done() { return player["sac"].points.gte(63) }
         },
     },
     challenges: {
@@ -283,8 +307,8 @@ addLayer("sac", {
         13: {
             name: "Sac Challenge 3",
             challengeDescription: "^0.1 PF. [Recommended Sac 24]",
-            canComplete: function() {return player.points.gte("e190750")},
-            goalDescription: "Get e190,750 PF.",
+            canComplete: function() {return player.points.gte("e191200")},
+            goalDescription: "Get e191,200 PF.",
             rewardDescription: "xe400K PF",
             unlocked() { return hasChallenge("sac", 12) },
         },

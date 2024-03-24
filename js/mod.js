@@ -13,11 +13,27 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.03: Supreme and Water (Hotfix 3)",
-	name: "Its over e500,000,000!",
+	num: "2.1: Choice Row Upgs",
+	name: "Its over e1,500,000,000!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v2.1 - Choice Row Upgrades</h3><br>
+
+Changes (v2.0.0) </h3><br>
+Swapped PU3 and 4 position, changed PU3 and 4 price <br>
+Changed price of Sac Challenge 3 Upgs. <br>
+Severely nerfed Secret Achievement Effect <br>
+Added Savebank <br>
+Added Size/Time Comparison <br>
+Changed SystemComponents - Now shows link to discord server <br>
+
+New Content</h3><br>
+Added 6 achievements, with 3 having rewards! <br>
+Added 5 milestones <br>
+Added 1 buyable! <br>
+Added 24 upgrades <br>
+Added 2 new extensions <br>
 <h3>v2.00 - Supreme and Water</h3><br>
 Hotfixes</h3><br>
 v2.01: Added keep energy milestone milestone in sac</h3><br>
@@ -304,6 +320,8 @@ function getPointGen() {
 	if (hasUpgrade('basic', 72)) gain = gain.times("1e500")
 	if (hasUpgrade('basic', 15)) gain = gain.times("1e10000")
 	if (hasUpgrade('basic', 55)) gain = gain.times("1e30000")
+	if (hasUpgrade('basic', 91)) gain = gain.times("e9.99e6")
+	if (hasUpgrade('basic', 95)) gain = gain.times("e18.2e6")
 
 	// reb
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
@@ -318,6 +336,8 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 34)) gain = gain.times(1e200)
 	if (hasUpgrade('rebirth', 41)) gain = gain.times("1e2000")
 	if (hasUpgrade('rebirth', 45)) gain = gain.times("1e200000")
+	if (hasUpgrade('rebirth', 63)) gain = gain.times("e8e6")
+	if (hasUpgrade('rebirth', 65)) gain = gain.times("e12.5e6")
 	// pres
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
@@ -397,6 +417,8 @@ function getPointGen() {
 	if (hasAchievement('a', 106)) gain = gain.times("1e150000")
 	if (hasAchievement('a', 125)) gain = gain.times("e2.8e6")
 	if (hasAchievement('a', 126)) gain = gain.times("e4.51e6")
+	if (hasAchievement('a', 135)) gain = gain.times("e14.141e6")
+	if (hasAchievement('a', 136)) gain = gain.times("e10e6")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -419,10 +441,17 @@ function getPointGen() {
 	if (hasUpgrade('w', 42)) gain = gain.times("e1.5e6")
 	if (hasUpgrade('w', 44)) gain = gain.times("e5e6")
 	if (hasUpgrade('s', 54)) gain = gain.times("e2e6")
+	if (hasUpgrade('s', 61)) gain = gain.times("e1e7")
+	if (hasUpgrade('s', 71)) gain = gain.times("e5e6")
+	if (hasUpgrade('s', 72)) gain = gain.times("e6e6")
+	if (hasUpgrade('s', 73)) gain = gain.times("e8e6")
+	if (hasUpgrade('s', 74)) gain = gain.times("e1e7")
+	if (hasUpgrade('s', 91)) gain = gain.times("e1e6")
 
 	// secret achievements
-	if (hasAchievement('sa', 13)) gain = gain.times(1.1)
-	if (hasAchievement('sa', 14)) gain = gain.times(1.05)
+	if (hasAchievement('sa', 12)) gain = gain.times(1.05)
+	if (hasAchievement('sa', 13)) gain = gain.times(1.05)
+	if (hasAchievement('sa', 14)) gain = gain.times(1.1)
 	if (hasAchievement('sa', 15)) gain = gain.times(1.1)
 	if (hasAchievement('sa', 16)) gain = gain.times(1.1)
 
@@ -431,6 +460,7 @@ function getPointGen() {
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
 	if (hasUpgrade('basic', 54)) gain = gain.pow(1.04)
 	if (hasUpgrade('basic', 72)) gain = gain.pow(1.015)
+	if (hasUpgrade('basic', 93)) gain = gain.pow(1.02)
 	if (hasUpgrade('rebirth', 22)) gain = gain.pow(1.02)
 	if (hasUpgrade('rebirth', 34)) gain = gain.pow(1.06)
 	if (hasUpgrade('prestige', 24)) gain = gain.pow(1.02)
@@ -477,6 +507,11 @@ function getPointGen() {
 	if (hasMilestone('sac', 34)) gain = gain.pow(1.012)
 	if (hasUpgrade('prestige', 35)) gain = gain.pow(1.015)
 	if (hasAchievement('a', 124)) gain = gain.pow(1.014074)
+	if (hasUpgrade('s', 61)) gain = gain.pow(1.01)
+	if (hasUpgrade('s', 63)) gain = gain.pow(1.03)
+	if (hasAchievement('a', 134)) gain = gain.pow(1.01)
+	if (hasUpgrade('rebirth', 65)) gain = gain.pow(1.01)
+	if (hasMilestone('sac', 39)) gain = gain.pow(1.02)
 	return gain
 }
 
@@ -486,11 +521,65 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+	function() {
+		if ((player.points.lte(1e17)) && (player.points.gte(1e15))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(3800000000))) + " fermions."
+		}
+	},
+	function() {
+		if ((player.points.lte(2.75e25)) && (player.points.gte(1e17))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1e17))) + " quarks."		}
+	},
+	function() {
+		if ((player.points.lte(7e29)) && (player.points.gte(2.75e25))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(2.75e25))) + " water molecules."
+		}
+	},
+	function() {
+		if ((player.points.lte(1.7e35)) && (player.points.gte(7e29))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(7e29))) + " red blood cells."
+		}
+	},
+	function() {
+		if ((player.points.lte(8.28e37)) && (player.points.gte(1.7e35))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1.7e35))) + " adult humans."
+		}
+	},
+	function() {
+		if ((player.points.lte(1.2742e42)) && (player.points.gte(8.28e37))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(8.28e37))) + " Burj Khalifas."
+		}
+	},
+	function() {
+		if ((player.points.lte(1.392e44)) && (player.points.gte(1.2742e42))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1.2742e42))) + " Earths."
+		}
+	},
+	function() {
+		if ((player.points.lte(9.460528405e50)) && (player.points.gte(1.392e44))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1.392e44))) + " Suns."
+		}
+	},
+	function() {
+		if ((player.points.lte(9.460528405e62)) && (player.points.gte(9.460528405e50))) {
+			return "If every point was a planck length, the length of all the points stacked together would take light " + format(player.points.div(new Decimal(9.460528405e50))) + " years to travel."
+		}
+	},
+	function() {
+		if ((player.points.lte(9.460528405e68)) && (player.points.gte(9.460528405e62))) {
+			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(9.460528405e62))) + " universes (Assuming 1 universe is 1T ly)."
+		}
+	},
+	function() {
+		if (player.points.gte(9.460528405e68)) {
+			return "If you write 1 number per second, writing down your point amount will need " + formatTime(player.points.add(1).log10()) + "."
+		}
+	},
 ]
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e511300000"))
+	return player.points.gte(new Decimal("e1.555e9"))
 }
 
 

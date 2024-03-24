@@ -196,14 +196,14 @@ addLayer("prestige", {
             done() { return player["prestige"].points.gte(10) }
         },
         3: {
-            requirementDescription: "400 PP",
-            effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
-            done() { return player["prestige"].points.gte(400) }
+            requirementDescription: "200 PP",
+            effectDescription: "Keep Row 5 Basic Point Upgs on Reset",
+            done() { return player["prestige"].points.gte(200) }
         },
         4: {
-            requirementDescription: "1,500 PP",
-            effectDescription: "Keep Row 5 Basic Point Upgs on Reset",
-            done() { return player["prestige"].points.gte(1500) }
+            requirementDescription: "900 PP",
+            effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
+            done() { return player["prestige"].points.gte(900) }
         },
         5: {
             requirementDescription: "20K PP",
@@ -229,6 +229,10 @@ addLayer("prestige", {
         let keptUpgrades = []
         if ((hasMilestone('mega', 2)) && hasUpgrade(this.layer, 21)) keptUpgrades.push(21)
         if (hasMilestone('mega', 5) && hasUpgrade(this.layer, 32)) keptUpgrades.push(32);
+        if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 41)) keptUpgrades.push(41)
+        if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 42)) keptUpgrades.push(42)
+        if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 43)) keptUpgrades.push(43)
+        if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 44)) keptUpgrades.push(44)
 
         for(i=1;i<5;i++){ //rows
             for(v=1;v<2;v++){ //columns
@@ -243,10 +247,9 @@ addLayer("prestige", {
               for(v=5;v<6;v++){ //columns
                 if ((hasMilestone('sac', 32)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
               }
-              if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 41)) keptUpgrades.push(41)
-              if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 42)) keptUpgrades.push(42)
-              if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 43)) keptUpgrades.push(43)
-              if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 44)) keptUpgrades.push(44)
+            for(v=1;v<6;v++){ //columns
+                if ((hasMilestone('sac', 36)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
+            }
           }
       
         // Stage 3, track which main features you want to keep - all upgrades, total points, specific toggles, etc.
@@ -295,6 +298,7 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 15)) mult = mult.times("e100000")
         if (hasUpgrade('prestige', 45)) mult = mult.times("e100000")
         if (hasUpgrade('s', 54)) mult = mult.times("e40000")
+        if (hasUpgrade('rebirth', 64)) mult = mult.times("e111.11e3")
         // secret achievement
         if (hasAchievement('sa', 15)) mult = mult.times(1.1)
         if (hasAchievement('sa', 16)) mult = mult.times(1.1)
@@ -314,6 +318,8 @@ addLayer("prestige", {
         if (hasUpgrade('mega', 83)) exp = exp.add(0.02)
         if (hasUpgrade('prestige', 25)) exp = exp.add(0.02)
         if (hasUpgrade('prestige', 35)) exp = exp.add(0.05)
+        if (hasUpgrade('s', 84)) exp = exp.add(0.025)
+        if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         return exp
     },
     effect(){
@@ -331,6 +337,7 @@ addLayer("prestige", {
         if (hasMilestone('sac', 29)) cap = 0.65
         if (hasUpgrade('prestige', 53)) cap = 0.78
         if (hasUpgrade('prestige', 25)) cap = 0.89
+        if (hasUpgrade('s', 92)) sc = 0.95
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
         softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
         return softcappedEffect

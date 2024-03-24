@@ -586,9 +586,10 @@ addLayer("mega", {
         mult = mult.times(buyableEffect('mega', 12))
         if (hasUpgrade('s', 54)) mult = mult.times("e6000")
         if (hasAchievement('a', 125)) mult = mult.times("e2940")
+        if (hasUpgrade('rebirth', 64)) mult = mult.times("e11.111e3")
 
         // secret achievement
-        if (hasAchievement('sa', 23)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
@@ -602,6 +603,9 @@ addLayer("mega", {
         if (hasMilestone('e', 12)) exp = exp.sub(0.1)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         if (hasUpgrade('mega', 83)) exp = exp.add(0.02)
+        if (hasUpgrade('s', 61)) exp = exp.add(0.01)
+        if (hasUpgrade('s', 82)) exp = exp.add(0.025)
+        if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         return exp
     },
     effect(){

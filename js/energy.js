@@ -198,10 +198,10 @@ addLayer("e", {
         if (hasUpgrade('w', 14)) mult = mult.times(1e10)
         if (hasUpgrade('w', 23)) mult = mult.times(1e25)
         if (hasUpgrade('s', 54)) mult = mult.times(1e20)
+        if (hasUpgrade('basic', 91)) mult = mult.times("1e99.99")
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
-        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -523,31 +523,31 @@ addLayer("e", {
             131: {
                 title: "Challenge 3-Specific Upgrades (Only can be get in Challenge 3, only boosts Challenge 3)",
                 description: "x7777 Energy, x7.77e77 MP",
-                cost: new Decimal(4.8e88),
+                cost: new Decimal(4e106),
                 unlocked() { return inChallenge("sac", 13) },
             },
             132: {
                 title: "Drilling for extra energy",
                 description: "You multiplied your energy production by 250M!!",
-                cost: new Decimal(3.5e93),
+                cost: new Decimal(5e111),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 131) },
             },
             133: {
                 title: "PF Power UP!",
                 description: "^1.05 PF",
-                cost: new Decimal(2.4e103),
+                cost: new Decimal(3e128),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 132) },
             },
             134: {
                 title: "Mega boosts energy GREATLY!",
                 description: "Energy Upgrade 8 is MUCH stronger",
-                cost: new Decimal(2.7e103),
+                cost: new Decimal(4e128),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 133) },
             },
             135: {
                 title: "Energy Reserves",
                 description: "Take some energy from the energy reserves. This leads to a x800K Energy.",
-                cost: new Decimal(6e126),
+                cost: new Decimal(3e146),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 134) },
             },
             141: {

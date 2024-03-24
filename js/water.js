@@ -134,6 +134,7 @@ addLayer("w", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
         if (hasUpgrade('w', 11)) mult = mult.times(2)
         if (hasUpgrade('w', 12)) mult = mult.times(2)
         if (hasUpgrade('w', 13)) mult = mult.times(upgradeEffect('w', 13))
@@ -158,14 +159,16 @@ addLayer("w", {
         if (hasUpgrade('s', 54)) mult = mult.times(10)
         if (hasMilestone('e', 13)) mult = mult.times(10)
         if (hasAchievement('a', 126)) mult = mult.times(45.1)
+        if (hasAchievement('a', 136)) mult = mult.times(1000)
 
-        // secret achievement
-        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
+        
+        if (hasAchievement('sa', 31)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('w', 32)) exp = exp.add(0.01)
+        if (hasUpgrade('s', 61)) exp = exp.add(0.01)
         return exp
     },
     branches: ["s", "e"],

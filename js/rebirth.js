@@ -131,6 +131,30 @@ addLayer("rebirth", {
             cost: new Decimal("e2863400"),
             unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 53) },
         },
+        61: {
+            title: "Rebirthingation",
+            description: "xe596.85750K RP",
+            cost: new Decimal("e59685750"),
+            unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 54) },
+        },
+        62: {
+            title: "Sixty Seventy",
+            description: "+^0.0060 RP, xe700K RP",
+            cost: new Decimal("e60070000"),
+            unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 61) },
+        },
+        63: {
+            title: "Rebirth Fragments",
+            description: "xe8M PF",
+            cost: new Decimal("e61016900"),
+            unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 62) },
+        },
+        64: {
+            title: "1111Quad PLUS",
+            description: "xe1.11M RP, xe111.11K PP, xe11.111K MP, xe111.11 SP",
+            cost: new Decimal("e64250000"),
+            unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 63) },
+        },
 
         // dimensional shift
         15: {
@@ -162,6 +186,12 @@ addLayer("rebirth", {
             description: "Mega Points +^0.05",
             cost: new Decimal("e6815150"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 45) },
+        },
+        65: {
+            title: "Ending it off with a BANG of PF!",
+            description: "PF xe12.5M, PF ^1.01",
+            cost: new Decimal("e65263850"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 64) },
         },
     },
     milestones: {
@@ -195,6 +225,12 @@ addLayer("rebirth", {
             effectDescription: "4 MOAR BP Upgrades",
             done() { return player["rebirth"].points.gte(1000000000) }
         },
+        7: {
+            requirementDescription: "THE ELUSIVE 7TH MILESTONE [E88.88M RP]",
+            effectDescription: "Keep Row 6 Rebirth Upgs",
+            unlocked() {return hasMilestone("sac", 38)},
+            done() { return player["rebirth"].points.gte("e88.88e6") }
+        },
     },
     color: "#0F52BA",
     requires: new Decimal(50000000), // Can be a function that takes requirement increases into account
@@ -206,12 +242,12 @@ addLayer("rebirth", {
     passiveGeneration() {
         if (hasMilestone('mega', 1)) return 10000
         if (hasMilestone('prestige', 5)) return 100
-        if (hasMilestone('prestige', 3)) return 1
+        if (hasMilestone('prestige', 4)) return 1
         return 0
     },
-    doReset(prestige) {
+    doReset(rebirth) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
-        if (layers[prestige].row <= this.row) return;
+        if (layers[rebirth].row <= this.row) return;
     
         // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
         let keptUpgrades = [];
@@ -233,6 +269,11 @@ addLayer("rebirth", {
             for(v=1;v<6;v++){ //columns
                 if ((hasMilestone('s', 1)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
             }
+          }
+        for(i=1;i<6;i++){ //rows
+            for(v=6;v<7;v++){ //columns
+                if ((hasMilestone('rebirth', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
           }
     
         // Stage 3, track which main features you want to keep - milestones
@@ -265,7 +306,7 @@ addLayer("rebirth", {
         if (hasUpgrade('prestige', 13)) mult = mult.times(10)
         if (hasUpgrade('prestige', 14)) mult = mult.times(10)
         if (hasUpgrade('prestige', 21)) mult = mult.times(25)
-        if (hasMilestone('prestige', 3)) mult = mult.times(1000)
+        if (hasMilestone('prestige', 4)) mult = mult.times(1000)
         if (hasUpgrade('prestige', 31)) mult = mult.times(1000)
         if (hasUpgrade('prestige', 33)) mult = mult.times(1e100)
         if (hasUpgrade('mega', 11)) mult = mult.times(10)
@@ -276,13 +317,17 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 45)) mult = mult.times("e13353")
         if (hasUpgrade('w', 42)) mult = mult.times("e50000")
         if (hasUpgrade('s', 54)) mult = mult.times("e120000")
+        if (hasUpgrade('rebirth', 61)) mult = mult.times("e596857.50")
+        if (hasUpgrade('rebirth', 62)) mult = mult.times("e700e3")
+        if (hasUpgrade('rebirth', 64)) mult = mult.times("e1.11e6")
+        if (hasUpgrade('basic', 91)) mult = mult.times("e999.99e3")
 
         // secret achievement
-        if (hasAchievement('sa', 14)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 14)) mult = mult.times(1.1)
         if (hasAchievement('sa', 15)) mult = mult.times(1.1)
         if (hasAchievement('sa', 16)) mult = mult.times(1.1)
-        if (hasAchievement('sa', 21)) mult = mult.times(1.2)
-        if (hasAchievement('sa', 22)) mult = mult.times(2)
+        if (hasAchievement('sa', 21)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 22)) mult = mult.times(1.25)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -303,6 +348,8 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.15)
         if (hasMilestone('e', 12)) exp = exp.sub(0.2)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
+        if (hasMilestone('sac', 37)) exp = exp.add(0.02)
+        if (hasUpgrade('rebirth', 62)) exp = exp.add(0.0060)
         return exp
     },
     effect(){
@@ -323,6 +370,7 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 53)) sc = 0.73
         if (hasUpgrade('rebirth', 54)) sc = 0.77
         if (hasUpgrade('rebirth', 15)) sc = 0.8
+        if (hasUpgrade('s', 92)) sc = 0.865
         softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
         let sprcap = 0.4
         if (hasUpgrade('rebirth', 44)) sprcap = 0.45

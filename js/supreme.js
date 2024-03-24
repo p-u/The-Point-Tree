@@ -194,7 +194,7 @@ addLayer("s", {
         },
         51: {
             title: "Compounding 9",
-            description: "xe1M PF, x1.8 SP",
+            description: "Supreme boosts itself",
             cost: new Decimal(1.7e19),
             unlocked() { return hasUpgrade("mega", 84) && hasUpgrade("s", 44) },
             effect() {
@@ -236,6 +236,172 @@ addLayer("s", {
             cost: new Decimal(7e33),
             unlocked() { return hasUpgrade("s", 53) },
         },
+        61: {
+            title: "Game-Changer",
+            description: "^1.01 PF, xe10,000,000 PF [WOW!!]",
+            cost: new Decimal(2e41),
+            unlocked() { return hasUpgrade("s", 54) },
+        },
+        62: {
+            title: "Buyable Stronk",
+            description: "SB1 and SB3 is stronger",
+            cost: new Decimal(1.25e46),
+            unlocked() { return hasUpgrade("s", 61) },
+        },
+        63: {
+            title: "Supremacy Buyable",
+            description: "^1.03 PF, Supreme Strong, but scales insanely",
+            cost: new Decimal(1.1e50),
+            unlocked() { return hasUpgrade("s", 62) },
+        },
+        64: {
+            title: "SP Gets Boosted based on PF.",
+            description: "Yeah.",
+            effect() {
+                let sppfbe = 0.0000000025
+                let eff = player.points.add(1).pow(sppfbe)
+                eff = softcap(eff, new Decimal("1e100"), 0.5)
+                return eff
+            },
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e100")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Supreme Points by " + format(upgEffect)+"x" + softcapDescription
+            },
+            cost: new Decimal(2.5e59),
+            unlocked() { return hasUpgrade("s", 63) },
+        },
+        71: {
+            title: "Massive Choice Upgrades (1: xe5M PF)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("1.2e61")
+                if (hasUpgrade("s", 84)) price = new Decimal ("3.3e72")
+                return price
+            },
+            unlocked() { 
+                if (hasUpgrade("s", 64)) {
+                    if (hasUpgrade("s", 81)) {
+                        if (hasUpgrade("s", 84)) {
+                            return true;
+                        } else {
+                            if (hasUpgrade("s", 74)) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        }
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return false; // or any other appropriate behavior
+                }
+            },            
+        },
+        72: {
+            title: "Massive Choice Upgrades (2: xe6M PF)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("4e62")
+                if (hasUpgrade("s", 84)) price = new Decimal ("1.125e74")
+                return price
+            },
+            unlocked() { return hasUpgrade("s", 71) },
+        },
+        73: {
+            title: "Massive Choice Upgrades (3: xe8M PF)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("5e66")
+                if (hasUpgrade("s", 84)) price = new Decimal ("6.6e75")
+                return price
+            },
+            unlocked() { return hasUpgrade("s", 72) },
+        },
+        74: {
+            title: "Massive Choice Upgrades (4: xe10M PF)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("1e69")
+                if (hasUpgrade("s", 84)) price = new Decimal ("1.9e78")
+                return price
+            },
+            unlocked() { return hasUpgrade("s", 73) },
+        },
+        81: {
+            title: "Massive Choice Upgrades (1: x50 SP)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("1.2e61")
+                if (hasUpgrade("s", 74)) price = new Decimal ("1e72")
+                return price
+            },
+            unlocked() { 
+                if (hasUpgrade("s", 64)) {
+                    if (hasUpgrade("s", 71)) {
+                        if (hasUpgrade("s", 74)) {
+                            return true
+                        } else {
+                            if (hasUpgrade("s", 84)) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        }
+                    } else {
+                        return true
+                    }
+                } else {
+                    return false
+                }
+            },    
+        },                    
+        82: {
+            title: "Massive Choice Upgrades (2: +^0.025 MP)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("7e62")
+                if (hasUpgrade("s", 74)) price = new Decimal ("7.35e73")
+                return price
+            },
+            unlocked() { return hasUpgrade("s", 81) },
+        },
+        83: {
+            title: "Massive Choice Upgrades (3: Supremacy Buyable is Stronger)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("8e66")
+                if (hasUpgrade("s", 74)) price = new Decimal ("4e75")
+                return price
+            },
+            unlocked() { return hasUpgrade("s", 82) },
+        },
+        84: {
+            title: "Massive Choice Upgrades (4: +^0.025 PP)",
+            description: "Choose one row. 7 or 8. The other row scales in price immensely.",
+            cost:() => {
+                let price = new Decimal("1.7e71")
+                if (hasUpgrade("s", 74)) price = new Decimal ("1.45e80")
+                return price
+            },
+            unlocked() { return hasUpgrade("s", 83) },
+        },
+        91: {
+            title: "Basic Love",
+            description: "xe10M BP. x1.0M PF",
+            cost: new Decimal(3.33e81),
+            unlocked() { return hasUpgrade("s", 84) },
+        },
+        92: {
+            title: "Less Nerfs",
+            description: "Rebirth and Prestige Softcap is weaker",
+            cost: new Decimal(1e105),
+            unlocked() { return hasUpgrade("s", 91) },
+        },
     },
     buyables: {
         11: {
@@ -260,6 +426,7 @@ addLayer("s", {
             let base1 = new Decimal(1.3)
             if (hasUpgrade('s', 23)) base1 = new Decimal(1.4)
             if (hasUpgrade('s', 53)) base1 = new Decimal(1.45)
+            if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
             let base2 = x
             let expo = new Decimal(1.001)
             let eff = base1.pow(Decimal.pow(base2, expo))
@@ -313,6 +480,34 @@ addLayer("s", {
         },
         effect(x) {
             let base1 = new Decimal(1.38)
+            if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
+            let base2 = x
+            let expo = new Decimal(1.005)
+            let eff = (base1.pow(Decimal.pow(base2, expo))-1)
+            return eff
+        },
+    },
+    14: {
+        title: "Supreme Buyable 4: Supremacy",
+        unlocked() { return (hasUpgrade('s', 63)) },
+        cost(x) {
+            let exp2 = 3
+            return new Decimal(1e50).mul(Decimal.pow(1.5, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+        },
+        display() {
+            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply SP AND WATER by " + format(buyableEffect(this.layer, this.id)) + "."
+        },
+        canAfford() {
+            return player[this.layer].points.gte(this.cost())
+        },
+        buy() {
+            let cost = new Decimal (1)
+            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+        },
+        effect(x) {
+            let base1 = new Decimal(100)
+            if (hasUpgrade('s', 83)) base1 = new Decimal(1000)
             let base2 = x
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
@@ -323,6 +518,7 @@ addLayer("s", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         mult = mult.times(buyableEffect('s', 11))
+        if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
         if (hasUpgrade('w', 21)) mult = mult.times(1.25)
         if (hasUpgrade('w', 24)) mult = mult.times(3)
         if (hasUpgrade('s', 43)) mult = mult.times(1.8)
@@ -335,20 +531,26 @@ addLayer("s", {
         if (hasUpgrade('s', 54)) mult = mult.times(3.162277)
         if (hasMilestone('e', 13)) mult = mult.times(2.5)
         if (hasAchievement('a', 126)) mult = mult.times(4.51)
+        if (hasUpgrade('sac', 11)) mult = mult.times(10)
+        if (hasUpgrade('s', 64)) mult = mult.times(upgradeEffect('s', 64))
+        if (hasUpgrade('s', 81)) mult = mult.times(50)
+        if (hasUpgrade('rebirth', 64)) mult = mult.times(111.11)
+        if (hasUpgrade('basic', 91)) mult = mult.times(99.99)
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)
         if (hasAchievement('sa', 26)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 31)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 31)) mult = mult.times(1.05)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
+        if (hasUpgrade('s', 61)) exp = exp.add(0.01)
         return exp
     },
     row: 5, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
-        {key: "p", description: "P: Supreme (because s is taken)!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "u", description: "U: Supreme (because s,p,r is taken)!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     branches: ["mega", "sac", "e"],
 })
