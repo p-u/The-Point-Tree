@@ -14,7 +14,7 @@ addLayer("basic", {
         let keptUpgrades = [];
         for(i=1;i<5;i++){ //rows
             for(v=1;v<4;v++){ //columns
-              if ((hasMilestone('rebirth', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              if ((hasMilestone('rebirth', 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
             for(v=4;v<5;v++){ //columns
                 if ((hasMilestone('rebirth', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)

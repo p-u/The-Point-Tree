@@ -500,7 +500,7 @@ addLayer("a", {
         136: {
             name: "[CRITICAL Warning] Too Much Water!",
             done() { return player.w.points.gte(new Decimal(1e115)) },
-            tooltip: "Get 4e51 Water. Reward: x1000 Water, xe10M PF",
+            tooltip: "Get 1e115 Water. Reward: x1000 Water, xe10M PF",
         },
     tabFormat: [
         "blank", 
