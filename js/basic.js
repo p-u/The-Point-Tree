@@ -20,7 +20,7 @@ addLayer("basic", {
                 if ((hasMilestone('rebirth', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
               }
             for(v=5;v<6;v++){ //columns
-                if ((hasMilestone('prestige', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+                if ((hasMilestone('prestige', 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
             for(v=6;v<7;v++){ //columns
                 if ((hasMilestone('mega', 6)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
