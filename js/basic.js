@@ -252,7 +252,7 @@ addLayer("basic", {
         61: {
             title: "Already a lot",
             description: "Multiply point fragments by...1e25...",
-            cost: new Decimal("e3975"),
+            cost: new Decimal("e3960"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 54) },
         },
         62: {
@@ -264,13 +264,13 @@ addLayer("basic", {
         63: {
             title: "Mega Insane",
             description: "Mega Upgrade 4 is boosted.",
-            cost: new Decimal("e5700"),
+            cost: new Decimal("e5680"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 62) },
         },
         64: {
             title: "Quite a lot",
             description: "Point fragments x1e50",
-            cost: new Decimal("e6400"),
+            cost: new Decimal("e6250"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 63) },
         },
         71: {

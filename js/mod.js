@@ -13,20 +13,33 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.1: Choice Row Upgs",
+	num: "2.2a: Mega Prices Rework",
 	name: "Its over e1,500,000,000!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+v2.2a (Mega Prices Rework)</h3><br>
+Decreased MU12, 14, 22 Prices <br>
+Decreased MM1, MM3, MM4, MM8, MM10 Prices <br>
+Decreased RU34, BU61, 63, 64 Prices <br>
+Increased MU23, MM2, MM8, MM11 Prices <br>
+Nerfed MU11 effect and buffed MU12. <br>
+Changed PU32 to be kept at MU7 instead of MU5. Also let PU31 be kept at MU7. <br>
+Changed Ach51 desc, increased Ach52 req and decreased Ach55 req. <br>
 <h3>v2.1 - Choice Row Upgrades</h3><br>
 
-Changes (v2.0.0) </h3><br>
+Changes (v2.1) </h3><br>
 Swapped PU3 and 4 position, changed PU3 and 4 price <br>
 Changed price of Sac Challenge 3 Upgs. <br>
 Severely nerfed Secret Achievement Effect <br>
 Added Savebank <br>
 Added Size/Time Comparison <br>
 Changed SystemComponents - Now shows link to discord server <br>
+Hotfixes</h3><br>
+v2.11: Fixed Supreme Savebank not working</h3><br>
+v2.12: Fixed Ach136 desc, fixed basic R4 keeping at RM4 instead of RM3</h3><br>
+v2.121: Fixed SA31 req</h3><br>
+v2.13: fixed basic R5 keeping at PM4 instead of PM3</h3><br>
 
 New Content</h3><br>
 Added 6 achievements, with 3 having rewards! <br>
@@ -352,8 +365,8 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 51)) gain = gain.times("e600000")
 	if (hasUpgrade('prestige', 55)) gain = gain.times("e2.8e6")
 	// mega
-	if (hasUpgrade('mega', 11)) gain = gain.times(10e6)
-	if (hasUpgrade('mega', 12)) gain = gain.times(10e9)
+	if (hasUpgrade('mega', 11)) gain = gain.times(1e10)
+	if (hasUpgrade('mega', 12)) gain = gain.times(1e7)
 	if (hasUpgrade('mega', 21)) gain = gain.times(1e50)
 	if (hasUpgrade('mega', 24)) gain = gain.times(1e15)
 	if (hasMilestone('mega', 8)) gain = gain.times(1e111)

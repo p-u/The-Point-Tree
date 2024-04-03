@@ -233,14 +233,14 @@ addLayer("a", {
             tooltip: "A mystery... But it is over e10,000 points and below e10,250. Reward: x1e68 PF.",
         },
         51: {
-            name: "Prestige Automation",
+            name: "More Pres Keep",
             done() { return (hasMilestone('mega', 5)) },
             tooltip: "Mega Milestone 5",
         },
         52: {
             name: "So many Megas!",
-            done() { return  player.mega.points.gte(1e18) },
-            tooltip: "Have 1e18 Mega Points. Reward: x1e18 Prestige Points.",
+            done() { return  player.mega.points.gte(1.8e18) },
+            tooltip: "Have 1.8e18 Mega Points. Reward: x1e18 Prestige Points.",
         },
         53: {
             name: "Are you able to buy?",
@@ -254,7 +254,7 @@ addLayer("a", {
         },
         55: {
             name: "Seemingly Random Version 2",
-            done() { return  player.points.gte(new Decimal("e32872")) },
+            done() { return  player.points.gte(new Decimal("e32772")) },
             tooltip: "A mystery... But it is over e32,500 points and below e33,000. Reward: x2.72e272 PF.",
         },
         56: {

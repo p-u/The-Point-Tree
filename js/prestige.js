@@ -228,7 +228,8 @@ addLayer("prestige", {
         // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 11, Challenge 32, Buyable 12
         let keptUpgrades = []
         if ((hasMilestone('mega', 2)) && hasUpgrade(this.layer, 21)) keptUpgrades.push(21)
-        if (hasMilestone('mega', 5) && hasUpgrade(this.layer, 32)) keptUpgrades.push(32);
+        if (hasMilestone('mega', 7) && hasUpgrade(this.layer, 31)) keptUpgrades.push(31);
+        if (hasMilestone('mega', 7) && hasUpgrade(this.layer, 32)) keptUpgrades.push(32);
         if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 41)) keptUpgrades.push(41)
         if ((hasMilestone('sac', 15)) && hasUpgrade(this.layer, 42)) keptUpgrades.push(42)
         if ((hasMilestone('sac', 26)) && hasUpgrade(this.layer, 43)) keptUpgrades.push(43)

@@ -104,13 +104,13 @@ addLayer("mega", {
     upgrades: {
         11: {
             title: "Mega upgrades come with MEGA boosts.",
-            description: "x10M PF, x1K BP, x10 RP",
+            description: "x10B PF, x1K BP, x10 RP",
             cost: new Decimal(1),
         },
         12: {
             title: "How about another upgrade?",
-            description: "x250 RP and x10B PF",
-            cost: new Decimal(2),
+            description: "x250 RP and x10M PF",
+            cost: new Decimal(1),
             unlocked() { return hasUpgrade("mega", 11) },
         },
         13: {
@@ -120,9 +120,9 @@ addLayer("mega", {
             unlocked() { return hasUpgrade("mega", 12) },
         },
         14: {
-            title: "More upgrades?",
+            title: "Price Jump",
             description: "Prestige Points gets boosted based on itself.",
-            cost: new Decimal(500),
+            cost: new Decimal(450),
             unlocked() { return hasUpgrade("mega", 13) },
             effect() {
                 let mu4exp = 0.055
@@ -142,13 +142,13 @@ addLayer("mega", {
         22: {
             title: "123 Exponent",
             description: "+^0.01 PP, +^0.02 RP, +^0.03 BP",
-            cost: new Decimal(225e6),
+            cost: new Decimal(150e6),
             unlocked() { return hasUpgrade("mega", 21) },
         },
         23: {
             title: "Exponents",
             description: "^1.03 Point Fragments...",
-            cost: new Decimal(4.5e9),
+            cost: new Decimal(5e9),
             unlocked() { return hasUpgrade("mega", 22) },
         },
         24: {
@@ -344,24 +344,24 @@ addLayer("mega", {
     },
     milestones: {
         1: {
-            requirementDescription: "3 MP",
+            requirementDescription: "2 MP",
             effectDescription: "Generate 1B% of Basic Points a second AND 1M% of Rebirth Points a second",
-            done() { return player["mega"].points.gte(3) }
+            done() { return player["mega"].points.gte(2) }
         },
         2: {
-            requirementDescription: "15 MP",
+            requirementDescription: "20 MP",
             effectDescription: "Keep Prestige Milestones and Prestige upgrade 21",
-            done() { return player["mega"].points.gte(15) }
+            done() { return player["mega"].points.gte(20) }
         },
         3: {
-            requirementDescription: "2,000 MP",
+            requirementDescription: "1,600 MP",
             effectDescription: "Get an extension to Basic Upgrades.",
-            done() { return player["mega"].points.gte(2000) }
+            done() { return player["mega"].points.gte(1600) }
         },
         4: {
-            requirementDescription: "100,000 MP",
+            requirementDescription: "70,000 MP",
             effectDescription: "Gain 100% of Prestige Points every second and keep PU11-14.",
-            done() { return player["mega"].points.gte(100000) }
+            done() { return player["mega"].points.gte(70000) }
         },
         5: {
             requirementDescription: "8e8 MP",
@@ -375,28 +375,28 @@ addLayer("mega", {
         },
         7: {
             requirementDescription: "5e24 MP",
-            effectDescription: "Extend Rebirth Upgrades.",
+            effectDescription: "Extend Rebirth Upgrades and keep PU31 and PU32.",
             done() { return player["mega"].points.gte(5e24) }
         },
         8: {
-            requirementDescription: "2.5e37 MP",
+            requirementDescription: "2e37 MP",
             effectDescription: "x1e111 Point Fragments.",
-            done() { return player["mega"].points.gte(2.5e37) }
+            done() { return player["mega"].points.gte(2e37) }
         },
         9: {
-            requirementDescription: "1e40 MP",
+            requirementDescription: "1e43 MP",
             effectDescription: "Keep RU33 and RU34 on Reset",
-            done() { return player["mega"].points.gte(1e40) }
+            done() { return player["mega"].points.gte(1e43) }
         },
         10: {
-            requirementDescription: "6e44 MP",
+            requirementDescription: "4e44 MP",
             effectDescription: "Extend Prestige Upgrades.",
-            done() { return player["mega"].points.gte(6e44) }
+            done() { return player["mega"].points.gte(4e44) }
         },
         11: {
-            requirementDescription: "1e65 MP",
+            requirementDescription: "4e65 MP",
             effectDescription: "X2.9 Mega Points",
-            done() { return player["mega"].points.gte(1e65) }
+            done() { return player["mega"].points.gte(4e65) }
         },
         12: {
             requirementDescription: "1e110 MP",

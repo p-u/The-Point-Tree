@@ -80,7 +80,7 @@ addLayer("rebirth", {
         34: {
             title: "THE BIG TRADE-OFF",
             description: "Basic Point Exponent -^0.08, BUT Point Fragments ^1.06, Mega Points x10, Point Fragments x1e200",
-            cost: new Decimal("e2700"),
+            cost: new Decimal("e2695"),
             unlocked() { return hasMilestone("mega", 7) && hasUpgrade("rebirth", 33) },
         },
         41: {
