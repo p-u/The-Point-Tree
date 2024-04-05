@@ -18,7 +18,10 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-v2.2a (Mega Prices Rework)</h3><br>
+v2.2b<br>
+Made ee and e start at e12, instead of e9. <br>
+Made SA31 do the right value. <br>
+<h3>v2.2a (Mega Prices Rework)</h3><br>
 Decreased MU12, 14, 22 Prices <br>
 Decreased MM1, MM3, MM4, MM8, MM10 Prices <br>
 Decreased RU34, BU61, 63, 64 Prices <br>

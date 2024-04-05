@@ -146,7 +146,7 @@ addLayer("sa", {
         31: {
             name: "True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1555737048")) {
+                   if (player.points.gte("e1554710000")) {
                        return true
                    }
                },
