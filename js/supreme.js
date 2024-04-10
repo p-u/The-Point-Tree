@@ -555,6 +555,7 @@ addLayer("s", {
         if (hasUpgrade('s', 81)) mult = mult.times(50)
         if (hasUpgrade('rebirth', 64)) mult = mult.times(111.11)
         if (hasUpgrade('basic', 91)) mult = mult.times(99.99)
+        if (hasUpgrade('w', 51)) mult = mult.times(1e7)
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)

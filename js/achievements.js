@@ -584,9 +584,9 @@ addLayer("a", {
             tooltip: "Continue on.",
         },
         154: {
-            name: "5.2",
-            done() { return player.points.gte(new Decimal("e5.2e9")) },
-            tooltip: "Get e5.2B PF. Reward: xe52M PF",
+            name: "5.378",
+            done() { return player.points.gte(new Decimal("e5.378e9")) },
+            tooltip: "Get e5.378B PF. Reward: xe53.78M PF",
         },
     tabFormat: [
         "blank", 

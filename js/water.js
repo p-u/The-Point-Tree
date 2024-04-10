@@ -50,6 +50,7 @@ addLayer("w", {
                 if (hasUpgrade('w', 31)) w3exp = 0.13
                 if (hasUpgrade('w', 43)) w3exp = 0.145
                 if (hasMilestone('w', 1)) w3exp = 0.16
+                if (hasUpgrade('w', 52)) w3exp = 0.175
                 return player["w"].points.add(1).pow(w3exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -132,6 +133,30 @@ addLayer("w", {
             cost: new Decimal(1.1e32),
             unlocked() { return hasUpgrade("w", 43) },
         },
+        51: {
+            title: "Water, Woo!",
+            description: "x10T Water, x10M SP",
+            cost: new Decimal(6e257),
+            unlocked() { return hasMilestone("sac", 45) },
+        },
+        52: {
+            title: "More itself",
+            description: "WU13 is stronger",
+            cost: new Decimal(3e274),
+            unlocked() { return hasMilestone("sac", 45) },
+        },
+        53: {
+            title: "Strong Water",
+            description: "x1 Qi Water, xe28M PF",
+            cost: new Decimal(1e280),
+            unlocked() { return hasMilestone("sac", 45) },
+        },
+        54: {
+            title: "Break Infinity",
+            description: "^1.011 PF",
+            cost: new Decimal(5e307),
+            unlocked() { return hasMilestone("sac", 45) },
+        },
     },
     milestones: {
         1: {
@@ -170,6 +195,8 @@ addLayer("w", {
         if (hasAchievement('a', 126)) mult = mult.times(45.1)
         if (hasAchievement('a', 136)) mult = mult.times(1000)
         if (hasMilestone('e', 14)) mult = mult.times(1e6)
+        if (hasUpgrade('w', 51)) mult = mult.times(1e13)
+        if (hasUpgrade('w', 53)) mult = mult.times(1e18)
 
         
         if (hasAchievement('sa', 32)) mult = mult.times(1.05)

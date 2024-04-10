@@ -459,7 +459,7 @@ function getPointGen() {
 	if (hasAchievement('a', 135)) gain = gain.times("e14.141e6")
 	if (hasAchievement('a', 136)) gain = gain.times("e10e6")
 	if (hasAchievement('a', 146)) gain = gain.times("e9.6e6")
-	if (hasAchievement('a', 154)) gain = gain.times("e52e6")
+	if (hasAchievement('a', 154)) gain = gain.times("e53.78e6")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -488,6 +488,7 @@ function getPointGen() {
 	if (hasUpgrade('s', 73)) gain = gain.times("e8e6")
 	if (hasUpgrade('s', 74)) gain = gain.times("e1e7")
 	if (hasUpgrade('s', 91)) gain = gain.times("e1e6")
+	if (hasUpgrade('w', 53)) gain = gain.times("e28e6")
 
 	// secret achievements
 	if (hasAchievement('sa', 12)) gain = gain.times(1.05)
@@ -575,6 +576,8 @@ function getPointGen() {
 		if (hasMilestone("e", 18)) gain = gain.pow(1.3)
 	}
 	if (hasChallenge("m", 11)) gain = gain.pow(1.12)
+	if (hasMilestone('sac', 45)) gain = gain.pow(1.0081)
+	if (hasUpgrade('w', 54)) gain = gain.pow(1.011)
 	return gain
 }
 
@@ -642,7 +645,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e5611000000"))
+	return player.points.gte(new Decimal("e6313175000"))
 }
 
 

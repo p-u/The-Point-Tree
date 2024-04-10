@@ -470,7 +470,7 @@ addLayer("basic", {
             effectDescription: "^1.05 PF",
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player.points.gte("e92811780")) {
+                    if (player.points.gte("e9081178")) {
                         return true
                     }
                 }
@@ -482,8 +482,10 @@ addLayer("basic", {
             effectDescription: "^1.15 PF, x1K Energy",
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player.points.gte("e11780000")) {
-                        return true
+                    if (hasMilestone("sac", 10)) {
+                        if (player.points.gte("e11780000")) {
+                            return true
+                        }
                     }
                 }
             },

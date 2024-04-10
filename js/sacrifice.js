@@ -318,6 +318,12 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(75)},
             done() { return player["sac"].points.gte(79) }
         },
+        45: {
+            requirementDescription: "Sacrifice 81",
+            effectDescription: "^1.0081 PF, More Water Upgs",
+            unlocked() {return player["sac"].points.gte(78)},
+            done() { return player["sac"].points.gte(81) }
+        },
     },
     challenges: {
         11: {

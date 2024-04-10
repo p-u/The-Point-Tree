@@ -456,7 +456,6 @@ addLayer("mega", {
                     }
                 }
             },
-            done() { return player["mega"].points.gte("9.78e978") }
         },
         20: {
             requirementDescription: "[MCS] e1210 MP [Req Sac 10]",
