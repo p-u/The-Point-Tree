@@ -49,6 +49,7 @@ addLayer("w", {
                 let w3exp = 0.111
                 if (hasUpgrade('w', 31)) w3exp = 0.13
                 if (hasUpgrade('w', 43)) w3exp = 0.145
+                if (hasMilestone('w', 1)) w3exp = 0.16
                 return player["w"].points.add(1).pow(w3exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -132,6 +133,14 @@ addLayer("w", {
             unlocked() { return hasUpgrade("w", 43) },
         },
     },
+    milestones: {
+        1: {
+            requirementDescription: "The First Water Milestone (3.33e135 Water)",
+            effectDescription: "^1.025 PF, WU13 is stronger",
+            done() { return player["e"].points.gte("3.33e135") },
+            unlocked() {return player["sac"].points.gte(64)},
+        },
+    },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
@@ -160,15 +169,19 @@ addLayer("w", {
         if (hasMilestone('e', 13)) mult = mult.times(10)
         if (hasAchievement('a', 126)) mult = mult.times(45.1)
         if (hasAchievement('a', 136)) mult = mult.times(1000)
+        if (hasMilestone('e', 14)) mult = mult.times(1e6)
 
         
-        if (hasAchievement('sa', 31)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 32)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 33)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 34)) mult = mult.times(1.25)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('w', 32)) exp = exp.add(0.01)
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
+        if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
     branches: ["s", "e"],

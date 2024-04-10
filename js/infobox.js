@@ -36,6 +36,9 @@ addLayer("i", {
                 "blank",
                 "blank",
                 ["infobox", "challenge"],
+                "blank",
+                "blank",
+                ["infobox", "repups"],
             ],
         },
         "Basic Layer": {
@@ -84,6 +87,14 @@ addLayer("i", {
                 "blank",
             ],
         },
+        "Mastery": {
+            unlocked() { return player.s.points.gte(1)},
+            content: [
+                ["infobox", "mastery"],
+                "blank",
+                "blank",
+            ],
+        },
     },
     infoboxes: {
         main: {
@@ -105,7 +116,7 @@ addLayer("i", {
         },
         reb: {
             title: "The rebirth Layer",
-            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000" },
+            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000 and Hypercaps at xe200M." },
             unlocked() { return (hasUpgrade('basic', 34))}
         },
         ext: {
@@ -124,7 +135,7 @@ addLayer("i", {
             unlocked() { return (hasMilestone('rebirth', 1))}
         },
         keep: {
-            title: "Keeping Upgrades",
+            title: "Keeping Upgrades, and Milestones",
             body() { return "At 100 RP, Upgrade Keeping is unlocked. This allows you to click less for a new layer." },
             unlocked() { return (hasMilestone('rebirth', 3))}
         },
@@ -177,6 +188,16 @@ addLayer("i", {
             title: "The Water Layer",
             body() { return "Basically, a more advanced version of energy. Boosts energy." },
             unlocked() { return player.w.points.gte(new Decimal("1"))}
+        },
+        mastery: {
+            title: "The Mastery Layer",
+            body() { return "The king of all layers. Resets all layers when going into challenge, even future ones! Buy all previous column's upgrades to unlock a new column. Stacks up to 5. Unlock new rows by completing mastery challenge." },
+            unlocked() { return player.m.points.gte(new Decimal("1"))}
+        },
+        repups: {
+            title: "Rep Upgrades",
+            body() { return "Does it repeatedly. Can be a formula, or just a static boost. Also can boost multiple things at once." },
+            unlocked() { return player.mega.points.gte(new Decimal("1"))}
         },
     },
 }, 

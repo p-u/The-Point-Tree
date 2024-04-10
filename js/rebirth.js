@@ -231,6 +231,24 @@ addLayer("rebirth", {
             unlocked() {return hasMilestone("sac", 38)},
             done() { return player["rebirth"].points.gte("e88.88e6") }
         },
+        8: {
+            requirementDescription: "Further expanding effect of PU24 (e116,292,900 RP)",
+            effectDescription: "PU24 softcap starts at e2.5M instead of e1.111M.",
+            unlocked() {return hasMilestone("sac", 40)},
+            done() { return player["rebirth"].points.gte("e116292900") }
+        },
+        9: {
+            requirementDescription: "Keep Basic Milestones [MCS] - e700K RP",
+            effectDescription: "",
+            unlocked() {return inChallenge("m", 11)},
+            done() { return player["rebirth"].points.gte("e700000") }
+        },
+        10: {
+            requirementDescription: "Power Up Plus",
+            effectDescription: "^1.25 PF, +^0.25 MP",
+            unlocked() {return hasMilestone("rebirth", 9) && inChallenge("m", 11)},
+            done() { return player["rebirth"].points.gte("2.4e242024") }
+        },
     },
     color: "#0F52BA",
     requires: new Decimal(50000000), // Can be a function that takes requirement increases into account
@@ -323,8 +341,7 @@ addLayer("rebirth", {
         if (hasUpgrade('basic', 91)) mult = mult.times("e999.99e3")
 
         // secret achievement
-        if (hasAchievement('sa', 14)) mult = mult.times(1.1)
-        if (hasAchievement('sa', 15)) mult = mult.times(1.1)
+        if (hasAchievement('sa', 15)) mult = mult.times(1.05)
         if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
         if (hasAchievement('sa', 22)) mult = mult.times(1.25)
@@ -350,6 +367,10 @@ addLayer("rebirth", {
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         if (hasUpgrade('rebirth', 62)) exp = exp.add(0.0060)
+        if (inChallenge("m", 11)) {
+            if (hasMilestone('e', 15)) exp = exp.add(0.15)
+        }
+        if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
     effect(){
@@ -377,6 +398,8 @@ addLayer("rebirth", {
         if (hasUpgrade('basic', 65)) sprcap = 0.5
         if (hasUpgrade('rebirth', 35)) sprcap = 0.725
         softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
+        let hyprcap = 0.3
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e200000000"), new Decimal(hyprcap))
         return softcappedEffect
        },
         effectDescription() {
@@ -387,6 +410,9 @@ addLayer("rebirth", {
             }
             if (layerEffect.gte(new Decimal("e100000")) ) {
                 softcapDescription = " (Supercapped)"
+            }
+            if (layerEffect.gte(new Decimal("e200000000")) ) {
+                softcapDescription = " (Hypercapped)"
             }
             let des = "which is boosting point fragments by x" + format(layerEffect) + softcapDescription
             return des;

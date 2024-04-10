@@ -47,6 +47,8 @@ addLayer("basic", {
     
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
+        if (hasMilestone("sac", 41)) keep.push("milestones");
+        if (hasMilestone("rebirth", 9)) keep.push("milestones");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -148,6 +150,7 @@ addLayer("basic", {
                 if (inChallenge("sac", 12)) expu8 = 0
                 let eff = player.points.add(1).pow(expu8)
                 eff = softcap(eff, new Decimal("1e40000000"), 0.5)
+                eff = softcap(eff, new Decimal("1e200000000"), 0.4)
                 return eff
             },
             effectDisplay() {
@@ -155,6 +158,9 @@ addLayer("basic", {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 if (upgEffect.gte(new Decimal("e40000000")) ) {
                     softcapDescription = " (Softcapped)"
+                }
+                if (upgEffect.gte(new Decimal("e200000000")) ) {
+                    softcapDescription = " (Supercapped)"
                 }
                 return "This upgrade boosts Point Fragments by " + format(upgEffect)+"x" + softcapDescription
             },
@@ -177,6 +183,7 @@ addLayer("basic", {
                 if (inChallenge("sac", 12)) expu10 = 0
                 let eff = player.points.add(500000).pow(expu10)
                 eff = softcap(eff, new Decimal("1e100000000"), 0.5)
+                eff = softcap(eff, new Decimal("1e2500000000"), 0.4)
                 return eff
             },
             effectDisplay() {
@@ -316,6 +323,7 @@ addLayer("basic", {
             effect() {
                 let bb2exp = 0.0004
                 if (hasUpgrade('basic', 85)) bb2exp = 0.0006
+                if (hasUpgrade('m', 33)) bb3exp = 0.000725
                 return player.points.add(1).pow(bb2exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -328,6 +336,7 @@ addLayer("basic", {
             effect() {
                 let bb3exp = 0.0000175
                 if (hasUpgrade('basic', 85)) bb3exp = 0.0000225
+                if (hasUpgrade('m', 33)) bb3exp = 0.000036
                 return player.points.add(1).pow(bb3exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -437,6 +446,38 @@ addLayer("basic", {
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
         },
     },
+    milestones: {
+        1: {
+            requirementDescription: "It's never too late to have milestones. (BM1: e421,662,500 BP)",
+            effectDescription: "^1.025 PF, +^0.025 BP",
+            done() { return player["basic"].points.gte("e421662500") },
+            unlocked() {return player["sac"].points.gte(64)},
+        },
+        2: {
+            requirementDescription: "Wait... A new currency? (BM2: e1,886,230,000 PF)",
+            effectDescription: "^1.02 PF, xe20M PF",
+            done() { return player.points.gte("e1886230000") },
+            unlocked() {return player["sac"].points.gte(64)},
+        },
+        3: {
+            requirementDescription: "Godly-Tier PF Mult (BM3: e2,282,415,000 PF)",
+            effectDescription: "xe30M PF",
+            done() { return player.points.gte("e2282415000") },
+            unlocked() {return hasMilestone("basic", 2)},
+        },
+        4: {
+            requirementDescription: "How do I even get this? [Mastery-Challenge-Specific] (Need e9081178 PF)",
+            effectDescription: "^1.05 PF",
+            done() { return player.points.gte("e9081178") },
+            unlocked() {return inChallenge("m", 11)},
+        },
+        5: {
+            requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e1.178M PF)",
+            effectDescription: "^1.15 PF, x1K Energy",
+            done() { return player.points.gte("e1178000") },
+            unlocked() {return inChallenge("m", 11) && hasMilestone("basic", 5)},
+        },
+    },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Basic Points", // Name of currency
@@ -514,6 +555,8 @@ addLayer("basic", {
         if (hasMilestone('sac', 38)) exp = exp.add(0.02)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         if (hasUpgrade('basic', 92)) exp = exp.add(0.025)
+        if (hasMilestone('basic', 1)) exp = exp.add(0.025)
+        if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)

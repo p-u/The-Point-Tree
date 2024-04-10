@@ -54,8 +54,11 @@ addLayer("prestige", {
             effect() {
                 let pu6exp = 0.05
                 if (hasUpgrade("mega", 41)) pu6exp = 0.08
+                if (hasMilestone("prestige", 8)) pu6exp = 0.16
                 let eff = player["rebirth"].points.add(1).pow(pu6exp)
-                eff = softcap(eff, new Decimal("1e1111111"), 0.35)
+                let softcapStart = new Decimal("1e1111111")
+                if (hasMilestone("rebirth", 8)) softcapStart = new Decimal("e2.5e6")
+                eff = softcap(eff, softcapStart, 0.35)
                 return eff
             },
             effectDisplay() {
@@ -220,6 +223,18 @@ addLayer("prestige", {
             effectDescription: "Keep all Rebirth Upgrades (Row 1 and 2) and RU32",
             done() { return player["prestige"].points.gte(1e10) }
         },
+        8: {
+            requirementDescription: "e10,175,850 PP",
+            effectDescription: "Prestige Supercap is weaker, PU24 is way stronger",
+            done() { return player["prestige"].points.gte("e10175850") },
+            unlocked() {return player["sac"].points.gte(64)},
+        },
+        9: {
+            requirementDescription: "e5563 PP [Mastery Challenge Specific]",
+            effectDescription: "Well well well... ^1.2 PF!!",
+            done() { return player.prestige.points.gte("e5563") },
+            unlocked() {return inChallenge("m", 11)},
+        },
     },
     doReset(prestige) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
@@ -300,9 +315,6 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 45)) mult = mult.times("e100000")
         if (hasUpgrade('s', 54)) mult = mult.times("e40000")
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e111.11e3")
-        // secret achievement
-        if (hasAchievement('sa', 15)) mult = mult.times(1.1)
-        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -321,6 +333,8 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 35)) exp = exp.add(0.05)
         if (hasUpgrade('s', 84)) exp = exp.add(0.025)
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
+        if (hasUpgrade('s', 93)) exp = exp.add(0.05)
+        if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
     effect(){
@@ -340,6 +354,7 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 25)) cap = 0.89
         if (hasUpgrade('s', 92)) sc = 0.95
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
+        if (hasMilestone('prestige', 8)) spreff = 0.67
         softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
         return softcappedEffect
        },

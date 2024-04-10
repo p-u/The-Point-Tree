@@ -115,6 +115,7 @@ addLayer("s", {
                 let supu5 = new Decimal(2)
                 let exp = new Decimal(1)
                 if (hasUpgrade('s', 52)) exp = new Decimal(25)
+                if (hasUpgrade('m', 32)) exp = new Decimal(50)
                 let sacpt = player["sac"].points
                 let eff = supu5.pow(sacpt).pow(exp)
                 return eff
@@ -199,6 +200,7 @@ addLayer("s", {
             unlocked() { return hasUpgrade("mega", 84) && hasUpgrade("s", 44) },
             effect() {
                 let c9exp = 0.0325
+                if (hasUpgrade('m', 32)) c9exp = new Decimal(0.075)
                 return player["s"].points.add(1).pow(c9exp)
             },
             effectDisplay() {
@@ -213,6 +215,7 @@ addLayer("s", {
             cost: new Decimal(2e20),
             effect() {
                 let supu5 = new Decimal(2)
+                if (hasUpgrade('m', 32)) supu5 = new Decimal(4)
                 let sacpt = player["sac"].points
                 let eff = supu5.pow(sacpt - 30)
                 return eff
@@ -402,6 +405,18 @@ addLayer("s", {
             cost: new Decimal(1e105),
             unlocked() { return hasUpgrade("s", 91) },
         },
+        93: {
+            title: "PP is a must.",
+            description: "+^0.05 PP",
+            cost: new Decimal(2.3e136),
+            unlocked() { return hasUpgrade("s", 92) },
+        },
+        94: {
+            title: "The Last Upgrade, before the next Reset Layer",
+            description: "^1.04 PF",
+            cost: new Decimal(3.6e179),
+            unlocked() { return hasUpgrade("s", 92) },
+        },
     },
     buyables: {
         11: {
@@ -427,6 +442,7 @@ addLayer("s", {
             if (hasUpgrade('s', 23)) base1 = new Decimal(1.4)
             if (hasUpgrade('s', 53)) base1 = new Decimal(1.45)
             if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
+            if (hasUpgrade('m', 35)) base1 = new Decimal(2.5)
             let base2 = x
             let expo = new Decimal(1.001)
             let eff = base1.pow(Decimal.pow(base2, expo))
@@ -454,6 +470,7 @@ addLayer("s", {
         effect(x) {
             let base1 = new Decimal(1.1)
             if (hasUpgrade('s', 44)) base1 = new Decimal(1.15)
+            if (hasUpgrade('m', 35)) base1 = new Decimal(1.5)
             let base2 = x
             let expo = new Decimal(1.001)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
@@ -481,6 +498,7 @@ addLayer("s", {
         effect(x) {
             let base1 = new Decimal(1.38)
             if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
+            if (hasUpgrade('m', 35)) base1 = new Decimal(2.25)
             let base2 = x
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
@@ -508,6 +526,7 @@ addLayer("s", {
         effect(x) {
             let base1 = new Decimal(100)
             if (hasUpgrade('s', 83)) base1 = new Decimal(1000)
+            if (hasUpgrade('m', 35)) base1 = new Decimal(10000)
             let base2 = x
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
@@ -540,12 +559,15 @@ addLayer("s", {
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)
         if (hasAchievement('sa', 26)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 31)) mult = mult.times(1.05)
+        if (hasAchievement('sa', 32)) mult = mult.times(1.02)
+        if (hasAchievement('sa', 33)) mult = mult.times(1.06)
+        if (hasAchievement('sa', 34)) mult = mult.times(1.15)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
+        if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
     row: 5, // Row the layer is in on the tree (0 is the first row)

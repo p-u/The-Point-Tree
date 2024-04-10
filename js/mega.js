@@ -166,6 +166,10 @@ addLayer("mega", {
                 let mu9exp = 8.5
                 if (hasUpgrade("mega", 33)) mu9exp = 12.5
                 if (hasUpgrade("e", 95)) mu9exp = 14.25
+                if (hasUpgrade('m', 31)) mu9exp = 22.5
+                if (inChallenge("m", 11)) {
+                    if (hasMilestone('mega', 19)) mu9exp = 5750
+                }
                 return player["mega"].points.add(1).pow(mu9exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -433,6 +437,24 @@ addLayer("mega", {
             unlocked() {return player["sac"].points.gte(38)},
             done() { return player["mega"].points.gte("1e200000") }
         },
+        18: {
+            requirementDescription: "e1105.39e3 MP",
+            effectDescription: "+^0.07 MP, ^1.011 PF, xe11.0539M PF",
+            unlocked() {return player["sac"].points.gte(64)},
+            done() { return player["mega"].points.gte("e1105390") }
+        },
+        19: {
+            requirementDescription: "mu31 [MCS Upg] - 9.78e978 MP",
+            effectDescription: "MU31 is insanely strong!",
+            unlocked() {return inChallenge("m", 11)},
+            done() { return player["mega"].points.gte("9.78e978") }
+        },
+        20: {
+            requirementDescription: "[MCS] e1210 MP",
+            effectDescription: "+^0.3 MP",
+            unlocked() {return inChallenge("m", 11)},
+            done() { return player["mega"].points.gte("e1210") }
+        },
     },
     buyables: {
         11: {
@@ -568,6 +590,9 @@ addLayer("mega", {
         if (hasUpgrade('mega', 44)) mult = mult.times(0.0075)
         if (hasUpgrade('e', 13)) mult = mult.times(1e25)
         if (hasUpgrade('e', 24)) mult = mult.times(1e40)
+        if (inChallenge("m", 11)) {
+            if (hasUpgrade('e', 24)) mult = mult.times("1e460")
+        }
         if (hasAchievement('a', 83)) mult = mult.times(1e81)
         if (hasUpgrade('e', 52)) mult = mult.div(1e50)
         if (hasUpgrade('basic', 45)) mult = mult.times(11.85)
@@ -590,7 +615,6 @@ addLayer("mega", {
 
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
-        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -606,6 +630,12 @@ addLayer("mega", {
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
         if (hasUpgrade('s', 82)) exp = exp.add(0.025)
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
+        if (hasMilestone('mega', 18)) exp = exp.add(0.07)
+        if (inChallenge("m", 11)) {
+            if (hasMilestone('rebirth', 10)) exp = exp.add(0.25)
+            if (hasMilestone('mega', 20)) exp = exp.add(0.3)
+        }
+        if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
     effect(){

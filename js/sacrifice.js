@@ -51,6 +51,7 @@ addLayer("sac", {
     canBuyMax(){
         let buyMaxSac = false
         if (hasMilestone("sac", 35)) buyMaxSac = true
+        if (inChallenge('m', 11)) buyMaxSac = true
        return buyMaxSac
      },
     milestones: {
@@ -109,7 +110,7 @@ addLayer("sac", {
         },
         10: {
             requirementDescription: "Sacrifice 10",
-            effectDescription: "Keep Mega Row 3 Upgs. ^1.006 PF. Unlock Energy. Energy is boosted by sacrifice. Clicking for energy gives 1 energy, but passively generating energy gives 20 times the energy.",
+            effectDescription: "Keep Mega Row 3 Upgs. ^1.006 PF. Unlock Energy. Energy is boosted by sacrifice. Clicking for energy gives 1 energy, but passively generating energy gives 20 times the energy. If in Mastery Challenge, ^1.05 PF.",
             unlocked() {return player["sac"].points.gte(9)},
             done() { return player["sac"].points.gte(10) }
         },
@@ -286,6 +287,36 @@ addLayer("sac", {
             effectDescription: "Keep Row 9 Basic Upgrades, ^1.02 PF",
             unlocked() {return player["sac"].points.gte(59)},
             done() { return player["sac"].points.gte(63) }
+        },
+        40: {
+            requirementDescription: "Sacrifice 64",
+            effectDescription: "xe10M PF, Unlock many milestones.",
+            unlocked() {return player["sac"].points.gte(62)},
+            done() { return player["sac"].points.gte(64) }
+        },
+        41: {
+            requirementDescription: "Sacrifice 69",
+            effectDescription: "Nice. Do you know what's nice as well? Keeping Basic Milestones!",
+            unlocked() {return player["sac"].points.gte(67)},
+            done() { return player["sac"].points.gte(69) }
+        },
+        42: {
+            requirementDescription: "Sacrifice 71",
+            effectDescription: "New ??? Layer",
+            unlocked() {return player["sac"].points.gte(70)},
+            done() { return player["sac"].points.gte(71) }
+        },
+        43: {
+            requirementDescription: "Sacrifice 75",
+            effectDescription: "xe17.5M PF",
+            unlocked() {return player["sac"].points.gte(71)},
+            done() { return player["sac"].points.gte(75) }
+        },
+        44: {
+            requirementDescription: "Sacrifice 79",
+            effectDescription: "xe22.5M PF",
+            unlocked() {return player["sac"].points.gte(75)},
+            done() { return player["sac"].points.gte(79) }
         },
     },
     challenges: {

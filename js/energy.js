@@ -199,6 +199,11 @@ addLayer("e", {
         if (hasUpgrade('w', 23)) mult = mult.times(1e25)
         if (hasUpgrade('s', 54)) mult = mult.times(1e20)
         if (hasUpgrade('basic', 91)) mult = mult.times("1e99.99")
+        if (inChallenge("m", 11)) {
+            if (hasMilestone('e', 15)) mult = mult.times(700)
+            if (hasMilestone('basic', 5)) mult = mult.times(1000)
+            if (hasMilestone('e', 16)) mult = mult.times(40)
+        }
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
@@ -212,6 +217,8 @@ addLayer("e", {
             if (hasUpgrade('e', 144)) exp = exp.mul(1.1)
         }
         if (hasMilestone('e', 13)) exp = exp.add(0.01)
+        if (hasMilestone('e', 14)) exp = exp.add(0.025)
+        if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
     upgrades: {
@@ -274,7 +281,7 @@ addLayer("e", {
             },
             24: {
                 title: "Boost Boost",
-                description: "A gigawatt of energy. That can power 750K Homes. That's a lot. Anyways, Mega Points now boost energy, by a little. x1e40 MP.",
+                description: "A gigawatt of energy. That can power 750K Homes. That's a lot. Anyways, Mega Points now boost energy, by a little. x1e40 MP (If in Mastery Challenge, Increase boost to xe500 MP.).",
                 cost: new Decimal(1e9),
                 effect() {
                     let e8exp = 0.00075
@@ -584,12 +591,12 @@ addLayer("e", {
     milestones: {
         1: {
             requirementDescription: "50,000 Energy. (50 kW)",
-            effectDescription: "x1e1,000 PF, +^0.02 PP and MP",
+            effectDescription: "x3.5 Energy. x1e1,000 PF, +^0.02 PP and MP",
             done() { return player["e"].points.gte(50000) }
         },
         2: {
             requirementDescription: "250 MW Energy, or 250M energy.",
-            effectDescription: "x3.5 Energy. Energy Effect is also stronger.",
+            effectDescription: "Energy Effect is also stronger.",
             done() { return player["e"].points.gte(250e6) }
         },
         3: {
@@ -647,6 +654,36 @@ addLayer("e", {
             effectDescription: "x2.5 SP, xe2e6 PF, x10 Water, +^0.01 Energy",
             done() { return player["e"].points.gte("5e2463") }
         },
+        14: {
+            requirementDescription: "The True Energy Milestone (1e5,380 Energy)",
+            effectDescription: "x1M Water, +^0.025 Energy",
+            done() { return player["e"].points.gte("1e5380") },
+            unlocked() {return player["sac"].points.gte(64)},
+        },
+        15: {
+            requirementDescription: "MCS-Milestone (Energy I) - 200K Energy",
+            effectDescription: "x700 Energy, +^0.15 RP",
+            done() { return player["e"].points.gte(200000) },
+            unlocked() {return inChallenge("m", 11)},
+        },
+        16: {
+            requirementDescription: "MCS-Milestone (Energy II) - 50M Energy",
+            effectDescription: "x40 Energy",
+            done() { return player["e"].points.gte(50e6) },
+            unlocked() {return inChallenge("m", 11) && hasMilestone("e", 15)},
+        },
+        17: {
+            requirementDescription: "MCS-Milestone (Energy III) - 500M Energy",
+            effectDescription: "^1.2 PF",
+            done() { return player["e"].points.gte(500e6) },
+            unlocked() {return inChallenge("m", 11) && hasMilestone("e", 16)},
+        },
+        18: {
+            requirementDescription: "MCS-Milestone (Energy IV) - 5B Energy",
+            effectDescription: "^1.3 PF",
+            done() { return player["e"].points.gte(5e9) },
+            unlocked() {return inChallenge("m", 11) && hasMilestone("e", 17)},
+        },
     },
     branches: ["sac", "mega"],
     effect(){
@@ -658,6 +695,7 @@ addLayer("e", {
     if (hasMilestone('e', 7)) enpow = 700
     if (hasUpgrade('basic', 55)) enpow = 1200
     if (hasMilestone('e', 8)) enpow = 400
+    if (hasUpgrade('m', 34)) enpow = 2250
         let eff = player.e.points.add(1).pow(enpow)
        return eff
        },

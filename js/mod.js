@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "basic.js", "supreme.js", "water.js", "secretAchievement.js", "tree.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "basic.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -13,11 +13,28 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.2a: Mega Prices Rework",
-	name: "Its over e1,500,000,000!",
+	num: "2.2: Mastery",
+	name: "Its over e5B!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>Changes (v2.2: Mastery) </h3><br>
+Bug Fix: Finsihed. <br>
+Shows req of secret achievement after completing. <br>
+Added 3 secret achievements <br>
+Changed req and/or boost of some secret achievements. <br>
+Added 2 savebanks, and switched saves of 2. <br>
+Added Rebirth Hypercap! <br>
+Changed formatTime, now shows centuries <br>
+Expanded on Info Layer. <br>
+
+New Content</h3><br>
+Added 9 achievements, with 3 having rewards! <br>
+Added 24 milestones, 11 being challenge-specific <br>
+Added 1 buyable! <br>
+Added 17 upgrades <br>
+Added a new layer and a challenge to go along with it. <br>
+New upgrade effect: change softcap start. <br>
 v2.2b<br>
 Made ee and e start at e12, instead of e9. <br>
 Made SA31 do the right value. <br>
@@ -338,6 +355,8 @@ function getPointGen() {
 	if (hasUpgrade('basic', 55)) gain = gain.times("1e30000")
 	if (hasUpgrade('basic', 91)) gain = gain.times("e9.99e6")
 	if (hasUpgrade('basic', 95)) gain = gain.times("e18.2e6")
+	if (hasMilestone('basic', 2)) gain = gain.times("e2e7")
+	if (hasMilestone('basic', 2)) gain = gain.times("e3e7")
 
 	// reb
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
@@ -381,6 +400,7 @@ function getPointGen() {
 	if (hasUpgrade('mega', 71)) gain = gain.times("1e180000")
 	if (hasUpgrade('mega', 72)) gain = gain.times("1e144000")
 	if (hasUpgrade('mega', 74)) gain = gain.times("1e172000")
+	if (hasMilestone('mega', 18)) gain = gain.times("e11.0539e6")
 
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
@@ -417,6 +437,9 @@ function getPointGen() {
 	if (hasUpgrade('e', 93)) gain = gain.times("e500000")
 	if (hasUpgrade('e', 94)) gain = gain.times("e657281")
 	if (hasMilestone('e', 13)) gain = gain.times("e2e6")
+	if (hasMilestone('sac', 40)) gain = gain.times("e1e7")
+	if (hasMilestone('sac', 43)) gain = gain.times("e17.5e6")
+	if (hasMilestone('sac', 44)) gain = gain.times("e22.5e6")
 
 	// achievement
 
@@ -435,6 +458,8 @@ function getPointGen() {
 	if (hasAchievement('a', 126)) gain = gain.times("e4.51e6")
 	if (hasAchievement('a', 135)) gain = gain.times("e14.141e6")
 	if (hasAchievement('a', 136)) gain = gain.times("e10e6")
+	if (hasAchievement('a', 146)) gain = gain.times("e9.6e6")
+	if (hasAchievement('a', 154)) gain = gain.times("e52e6")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -528,6 +553,28 @@ function getPointGen() {
 	if (hasAchievement('a', 134)) gain = gain.pow(1.01)
 	if (hasUpgrade('rebirth', 65)) gain = gain.pow(1.01)
 	if (hasMilestone('sac', 39)) gain = gain.pow(1.02)
+	if (hasMilestone('w', 1)) gain = gain.pow(1.025)
+	if (hasMilestone('basic', 1)) gain = gain.pow(1.025)
+	if (hasMilestone('basic', 2)) gain = gain.pow(1.025)
+	if (hasMilestone('mega', 18)) gain = gain.pow(1.011)
+	if (hasUpgrade('s', 94)) gain = gain.pow(1.04)
+	if (hasUpgrade('m', 21)) gain = gain.pow(1.02)
+	if (hasUpgrade('m', 22)) gain = gain.pow(1.02)
+	if (hasUpgrade('m', 23)) gain = gain.pow(1.03)
+	if (hasUpgrade('m', 24)) gain = gain.pow(1.025)
+	if (hasUpgrade('m', 25)) gain = gain.pow(1.05)
+	if (hasAchievement('a', 145)) gain = gain.pow(1.029)
+	if (inChallenge('m', 11)) gain = gain.pow(0.1)
+	if (inChallenge("m", 11)) {
+		if (hasMilestone("basic", 4)) gain = gain.pow(1.05)
+		if (hasMilestone("sac", 10)) gain = gain.pow(1.05)
+		if (hasMilestone("rebirth", 10)) gain = gain.pow(1.25)
+		if (hasMilestone("basic", 5)) gain = gain.pow(1.15)
+		if (hasMilestone("e", 17)) gain = gain.pow(1.2)
+		if (hasMilestone("prestige", 9)) gain = gain.pow(1.2)
+		if (hasMilestone("e", 18)) gain = gain.pow(1.3)
+	}
+	if (hasChallenge("m", 11)) gain = gain.pow(1.12)
 	return gain
 }
 
@@ -595,7 +642,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e1.555e9"))
+	return player.points.gte(new Decimal("e5611000000"))
 }
 
 
