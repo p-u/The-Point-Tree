@@ -468,13 +468,25 @@ addLayer("basic", {
         4: {
             requirementDescription: "How do I even get this? [Mastery-Challenge-Specific] (Need e9081178 PF)",
             effectDescription: "^1.05 PF",
-            done() { return player.points.gte("e9081178") },
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player.points.gte("e9081178")) {
+                        return true
+                    }
+                }
+            },
             unlocked() {return inChallenge("m", 11)},
         },
         5: {
             requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e1.178M PF)",
             effectDescription: "^1.15 PF, x1K Energy",
-            done() { return player.points.gte("e1178000") },
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player.points.gte("e1178000")) {
+                        return true
+                    }
+                }
+            },
             unlocked() {return inChallenge("m", 11) && hasMilestone("basic", 5)},
         },
     },

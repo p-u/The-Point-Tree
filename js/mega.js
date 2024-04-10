@@ -444,16 +444,33 @@ addLayer("mega", {
             done() { return player["mega"].points.gte("e1105390") }
         },
         19: {
-            requirementDescription: "mu31 [MCS Upg] - 9.78e978 MP",
+            requirementDescription: "mu31 [MCS Upg] - 9.78e978 MP [Req Sac 10]",
             effectDescription: "MU31 is insanely strong!",
-            unlocked() {return inChallenge("m", 11)},
+            unlocked() {return inChallenge("m", 11)  && hasMilestone("sac", 10)},
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (hasMilestone("sac", 10)) {
+                        if (player["mega"].points.gte("9.78e978")) {
+                            return true
+                        }
+                    }
+                }
+            },
             done() { return player["mega"].points.gte("9.78e978") }
         },
         20: {
-            requirementDescription: "[MCS] e1210 MP",
+            requirementDescription: "[MCS] e1210 MP [Req Sac 10]",
             effectDescription: "+^0.3 MP",
-            unlocked() {return inChallenge("m", 11)},
-            done() { return player["mega"].points.gte("e1210") }
+            unlocked() {return inChallenge("m", 11) && hasMilestone("sac", 10) && hasMilestone("mega", 19)},
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (hasMilestone("sac", 10)) {
+                            if (player["mega"].points.gte("e1210")) {
+                            return true
+                        }
+                    }
+                }
+            },
         },
     },
     buyables: {

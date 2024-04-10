@@ -241,13 +241,27 @@ addLayer("rebirth", {
             requirementDescription: "Keep Basic Milestones [MCS] - e700K RP",
             effectDescription: "",
             unlocked() {return inChallenge("m", 11)},
-            done() { return player["rebirth"].points.gte("e700000") }
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (hasMilestone("sac", 10)) {
+                        if (player["rebirth"].points.gte("e700000")) {
+                            return true
+                        }
+                    }
+                }
+            },
         },
         10: {
-            requirementDescription: "Power Up Plus",
+            requirementDescription: "Power Up Plus [MCS] - e242024 PF [Req Sac 10]",
             effectDescription: "^1.25 PF, +^0.25 MP",
-            unlocked() {return hasMilestone("rebirth", 9) && inChallenge("m", 11)},
-            done() { return player["rebirth"].points.gte("2.4e242024") }
+            unlocked() {return hasMilestone("rebirth", 9) && inChallenge("m", 11) && hasMilestone("sac", 10)},
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player["rebirth"].points.gte("2.4e242024")) {
+                        return true
+                    }
+                }
+            },
         },
     },
     color: "#0F52BA",

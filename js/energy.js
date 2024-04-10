@@ -663,25 +663,49 @@ addLayer("e", {
         15: {
             requirementDescription: "MCS-Milestone (Energy I) - 200K Energy",
             effectDescription: "x700 Energy, +^0.15 RP",
-            done() { return player["e"].points.gte(200000) },
             unlocked() {return inChallenge("m", 11)},
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player["e"].points.gte(200000)) {
+                        return true
+                    }
+                }
+            },
         },
         16: {
             requirementDescription: "MCS-Milestone (Energy II) - 50M Energy",
             effectDescription: "x40 Energy",
-            done() { return player["e"].points.gte(50e6) },
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player["e"].points.gte(50e6)) {
+                        return true
+                    }
+                }
+            },
             unlocked() {return inChallenge("m", 11) && hasMilestone("e", 15)},
         },
         17: {
             requirementDescription: "MCS-Milestone (Energy III) - 500M Energy",
             effectDescription: "^1.2 PF",
-            done() { return player["e"].points.gte(500e6) },
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player["e"].points.gte(500e6)) {
+                        return true
+                    }
+                }
+            },
             unlocked() {return inChallenge("m", 11) && hasMilestone("e", 16)},
         },
         18: {
             requirementDescription: "MCS-Milestone (Energy IV) - 5B Energy",
             effectDescription: "^1.3 PF",
-            done() { return player["e"].points.gte(5e9) },
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (player["e"].points.gte(5e9)) {
+                        return true
+                    }
+                }
+            },
             unlocked() {return inChallenge("m", 11) && hasMilestone("e", 17)},
         },
     },

@@ -137,7 +137,7 @@ addLayer("w", {
         1: {
             requirementDescription: "The First Water Milestone (3.33e135 Water)",
             effectDescription: "^1.025 PF, WU13 is stronger",
-            done() { return player["e"].points.gte("3.33e135") },
+            done() { return player["w"].points.gte("3.33e135") },
             unlocked() {return player["sac"].points.gte(64)},
         },
     },

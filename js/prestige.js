@@ -230,10 +230,18 @@ addLayer("prestige", {
             unlocked() {return player["sac"].points.gte(64)},
         },
         9: {
-            requirementDescription: "e5563 PP [Mastery Challenge Specific]",
+            requirementDescription: "e5563 PP [Mastery Challenge Specific] [Req Sac 10]",
             effectDescription: "Well well well... ^1.2 PF!!",
-            done() { return player.prestige.points.gte("e5563") },
-            unlocked() {return inChallenge("m", 11)},
+            done() {
+                if (inChallenge("m", 11)) {
+                    if (hasMilestone("sac", 10)) {
+                        if (player.prestige.points.gte("e5563")) {
+                            return true
+                        }
+                    }
+                }
+            },
+            unlocked() {return inChallenge("m", 11) && hasMilestone("sac", 10)},
         },
     },
     doReset(prestige) {
