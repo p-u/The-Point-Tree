@@ -238,12 +238,12 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte("e116292900") }
         },
         9: {
-            requirementDescription: "Keep Basic Milestones [MCS] - e750K RP",
+            requirementDescription: "Keep Basic Milestones [MCS] - e700K RP",
             effectDescription: "",
             unlocked() {return inChallenge("m", 11)},
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player["rebirth"].points.gte("e750000")) {
+                    if (player["rebirth"].points.gte("e700000")) {
                         return true
                     }
                 }
