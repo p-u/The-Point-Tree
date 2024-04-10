@@ -470,7 +470,7 @@ addLayer("basic", {
             effectDescription: "^1.05 PF",
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player.points.gte("e9081178")) {
+                    if (player.points.gte("e92811780")) {
                         return true
                     }
                 }
@@ -478,11 +478,11 @@ addLayer("basic", {
             unlocked() {return inChallenge("m", 11)},
         },
         5: {
-            requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e1.178M PF)",
+            requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e11.78M PF)",
             effectDescription: "^1.15 PF, x1K Energy",
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player.points.gte("e1178000")) {
+                    if (player.points.gte("e11780000")) {
                         return true
                     }
                 }
