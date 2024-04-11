@@ -11,6 +11,27 @@ addLayer("rebirth", {
         if (hasUpgrade('basic', 34) || player.rebirth.unlocked) visible = true
        return visible
      },
+    tabFormat: {
+        "NOTE [ONLY FOR MASTERY CHALLENGE]": {
+            content: [
+                ["infobox", "info"],
+            ],
+            unlocked() {return inChallenge("m", 11)}
+        },
+        "Main Tab": {
+            content: [
+                "main-display",
+                "blank",
+                "blank",
+                "prestige-button",
+                "blank",
+                "blank",
+                "milestones",
+                "blank",
+                "upgrades"
+            ],
+        },
+    },
     upgrades: {
         11: {
             title: "Welcome to rebirth. Here's a x4 point fragments for you.",
@@ -238,12 +259,12 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte("e116292900") }
         },
         9: {
-            requirementDescription: "Keep Basic Milestones [MCS] - e700K RP",
+            requirementDescription: "Keep Basic Milestones [MCS] - e600K RP",
             effectDescription: "",
             unlocked() {return inChallenge("m", 11)},
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player["rebirth"].points.gte("e700000")) {
+                    if (player["rebirth"].points.gte("e600000")) {
                         return true
                     }
                 }
@@ -277,6 +298,12 @@ addLayer("rebirth", {
         if (hasMilestone('prestige', 4)) return 1
         return 0
     },
+    infoboxes: {
+        info: {
+            title: "NOTE",
+            body() { return "In Mastery Challenge, DO NOT RESET FOR PRESTIGE IF YOU DID NOT GET THE FIRST BASIC MILESTONE. Get it by buying all upgs in Basic, Rebirth, then buy more upgrades, then rebirth, then buy last row of basic, then you can get milestone." },
+        },
+    },  
     doReset(rebirth) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
         if (layers[rebirth].row <= this.row) return;
