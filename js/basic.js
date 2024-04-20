@@ -543,10 +543,12 @@ addLayer("basic", {
         if (hasUpgrade('s', 54)) mult = mult.times("e500000")
         if (hasUpgrade('s', 91)) mult = mult.times("e1e7")
         if (hasUpgrade('basic', 94)) mult = mult.times("e1e7")
+        if (hasUpgrade('m', 52)) mult = mult.times("e2e7")
         if (hasAchievement('sa', 13)) mult = mult.times(1.05)
         if (hasAchievement('sa', 14)) mult = mult.times(1.1)
         if (hasAchievement('sa', 15)) mult = mult.times(1.1)
         if (hasAchievement('sa', 16)) mult = mult.times(1.1)
+        if (hasUpgrade('mega', 15)) mult = mult.times("e25e6")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

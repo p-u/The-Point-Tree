@@ -8,16 +8,37 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 240,  // In hours
+	offlineLimit: 50,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.2: Mastery",
-	name: "Its over e5B!",
+	num: "2.3: Dimensional Shift 4 and Supreme Buyable 5",
+	name: "Its over 10^(10^10)!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>Changes (v2.3: Dimensional Shift 4 and Supreme Buyable 5) </h3><br>
+Bug Fix: Ach 144 desc, MU73 desc, DS3 bar desc, SU94 unlock. <br>
+Shows req of secret achievement after completing. <br>
+Added 3 secret achievements <br>
+Changed req and/or boost of some secret achievements. <br>
+Added 2 savebanks, and switched saves of 2. <br>
+Added Rebirth Hypercap! <br>
+Changed formatTime, now shows centuries <br>
+Expanded on Info Layer. <br>
+
+New Content</h3><br>
+Added 9 achievements, with 3 having rewards! <br>
+Added 24 milestones, 11 being challenge-specific <br>
+Added 1 buyable! <br>
+Added 17 upgrades <br>
+Added a new layer and a challenge to go along with it. <br>
+New upgrade effect: change softcap start. <br>
+
+
+
+
 <h3>Changes (v2.2: Mastery) </h3><br>
 Bug Fix: Finsihed. <br>
 Shows req of secret achievement after completing. <br>
@@ -333,6 +354,9 @@ function getPointGen() {
 	if (hasUpgrade('basic', 24)) gain = gain.times(upgradeEffect('basic', 24))
 	if (hasUpgrade('basic', 32)) gain = gain.times(upgradeEffect('basic', 32))
 	if (hasUpgrade('mega', 31)) gain = gain.times(upgradeEffect('mega', 31))
+	
+	
+	
 	// basic
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
 	if (hasUpgrade('basic', 22)) gain = gain.times(2)
@@ -358,6 +382,8 @@ function getPointGen() {
 	if (hasMilestone('basic', 2)) gain = gain.times("e2e7")
 	if (hasMilestone('basic', 2)) gain = gain.times("e3e7")
 
+	
+	
 	// reb
 	if (hasUpgrade('rebirth', 11)) gain = gain.times(4)
 	if (hasUpgrade('rebirth', 12)) gain = gain.times(10)
@@ -373,6 +399,8 @@ function getPointGen() {
 	if (hasUpgrade('rebirth', 45)) gain = gain.times("1e200000")
 	if (hasUpgrade('rebirth', 63)) gain = gain.times("e8e6")
 	if (hasUpgrade('rebirth', 65)) gain = gain.times("e12.5e6")
+	
+	
 	// pres
 	if (hasUpgrade('prestige', 11)) gain = gain.times(20)
 	if (hasUpgrade('prestige', 12)) gain = gain.times(10)
@@ -386,6 +414,14 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 34)) gain = gain.times("6.66e666")
 	if (hasUpgrade('prestige', 51)) gain = gain.times("e600000")
 	if (hasUpgrade('prestige', 55)) gain = gain.times("e2.8e6")
+	if (hasUpgrade('prestige', 61)) gain = gain.times("e20e6")
+	if (hasUpgrade('prestige', 62)) gain = gain.times("e40e6")
+	if (hasUpgrade('prestige', 63)) gain = gain.times("e60e6")
+	if (hasUpgrade('prestige', 64)) gain = gain.times("e80e6")
+	if (hasUpgrade('prestige', 65)) gain = gain.times("e100e6")
+	
+	
+	
 	// mega
 	if (hasUpgrade('mega', 11)) gain = gain.times(1e10)
 	if (hasUpgrade('mega', 12)) gain = gain.times(1e7)
@@ -393,14 +429,24 @@ function getPointGen() {
 	if (hasUpgrade('mega', 24)) gain = gain.times(1e15)
 	if (hasMilestone('mega', 8)) gain = gain.times(1e111)
 	if (hasUpgrade('mega', 54)) gain = gain.times("1e40000")
-	if (hasUpgrade('mega', 61)) gain = gain.times("1e4000")
-	if (hasUpgrade('mega', 62)) gain = gain.times("1e4000")
-	if (hasUpgrade('mega', 63)) gain = gain.times("1e4000")
-	if (hasUpgrade('mega', 64)) gain = gain.times("1e4000")
+	if (!(hasUpgrade("mega", 65))) {
+		if (hasUpgrade('mega', 61)) gain = gain.times("1e4000")
+		if (hasUpgrade('mega', 62)) gain = gain.times("1e4000")
+		if (hasUpgrade('mega', 63)) gain = gain.times("1e4000")
+		if (hasUpgrade('mega', 64)) gain = gain.times("1e4000")
+	} else {
+		if (hasUpgrade('mega', 61)) gain = gain.times("e20e6")
+		if (hasUpgrade('mega', 62)) gain = gain.times("e20e6")
+		if (hasUpgrade('mega', 63)) gain = gain.times("e20e6")
+		if (hasUpgrade('mega', 64)) gain = gain.times("e20e6")
+	}
 	if (hasUpgrade('mega', 71)) gain = gain.times("1e180000")
 	if (hasUpgrade('mega', 72)) gain = gain.times("1e144000")
 	if (hasUpgrade('mega', 74)) gain = gain.times("1e172000")
+	if (hasUpgrade('mega', 75)) gain = gain.times("e96714e3")
 	if (hasMilestone('mega', 18)) gain = gain.times("e11.0539e6")
+	if (hasUpgrade('mega', 15)) gain = gain.times("e50e6")
+	if (hasUpgrade('mega', 85)) gain = gain.times("e200e6")
 
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
@@ -440,6 +486,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 40)) gain = gain.times("e1e7")
 	if (hasMilestone('sac', 43)) gain = gain.times("e17.5e6")
 	if (hasMilestone('sac', 44)) gain = gain.times("e22.5e6")
+	if (hasMilestone('sac', 49)) gain = gain.times("e100e6")
 
 	// achievement
 
@@ -460,6 +507,11 @@ function getPointGen() {
 	if (hasAchievement('a', 136)) gain = gain.times("e10e6")
 	if (hasAchievement('a', 146)) gain = gain.times("e9.6e6")
 	if (hasAchievement('a', 154)) gain = gain.times("e53.78e6")
+	if (hasAchievement('a', 156)) gain = gain.times("e64.64e6")
+	if (hasAchievement('a', 162)) gain = gain.times("e70e6")
+	if (hasAchievement('a', 164)) gain = gain.times("e96.87e6")
+	if (hasAchievement('a', 166)) gain = gain.times("e168.92e6")
+
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -489,6 +541,14 @@ function getPointGen() {
 	if (hasUpgrade('s', 74)) gain = gain.times("e1e7")
 	if (hasUpgrade('s', 91)) gain = gain.times("e1e6")
 	if (hasUpgrade('w', 53)) gain = gain.times("e28e6")
+	if (hasUpgrade('s', 101)) gain = gain.times("e1e8")
+	if (hasUpgrade('s', 104)) gain = gain.times("e1.25e8")
+
+	// mastery
+
+	if (hasUpgrade('m', 53)) gain = gain.times("e70e6")
+	if (hasUpgrade('m', 55)) gain = gain.times("e130e6")
+
 
 	// secret achievements
 	if (hasAchievement('sa', 12)) gain = gain.times(1.05)
@@ -578,6 +638,12 @@ function getPointGen() {
 	if (hasChallenge("m", 11)) gain = gain.pow(1.12)
 	if (hasMilestone('sac', 45)) gain = gain.pow(1.0081)
 	if (hasUpgrade('w', 54)) gain = gain.pow(1.011)
+	if (hasMilestone('sac', 47)) gain = gain.pow(1.0092)
+	if (hasUpgrade('mega', 35)) gain = gain.pow(1.025)
+	if (hasMilestone('sac', 51)) gain = gain.pow(1.0109)
+	if (hasMilestone('sac', 54)) gain = gain.pow(1.0118)
+	if (hasUpgrade('s', 104)) gain = gain.pow(1.025)
+	if (hasUpgrade('s', 102)) gain = gain.pow(buyableEffect('s', 15))
 	return gain
 }
 
@@ -645,7 +711,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e6313175000"))
+	return player.points.gte(new Decimal("e31528650000"))
 }
 
 

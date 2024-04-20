@@ -33,6 +33,8 @@ addLayer("sac", {
                 "blank",
                 ["bar", "DS3"],
                 "blank",
+                ["bar", "DS4"],
+                "blank",
                 "blank",
                 "upgrades",
             ],
@@ -324,6 +326,66 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(78)},
             done() { return player["sac"].points.gte(81) }
         },
+        46: {
+            requirementDescription: "Sacrifice 86",
+            effectDescription: "Autobuy Supreme Buyable 1",
+            unlocked() {return player["sac"].points.gte(82)},
+            done() { return player["sac"].points.gte(86) }
+        },
+        47: {
+            requirementDescription: "Sacrifice 92",
+            effectDescription: "Unlock the elusive DS4!, ^1.0092 PF",
+            unlocked() {return player["sac"].points.gte(85)},
+            done() { return player["sac"].points.gte(92) }
+        },
+        48: {
+            requirementDescription: "Sacrifice 96",
+            effectDescription: "Autobuy Supreme Buyable 2",
+            unlocked() {return player["sac"].points.gte(92)},
+            done() { return player["sac"].points.gte(96) }
+        },
+        49: {
+            requirementDescription: "Sacrifice 100",
+            effectDescription: "xe100M PF",
+            unlocked() {return player["sac"].points.gte(96)},
+            done() { return player["sac"].points.gte(100) }
+        },
+        50: {
+            requirementDescription: "Sacrifice 106",
+            effectDescription: "xe106 SP",
+            unlocked() {return player["sac"].points.gte(102)},
+            done() { return player["sac"].points.gte(106) }
+        },
+        51: {
+            requirementDescription: "Sacrifice 109",
+            effectDescription: "Autobuy Supreme Buyable 3, extend Prestige Upgrades, ^1.0109 PF",
+            unlocked() {return player["sac"].points.gte(105)},
+            done() { return player["sac"].points.gte(109) }
+        },
+        52: {
+            requirementDescription: "Sacrifice 113",
+            effectDescription: "Keep DS4 upgs",
+            unlocked() {return player["sac"].points.gte(111)},
+            done() { return player["sac"].points.gte(113) }
+        },
+        53: {
+            requirementDescription: "Sacrifice 115",
+            effectDescription: "Supreme Buyable 4 cost formula is weaker and effect is stronger, unlock more supreme upgrades",
+            unlocked() {return player["sac"].points.gte(111)},
+            done() { return player["sac"].points.gte(115) }
+        },
+        54: {
+            requirementDescription: "Sacrifice 118",
+            effectDescription: "^1.0118 PF",
+            unlocked() {return player["sac"].points.gte(113)},
+            done() { return player["sac"].points.gte(118) }
+        },
+        55: {
+            requirementDescription: "Sacrifice 124",
+            effectDescription: "Keep Prestige Row 6 Upgrades on sac",
+            unlocked() {return player["sac"].points.gte(120)},
+            done() { return player["sac"].points.gte(124) }
+        },
     },
     challenges: {
         11: {
@@ -409,11 +471,30 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(40))
-                    return "Unlock dimensional shift 2: " + format(player.sac.points) + "/41 sacrifices. [COMING SOON]"
+                    return "Unlock dimensional shift 3: " + format(player.sac.points) + "/41 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 3. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Prestige Upgrades."
             },
-            unlocked() { return player.sac.best.gte(15) }
+            unlocked() { return player.sac.best.gte(27) }
+        },
+        DS4: {
+            direction: RIGHT,
+            width: 650,
+            height: 40,
+            fillStyle: { 'background-color': "#79029b" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(92)
+                if (player.sac.best.gte(92)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(91))
+                    return "Unlock dimensional shift 4: " + format(player.sac.points) + "/92 sacrifices. [Wait, how do I get so many?]"
+                else
+                    return "You have unlocked Dimensional Shift 4. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to MEGA Upgrades."
+            },
+            unlocked() { return player.sac.best.gte(41) }
         },
     },   
     color: "#79029b",

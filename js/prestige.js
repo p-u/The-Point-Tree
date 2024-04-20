@@ -154,7 +154,30 @@ addLayer("prestige", {
             cost: new Decimal("e581346"),
             unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 53) },
         },
-
+        61: {
+            title: "Prestige REP UPGS! [1]",
+            description: "Formula: e(20M + (20M * RepUpgNo)) PF",
+            cost: new Decimal("e55367367"),
+            unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 55) },
+        },
+        62: {
+            title: "Prestige REP UPGS! [2]",
+            description: "Formula: e(20M + (20M * RepUpgNo)) PF",
+            cost: new Decimal("e55880550"),
+            unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 61) },
+        },
+        63: {
+            title: "Prestige REP UPGS! [3]",
+            description: "Formula: e(20M + (20M * RepUpgNo)) PF",
+            cost: new Decimal("e56906906"),
+            unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 62) },
+        },
+        64: {
+            title: "Prestige REP UPGS! [4]",
+            description: "Formula: e(20M + (20M * RepUpgNo)) PF",
+            cost: new Decimal("e58448530"),
+            unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 63) },
+        },
 
         15: {
             title: "PP!",
@@ -185,6 +208,12 @@ addLayer("prestige", {
             description: "SP x10, Water x35, PF xe2.8M",
             cost: new Decimal("e2547000"),
             unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 45) },
+        },
+        65: {
+            title: "Prestige REP UPGS! [5]",
+            description: "Formula: e(20M + (20M * RepUpgNo)) PF",
+            cost: new Decimal("e60503303"),
+            unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 64) },
         },
     },
     milestones: {
@@ -275,6 +304,11 @@ addLayer("prestige", {
                 if ((hasMilestone('sac', 36)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
             }
           }
+          for(i=1;i<6;i++){ //rows
+            for(v=6;v<7;v++){ //columns
+                if ((hasMilestone('sac', 55)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            }
       
         // Stage 3, track which main features you want to keep - all upgrades, total points, specific toggles, etc.
         let keep = [];
@@ -298,6 +332,7 @@ addLayer("prestige", {
         if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
         if (hasUpgrade('basic', 82)) mult = mult.times(upgradeEffect('basic', 82))
         if (hasUpgrade('mega', 14)) mult = mult.times(upgradeEffect('mega', 14))
+        if (hasUpgrade('mega', 25)) mult = mult.times(upgradeEffect('mega', 25))
         if (hasUpgrade('rebirth', 32)) mult = mult.times(1.11)
         if (hasUpgrade('prestige', 31)) mult = mult.times(0.1)
         if (hasUpgrade('prestige', 33)) mult = mult.times(1e50)
@@ -312,7 +347,8 @@ addLayer("prestige", {
         if (hasUpgrade('e', 81)) mult = mult.times("1e5500")
         if (hasMilestone('sac', 24)) mult = mult.times("1e10000")
         if (hasUpgrade('mega', 73)) mult = mult.times("1e5160")
-        if (hasUpgrade('mega', 73)) mult = mult.times("1e2580")
+        if (hasUpgrade('mega', 74)) mult = mult.times("1e2580")
+        if (hasUpgrade('mega', 75)) mult = mult.times("e1540.26e3")
         if (hasMilestone('e', 11)) mult = mult.times("1e10000")
         if (hasUpgrade('e', 91)) mult = mult.times("1e400")
         if (hasUpgrade('prestige', 51)) mult = mult.times("e5000")
@@ -323,6 +359,8 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 45)) mult = mult.times("e100000")
         if (hasUpgrade('s', 54)) mult = mult.times("e40000")
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e111.11e3")
+        if (hasUpgrade('m', 54)) mult = mult.times("e2.5e6")
+
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -343,6 +381,7 @@ addLayer("prestige", {
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         if (hasUpgrade('s', 93)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
+        if (hasUpgrade('mega', 55)) exp = exp.add(0.05)
         return exp
     },
     effect(){

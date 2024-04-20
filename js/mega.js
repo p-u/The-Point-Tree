@@ -42,6 +42,9 @@ addLayer("mega", {
             for(v=8;v<9;v++){ //columns
                 if ((hasMilestone('mega', 17)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
               }
+              for(v=1;v<9;v++){ //columns
+                if ((hasMilestone('sac', 52)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
+            }
           }
     
         // Stage 3, track which main features you want to keep - milestones
@@ -167,6 +170,7 @@ addLayer("mega", {
                 if (hasUpgrade("mega", 33)) mu9exp = 12.5
                 if (hasUpgrade("e", 95)) mu9exp = 14.25
                 if (hasUpgrade('m', 31)) mu9exp = 22.5
+                if (hasUpgrade('m', 62)) mu9exp = 33.75
                 if (inChallenge("m", 11)) {
                     if (hasMilestone('mega', 19)) mu9exp = 5750
                 }
@@ -211,7 +215,9 @@ addLayer("mega", {
                 if (hasMilestone("sac", 9)) mbiupgexp = 0.115
                 if (hasUpgrade("mega", 52)) mbiupgexp = 0.1515
                 let eff = player["mega"].points.add(1).pow(mbiupgexp)
-                eff = softcap(eff, new Decimal("1e8000"), 0.4)
+                let scap = 0.4
+                if (hasUpgrade("mega", 45)) scap = 0.68
+                eff = softcap(eff, new Decimal("1e8000"), scap)
                 return eff
             },
             effectDisplay() {
@@ -297,7 +303,7 @@ addLayer("mega", {
         },
         73: {
             title: "Prestigating",
-            description: "Mega Upgrade 71 boosts prestige by ^0.015 of the PF boost.",
+            description: "Mega Upgrade 71 boosts prestige by ^0.015925 (about there) of the PF boost.",
             cost: new Decimal("1e33509"),
             unlocked() { return hasMilestone("mega", 15) && hasUpgrade("mega", 72) },
         },
@@ -344,6 +350,62 @@ addLayer("mega", {
                 return "This upgrade boosts Mega Points by " + format(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 83) },
+        },
+
+        // DS4
+
+        15: {
+            title: "DS4 upgrades come with Dimensional boosts.",
+            description: "xe50M PF, xe25M BP, xe10M RP",
+            cost: new Decimal("e3568310"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 14) },
+        },
+        25: {
+            title: "Mega Points boosts Prestige Points.",
+            description: "more!",
+            cost: new Decimal("e3698678"),
+            effect() {
+                let ds4u2exp = 1
+                return player["mega"].points.add(1).pow(ds4u2exp)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 24) },
+        },
+        35: {
+            title: "Exponents 2+",
+            description: "^1.025 PF",
+            cost: new Decimal("e4041290"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 34) },
+        },
+        45: {
+            title: "Softcap? No, I want big number!",
+            description: "Softcap 'Compounding V' is way weaker (^0.4 to ^0.68)",
+            cost: new Decimal("e4218400"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 44) },
+        },
+        55: {
+            title: "PPPP",
+            description: "PP Plus Powerr",
+            cost: new Decimal("e4446544"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 54) },
+        },
+        65: {
+            title: "Rep Overdrive",
+            description: "^5000 Rep Upg Boosts (now up to e20Mx)",
+            cost: new Decimal("e5127520"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 64) },
+        },
+        75: {
+            title: "Hyper Boost",
+            description: "^200 MU71 Boost (now up to e97.2Mx, Pres xe1.548Mx)",
+            cost: new Decimal("e5363530"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 74) },
+        },
+        85: {
+            title: "A new record!",
+            description: "xe200M PF",
+            cost: new Decimal("e5810581"),
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 84) },
         },
     },
     milestones: {
@@ -508,6 +570,7 @@ addLayer("mega", {
                 if (hasUpgrade('e', 44)) base2 = x.mul(new Decimal(20))
                 if (hasMilestone('sac', 23)) base2 = x.mul(new Decimal(300))
                 if (hasUpgrade('mega', 82)) base2 = x.mul(new Decimal(1800))
+                if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(70000))
                 let expo = new Decimal(1.005)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -541,6 +604,7 @@ addLayer("mega", {
                 if (hasUpgrade('e', 44)) base2 = x.mul(new Decimal(4))
                 if (hasMilestone('sac', 23)) base2 = x.mul(new Decimal(50))
                 if (hasUpgrade('mega', 82)) base2 = x.mul(new Decimal(120))
+                if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(2000))
                 let expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -571,6 +635,7 @@ addLayer("mega", {
                 let base2 = x
                 if (hasMilestone('sac', 23)) base2 = x.mul(new Decimal(4))
                 if (hasUpgrade('mega', 82)) base2 = x.mul(new Decimal(10))
+                if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(100))
                 let expo = new Decimal(1.015)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -628,7 +693,7 @@ addLayer("mega", {
         if (hasUpgrade('s', 54)) mult = mult.times("e6000")
         if (hasAchievement('a', 125)) mult = mult.times("e2940")
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e11.111e3")
-
+        if (hasUpgrade('m', 51)) mult = mult.times("e100e3")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         return mult

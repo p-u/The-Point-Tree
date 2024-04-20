@@ -40,6 +40,28 @@ addLayer("s", {
             ],
         },
     },
+    automate() {
+		if (hasMilestone('sac', 46)) {
+			if (layers.s.buyables[11].canAfford()) {
+				layers.s.buyables[11].buy();
+			};
+		};
+        if (hasMilestone('sac', 48)) {
+			if (layers.s.buyables[12].canAfford()) {
+				layers.s.buyables[12].buy();
+			};
+		};
+        if (hasMilestone('sac', 51)) {
+			if (layers.s.buyables[13].canAfford()) {
+				layers.s.buyables[13].buy();
+			};
+		};
+        if (hasUpgrade('s', 101)) {
+			if (layers.s.buyables[14].canAfford()) {
+				layers.s.buyables[14].buy();
+			};
+		};
+	},
     color: "#63e5ff",
     requires: new Decimal("e78250"), // Can be a function that takes requirement increases into account
     resource: "Supreme Points", // Name of currency
@@ -116,6 +138,7 @@ addLayer("s", {
                 let exp = new Decimal(1)
                 if (hasUpgrade('s', 52)) exp = new Decimal(25)
                 if (hasUpgrade('m', 32)) exp = new Decimal(50)
+                if (hasUpgrade('m', 64)) exp = new Decimal(80)
                 let sacpt = player["sac"].points
                 let eff = supu5.pow(sacpt).pow(exp)
                 return eff
@@ -262,6 +285,7 @@ addLayer("s", {
             description: "Yeah.",
             effect() {
                 let sppfbe = 0.0000000025
+                if (hasUpgrade("m", 61)) sppfbe = 0.0000000035
                 let eff = player.points.add(1).pow(sppfbe)
                 eff = softcap(eff, new Decimal("1e100"), 0.5)
                 return eff
@@ -415,7 +439,31 @@ addLayer("s", {
             title: "The Last Upgrade, before the next Reset Layer",
             description: "^1.04 PF",
             cost: new Decimal(3.6e179),
-            unlocked() { return hasUpgrade("s", 92) },
+            unlocked() { return hasUpgrade("s", 93) },
+        },
+        101: {
+            title: "More!",
+            description: "xe100M PF, Autobuy Supreme Buyable 4",
+            cost: new Decimal("5e1229"),
+            unlocked() { return hasUpgrade("s", 94) && hasMilestone("sac", 53) },
+        },
+        102: {
+            title: "Unleash the Ultimate Weapon!",
+            description: "Unlock Supreme Buyable 5. It's not the same as the others...",
+            cost: new Decimal("4.75e1266"),
+            unlocked() { return hasUpgrade("s", 101) && hasMilestone("sac", 53) },
+        },
+        103: {
+            title: "Another SB4 buff",
+            description: "SB4 effect has been increased from x1e8 per buy to x1e15 per buy",
+            cost: new Decimal("1e1405"),
+            unlocked() { return hasUpgrade("s", 102) && hasMilestone("sac", 53) },
+        },
+        104: {
+            title: "Yes!",
+            description: "^1.025 PF, xe125M PF",
+            cost: new Decimal("1.4e1529"),
+            unlocked() { return hasUpgrade("s", 102) && hasMilestone("sac", 53) },
         },
     },
     buyables: {
@@ -443,6 +491,7 @@ addLayer("s", {
             if (hasUpgrade('s', 53)) base1 = new Decimal(1.45)
             if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
             if (hasUpgrade('m', 35)) base1 = new Decimal(2.5)
+            if (hasUpgrade('m', 63)) base1 = new Decimal(3.2)
             let base2 = x
             let expo = new Decimal(1.001)
             let eff = base1.pow(Decimal.pow(base2, expo))
@@ -471,6 +520,7 @@ addLayer("s", {
             let base1 = new Decimal(1.1)
             if (hasUpgrade('s', 44)) base1 = new Decimal(1.15)
             if (hasUpgrade('m', 35)) base1 = new Decimal(1.5)
+            if (hasUpgrade('m', 63)) base1 = new Decimal(1.9)
             let base2 = x
             let expo = new Decimal(1.001)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
@@ -499,6 +549,7 @@ addLayer("s", {
             let base1 = new Decimal(1.38)
             if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
             if (hasUpgrade('m', 35)) base1 = new Decimal(2.25)
+            if (hasUpgrade('m', 63)) base1 = new Decimal(2.75)
             let base2 = x
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
@@ -510,6 +561,7 @@ addLayer("s", {
         unlocked() { return (hasUpgrade('s', 63)) },
         cost(x) {
             let exp2 = 3
+            if (hasMilestone('sac', 53)) exp2 = 1.75
             return new Decimal(1e50).mul(Decimal.pow(1.5, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
@@ -527,9 +579,38 @@ addLayer("s", {
             let base1 = new Decimal(100)
             if (hasUpgrade('s', 83)) base1 = new Decimal(1000)
             if (hasUpgrade('m', 35)) base1 = new Decimal(10000)
+            if (hasUpgrade('m', 63)) base1 = new Decimal(1000000)
+            if (hasMilestone('sac', 53)) base1 = new Decimal(1e8)
+            if (hasUpgrade('s', 103)) base1 = new Decimal(1e15)
             let base2 = x
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo))-1)
+            return eff
+        },
+    },
+    15: {
+        title: "Supreme Buyable 5: PF Power!",
+        unlocked() { return (hasUpgrade('s', 102)) },
+        cost(x) {
+            let exp2 = 2.5
+            return new Decimal("1e1266").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+        },
+        display() {
+            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + format(buyableEffect(this.layer, this.id)) + " Point Fragments."
+        },
+        canAfford() {
+            return player[this.layer].points.gte(this.cost())
+        },
+        buy() {
+            let cost = new Decimal (1)
+            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+        },
+        effect(x) {
+            let base1 = new Decimal(1.008)
+            let base2 = x
+            let expo = new Decimal(1.004)
+            let eff = base1.pow(Decimal.pow(base2, expo))
             return eff
         },
     },
@@ -550,12 +631,12 @@ addLayer("s", {
         if (hasUpgrade('s', 54)) mult = mult.times(3.162277)
         if (hasMilestone('e', 13)) mult = mult.times(2.5)
         if (hasAchievement('a', 126)) mult = mult.times(4.51)
-        if (hasUpgrade('sac', 11)) mult = mult.times(10)
         if (hasUpgrade('s', 64)) mult = mult.times(upgradeEffect('s', 64))
         if (hasUpgrade('s', 81)) mult = mult.times(50)
         if (hasUpgrade('rebirth', 64)) mult = mult.times(111.11)
         if (hasUpgrade('basic', 91)) mult = mult.times(99.99)
         if (hasUpgrade('w', 51)) mult = mult.times(1e7)
+        if (hasMilestone('sac', 50)) mult = mult.times("e106")
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)

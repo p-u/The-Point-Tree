@@ -380,6 +380,7 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 62)) mult = mult.times("e700e3")
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e1.11e6")
         if (hasUpgrade('basic', 91)) mult = mult.times("e999.99e3")
+        if (hasUpgrade('mega', 15)) mult = mult.times("e10e6")
 
         // secret achievement
         if (hasAchievement('sa', 15)) mult = mult.times(1.05)

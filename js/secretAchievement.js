@@ -241,7 +241,7 @@ addLayer("sa", {
         32: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e6313175000")) {
+                   if (player.points.gte("e31528650000")) {
                        return true
                    }
                },
@@ -257,7 +257,7 @@ addLayer("sa", {
         33: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e6313375000")) {
+                   if (player.points.gte("e31529020000")) {
                        return true
                    }
                },
@@ -273,7 +273,7 @@ addLayer("sa", {
         34: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e6313575000")) {
+                   if (player.points.gte("e31529250000")) {
                        return true
                    }
                },
