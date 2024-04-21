@@ -20,15 +20,14 @@ let VERSION = {
 let changelog = `<h1>Changelog:</h1><br>
 <h3>Changes (v2.3: Dimensional Shift 4 and Supreme Buyable 5) </h3><br>
 Bug Fix: Ach 144 desc, MU73 desc, DS3 bar desc, SU94 unlock. <br>
-Shows req of secret achievement after completing. <br>
-Added 3 secret achievements <br>
-Changed req and/or boost of some secret achievements. <br>
-Added 2 savebanks, and switched saves of 2. <br>
-Added Rebirth Hypercap! <br>
-Changed formatTime, now shows centuries <br>
-Expanded on Info Layer. <br>
 
-New Content</h3><br>
+<h3>Hotfixes </h3><br>
+v2.31<br>
+Fixed A166 Desc, changed A165 Desc (to sound more correct) <br>
+Supreme Buyable 2 will start at 1% efficiency instead of 0%, to counter people saying that 'Supreme Points not generating' <br>
+Added v2.2x changelogs <br>
+
+<h3>New Content</h3><br>
 Added 9 achievements, with 3 having rewards! <br>
 Added 24 milestones, 11 being challenge-specific <br>
 Added 1 buyable! <br>
@@ -37,8 +36,15 @@ Added a new layer and a challenge to go along with it. <br>
 New upgrade effect: change softcap start. <br>
 
 
-
-
+v2.23<br>
+Added an extra infobox to make people buy basic milestone before (in Rebirth Layer). <br>
+v2.22<br>
+A154 req is changed, boosted boost. <br>
+Added more reqs for Mastery Challenge milestones (ex. BM4 and RM9) to be unlocked only at Sac 10. <br>
+Added 3 water upgrades <br>
+v2.21<br>
+Added more reqs for unlocking all Mastery Challenge-Specific Milestones (Check if in Challenge). <br>
+Water Milestone 1 req fixed <br>
 <h3>Changes (v2.2: Mastery) </h3><br>
 Bug Fix: Finsihed. <br>
 Shows req of secret achievement after completing. <br>

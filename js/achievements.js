@@ -633,12 +633,12 @@ addLayer("a", {
         165: {
             name: "'New' thing",
             done() { return (hasUpgrade('s', 102)) },
-            tooltip: "Get Supreme Buyable V.",
+            tooltip: "Unlock Supreme Buyable V.",
         },
         166: {
             name: "6.892",
             done() { return player.basic.points.gte(new Decimal("e6.892e9")) },
-            tooltip: "Get e6.892B PF. Reward: xe168.92M PF",
+            tooltip: "Get e6.892B BP. Reward: xe168.92M PF",
         },
     tabFormat: [
         "blank", 

@@ -523,7 +523,7 @@ addLayer("s", {
             if (hasUpgrade('m', 63)) base1 = new Decimal(1.9)
             let base2 = x
             let expo = new Decimal(1.001)
-            let eff = (base1.pow(Decimal.pow(base2, expo))-1)
+            let eff = (base1.pow(Decimal.pow(base2, expo))-0.99)
             return eff
         },
     },
