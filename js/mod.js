@@ -8,7 +8,7 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 50,  // In hours
+	offlineLimit: 10,  // In hours
 }
 
 // Set your version in num and name
@@ -26,14 +26,16 @@ v2.31<br>
 Fixed A166 Desc, changed A165 Desc (to sound more correct) <br>
 Supreme Buyable 2 will start at 1% efficiency instead of 0%, to counter people saying that 'Supreme Points not generating' <br>
 Added v2.2x changelogs <br>
+v2.32<br>
+Decreased offline time down to 10 hours instead of 50. <br>
+Fixed typo in RU64 <br>
+Precision for values increased from 2 decimal places to 4 <br>
 
 <h3>New Content</h3><br>
 Added 9 achievements, with 3 having rewards! <br>
 Added 24 milestones, 11 being challenge-specific <br>
 Added 1 buyable! <br>
 Added 17 upgrades <br>
-Added a new layer and a challenge to go along with it. <br>
-New upgrade effect: change softcap start. <br>
 
 
 v2.23<br>

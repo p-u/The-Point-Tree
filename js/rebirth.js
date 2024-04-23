@@ -172,7 +172,7 @@ addLayer("rebirth", {
         },
         64: {
             title: "1111Quad PLUS",
-            description: "xe1.11M RP, xe111.11K PP, xe11.111K MP, xe111.11 SP",
+            description: "xe1.11M RP, xe111.11K PP, xe11.111K MP, x111.11 SP",
             cost: new Decimal("e64250000"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 63) },
         },
