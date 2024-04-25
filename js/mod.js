@@ -30,6 +30,8 @@ v2.32<br>
 Decreased offline time down to 10 hours instead of 50. <br>
 Fixed typo in RU64 <br>
 Precision for values increased from 2 decimal places to 4 <br>
+v2.321<br>
+Precision Changes<br>
 
 <h3>New Content</h3><br>
 Added 9 achievements, with 3 having rewards! <br>
