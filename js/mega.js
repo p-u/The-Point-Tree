@@ -50,6 +50,7 @@ addLayer("mega", {
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
         if (hasMilestone('sac', 3)) keep.push("milestones");
+        if (hasMilestone('sac', 60)) keep.push("buyables");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -620,7 +621,7 @@ addLayer("mega", {
                 return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(1 + exp3 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + format(buyableEffect(this.layer, this.id))
+                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + format(buyableEffect(this.layer, this.id))
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -638,6 +639,34 @@ addLayer("mega", {
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(100))
                 let expo = new Decimal(1.015)
                 let eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+        },
+        14: {
+            title: "Mega Buyable 4: Energy Power!",
+            unlocked() { return (hasUpgrade('s', 102)) },
+            cost(x) {
+                let exp2 = 4
+                if (hasUpgrade('e', 45)) exp2 = 3
+                return new Decimal("e23460000").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            },
+            display() {
+                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: +^" + format(buyableEffect(this.layer, this.id)) + " Energy."
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                let base1 = new Decimal(1.008)
+                let base2 = x
+                let expo = new Decimal(1.008)
+                let eff = base1.pow(Decimal.pow(base2, expo))
+                eff = eff - new Decimal(1)
                 return eff
             },
         },
@@ -712,15 +741,20 @@ addLayer("mega", {
         if (hasUpgrade('s', 82)) exp = exp.add(0.025)
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         if (hasMilestone('mega', 18)) exp = exp.add(0.07)
+        if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
         if (inChallenge("m", 11)) {
             if (hasMilestone('rebirth', 10)) exp = exp.add(0.25)
             if (hasMilestone('mega', 20)) exp = exp.add(0.3)
         }
+        if (hasUpgrade('w', 63)) exp = exp.add(0.05)
+        if (hasMilestone('e', 20)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
     effect(){
-        let eff = player.mega.points.add(1).pow(1)
+        let effectBoost = 1
+        if (hasUpgrade("basic", 101)) effectBoost = 3
+        let eff = player.mega.points.add(1).pow(effectBoost)
         let cap = 0.3
         if (hasUpgrade('mega', 81)) cap = 0.45
         if (hasUpgrade('mega', 83)) cap = 0.6125

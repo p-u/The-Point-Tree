@@ -176,6 +176,30 @@ addLayer("rebirth", {
             cost: new Decimal("e64250000"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 63) },
         },
+        71: {
+            title: "Hypercaps are too strong!",
+            description: "Reduce Rebirth Hypercap Effect.",
+            cost: new Decimal("e2178590e3"),
+            unlocked() { return hasMilestone("sac", 56) && hasUpgrade("rebirth", 65) },
+        },
+        72: {
+            title: "Power Buyability",
+            description: "Supreme Buyable 5 cost formula is weakened.",
+            cost: new Decimal("e2294340e3"),
+            unlocked() { return hasMilestone("sac", 56) && hasUpgrade("rebirth", 71) },
+        },
+        73: {
+            title: "Power Cycle",
+            description: "^1.01 PF, +^0.005 BP-MP",
+            cost: new Decimal("e2466270e3"),
+            unlocked() { return hasMilestone("sac", 56) && hasUpgrade("rebirth", 72) },
+        },
+        74: {
+            title: "Effect Boost",
+            description: "Rebirth Effect increased from ^1.57 to ^1.7, Prestige Effect increased from ^2.5 to ^4 [Secret Effect: x2 SP]",
+            cost: new Decimal("e2576280e3"),
+            unlocked() { return hasMilestone("sac", 56) && hasUpgrade("rebirth", 73) },
+        },
 
         // dimensional shift
         15: {
@@ -212,7 +236,13 @@ addLayer("rebirth", {
             title: "Ending it off with a BANG of PF!",
             description: "PF xe12.5M, PF ^1.01",
             cost: new Decimal("e65263850"),
-            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 64) },
+            unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 64) },
+        },
+        75: {
+            title: "New Tier unlocked: Extreme [T11]",
+            description: "PF xe500M, PF ^1.025 [Hidden Effect: x3.77 Water]",
+            cost: new Decimal("e3425150e3"),
+            unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 74) },
         },
     },
     milestones: {
@@ -284,6 +314,18 @@ addLayer("rebirth", {
                 }
             },
         },
+        11: {
+            requirementDescription: "Another Milestone [E5B RP]",
+            effectDescription: "Keep Row 7 Rebirth Upgs",
+            unlocked() {return hasMilestone("sac", 57)},
+            done() { return player["rebirth"].points.gte("e5e9") }
+        },
+        12: {
+            requirementDescription: "Even More OP Milestone [E16,101M RP]",
+            effectDescription: "Rebirth Softcap is reduced",
+            unlocked() {return hasMilestone("sac", 57)},
+            done() { return player["rebirth"].points.gte("e16101e6") }
+        },
     },
     color: "#0F52BA",
     requires: new Decimal(50000000), // Can be a function that takes requirement increases into account
@@ -332,6 +374,9 @@ addLayer("rebirth", {
         for(i=1;i<6;i++){ //rows
             for(v=6;v<7;v++){ //columns
                 if ((hasMilestone('rebirth', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            for(v=7;v<8;v++){ //columns
+                if ((hasMilestone('rebirth', 11)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
               }
           }
     
@@ -409,6 +454,7 @@ addLayer("rebirth", {
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         if (hasUpgrade('rebirth', 62)) exp = exp.add(0.0060)
+        if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
         if (inChallenge("m", 11)) {
             if (hasMilestone('e', 15)) exp = exp.add(0.15)
         }
@@ -416,7 +462,9 @@ addLayer("rebirth", {
         return exp
     },
     effect(){
-        let eff = player.rebirth.points.add(1).pow(1.57)
+        let effectBoost = 1.57
+        if (hasUpgrade("rebirth", 74)) effectBoost = 1.7
+        let eff = player.rebirth.points.add(1).pow(effectBoost)
         let sc = 0.35
         if (hasUpgrade('rebirth', 33)) sc = 0.375
         if (hasAchievement('a', 56)) sc = 0.4
@@ -434,6 +482,7 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 54)) sc = 0.77
         if (hasUpgrade('rebirth', 15)) sc = 0.8
         if (hasUpgrade('s', 92)) sc = 0.865
+        if (hasMilestone('rebirth', 12)) sc = 0.915
         softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
         let sprcap = 0.4
         if (hasUpgrade('rebirth', 44)) sprcap = 0.45
@@ -441,6 +490,7 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 35)) sprcap = 0.725
         softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
         let hyprcap = 0.3
+        if (hasUpgrade('rebirth', 71)) hyprcap = 0.375
         softcappedEffect = softcap(softcappedEffect, new Decimal("e200000000"), new Decimal(hyprcap))
         return softcappedEffect
        },

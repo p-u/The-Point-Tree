@@ -1,6 +1,6 @@
 addLayer("m", {
     name: "Mastery", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "M", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "MAS", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { 
         return {
@@ -49,7 +49,7 @@ addLayer("m", {
     baseResource: "Sacrifice", // Name of resource prestige is based on
     baseAmount() {return player.sac.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.00000000000000001,  // Balance is needed. 
+    exponent: 0.0000000000000000001,  // Balance is needed. 
     upgrades: {
         11: {
             title: "MMP (More Mastery Points) 1",
@@ -260,8 +260,8 @@ addLayer("m", {
         if (hasUpgrade('m', 45)) mult = mult.times(100)
         if (hasUpgrade('m', 11)) mult = mult.times(base)
         if (hasAchievement('sa', 31)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 33)) mult = mult.times(1.02)
-        if (hasAchievement('sa', 34)) mult = mult.times(1.07)
+        if (hasAchievement('sa', 33)) mult = mult.times(1.01)
+        if (hasAchievement('sa', 34)) mult = mult.times(1.06)
         if (hasUpgrade("w", 54)) {
             if (hasChallenge("m", 11)) mult = mult.times(100)
         }

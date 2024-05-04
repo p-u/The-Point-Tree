@@ -137,25 +137,49 @@ addLayer("w", {
             title: "Water, Woo!",
             description: "x10T Water, x10M SP",
             cost: new Decimal(6e257),
-            unlocked() { return hasMilestone("sac", 45) },
+            unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 44) },
         },
         52: {
             title: "More itself",
             description: "WU13 is stronger",
             cost: new Decimal(3e274),
-            unlocked() { return hasMilestone("sac", 45) },
+            unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 51) },
         },
         53: {
             title: "Strong Water",
             description: "x1 Qi Water, xe28M PF",
             cost: new Decimal(1e280),
-            unlocked() { return hasMilestone("sac", 45) },
+            unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 52) },
         },
         54: {
             title: "Break Infinity",
             description: "^1.011 PF",
             cost: new Decimal(5e307),
-            unlocked() { return hasMilestone("sac", 45) },
+            unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 53) },
+        },
+        61: {
+            title: "All again, another.",
+            description: "xe150M PF",
+            cost: new Decimal("1.7e1152"),
+            unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 54) },
+        },
+        62: {
+            title: "Quattuorquinquagintillioning",
+            description: "xe167 Water",
+            cost: new Decimal("1.5e1164"),
+            unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 61)  }, 
+        },
+        63: {
+            title: "More sacrifices",
+            description: "MP +^0.05, PP +^0.1",
+            cost: new Decimal("2e1388"),
+            unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 62)  }, 
+        },
+        64: {
+            title: "Buyaboost",
+            description: "Supreme Buyable 1,3,5 is stronger",
+            cost: new Decimal("3e1419"),
+            unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 63)  }, 
         },
     },
     milestones: {
@@ -164,6 +188,12 @@ addLayer("w", {
             effectDescription: "^1.025 PF, WU13 is stronger",
             done() { return player["w"].points.gte("3.33e135") },
             unlocked() {return player["sac"].points.gte(64)},
+        },
+        2: {
+            requirementDescription: "The Second Water Milestone (1.111e1111 Water)",
+            effectDescription: "+^0.1111 PP",
+            done() { return player["w"].points.gte("1.111e1111") },
+            unlocked() {return player["sac"].points.gte(132)},
         },
     },
     gainMult() { // Prestige multiplier
@@ -197,6 +227,8 @@ addLayer("w", {
         if (hasMilestone('e', 14)) mult = mult.times(1e6)
         if (hasUpgrade('w', 51)) mult = mult.times(1e13)
         if (hasUpgrade('w', 53)) mult = mult.times(1e18)
+        if (hasUpgrade('rebirth', 75)) mult = mult.times(3.77)
+        if (hasUpgrade('w', 62)) mult = mult.times(1e167)
 
         
         if (hasAchievement('sa', 32)) mult = mult.times(1.05)
@@ -208,6 +240,7 @@ addLayer("w", {
         let exp = new Decimal(1)
         if (hasUpgrade('w', 32)) exp = exp.add(0.01)
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
+        if (hasAchievement('a', 171)) exp = exp.add(0.02)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -217,6 +250,7 @@ addLayer("w", {
         if (hasUpgrade('w', 22)) weffpow = 4
         if (hasUpgrade('w', 23)) weffpow = 2
         if (hasUpgrade('w', 31)) weffpow = 3
+        if (hasUpgrade('e', 65)) weffpow = 5
             let eff = player.w.points.add(1).pow(weffpow)
            return eff
            },

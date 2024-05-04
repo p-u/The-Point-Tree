@@ -20,6 +20,9 @@ addLayer("i", {
                 ["infobox", "milestone"],
                 "blank",
                 "blank",
+                ["infobox", "NSU"],
+                "blank",
+                "blank",
                 ["infobox", "ext"],
                 "blank",
                 "blank",
@@ -46,7 +49,13 @@ addLayer("i", {
                 ["infobox", "basic"],
                 "blank",
                 "blank",
-                ["infobox", "NSU"],
+                ["infobox", "reb"],
+                "blank",
+                "blank",
+                ["infobox", "pres"],
+                "blank",
+                "blank",
+                ["infobox", "mega"],
             ],
         },
         "Rebirth Layer": {
@@ -85,10 +94,11 @@ addLayer("i", {
                 ["infobox", "supreme"],
                 "blank",
                 "blank",
+                ["infobox", "water"],
             ],
         },
         "Mastery": {
-            unlocked() { return player.s.points.gte(1)},
+            unlocked() { return player.m.points.gte(1)},
             content: [
                 ["infobox", "mastery"],
                 "blank",
@@ -111,7 +121,7 @@ addLayer("i", {
         },
         NSU: {
             title: "Non-static Upgrades",
-            body() { return "Upgrade 2 and 3 is the first of the upgrades that changes by a currency" },
+            body() { return "Non-Static Upgrades (Currency boost Currency upgrades) makes one currency boost another currency by an exponent. The two currencies can be the same, or different." },
             unlocked() { return (hasUpgrade('basic', 11))}
         },
         reb: {
@@ -121,12 +131,12 @@ addLayer("i", {
         },
         ext: {
             title: "Extensions",
-            body() { return "The first extension is at Rebirth Milestone 1. This adds new upgrades to previous layers" },
+            body() { return "Well, extensions... well, add new content! This adds new upgrades and/or milestones to previous layers." },
             unlocked() { return (hasUpgrade('basic', 34))}
         },
         passive: {
             title: "Passive Generation",
-            body() { return "At 20 RP, Passive Generation is unlocked." },
+            body() { return "Passive Generation allows you to gain a certain multiplier or percentage of a currency, allowing you to not reset (instead, it will passively gain)" },
             unlocked() { return (hasMilestone('rebirth', 2))}
         },
         milestone: {
@@ -135,13 +145,13 @@ addLayer("i", {
             unlocked() { return (hasMilestone('rebirth', 1))}
         },
         keep: {
-            title: "Keeping Upgrades, and Milestones",
-            body() { return "At 100 RP, Upgrade Keeping is unlocked. This allows you to click less for a new layer." },
+            title: "Keeping Stuff",
+            body() { return "Upgrade Keeping is a way for you to click less, as there is NO AUTOMATION in the game. A higher layer in the game will keep previous layer's stuff. You can also keep Milestones, Buyables and Challenges. " },
             unlocked() { return (hasMilestone('rebirth', 3))}
         },
         cap: {
-            title: "Softcaps and Supercaps",
-            body() { return "Softcaps and Supercaps nerfs the boost. There are upgrades to reduce the nerf." },
+            title: "Softcaps",
+            body() { return "These caps nerfs the boost. There are upgrades to reduce the nerf. There are upgrades to increase the starting cap. There are currently 3 stages of caps, which is Softcap, Supercap and Hypercap." },
             unlocked() { return player.rebirth.points.gte(new Decimal(1))}
         },
         pres: {
@@ -155,8 +165,8 @@ addLayer("i", {
             unlocked() { return player.mega.points.gte(new Decimal("1"))}
         },
         buyable: {
-            title: "About Buyables",
-            body() { return "Buyables are a way to gain boosts, but unlike upgrades, they can be bought more than one time." },
+            title: "Buyables",
+            body() { return "Buyables are a way to gain boosts, but unlike upgrades, they can be bought more than one time. These buyables will scale in price. The boosts from buyables can range from multiplying a specific currency, exponentiating a currency or increasing upgrade boost." },
             unlocked() { return (hasUpgrade('mega', 33))}
         },
         sac: {
@@ -176,7 +186,7 @@ addLayer("i", {
         },
         challenge: {
             title: "Challenges",
-            body() { return "Challenges nerfs progression by a few ways. It also gives unique challenge-specific upgrades which only can be bought in that challenge. Method 1: ^x of a particular currency. x is lower than 1. Method 2: Nerfing upgrade boost, or even removing it entirely. Method 3: [Most Time Consuming] Disabling passive generation and/or automation." },
+            body() { return "Challenges nerfs progression by a few ways. It also gives unique challenge-specific upgrades which only can be bought in that challenge. Method 1: ^x of a particular currency. x is lower than 1. Method 2: Nerfing upgrade boost, or even removing it entirely. " },
             unlocked() { return player.sac.points.gte(new Decimal("20"))}
         },
         supreme: {
@@ -196,8 +206,8 @@ addLayer("i", {
         },
         repups: {
             title: "Rep Upgrades",
-            body() { return "Does it repeatedly. Can be a formula, or just a static boost. Also can boost multiple things at once." },
-            unlocked() { return player.mega.points.gte(new Decimal("1"))}
+            body() { return "Upgrades that do things repeatedly. Can be a formula, or just a static boost. Also can boost multiple things at once." },
+            unlocked() { return hasUpgrade("mega", 61)}
         },
     },
 }, 

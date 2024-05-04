@@ -231,7 +231,7 @@ addLayer("sa", {
             },
             tooltip() {
                 if (hasAchievement('sa', 31)) {
-                    return "Get 100K Mastery Points without completing the Mastery Challenge (Reward: x1.05 Mastery Points)"
+                    return "Get 100K Mastery Points without completing the Mastery Challenge [OR GET ERA 1] (Reward: x1.05 Mastery Points)"
                 }
                 else {
                     return "(Reward: x1.05 Mastery Points)"
@@ -241,7 +241,7 @@ addLayer("sa", {
         32: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e31528650000")) {
+                   if (player.points.gte("e559326500000")) {
                        return true
                    }
                },
@@ -257,32 +257,32 @@ addLayer("sa", {
         33: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e31529020000")) {
+                   if (player.points.gte("e559330500000")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 33)) {
-                    return "Congrats! You have reached high endgame at least once. (Reward: x1.1 Water, x1.06 SP, x1.02 Mastery Points)"
+                    return "Congrats! You have reached high endgame at least once. (Reward: x1.1 Water, x1.06 SP, x1.01 Mastery Points)"
                 }
                 else {
-                    return "Reach High Endgame. (Reward: x1.1 Water, x1.06 SP, x1.02 Mastery Points)"
+                    return "Reach High Endgame. (Reward: x1.1 Water, x1.06 SP, x1.01 Mastery Points)"
                 }
             },
         },
         34: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e31529250000")) {
+                   if (player.points.gte("e559335000000")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 34)) {
-                    return "Congrats! You have reached Absolute True endgame at least once. (Reward: x1.25 Water, x1.15 SP, x1.07 Mastery Points)"
+                    return "Congrats! You have reached Absolute True endgame at least once. (Reward: x1.25 Water, x1.15 SP, x1.06 Mastery Points)"
                 }
                 else {
-                    return "Reach Absolute True Endgame. (Reward: x1.25 Water, x1.15 SP, x1.07 Mastery Points)"
+                    return "Reach Absolute True Endgame. (Reward: x1.25 Water, x1.15 SP, x1.06 Mastery Points)"
                 }
             },
         },

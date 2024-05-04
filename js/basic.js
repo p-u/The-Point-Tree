@@ -387,6 +387,46 @@ addLayer("basic", {
             cost: new Decimal("e316648000"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 93) },
         },
+        101: {
+            title: "5 Types of Upgrades. Type 1: Effect Boost/Reduce Softcap",
+            description: "Mega Effect Boost increased from ^1 to ^3",
+            cost: new Decimal("e37845e6"),
+            unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 95) },
+        },
+        102: {
+            title: "5 Types of Upgrades. Type 2: Currency boost Currency",
+            description: "Basic Points boost Supreme Points",
+            cost: new Decimal("e39155400e3"),
+            effect() {
+                let bb5exp = 0.0000000045
+                let eff = player.points.add(1).pow(bb5exp)
+                return eff
+            },
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade boosts SP by " + format(upgEffect)+"x" + softcapDescription
+            },
+            unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 101) },
+        },
+        103: {
+            title: "5 Types of Upgrades. Type 3: Exponent on some currency",
+            description: "+^0.05 PP, ^1.03 PF",
+            cost: new Decimal("e46411100e3"),
+            unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 102) },
+        },
+        104: {
+            title: "5 Types of Upgrades. Type 4: Stronger Buyable Effect / Buyable Scaling is weaker",
+            description: "All Supreme Buyable's effects are stronger.",
+            cost: new Decimal("e53484400e3"),
+            unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 103) },
+        },
+        105: {
+            title: "5 Types of Upgrades. Type 5: Multiplying some currency",
+            description: "xe1,000,000,000 PF!!",
+            cost: new Decimal("e74309e6"),
+            unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 104) },
+        },
 
 
         // dimensional shift
@@ -491,6 +531,12 @@ addLayer("basic", {
             },
             unlocked() {return inChallenge("m", 11) && hasMilestone("basic", 5)},
         },
+        6: {
+            requirementDescription: "That's a lot (Req e50B PF)",
+            effectDescription: "xe250M PF",
+            done() { return player.points.gte("e50e9") },
+            unlocked() {return player["sac"].points.gte(132)},
+        },
     },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -572,6 +618,7 @@ addLayer("basic", {
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         if (hasUpgrade('basic', 92)) exp = exp.add(0.025)
         if (hasMilestone('basic', 1)) exp = exp.add(0.025)
+        if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

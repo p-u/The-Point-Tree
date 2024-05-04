@@ -382,10 +382,16 @@ addLayer("prestige", {
         if (hasUpgrade('s', 93)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         if (hasUpgrade('mega', 55)) exp = exp.add(0.05)
+        if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
+        if (hasMilestone('w', 2)) exp = exp.add(0.1111)
+        if (hasUpgrade('w', 63)) exp = exp.add(0.1)
+        if (hasUpgrade('basic', 103)) exp = exp.add(0.05)
         return exp
     },
     effect(){
-        let eff = player.prestige.points.add(1).pow(2.5)
+        let effectBoost = 2.5
+        if (hasUpgrade("rebirth", 74)) effectBoost = 4
+        let eff = player.prestige.points.add(1).pow(effectBoost)
         let cap = 0.3
         let spreff = 0.5
         if (hasMilestone('sac', 8)) cap = 0.31

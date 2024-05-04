@@ -35,6 +35,8 @@ addLayer("sac", {
                 "blank",
                 ["bar", "DS4"],
                 "blank",
+                ["bar", "DS5"],
+                "blank",
                 "blank",
                 "upgrades",
             ],
@@ -345,7 +347,7 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(96) }
         },
         49: {
-            requirementDescription: "Sacrifice 100",
+            requirementDescription: "Sacrifice 100!!!",
             effectDescription: "xe100M PF",
             unlocked() {return player["sac"].points.gte(96)},
             done() { return player["sac"].points.gte(100) }
@@ -386,6 +388,74 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(120)},
             done() { return player["sac"].points.gte(124) }
         },
+        56: {
+            requirementDescription: "Sacrifice 126",
+            effectDescription: "^1.0126 PF, extend Rebirth Upgrades",
+            unlocked() {return player["sac"].points.gte(120)},
+            done() { return player["sac"].points.gte(126) }
+        },
+        57: {
+            requirementDescription: "Sacrifice 132",
+            effectDescription: "^1.0132 PF, unlock BM6, WM2 and RM11",
+            unlocked() {return player["sac"].points.gte(126)},
+            done() { return player["sac"].points.gte(132) }
+        },
+        58: {
+            requirementDescription: "Sacrifice 140",
+            effectDescription:  function(){
+				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000]. Also, unlock more Water Upgrades.";
+			},
+            unlocked() {return player["sac"].points.gte(135)},
+            done() { return player["sac"].points.gte(140) },
+        },
+        59: {
+            requirementDescription: "Sacrifice 150",
+            effectDescription: "^1.015 PF, xe500M PF, Unlock DS5",
+            unlocked() {return player["sac"].points.gte(140)},
+            done() { return player["sac"].points.gte(150) }
+        },
+        60: {
+            requirementDescription: "Sacrifice 160",
+            effectDescription: "^1.016 PF, Keep Mega Buyables on Sac",
+            unlocked() {return player["sac"].points.gte(150)},
+            done() { return player["sac"].points.gte(160) }
+        },
+        61: {
+            requirementDescription: "Sacrifice 170",
+            effectDescription: "^1.017 PF, extend Basic Upgrades, Unlock EM19",
+            unlocked() {return player["sac"].points.gte(160)},
+            done() { return player["sac"].points.gte(170) }
+        },
+        62: {
+            requirementDescription: "Sacrifice 180",
+            effectDescription: "^1.018 PF, Unlock RM12",
+            unlocked() {return player["sac"].points.gte(170)},
+            done() { return player["sac"].points.gte(180) }
+        },
+        63: {
+            requirementDescription: "Sacrifice 200!!",
+            effectDescription: "^1.02 PF, xe500M PF, x13.5 SP, Unlock Supreme Milestone 7",
+            unlocked() {return player["sac"].points.gte(195)},
+            done() { return player["sac"].points.gte(200) }
+        },
+        64: {
+            requirementDescription: "Sacrifice 225",
+            effectDescription: "^1.02 PF, Unlock EM20",
+            unlocked() {return player["sac"].points.gte(210)},
+            done() { return player["sac"].points.gte(225) }
+        },
+        65: {
+            requirementDescription: "Sacrifice 240",
+            effectDescription: "xe650M PF",
+            unlocked() {return player["sac"].points.gte(225)},
+            done() { return player["sac"].points.gte(240) }
+        },
+    },
+    sacms58eff() {
+        var sm58e=player.sac.best;
+        sm58e = sm58e.div(10000)
+        sm58e = sm58e.add(1)
+		return sm58e;
     },
     challenges: {
         11: {
@@ -424,7 +494,7 @@ addLayer("sac", {
         DS1: {
             direction: RIGHT,
             width: 650,
-            height: 40,
+            height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
             progress() {
@@ -442,7 +512,7 @@ addLayer("sac", {
         DS2: {
             direction: RIGHT,
             width: 650,
-            height: 40,
+            height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
             progress() {
@@ -461,7 +531,7 @@ addLayer("sac", {
         DS3: {
             direction: RIGHT,
             width: 650,
-            height: 40,
+            height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
             progress() {
@@ -480,7 +550,7 @@ addLayer("sac", {
         DS4: {
             direction: RIGHT,
             width: 650,
-            height: 40,
+            height: 70,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
             progress() {
@@ -495,6 +565,25 @@ addLayer("sac", {
                     return "You have unlocked Dimensional Shift 4. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to MEGA Upgrades."
             },
             unlocked() { return player.sac.best.gte(41) }
+        },
+        DS5: {
+            direction: RIGHT,
+            width: 650,
+            height: 80,
+            fillStyle: { 'background-color': "#79029b" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(150)
+                if (player.sac.best.gte(150)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(149))
+                    return "Unlock dimensional shift 5: " + format(player.sac.points) + "/150 sacrifices. [Wait, how do I get so many?]"
+                else
+                    return "You have unlocked Dimensional Shift 5. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to ENERGY Upgrades. You may control the world's power supply after this."
+            },
+            unlocked() { return player.sac.best.gte(92) }
         },
     },   
     color: "#79029b",

@@ -1,6 +1,6 @@
 addLayer("s", {
     name: "Supreme", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "SP", // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: "SU", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 2, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
@@ -104,6 +104,12 @@ addLayer("s", {
             unlocked() {return (hasUpgrade('w', 24))},
             done() { return player["s"].points.gte(25e6) }
         },
+        7: {
+            requirementDescription: "Too Much SP - e13,015",
+            effectDescription: "SU21 and SU52 is MUCH STRONGER",
+            unlocked() {return (hasMilestone('sac', 63))},
+            done() { return player["s"].points.gte("e13015") }
+        },
     },
     upgrades: {
         11: {
@@ -139,6 +145,7 @@ addLayer("s", {
                 if (hasUpgrade('s', 52)) exp = new Decimal(25)
                 if (hasUpgrade('m', 32)) exp = new Decimal(50)
                 if (hasUpgrade('m', 64)) exp = new Decimal(80)
+                if (hasMilestone('s', 7)) exp = new Decimal(800)
                 let sacpt = player["sac"].points
                 let eff = supu5.pow(sacpt).pow(exp)
                 return eff
@@ -239,6 +246,7 @@ addLayer("s", {
             effect() {
                 let supu5 = new Decimal(2)
                 if (hasUpgrade('m', 32)) supu5 = new Decimal(4)
+                if (hasMilestone('s', 7)) supu5 = new Decimal(40)
                 let sacpt = player["sac"].points
                 let eff = supu5.pow(sacpt - 30)
                 return eff
@@ -492,6 +500,8 @@ addLayer("s", {
             if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
             if (hasUpgrade('m', 35)) base1 = new Decimal(2.5)
             if (hasUpgrade('m', 63)) base1 = new Decimal(3.2)
+            if (hasUpgrade('w', 64)) base1 = new Decimal(25)
+            if (hasUpgrade('basic', 104)) base1 = new Decimal(125)
             let base2 = x
             let expo = new Decimal(1.001)
             let eff = base1.pow(Decimal.pow(base2, expo))
@@ -521,9 +531,10 @@ addLayer("s", {
             if (hasUpgrade('s', 44)) base1 = new Decimal(1.15)
             if (hasUpgrade('m', 35)) base1 = new Decimal(1.5)
             if (hasUpgrade('m', 63)) base1 = new Decimal(1.9)
+            if (hasUpgrade('basic', 104)) base1 = new Decimal(6)
             let base2 = x
             let expo = new Decimal(1.001)
-            let eff = (base1.pow(Decimal.pow(base2, expo))-0.99)
+            let eff = (base1.pow(Decimal.pow(base2, expo)) - new Decimal(0.99))
             return eff
         },
     },
@@ -550,9 +561,11 @@ addLayer("s", {
             if (hasUpgrade('s', 62)) base1 = new Decimal(1.8)
             if (hasUpgrade('m', 35)) base1 = new Decimal(2.25)
             if (hasUpgrade('m', 63)) base1 = new Decimal(2.75)
+            if (hasUpgrade('w', 64)) base1 = new Decimal(50)
+            if (hasUpgrade('basic', 104)) base1 = new Decimal(75)
             let base2 = x
             let expo = new Decimal(1.005)
-            let eff = (base1.pow(Decimal.pow(base2, expo))-1)
+            let eff = (base1.pow(Decimal.pow(base2, expo)))
             return eff
         },
     },
@@ -560,8 +573,8 @@ addLayer("s", {
         title: "Supreme Buyable 4: Supremacy",
         unlocked() { return (hasUpgrade('s', 63)) },
         cost(x) {
-            let exp2 = 3
-            if (hasMilestone('sac', 53)) exp2 = 1.75
+            let exp2 = new Decimal(3)
+            if (hasMilestone('sac', 53)) exp2 = new Decimal(1.75)
             return new Decimal(1e50).mul(Decimal.pow(1.5, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
@@ -582,9 +595,10 @@ addLayer("s", {
             if (hasUpgrade('m', 63)) base1 = new Decimal(1000000)
             if (hasMilestone('sac', 53)) base1 = new Decimal(1e8)
             if (hasUpgrade('s', 103)) base1 = new Decimal(1e15)
+            if (hasUpgrade('basic', 104)) base1 = new Decimal(1e25)
             let base2 = x
             let expo = new Decimal(1.005)
-            let eff = (base1.pow(Decimal.pow(base2, expo))-1)
+            let eff = (base1.pow(Decimal.pow(base2, expo)))
             return eff
         },
     },
@@ -593,6 +607,7 @@ addLayer("s", {
         unlocked() { return (hasUpgrade('s', 102)) },
         cost(x) {
             let exp2 = 2.5
+            if (hasUpgrade('rebirth', 72)) exp2 = 2
             return new Decimal("1e1266").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
@@ -608,6 +623,8 @@ addLayer("s", {
         },
         effect(x) {
             let base1 = new Decimal(1.008)
+            if (hasUpgrade('w', 64)) base1 = new Decimal(1.011)
+            if (hasUpgrade('basic', 104)) base1 = new Decimal(1.013)
             let base2 = x
             let expo = new Decimal(1.004)
             let eff = base1.pow(Decimal.pow(base2, expo))
@@ -618,6 +635,7 @@ addLayer("s", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         mult = mult.times(buyableEffect('s', 11))
+        if (hasUpgrade('basic', 102)) mult = mult.times(upgradeEffect('basic', 102))
         if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
         if (hasUpgrade('w', 21)) mult = mult.times(1.25)
         if (hasUpgrade('w', 24)) mult = mult.times(3)
@@ -637,6 +655,8 @@ addLayer("s", {
         if (hasUpgrade('basic', 91)) mult = mult.times(99.99)
         if (hasUpgrade('w', 51)) mult = mult.times(1e7)
         if (hasMilestone('sac', 50)) mult = mult.times("e106")
+        if (hasUpgrade('rebirth', 74)) mult = mult.times(2)
+        if (hasMilestone('sac', 63)) mult = mult.times(13.5)
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)

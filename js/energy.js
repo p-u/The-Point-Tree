@@ -69,7 +69,10 @@ addLayer("e", {
                 if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
           }
-            for(v=9;v<10;v++){ //columns
+          for(v=1;v<9;v++){ //columns
+            if ((hasMilestone('e', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
+          }
+          for(v=9;v<10;v++){ //columns
                 if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
             }
     
@@ -218,6 +221,7 @@ addLayer("e", {
         }
         if (hasMilestone('e', 13)) exp = exp.add(0.01)
         if (hasMilestone('e', 14)) exp = exp.add(0.025)
+        if (hasUpgrade('e', 35)) exp = exp.add(buyableEffect('mega', 14))
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -248,6 +252,7 @@ addLayer("e", {
                     let e4exp = 0.125
                     if (hasUpgrade('e', 33)) e4exp = 0.16
                     if (hasMilestone('e', 9)) e4exp = 0.195
+                    if (hasUpgrade('e', 15)) e4exp = 0.25
                     let eff = player["e"].points.add(1).pow(e4exp)
                     eff = softcap(eff, new Decimal("1e700"), 0.5)
                     return eff
@@ -587,6 +592,58 @@ addLayer("e", {
                 cost: new Decimal(3e74),
                 unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 143) },
             },
+
+
+
+            // dimshift
+            15: {
+                title: "More Compound Energy",
+                description: "EU14 is stronger",
+                cost: new Decimal("e70515"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 14) },
+            },
+            25: {
+                title: "Energy-PF ties",
+                description: "Energy Effect is stronger.",
+                cost: new Decimal("e73468"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 15) },
+            },
+            35: {
+                title: "More Energy!",
+                description: "xe250M PF, Unlock 1 new mega buyable",
+                cost: new Decimal("e75165"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 25) },
+            },
+            45: {
+                title: "Mega Buyable 4",
+                description: "Weaker cost scaling. ",
+                cost: new Decimal("e85877"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 35) },
+            },
+            55: {
+                title: "Normal things",
+                description: "xe250m pf. ",
+                cost: new Decimal("e87994"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 45) },
+            },
+            65: {
+                title: "Even More Energy",
+                description: "Water boosts energy more.",
+                cost: new Decimal("e104202"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 55) },
+            },
+            75: {
+                title: "A well-rounded boost.",
+                description: "PF ^1.02",
+                cost: new Decimal("e112691"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 65) },
+            },
+            85: {
+                title: "Crazy amount of PF",
+                description: "xe700M PF",
+                cost: new Decimal("e118317"),
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 75) },
+            },
     },
     milestones: {
         1: {
@@ -708,6 +765,18 @@ addLayer("e", {
             },
             unlocked() {return inChallenge("m", 11) && hasMilestone("e", 17)},
         },
+        19: {
+            requirementDescription: "The Absolute True Energy Milestone (1e150K Energy)",
+            effectDescription: "Keep Row 5 Energy Ups on Reset, xe500M PF",
+            done() { return player["e"].points.gte("e150000") },
+            unlocked() {return player["sac"].points.gte(170)},
+        },
+        20: {
+            requirementDescription: "The Absolute Very True Energy Milestone (e484,825 Energy)",
+            effectDescription: "xe500M PF, +^0.05 MP",
+            done() { return player["e"].points.gte("e484425") },
+            unlocked() {return player["sac"].points.gte(225)},
+        },
     },
     branches: ["sac", "mega"],
     effect(){
@@ -720,6 +789,7 @@ addLayer("e", {
     if (hasUpgrade('basic', 55)) enpow = 1200
     if (hasMilestone('e', 8)) enpow = 400
     if (hasUpgrade('m', 34)) enpow = 2250
+    if (hasUpgrade('e', 25)) enpow = 5000
         let eff = player.e.points.add(1).pow(enpow)
        return eff
        },
