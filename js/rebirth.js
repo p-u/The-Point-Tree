@@ -323,7 +323,7 @@ addLayer("rebirth", {
         12: {
             requirementDescription: "Even More OP Milestone [E16,101M RP]",
             effectDescription: "Rebirth Softcap is reduced",
-            unlocked() {return hasMilestone("sac", 57)},
+            unlocked() {return hasMilestone("sac", 62)},
             done() { return player["rebirth"].points.gte("e16101e6") }
         },
     },

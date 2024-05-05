@@ -644,7 +644,7 @@ addLayer("mega", {
         },
         14: {
             title: "Mega Buyable 4: Energy Power!",
-            unlocked() { return (hasUpgrade('s', 102)) },
+            unlocked() { return (hasUpgrade('e', 35)) },
             cost(x) {
                 let exp2 = 4
                 if (hasUpgrade('e', 45)) exp2 = 3

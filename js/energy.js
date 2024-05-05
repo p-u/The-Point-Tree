@@ -772,7 +772,7 @@ addLayer("e", {
             unlocked() {return player["sac"].points.gte(170)},
         },
         20: {
-            requirementDescription: "The Absolute Very True Energy Milestone (e484,825 Energy)",
+            requirementDescription: "The Absolute Very True Energy Milestone (e484,425 Energy)",
             effectDescription: "xe500M PF, +^0.05 MP",
             done() { return player["e"].points.gte("e484425") },
             unlocked() {return player["sac"].points.gte(225)},
