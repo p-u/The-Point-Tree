@@ -14,8 +14,16 @@ function getStartOptions() {
 		forceOneTab: false,
 		oldStyle: false,
 		tooltipForcing: true,
+		formatE: '9',
 	}
 }
+
+let formatEList = ['6','9','12','15','18']
+
+function changeEFormat() {
+	player.formatE = formatEList[(formatEList.indexOf(player.formatE) + 1) % formatEList.length]
+}
+
 
 function toggleOpt(name) {
 	if (name == "oldStyle" && styleCooldown > 0)

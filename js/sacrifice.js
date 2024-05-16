@@ -463,7 +463,7 @@ addLayer("sac", {
             challengeDescription: "^0.5 Point Fragments",
             canComplete: function() {return player.points.gte("e516500")},
             goalDescription: "Get e516.5K PF.",
-            rewardDescription: "x10B Energy and xe25K PF"
+            rewardDescription: "x10B Energy and xe25K PF",
         },
         12: {
             name: "Sac Challenge 2",

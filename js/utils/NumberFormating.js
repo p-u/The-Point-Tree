@@ -6,7 +6,12 @@ function exponentialFormat(num, precision, mantissa = true) {
         m = decimalOne
         e = e.add(1)
     }
-    e = (e.gte(1e12) ? format(e, 3) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+    let elimit = new Decimal(1e9)
+    if (player.formatE == '18') elimit = 1e18
+    if (player.formatE == '15') elimit = 1e15
+    if (player.formatE == '12') elimit = 1e12
+    if (player.formatE == '6') elimit = 1e6
+    e = (e.gte(elimit) ? format(e, 3) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     if (mantissa)
         return m.toStringWithDecimalPlaces(precision) + "e" + e
     else return "e" + e
@@ -54,7 +59,11 @@ function format(decimal, precision = 3, small) {
         if (slog.gte(1e6)) return "F" + format(slog.floor())
         else return Decimal.pow(10, slog.sub(slog.floor())).toStringWithDecimalPlaces(3) + "F" + commaFormat(slog.floor(), 0)
     }
-    else if (decimal.gte("1e1000000000")) return exponentialFormat(decimal, 0, false)
+    else if (player.formatE == '18' && decimal.gte("1ee18")) return exponentialFormat(decimal, 0, false)
+    else if (player.formatE == '15' && decimal.gte("1ee15")) return exponentialFormat(decimal, 0, false) 
+    else if (player.formatE == '12' && decimal.gte("1ee12")) return exponentialFormat(decimal, 0, false) 
+    else if (player.formatE == '6' && decimal.gte("1ee6")) return exponentialFormat(decimal, 0, false) 
+    else if (decimal.gte("1ee9")) return exponentialFormat(decimal, 0, false)
     else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
     else if (decimal.gte(1e12)) return exponentialFormat(decimal, (precision + 2))
     else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
