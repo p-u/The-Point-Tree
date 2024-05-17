@@ -1,5 +1,5 @@
 // ************ Themes ************
-var themes = ["default", "aqua", "light"]
+var themes = ["default", "aqua", "lava", "light"]
 
 var colors = {
 	default: {
@@ -22,15 +22,25 @@ var colors = {
 		background: "#001f3f",
 		background_tooltip: "rgba(0, 15, 31, 0.75)",
 	},
+	lava: {
+		1: "#bfdfff",
+		2: "#8fa7bf",
+		3: "#b5332e",
+		color: "#bfdfff",
+		points: "#dfefff",
+		locked: "#c4a7b3",
+		background: "#f7342b",
+		background_tooltip: "rgba(0, 15, 31, 0.75)",
+	},
 	light: {
 		1: "#000000",//Branch color 1
-		2: "#000000",//Branch color 2
-		3: "#000000",//Branch color 3
-		color: "#000000",
-		points: "#000000",
-		locked: "#000000",
+		2: "#7c7c7c",//Branch color 2
+		3: "#3f3e3e",//Branch color 3
+		color: "#00000033",
+		points: "#504949",
+		locked: "#333333",
 		background: "#E2EAF4",
-		background_tooltip: "rgba(255, 255, 255, 0.75)",
+		background_tooltip: "rgba(0, 0, 0, 0.5)",
 	},
 }
 function changeTheme() {
