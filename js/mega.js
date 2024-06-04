@@ -79,6 +79,11 @@ addLayer("mega", {
 				layers.mega.buyables[13].buy();
 			};
 		};
+        if (hasMilestone('sac', 72)) {
+			if (layers.mega.buyables[14].canAfford()) {
+				layers.mega.buyables[14].buy();
+			};
+		};
 	},
      tabFormat: {
         "Main tab": {
@@ -294,7 +299,7 @@ addLayer("mega", {
             title: "HYPER MASSIVE BOOST",
             description: "x1e180K PF",
             cost: new Decimal("2.5e32835"),
-            unlocked() { return hasMilestone("mega", 15) && hasUpgrade("mega", 64) },
+            unlocked() { return hasUpgrade("mega", 64) },
         },
         72: {
             title: "Boost to Previous Upgrade",
@@ -339,7 +344,9 @@ addLayer("mega", {
             effect() {
                 let sprmegaexp = 400
                 let eff = player["s"].points.add(1).pow(sprmegaexp)
-                eff = softcap(eff, new Decimal("1e25000"), 0.1)
+                let softcapExp = 0.1
+                if (hasUpgrade('m', 93)) softcapExp = 0.25
+                eff = softcap(eff, new Decimal("1e25000"), softcapExp)
                 return eff
             },
             effectDisplay() {
@@ -351,6 +358,30 @@ addLayer("mega", {
                 return "This upgrade boosts Mega Points by " + format(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 83) },
+        },
+        91: {
+            title: "Ayy!! Extension!",
+            description: "+^0.05 MP",
+            cost: new Decimal("e1257288e3"),
+            unlocked() { return hasMilestone("sac", 71) },
+        },
+        92: {
+            title: "The Ultima-Tradeoff",
+            description: "Sacrifice scaling is WEAKER - Ensure that you have 638 Sacs, but xe4B PF",
+            cost: new Decimal("e1973207e3"),
+            unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 91)  },
+        },
+        93: {
+            title: "POW",
+            description: "^1.005 PF",
+            cost: new Decimal("e2219130e3"),
+            unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 92) },
+        },
+        94: {
+            title: "Alla Pow",
+            description: "+^0.005 BP, RP, PP, MP, Energy, Water, SP and Mastery Points",
+            cost: new Decimal("e2806616616"),
+            unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 93) },
         },
 
         // DS4
@@ -407,6 +438,12 @@ addLayer("mega", {
             description: "xe200M PF",
             cost: new Decimal("e5810581"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 84) },
+        },
+        95: {
+            title: "Astronomical Amount [Tier 10]",
+            description: "xe15B PF",
+            cost: new Decimal("e5810581"),
+            unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) },
         },
     },
     milestones: {
@@ -534,6 +571,30 @@ addLayer("mega", {
                 }
             },
         },
+        21: {
+            requirementDescription: "Mastery Challenge 2 Specific - Sacrifice cost scaling is weaker (e6,768,462 MP)",
+            effectDescription: "[Down Arrow] Cost Scaling",
+            unlocked() {return inChallenge("m", 12)},
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["mega"].points.gte("e6768462")) {
+                        return true
+                    }
+                }
+            },
+        },
+        22: {
+            requirementDescription: "Mastery Challenge 2 Specific - Final Upgrade. (e18,785,015 MP)",
+            effectDescription: "^1.1 PF, Sac Scaling INCREASED (MAKE SURE YOU HAVE 31 SAC)",
+            unlocked() {return inChallenge("m", 12)},
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["mega"].points.gte("e18785015")) {
+                        return true
+                    }
+                }
+            },
+        },
     },
     buyables: {
         11: {
@@ -544,8 +605,10 @@ addLayer("mega", {
                 if (hasMilestone('sac', 3)) exp2 = 1.09125
                 if (hasUpgrade('mega', 43)) exp2 = 1.069
                 if (hasUpgrade('e', 31)) exp2 = 1.035
-                if (hasMilestone('sac', 23)) exp2 = 1.35
-                if (hasMilestone('sac', 26)) exp2 = 1.225
+                if (!(inChallenge('m', 12))) {
+                    if (hasMilestone('sac', 23)) exp2 = 1.35
+                    if (hasMilestone('sac', 26)) exp2 = 1.225
+                }
                 return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -584,7 +647,9 @@ addLayer("mega", {
                 let exp2 = 1.1
                 if (hasUpgrade('e', 22)) exp2 = 1.085
                 if (hasUpgrade('e', 42)) exp2 = 1.05
-                if (hasMilestone('sac', 23)) exp2 = 1.5
+                if (!(inChallenge('m', 12))) {
+                    if (hasMilestone('sac', 23)) exp2 = 1.5
+                }
                 return new Decimal("1e474").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -617,7 +682,9 @@ addLayer("mega", {
             unlocked() { return hasMilestone("mega", 14) },
             cost(x) {
                 let exp3 = 0.2
-                if (hasMilestone('sac', 23)) exp3 = 0.5
+                if (!(inChallenge('m', 12))) {
+                    if (hasMilestone('sac', 23)) exp3 = 0.5
+                }
                 return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(1 + exp3 , x))).floor()
             },
             display() {
@@ -731,8 +798,10 @@ addLayer("mega", {
         let exp = new Decimal(1)
         if (hasMilestone('e', 1)) exp = exp.add(0.02)
         if (hasUpgrade('e', 64)) exp = exp.sub(0.025)
-        if (hasUpgrade('rebirth', 25)) exp = exp.sub(0.08)
-        if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.09)
+            if (!(inChallenge("m", 12))) {
+                if (hasUpgrade('rebirth', 25)) exp = exp.sub(0.08)
+                if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.09)
+            }
         if (hasUpgrade('rebirth', 35)) exp = exp.add(0.05)
         if (hasMilestone('e', 12)) exp = exp.sub(0.1)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
@@ -748,6 +817,13 @@ addLayer("mega", {
         }
         if (hasUpgrade('w', 63)) exp = exp.add(0.05)
         if (hasMilestone('e', 20)) exp = exp.add(0.05)
+            if (inChallenge("m", 12)) {
+                if (hasMilestone("w", 3)) exp = exp.add(0.055)
+                if (hasMilestone('s', 8)) exp = exp.add(0.08)
+            }
+        if (hasUpgrade('m', 83)) exp = exp.add(0.04)
+        if (hasUpgrade('mega', 91)) exp = exp.add(0.05)
+            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
@@ -758,6 +834,7 @@ addLayer("mega", {
         let cap = 0.3
         if (hasUpgrade('mega', 81)) cap = 0.45
         if (hasUpgrade('mega', 83)) cap = 0.6125
+        if (hasUpgrade('m', 91)) cap = 0.825
         softcappedEffect = softcap(eff, new Decimal("e30000"), new Decimal(cap))
         return softcappedEffect
        },

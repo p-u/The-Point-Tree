@@ -8,16 +8,34 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 10,  // In hours
+	offlineLimit: 2,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.4: Dim Shift 5 and ???",
-	name: "Its over 10^(10^10)!",
+	num: "2.5: RAPID INFLATION COMES",
+	name: "Its over e10T",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v2.5.0 - RAPID INFLATION COMES</h3><br>
+Added a hardcap for Supreme Buyable 5 (^1.25) <br>
+Added a softcap and a hardcap for Sacrifice Milestone 58 (SC: ^1.075, HC: ^1.1) <br>
+Changed description of some Sac Milestones <br>
+New Feature: Reduce softcap of upgrades <br>
+New Feature: Layers reset nothing <br>
+New Feature: Changing exponent of static layers <br>
+Added 2 savebanks <br>
+Added a Mastery Challenge! <br>
+Added 10 upgrades <br>
+Added 10 Mastery Challenge 2-specific milestones <br>
+Added 9 non-Mastery Challenge milestones <br>
+Added 6 achievements, with 5 giving boosts! <br>
+Endgame: e29,425,200,000,000 PF <br>
+High Endgame: e29,425,225,000,000 PF <br>
+Absolute True Endgame: e29,425,235,000,000 PF <br>
+
+
 <h3>v2.4.0 - Dim Shift 5 and ???</h3><br>
 Base number formatting precision increased from 2 to 3 <br>
 Infobox layer got a revamp! Most things are now updated, and shifted locations <br>
@@ -31,6 +49,10 @@ Added 10 sacrifice milestones <br>
 Added 7 non-sacrifice milestones <br>
 Added 6 achievements, WITH ALL giving boosts! <br>
 Endgame: e559,326,500,000 PF <br>
+
+v2.41 - Fixed some bugs
+v2.42 - Added Light Theme and a setting to change to e notation
+v2.43 - Added Lava Theme
 
 <h3>Changes (v2.3: Dimensional Shift 4 and Supreme Buyable 5) </h3><br>
 Bug Fix: Ach 144 desc, MU73 desc, DS3 bar desc, SU94 unlock. <br>
@@ -407,6 +429,8 @@ function getPointGen() {
 	if (hasMilestone('basic', 3)) gain = gain.times("e3e7")
 	if (hasMilestone('basic', 6)) gain = gain.times("e250e6")
 	if (hasUpgrade('basic', 105)) gain = gain.times("e1e9")
+	if (hasMilestone('basic', 7)) gain = gain.times("e250e6")
+	if (hasMilestone('basic', 8)) gain = gain.times("e2e9")
 
 	
 	
@@ -474,6 +498,8 @@ function getPointGen() {
 	if (hasMilestone('mega', 18)) gain = gain.times("e11.0539e6")
 	if (hasUpgrade('mega', 15)) gain = gain.times("e50e6")
 	if (hasUpgrade('mega', 85)) gain = gain.times("e200e6")
+	if (hasUpgrade('mega', 92)) gain = gain.times("e4e9")
+	if (hasUpgrade('mega', 95)) gain = gain.times("e15e9")
 
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
@@ -522,6 +548,13 @@ function getPointGen() {
 	if (hasMilestone('sac', 63)) gain = gain.times("e500e6")
 	if (hasMilestone('e', 20)) gain = gain.times("e500e6")
 	if (hasMilestone('sac', 65)) gain = gain.times("e650e6")
+	if (hasMilestone('e', 21)) gain = gain.times("e400e6")
+	if (hasMilestone('sac', 66)) gain = gain.times("e1e9")
+	if (hasUpgrade('e', 102)) gain = gain.times("e694.2e6")
+	if (hasUpgrade('e', 105)) gain = gain.times("e1337.69420e6")
+	if (hasMilestone('sac', 67)) gain = gain.times("e1e9")
+	if (hasMilestone('sac', 68)) gain = gain.times("e2.023e9")
+	if (hasMilestone('sac', 70)) gain = gain.times("e2.5e9")
 
 	// achievement
 
@@ -552,6 +585,10 @@ function getPointGen() {
 	if (hasAchievement('a', 174)) gain = gain.times("e400e6")
 	if (hasAchievement('a', 175)) gain = gain.times("e421.4e6")
 	if (hasAchievement('a', 176)) gain = gain.times("e1e9")
+	if (hasAchievement('a', 182)) gain = gain.times("e1e9")
+	if (hasAchievement('a', 183)) gain = gain.times("e1.85e9")
+	if (hasAchievement('a', 185)) gain = gain.times("e2.697e9")
+	if (hasAchievement('a', 186)) gain = gain.times("e7e9")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -697,7 +734,20 @@ function getPointGen() {
 	if (hasUpgrade('basic', 103)) gain = gain.pow(1.03)
 	if (hasMilestone('sac', 63)) gain = gain.pow(1.02)
 	if (hasMilestone('sac', 64)) gain = gain.pow(1.02)
-
+	if (hasUpgrade('e', 103)) gain = gain.pow(1.006969)
+		if (inChallenge("m", 12)) {
+			if (hasMilestone("e", 22)) gain = gain.pow(1.025)
+			if (hasMilestone("w", 3)) gain = gain.pow(1.05)
+			if (hasMilestone('sac', 21)) gain = gain.pow(1.01)
+			if (hasMilestone("e", 23)) gain = gain.pow(1.1)
+			if (hasMilestone("w", 4)) gain = gain.pow(1.04)
+			if (hasMilestone("mega", 22)) gain = gain.pow(1.1)
+		}
+	if (hasUpgrade('m', 82)) gain = gain.pow(1.01)
+	if (hasUpgrade('m', 85)) gain = gain.pow(1.015)
+	if (hasMilestone('sac', 71)) gain = gain.pow(1.008)
+	if (hasUpgrade('mega', 93)) gain = gain.pow(1.005)
+	if (hasMilestone('sac', 72)) gain = gain.pow(1.004)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	return gain
 }
@@ -771,7 +821,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e559326500000"))
+	return player.points.gte(new Decimal("e29245200000000"))
 }
 
 

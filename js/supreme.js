@@ -110,6 +110,18 @@ addLayer("s", {
             unlocked() {return (hasMilestone('sac', 63))},
             done() { return player["s"].points.gte("e13015") }
         },
+        8: {
+            requirementDescription: "MC2S (Supreme I) - 1.6e1446",
+            effectDescription: "+^0.08 MP, Sacrifice Scaling slightly lower",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["s"].points.gte("1.6e1446")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return (inChallenge("s", 12))},
+        },
     },
     upgrades: {
         11: {
@@ -603,7 +615,7 @@ addLayer("s", {
         },
     },
     15: {
-        title: "Supreme Buyable 5: PF Power!",
+        title: "Supreme Buyable 5: PF Power! [Max effect ^1.25]",
         unlocked() { return (hasUpgrade('s', 102)) },
         cost(x) {
             let exp2 = 2.5
@@ -628,6 +640,7 @@ addLayer("s", {
             let base2 = x
             let expo = new Decimal(1.004)
             let eff = base1.pow(Decimal.pow(base2, expo))
+            if (eff.gte(1.25)) eff = 1.25
             return eff
         },
     },
@@ -669,6 +682,8 @@ addLayer("s", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
+        if (hasUpgrade('m', 84)) exp = exp.add(0.05)
+            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },

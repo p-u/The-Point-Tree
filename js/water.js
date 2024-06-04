@@ -187,13 +187,37 @@ addLayer("w", {
             requirementDescription: "The First Water Milestone (3.33e135 Water)",
             effectDescription: "^1.025 PF, WU13 is stronger",
             done() { return player["w"].points.gte("3.33e135") },
-            unlocked() {return player["sac"].points.gte(64)},
+            unlocked() {return player["sac"].points.gte(64) || hasMilestone("w", 3)},
         },
         2: {
             requirementDescription: "The Second Water Milestone (1.111e1111 Water)",
             effectDescription: "+^0.1111 PP",
             done() { return player["w"].points.gte("1.111e1111") },
             unlocked() {return player["sac"].points.gte(132)},
+        },
+        3: {
+            requirementDescription: "OP Mastery Challenge 2 Specific Milestone (1e300 Water)",
+            effectDescription: "^1.05 PF, Water Milestone 1 is visible in Mastery Challenge 2, PP +^0.1, MP +^0.055",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["w"].points.gte("e300")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return inChallenge("m", 12)},
+        },
+        4: {
+            requirementDescription: "Mastery Challenge 2 Specific Milestone 2 (1e668 Water)",
+            effectDescription: "^1.04 PF, Sac Scaling weaker",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["w"].points.gte("e668")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return (inChallenge("m", 12) && hasMilestone('w', 3))},
         },
     },
     gainMult() { // Prestige multiplier
@@ -241,6 +265,8 @@ addLayer("w", {
         if (hasUpgrade('w', 32)) exp = exp.add(0.01)
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
         if (hasAchievement('a', 171)) exp = exp.add(0.02)
+        if (hasUpgrade('m', 81)) exp = exp.add(0.1)
+            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },

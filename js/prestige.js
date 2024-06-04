@@ -58,7 +58,9 @@ addLayer("prestige", {
                 let eff = player["rebirth"].points.add(1).pow(pu6exp)
                 let softcapStart = new Decimal("1e1111111")
                 if (hasMilestone("rebirth", 8)) softcapStart = new Decimal("e2.5e6")
-                eff = softcap(eff, softcapStart, 0.35)
+                let softcapExp = 0.35
+                if (hasUpgrade('m', 94)) softcapExp = 0.375
+                eff = softcap(eff, softcapStart, softcapExp)
                 return eff
             },
             effectDisplay() {
@@ -272,6 +274,20 @@ addLayer("prestige", {
             },
             unlocked() {return inChallenge("m", 11) && hasMilestone("sac", 10)},
         },
+        10: {
+            requirementDescription: "MC2S (Pres I) - e66,136,216 PP [Req Sac 17]",
+            effectDescription: "+^0.0628 PP, Sacrifice Scaling is weaker",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (hasMilestone("sac", 17)) {
+                        if (player.prestige.points.gte("e66136196")) {
+                            return true
+                        }
+                    }
+                }
+            },
+            unlocked() {return inChallenge("m", 12)},
+        },
     },
     doReset(prestige) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
@@ -360,6 +376,8 @@ addLayer("prestige", {
         if (hasUpgrade('s', 54)) mult = mult.times("e40000")
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e111.11e3")
         if (hasUpgrade('m', 54)) mult = mult.times("e2.5e6")
+        if (hasUpgrade('e', 104)) mult = mult.times("e69.69e6")
+        if (hasMilestone('sac', 69)) mult = mult.times("e360e6")
 
         return mult
     },
@@ -386,6 +404,13 @@ addLayer("prestige", {
         if (hasMilestone('w', 2)) exp = exp.add(0.1111)
         if (hasUpgrade('w', 63)) exp = exp.add(0.1)
         if (hasUpgrade('basic', 103)) exp = exp.add(0.05)
+        if (hasAchievement('a', 181)) exp = exp.add(0.035)
+            if (inChallenge("m", 12)) {
+                if (hasMilestone("e", 22)) exp = exp.add(0.025)
+                if (hasMilestone("w", 3)) exp = exp.add(0.1)
+                if (hasMilestone("prestige", 10)) exp = exp.add(0.0628)
+            }
+            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         return exp
     },
     effect(){

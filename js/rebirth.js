@@ -12,12 +12,6 @@ addLayer("rebirth", {
        return visible
      },
     tabFormat: {
-        "NOTE [ONLY FOR MASTERY CHALLENGE]": {
-            content: [
-                ["infobox", "info"],
-            ],
-            unlocked() {return inChallenge("m", 11)}
-        },
         "Main Tab": {
             content: [
                 "main-display",
@@ -30,6 +24,12 @@ addLayer("rebirth", {
                 "blank",
                 "upgrades"
             ],
+        },
+        "NOTE [ONLY FOR MASTERY CHALLENGE]": {
+            content: [
+                ["infobox", "info"],
+            ],
+            unlocked() {return inChallenge("m", 11)}
         },
     },
     upgrades: {
@@ -210,13 +210,13 @@ addLayer("rebirth", {
         },
         25: {
             title: "Exponent Switcheroo",
-            description: "-^0.03 BP, -^0.08 MP, +^0.12 PP",
+            description: "-^0.03 BP, -^0.08 MP, +^0.12 PP **MP NERF DO NOT APPLY IF IN MASTERY CHALLENGE 2**",
             cost: new Decimal("e5594600"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 15) },
         },
         35: {
             title: "Rebirth Exponent Decrease?",
-            description: "-^0.15 RP, -^0.09 MP, Rebirth Supercap is stronger",
+            description: "-^0.15 RP, -^0.09 MP, Rebirth Supercap is stronger **NERFS DO NOT APPLY IF IN MASTERY CHALL 2**",
             cost: new Decimal("e6238238"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 25) },
         },
@@ -325,6 +325,18 @@ addLayer("rebirth", {
             effectDescription: "Rebirth Softcap is reduced",
             unlocked() {return hasMilestone("sac", 62)},
             done() { return player["rebirth"].points.gte("e16101e6") }
+        },
+        13: {
+            requirementDescription: "MC2S (Rebirth I) - e1,634,937,700 Energy",
+            effectDescription: "Back to basics - Basic Upgrade 2 and 3 is stronger. Yes. 2. 3.",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["rebirth"].points.gte("e1634937700")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return inChallenge("m", 12)},
         },
     },
     color: "#0F52BA",
@@ -449,7 +461,9 @@ addLayer("rebirth", {
         if (hasMilestone('sac', 27)) exp = exp.add(0.025)
         if (hasUpgrade('rebirth', 15)) exp = exp.add(0.025)
         if (hasUpgrade('rebirth', 25)) exp = exp.add(0.08)
-        if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.15)
+        if (!(inChallenge("m", 12))) {
+            if (hasUpgrade('rebirth', 35)) exp = exp.sub(0.15)
+        }
         if (hasMilestone('e', 12)) exp = exp.sub(0.2)
         if (inChallenge('sac', 14)) exp = exp.mul(0.5)
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
@@ -458,6 +472,7 @@ addLayer("rebirth", {
         if (inChallenge("m", 11)) {
             if (hasMilestone('e', 15)) exp = exp.add(0.15)
         }
+        if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

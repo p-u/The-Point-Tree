@@ -68,12 +68,18 @@ addLayer("e", {
             for(v=9;v<10;v++){ //columns
                 if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
+            for(v=10;v<11;v++){ //columns
+                if ((hasMilestone('sac', 69)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
           }
           for(v=1;v<9;v++){ //columns
             if ((hasMilestone('e', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
           }
           for(v=9;v<10;v++){ //columns
                 if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
+            }
+            for(v=10;v<11;v++){ //columns
+                if ((hasMilestone('sac', 69)) && hasUpgrade(this.layer, 105)) keptUpgrades.push(105)
             }
     
     
@@ -207,6 +213,7 @@ addLayer("e", {
             if (hasMilestone('basic', 5)) mult = mult.times(1000)
             if (hasMilestone('e', 16)) mult = mult.times(40)
         }
+        if (hasUpgrade('e', 101)) mult = mult.times("e42000")
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
@@ -222,6 +229,8 @@ addLayer("e", {
         if (hasMilestone('e', 13)) exp = exp.add(0.01)
         if (hasMilestone('e', 14)) exp = exp.add(0.025)
         if (hasUpgrade('e', 35)) exp = exp.add(buyableEffect('mega', 14))
+        if (hasMilestone('e', 21)) exp = exp.add(0.05)
+            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -254,7 +263,9 @@ addLayer("e", {
                     if (hasMilestone('e', 9)) e4exp = 0.195
                     if (hasUpgrade('e', 15)) e4exp = 0.25
                     let eff = player["e"].points.add(1).pow(e4exp)
-                    eff = softcap(eff, new Decimal("1e700"), 0.5)
+                    let softcapExp = 0.5
+                    if (hasUpgrade('m', 92)) softcapExp = 0.52
+                    eff = softcap(eff, new Decimal("1e700"), softcapExp)
                     return eff
                 },
             effectDisplay() {
@@ -490,6 +501,38 @@ addLayer("e", {
                 cost: new Decimal("1e714"),
                 unlocked() { return hasUpgrade("e", 94) },
             },
+            101: {
+                title: "Wait, there is a row 10?",
+                description: "xe42,069 Energy, lol",
+                cost: new Decimal("e655115"),
+                unlocked() { return hasUpgrade("e", 95) && hasMilestone('e', 21) },
+            },
+            102: {
+                title: "Not funny",
+                description: "xe694.2M PF",
+                cost: new Decimal("e815800"),
+                unlocked() { return hasUpgrade("e", 101) && hasMilestone('e', 21) },
+            },
+            103: {
+                title: "Still not funny",
+                description: "^1.006969 PF",
+                cost: new Decimal("e845774"),
+                unlocked() { return hasUpgrade("e", 102) && hasMilestone('e', 21) },
+            },
+            104: {
+                title: "not  funni",
+                description: "xe69.69M PP",
+                cost: new Decimal("e883688"),
+                unlocked() { return hasUpgrade("e", 103) && hasMilestone('e', 21) },
+            },
+            105: {
+                title: "HAHAHA SO FUNNY LOLOL",
+                description: "xe1337.69420M PF",
+                cost: new Decimal("e921842"),
+                unlocked() { return hasUpgrade("e", 104) && hasMilestone('e', 21) },
+            },
+
+            // challenge specific upgs
             111: {
                 title: "Challenge 1-Specific Upgrades (Only can be get in Challenge 1, only boosts Challenge 1)",
                 description: "xe5K BP",
@@ -715,7 +758,7 @@ addLayer("e", {
             requirementDescription: "The True Energy Milestone (1e5,380 Energy)",
             effectDescription: "x1M Water, +^0.025 Energy",
             done() { return player["e"].points.gte("1e5380") },
-            unlocked() {return player["sac"].points.gte(64)},
+            unlocked() {return player["sac"].points.gte(64) || hasMilestone("e", 22)},
         },
         15: {
             requirementDescription: "MCS-Milestone (Energy I) - 200K Energy",
@@ -776,6 +819,36 @@ addLayer("e", {
             effectDescription: "xe500M PF, +^0.05 MP",
             done() { return player["e"].points.gte("e484425") },
             unlocked() {return player["sac"].points.gte(225)},
+        },
+        21: {
+            requirementDescription: "Galactic Energy (e556,395 energy)",
+            effectDescription: "Unlock Row 10 of Energy Upgrades, +^0.05 Energy, xe400M PF",
+            done() { return player["e"].points.gte("e556395") },
+            unlocked() {return player["sac"].points.gte(240)},
+        },
+        22: {
+            requirementDescription: "MC2S (Energy I) - e15,582 Energy",
+            effectDescription: "^1.025 PF, +^0.025 PP, Show True Energy Milestone.",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["e"].points.gte("e15582")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return inChallenge("m", 12)},
+        },
+        23: {
+            requirementDescription: "MC2S (Energy 2) - 5e18,980 Energy",
+            effectDescription: "^1.1 PF",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["e"].points.gte("5e18980")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return (inChallenge("m", 12) && hasMilestone("e", 22))},
         },
     },
     branches: ["sac", "mega"],

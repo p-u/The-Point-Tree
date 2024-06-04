@@ -34,6 +34,9 @@ addLayer("basic", {
             for(v=9;v<10;v++){ //columns
                 if ((hasMilestone('sac', 39)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
+            for(v=10;v<11;v++){ //columns
+                if ((hasMilestone('sac', 65)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
           }
             for(v=1;v<8;v++){ //columns
               if ((hasMilestone('sac', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
@@ -43,6 +46,9 @@ addLayer("basic", {
             }
             for(v=9;v<10;v++){ //columns
                 if ((hasMilestone('sac', 39)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
+            }
+            for(v=10;v<11;v++){ //columns
+                if ((hasMilestone('sac', 65)) && hasUpgrade(this.layer, 105)) keptUpgrades.push(105)
             }
     
         // Stage 3, track which main features you want to keep - milestones
@@ -70,6 +76,7 @@ addLayer("basic", {
             effect() {
                 let expu2 = 0.35
                 if (hasUpgrade("basic", 62)) expu2 = 0.3575
+                if (hasMilestone("rebirth", 13)) expu2 = 0.365
                 let eff = player[this.layer].points.add(1).pow(expu2)
                 eff = softcap(eff, new Decimal("1e50000000"), 0.5)
                 return eff
@@ -84,6 +91,7 @@ addLayer("basic", {
             cost: new Decimal(5),
             effect() {
                 let expu3 = 0.16
+                if (hasMilestone("rebirth", 13)) expu3 = 0.161616
                 let eff = player.points.add(1).pow(expu3)
                 eff = softcap(eff, new Decimal("1e5000000"), 0.5)
                 eff = softcap(eff, new Decimal("1e25000000"), 0.3)
@@ -182,7 +190,9 @@ addLayer("basic", {
                 if (hasUpgrade('prestige', 32)) expu10 = 0.09
                 if (inChallenge("sac", 12)) expu10 = 0
                 let eff = player.points.add(500000).pow(expu10)
-                eff = softcap(eff, new Decimal("1e100000000"), 0.5)
+                let softcapExp = 0.5
+                if (hasUpgrade('m', 95)) softcapExp = 0.522
+                eff = softcap(eff, new Decimal("1e100000000"), softcapExp)
                 eff = softcap(eff, new Decimal("1e2500000000"), 0.4)
                 return eff
             },
@@ -491,19 +501,19 @@ addLayer("basic", {
             requirementDescription: "It's never too late to have milestones. (BM1: e421,662,500 BP)",
             effectDescription: "^1.025 PF, +^0.025 BP",
             done() { return player["basic"].points.gte("e421662500") },
-            unlocked() {return player["sac"].points.gte(64)},
+            unlocked() {return player["sac"].points.gte(64) || hasMilestone("basic", 7)},
         },
         2: {
             requirementDescription: "Wait... A new currency? (BM2: e1,886,230,000 PF)",
             effectDescription: "^1.02 PF, xe20M PF",
             done() { return player.points.gte("e1886230000") },
-            unlocked() {return player["sac"].points.gte(64)},
+            unlocked() {return player["sac"].points.gte(64) || hasMilestone("basic", 7)},
         },
         3: {
             requirementDescription: "Godly-Tier PF Mult (BM3: e2,282,415,000 PF)",
             effectDescription: "xe30M PF",
             done() { return player.points.gte("e2282415000") },
-            unlocked() {return hasMilestone("basic", 2)},
+            unlocked() {return hasMilestone("basic", 2) || hasMilestone("basic", 7)},
         },
         4: {
             requirementDescription: "How do I even get this? [Mastery-Challenge-Specific] (Need e9081178 PF)",
@@ -535,7 +545,25 @@ addLayer("basic", {
             requirementDescription: "That's a lot (Req e50B PF)",
             effectDescription: "xe250M PF",
             done() { return player.points.gte("e50e9") },
-            unlocked() {return player["sac"].points.gte(132)},
+            unlocked() {return player["sac"].points.gte(132) || hasMilestone("basic", 7)},
+        },
+        7: {
+            requirementDescription: "MC2S (Basic I) - e7,963,340,000 Energy",
+            effectDescription: "xe250M PF, Sacrifice Scaling weaker, Basic Milestone 1-4 is visible.",
+            done() {
+                if (inChallenge("m", 12)) {
+                    if (player["basic"].points.gte("e7963340000")) {
+                        return true
+                    }
+                }
+            },
+            unlocked() {return inChallenge("m", 12)},
+        },
+        8: {
+            requirementDescription: "That's too much (Req e250B BP)",
+            effectDescription: "xe2B PF",
+            done() { return player["basic"].points.gte("e250e9") },
+            unlocked() {return player["sac"].points.gte(335)},
         },
     },
     color: "#add8e6",
@@ -611,6 +639,7 @@ addLayer("basic", {
         if (hasUpgrade('basic', 55)) exp = exp.sub(0.03)
         if (hasMilestone('sac', 18)) exp = exp.sub(0.05)
         if (hasMilestone('sac', 21)) exp = exp.sub(0.1)
+        if ((hasMilestone('sac', 21)) && inChallenge("m", 12)) exp = exp.add(0.1)
         if (hasUpgrade('rebirth', 25)) exp = exp.sub(0.03)
         if (hasMilestone('e', 12)) exp = exp.sub(0.1)
         if (hasAchievement("a", 134)) exp = exp.add(0.01)
@@ -619,6 +648,7 @@ addLayer("basic", {
         if (hasUpgrade('basic', 92)) exp = exp.add(0.025)
         if (hasMilestone('basic', 1)) exp = exp.add(0.025)
         if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
+            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

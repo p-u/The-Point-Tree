@@ -56,6 +56,7 @@ addLayer("sac", {
         let buyMaxSac = false
         if (hasMilestone("sac", 35)) buyMaxSac = true
         if (inChallenge('m', 11)) buyMaxSac = true
+        if (hasAchievement('a', 182)) buyMaxSac = true
        return buyMaxSac
      },
     milestones: {
@@ -180,7 +181,7 @@ addLayer("sac", {
         },
         21: {
             requirementDescription: "Sacrifice 21",
-            effectDescription: "-^0.1 BP, BUT xe10 Energy, Automate Mega Buyable 3",
+            effectDescription: "-^0.1 BP, BUT xe10 Energy, Automate Mega Buyable 3. If in Mastery Challenge 2, negate the effect by adding 0.1 to the BP Power and ^1.01 PF.",
             unlocked() {return player["sac"].points.gte(20)},
             done() { return player["sac"].points.gte(21) }
         },
@@ -192,7 +193,7 @@ addLayer("sac", {
         },
         23: {
             requirementDescription: "Sacrifice 23",
-            effectDescription: "All buyables are MUCH MORE EXPENSIVE, but are MUCH stronger. Add 1 row of Rebirth Upgrades.",
+            effectDescription: "All buyables are MUCH MORE EXPENSIVE, but are MUCH stronger. Add 1 row of Rebirth Upgrades. Buyable Nerf does NOT apply to Mastery Challenge 2.",
             unlocked() {return player["sac"].points.gte(22)},
             done() { return player["sac"].points.gte(23) }
         },
@@ -403,7 +404,7 @@ addLayer("sac", {
         58: {
             requirementDescription: "Sacrifice 140",
             effectDescription:  function(){
-				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000]. Also, unlock more Water Upgrades.";
+				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000] **After 750 sacs, formula is worse, and has a hardcap of 2,000 sacs. Also, unlock more Water Upgrades.";
 			},
             unlocked() {return player["sac"].points.gte(135)},
             done() { return player["sac"].points.gte(140) },
@@ -446,14 +447,66 @@ addLayer("sac", {
         },
         65: {
             requirementDescription: "Sacrifice 240",
-            effectDescription: "xe650M PF",
+            effectDescription: "xe650M PF, Keep Basic Upgrades on Reset, Unlock EM21",
             unlocked() {return player["sac"].points.gte(225)},
             done() { return player["sac"].points.gte(240) }
+        },
+        66: {
+            requirementDescription: "Sacrifice 250",
+            effectDescription: "xe1B PF... [NEW STAGE UNLOCKED]",
+            unlocked() {return player["sac"].points.gte(240)},
+            done() { return player["sac"].points.gte(250) }
+        },
+        67: {
+            requirementDescription: "Sacrifice 280",
+            effectDescription: "xe1B PF...",
+            unlocked() {return player["sac"].points.gte(260)},
+            done() { return player["sac"].points.gte(280) }
+        },
+        68: {
+            requirementDescription: "Sacrifice 335",
+            effectDescription: "xe2.023B PF... and unlock a basic milestone",
+            unlocked() {return player["sac"].points.gte(300)},
+            done() { return player["sac"].points.gte(335) }
+        },
+        69: {
+            requirementDescription: "Sacrifice 360 [1 full round]",
+            effectDescription: "xe360M PP, Energy Row 10 Upgs are automated",
+            unlocked() {return player["sac"].points.gte(345)},
+            done() { return player["sac"].points.gte(360) }
+        },
+        70: {
+            requirementDescription: "Sacrifice 450",
+            effectDescription: "xe2.5B PF",
+            unlocked() {return player["sac"].points.gte(400)},
+            done() { return player["sac"].points.gte(450) }
+        },
+        71: {
+            requirementDescription: "Sacrifice 515",
+            effectDescription: "Sacrifices reset nothing, ^1.008 PF, unlock a MP Extension.",
+            unlocked() {return player["sac"].points.gte(475)},
+            done() { return player["sac"].points.gte(515) }
+        },
+        72: {
+            requirementDescription: "Sacrifice 680",
+            effectDescription: "Autobuy Mega Upgrade 4, ^1.004 PF",
+            unlocked() {return player["sac"].points.gte(600)},
+            done() { return player["sac"].points.gte(680) }
         },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
-        sm58e = sm58e.div(10000)
+        if (sm58e.lte(750)) {
+            sm58e = sm58e.div(10000)
+        } else {
+            let nsm58e = sm58e.sub(750)
+            if (nsm58e.gt(1250)) {
+                sm58e = new Decimal(0.1)
+            } else {
+                nsm58e = nsm58e.div(50000)
+                sm58e = nsm58e.add(0.075)
+            }
+        }
         sm58e = sm58e.add(1)
 		return sm58e;
     },
@@ -592,7 +645,25 @@ addLayer("sac", {
     baseResource: "Mega Points", // Name of resource prestige is based on
     baseAmount() {return player.mega.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 3.6,  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
+    resetsNothing: function() {
+        if (hasMilestone('sac', 71)) return true
+        return false
+    },
+    exponent() {
+        let exp = 3.6
+        if (inChallenge('m', 12)) {
+            exp = 7
+            if (hasMilestone('mega', 21)) exp = 6.5
+            if (hasMilestone('basic', 7)) exp = 6.1
+            if (hasMilestone('prestige', 10)) exp = 5.75
+            if (hasMilestone('s', 8)) exp = 5.5
+            if (hasMilestone("w", 4)) exp = 5.25
+            if (hasMilestone("mega", 22)) exp = 5.5
+        }
+        if (hasChallenge('m', 12)) exp = 3.5
+        if (hasUpgrade('mega', 92)) exp = 3.6
+        return exp
+    },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         return mult
