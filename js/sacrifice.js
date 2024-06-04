@@ -49,7 +49,7 @@ addLayer("sac", {
                 "blank",
                 "challenges",
             ],
-            unlocked() {return player.sac.points.gte(20)}
+            unlocked() {return player.sac.points.gte(20) && (!(hasChallenge("m", 12)))}
         },
     },
     canBuyMax(){

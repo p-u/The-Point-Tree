@@ -338,7 +338,7 @@ addLayer("m", {
             challengeDescription: "Sacrifice Cost Scaling is now increased from 3.6 to 7.5 exponent.",
             canComplete: function() {return player.points.gte("e81643000000")},
             goalDescription: "Get e81.643B PF.",
-            rewardDescription: "Unlock new Mastery Upgrades and x10,000 Mastery Points, Sac Scaling decreased to 3.5",
+            rewardDescription: "Unlock new Mastery Upgrades and x10,000 Mastery Points, Sac Scaling decreased to 3.5, but you cannot enter sacrifice challenges",
             unlocked() { return hasAchievement("a", 182) },
         },
     },
