@@ -442,7 +442,7 @@ addLayer("mega", {
         95: {
             title: "Astronomical Amount [Tier 10]",
             description: "xe15B PF",
-            cost: new Decimal("e5810581"),
+            cost: new Decimal("e2900000000"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) },
         },
     },

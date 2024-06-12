@@ -327,7 +327,7 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte("e16101e6") }
         },
         13: {
-            requirementDescription: "MC2S (Rebirth I) - e1,634,937,700 Energy",
+            requirementDescription: "MC2S (Rebirth I) - e1,634,937,700 Rebirth Points",
             effectDescription: "Back to basics - Basic Upgrade 2 and 3 is stronger. Yes. 2. 3.",
             done() {
                 if (inChallenge("m", 12)) {

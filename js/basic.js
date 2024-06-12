@@ -548,7 +548,7 @@ addLayer("basic", {
             unlocked() {return player["sac"].points.gte(132) || hasMilestone("basic", 7)},
         },
         7: {
-            requirementDescription: "MC2S (Basic I) - e7,963,340,000 Energy",
+            requirementDescription: "MC2S (Basic I) - e7,963,340,000 Basic Points",
             effectDescription: "xe250M PF, Sacrifice Scaling weaker, Basic Milestone 1-4 is visible.",
             done() {
                 if (inChallenge("m", 12)) {

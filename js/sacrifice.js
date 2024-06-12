@@ -49,7 +49,7 @@ addLayer("sac", {
                 "blank",
                 "challenges",
             ],
-            unlocked() {return player.sac.points.gte(20) && (!(hasChallenge("m", 12)))}
+            unlocked() {return player.sac.points.gte(20) && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))}
         },
     },
     canBuyMax(){
@@ -489,7 +489,7 @@ addLayer("sac", {
         },
         72: {
             requirementDescription: "Sacrifice 680",
-            effectDescription: "Autobuy Mega Upgrade 4, ^1.004 PF",
+            effectDescription: "Autobuy Mega Buyable 4, ^1.004 PF",
             unlocked() {return player["sac"].points.gte(600)},
             done() { return player["sac"].points.gte(680) }
         },
@@ -500,7 +500,7 @@ addLayer("sac", {
             sm58e = sm58e.div(10000)
         } else {
             let nsm58e = sm58e.sub(750)
-            if (nsm58e.gt(1250)) {
+            if (nsm58e.gt(2000)) {
                 sm58e = new Decimal(0.1)
             } else {
                 nsm58e = nsm58e.div(50000)
@@ -514,14 +514,14 @@ addLayer("sac", {
         11: {
             name: "Sac Challenge 1 [Recommended Having 'The last of it all' achievement",
             challengeDescription: "^0.5 Point Fragments",
-            canComplete: function() {return player.points.gte("e516500")},
+            canComplete: function() {return player.points.gte("e516500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
             goalDescription: "Get e516.5K PF.",
             rewardDescription: "x10B Energy and xe25K PF",
         },
         12: {
             name: "Sac Challenge 2",
             challengeDescription: "Basic Upgrades 8,10 gives no boost. [Recommended Sac 21]",
-            canComplete: function() {return player.points.gte("e1552500")},
+            canComplete: function() {return player.points.gte("e1552500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
             goalDescription: "Get e1,552,500 PF.",
             rewardDescription: "xe75K PF",
             unlocked() { return hasChallenge("sac", 11) },
@@ -529,7 +529,7 @@ addLayer("sac", {
         13: {
             name: "Sac Challenge 3",
             challengeDescription: "^0.1 PF. [Recommended Sac 24]",
-            canComplete: function() {return player.points.gte("e191200")},
+            canComplete: function() {return player.points.gte("e191200") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
             goalDescription: "Get e191,200 PF.",
             rewardDescription: "xe400K PF",
             unlocked() { return hasChallenge("sac", 12) },
@@ -537,8 +537,8 @@ addLayer("sac", {
         14: {
             name: "Sac Challenge 4",
             challengeDescription: "All layers ^0.5. [Recommended Sac 28]",
-            canComplete: function() {return player.points.gte("e3153153")}, // change and add upg
-            goalDescription: "Get e3,153,153 PF.", // change this
+            canComplete: function() {return player.points.gte("e3153153") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))}, 
+            goalDescription: "Get e3,153,153 PF.", 
             rewardDescription: "^1.015 PF, xe20 Energy",
             unlocked() { return hasChallenge("sac", 13) },
         },

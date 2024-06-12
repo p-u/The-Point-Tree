@@ -247,367 +247,475 @@ addLayer("a", {
         26: {
             name: "1e100!",
             done() { return player.points.gte(1e100) },
-            tooltip: "Get 1e100 point fragments.",
+            tooltip: "Get 1e100 point fragments. Unlock the next 3 rows of achievements.",
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         31: {
             name: "PRESTIGE",
             done() { return player.prestige.points.gte(1) },
             tooltip: "Prestige!",
+            unlocked() { return hasAchievement("a", 26) },
         },
         32: {
             name: "1e100 2X!",
             done() { return player.points.gte(1e200) },
             tooltip: "Get 1e200 point fragments.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         33: {
             name: "Last of Rebirths",
             done() { return (hasUpgrade('rebirth', 32)) },
             tooltip: "Get the last Extended-Rebirth Upgrade (RU10).",
+            unlocked() { return hasAchievement("a", 26) },
         },
         34: {
             name: "Fiver Hundo",
             done() { return  player.points.gte(new Decimal("e500")) },
             tooltip: "Get 1e500 point fragments.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         35: {
             name: "10 to the power of Ten Hundred?",
             done() { return  player.points.gte(new Decimal("e1000")) },
             tooltip: "Get 1e1000 point fragments.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         36: {
             name: "Even More?",
             done() { return  player.points.gte(new Decimal("e1500")) },
             tooltip: "Get 1e1500 point fragments.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         41: {
             name: "Layer 4: MEGA!",
             done() { return  player.mega.points.gte(1) },
             tooltip: "Get 1 mega point.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         42: {
             name: "Keep Prestige Milestone!!",
             done() { return  (hasMilestone('mega', 2)) },
             tooltip: "Get the second mega milestone",
+            unlocked() { return hasAchievement("a", 26) },
         },
         43: {
             name: "Tres thou.",
             done() { return player.points.gte(new Decimal("e3000")) },
             tooltip: "Get 1e3,000 points. Reward: x1e30 points.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         44: {
             name: "Are you kidding me?",
             done() { return (hasUpgrade('mega', 21)) },
             tooltip: "Get the fifth mega upgrade. ",
+            unlocked() { return hasAchievement("a", 26) },
         },
         45: {
             name: "Seemingly random",
             done() { return player.points.gte(new Decimal("e10218")) },
             tooltip: "A mystery... But it is over e10,000 points and below e10,250. Reward: x1e68 PF.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         51: {
             name: "More Pres Keep",
             done() { return (hasMilestone('mega', 5)) },
             tooltip: "Mega Milestone 5",
+            unlocked() { return hasAchievement("a", 26) },
         },
         52: {
             name: "So many Megas!",
             done() { return  player.mega.points.gte(1.8e18) },
             tooltip: "Have 1.8e18 Mega Points. Reward: x1e18 Prestige Points.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         53: {
             name: "Are you able to buy?",
             done() { return (hasUpgrade('mega', 33))  },
             tooltip: "Get Mega Buyable 1.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         54: {
             name: "THE TRADE-OFF OF THE CENTURY",
             done() { return  (hasUpgrade('rebirth', 34)) },
-            tooltip: "Rebirth Upgrade 12",
+            tooltip: "Buy Rebirth Upgrade 34",
+            unlocked() { return hasAchievement("a", 26) },
         },
         55: {
             name: "Seemingly Random Version 2",
             done() { return  player.points.gte(new Decimal("e32772")) },
             tooltip: "A mystery... But it is over e32,500 points and below e33,000. Reward: x2.72e272 PF.",
+            unlocked() { return hasAchievement("a", 26) },
         },
         56: {
             name: "e70.6 Thousand",
             done() { return  player.points.gte(new Decimal("e70600")) },
-            tooltip: "Get e70,600 Point Fragments. Reward: Rebirth Softcap is less strong. (^0.375 to ^0.4)",
+            tooltip: "Get e70,600 Point Fragments. Reward: Rebirth Softcap is less strong. (^0.375 to ^0.4). Also, unlock the next 2 rows of achievements.",
+            unlocked() { return hasAchievement("a", 26) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         61: {
             name: "Sacrifice!!",
             done() { return  player.sac.points.gte(1) },
             tooltip: "Get Sacrifice 1. Reward: You love passive generation, right? Gain 1.84% of Mega Points a second.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         62: {
             name: "Stronger than ever!",
             done() { return  player.sac.points.gte(2) },
             tooltip: "Get Sacrifice 2.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         63: {
             name: "Pentac",
             done() { return  player.sac.points.gte(5) },
             tooltip: "Get Sacrifice 5!",
+            unlocked() { return hasAchievement("a", 56) },
         },
         64: {
             name: "DubleX100K",
             done() { return  player.points.gte(new Decimal("e200000")) },
             tooltip: "Get e200,000 points. Reward: Rebirth Softcap is less strong.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         65: {
             name: "Buyable 2",
             done() { return  (hasMilestone('mega', 13)) },
             tooltip: "Get mega buyable 2 [Elusive Rarity]",
+            unlocked() { return hasAchievement("a", 56) },
         },
         66: {
             name: "Seemingly random III",
             done() { return  player.points.gte(new Decimal("e528528")) },
             tooltip: "A mystery... But it is over e528,000 points and below e529,000. Reward: x1e500 PF.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         71: {
             name: "Energy I",
             done() { return  player.e.points.gte(new Decimal("1")) },
             tooltip: "Start gaining energy.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         72: {
             name: "Energy Milestonation",
             done() { return  (hasMilestone('e', 1)) },
             tooltip: "Get the first energy milestone.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         73: {
             name: "eMilillionaire",
             done() { return player.points.gte(new Decimal("e1000000")) },
             tooltip: "E1M POINTS!! Reward: xe10,000 Points.",
+            unlocked() { return hasAchievement("a", 56) },
         },
         74: {
-            name: "Era 3 Pres Upgs",
+            name: "Stage 3 Pres Upgs",
             done() { return (hasUpgrade('prestige', 41))},
             tooltip: "Prestige Upgrade 13 [Elusive Rarity].",
+            unlocked() { return hasAchievement("a", 56) },
         },
         75: {
             name: "e(1x2)M",
             done() { return player.points.gte(new Decimal("e2000000")) },
             tooltip: "E2M POINTS!! Reward: xe10,000 Points and x100 energy",
+            unlocked() { return hasAchievement("a", 56) },
         },
         76: {
             name: "Sac 15",
             done() { return player.sac.points.gte(new Decimal(15)) },
-            tooltip: "Sacrifice 15 [Elusive Rarity]",
+            tooltip: "Sacrifice 15 [Elusive Rarity]. Unlock the next 3 rows of achievements.",
+            unlocked() { return hasAchievement("a", 56) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         81: {
             name: "Dimensional Shift 1 Upgrade 1",
             done() { return (hasUpgrade('basic', 15)) },
             tooltip: "BUS 1 [Exclusive Rarity]",
+            unlocked() { return hasAchievement("a", 76) },
         },
         82: {
             name: "Power Crazily Increase",
             done() { return (hasUpgrade('basic', 45)) },
             tooltip: "x1B Energy? That's insane!",
+            unlocked() { return hasAchievement("a", 76) },
         },
         83: {
             name: "e8100 Mega Points",
             done() { return player.mega.points.gte(new Decimal("e8100")) },
             tooltip: "e8,100 MP. Reward: x1e81 MP",
+            unlocked() { return hasAchievement("a", 76) },
         },
         84: {
             name: "Mega Buyable 3",
             done() { return (hasMilestone('mega', 14)) },
             tooltip: "Mega Buyable 3",
+            unlocked() { return hasAchievement("a", 76) },
         },
         85: {
             name: "Mega Rep Upgrades",
             done() { return (hasUpgrade('mega', 61)) },
             tooltip: "Rep Upgrades [Exclusive Rarity]",
+            unlocked() { return hasAchievement("a", 76) },
         },
         86: {
             name: "The last of it all",
             done() { return (hasUpgrade('basic', 75)) },
             tooltip: "The final Basic Upgrade S. Reward: ^1.00025 PF.",
+            unlocked() { return hasAchievement("a", 76) },
         },
         91: {
             name: "A Challenge Done!",
             done() { return (hasChallenge('sac', 11)) },
             tooltip: "Challenges [Insane Rarity]",
+            unlocked() { return hasAchievement("a", 76) },
         },
         92: {
             name: "1.00E1.00E7",
             done() { return player.points.gte(new Decimal("e10000000")) },
             tooltip: "E10,000,000 POINT FRAGMENTS!.",
+            unlocked() { return hasAchievement("a", 76) },
         },
         93: {
             name: "BP9M",
             done() { return player.basic.points.gte(new Decimal("e9000000")) },
             tooltip: "E9,000,000 Basic Points. Reward: xe9K RP, xe27K BP, xe54K PF",
+            unlocked() { return hasAchievement("a", 76) },
         },
         94: {
             name: "15 Million Digits",
             done() { return player.points.gte(new Decimal("e15000000")) },
             tooltip: "E15,000,000 Point Fragments. Reward: xe100K PF",
+            unlocked() { return hasAchievement("a", 76) },
         },
         95: {
             name: "Mega Rise!",
             done() { return player.mega.points.gte(new Decimal("e19500")) },
             tooltip: "E19.5K Mega Points. Reward: xe195 MP, xe95K PF",
+            unlocked() { return hasAchievement("a", 76) },
         },
         96: {
             name: "25 Million Digits",
             done() { return player.points.gte(new Decimal("e25000000")) },
             tooltip: "E25,000,000 Point Fragments.",
+            unlocked() { return hasAchievement("a", 76) },
         },
         101: {
             name: "Basic Points boosts all currencies (except sac)",
             done() { return (hasUpgrade('basic', 84)) },
             tooltip: "Get Basic Boost 4. [Exclusive Rarity]",
+            unlocked() { return hasAchievement("a", 76) },
         },
         102: {
             name: "30 Million Digits",
             done() { return player.points.gte(new Decimal("e30000000")) },
             tooltip: "E30,000,000 Point Fragments.",
+            unlocked() { return hasAchievement("a", 76) },
         },
         103: {
             name: "Completion of Dimensional Shift 2",
             done() { return (hasUpgrade('rebirth', 55)) },
             tooltip: "Get the fifth upgrade in the Dimensional Shift Series! [Insane Rarity]",
+            unlocked() { return hasAchievement("a", 76) },
         },
         104: {
             name: "PP Madness",
             done() { return player.prestige.points.gte(new Decimal("e500000")) },
             tooltip: "Get e500,000 PP. Reward: xe250K PF.",
+            unlocked() { return hasAchievement("a", 76) },
         },
         105: {
             name: "Another Extension...",
             done() { return (hasUpgrade('prestige', 51)) },
             tooltip: "Another Prestige Extension.",
+            unlocked() { return hasAchievement("a", 76) },
         },
         106: {
             name: "150 Million Digits",
             done() { return player.points.gte(new Decimal("e150000000")) },
-            tooltip: "E150,000,000 Point Fragments. Reward: xe150K PF",
+            tooltip: "Get e150,000,000 Point Fragments. Reward: xe150K PF. Unlock the next 2 rows of achievements.",
+            unlocked() { return hasAchievement("a", 76) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         111: {
             name: "Supreme",
             done() { return player.s.points.gte(new Decimal(1)) },
-            tooltip: "1 Supreme Point [Super Exclusive Rarity]",
+            tooltip: "Get 1 Supreme Point [Super Exclusive Rarity]",
+            unlocked() { return hasAchievement("a", 106) },
         },
         112: {
             name: "More Supreme",
             done() { return player.s.points.gte(new Decimal(15)) },
-            tooltip: "15 Supreme Points [Super Exclusive Rarity]",
+            tooltip: "Get 15 Supreme Points [Super Exclusive Rarity]",
+            unlocked() { return hasAchievement("a", 106) },
         },
         113: {
             name: "Many Supreme",
             done() { return player.s.points.gte(new Decimal(1000)) },
-            tooltip: "1,000 Supreme Point [Super Exclusive Rarity]. Reward: Unlock 'Supreme Buyable' tab.",
+            tooltip: "Get 1,000 Supreme Point [Super Exclusive Rarity]. Reward: Unlock 'Supreme Buyable' tab.",
+            unlocked() { return hasAchievement("a", 106) },
         },
         114: {
             name: "Water",
             done() { return player.w.points.gte(new Decimal(1)) },
-            tooltip: "1 Water [Super Exclusive Rarity]",
+            tooltip: "Get water. [Super Exclusive Rarity]",
+            unlocked() { return hasAchievement("a", 106) },
         },
         115: {
             name: "Passively Supreme",
             done() { return (hasUpgrade('s', 42)) },
-            tooltip: "Supreme Buyable 2 [Super Exclusive Rarity]. ",
+            tooltip: "Unlock Supreme Buyable 2 [Super Exclusive Rarity]. ",
+            unlocked() { return hasAchievement("a", 106) },
         },
         116: {
             name: "Finally, a milestone",
             done() { return (hasMilestone('sac', 33)) },
             tooltip: "Get Sac Milestone 33. ",
+            unlocked() { return hasAchievement("a", 106) },
         },
         121: {
             name: "Get Loads of Water",
             done() { return player.w.points.gte(new Decimal(1e10)) },
             tooltip: "Get 10^10 Water [Mega Exclusive Rarity]. ",
+            unlocked() { return hasAchievement("a", 106) },
         },
         122: {
             name: "How big is that?",
             done() { return player.points.gte(new Decimal("e290000000")) },
             tooltip: "Get e290M PF. Reward: ^1.015 PF",
+            unlocked() { return hasAchievement("a", 106) },
         },
         123: {
             name: "Get Insanely Many Water",
             done() { return player.w.points.gte(new Decimal(1e30)) },
             tooltip: "Get 10^30 Water [Mega Exclusive Rarity]. ",
+            unlocked() { return hasAchievement("a", 106) },
         },
         124: {
             name: "How big is that+?",
             done() { return player.points.gte(new Decimal("e407.4e6")) },
             tooltip: "Get e407.4M PF. Reward: ^1.014074 PF",
+            unlocked() { return hasAchievement("a", 106) },
         },
         125: {
             name: "Mega a lot",
             done() { return player.mega.points.gte(new Decimal("e280000")) },
             tooltip: "Get e280K MP. Reward: xe2.8M PF, xe2.94K MP",
+            unlocked() { return hasAchievement("a", 106) },
         },
         126: {
             name: "[Warning] Too Much Water!",
             done() { return player.w.points.gte(new Decimal(4e51)) },
-            tooltip: "Get 4e51 Water. Reward: xe4.51M PF, x45.1 Water, x4.51 SP",
+            tooltip: "Get 4e51 Water. Reward: xe4.51M PF, x45.1 Water, x4.51 SP. Also unlock the next 7 milestones.",
+            unlocked() { return hasAchievement("a", 106) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         131: {
             name: "True Supremacy",
             done() { return (hasUpgrade('s', 63)) },
-            tooltip: "Supreme Buyable 4 [Mega Exclusive Rarity]. ",
+            tooltip: "Unlock Supreme Buyable 4 [Mega Exclusive Rarity]. ",
+            unlocked() { return hasAchievement("a", 126) },
         },
         132: {
             name: "Choice Row Upgs Start",
             done() { return ((hasUpgrade('s', 71)) || (hasUpgrade('s', 81))) },
             tooltip: "Choose and buy one of the two starting choice row upgs",
+            unlocked() { return hasAchievement("a", 126) },
         },
         133: {
             name: "Choice Row Upgs 2",
             done() { return ((hasUpgrade('s', 71)) && (hasUpgrade('s', 81))) },
             tooltip: "Choose and buy both of the starting choice row upgs",
+            unlocked() { return hasAchievement("a", 126) },
         },
         134: {
             name: "I NEED ONE MORE MILLION!",
             done() { return player.basic.points.gte(new Decimal("e199000000")) },
             tooltip: "Get e199M BP. Reward: +^0.01 BP, ^1.01 PF",
+            unlocked() { return hasAchievement("a", 126) },
         },
         135: {
             name: "41414141414141414141414141414141",
             done() { return player.e.points.gte(new Decimal("4.141e4141")) },
             tooltip: "Get 4.141e4141 Energy. Reward: xe14.141M PF",
+            unlocked() { return hasAchievement("a", 126) },
         },
         136: {
             name: "[CRITICAL Warning] Too Much Water!",
             done() { return player.w.points.gte(new Decimal(1e115)) },
             tooltip: "Get 1e115 Water. Reward: x1000 Water, xe10M PF",
+            unlocked() { return hasAchievement("a", 126) },
         },
         141: {
             name: "More Milestones",
             done() { return (hasMilestone('sac', 40)) },
-            tooltip: "Sac MS40. ",
+            tooltip: "Sac MS40. Unlock the next 15 achievements.",
+            unlocked() { return hasAchievement("a", 126) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         142: {
             name: "Basic Milestones?",
             done() { return (hasMilestone('basic', 1)) },
             tooltip: "Basic MS1. ",
+            unlocked() { return hasAchievement("a", 141) },
         },
         143: {
             name: "The New Reset Layer",
             done() { return (hasMilestone('sac', 42)) },
             tooltip: "Sac MS42. ",
+            unlocked() { return hasAchievement("a", 141) },
         },
         144: {
             name: "OP Energy",
             done() { return (hasUpgrade('m', 34)) },
             tooltip: "Mastery Upg 34",
+            unlocked() { return hasAchievement("a", 141) },
         },
         145: {
             name: "9131",
             done() { return player.basic.points.gte(new Decimal("e913095000")) },
             tooltip: "Get e913,095,000 BP. Reward: ^1.029 PF",
+            unlocked() { return hasAchievement("a", 141) },
         },
         146: {
             name: "Energy Overload",
             done() { return player.e.points.gte(new Decimal("e9600")) },
             tooltip: "Get e9600 Energy. Reward: xe9.6M PF",
+            unlocked() { return hasAchievement("a", 141) },
         },
         151: {
             name: "Mastery Challenge - First Milestone",
             done() { return hasMilestone("basic", 4) },
             tooltip: "Find out a way to get BM4.",
+            unlocked() { return hasAchievement("a", 141) },
         },
         152: {
             name: "Then what?",
@@ -619,6 +727,7 @@ addLayer("a", {
                 }
             },
             tooltip: "Continue on.",
+            unlocked() { return hasAchievement("a", 141) },
         },
         153: {
             name: "Then more energy",
@@ -630,111 +739,145 @@ addLayer("a", {
                 }
             },
             tooltip: "Continue on.",
+            unlocked() { return hasAchievement("a", 141) },
         },
         154: {
             name: "5.378",
             done() { return player.points.gte(new Decimal("e5.378e9")) },
             tooltip: "Get e5.378B PF. Reward: xe53.78M PF",
+            unlocked() { return hasAchievement("a", 141) },
         },
         155: {
             name: "Some Compound?",
             done() { return (hasUpgrade('m', 42)) },
             tooltip: "Mastery Upg 42",
+            unlocked() { return hasAchievement("a", 141) },
         },
         156: {
             name: "8964",
             done() { return player.points.gte(new Decimal("e8964646464")) },
             tooltip: "Get e8964646464 PF. Reward: xe64.64M PF",
+            unlocked() { return hasAchievement("a", 141) },
         },
         161: {
             name: "DS4",
             done() { return player.sac.points.gte(new Decimal("92")) },
             tooltip: "Unlock DS4.",
+            unlocked() { return hasAchievement("a", 141) },
         },
         162: {
             name: "e700",
             done() { return player.s.points.gte(new Decimal("e700")) },
             tooltip: "Get e700 SP. Reward: xe70M PF",
+            unlocked() { return hasAchievement("a", 141) },
         },
         163: {
             name: "Really OP",
             done() { return (hasUpgrade('mega', 85)) },
             tooltip: "Get MU85.",
+            unlocked() { return hasAchievement("a", 141) },
         },
         164: {
             name: "Mystery amount of PF",
             done() { return player.points.gte(new Decimal("e19876094372")) },
-            tooltip: "???? Reward: xe96.87M PF (HINT: >e19B, and reward may be a hint)",
+            tooltip: "???? Reward: xe96.87M PF (HINT: >e19B, and reward may be a hint). Unlock the next 14 achievements.",
+            unlocked() { return hasAchievement("a", 141) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
         165: {
             name: "'New' thing",
             done() { return (hasUpgrade('s', 102)) },
             tooltip: "Unlock Supreme Buyable V.",
+            unlocked() { return hasAchievement("a", 164) },
         },
         166: {
             name: "6.892",
             done() { return player.basic.points.gte(new Decimal("e6.892e9")) },
             tooltip: "Get e6.892B BP. Reward: xe168.92M PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         171: {
             name: "Level 10 Water Planet",
             done() { return player.w.points.gte(new Decimal("e868")) },
             tooltip: "Get e868 Water. Reward: xe186.8M PF, ^1.02 Water",
+            unlocked() { return hasAchievement("a", 164) },
         },
         172: {
             name: "e1.9k",
             done() { return player.s.points.gte(new Decimal("e1900")) },
             tooltip: "Get e1900 SP. Reward: xe300M PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         173: {
             name: "Loads of BP",
             done() { return player.basic.points.gte(new Decimal("e18537500000")) },
             tooltip: "Get e18.5375B BP. Reward: xe300M PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         174: {
             name: "Loads of Water",
             done() { return player.w.points.gte(new Decimal("e2049")) },
             tooltip: "Get e2,049 Water. Reward: xe400M PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         175: {
             name: "True Supremacy",
             done() { return player.s.points.gte(new Decimal("e4214")) },
             tooltip: "Get e4,214 SP. Reward: xe421.4M PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         176: {
-            name: "e12k",
+            name: "Insane Supremacy",
             done() { return player.s.points.gte(new Decimal("e12000")) },
             tooltip: "Get e12K SP. Reward: xe1B PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         181: {
             name: "PP Insanity",
             done() { return player.prestige.points.gte(new Decimal("e1869400000")) },
             tooltip: "Get e1,869,400,000 PP. Reward: +^0.035 PP.",
+            unlocked() { return hasAchievement("a", 164) },
         },
         182: {
-            name: "e30.7k",
+            name: "Supreme Supremacy",
             done() { return player.s.points.gte(new Decimal("e30700")) },
             tooltip: "Get e30.7K SP. Reward: xe1B PF, Perma-Unlock Max Sacrifices, UNLOCK MASTERY CHALLENGE 2!!!",
+            unlocked() { return hasAchievement("a", 164) },
         },
         183: {
-            name: "1855334",
+            name: "An ungodly amount",
             done() { return player.points.gte(new Decimal("e1855334e6")) },
             tooltip: "Get e1,855,334e6 PF. Reward: xe1.85B PF, x3.4 Mastery Points",
+            unlocked() { return hasAchievement("a", 164) },
         },
         184: {
             name: "4t!",
             done() { return player.points.gte(new Decimal("e4e12")) },
             tooltip: "Get e4T PF. Wow.",
+            unlocked() { return hasAchievement("a", 164) },
         },
         185: {
-            name: "2697",
+            name: "Mega Compoundation",
             done() { return player.mega.points.gte(new Decimal("e2697e6")) },
             tooltip: "Get e2.697B MP. Reward: xe2.697B PF",
+            unlocked() { return hasAchievement("a", 164) },
         },
         186: {
-            name: "3098945",
+            name: "Basically Insane",
             done() { return player.basic.points.gte(new Decimal("e3098945e6")) },
-            tooltip: "Get e3.098945T BP. Reward: xe7B PF",
+            tooltip: "Get e3.098945T BP. Reward: xe7B PF and unlock more achievements",
+            unlocked() { return hasAchievement("a", 164) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            }
         },
     tabFormat: [
         "blank", 

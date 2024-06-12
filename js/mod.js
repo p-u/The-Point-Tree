@@ -18,6 +18,19 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v2.5.2 (QoL Upd)</h3><br>
+Added red-bordered achievements, which unlocks more achievements.<br>
+Achievements (excluding the first 2 rows) now is not visible at the start.<br>
+
+Basic and Rebirth Mastery-Challenge 2 specific upgrades' description is changed<br>
+Sac 680 description is changed<br>
+Sac formula for SM58 is changed (softcap)<br>
+You cannot enter any of Sac Challenges in the Mastery Challenge 2.<br>
+
+<h3>v2.5.1</h3><br>
+You cannot enter any of Sac Challenges after completing Mastery Challenge 2.<br>
+
+
 <h3>v2.5.0 - RAPID INFLATION COMES</h3><br>
 Added a hardcap for Supreme Buyable 5 (^1.25) <br>
 Added a softcap and a hardcap for Sacrifice Milestone 58 (SC: ^1.075, HC: ^1.1) <br>
