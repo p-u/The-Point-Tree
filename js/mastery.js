@@ -98,7 +98,7 @@ addLayer("m", {
         },
         33: {
             title: "UB 3",
-            description: "BB2 and BB3 is boosted.",
+            description: "BB3 is boosted.",
             cost: new Decimal(500),
             unlocked() { return (hasUpgrade("m", 12) && hasUpgrade("m", 22) && hasUpgrade("m", 32)) },
         },
@@ -158,7 +158,7 @@ addLayer("m", {
         },
         42: {
             title: "MMP 7",
-            description: "Mastery Points gets boosted based on itself",
+            description: "Mastery Points gets boosted based on itself (Compounding XI / 11)",
             cost: new Decimal(3500000),
             unlocked() { return (hasUpgrade("m", 41) && hasUpgrade("m", 51) && hasUpgrade("m", 61)) },
             effect() {
@@ -324,6 +324,41 @@ addLayer("m", {
             cost: new Decimal(9.5e27),
             unlocked() { return (hasUpgrade("m", 73) && hasUpgrade("m", 83) && hasUpgrade("m", 93)) },
         },
+        101: {
+            title: "Sac is even more OP",
+            description: "SU21 and SU52 is better",
+            cost: new Decimal(8.5e39), 
+            unlocked() { return (hasMilestone("sac", 93)) },
+        },
+        102: {
+            title: "More Mega = More Sacs",
+            description: "Mega Exponent +^0.08",
+            cost: new Decimal(1e40), 
+            unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 101)) },
+        },
+        103: {
+            title: "More EC = More Mastery",
+            description: "EC boosts Mastery by a very little bit",
+            cost: new Decimal(1.2e40), 
+            unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 102)) },
+            effect() {
+                let ectomasteryexp = 0.06
+                return player["era"].ec.add(1).pow(ectomasteryexp).log(1.8)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        104: {
+            title: "More Rebirth = More PF",
+            description: "RP Exponent +^0.04",
+            cost: new Decimal(1.5e41), 
+            unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 103)) },
+        },
+        105: {
+            title: "Multi-dimensional-fold upgrade",
+            description: "xe1 Qd PF, add more era upgrades, x100 EC",
+            cost: new Decimal(2e41), 
+            unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 104)) },
+        },
     },
     challenges: {
         11: {
@@ -361,8 +396,9 @@ addLayer("m", {
         if (hasUpgrade('m', 45)) mult = mult.times(100)
         if (hasUpgrade('m', 11)) mult = mult.times(base)
         if (hasAchievement('sa', 31)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 33)) mult = mult.times(1.01)
-        if (hasAchievement('sa', 34)) mult = mult.times(1.06)
+        if (hasAchievement('sa', 34)) mult = mult.times(1.01)
+        if (hasAchievement('sa', 35)) mult = mult.times(1.03)
+        if (hasAchievement('sa', 36)) mult = mult.times(1.07)
         if (hasUpgrade("w", 54)) {
             if (hasChallenge("m", 11)) mult = mult.times(100)
         }
@@ -370,6 +406,8 @@ addLayer("m", {
         if (hasUpgrade('m', 71)) mult = mult.times(78.2)
         if (hasAchievement('a', 183)) mult = mult.times(3.4)
         if (hasUpgrade('m', 74)) mult = mult.times(420)
+        if (hasMilestone('sac', 93)) mult = mult.times(1e10)
+        if (hasUpgrade('m', 103)) mult = mult.times(upgradeEffect('m', 103))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -379,6 +417,5 @@ addLayer("m", {
         return exp
     },
     branches: ["s", "sac", "w"],
-    row: 99, // Row the layer is in on the tree (0 is the first row)
-    displayRow: 6,
+    row: 7, // Row the layer is in on the tree (0 is the first row)
 })

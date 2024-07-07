@@ -86,6 +86,8 @@ addLayer("e", {
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
         if (hasMilestone('sac', 20)) keep.push("milestones");
+        if (hasMilestone("era", 3)) keep.push("upgrades");
+        if (hasMilestone("era", 3)) keep.push("milestones");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -195,6 +197,8 @@ addLayer("e", {
         if (hasMilestone('sac', 29)) mult = mult.times(292929)
         if (hasUpgrade('e', 91)) mult = mult.times(1e3)
         if (hasMilestone('sac', 31)) mult = mult.times(2)
+        if (hasUpgrade('e', 151)) mult = mult.times("e30e9")
+        if (hasUpgrade('era', 282)) mult = mult.times("e70e9")
         mult = mult.times(buyableEffect('mega', 13))
 
         // supreme
@@ -253,7 +257,7 @@ addLayer("e", {
                 unlocked() { return hasUpgrade("e", 12) },
             },
             14: {
-                title: "Compounding 6",
+                title: "Compounding 7",
                 description: "Energy gets boosted based on itself.",
                 cost: new Decimal(3300),
                 unlocked() { return hasUpgrade("e", 13) },
@@ -262,6 +266,7 @@ addLayer("e", {
                     if (hasUpgrade('e', 33)) e4exp = 0.16
                     if (hasMilestone('e', 9)) e4exp = 0.195
                     if (hasUpgrade('e', 15)) e4exp = 0.25
+                    if (hasUpgrade("era", 131)) e4exp = 0.29
                     let eff = player["e"].points.add(1).pow(e4exp)
                     let softcapExp = 0.5
                     if (hasUpgrade('m', 92)) softcapExp = 0.52
@@ -308,15 +313,20 @@ addLayer("e", {
                         if (hasUpgrade('e', 134)) e8exp = 0.005
                     }
                     if (hasUpgrade('e', 82)) e8exp = 0.001825
+                    if (hasUpgrade('basic', 113)) e8exp = 0.01
                     let eff = player["mega"].points.add(1).pow(e8exp)
                     eff = softcap(eff, new Decimal("1e5000"), 0.3)
+                    eff = softcap(eff, new Decimal("e100e6"), 0.3)
                     return eff
                 },
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e500")) ) {
+                if (upgEffect.gte(new Decimal("e5000")) ) {
                     softcapDescription = " (Softcapped)"
+                }
+                if (upgEffect.gte(new Decimal("e100e6")) ) {
+                    softcapDescription = " (Supercapped)"
                 }
                 return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
             },
@@ -419,12 +429,13 @@ addLayer("e", {
                 unlocked() { return hasUpgrade("e", 63) },
             },
             71: {
-                title: "e200 Energy - Compounding 7",
+                title: "e200 Energy - Compounding 8",
                 description: "Energy gets boosted based on itself, but starts at 1e175.",
                 cost: new Decimal(2e200),
                 unlocked() { return hasUpgrade("e", 64) },
                 effect() {
                     let e200EUExp = 0.125
+                    if (hasUpgrade("era", 253)) e200EUExp = 0.133
                     return player["e"].points.add(1).div(1e175).pow(e200EUExp)
                 },
                 effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -530,6 +541,38 @@ addLayer("e", {
                 description: "xe1337.69420M PF",
                 cost: new Decimal("e921842"),
                 unlocked() { return hasUpgrade("e", 104) && hasMilestone('e', 21) },
+            },
+
+            // extension beyond csu nums
+            151: {
+                title: "R",
+                description: "xe30B Energy",
+                cost: new Decimal("e335776190372"),
+                unlocked() { return hasUpgrade("e", 105) && hasUpgrade('era', 275) },
+            },
+            152: {
+                title: "O",
+                description: "xe0.1e15 PP",
+                cost: new Decimal("e374899393494"),
+                unlocked() { return hasUpgrade("e", 151) && hasUpgrade('era', 275) },
+            },
+            153: {
+                title: "W",
+                description: "Less Sac Scaling",
+                cost: new Decimal("e408627212190"),
+                unlocked() { return hasUpgrade("e", 152) && hasUpgrade('era', 275) },
+            },
+            154: {
+                title: "1",
+                description: "Less Sac Scaling",
+                cost: new Decimal("e409506609384"),
+                unlocked() { return hasUpgrade("e", 153) && hasUpgrade('era', 275) },
+            },
+            155: {
+                title: "5!",
+                description: "x250 EC, xe3.1Qd PF",
+                cost: new Decimal("e438491221792"),
+                unlocked() { return hasUpgrade("e", 154) && hasUpgrade('era', 275) },
             },
 
             // challenge specific upgs
@@ -850,6 +893,12 @@ addLayer("e", {
             },
             unlocked() {return (inChallenge("m", 12) && hasMilestone("e", 22))},
         },
+        24: {
+            requirementDescription: "Multiversal Control (10^10^10 Energy)",
+            effectDescription: "Energy Effect is better",
+            done() { return player["e"].points.gte("e10e9") },
+            unlocked() {return hasUpgrade("era", 161)},
+        },
     },
     branches: ["sac", "mega"],
     effect(){
@@ -863,6 +912,10 @@ addLayer("e", {
     if (hasMilestone('e', 8)) enpow = 400
     if (hasUpgrade('m', 34)) enpow = 2250
     if (hasUpgrade('e', 25)) enpow = 5000
+    if (hasUpgrade('era', 122)) enpow = 10000
+    if (hasMilestone('e', 24)) enpow = 13500
+    if (hasUpgrade('basic', 113)) enpow = 8888
+    if (hasUpgrade('e', 154)) enpow = 11111
         let eff = player.e.points.add(1).pow(enpow)
        return eff
        },

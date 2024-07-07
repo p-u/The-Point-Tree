@@ -49,8 +49,9 @@ addLayer("mega", {
     
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
-        if (hasMilestone('sac', 3)) keep.push("milestones");
-        if (hasMilestone('sac', 60)) keep.push("buyables");
+        if ((hasMilestone('sac', 3)) || hasMilestone("era", 2)) keep.push("milestones");
+        if ((hasMilestone('sac', 60)) || hasMilestone("era", 2)) keep.push("buyables");
+        if (hasMilestone("era", 3)) keep.push("upgrades");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -129,7 +130,7 @@ addLayer("mega", {
             unlocked() { return hasUpgrade("mega", 12) },
         },
         14: {
-            title: "Price Jump",
+            title: "Compounding V",
             description: "Prestige Points gets boosted based on itself.",
             cost: new Decimal(450),
             unlocked() { return hasUpgrade("mega", 13) },
@@ -177,12 +178,26 @@ addLayer("mega", {
                 if (hasUpgrade("e", 95)) mu9exp = 14.25
                 if (hasUpgrade('m', 31)) mu9exp = 22.5
                 if (hasUpgrade('m', 62)) mu9exp = 33.75
+                if (hasUpgrade('era', 265)) mu9exp = 44.5
                 if (inChallenge("m", 11)) {
                     if (hasMilestone('mega', 19)) mu9exp = 5750
                 }
-                return player["mega"].points.add(1).pow(mu9exp)
+                let eff =  player["mega"].points.add(1).pow(mu9exp)
+                eff = softcap(eff, new Decimal("e2.5e12"), 0.5)
+                eff = softcap(eff, new Decimal("e4e15"), 0.4)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e2.5e12")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                if (upgEffect.gte(new Decimal("e4e15")) ) {
+                    softcapDescription = " (Supercapped)"
+                }
+                return "This upgrade boosts PF by " + format(upgEffect)+"x" + softcapDescription
+            },
         },
         32: {
             title: "Exponents 2",
@@ -209,7 +224,7 @@ addLayer("mega", {
             unlocked() { return hasMilestone("sac", 4) && hasUpgrade("mega", 34) },
         },
         42: {
-            title: "Compounding V",
+            title: "Compounding VI",
             description: "Mega boosts itself, slightly",
             cost: new Decimal(4.44e197),
             unlocked() { return hasMilestone("sac", 5) && hasUpgrade("mega", 41) },
@@ -220,6 +235,7 @@ addLayer("mega", {
                 if (hasUpgrade("basic", 74)) mbiupgexp = 0.094
                 if (hasMilestone("sac", 9)) mbiupgexp = 0.115
                 if (hasUpgrade("mega", 52)) mbiupgexp = 0.1515
+                if (hasUpgrade("era", 261)) mbiupgexp = 0.1625
                 let eff = player["mega"].points.add(1).pow(mbiupgexp)
                 let scap = 0.4
                 if (hasUpgrade("mega", 45)) scap = 0.68
@@ -343,6 +359,7 @@ addLayer("mega", {
             cost: new Decimal("e155039"),
             effect() {
                 let sprmegaexp = 400
+                if (hasUpgrade("s", 85)) sprmegaexp = 5000
                 let eff = player["s"].points.add(1).pow(sprmegaexp)
                 let softcapExp = 0.1
                 if (hasUpgrade('m', 93)) softcapExp = 0.25
@@ -595,6 +612,12 @@ addLayer("mega", {
                 }
             },
         },
+        23: {
+            requirementDescription: "e10e12 MP",
+            effectDescription: "xe60T PF",
+            unlocked() {return hasUpgrade("era", 161)},
+            done() { return player["mega"].points.gte("e10e12") }
+        },
     },
     buyables: {
         11: {
@@ -609,6 +632,7 @@ addLayer("mega", {
                     if (hasMilestone('sac', 23)) exp2 = 1.35
                     if (hasMilestone('sac', 26)) exp2 = 1.225
                 }
+                if (hasMilestone("era", 1)) exp2 = 1.225
                 return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -635,6 +659,8 @@ addLayer("mega", {
                 if (hasMilestone('sac', 23)) base2 = x.mul(new Decimal(300))
                 if (hasUpgrade('mega', 82)) base2 = x.mul(new Decimal(1800))
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(70000))
+                if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(1e6))
+                if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(1e10))
                 let expo = new Decimal(1.005)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -650,6 +676,7 @@ addLayer("mega", {
                 if (!(inChallenge('m', 12))) {
                     if (hasMilestone('sac', 23)) exp2 = 1.5
                 }
+                if (hasMilestone("era", 1)) exp2 = 1.5
                 return new Decimal("1e474").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -671,6 +698,8 @@ addLayer("mega", {
                 if (hasMilestone('sac', 23)) base2 = x.mul(new Decimal(50))
                 if (hasUpgrade('mega', 82)) base2 = x.mul(new Decimal(120))
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(2000))
+                if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(400000))
+                if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(6e9))
                 let expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -682,6 +711,7 @@ addLayer("mega", {
             unlocked() { return hasMilestone("mega", 14) },
             cost(x) {
                 let exp3 = 0.2
+                if (hasMilestone("era", 1)) exp3 = 0.5
                 if (!(inChallenge('m', 12))) {
                     if (hasMilestone('sac', 23)) exp3 = 0.5
                 }
@@ -704,6 +734,8 @@ addLayer("mega", {
                 if (hasMilestone('sac', 23)) base2 = x.mul(new Decimal(4))
                 if (hasUpgrade('mega', 82)) base2 = x.mul(new Decimal(10))
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(100))
+                if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(20000))
+                if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(1.5e7))
                 let expo = new Decimal(1.015)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -730,6 +762,7 @@ addLayer("mega", {
             },
             effect(x) {
                 let base1 = new Decimal(1.008)
+                if (hasUpgrade("era", 203)) base1 = new Decimal(1.0088)
                 let base2 = x
                 let expo = new Decimal(1.008)
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -790,6 +823,10 @@ addLayer("mega", {
         if (hasAchievement('a', 125)) mult = mult.times("e2940")
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e11.111e3")
         if (hasUpgrade('m', 51)) mult = mult.times("e100e3")
+        if (hasUpgrade('s', 111)) mult = mult.times("e250e6")
+        if (hasUpgrade('era', 121)) mult = mult.times("e10e9")
+        if (hasUpgrade('era', 175)) mult = mult.times("e77.77e9")
+            if (hasUpgrade('era', 224)) mult = mult.times("e750e9")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         return mult
@@ -823,19 +860,28 @@ addLayer("mega", {
             }
         if (hasUpgrade('m', 83)) exp = exp.add(0.04)
         if (hasUpgrade('mega', 91)) exp = exp.add(0.05)
-            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('era', 151)) exp = exp.add(0.05)
+        if (hasUpgrade('era', 185)) exp = exp.add(0.12)
+        if (hasUpgrade('era', 205)) exp = exp.add(0.1)
+        if (hasUpgrade('era', 222)) exp = exp.add(0.07)
+        if (hasUpgrade('m', 102)) exp = exp.add(0.08)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
     effect(){
         let effectBoost = 1
         if (hasUpgrade("basic", 101)) effectBoost = 3
+        if (hasUpgrade("era", 81)) effectBoost = 3.5
         let eff = player.mega.points.add(1).pow(effectBoost)
         let cap = 0.3
+        let sprcap = 0.5
         if (hasUpgrade('mega', 81)) cap = 0.45
         if (hasUpgrade('mega', 83)) cap = 0.6125
         if (hasUpgrade('m', 91)) cap = 0.825
         softcappedEffect = softcap(eff, new Decimal("e30000"), new Decimal(cap))
+        if (hasUpgrade('era', 264)) sprcap = 0.565
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e500e9"), new Decimal(sprcap))
         return softcappedEffect
        },
         effectDescription() {
@@ -843,6 +889,9 @@ addLayer("mega", {
             let layerEffect = tmp[this.layer].effect
             if (layerEffect.gte(new Decimal("e30000")) ) {
                 softcapDescription = " (Softcapped)"
+            }
+            if (layerEffect.gte(new Decimal("e500e9")) ) {
+                softcapDescription = " (Supercapped)"
             }
             let desc = "which is boosting all previous reset layers by x" + format(tmp[this.layer].effect) + softcapDescription;
             return desc;

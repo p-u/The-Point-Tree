@@ -200,6 +200,30 @@ addLayer("rebirth", {
             cost: new Decimal("e2576280e3"),
             unlocked() { return hasMilestone("sac", 56) && hasUpgrade("rebirth", 73) },
         },
+        81: {
+            title: "Rebirth Rep Upgrades MK. 2",
+            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe600B)",
+            cost: new Decimal("e31778268250e3"),
+            unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 75) },
+        },
+        82: {
+            title: "Rebirth Rep Upgrades MK. 2 - 2",
+            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe960B)",
+            cost: new Decimal("e32996054475e3"),
+            unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 81) },
+        },
+        83: {
+            title: "Rebirth Rep Upgrades MK. 2 - 3",
+            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe1.536T)",
+            cost: new Decimal("e34947700575e3"),
+            unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 82) },
+        },
+        84: {
+            title: "Rebirth Rep Upgrades MK. 2 - 4",
+            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe2.4576T)",
+            cost: new Decimal("e38868729750e3"),
+            unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 83) },
+        },
 
         // dimensional shift
         15: {
@@ -243,6 +267,12 @@ addLayer("rebirth", {
             description: "PF xe500M, PF ^1.025 [Hidden Effect: x3.77 Water]",
             cost: new Decimal("e3425150e3"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 74) },
+        },
+        85: {
+            title: "Rebirth Rep Upgrades MK. 2 - 5",
+            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe3.93216T) [Secret Effect: x18 Era Crystals, unlock more Era Upgrades]",
+            cost: new Decimal("e43816900550e3"),
+            unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 84) },
         },
     },
     milestones: {
@@ -395,6 +425,8 @@ addLayer("rebirth", {
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
         if (hasMilestone('prestige', 5)) keep.push("milestones");
+        if (hasMilestone("era", 3)) keep.push("upgrades");
+        if (hasMilestone("era", 3)) keep.push("milestones");
     
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -438,10 +470,10 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 64)) mult = mult.times("e1.11e6")
         if (hasUpgrade('basic', 91)) mult = mult.times("e999.99e3")
         if (hasUpgrade('mega', 15)) mult = mult.times("e10e6")
+        if (hasUpgrade('s', 111)) mult = mult.times("e35e9")
+        if (hasUpgrade('era', 174)) mult = mult.times("e11.11e12")
 
         // secret achievement
-        if (hasAchievement('sa', 15)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
         if (hasAchievement('sa', 22)) mult = mult.times(1.25)
         return mult
@@ -473,6 +505,8 @@ addLayer("rebirth", {
             if (hasMilestone('e', 15)) exp = exp.add(0.15)
         }
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('era', 183)) exp = exp.add(0.07)
+            if (hasUpgrade('m', 104)) exp = exp.add(0.04)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
@@ -507,6 +541,8 @@ addLayer("rebirth", {
         let hyprcap = 0.3
         if (hasUpgrade('rebirth', 71)) hyprcap = 0.375
         softcappedEffect = softcap(softcappedEffect, new Decimal("e200000000"), new Decimal(hyprcap))
+        let inscap = 0.2
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e5e15"), new Decimal(inscap))
         return softcappedEffect
        },
         effectDescription() {
@@ -520,6 +556,9 @@ addLayer("rebirth", {
             }
             if (layerEffect.gte(new Decimal("e200000000")) ) {
                 softcapDescription = " (Hypercapped)"
+            }
+            if (layerEffect.gte(new Decimal("e5e15")) ) {
+                softcapDescription = " (Insanitycapped)"
             }
             let des = "which is boosting point fragments by x" + format(layerEffect) + softcapDescription
             return des;

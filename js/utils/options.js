@@ -6,7 +6,6 @@ function getStartOptions() {
 	return {
 		autosave: true,
 		msDisplay: "always",
-		theme: "default",
 		hqTree: false,
 		offlineProd: true,
 		hideChallenges: false,
@@ -14,14 +13,22 @@ function getStartOptions() {
 		forceOneTab: false,
 		oldStyle: false,
 		tooltipForcing: true,
-		formatE: '9',
+		formatE: '12',
+		dp: 3,
+		showdp: 5,
+		theme: "default",
 	}
 }
-
-let formatEList = ['6','9','12','15','18']
+let formatEList = ['3','6','9','12','15']
+let dpList = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 function changeEFormat() {
 	player.formatE = formatEList[(formatEList.indexOf(player.formatE) + 1) % formatEList.length]
+}
+
+function changeDP() {
+	player.dp = dpList[(dpList.indexOf(player.dp) + 1) % dpList.length]
+	player.showdp = (player.dp) + 2
 }
 
 

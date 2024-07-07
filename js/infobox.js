@@ -113,7 +113,7 @@ addLayer("i", {
         },
         ach: {
             title: "Achievements",
-            body() { return "Achievements give you a sense of progress. Every row of the achievements means a new stage. Achievements can have rewards. Red-bordered achievements unlock more achievements or is at the endgame." },
+            body() { return "Achievements give you a sense of progress. Every row of the achievements means a new stage. Achievements can have rewards. Red-bordered achievements unlock more achievements. Thick red-bordered achievements unlock a new ????" },
         },
         basic: {
             title: "The Basic layer",

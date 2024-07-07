@@ -37,6 +37,8 @@ addLayer("sac", {
                 "blank",
                 ["bar", "DS5"],
                 "blank",
+                ["bar", "DS6"],
+                "blank",
                 "blank",
                 "upgrades",
             ],
@@ -193,7 +195,7 @@ addLayer("sac", {
         },
         23: {
             requirementDescription: "Sacrifice 23",
-            effectDescription: "All buyables are MUCH MORE EXPENSIVE, but are MUCH stronger. Add 1 row of Rebirth Upgrades. Buyable Nerf does NOT apply to Mastery Challenge 2.",
+            effectDescription: "All buyables are MUCH MORE EXPENSIVE, but are MUCH stronger. [Automatically applies, post Era] Add 1 row of Rebirth Upgrades. Buyable Nerf does NOT apply to Mastery Challenge 2.",
             unlocked() {return player["sac"].points.gte(22)},
             done() { return player["sac"].points.gte(23) }
         },
@@ -404,7 +406,7 @@ addLayer("sac", {
         58: {
             requirementDescription: "Sacrifice 140",
             effectDescription:  function(){
-				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000] **After 750 sacs, formula is worse, and has a hardcap of 2,000 sacs. Also, unlock more Water Upgrades.";
+				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000] **After 750 sacs, softcaps, and has a hardcap of 2,500 sacs. Also, unlock more Water Upgrades.";
 			},
             unlocked() {return player["sac"].points.gte(135)},
             done() { return player["sac"].points.gte(140) },
@@ -493,6 +495,158 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(600)},
             done() { return player["sac"].points.gte(680) }
         },
+        73: {
+            requirementDescription: "Sacrifice 761",
+            effectDescription: "Unlock ?&!?!#$&!??",
+            unlocked() {return player["sac"].points.gte(750)},
+            done() { return player["sac"].points.gte(761) }
+        },
+        74: {
+            requirementDescription: "Sacrifice 835",
+            effectDescription: "xe40,000,000,000 Point Fragments",
+            unlocked() {return player["sac"].points.gte(800)},
+            done() { return player["sac"].points.gte(835) }
+        },
+        75: {
+            requirementDescription: "Sacrifice 945",
+            effectDescription: "xe234B PF",
+            unlocked() {return player["sac"].points.gte(900)},
+            done() { return player["sac"].points.gte(945) }
+        },
+        76: {
+            requirementDescription: "Sacrifice 1068",
+            effectDescription: "+^0.0068 to SB5 cap",
+            unlocked() {return player["sac"].points.gte(1000)},
+            done() { return player["sac"].points.gte(1068) }
+        },
+        77: {
+            requirementDescription: "Sacrifice 1200",
+            effectDescription: "+^0.01 to SB5 cap",
+            unlocked() {return player["sac"].points.gte(1111)},
+            done() { return player["sac"].points.gte(1200) }
+        },
+        78: {
+            requirementDescription: "Sacrifice 1350",
+            effectDescription: "Sac scaling is slightly weaker",
+            unlocked() {return player["sac"].points.gte(1250)},
+            done() { return player["sac"].points.gte(1350) }
+        },
+        79: {
+            requirementDescription: "Sacrifice 1500: The Final Push",
+            effectDescription: "^1.0065 PF",
+            unlocked() {return player["sac"].points.gte(1400)},
+            done() { return player["sac"].points.gte(1500) }
+        },
+        80: {
+            requirementDescription: "Sacrifice 1594",
+            effectDescription: "+^0.002 SB5 Cap, x4 Era Crystals",
+            unlocked() {return player["sac"].points.gte(1580)},
+            done() { return player["sac"].points.gte(1594) }
+        },
+        81: {
+            requirementDescription: "Sacrifice 1,800",
+            effectDescription: "xe1T PF",
+            unlocked() {return player["sac"].points.gte(1700)},
+            done() { return player["sac"].points.gte(1800) }
+        },
+        82: {
+            requirementDescription: "Sacrifice 2,000",
+            effectDescription: "Sac scaling is slightly weaker",
+            unlocked() {return player["sac"].points.gte(1900)},
+            done() { return player["sac"].points.gte(2000) }
+        },
+        83: {
+            requirementDescription: "Sacrifice 2,250",
+            effectDescription: "Sac scaling is slightly weaker",
+            unlocked() {return player["sac"].points.gte(2125)},
+            done() { return player["sac"].points.gte(2250) }
+        },
+        84: {
+            requirementDescription: "Sacrifice 2,500",
+            effectDescription: "+^0.002 SB5 HC, x25 Era Crystals",
+            unlocked() {return player["sac"].points.gte(2400)},
+            done() { return player["sac"].points.gte(2500) }
+        },
+        85: {
+            requirementDescription: "Sacrifice 3,000",
+            effectDescription: "+^0.007 SB5 HC, x30 Era Crystals",
+            unlocked() {return player["sac"].points.gte(2997)},
+            done() { return player["sac"].points.gte(3000) }
+        },
+        86: {
+            requirementDescription: "Sacrifice 3,250",
+            effectDescription:  function(){
+				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms86eff)+". Formula: 1 + (log2.5(Best Sac / 2500) / 400)";
+			},
+            unlocked() {return player["sac"].points.gte(3200)},
+            done() { return player["sac"].points.gte(3250) },
+        },
+        87: {
+            requirementDescription: "Sacrifice 4,000",
+            effectDescription: "UNLOCK DS6, ^1.014 PF!, xe4T PF",
+            unlocked() {return player["sac"].points.gte(3600)},
+            done() { return player["sac"].points.gte(4000) }
+        },
+        88: {
+            requirementDescription: "Sacrifice 4,500",
+            effectDescription: "xe20T PF",
+            unlocked() {return player["sac"].points.gte(4444)},
+            done() { return player["sac"].points.gte(4500) }
+        },
+        89: {
+            requirementDescription: "Sacrifice 5,000",
+            effectDescription: "Autobuy Era Buyables 1 and 2",
+            unlocked() {return player["sac"].points.gte(4700)},
+            done() { return player["sac"].points.gte(5000) }
+        },
+        90: {
+            requirementDescription: "Sacrifice 6,000",
+            effectDescription: "^1.006 PF",
+            unlocked() {return player["sac"].points.gte(5200)},
+            done() { return player["sac"].points.gte(6000) }
+        },
+        91: {
+            requirementDescription: "Sacrifice 9,000",
+            effectDescription: "xe90T PF",
+            unlocked() {return player["sac"].points.gte(8000)},
+            done() { return player["sac"].points.gte(9000) }
+        },
+        92: {
+            requirementDescription: "Sacrifice 10K",
+            effectDescription: "xe100T PF, ^1.01 PF, x100 EC",
+            unlocked() {return player["sac"].points.gte(9000)},
+            done() { return player["sac"].points.gte(10000) }
+        },
+        93: {
+            requirementDescription: "Sacrifice 15K",
+            effectDescription: "x15 EC, SB5 HC +^0.05, xe10 Mastery Points",
+            unlocked() {return player["sac"].points.gte(12500)},
+            done() { return player["sac"].points.gte(15000) }
+        },
+        94: {
+            requirementDescription: "Sacrifice 18K",
+            effectDescription: "x180 EC, xe1.8e15 PF",
+            unlocked() {return player["sac"].points.gte(17500)},
+            done() { return player["sac"].points.gte(18000) }
+        },
+        95: {
+            requirementDescription: "Sacrifice 20K",
+            effectDescription: "Less Sac scaling.",
+            unlocked() {return player["sac"].points.gte(19250)},
+            done() { return player["sac"].points.gte(20000) }
+        },
+        96: {
+            requirementDescription: "Sacrifice 25K",
+            effectDescription: "SB5 HC +^0.01",
+            unlocked() {return player["sac"].points.gte(22500)},
+            done() { return player["sac"].points.gte(25000) }
+        },
+        97: {
+            requirementDescription: "Sacrifice 28K",
+            effectDescription: "x280 EC, xe2e15 PF",
+            unlocked() {return player["sac"].points.gte(26500)},
+            done() { return player["sac"].points.gte(28000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -500,8 +654,8 @@ addLayer("sac", {
             sm58e = sm58e.div(10000)
         } else {
             let nsm58e = sm58e.sub(750)
-            if (nsm58e.gt(2000)) {
-                sm58e = new Decimal(0.1)
+            if (nsm58e.gt(1750)) {
+                sm58e = new Decimal(0.11)
             } else {
                 nsm58e = nsm58e.div(50000)
                 sm58e = nsm58e.add(0.075)
@@ -509,6 +663,15 @@ addLayer("sac", {
         }
         sm58e = sm58e.add(1)
 		return sm58e;
+    },
+    sacms86eff() {
+        var amtsac=player.sac.best;
+        amtsac = amtsac.div(2500)
+        let eff = new Decimal(1)
+        eff = amtsac.log(2.5)
+        eff = eff.div(400)
+        eff = eff.add(1)
+        return eff;
     },
     challenges: {
         11: {
@@ -546,7 +709,7 @@ addLayer("sac", {
     bars: {
         DS1: {
             direction: RIGHT,
-            width: 650,
+            width: 600,
             height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -564,7 +727,7 @@ addLayer("sac", {
         },
         DS2: {
             direction: RIGHT,
-            width: 650,
+            width: 600,
             height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -575,7 +738,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(26))
-                    return "Unlock dimensional shift 2: " + format(player.sac.points) + "/27 sacrifices. [COMING SOON]"
+                    return "Unlock dimensional shift 2: " + format(player.sac.points) + "/27 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 2. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Rebirth Upgrades."
             },
@@ -583,8 +746,8 @@ addLayer("sac", {
         },
         DS3: {
             direction: RIGHT,
-            width: 650,
-            height: 60,
+            width: 600,
+            height: 70,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
             progress() {
@@ -603,7 +766,7 @@ addLayer("sac", {
         DS4: {
             direction: RIGHT,
             width: 650,
-            height: 70,
+            height: 80,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
             progress() {
@@ -621,7 +784,7 @@ addLayer("sac", {
         },
         DS5: {
             direction: RIGHT,
-            width: 650,
+            width: 700,
             height: 80,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -632,11 +795,30 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(149))
-                    return "Unlock dimensional shift 5: " + format(player.sac.points) + "/150 sacrifices. [Wait, how do I get so many?]"
+                    return "Unlock dimensional shift 5: " + format(player.sac.points) + "/150 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 5. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to ENERGY Upgrades. You may control the world's power supply after this."
             },
             unlocked() { return player.sac.best.gte(92) }
+        },
+        DS6: {
+            direction: RIGHT,
+            width: 750,
+            height: 80,
+            fillStyle: { 'background-color': "red" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(4000)
+                if (player.sac.best.gte(4000)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(3999))
+                    return "Unlock dimensional shift 6: " + format(player.sac.points) + "/4000 sacrifices. Wait... What?"
+                else
+                    return "You have unlocked Dimensional Shift 6. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to SUPREME Upgrades. That's err... 11 upgrades??"
+            },
+            unlocked() { return hasMilestone("era", 2) }
         },
     },   
     color: "#79029b",
@@ -647,12 +829,13 @@ addLayer("sac", {
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     resetsNothing: function() {
         if (hasMilestone('sac', 71)) return true
+        if (hasMilestone("era", 1)) return true
         return false
     },
     exponent() {
-        let exp = 3.6
+        let exp = new Decimal(3.6)
         if (inChallenge('m', 12)) {
-            exp = 7
+            exp = new Decimal(7)
             if (hasMilestone('mega', 21)) exp = 6.5
             if (hasMilestone('basic', 7)) exp = 6.1
             if (hasMilestone('prestige', 10)) exp = 5.75
@@ -660,8 +843,24 @@ addLayer("sac", {
             if (hasMilestone("w", 4)) exp = 5.25
             if (hasMilestone("mega", 22)) exp = 5.5
         }
-        if (hasChallenge('m', 12)) exp = 3.5
-        if (hasUpgrade('mega', 92)) exp = 3.6
+        if ((hasChallenge('m', 12)) && (!(hasMilestone("era", 2)))) exp = new Decimal(3.5)
+        if (hasUpgrade('mega', 92)) exp = new Decimal(3.6)
+        if (hasAchievement("a", 195)) exp = exp.sub(0.01)
+        if (hasUpgrade('prestige', 74)) exp = exp.sub(0.01)
+        if (hasUpgrade("era", 113)) exp = exp.sub(0.008)
+        if (hasMilestone("sac", 78)) exp = exp.sub(0.006)
+        if (hasMilestone("era", 2)) exp = exp.sub(0.006)
+        if (hasMilestone("sac", 82)) exp = exp.sub(0.006)
+        if (hasMilestone("sac", 83)) exp = exp.sub(0.006)
+        if (hasUpgrade("era", 142)) exp = exp.sub(0.005)
+        if (hasUpgrade("w", 74)) exp = exp.sub(0.00031762827)
+        if (hasUpgrade("era", 214)) exp = exp.sub(0.012)
+        if (hasUpgrade("era", 245)) exp = exp.sub(0.01)
+        if (hasUpgrade("era", 272)) exp = exp.sub(0.01)
+        if (hasMilestone("sac", 95)) exp = exp.sub(0.0095)
+        if (hasUpgrade("e", 153)) exp = exp.sub(0.01)
+        if (hasMilestone("era", 3)) exp = exp.sub(0.01)
+        if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
     gainMult() { // Prestige multiplier
@@ -671,6 +870,10 @@ addLayer("sac", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         return exp
+    },
+    autoPrestige() {
+        if (hasMilestone("era", 1)) return true
+        else return false
     },
     row: 5, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [

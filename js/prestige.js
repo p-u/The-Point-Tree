@@ -55,6 +55,7 @@ addLayer("prestige", {
                 let pu6exp = 0.05
                 if (hasUpgrade("mega", 41)) pu6exp = 0.08
                 if (hasMilestone("prestige", 8)) pu6exp = 0.16
+                if (hasUpgrade("era", 254)) pu6exp = 0.22
                 let eff = player["rebirth"].points.add(1).pow(pu6exp)
                 let softcapStart = new Decimal("1e1111111")
                 if (hasMilestone("rebirth", 8)) softcapStart = new Decimal("e2.5e6")
@@ -180,6 +181,30 @@ addLayer("prestige", {
             cost: new Decimal("e58448530"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 63) },
         },
+        71: {
+            title: "Point Fragments = Life",
+            description: "Another xe250B PF",
+            cost: new Decimal("e364285678e3"),
+            unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 65) },
+        },
+        72: {
+            title: "Slowly nullifying the Supercap",
+            description: "Pres Supercap is weaker",
+            cost: new Decimal("e416317039e3"),
+            unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 71) },
+        },
+        73: {
+            title: "Let's go PP!",
+            description: "+^0.05 PP",
+            cost: new Decimal("e427789944e3"),
+            unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 72) },
+        },
+        74: {
+            title: "More sacrifices",
+            description: "Reduce sac scaling by a bit",
+            cost: new Decimal("e461007277277"),
+            unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 73) },
+        },
 
         15: {
             title: "PP!",
@@ -216,6 +241,12 @@ addLayer("prestige", {
             description: "Formula: e(20M + (20M * RepUpgNo)) PF",
             cost: new Decimal("e60503303"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 64) },
+        },
+        75: {
+            title: "EC+*",
+            description: "xe500B PF AND x17 Era Crystals",
+            cost: new Decimal("e462212603e3"),
+            unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 74) },
         },
     },
     milestones: {
@@ -288,6 +319,12 @@ addLayer("prestige", {
             },
             unlocked() {return inChallenge("m", 12)},
         },
+        11: {
+            requirementDescription: "Prestige Domination (Req e50T, or e5e13 PP)",
+            effectDescription: "xe40T PF",
+            done() { return player["prestige"].points.gte("e5e13") },
+            unlocked() {return hasUpgrade("era", 161)},
+        },
     },
     doReset(prestige) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
@@ -329,6 +366,8 @@ addLayer("prestige", {
         // Stage 3, track which main features you want to keep - all upgrades, total points, specific toggles, etc.
         let keep = [];
         if ((hasMilestone('mega', 2))) keep.push("milestones");
+        if (hasMilestone("era", 3)) keep.push("upgrades");
+        if (hasMilestone("era", 3)) keep.push("milestones");
       
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
@@ -378,6 +417,10 @@ addLayer("prestige", {
         if (hasUpgrade('m', 54)) mult = mult.times("e2.5e6")
         if (hasUpgrade('e', 104)) mult = mult.times("e69.69e6")
         if (hasMilestone('sac', 69)) mult = mult.times("e360e6")
+        if (hasUpgrade('s', 111)) mult = mult.times("e3e9")
+        if (hasUpgrade('era', 172)) mult = mult.times("e1e12")
+        if (hasAchievement('a', 211)) mult = mult.times("e3e12")
+        if (hasUpgrade('e', 152)) mult = mult.times("e100e12")
 
         return mult
     },
@@ -410,7 +453,11 @@ addLayer("prestige", {
                 if (hasMilestone("w", 3)) exp = exp.add(0.1)
                 if (hasMilestone("prestige", 10)) exp = exp.add(0.0628)
             }
-            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('prestige', 73)) exp = exp.add(0.05)
+        if (hasUpgrade('era', 184)) exp = exp.add(0.12)
+        if (hasUpgrade('era', 204)) exp = exp.add(0.1)
+        if (hasUpgrade('basic', 114)) exp = exp.add(0.09)
         return exp
     },
     effect(){
@@ -419,6 +466,7 @@ addLayer("prestige", {
         let eff = player.prestige.points.add(1).pow(effectBoost)
         let cap = 0.3
         let spreff = 0.5
+        let hcapeff = 0.5
         if (hasMilestone('sac', 8)) cap = 0.31
         if (hasUpgrade('prestige', 42)) cap = 0.4
         if (hasUpgrade('basic', 35)) cap = 0.37
@@ -433,7 +481,10 @@ addLayer("prestige", {
         if (hasUpgrade('s', 92)) sc = 0.95
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
         if (hasMilestone('prestige', 8)) spreff = 0.67
+        if (hasUpgrade('prestige', 72)) spreff = 0.75
+        if (hasUpgrade('s', 95)) spreff = 0.95
         softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
+        softcappedEffect = softcap(softcappedEffect, new Decimal("ee12"), new Decimal(hcapeff))
         return softcappedEffect
        },
         effectDescription() {
@@ -444,6 +495,9 @@ addLayer("prestige", {
             }
             if (layerEffect.gte(new Decimal("e1000000")) ) {
                 softcapDescription = " (Supercapped)"
+            }
+            if (layerEffect.gte(new Decimal("e1e12")) ) {
+                softcapDescription = " (Hypercapped)"
             }
             let desc = "which is boosting basic points and point fragments by x" + format(tmp[this.layer].effect) + softcapDescription;
             return desc;

@@ -143,6 +143,9 @@ var systemComponents = {
 		Savebank from 'The Plant Tree'
 		<br>
 		<br>
+		Minigame inspired from 'The Mario Maker 2 Tree'
+		<br>
+		<br>
 		<br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
         <span v-if="modInfo.discordLink"><a class="link" v-bind:href="modInfo.discordLink" target="_blank">{{modInfo.discordName}}</a><br></span>
@@ -180,6 +183,7 @@ var systemComponents = {
 				</tr> 
 			<tr>
                 <td><button class="opt" onclick="changeEFormat()">Change to 'e' notation: 10^ {{ player.formatE }}</button></td>
+				<td><button class="opt" onclick="changeDP()">Current decimal places behind 'e': {{ player.showdp }}</button></td>
 				</tr> 
         </table>`
     },

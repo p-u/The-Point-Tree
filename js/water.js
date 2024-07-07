@@ -15,6 +15,25 @@ addLayer("w", {
         if (hasMilestone('s', 5)) return 5
         return 0
     },
+    doReset(w) {
+        // Stage 1, almost always needed, makes resetting this layer not delete your progress
+        if (layers[w].row <= this.row) return;
+    
+        // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
+        let keptUpgrades = [];
+    
+    
+        // Stage 3, track which main features you want to keep - milestones
+        let keep = [];
+        if (hasMilestone("era", 3)) keep.push("upgrades");
+        if (hasMilestone("era", 3)) keep.push("milestones");
+    
+        // Stage 4, do the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5, add back in the specific subfeatures you saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    },  
     infoboxes: {
         info: {
             title: "NOTE",
@@ -41,7 +60,7 @@ addLayer("w", {
             unlocked() { return hasUpgrade("w", 11) },
         },
         13: {
-            title: "Woah, I love compounding.",
+            title: "Woah, I love compounding. (Compounding IX)",
             description: "Water gets boosted based on itself.",
             cost: new Decimal(1250),
             unlocked() { return hasUpgrade("w", 12) },
@@ -51,6 +70,8 @@ addLayer("w", {
                 if (hasUpgrade('w', 43)) w3exp = 0.145
                 if (hasMilestone('w', 1)) w3exp = 0.16
                 if (hasUpgrade('w', 52)) w3exp = 0.175
+                if (hasUpgrade('s', 25)) w3exp = new Decimal(0.2)
+                if (hasUpgrade('era', 252)) w3exp = new Decimal(0.225)
                 return player["w"].points.add(1).pow(w3exp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -181,6 +202,30 @@ addLayer("w", {
             cost: new Decimal("3e1419"),
             unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 63)  }, 
         },
+        71: {
+            title: "A big jump in price",
+            description: "xe2M Water",
+            cost: new Decimal("4e10401459"),
+            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 64)  }, 
+        },
+        72: {
+            title: "Water Power",
+            description: "+^0.1 Water, ^1.0072 PF",
+            cost: new Decimal("1.6e11887902"),
+            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 71)  }, 
+        },
+        73: {
+            title: "Water Power",
+            description: "Raise SU52's water effect to the 500TH POWER!",
+            cost: new Decimal("1e12730927"),
+            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 71)  }, 
+        },
+        74: {
+            title: "Completion",
+            description: "xe20T PF and reduce sacrifice scaling by a teeny weeny bit",
+            cost: new Decimal("8e14525523"),
+            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 71)  }, 
+        },
     },
     milestones: {
         1: {
@@ -222,6 +267,7 @@ addLayer("w", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (hasUpgrade('basic', 111)) mult = mult.times(upgradeEffect('basic', 111))
         if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
         if (hasUpgrade('w', 11)) mult = mult.times(2)
         if (hasUpgrade('w', 12)) mult = mult.times(2)
@@ -253,11 +299,12 @@ addLayer("w", {
         if (hasUpgrade('w', 53)) mult = mult.times(1e18)
         if (hasUpgrade('rebirth', 75)) mult = mult.times(3.77)
         if (hasUpgrade('w', 62)) mult = mult.times(1e167)
+        if (hasUpgrade('w', 71)) mult = mult.times("e2000000")
+        if (hasUpgrade('era', 233)) mult = mult.times("e50e6")
+        if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
 
         
-        if (hasAchievement('sa', 32)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 33)) mult = mult.times(1.1)
-        if (hasAchievement('sa', 34)) mult = mult.times(1.25)
+        if (hasAchievement('sa', 33)) mult = mult.times(1.2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -267,6 +314,10 @@ addLayer("w", {
         if (hasAchievement('a', 171)) exp = exp.add(0.02)
         if (hasUpgrade('m', 81)) exp = exp.add(0.1)
             if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade("era", 23)) exp = exp.add(0.05)
+        if (hasUpgrade('w', 72)) exp = exp.add(0.1)
+        if (hasUpgrade('s', 15)) exp = exp.add(0.08)
+            if (hasUpgrade('era', 274)) exp = exp.add(0.09)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -277,6 +328,7 @@ addLayer("w", {
         if (hasUpgrade('w', 23)) weffpow = 2
         if (hasUpgrade('w', 31)) weffpow = 3
         if (hasUpgrade('e', 65)) weffpow = 5
+        if (hasUpgrade("era", 133)) weffpow = 17.5
             let eff = player.w.points.add(1).pow(weffpow)
            return eff
            },
