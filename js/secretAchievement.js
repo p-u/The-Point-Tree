@@ -833,7 +833,7 @@ addLayer("sa", {
             title: "x10^10",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(1e10)},
-            unlocked() {return hasAchievement("sa", 123)}
+            unlocked() {return hasAchievement("sa", 125)}
         },
         42: {
             title: "x3",

@@ -846,8 +846,8 @@ addLayer("a", {
         },
         185: {
             name: "Mega Compoundation",
-            done() { return player.mega.points.gte(new Decimal("e2697e6")) },
-            tooltip: "Get e2.697B MP. Reward: xe2.697B PF",
+            done() { return player.mega.points.gte(new Decimal("e2696672e3")) },
+            tooltip: "Get e2.696672B MP. Reward: xe2.696672B PF",
             unlocked() { return hasAchievement("a", 164) },
         },
         186: {

@@ -379,25 +379,25 @@ addLayer("mega", {
         91: {
             title: "Ayy!! Extension!",
             description: "+^0.05 MP",
-            cost: new Decimal("e1257288e3"),
+            cost: new Decimal("e1256567e3"),
             unlocked() { return hasMilestone("sac", 71) },
         },
         92: {
             title: "The Ultima-Tradeoff",
             description: "Sacrifice scaling is WEAKER - Ensure that you have 638 Sacs, but xe4B PF",
-            cost: new Decimal("e1973207e3"),
+            cost: new Decimal("e1972067e3"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 91)  },
         },
         93: {
             title: "POW",
             description: "^1.005 PF",
-            cost: new Decimal("e2219130e3"),
+            cost: new Decimal("e2217937e3"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 92) },
         },
         94: {
             title: "Alla Pow",
             description: "+^0.005 BP, RP, PP, MP, Energy, Water, SP and Mastery Points",
-            cost: new Decimal("e2806616616"),
+            cost: new Decimal("e2806286e3"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 93) },
         },
 
@@ -459,7 +459,7 @@ addLayer("mega", {
         95: {
             title: "Astronomical Amount [Tier 10]",
             description: "xe15B PF",
-            cost: new Decimal("e2900000000"),
+            cost: new Decimal("e3196800e3"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) },
         },
     },

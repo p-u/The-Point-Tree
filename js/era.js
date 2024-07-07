@@ -106,17 +106,19 @@ addLayer("era", {
         1: {
             requirementDescription: "Era One. The start of a new journey.",
             effectDescription: "Start generating Era Crystals, Unlock new tabs. Unlock Auto Sac. ^1.004 PF. Auto-complete SA31 if you have not already.",
-            done() { return player["era"].points.gte(1) }
+            done() { return player["era"].points.gte(1) },
         },
         2: {
             requirementDescription: "Era Two: What's there to come?",
             effectDescription: "Keep Mega Milestones and Buyables on era reset, ^1.015 PF, Less sac scaling, x50 Era Crystals, Unlock more Era Crystal Upgrades and a new DS...",
-            done() { return player["era"].points.gte(2) }
+            done() { return player["era"].points.gte(2) },
+            unlocked() { return player["era"].points.gte(1) },
         },
         3: {
             requirementDescription: "Era Three: What more?",
             effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x3333 EC, Less Sac Scaling, More EC Ups",
-            done() { return player["era"].points.gte(3) }
+            done() { return player["era"].points.gte(3) },
+            unlocked() { return player["era"].points.gte(2) },
         },
     },
     upgrades: {
