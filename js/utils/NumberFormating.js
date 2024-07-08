@@ -47,6 +47,8 @@ function sumValues(x) {
 }
 
 function format(decimal, precision = player.dp, small) {
+    if (player.dp.gte(100)) player.dp = new Decimal(20)
+    if (player.dp.lte(0)) player.dp = new Decimal(1)
     small = small || modInfo.allowSmall
     decimal = new Decimal(decimal)
     if (isNaN(decimal.sign) || isNaN(decimal.layer) || isNaN(decimal.mag)) {
