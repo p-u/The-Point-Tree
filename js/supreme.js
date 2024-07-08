@@ -5,6 +5,8 @@ addLayer("s", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+        sb5eff: new Decimal(1),
+        sb5hc: new Decimal(1.25),
     }},
     layerShown(){
         let visible = false
@@ -766,6 +768,7 @@ addLayer("s", {
             if (hasUpgrade('m', 63)) base1 = new Decimal(1000000)
             if (hasMilestone('sac', 53)) base1 = new Decimal(1e8)
             if (hasUpgrade('s', 103)) base1 = new Decimal(1e15)
+            if (hasUpgrade('basic', 104)) base1 = new Decimal(1e25)
             let base2 = x
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(100))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(10000))
@@ -783,7 +786,7 @@ addLayer("s", {
             return new Decimal("1e1266").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + format(buyableEffect(this.layer, this.id)) + " Point Fragments."
+            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + (tmp.s.sb5effect) + " Point Fragments."
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -792,37 +795,6 @@ addLayer("s", {
             let cost = new Decimal (1)
             player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-        },
-        effect(x) {
-            let base1 = new Decimal(1.008)
-            if (hasUpgrade('w', 64)) base1 = new Decimal(1.011)
-            if (hasUpgrade('basic', 104)) base1 = new Decimal(1.013)
-            let base2 = x
-            let expo = new Decimal(1.004)
-            let eff = base1.pow(Decimal.pow(base2, expo))
-            let hcap = new Decimal(1.25)
-            if(hasUpgrade("s", 112)) hcap = hcap.add(0.01)
-            if(hasUpgrade("era", 71)) hcap = hcap.add(0.008)
-            if(hasUpgrade("era", 84)) hcap = hcap.add(0.005)
-            if(hasMilestone("sac", 76)) hcap = hcap.add(0.0068)
-            if(hasMilestone("sac", 77)) hcap = hcap.add(0.01)
-            if(hasUpgrade("era", 102)) hcap = hcap.add(0.0066)
-            if(hasUpgrade("era", 112)) hcap = hcap.add(0.0066)
-            if(hasMilestone("sac", 80)) hcap = hcap.add(0.002)
-            if(hasUpgrade("era", 132)) hcap = hcap.add(0.005)
-            if(hasUpgrade("era", 152)) hcap = hcap.add(0.005)
-            if(hasMilestone("sac", 84)) hcap = hcap.add(0.002)
-            if(hasMilestone("sac", 85)) hcap = hcap.add(0.007)
-            if(hasUpgrade("era", 192)) hcap = hcap.add(0.003)
-            if(hasUpgrade("era", 193)) hcap = hcap.add(0.003)
-            if(hasUpgrade("s", 105)) hcap = hcap.add(0.01)
-            if(hasUpgrade("era", 223)) hcap = hcap.add(0.01)
-            if(hasUpgrade("basic", 112)) hcap = hcap.add(0.0055)
-            if(hasMilestone("sac", 93)) hcap = hcap.add(0.005)
-            if(hasUpgrade("era", 232)) hcap = hcap.add(0.003)
-            if(hasMilestone("sac", 96)) hcap = hcap.add(0.01)
-            if (eff.gte(hcap)) eff = hcap
-            return eff
         },
     },
     16: {
@@ -855,7 +827,38 @@ addLayer("s", {
             return eff
         },
     },
-},
+},  
+    sb5effect() {
+        let base1 = new Decimal(1.008)
+        if (hasUpgrade('w', 64)) base1 = new Decimal(1.011)
+        if (hasUpgrade('basic', 104)) base1 = new Decimal(1.013)
+        let base2 = getBuyableAmount(this.layer, 15)
+        let expo = new Decimal(1.004)
+        let eff = base1.pow(Decimal.pow(base2, expo))
+        let hcap = player.s.sb5hc
+        if(hasUpgrade("s", 112)) hcap = hcap.add(0.01)
+            if(hasUpgrade("era", 71)) hcap = hcap.add(0.008)
+            if(hasUpgrade("era", 84)) hcap = hcap.add(0.005)
+            if(hasMilestone("sac", 76)) hcap = hcap.add(0.0068)
+            if(hasMilestone("sac", 77)) hcap = hcap.add(0.01)
+            if(hasUpgrade("era", 102)) hcap = hcap.add(0.0066)
+            if(hasUpgrade("era", 112)) hcap = hcap.add(0.0066)
+            if(hasMilestone("sac", 80)) hcap = hcap.add(0.002)
+            if(hasUpgrade("era", 132)) hcap = hcap.add(0.005)
+            if(hasUpgrade("era", 152)) hcap = hcap.add(0.005)
+            if(hasMilestone("sac", 84)) hcap = hcap.add(0.002)
+            if(hasMilestone("sac", 85)) hcap = hcap.add(0.007)
+            if(hasUpgrade("era", 192)) hcap = hcap.add(0.003)
+            if(hasUpgrade("era", 193)) hcap = hcap.add(0.003)
+            if(hasUpgrade("s", 105)) hcap = hcap.add(0.01)
+            if(hasUpgrade("era", 223)) hcap = hcap.add(0.01)
+            if(hasUpgrade("basic", 112)) hcap = hcap.add(0.0055)
+            if(hasMilestone("sac", 93)) hcap = hcap.add(0.005)
+            if(hasUpgrade("era", 232)) hcap = hcap.add(0.003)
+            if(hasMilestone("sac", 96)) hcap = hcap.add(0.01)
+        if (eff.gte(hcap)) eff = hcap
+        return eff
+    },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         mult = mult.times(buyableEffect('s', 11))

@@ -813,7 +813,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 51)) gain = gain.pow(1.0109)
 	if (hasMilestone('sac', 54)) gain = gain.pow(1.0118)
 	if (hasUpgrade('s', 104)) gain = gain.pow(1.025)
-	if (hasUpgrade('s', 102)) gain = gain.pow(buyableEffect('s', 15))
+	if (hasUpgrade('s', 102)) gain = gain.pow(tmp.s.sb5effect)
 	if (hasMilestone('sac', 56)) gain = gain.pow(1.0126)
 	if (hasUpgrade('rebirth', 73)) gain = gain.pow(1.01)
 	if (hasMilestone('sac', 57)) gain = gain.pow(1.0132)

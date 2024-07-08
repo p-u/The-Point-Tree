@@ -354,7 +354,7 @@ addLayer("sa", {
             },
         },
         112: {
-            name: "Reach the NSFW number",
+            name: "Reach the leet number",
             done() {
                    if (player.sa.minigameNum.eq(1337)) {
                        return true
@@ -430,7 +430,7 @@ addLayer("sa", {
             }
         },
         116: {
-            name: "Reach the ULTIMATE NSFW Number",
+            name: "Reach the ULTIMATE LEET Number",
             done() {
                    if ((player.sa.minigameNum.gte("9.99e1336")) && (player.sa.minigameNum.lte("1.01e1337"))) {
                        return true
