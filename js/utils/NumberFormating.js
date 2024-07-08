@@ -1,5 +1,7 @@
 
 function exponentialFormat(num, precision, mantissa = true) {
+    if (precision > 100) precision = 100
+	if (precision < 0) precision = 0
     let e = num.log10().floor()
     let m = num.div(Decimal.pow(10, e))
     if (m.toStringWithDecimalPlaces(precision) == 10) {
@@ -19,6 +21,8 @@ function exponentialFormat(num, precision, mantissa = true) {
 }
 
 function commaFormat(num, precision) {
+    if (precision > 100) precision = 100
+	if (precision < 0) precision = 0
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.001) return (0).toFixed(precision)
     let init = num.toStringWithDecimalPlaces(precision)
@@ -30,6 +34,8 @@ function commaFormat(num, precision) {
 
 
 function regularFormat(num, precision) {
+    if (precision > 100) precision = 100
+	if (precision < 0) precision = 0
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.0001) return (0).toFixed(precision)
     if (num.mag < 0.1 && precision !==0) precision = Math.max(precision, 4)
@@ -47,8 +53,8 @@ function sumValues(x) {
 }
 
 function format(decimal, precision = player.dp, small) {
-    if (player.dp.gte(100)) player.dp = new Decimal(20)
-    if (player.dp.lte(0)) player.dp = new Decimal(1)
+    if (precision > 100) precision = 100
+	if (precision < 0) precision = 0
     small = small || modInfo.allowSmall
     decimal = new Decimal(decimal)
     if (isNaN(decimal.sign) || isNaN(decimal.layer) || isNaN(decimal.mag)) {
@@ -101,6 +107,8 @@ function formatTime(s) {
 }
 
 function toPlaces(x, precision, maxAccepted) {
+    if (precision > 100) precision = 100
+	if (precision < 0) precision = 0
     x = new Decimal(x)
     let result = x.toStringWithDecimalPlaces(precision)
     if (new Decimal(result).gte(maxAccepted)) {

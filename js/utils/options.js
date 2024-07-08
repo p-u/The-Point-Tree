@@ -20,7 +20,7 @@ function getStartOptions() {
 	}
 }
 let formatEList = ['3','6','9','12','15']
-let dpList = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+let dpList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 function changeEFormat() {
 	player.formatE = formatEList[(formatEList.indexOf(player.formatE) + 1) % formatEList.length]
@@ -29,6 +29,8 @@ function changeEFormat() {
 function changeDP() {
 	player.dp = dpList[(dpList.indexOf(player.dp) + 1) % dpList.length]
 	player.showdp = (player.dp) + 2
+	if (player.dp > 100) player.dp = 20
+	if (player.dp < 0) player.dp = 0
 }
 
 
