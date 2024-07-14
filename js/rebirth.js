@@ -41,55 +41,55 @@ addLayer("rebirth", {
         12: {
             title: "That's a while since the last one. How about some Point boosts?",
             description: "X5 Basic Points, X10 Point Fragments",
-            cost: new Decimal(400),
+            cost: new Decimal(1500),
             unlocked() { return hasUpgrade("rebirth", 11) },
         },
         13: {
             title: "Boosts to all",
             description: "X1.28 Rebirth Points, Basic Points and Point Fragments",
-            cost: new Decimal(12000),
+            cost: new Decimal(60000),
             unlocked() { return hasUpgrade("rebirth", 12) },
         },
         14: {
             title: "Point Fragmenting",
             description: "AN INSANE X50 BOOST TO Point Fragments",
-            cost: new Decimal(40000),
+            cost: new Decimal(300000),
             unlocked() { return hasUpgrade("rebirth", 13) },
         },
         21: {
             title: "Booster",
             description: "X1.36 RP (Rebirth Point), X2 BP (Basic Point), X100 PF (Point Fragment)",
-            cost: new Decimal(300000),
+            cost: new Decimal(1.5e6),
             unlocked() { return hasUpgrade("rebirth", 14) },
         },
         22: {
             title: "Another Exponent?",
             description: "+^0.01 BP, ^1.02 PF",
-            cost: new Decimal(12500000),
+            cost: new Decimal(40e6),
             unlocked() { return hasUpgrade("rebirth", 21) },
         },
         23: {
             title: "Boost",
             description: "X2 RP, X10 PF",
-            cost: new Decimal(50000000),
+            cost: new Decimal(60e6),
             unlocked() { return hasUpgrade("rebirth", 21) },
         },
         24: {
             title: "Final Reb Upg before Pres",
             description: "X1.28 RP, X2.22 BP, X20 PF",
-            cost: new Decimal(600000000),
+            cost: new Decimal(2.5e9),
             unlocked() { return hasUpgrade("rebirth", 23) },
         },
         31: {
             title: "Extension 1 - Upgrade Boosting",
             description: "Basic Upgrade 10 is boosted.",
-            cost: new Decimal(6.9e42),
+            cost: new Decimal(4.44e44),
             unlocked() { return hasUpgrade("prestige", 21) && hasUpgrade("rebirth", 24) },
         },
         32: {
             title: "1111Quad",
             description: "x1.11 PP, x11.11 RP, x1111.11 BP, x1111111.11 PF",
-            cost: new Decimal(1e48),
+            cost: new Decimal(5e50),
             unlocked() { return hasUpgrade("rebirth", 31) },
         },
         33: {
@@ -283,28 +283,28 @@ addLayer("rebirth", {
         },
         2: {
             requirementDescription: "20 RP",
-            effectDescription: "Generate 100% of Basic Points a sec",
+            effectDescription: "Keep Row 1-3 Basic Point Upgrades",
             done() { return player["rebirth"].points.gte(20) }
         },
         3: {
-            requirementDescription: "100 RP",
-            effectDescription: "Keep Row 1-3 Basic Point Upgrades",
-            done() { return player["rebirth"].points.gte(100) }
+            requirementDescription: "60 RP",
+            effectDescription: "Generate 100% of Basic Points a sec",
+            done() { return player["rebirth"].points.gte(60) }
         },
         4: {
-            requirementDescription: "2,000 RP",
-            effectDescription: "Generate 10,000% of Basic Points a sec",
-            done() { return player["rebirth"].points.gte(2000) }
+            requirementDescription: "7,000 RP",
+            effectDescription: "Keep Row 4 Basic Point Upgrades",
+            done() { return player["rebirth"].points.gte(7000) }
         },
         5: {
-            requirementDescription: "4M RP",
-            effectDescription: "Keep Row 4 Basic Point Upgrades",
-            done() { return player["rebirth"].points.gte(4000000) }
+            requirementDescription: "5M RP",
+            effectDescription: "Generate 10,000% of Basic Points a sec",
+            done() { return player["rebirth"].points.gte(5000000) }
         },
         6: {
-            requirementDescription: "RP Billionaire",
+            requirementDescription: "10B RP",
             effectDescription: "4 MOAR BP Upgrades",
-            done() { return player["rebirth"].points.gte(1000000000) }
+            done() { return player["rebirth"].points.gte(10000000000) }
         },
         7: {
             requirementDescription: "THE ELUSIVE 7TH MILESTONE [E88.88M RP]",
@@ -403,6 +403,9 @@ addLayer("rebirth", {
         if (hasMilestone('sac', 18) && hasUpgrade(this.layer, 43)) keptUpgrades.push(43);
         if (hasMilestone('sac', 18) && hasUpgrade(this.layer, 44)) keptUpgrades.push(44);
         for(i=1;i<5;i++){ //rows
+            for(v=1;v<2;v++){ //columns
+                if ((hasMilestone('prestige', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
             for(v=1;v<3;v++){ //columns
               if ((hasMilestone('prestige', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }

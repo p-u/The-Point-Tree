@@ -25,31 +25,31 @@ addLayer("prestige", {
         12: {
             title: "Exponent",
             description: "+^0.01 BP, x10 PF, x1.75 RP",
-            cost: new Decimal(2),
+            cost: new Decimal(1),
             unlocked() { return hasUpgrade("prestige", 11) },
         },
         13: {
             title: "Is it a lot?",
             description: "x10 RP, x100 PF",
-            cost: new Decimal(5),
+            cost: new Decimal(4),
             unlocked() { return hasUpgrade("prestige", 12) },
         },
         14: {
             title: "Is it a lot? (2)",
             description: "x10 RP, x1K PF",
-            cost: new Decimal(25),
+            cost: new Decimal(16),
             unlocked() { return hasUpgrade("prestige", 13) },
         },
         21: {
             title: "Can Rebirth Extend",
             description: "x25 RP, BP and PF. Unlock 2 new RP Upgrades.",
-            cost: new Decimal(50),
+            cost: new Decimal(90),
             unlocked() { return hasUpgrade("prestige", 14) },
         },
         22: {
             title: "Compounding IV",
             description: "Rebirth Points boosts itself.",
-            cost: new Decimal(500),
+            cost: new Decimal(8000),
             unlocked() { return hasUpgrade("prestige", 21) },
             effect() {
                 let pu6exp = 0.05
@@ -76,25 +76,25 @@ addLayer("prestige", {
         23: {
             title: "10^^2",
             description: "x10^10 PF",
-            cost: new Decimal(2500),
+            cost: new Decimal(20000),
             unlocked() { return hasUpgrade("prestige", 22) },
         },
         24: {
             title: "Exponent+",
             description: "+^0.02 BP, ^1.02 PF",
-            cost: new Decimal(20000),
+            cost: new Decimal(600000),
             unlocked() { return hasUpgrade("prestige", 23) },
         },
         31: {
             title: "Insanely OP, but with a catch",
             description: "x1e20 PF, x1e8 BP, x1e3 RP, BUT /10 PP",
-            cost: new Decimal(10000000),
+            cost: new Decimal(50e6),
             unlocked() { return hasUpgrade("prestige", 24) },
         },
         32: {
             title: "The last Upgrade before the reset",
             description: "Basic Upgrade 10 is buffed, and +^0.01 RP, +^0.03 BP",
-            cost: new Decimal(200e6),
+            cost: new Decimal(1e9),
             unlocked() { return hasUpgrade("prestige", 31) },
         },
         33: {
@@ -251,19 +251,19 @@ addLayer("prestige", {
     },
     milestones: {
         1: {
-            requirementDescription: "3 PP",
+            requirementDescription: "2 PP",
             effectDescription: "Generate 1,000,000% of Basic Points a second",
-            done() { return player["prestige"].points.gte(3) }
+            done() { return player["prestige"].points.gte(2) }
         },
         2: {
-            requirementDescription: "10 PP",
-            effectDescription: "x100 PF.",
-            done() { return player["prestige"].points.gte(10) }
+            requirementDescription: "8 PP",
+            effectDescription: "Keep Row 1-4 Basic Point Upgs on reset",
+            done() { return player["prestige"].points.gte(8) }
         },
         3: {
-            requirementDescription: "200 PP",
+            requirementDescription: "35 PP",
             effectDescription: "Keep Row 5 Basic Point Upgs on Reset",
-            done() { return player["prestige"].points.gte(200) }
+            done() { return player["prestige"].points.gte(35) }
         },
         4: {
             requirementDescription: "900 PP",
@@ -271,19 +271,19 @@ addLayer("prestige", {
             done() { return player["prestige"].points.gte(900) }
         },
         5: {
-            requirementDescription: "20K PP",
-            effectDescription: "Keep Rebirth Milestone and Rebirth Upgrade 9.",
-            done() { return player["prestige"].points.gte(20000) }
+            requirementDescription: "100K PP",
+            effectDescription: "Keep Rebirth Milestones, Row 1 Rebirth Upgrades, Rebirth Upgrade 9, x100 PF",
+            done() { return player["prestige"].points.gte(100000) }
         },
         6: {
-            requirementDescription: "500,000 PP",
+            requirementDescription: "15,000,000 PP",
             effectDescription: "Generate 10,000% of Rebirth Points a second.",
-            done() { return player["prestige"].points.gte(500000) }
+            done() { return player["prestige"].points.gte(15e6) }
         },
         7: {
-            requirementDescription: "1e10 PP",
-            effectDescription: "Keep all Rebirth Upgrades (Row 1 and 2) and RU32",
-            done() { return player["prestige"].points.gte(1e10) }
+            requirementDescription: "250M PP",
+            effectDescription: "Keep Row 2 Rebirth Upgrades and RU32",
+            done() { return player["prestige"].points.gte(250e6) }
         },
         8: {
             requirementDescription: "e10,175,850 PP",

@@ -875,13 +875,13 @@ addLayer("sa", {
             title: "^2",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)},
-            unlocked() {return hasAchievement("sa", 145)}
+            unlocked() {return hasAchievement("sa", 146)}
         },
         63: {
             title: "^0.1",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.1)},
-            unlocked() {return hasAchievement("sa", 145)}
+            unlocked() {return hasAchievement("sa", 146)}
         },
     },
 })

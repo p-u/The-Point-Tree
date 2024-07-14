@@ -13,11 +13,28 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.0.3",
+	num: "3.0.X",
 	name: "Over e1 Qt!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.0.X </h3><br>
+Rebalanced all content from Basic to Prestige layer. Added more QoLs + more accessible in Pres layer<br>
+Fixed ^2 clickable unlock<br>
+
+<h3>v3.0.3 </h3><br>
+Fixed precision issues that caused unplayable game<br>
+
+<h3>v3.0.2 </h3><br>
+Bug fix: SB1 is now working<br>
+Changed SB5 effect visual to update all the time<br>
+Ach 12 and 16 of minigame is changed description.<br>
+
+<h3>v3.0.1 </h3><br>
+Changed A185 req, changed MU91-95 price<br>
+Fixed clickable 10^10x unlock<br>
+Era milestones now unlock at previous era amount<br>
+
 <h2>v3.0.0 (The Biggest Update)</h2><br>
 Endgame: e1.3294765716e18 PF <br>
 High Endgame: e1.32947657162222e18 PF <br>
@@ -511,7 +528,7 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 13)) gain = gain.times(100)
 	if (hasUpgrade('prestige', 14)) gain = gain.times(1000)
 	if (hasUpgrade('prestige', 21)) gain = gain.times(25)
-	if (hasMilestone('prestige', 2)) gain = gain.times(100)
+	if (hasMilestone('prestige', 5)) gain = gain.times(100)
 	if (hasUpgrade('prestige', 23)) gain = gain.times(1e10)
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
 	if (hasUpgrade('prestige', 33)) gain = gain.times(1e300)
