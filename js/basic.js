@@ -708,7 +708,6 @@ addLayer("basic", {
         if (hasUpgrade('s', 91)) mult = mult.times("e1e7")
         if (hasUpgrade('basic', 94)) mult = mult.times("e1e7")
         if (hasUpgrade('m', 52)) mult = mult.times("e2e7")
-        if (hasAchievement('sa', 16)) mult = mult.times(1.1)
         if (hasUpgrade('mega', 15)) mult = mult.times("e25e6")
         if (hasUpgrade('s', 111)) mult = mult.times("e100e9")
         if (hasUpgrade('era', 124)) mult = mult.times("e5e12")

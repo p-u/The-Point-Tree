@@ -1,5 +1,5 @@
 // ************ Themes ************
-var themes = ["default", "aqua", "lava", "light"]
+var themes = ["default", "aqua", "verdant", "lava", "light"]
 
 var colors = {
 	default: {
@@ -21,6 +21,16 @@ var colors = {
 		locked: "#c4a7b3",
 		background: "#001f3f",
 		background_tooltip: "rgba(0, 15, 31, 0.75)",
+	},
+	verdant: {
+		1: "#a8efd7",
+		2: "#ffffff",
+		3: "#191668",
+		color: "#54e1b1",
+		points: "#dfefff",
+		locked: "#bf8f8f",
+		background: "#12674a",
+		background_tooltip: "rgba(0, 0, 0, 0.75)",
 	},
 	lava: {
 		1: "#bfdfff",

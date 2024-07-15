@@ -13,11 +13,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.0.X",
+	num: "3.0.Y",
 	name: "Over e1 Qt!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.0.Y </h3><br>
+Added hold mechanic to minigame clickables<br>
+Added Verdant Theme <br>
+Fixed SA15 and SA16 giving boosts <br>
+
 <h3>v3.0.X </h3><br>
 Rebalanced all content from Basic to Prestige layer. Added more QoLs + more accessible in Pres layer<br>
 Fixed ^2 clickable unlock<br>
@@ -738,11 +743,6 @@ function getPointGen() {
 	if (hasUpgrade("era", 213)) gain = gain.times("e37e12")
 	if (hasUpgrade("era", 245)) gain = gain.times("e350e12")
 	if (hasUpgrade("era", 284)) gain = gain.times("e5e15")
-
-
-	// secret achievements
-	if (hasAchievement('sa', 15)) gain = gain.times(1.05)
-	if (hasAchievement('sa', 16)) gain = gain.times(1.1)
 
 
 	// power (^)

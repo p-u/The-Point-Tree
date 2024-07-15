@@ -800,11 +800,13 @@ addLayer("sa", {
             title: "+1",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.add(1)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.add(1)}
         },
         22: {
             title: "x2",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(2)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(2)}
         },
         23: {
             title: "=1",
@@ -815,73 +817,85 @@ addLayer("sa", {
             title: "x69",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(69)},
-            unlocked() {return hasAchievement("sa", 113)}
+            unlocked() {return hasAchievement("sa", 113)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(69)}
         },
         32: {
             title: "x911",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(911)},
-            unlocked() {return hasAchievement("sa", 116)}
+            unlocked() {return hasAchievement("sa", 116)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(911)}
         },
         33: {
             title: "/3",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)},
-            unlocked() {return hasAchievement("sa", 116)}
+            unlocked() {return hasAchievement("sa", 116)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)}
         },
         41: {
             title: "x10^10",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(1e10)},
-            unlocked() {return hasAchievement("sa", 125)}
+            unlocked() {return hasAchievement("sa", 125)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(1e10)}
         },
         42: {
             title: "x3",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(3)},
-            unlocked() {return hasAchievement("sa", 126)}
+            unlocked() {return hasAchievement("sa", 126)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(3)}
         },
         43: {
             title: "/2",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)},
-            unlocked() {return hasAchievement("sa", 126)}
+            unlocked() {return hasAchievement("sa", 126)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)}
         },
         51: {
             title: "x10",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(10)},
-            unlocked() {return hasAchievement("sa", 133)}
+            unlocked() {return hasAchievement("sa", 133)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(10)}
         },
         52: {
             title: "^1.01",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.01)},
-            unlocked() {return hasAchievement("sa", 135)}
+            unlocked() {return hasAchievement("sa", 135)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.01)}
         },
         53: {
             title: "^0.99",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.99)},
-            unlocked() {return hasAchievement("sa", 135)}
+            unlocked() {return hasAchievement("sa", 135)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.99)}
         },
         61: {
             title: "^1.1",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.1)},
-            unlocked() {return hasAchievement("sa", 143)}
+            unlocked() {return hasAchievement("sa", 143)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.1)}
         },
         62: {
             title: "^2",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)},
-            unlocked() {return hasAchievement("sa", 146)}
+            unlocked() {return hasAchievement("sa", 146)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)}
         },
         63: {
             title: "^0.1",
             canClick() {return true},
             onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.1)},
-            unlocked() {return hasAchievement("sa", 146)}
+            unlocked() {return hasAchievement("sa", 146)},
+            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.1)}
         },
     },
 })
