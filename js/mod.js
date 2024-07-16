@@ -679,8 +679,8 @@ function getPointGen() {
 	if (hasAchievement('a', 183)) gain = gain.times("e1.85e9")
 	if (hasAchievement('a', 185)) gain = gain.times("e2.697e9")
 	if (hasAchievement('a', 186)) gain = gain.times("e7e9")
-	if (hasAchievement('a', 205)) gain = gain.times("e15e12")
-	if (hasAchievement('a', 214)) gain = gain.times("e777e12")
+	if (hasAchievement('a', 211)) gain = gain.times("e15e12")
+	if (hasAchievement('a', 225)) gain = gain.times("e777e12")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -867,7 +867,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 79)) gain = gain.pow(1.0065)
 	if (hasMilestone("era", 2)) gain = gain.pow(1.015)
 	if (hasUpgrade("era", 141)) gain = gain.pow(1.006)
-	if (hasAchievement('a', 202)) gain = gain.pow(1.005)
+	if (hasAchievement('a', 203)) gain = gain.pow(1.005)
 	if (hasUpgrade("era", 155)) gain = gain.pow(1.01)
 	if (hasUpgrade("w", 72)) gain = gain.pow(1.0072)
 	if (hasUpgrade("era", 181)) gain = gain.pow(1.0111)

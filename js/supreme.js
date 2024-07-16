@@ -768,7 +768,7 @@ addLayer("s", {
             if (hasUpgrade('m', 63)) base1 = new Decimal(1000000)
             if (hasMilestone('sac', 53)) base1 = new Decimal(1e8)
             if (hasUpgrade('s', 103)) base1 = new Decimal(1e15)
-            if (hasUpgrade('basic', 104)) base1 = new Decimal(1e25)
+            if ((hasUpgrade('basic', 104)) && !(hasMilestone("era", 1))) base1 = new Decimal(1e25)
             let base2 = x
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(100))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(10000))
