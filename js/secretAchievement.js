@@ -1,7 +1,8 @@
 addLayer("sa", {
     startData() { return {
         unlocked: true,
-        minigameNum: new Decimal(1)
+        minigameNum: new Decimal(1),
+        pdx: new Decimal(0)
     }},
     color: "grey",
     row: "side",
@@ -199,7 +200,7 @@ addLayer("sa", {
             },
         },
         25: {
-            name: ".--- ..- ... - / --. . - / ... ..- .--. .-. . -- .",
+            name: ".--- ..- ... - / ... - .- .-.. .-.. / ... ..- .--. .-. . -- .",
             done() {
                 if(player.s.best.lte(0)) {
                    if (player.points.gte("e152980000")) {
@@ -276,7 +277,7 @@ addLayer("sa", {
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.3294765716e18")) {
+                   if (player.points.gte("e5.011135425235e19")) {
                        return true
                    }
                },
@@ -292,7 +293,7 @@ addLayer("sa", {
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.32947657162222e18")) {
+                   if (player.points.gte("e5.01113542524e19")) {
                        return true
                    }
                },
@@ -308,7 +309,7 @@ addLayer("sa", {
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.32947657164e18")) {
+                   if (player.points.gte("e5.011135425243e19")) {
                        return true
                    }
                },
@@ -324,7 +325,7 @@ addLayer("sa", {
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.329476571655e18")) {
+                   if (player.points.gte("e5.011135425246e19")) {
                        return true
                    }
                },
@@ -333,7 +334,7 @@ addLayer("sa", {
                     return "Congrats! You have reached Insanity True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points)"
                 }
                 else {
-                    return "Reach Absolute True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points)"
+                    return "Reach Insanity True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points)"
                 }
             },
         },
@@ -460,7 +461,7 @@ addLayer("sa", {
                     return "a bit big"
                 }
                 else {
-                    return "straightforward"
+                    return "more"
                 }
             },
         },
@@ -476,7 +477,7 @@ addLayer("sa", {
                     return "big"
                 }
                 else {
-                    return "straightforward"
+                    return "even more"
                 }
             },
             unlocked() { 
@@ -495,7 +496,7 @@ addLayer("sa", {
                     return "very big"
                 }
                 else {
-                    return "straightforward"
+                    return "way more"
                 }
             },
             unlocked() { 
@@ -514,7 +515,7 @@ addLayer("sa", {
                     return "hugely big"
                 }
                 else {
-                    return "straightforward"
+                    return "grind"
                 }
             },
             unlocked() { 
@@ -533,7 +534,7 @@ addLayer("sa", {
                     return "insanely big (Reward: x1e10 button)"
                 }
                 else {
-                    return "straightforward"
+                    return "very grindy"
                 }
             },
             unlocked() { 
@@ -552,7 +553,7 @@ addLayer("sa", {
                     return "insanely big (Reward: x3, /2 button)"
                 }
                 else {
-                    return "straightforward"
+                    return "grind ^2"
                 }
             },
             unlocked() { 
@@ -651,6 +652,25 @@ addLayer("sa", {
                 if(hasAchievement("sa", 134) && hasAchievement("sa", 126) && hasAchievement("sa", 116)) return true
             }
         },
+        136: {
+            name: "Reach 3.029679879579 [some buffer] (Extreme 01/07)",
+            done() {
+                if ((player.sa.minigameNum.gte(3.02967987)) && (player.sa.minigameNum.lte(3.02967988))) {
+                    return true
+                }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 136)) {
+                    return "good job [Extreme 01]"
+                }
+                else {
+                    return "Hint: 7 buttons [not including =1]"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 146)) return true
+            }
+        },
         141: {
             name: "Even higher (e1M)",
             done() {
@@ -682,7 +702,7 @@ addLayer("sa", {
                     return "supremely big"
                 }
                 else {
-                    return "straightforward"
+                    return "grind starts"
                 }
             },
             unlocked() { 
@@ -701,7 +721,7 @@ addLayer("sa", {
                     return "very insanely big (Reward: Unlock ^1.1 button)"
                 }
                 else {
-                    return "straightforward"
+                    return "long time, isn't it?"
                 }
             },
             unlocked() { 
@@ -720,7 +740,7 @@ addLayer("sa", {
                     return "breaking bounds"
                 }
                 else {
-                    return "straightforward"
+                    return "passing EEs like nothing"
                 }
             },
             unlocked() { 
@@ -728,9 +748,9 @@ addLayer("sa", {
             }
         },
         145: {
-            name: "Even higher (ee250)",
+            name: "Even higher (ee200)",
             done() {
-                   if (player.sa.minigameNum.gte("ee250")) {
+                   if (player.sa.minigameNum.gte("ee200")) {
                        return true
                    }
                },
@@ -739,7 +759,7 @@ addLayer("sa", {
                     return "breaking bounds"
                 }
                 else {
-                    return "straightforward"
+                    return "theres more???"
                 }
             },
             unlocked() { 
@@ -747,15 +767,15 @@ addLayer("sa", {
             }
         },
         146: {
-            name: "LAST ACHIEVEMENT WOW FOR MINIGAME (EE1,000)",
+            name: "LAST ACHIEVEMENT WOW FOR MINIGAME (EE500)",
             done() {
-                   if (player.sa.minigameNum.gte("ee1000")) {
+                   if (player.sa.minigameNum.gte("ee500")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 146)) {
-                    return "now get all titles [Reward: ^2 button!! and ^0.1]"
+                    return "now get all titles [Reward: ^2 button!! and /7]"
                 }
                 else {
                     return "straightforward"
@@ -765,11 +785,127 @@ addLayer("sa", {
                 if(hasAchievement("sa", 145)) return true
             }
         },
+        151: {
+            name: "Reach 8.856444797045 [some buffer] (Extreme 02/07)",
+            done() {
+                if ((player.sa.minigameNum.gte(8.8564447970)) && (player.sa.minigameNum.lte(8.8564447971))) {
+                    return true
+                }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 151)) {
+                    return "nicely done [Extreme 02]. Unlock /10 button"
+                }
+                else {
+                    return "Hint: 1 button, then press and hold a button"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 136)) return true
+            }
+        },
+        152: {
+            name: "Reach pi (wait what, pi??) yes, to 15 digits [3.14159265358979] (Extreme 03/07)",
+            done() {
+                if ((player.sa.minigameNum.gte(3.14159265358979)) && (player.sa.minigameNum.lte(3.1415926535898))) {
+                    return true
+                }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 152)) {
+                    return "nicely done [Extreme 03] Unlock pdx value show up"
+                }
+                else {
+                    return "Hint: 1 button, then press and hold a button"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 151)) return true
+            }
+        },
+        153: {
+            name: "Get less than 1.0000000001, and more than 1.000000000001, without using more than 3 pdx.",
+            done() {
+                if ((player.sa.minigameNum.lte(1.0000000001)) && (player.sa.minigameNum.gte(1.000000000001)) && (player.sa.pdx.lte(3))) {
+                    return true
+                }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 153)) {
+                    return "nicely done [Extreme 04]"
+                }
+                else {
+                    return "Hint: 1 button, then press and hold a button"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 152)) return true
+            }
+        },
+        154: {
+            name: "Get less than 1e-1e20",
+            done() {
+                let MNL = player.sa.minigameNum.layer
+                let MNM = player.sa.minigameNum.mag
+                if ((MNL >= 2) && (MNM < -20)) {
+                    return true
+                }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 154)) {
+                    return "nicely done [Extreme 05] Unlock ^10 button :)"
+                }
+                else {
+                    return "Hint: 1 button, then press and hold a button"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 153)) return true
+            }
+        },
+        155: {
+            name: "Astronomical (ee70k)",
+            done() {
+                   if (player.sa.minigameNum.gte("ee70000")) {
+                       return true
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 155)) {
+                    return "insane [unlock: ^1e10 button]"
+                }
+                else {
+                    return "thats crazy [Extreme 06]"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 154)) return true
+            }
+        },
+        156: {
+            name: "UTTER INSANITY (ee1.25M)",
+            done() {
+                   if (player.sa.minigameNum.gte("ee1.25e6")) {
+                       return true
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 156)) {
+                    return "stupidly insane [unlock: ^e250 button, x1.01 PF!!!! wow thats a lot of boosts!!]"
+                }
+                else {
+                    return "who would grind this? [Extreme 07]"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 155)) return true
+            }
+        },
     },
     clickables: {
         11: {
             title(){
-                title = formatWhole(player[this.layer].minigameNum)
+                title = minigameFormat(player[this.layer].minigameNum)
                 return title
             },
             display() { dis = ""
@@ -788,12 +924,30 @@ addLayer("sa", {
                 if (player.sa.minigameNum.gte("ee2000")) dis = "Infinite"
                 if (player.sa.minigameNum.gte("ee25000")) dis = "Èternal"
                 if (player.sa.minigameNum.gte("ee150000")) dis = "Infinite Eternal"
-                if (player.sa.minigameNum.gte("eee6")) dis = "oNlY 1% oF pEoPlE cAn gEt ThIs!"
-                if (player.sa.minigameNum.gte("eee7")) dis = "True No-Life"
-                if (player.sa.minigameNum.gte("eee8")) dis = "Absolute True No-Life"
-                if (player.sa.minigameNum.gte("eee10")) dis = "CHEATER!!"
+                if (player.sa.minigameNum.gte("eee6")) dis = "Utter Infinite Eternal"
+                if (player.sa.minigameNum.gte("ee2e7")) dis = "oNlY 1% oF pEoPlE cAn gEt ThIs!"
+                if (player.sa.minigameNum.gte("eee8")) dis = "True No-Life"
+                if (player.sa.minigameNum.gte("eee9")) dis = "Absolute True No-Life"
+                if (player.sa.minigameNum.gte("ee4e9")) dis = "Another 5 more to go!"
+                if (player.sa.minigameNum.gte("ee1e10")) dis = "Keep it up!"
+                if (player.sa.minigameNum.gte("ee2.5e10")) dis = "Holy Heavens"
+                if (player.sa.minigameNum.gte("ee5e10")) dis = "Transcending Eternity"
+                if (player.sa.minigameNum.gte("ee7.5e10")) dis = "Meta-Reality"
+                if (player.sa.minigameNum.gte("ee1e11")) dis = "Absolute True Insane Transcedental Meta-Reality"
                 return dis
             },
+            canClick() {return false},
+        },
+        12: {
+            title(){
+                title = formatWhole(player[this.layer].pdx) + " pdx"
+                return title
+            },
+            display() { 
+                dis = "A new feature, pdx, has appeared. PDX is gained by clicking the divide buttons. Some clickables needs you to stay below a certain pdx. /3 and /7: +1 pdx. /2: +3 pdx. /10: +10 pdx"
+                return dis
+            },
+            unlocked() {return hasAchievement("sa", 151)},
             canClick() {return false},
         },
         21: {
@@ -811,7 +965,10 @@ addLayer("sa", {
         23: {
             title: "=1",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = decimalOne},
+            onClick() {
+                player[this.layer].minigameNum = decimalOne
+                player[this.layer].pdx = new Decimal(0)
+            },
         },
         31: {
             title: "x69",
@@ -830,9 +987,15 @@ addLayer("sa", {
         33: {
             title: "/3",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)
+                player[this.layer].pdx = player[this.layer].pdx.add(1)
+            },
             unlocked() {return hasAchievement("sa", 116)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)
+                player[this.layer].pdx = player[this.layer].pdx.add(1)
+            }
         },
         41: {
             title: "x10^10",
@@ -851,9 +1014,14 @@ addLayer("sa", {
         43: {
             title: "/2",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)
+                player[this.layer].pdx = player[this.layer].pdx.add(3)
+            },
             unlocked() {return hasAchievement("sa", 126)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)
+            }
         },
         51: {
             title: "x10",
@@ -891,11 +1059,62 @@ addLayer("sa", {
             onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)}
         },
         63: {
-            title: "^0.1",
+            title: "/7",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.1)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(7)
+                player[this.layer].pdx = player[this.layer].pdx.add(1)
+            },
             unlocked() {return hasAchievement("sa", 146)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.1)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(7)
+            }
+        },
+        71: {
+            title: "/10",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(10)
+                player[this.layer].pdx = player[this.layer].pdx.add(10)
+            },
+            unlocked() {return hasAchievement("sa", 151)},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(10)
+                player[this.layer].pdx = player[this.layer].pdx.add(10)
+            }
+        },
+        72: {
+            title: "^10",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.pow(10)
+            },
+            unlocked() {return hasAchievement("sa", 154)},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.pow(10)
+            }
+        },
+        73: {
+            title: "^1e10",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e10)
+            },
+            unlocked() {return hasAchievement("sa", 155)},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e10)
+            }
+        },
+        74: {
+            title: "^1e250",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e250)
+            },
+            unlocked() {return hasAchievement("sa", 156)},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e250)
+            }
         },
     },
 })

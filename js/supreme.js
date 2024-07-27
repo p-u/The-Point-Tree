@@ -160,6 +160,12 @@ addLayer("s", {
             unlocked() {return (hasUpgrade('s', 115))},
             done() { return player["s"].points.gte("e2e9") }
         },
+        10: {
+            requirementDescription: "e10T Supreme",
+            effectDescription: "+^0.01 SB5 HC",
+            unlocked() {return (hasUpgrade('s', 115))},
+            done() { return player["s"].points.gte("e1e13") }
+        },
     },
     upgrades: {
         11: {
@@ -302,7 +308,7 @@ addLayer("s", {
                 if (hasUpgrade('m', 32)) supu5 = new Decimal(4)
                 if (hasMilestone('s', 7)) supu5 = new Decimal(40)
                 let sacpt = player["sac"].points
-                let eff = supu5.pow(sacpt - 30)
+                let eff = supu5.pow(sacpt.sub(30))
                 if (hasUpgrade("w", 73)) eff = eff.pow(500)
                 if (hasUpgrade("m", 101)) eff = eff.pow(12.5)
                 return eff
@@ -672,6 +678,8 @@ addLayer("s", {
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(333))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(40000))
             if (hasUpgrade('era', 221)) base2 = x.mul(new Decimal(225000))
+            if (hasUpgrade("w", 82)) base2 = base2.pow(1.3)
+            if (hasUpgrade("era", 75)) base2 = base2.pow(1.1)
             let expo = new Decimal(1.001)
             let eff = base1.pow(Decimal.pow(base2, expo))
             return eff
@@ -737,6 +745,8 @@ addLayer("s", {
             let base2 = x
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(123))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(12345))
+            if (hasUpgrade("w", 82)) base2 = base2.pow(1.4)
+            if (hasUpgrade("era", 75)) base2 = base2.pow(1.15)
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo)))
             return eff
@@ -772,6 +782,8 @@ addLayer("s", {
             let base2 = x
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(100))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(10000))
+            if (hasUpgrade("w", 82)) base2 = base2.pow(1.5)
+            if (hasUpgrade("era", 75)) base2 = base2.pow(1.1)
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo)))
             return eff
@@ -819,6 +831,7 @@ addLayer("s", {
             let base1 = new Decimal(1.0012)
             if(hasUpgrade("s", 105)) base1 = new Decimal(1.0015)
             if(hasUpgrade("era", 221)) base1 = new Decimal(1.0018)
+            if(hasUpgrade("w", 82)) base1 = new Decimal(1.0019)
             let base2 = x
             let expo = new Decimal(1.006)
             let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
@@ -856,6 +869,10 @@ addLayer("s", {
             if(hasMilestone("sac", 93)) hcap = hcap.add(0.005)
             if(hasUpgrade("era", 232)) hcap = hcap.add(0.003)
             if(hasMilestone("sac", 96)) hcap = hcap.add(0.01)
+            if(hasMilestone("sac", 98)) hcap = hcap.add(0.01)
+            if(hasUpgrade("era", 134)) hcap = hcap.add(0.01)
+            if(hasMilestone("sac", 104)) hcap = hcap.add(0.01)
+            if(hasMilestone("s", 10)) hcap = hcap.add(0.01)
         if (eff.gte(hcap)) eff = hcap
         return eff
     },
@@ -885,6 +902,7 @@ addLayer("s", {
         if (hasUpgrade('rebirth', 74)) mult = mult.times(2)
         if (hasMilestone('sac', 63)) mult = mult.times(13.5)
         if (hasUpgrade('s', 75)) mult = mult.times(upgradeEffect('s', 75))
+        if (hasUpgrade('mega', 105)) mult = mult.times("e50e9")
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)
@@ -898,6 +916,7 @@ addLayer("s", {
         if (hasUpgrade('m', 84)) exp = exp.add(0.05)
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('s', 15)) exp = exp.add(0.08)
+        if (hasUpgrade('era', 165)) exp = exp.add(0.05)
             if (hasUpgrade('era', 273)) exp = exp.add(0.125)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp

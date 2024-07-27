@@ -32,6 +32,15 @@ function commaFormat(num, precision) {
     return portions[0] + "." + portions[1]
 }
 
+function minigameFormat(num, precision) {
+    if (precision > 100) precision = 100
+	if (precision < 0) precision = 0
+    if (num === null || num === undefined) return "NaN"
+    if (num.mag < 0.0001) return (0).toFixed(precision)
+    if (num.mag < 0.1 && precision !==0) precision = Math.max(precision, 4)
+    if (num.mag > 0.0001) precision = player.dp
+    return num.toStringWithDecimalPlaces(precision)
+}
 
 function regularFormat(num, precision) {
     if (precision > 100) precision = 100
@@ -75,7 +84,7 @@ function format(decimal, precision = player.dp, small) {
     else if (decimal.gte("1ee12")) return exponentialFormat(decimal, 0, false)
     else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
     else if (decimal.gte(1e12)) return exponentialFormat(decimal, (precision + 2))
-    else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
+    else if (decimal.gte(10)) return commaFormat(decimal, 0)
     else if (decimal.gte(0.0001) || !small) return regularFormat(decimal, precision)
     else if (decimal.eq(0)) return (0).toFixed(precision)
 

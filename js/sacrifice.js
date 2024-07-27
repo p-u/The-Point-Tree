@@ -5,6 +5,11 @@ addLayer("sac", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+        sacstr: new Decimal(0),
+        nextsstr: new Decimal(0),
+        se1: new Decimal(0),
+        se2: new Decimal(0),
+        se3: new Decimal(0)
     }},
     layerShown(){
         let visible = false
@@ -39,8 +44,6 @@ addLayer("sac", {
                 "blank",
                 ["bar", "DS6"],
                 "blank",
-                "blank",
-                "upgrades",
             ],
         },
         "Challenges": {
@@ -52,6 +55,94 @@ addLayer("sac", {
                 "challenges",
             ],
             unlocked() {return player.sac.points.gte(20) && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))}
+        },
+        "Sacrifice Strength": {
+            content: [
+                "main-display",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + `You have 
+                        <h2><span style="color: red; text-shadow: 0px 0px 10px #AD6F69; font-family: Lucida Console, Courier New, monospace">
+                            ${format(player.sac.sacstr)}</span></h2> Sacrifice Strength.`
+                        return a
+                    }
+                ],
+                "blank",
+                "blank",
+                ["display-text", "Every OOM of Sac Strength, there will be a softcap. Get past this softcap to get more Sac Strengths!"],
+                "blank",
+                ["display-text", "Sac Strength gives boosts."],
+                ["display-text",
+                    function(){
+                        let a = "Next Boost: 2 Sac Strength"
+                        if (player.sac.sacstr.gte(2)) {
+                            a = "Next Boost: 5 Sac Strength"
+                        }
+                        if (player.sac.sacstr.gte(5)) {
+                            a = "You have unlocked all current boosts!"
+                        }
+                        return a
+                    }
+                ],
+                "blank",
+                "blank",
+                ["bar", "SacStr"],
+                "blank",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + `Your Mega Points has an increase of ^ 
+                        <h2> ${format(player.sac.se1)}</span></h2>.`
+                        return a
+                    }
+                ],
+                ["display-text", "Formula: log1.234(SS+0.5)/30, with cap at +^1"],
+                "blank",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        if (player.sac.sacstr.gte(2)) {
+                            a = a + `Your Prestige Points has an increase of ^ 
+                            <h2> ${format(player.sac.se2)}</span></h2>.`
+                        }
+                        return a
+                    }
+                ],
+                ["display-text",
+                    function(){
+                        let a = ""
+                        if (player.sac.sacstr.gte(2)) {
+                            a = a + "Formula: log1.275(SS-1)/33, with cap at +^1"
+                        }
+                        return a
+                    }
+                ],
+                "blank",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        if (player.sac.sacstr.gte(5)) {
+                            a = a + `Your Point Fragments are getting powered by 
+                            <h2> ${format(player.sac.se3)}</span></h2>.`
+                        }
+                        return a
+                    }
+                ],
+                ["display-text",
+                    function(){
+                        let a = ""
+                        if (player.sac.sacstr.gte(2)) {
+                            a = a + "Formula: (log2.2(SS-2.5)+1)/50, with cap at ^1.4"
+                        }
+                        return a
+                    }
+                ],
+            ],
         },
     },
     canBuyMax(){
@@ -647,6 +738,48 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(26500)},
             done() { return player["sac"].points.gte(28000) }
         },
+        98: {
+            requirementDescription: "Sacrifice 35K",
+            effectDescription: "SB5 HC +^0.01",
+            unlocked() {return player["sac"].points.gte(30000)},
+            done() { return player["sac"].points.gte(35000) }
+        },
+        99: {
+            requirementDescription: "Sacrifice 45K",
+            effectDescription: "Extend Water Upgrades, Mega Points +^0.04",
+            unlocked() {return player["sac"].points.gte(40000)},
+            done() { return player["sac"].points.gte(45000) }
+        },
+        100: {
+            requirementDescription: "Sacrifice 50K [100th Milestone]",
+            effectDescription: "Unlock a new Sacrifice Feature, and unlock a new Era Feature.",
+            unlocked() {return player["sac"].points.gte(45000)},
+            done() { return player["sac"].points.gte(50000) }
+        },
+        101: {
+            requirementDescription: "Sacrifice 66,666",
+            effectDescription: "Feeling Devilish, huh? xe1.66e16 PF.",
+            unlocked() {return player["sac"].points.gte(60000)},
+            done() { return player["sac"].points.gte(66666) }
+        },
+        102: {
+            requirementDescription: "Sacrifice 80K",
+            effectDescription: "^1.008 PF, xe8e15 PF",
+            unlocked() {return player["sac"].points.gte(70000)},
+            done() { return player["sac"].points.gte(80000) }
+        },
+        103: {
+            requirementDescription: "Sacrifice 120,000",
+            effectDescription: "x12 EC, Reduce Sac Scaling",
+            unlocked() {return player["sac"].points.gte(100000)},
+            done() { return player["sac"].points.gte(120000) }
+        },
+        104: {
+            requirementDescription: "Sacrifice 175,000",
+            effectDescription: "+^0.01 SB5 HC",
+            unlocked() {return player["sac"].points.gte(140000)},
+            done() { return player["sac"].points.gte(175000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -672,6 +805,62 @@ addLayer("sac", {
         eff = eff.div(400)
         eff = eff.add(1)
         return eff;
+    },
+
+    // calculation: sac strength
+    sstr() {
+        if (player.sac.points.gte(50000)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(3).add(1).floor()
+        }
+        if (player.sac.sacstr.gte(10)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(7).add(1).floor()
+            if (player.sac.sacstr.lte(10)) player.sac.sacstr = new Decimal(10)
+        }
+        if (player.sac.sacstr.gte(100)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(15).add(1).floor()
+            if (player.sac.sacstr.lte(100)) player.sac.sacstr = new Decimal(100)
+        }
+        if (player.sac.sacstr.gte(1000)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(50).add(1).floor()
+            if (player.sac.sacstr.lte(1000)) player.sac.sacstr = new Decimal(1000)
+        }
+        if (player.sac.sacstr.gte(10000)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(500).add(1).floor()
+            if (player.sac.sacstr.lte(10000)) player.sac.sacstr = new Decimal(10000)
+        }
+
+        // next sstr
+        player.sac.nextsstr = new Decimal(3).pow(player.sac.sacstr).mul(50000)
+        if (player.sac.sacstr.gte(10)) {
+            player.sac.nextsstr = new Decimal(7).pow(player.sac.sacstr).mul(50000)
+        }
+        if (player.sac.sacstr.gte(100)) {
+            player.sac.nextsstr = new Decimal(15).pow(player.sac.sacstr).mul(50000)
+        }
+        if (player.sac.sacstr.gte(1000)) {
+            player.sac.nextsstr = new Decimal(50).pow(player.sac.sacstr).mul(50000)
+        }
+        if (player.sac.sacstr.gte(10000)) {
+            player.sac.nextsstr = new Decimal(500).pow(player.sac.sacstr).mul(50000)
+        }
+
+        if (player.sac.points.gte(50000)) { 
+            player.sac.se1 = player.sac.sacstr.add(0.5).log(1.234).div(30).min(2)
+        } else {
+            player.sac.se1 = new Decimal(1)
+        }
+
+        if (player.sac.sacstr.gte(2)) { 
+            player.sac.se2 = player.sac.sacstr.sub(0.75).log(1.275).div(33).min(2)
+        } else {
+            player.sac.se2 = new Decimal(0)
+        }
+
+        if (player.sac.sacstr.gte(5)) { 
+            player.sac.se3 = player.sac.sacstr.sub(2.5).log(2.2).div(50).add(1).min(1.4)
+        } else {
+            player.sac.se3 = new Decimal(1)
+        }
     },
     challenges: {
         11: {
@@ -820,6 +1009,22 @@ addLayer("sac", {
             },
             unlocked() { return hasMilestone("era", 2) }
         },
+        SacStr: {
+            direction: RIGHT,
+            width: 500,
+            height: 60,
+            fillStyle: { 'background-color': "#79029b" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(player.sac.nextsstr)
+                if (player.sac.points.gte(player.sac.nextsstr)) prog = 1
+                return prog
+            },
+            display() {
+                return "You have " + format(player.sac.sacstr) + " Sac Strength. (" + format(player.sac.points) + "/" + format(player.sac.nextsstr) + ")"
+            },
+            unlocked() { return hasMilestone("sac", 100) }
+        },
     },   
     color: "#79029b",
     requires: new Decimal(1.11e111), // Can be a function that takes requirement increases into account
@@ -859,7 +1064,11 @@ addLayer("sac", {
         if (hasUpgrade("era", 272)) exp = exp.sub(0.01)
         if (hasMilestone("sac", 95)) exp = exp.sub(0.0095)
         if (hasUpgrade("e", 153)) exp = exp.sub(0.01)
-        if (hasMilestone("era", 3)) exp = exp.sub(0.01)
+        if (hasMilestone("era", 3)) exp = exp.sub(0.025)
+        if (hasUpgrade("mega", 104)) exp = exp.sub(0.01)
+        if (hasUpgrade("era", 34)) exp = exp.sub(0.0122)
+        if (hasUpgrade("prestige", 81)) exp = exp.sub(0.12)
+        if (hasMilestone("sac", 103)) exp = exp.sub(0.0103)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

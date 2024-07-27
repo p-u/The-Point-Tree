@@ -139,9 +139,18 @@ addLayer("mega", {
                 if (hasUpgrade('basic', 63)) mu4exp = 0.08
                 if (hasUpgrade('mega', 41)) mu4exp = 0.1
                 if (hasUpgrade('e', 64)) mu4exp = 0.155
-                return player["prestige"].points.add(1).pow(mu4exp)
+                let eff = player["prestige"].points.add(1).pow(mu4exp)
+                eff = softcap(eff, new Decimal("e1e15"), 0.8)
+                return eff
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                let softcapDescription = ""
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                if (upgEffect.gte(new Decimal("e1e15")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                return "This upgrade boosts Prestige Points by " + format(upgEffect)+"x" + softcapDescription
+            },
         },
         21: {
             title: "THE PRICE...",
@@ -364,6 +373,7 @@ addLayer("mega", {
                 let softcapExp = 0.1
                 if (hasUpgrade('m', 93)) softcapExp = 0.25
                 eff = softcap(eff, new Decimal("1e25000"), softcapExp)
+                eff = softcap(eff, new Decimal("e1e15"), 0.25)
                 return eff
             },
             effectDisplay() {
@@ -371,6 +381,9 @@ addLayer("mega", {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 if (upgEffect.gte(new Decimal("e25000")) ) {
                     softcapDescription = " (Softcapped)"
+                }
+                if (upgEffect.gte(new Decimal("e1e15")) ) {
+                    softcapDescription = " (Supercapped)"
                 }
                 return "This upgrade boosts Mega Points by " + format(upgEffect)+"x" + softcapDescription
             },
@@ -461,6 +474,40 @@ addLayer("mega", {
             description: "xe15B PF",
             cost: new Decimal("e3196800e3"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) },
+        },
+
+
+        // era +
+
+        101: {
+            title: "Currency Boost [In order] 01: PF",
+            description: "xe5 Qd PF",
+            cost: new Decimal("e619538393038500"),
+            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 95)},
+        },
+        102: {
+            title: "Currency Boost [In order] 02: BP, RP",
+            description: "xe20 Qd RP, xe50 Qd BP",
+            cost: new Decimal("e728939884744444"),
+            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 101) },
+        },
+        103: {
+            title: "Currency Boost [In order] 03: PP, MP",
+            description: "xe500T PP, xe50T MP",
+            cost: new Decimal("e854370842820e3"),
+            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 102) },
+        },
+        104: {
+            title: "Currency Boost [In order] 04: Energy, Sacs",
+            description: "Sacs have lower scaling, xe100,000,000,000 Energy",
+            cost: new Decimal("e1.132047146993e15"),
+            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 103) },
+        },
+        105: {
+            title: "Currency Boost [In order] 05: Supreme, Water",
+            description: "xe50B Supreme, xe10B Water",
+            cost: new Decimal("e1.15989956146e15"),
+            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 103) },
         },
     },
     milestones: {
@@ -661,6 +708,7 @@ addLayer("mega", {
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(70000))
                 if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(1e6))
                 if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(1e10))
+                if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(1e13))
                 let expo = new Decimal(1.005)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -700,6 +748,7 @@ addLayer("mega", {
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(2000))
                 if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(400000))
                 if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(6e9))
+                if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(4e12))
                 let expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -736,13 +785,14 @@ addLayer("mega", {
                 if (hasUpgrade('m', 65)) base2 = x.mul(new Decimal(100))
                 if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(20000))
                 if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(1.5e7))
+                if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(1e10))
                 let expo = new Decimal(1.015)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
             },
         },
         14: {
-            title: "Mega Buyable 4: Energy Power!",
+            title: "Mega Buyable 4: Energy Power! [Hardcap +^1]",
             unlocked() { return (hasUpgrade('e', 35)) },
             cost(x) {
                 let exp2 = 4
@@ -765,8 +815,9 @@ addLayer("mega", {
                 if (hasUpgrade("era", 203)) base1 = new Decimal(1.0088)
                 let base2 = x
                 let expo = new Decimal(1.008)
-                let eff = base1.pow(Decimal.pow(base2, expo))
-                eff = eff - new Decimal(1)
+                let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
+                let hcap = new Decimal(1)
+                if (eff.gte(hcap)) eff = hcap
                 return eff
             },
         },
@@ -826,7 +877,9 @@ addLayer("mega", {
         if (hasUpgrade('s', 111)) mult = mult.times("e250e6")
         if (hasUpgrade('era', 121)) mult = mult.times("e10e9")
         if (hasUpgrade('era', 175)) mult = mult.times("e77.77e9")
-            if (hasUpgrade('era', 224)) mult = mult.times("e750e9")
+        if (hasUpgrade('era', 224)) mult = mult.times("e750e9")
+        if (hasUpgrade('mega', 103)) mult = mult.times("e5e13")
+        if (hasUpgrade('era', 94)) mult = mult.times("e8e14")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         return mult
@@ -866,6 +919,10 @@ addLayer("mega", {
         if (hasUpgrade('era', 205)) exp = exp.add(0.1)
         if (hasUpgrade('era', 222)) exp = exp.add(0.07)
         if (hasUpgrade('m', 102)) exp = exp.add(0.08)
+        if (hasMilestone('sac', 99)) exp = exp.add(0.04)
+        if (hasMilestone("sac", 100)) exp = exp.add(player.sac.se1)
+        if (hasUpgrade('prestige', 81)) exp = exp.sub(0.03)
+        if (hasUpgrade('prestige', 82)) exp = exp.add(0.08)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

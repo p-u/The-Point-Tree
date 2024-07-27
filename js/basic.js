@@ -141,6 +141,7 @@ addLayer("basic", {
                 let expu5 = 0.175
                 if (inChallenge("sac", 12)) expu5 = 0.111
                 if (hasUpgrade("era", 263)) expu5 = 0.275
+                if (hasUpgrade("era", 135)) expu5 = 0.313
                 let eff = player.basic.points.add(1).pow(expu5)
                 eff = softcap(eff, new Decimal("1e5000000"), 0.5)
                 eff = softcap(eff, new Decimal("e1e12"), 0.4)
@@ -655,6 +656,12 @@ addLayer("basic", {
             done() { return player["basic"].points.gte("e1e15") },
             unlocked() {return hasUpgrade("era", 161)},
         },
+        10: {
+            requirementDescription: "Woah, a lot (Req e5e18 BP)",
+            effectDescription: "xe1.6e16 PF",
+            done() { return player["basic"].points.gte("e5e18") },
+            unlocked() {return hasUpgrade("era", 35)},
+        },
     },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -713,6 +720,7 @@ addLayer("basic", {
         if (hasUpgrade('era', 124)) mult = mult.times("e5e12")
         if (hasUpgrade('era', 171)) mult = mult.times("e50e12")
         if (hasUpgrade('era', 283)) mult = mult.times("e1.25e16")
+        if (hasUpgrade('mega', 102)) mult = mult.times("e5e16")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -741,6 +749,8 @@ addLayer("basic", {
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('era', 182)) exp = exp.add(0.055)
         if (hasUpgrade('era', 231)) exp = exp.add(0.025)
+        if (hasUpgrade('prestige', 84)) exp = exp.sub(0.011)
+        if (hasUpgrade('prestige', 85)) exp = exp.add(0.06)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

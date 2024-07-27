@@ -248,6 +248,38 @@ addLayer("prestige", {
             cost: new Decimal("e462212603e3"),
             unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 74) },
         },
+        
+        // row 8+
+        81: {
+            title: "A catch",
+            description: "Sacrifice scaling is way way less, BUT -^0.05 MP",
+            cost: new Decimal("e5.269096262242e16"),
+            unlocked() { return hasAchievement("a", 233) && hasUpgrade("prestige", 75) },
+        },
+        82: {
+            title: "Another catch??",
+            description: "+^0.08 MP, but -^0.05 PP",
+            cost: new Decimal("e5.654617974192e16"),
+            unlocked() { return hasAchievement("a", 233) && hasUpgrade("prestige", 81) },
+        },
+        83: {
+            title: "Catch obsession",
+            description: "+^0.08 PP, but -^0.05 RP",
+            cost: new Decimal("e5.77151973174e16"),
+            unlocked() { return hasAchievement("a", 233) && hasUpgrade("prestige", 82) },
+        },
+        84: {
+            title: "Yes",
+            description: "+^0.11 RP, but -^0.011 BP",
+            cost: new Decimal("e6.70517924374e16"),
+            unlocked() { return hasAchievement("a", 233) && hasUpgrade("prestige", 83) },
+        },
+        85: {
+            title: "A ^0.xxx PF?",
+            description: "+^0.06 BP, but ^0.99 PF. Extend Era Upgrades, x850 EC",
+            cost: new Decimal("e6.738852390157e16"),
+            unlocked() { return hasAchievement("a", 233) && hasUpgrade("prestige", 83) },
+        },
     },
     milestones: {
         1: {
@@ -421,6 +453,8 @@ addLayer("prestige", {
         if (hasUpgrade('era', 172)) mult = mult.times("e1e12")
         if (hasAchievement('a', 213)) mult = mult.times("e3e12")
         if (hasUpgrade('e', 152)) mult = mult.times("e100e12")
+        if (hasUpgrade('mega', 103)) mult = mult.times("e5e14")
+        if (hasUpgrade('era', 95)) mult = mult.times("e6e15")
 
         return mult
     },
@@ -458,6 +492,9 @@ addLayer("prestige", {
         if (hasUpgrade('era', 184)) exp = exp.add(0.12)
         if (hasUpgrade('era', 204)) exp = exp.add(0.1)
         if (hasUpgrade('basic', 114)) exp = exp.add(0.09)
+        if (hasUpgrade('prestige', 82)) exp = exp.sub(0.05)
+        if (hasUpgrade('prestige', 83)) exp = exp.add(0.08)
+        if (player.sac.sacstr.gte(2)) exp = exp.add(player.sac.se2)
         return exp
     },
     effect(){

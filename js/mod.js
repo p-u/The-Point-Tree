@@ -13,11 +13,26 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.0.Y",
-	name: "Over e1 Qt!",
+	num: "3.1",
+	name: "Endgame: About 5ee19",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.1: Sac Strength and Extended Upgrades </h3><br>
+Added a hardcap for Mega Buyable 4 (+^1) <br>
+Added Era 2: Extension part <br>
+Added Combos and Extended Upgrades <br>
+Changed some achievement names <br>
+Changed morse code to reflect correctly <br>
+Energy Milestone 12 now shows boosts <br>
+Increased Era Exponent <br>
+Added Sacrifice Strength and 3 milestones [1 not done] <br>
+New Feature: Total Upgrade count boosting something <br>
+Added 1 savebank <br>
+Added 39 upgrades <br>
+Added 9 milestones <br>
+Added 6 achievements, with 3 giving boosts/continuation <br>
+
 <h3>v3.0.Y </h3><br>
 Added hold mechanic to minigame clickables<br>
 Added Verdant Theme <br>
@@ -501,6 +516,7 @@ function getPointGen() {
 	if (hasMilestone('basic', 8)) gain = gain.times("e2e9")
 	if (hasMilestone('basic', 9)) gain = gain.times("e25e12")
 	if (hasUpgrade('basic', 115)) gain = gain.times("e250e12")
+	if (hasMilestone('basic', 10)) gain = gain.times("e1.6e16")
 
 	
 	
@@ -579,6 +595,7 @@ function getPointGen() {
 	if (hasUpgrade('mega', 92)) gain = gain.times("e4e9")
 	if (hasUpgrade('mega', 95)) gain = gain.times("e15e9")
 	if (hasMilestone('mega', 23)) gain = gain.times("e60e12")
+	if (hasUpgrade('mega', 101)) gain = gain.times("e5e15")
 
 	// sacrifice + energy
 	if (hasMilestone('sac', 1)) gain = gain.times(1e100)
@@ -644,6 +661,8 @@ function getPointGen() {
 	if (hasMilestone('sac', 94)) gain = gain.times("e1.8e15")
 	if (hasUpgrade('e', 155)) gain = gain.times("e3.1e15")
 	if (hasMilestone('sac', 97)) gain = gain.times("e2.8e15")
+	if (hasMilestone('sac', 100)) gain = gain.times("e1.66e16")
+	if (hasMilestone('sac', 102)) gain = gain.times("e8e15")
 
 
 	// achievement
@@ -719,6 +738,7 @@ function getPointGen() {
 	if (hasUpgrade('s', 45)) gain = gain.times("e15e12")
 	if (hasUpgrade('s', 115)) gain = gain.times("e50e12")
 	if (hasMilestone('s', 9)) gain = gain.times("e50e12")
+	if (hasUpgrade('w', 84)) gain = gain.times("e10e15")
 
 	// mastery
 
@@ -743,6 +763,16 @@ function getPointGen() {
 	if (hasUpgrade("era", 213)) gain = gain.times("e37e12")
 	if (hasUpgrade("era", 245)) gain = gain.times("e350e12")
 	if (hasUpgrade("era", 284)) gain = gain.times("e5e15")
+	if (hasUpgrade("era", 292)) gain = gain.times("e2e15")
+	if (hasUpgrade("era", 293)) gain = gain.times("e3e15")
+	if (hasUpgrade("era", 294)) gain = gain.times("e4e15")
+	if (hasUpgrade("era", 295)) gain = gain.times("e5e15")
+	if (hasUpgrade("era", 54)) gain = gain.times("e6e15")
+	if (hasUpgrade("era", 105)) gain = gain.times("e1.6e16")
+	if (hasUpgrade("era", 144)) gain = gain.times("e2e16")
+	if (hasUpgrade("era", 24)) gain = gain.times("e2.4e16")
+	if (hasUpgrade("era", 92)) gain = gain.times("e3e16")
+	if (hasUpgrade("era", 195)) gain = gain.times("e4e16")
 
 
 	// power (^)
@@ -879,8 +909,13 @@ function getPointGen() {
 	if (hasUpgrade("era", 234)) gain = gain.pow(1.005)
 	if (hasUpgrade("era", 275)) gain = gain.pow(1.01)
 	if (hasAchievement('a', 214)) gain = gain.pow(1.0077)
-	if (hasUpgrade("era", 285)) gain = gain.pow(1.01)
+	if (hasUpgrade("era", 285)) gain = gain.pow(1.0125)
 	if (hasMilestone("era", 3)) gain = gain.pow(1.025)
+	if (hasUpgrade("w", 83)) gain = gain.pow(1.001)
+	if (hasUpgrade("era", 55)) gain = gain.pow(1.0075)
+	if (hasUpgrade("era", 35)) gain = gain.pow(1.01)
+	if (hasMilestone('sac', 102)) gain = gain.pow(1.008)
+	if (hasUpgrade("prestige", 85)) gain = gain.pow(0.99)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);
 	return gain
@@ -965,7 +1000,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e1.3294765716e18"))
+	return player.points.gte(new Decimal("e5.011135425235e19"))
 }
 
 
@@ -979,7 +1014,7 @@ var backgroundStyle = {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	return(3600) // Default is 1 hour which is just arbitrarily large
+	return(3600) 
 }
 
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,

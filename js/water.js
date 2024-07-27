@@ -218,13 +218,37 @@ addLayer("w", {
             title: "Water Power",
             description: "Raise SU52's water effect to the 500TH POWER!",
             cost: new Decimal("1e12730927"),
-            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 71)  }, 
+            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 72)  }, 
         },
         74: {
             title: "Completion",
             description: "xe20T PF and reduce sacrifice scaling by a teeny weeny bit",
             cost: new Decimal("8e14525523"),
-            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 71)  }, 
+            unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 73)  }, 
+        },
+        81: {
+            title: "Is it just repeating??",
+            description: "xe10B Water",
+            cost: new Decimal("2e45164322793"),
+            unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 74)  }, 
+        },
+        82: {
+            title: "no",
+            description: "Supreme Buyables are stronger [POWER EFFECT???]",
+            cost: new Decimal("5e56555043545"),
+            unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 81)  }, 
+        },
+        83: {
+            title: "Water Power Mk. 2",
+            description: "xe2B Water, +^0.1 Water, ^1.001 PF",
+            cost: new Decimal("2e67540292272"),
+            unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 82)  }, 
+        },
+        84: {
+            title: "To 50K Sacs.",
+            description: "xe10 Qd PF",
+            cost: new Decimal("3e87842343930"),
+            unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 83)  }, 
         },
     },
     milestones: {
@@ -264,6 +288,12 @@ addLayer("w", {
             },
             unlocked() {return (inChallenge("m", 12) && hasMilestone('w', 3))},
         },
+        5: {
+            requirementDescription: "A new water milestone (1e1T Water)",
+            effectDescription: "+^0.1 Water",
+            done() { return player["w"].points.gte("1e1e12") },
+            unlocked() {return player["sac"].points.gte(132)},
+        },
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
@@ -301,6 +331,10 @@ addLayer("w", {
         if (hasUpgrade('w', 62)) mult = mult.times(1e167)
         if (hasUpgrade('w', 71)) mult = mult.times("e2000000")
         if (hasUpgrade('era', 233)) mult = mult.times("e50e6")
+        if (hasUpgrade('mega', 105)) mult = mult.times("e10e9")
+        if (hasUpgrade('w', 81)) mult = mult.times("e10e9")
+        if (hasUpgrade('w', 83)) mult = mult.times("e10e9")
+        if (hasUpgrade('era', 93)) mult = mult.times("e50e9")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
 
         
@@ -313,11 +347,14 @@ addLayer("w", {
         if (hasUpgrade('s', 61)) exp = exp.add(0.01)
         if (hasAchievement('a', 171)) exp = exp.add(0.02)
         if (hasUpgrade('m', 81)) exp = exp.add(0.1)
-            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade("era", 23)) exp = exp.add(0.05)
         if (hasUpgrade('w', 72)) exp = exp.add(0.1)
         if (hasUpgrade('s', 15)) exp = exp.add(0.08)
-            if (hasUpgrade('era', 274)) exp = exp.add(0.09)
+        if (hasUpgrade('era', 274)) exp = exp.add(0.09)
+        if (hasUpgrade('w', 83)) exp = exp.add(0.1)
+        if (hasMilestone('w', 5)) exp = exp.add(0.1)
+        if (hasUpgrade('era', 165)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -329,8 +366,10 @@ addLayer("w", {
         if (hasUpgrade('w', 31)) weffpow = 3
         if (hasUpgrade('e', 65)) weffpow = 5
         if (hasUpgrade("era", 133)) weffpow = 17.5
-            let eff = player.w.points.add(1).pow(weffpow)
-           return eff
+        let eff = player.w.points.add(1).pow(weffpow)
+        let cap = 0.3
+        softcappedEffect = softcap(eff, new Decimal("e1e15"), new Decimal(cap))
+        return softcappedEffect
            },
             effectDescription() {
                 let desc = "which is boosting Energy by x" + format(tmp[this.layer].effect);

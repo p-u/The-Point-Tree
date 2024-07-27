@@ -78,7 +78,7 @@ addLayer("era", {
         },
         "Info after Era": {
             content: [
-                ["display-text", "Firstly, let's talk about softcaps. There are many softcaps after e1T effect, ranging from e1T to e15T. You will see some caps."],
+                ["display-text", "Firstly, let's talk about softcaps. There are many softcaps after e1T effect, ranging from e1T to e15T and some at ee15. You will see some caps."],
                 ["display-text", "Why is there a hardcap for Supreme Buyable 5? It is just TOO OP. Hardcap varies, but starts at ^1.25."],
                 ["display-text", "What is Era Crystals? It is an elusive currency for Era, and is generated. This is used to buy Tree Upgrades. These Tree Upgrades have branches connecting to them."],
                 ["display-text", "Era Upgrade Naming System: A '+1' to the name will only be added IF the upgrade unlocks other upgrades. If one upgrade unlocks multiple upgrades, it will be 'A', 'B', 'C', 'D', 'E', depending on how many upgrades it unlocks."],
@@ -86,6 +86,7 @@ addLayer("era", {
                 ["display-text", "Common new shortforms: EC = Era Crystals, SBx = Supreme Buyable x, MBx = Mega Buyable x, EBx = Era Buyable x (sneak peek), HC = Hardcap"],
                 ["display-text", "Insanitycaps - Occurs to Rebirth at e5e15 effect. It is way stronger than all other caps, at a ^0.2 power!"],
                 ["display-text", "There will be a 2nd tree. However, this only happens in Era 3. Up to 30 rows per tree. Don't complain. There is a scrollwheel. At least its not 100 rows"],
+                ["display-text", "Era 3 new feature: Combos. Combos happen when all of shown upgrades are bought, and give a boost, mostly to EC mult."],
             ],
             unlocked() {return player.era.points.gte(1)},
         },
@@ -116,7 +117,7 @@ addLayer("era", {
         },
         3: {
             requirementDescription: "Era Three: What more?",
-            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x3333 EC, Less Sac Scaling, More EC Ups",
+            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups",
             done() { return player["era"].points.gte(3) },
             unlocked() { return player["era"].points.gte(2) },
         },
@@ -129,7 +130,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['21', '22', '23']
+            branches: ['21', '22', '23', '24', '25']
         },
         21: {
             title: "ErUp 3A: To the left",
@@ -138,7 +139,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['31', '32', '41'],
+            branches: ['31', '32', '33', '34', '35', '41'],
             unlocked() {return hasUpgrade("era", 22)}
         },
         22: {
@@ -148,7 +149,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['21', '23', '31', '32'],
+            branches: ['21', '23', '31', '32', '33', '34', '35'],
             unlocked() {return hasUpgrade("era", 11)}
         },
         23: {
@@ -158,7 +159,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['31', '32', '44'],
+            branches: ['31', '32', '33', '34', '35', '44'],
             unlocked() {return hasUpgrade("era", 22)}
         },
         31: {
@@ -198,7 +199,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['51', '52'],
+            branches: ['51', '52', '53', '54', '55'],
             unlocked() {return (hasUpgrade("era", 31) && hasUpgrade("era", 32))}
         },
         43: {
@@ -208,7 +209,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['51', '52'],
+            branches: ['51', '52', '53', '54', '55'],
             unlocked() {return (hasUpgrade("era", 31) && hasUpgrade("era", 32))}
         },
         44: {
@@ -218,7 +219,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['51', '52', '64'],
+            branches: ['51', '52', '53', '54', '55', '64'],
             unlocked() {return (hasUpgrade("era", 31) && hasUpgrade("era", 32))}
         },
         51: {
@@ -601,6 +602,7 @@ addLayer("era", {
                 let eracompexp = 0.07
                 if (hasUpgrade("era", 242)) eracompexp = 0.095
                 if (hasUpgrade("era", 255)) eracompexp = 0.115
+                if (hasUpgrade("era", 33)) eracompexp = 0.14
                 return player["era"].ec.add(1).pow(eracompexp)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -1212,7 +1214,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['291', '292', '293', '294', '295'],
             unlocked() {return (hasUpgrade("era", 272) && hasUpgrade("era", 273) && hasUpgrade("era", 274) && hasUpgrade("era", 275))}
         },
         282: {
@@ -1222,7 +1224,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['291', '292', '293', '294', '295'],
             unlocked() {return (hasUpgrade("era", 281))}
         },
         283: {
@@ -1232,7 +1234,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['291', '292', '293', '294', '295'],
             unlocked() {return (hasUpgrade("era", 281))}
         },
         284: {
@@ -1242,18 +1244,322 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['291', '292', '293', '294', '295'],
             unlocked() {return (hasUpgrade("era", 281))}
         },
         285: {
-            title: "ErUp 62: The Last Upgrade before Era 3.",
-            description: "^1.01 PF!",
-            cost: new Decimal(1.5e83),
+            title: "ErUp 62: The Last Era Upgrade before Era 3.",
+            description: "^1.0125 PF!",
+            cost: new Decimal(1.5e85),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['291', '292', '293', '294', '295'],
+            unlocked() {return (hasUpgrade("era", 282) && hasUpgrade("era", 283) && hasUpgrade("era", 284))}
+        },
+        291: {
+            title: "ErUp 63: Big EC boost",
+            description: "x100 EC",
+            cost: new Decimal(5e91),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: [],
-            unlocked() {return (hasUpgrade("era", 282) && hasUpgrade("era", 283) && hasUpgrade("era", 284))}
+            unlocked() {return (hasMilestone("era", 3))}
+        },
+        292: {
+            title: "ErUp 64A: slight PF mult",
+            description: "xe2e15 PF [Combo: x1.8 EC]",
+            cost: new Decimal(2e94),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: [],
+            unlocked() {return (hasUpgrade("era", 291))}
+        },
+        293: {
+            title: "ErUp 64B: better PF mult",
+            description: "xe3e15 PF [Combo: x1.8 EC]",
+            cost: new Decimal(3e94),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: [],
+            unlocked() {return (hasUpgrade("era", 291))}
+        },
+        294: {
+            title: "ErUp 65A: even better PF mult",
+            description: "xe4e15 PF",
+            cost: new Decimal(4e94),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: [],
+            unlocked() {return (hasUpgrade("era", 292) && hasUpgrade("era", 293))}
+        },
+        295: {
+            title: "ErUp 65B: super PF mult",
+            description: "xe5e15 PF",
+            cost: new Decimal(5e94),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: [],
+            unlocked() {return (hasUpgrade("era", 292) && hasUpgrade("era", 293))}
+        },
+
+
+        // Extension Upgrades [Era 3]
+        53: {
+            title: "ErUp 6e1: Nice mult",
+            description: "x25 Era Crystals",
+            cost: new Decimal(2e95),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['71', '72', '73', '74'],
+            unlocked() {return hasMilestone("sac", 100)}
+        },
+        54: {
+            title: "ErUp 6e2A: Mult",
+            description: "x6e15 PF",
+            cost: new Decimal(2.5e96),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['71', '72', '73', '74'],
+            unlocked() {return hasUpgrade("era", 53)}
+        },
+        55: {
+            title: "ErUp 6e2B: or Power?",
+            description: "^1.0075 PF",
+            cost: new Decimal(2.5e96),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['71', '72', '73', '74'],
+            unlocked() { return hasUpgrade("era", 53)}
+        },
+        104: {
+            title: "ErUp 12e1: Power",
+            description: "^1.026 EC",
+            cost: new Decimal(4.2e109),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['111', '112', '113', '114'],
+            unlocked() {return (hasUpgrade("era", 54) && hasUpgrade("era", 55))}
+        },
+        105: {
+            title: "ErUp 12e2: Way more PFx",
+            description: "xe1.6e16 PF",
+            cost: new Decimal(1.6e114),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['111', '112', '113', '114', '115'],
+            unlocked() {return hasUpgrade("era", 104)}
+        },
+        134: {
+            title: "ErUp 18e1A: SB5 (Combo: x1.3 EC)",
+            description: "SB5 is stronger",
+            cost: new Decimal(1.7e114),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['141', '142', '143', '144', '145'],
+            unlocked() {return hasUpgrade("era", 105)}
+        },
+        135: {
+            title: "ErUp 18e1B: Basic Upgrades (Combo: x1.3 EC)",
+            description: "BU21 is stronger",
+            cost: new Decimal(1.6e114),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['141', '142', '143', '144', '145'],
+            unlocked() {return hasUpgrade("era", 105)}
+        },
+        144: {
+            title: "ErUp 21e1A: Another HUGE PF boost (Combo: x1.4 EC)",
+            description: "xe2e16 PF",
+            cost: new Decimal(2e114),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['151', '152', '153', '154', '155'],
+            unlocked() {return hasUpgrade("era", 105)}
+        },
+        145: {
+            title: "ErUp 21e1B: Solar Flares (Combo: x1.4 EC)",
+            description: "Solar Flares occur more frequently! xe5e11 Energy",
+            cost: new Decimal(2e114),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['151', '152', '153', '154', '155'],
+            unlocked() {return hasUpgrade("era", 105)}
+        },
+        33: {
+            title: "ErUp 4e1",
+            description: "Era Compoundation is stronger!",
+            cost: new Decimal(4e114),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['41', '42', '43', '44'],
+            unlocked() {return (hasUpgrade("era", 134) && hasUpgrade("era", 135) && (hasUpgrade("era", 144) && hasUpgrade("era", 145)))}
+        },
+        34: {
+            title: "ErUp 4e2A",
+            description: "Sacrifice formulae is weaker",
+            cost: new Decimal(3e119),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['41', '42', '43', '44'],
+            unlocked() {return (hasUpgrade("era", 33))}
+        },
+        35: {
+            title: "ErUp 4e2B",
+            description: "Unlock new milestones, ^1.01 PF!",
+            cost: new Decimal(4.44e119),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['41', '42', '43', '44'],
+            unlocked() {return (hasUpgrade("era", 33))}
+        },
+        24: {
+            title: "ErUp 3e1",
+            description: "xe2.4e16 PF :)",
+            cost: new Decimal(2.4e125),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['31', '32', '33', '34', '35'],
+            unlocked() {return (hasUpgrade("prestige", 85))}
+        },
+        25: {
+            title: "ErUp 3e2: Lightning Strikes",
+            description: "Lightning occurs 10x more frequently! [x1e1e12 Energy]",
+            cost: new Decimal(2.5e127),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['31', '32', '33', '34', '35'],
+            unlocked() {return (hasUpgrade("era", 24))}
+        },
+        12: {
+            title: "ErUp 1e1: Oh, that's nice.",
+            description: "Amount of Era Upgrades increases EC gain.",
+            cost: new Decimal(4.5e127),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['21', '22', '23', '24', '25'],
+            unlocked() {return (hasUpgrade("era", 25))},
+            effect() {
+                let euiec = new Decimal(1.05)
+                let eraups = player.era.upgrades.length
+                return Math.pow(euiec, eraups)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        92: {
+            title: "ErUp 11e1A",
+            description: "xe3e16 PF",
+            cost: new Decimal(5.5e131),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['101', '102', '103', '104', '105'],
+            unlocked() {return (hasUpgrade("era", 12))},
+        },
+        93: {
+            title: "ErUp 11e1B",
+            description: "xe40B Water",
+            cost: new Decimal(4.5e131),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['101', '102', '103', '104', '105'],
+            unlocked() {return (hasUpgrade("era", 12))},
+        },
+        94: {
+            title: "ErUp 11e1C",
+            description: "xe8e14 MP",
+            cost: new Decimal(5e131),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['101', '102', '103', '104', '105'],
+            unlocked() {return (hasUpgrade("era", 12))},
+        },
+        95: {
+            title: "ErUp 11e1D",
+            description: "xe6e15 PP",
+            cost: new Decimal(5e131),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['101', '102', '103', '104', '105'],
+            unlocked() {return (hasUpgrade("era", 12))},
+        },
+        45: {
+            title: "ErUp 5e1",
+            description: "EC is boosted by log(EC)",
+            cost: new Decimal(5e132),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['51', '52', '53', '54', '55'],
+            unlocked() {return (hasUpgrade("era", 12))},
+            effect() {
+                let logxec = 10
+                return player.era.ec.log(logxec)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        65: {
+            title: "ErUp 7e1",
+            description: "Mega Buyables 1-3 are better",
+            cost: new Decimal(3e135),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['71', '72', '73', '74', '75'],
+            unlocked() {return (hasUpgrade("era", 12))},
+        },
+        75: {
+            title: "ErUp 8e1",
+            description: "Supreme Buyables 1,3,4 are better",
+            cost: new Decimal(2.5e135),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['81', '82', '83', '84', '85'],
+            unlocked() {return (hasUpgrade("era", 12))},
+        },
+        165: {
+            title: "ErUp 26e1",
+            description: "+^0.05 Water and SP",
+            cost: new Decimal(4.2e135),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['171', '172', '173', '174', '175'],
+            unlocked() {return (hasAchievement("a", 236))},
+        },
+        195: {
+            title: "ErUp 33e1",
+            description: "xe4e16 PF.",
+            cost: new Decimal(3.3e135),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['171', '172', '173', '174', '175'],
+            unlocked() {return (hasAchievement("a", 236))},
         },
     },
     buyables: {
@@ -1313,6 +1619,32 @@ addLayer("era", {
                 return eff
             },
         },
+        13: {
+            title: "Era Buyable 3: Semi-Booster; Multi.",
+            unlocked() { return (hasAchievement('a', 232)) },
+            cost(x) {
+                let exp2 = new Decimal(1.19)
+                return new Decimal(3.5e96).mul(Decimal.pow(1.1, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            },
+            display() {
+                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + format(buyableEffect(this.layer, this.id)) + " and Mastery Points by x" + format(buyableEffect(this.layer, this.id).pow(0.4))
+            },
+            canAfford() {
+                return player.era.ec.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                let base1 = new Decimal(4)
+                let base2 = x
+                let expo = new Decimal(1.047)
+                let eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+        },
     },
     color: "brown",
     requires: new Decimal(761), // Can be a function that takes requirement increases into account
@@ -1320,7 +1652,7 @@ addLayer("era", {
     baseResource: "Sacrifices", // Name of resource prestige is based on
     baseAmount() {return player.sac.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 2.4, 
+    exponent: 2.5, 
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         return mult
@@ -1339,9 +1671,12 @@ addLayer("era", {
             let gain = new Decimal(15)
             if (hasUpgrade('era', 143)) gain = gain.times(buyableEffect('era', 11))
             if (hasUpgrade('era', 173)) gain = gain.times(buyableEffect('era', 12))
+            if (hasAchievement('a', 232)) gain = gain.times(buyableEffect('era', 13))
             
             // upgs
             if (hasUpgrade('era', 153)) gain = gain.times(upgradeEffect('era', 153))
+            if (hasUpgrade('era', 12)) gain = gain.times(upgradeEffect('era', 12))
+            if (hasUpgrade('era', 45)) gain = gain.times(upgradeEffect('era', 45))
             if (hasUpgrade("era", 11)) gain = gain.times(2)
             if (hasUpgrade("era", 22)) gain = gain.times(3)
             if (hasUpgrade("era", 31)) gain = gain.times(2)
@@ -1370,9 +1705,12 @@ addLayer("era", {
             if (hasUpgrade("era", 211)) gain = gain.times(2)
             if (hasUpgrade("era", 213)) gain = gain.times(2)
             if (hasUpgrade("era", 281)) gain = gain.times(1000)
+            if (hasUpgrade("era", 291)) gain = gain.times(100)
+            if ((hasUpgrade("era", 292)) && (hasUpgrade("era", 293))) gain = gain.times(1.8) // code example of combos
+            if (hasUpgrade("era", 53)) gain = gain.times(25)
             if (hasUpgrade("prestige", 75)) gain = gain.times(17)
             if (hasMilestone("era", 2)) gain = gain.times(50)
-            if (hasMilestone("era", 3)) gain = gain.times(3333)
+            if (hasMilestone("era", 3)) gain = gain.times(33333)
             if (hasMilestone("sac", 80)) gain = gain.times(4)
             if (hasUpgrade("rebirth", 85)) gain = gain.times(18)
             if (hasMilestone("sac", 84)) gain = gain.times(25)
@@ -1385,15 +1723,20 @@ addLayer("era", {
             if (hasUpgrade("m", 105)) gain = gain.times(105)
             if (hasUpgrade("e", 155)) gain = gain.times(250)
             if(hasMilestone("sac", 97)) gain = gain.times(280)
+            if(hasUpgrade("prestige", 85)) gain = gain.times(850)
+            if(hasMilestone("sac", 103)) gain = gain.times(12)
             if (hasAchievement('sa', 32)) gain = gain.times(1.03)
             if (hasAchievement('sa', 34)) gain = gain.times(1.03)
             if (hasAchievement('sa', 35)) gain = gain.times(1.05)
             if (hasAchievement('sa', 36)) gain = gain.times(1.1)
+            if ((hasUpgrade("era", 134)) && (hasUpgrade("era", 135))) gain = gain.times(1.3)
+            if ((hasUpgrade("era", 144)) && (hasUpgrade("era", 145))) gain = gain.times(1.4)
 
 
             // power
             if (hasUpgrade("era", 241)) gain = gain.pow(1.02)
             if (hasUpgrade("era", 271)) gain = gain.pow(1.02)
+            if (hasUpgrade("era", 104)) gain = gain.pow(1.026)
 
             // statements above this line
             player.era.ecg = gain

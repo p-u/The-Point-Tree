@@ -475,6 +475,7 @@ addLayer("rebirth", {
         if (hasUpgrade('mega', 15)) mult = mult.times("e10e6")
         if (hasUpgrade('s', 111)) mult = mult.times("e35e9")
         if (hasUpgrade('era', 174)) mult = mult.times("e11.11e12")
+        if (hasUpgrade('mega', 102)) mult = mult.times("e2e16")
 
         // secret achievement
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
@@ -509,7 +510,9 @@ addLayer("rebirth", {
         }
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('era', 183)) exp = exp.add(0.07)
-            if (hasUpgrade('m', 104)) exp = exp.add(0.04)
+        if (hasUpgrade('m', 104)) exp = exp.add(0.04)
+        if (hasUpgrade('prestige', 83)) exp = exp.sub(0.05)
+        if (hasUpgrade('prestige', 84)) exp = exp.add(0.11)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

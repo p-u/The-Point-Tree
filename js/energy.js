@@ -22,30 +22,6 @@ addLayer("e", {
     
         // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
         let keptUpgrades = [];
-        if (hasMilestone('sac', 13)) keptUpgrades.push(11);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(12);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(13);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(14);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(21);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(22);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(23);
-        if (hasMilestone('sac', 13)) keptUpgrades.push(24);
-        if (hasMilestone('sac', 17)) keptUpgrades.push(31);
-        if (hasMilestone('sac', 17)) keptUpgrades.push(32);
-        if (hasMilestone('sac', 17)) keptUpgrades.push(33);
-        if (hasMilestone('sac', 17)) keptUpgrades.push(34);
-        if (hasMilestone('sac', 22)) keptUpgrades.push(41);
-        if (hasMilestone('sac', 22)) keptUpgrades.push(42);
-        if (hasMilestone('sac', 22)) keptUpgrades.push(43);
-        if (hasMilestone('sac', 22)) keptUpgrades.push(44);
-        if (hasMilestone('sac', 29)) keptUpgrades.push(51);
-        if (hasMilestone('sac', 29)) keptUpgrades.push(52);
-        if (hasMilestone('sac', 29)) keptUpgrades.push(53);
-        if (hasMilestone('sac', 29)) keptUpgrades.push(54);
-        if (hasMilestone('sac', 31)) keptUpgrades.push(61);
-        if (hasMilestone('sac', 31)) keptUpgrades.push(62);
-        if (hasMilestone('sac', 31)) keptUpgrades.push(63);
-        if (hasMilestone('sac', 31)) keptUpgrades.push(64);
         for(i=1;i<5;i++){ //rows
             for(v=1;v<3;v++){ //columns
               if ((hasMilestone('sac', 13)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
@@ -218,6 +194,9 @@ addLayer("e", {
             if (hasMilestone('e', 16)) mult = mult.times(40)
         }
         if (hasUpgrade('e', 101)) mult = mult.times("e42000")
+        if (hasUpgrade('mega', 104)) mult = mult.times("e1e11")
+        if (hasUpgrade('era', 145)) mult = mult.times("e5e11")
+        if (hasUpgrade('era', 25)) mult = mult.times("e1e12")
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
@@ -317,6 +296,7 @@ addLayer("e", {
                     let eff = player["mega"].points.add(1).pow(e8exp)
                     eff = softcap(eff, new Decimal("1e5000"), 0.3)
                     eff = softcap(eff, new Decimal("e100e6"), 0.3)
+                    eff = softcap(eff, new Decimal("e1e15"), 0.2)
                     return eff
                 },
             effectDisplay() {
@@ -327,6 +307,9 @@ addLayer("e", {
                 }
                 if (upgEffect.gte(new Decimal("e100e6")) ) {
                     softcapDescription = " (Supercapped)"
+                }
+                if (upgEffect.gte(new Decimal("e1e15")) ) {
+                    softcapDescription = " (Hypercapped)"
                 }
                 return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
             },
@@ -789,7 +772,7 @@ addLayer("e", {
         },
         12: {
             requirementDescription: "8e575 Energy: MASSIVE CHANGE",
-            effectDescription: "-^0.1 BP, -^0.2 RP, -^0.1 PP, -^0.15 MP",
+            effectDescription: "-^0.1 BP, -^0.2 RP, -^0.1 PP, -^0.15 MP, ^1.22 PF",
             done() { return player["e"].points.gte("8e575") }
         },
         13: {
@@ -916,8 +899,10 @@ addLayer("e", {
     if (hasMilestone('e', 24)) enpow = 13500
     if (hasUpgrade('basic', 113)) enpow = 8888
     if (hasUpgrade('e', 154)) enpow = 11111
-        let eff = player.e.points.add(1).pow(enpow)
-       return eff
+    let eff = player.e.points.add(1).pow(enpow)
+    let cap = 0.4
+    softcappedEffect = softcap(eff, new Decimal("e7.5e17"), new Decimal(cap))
+    return softcappedEffect
        },
         effectDescription() {
             let desc = "which is boosting Point Fragments by x" + format(tmp[this.layer].effect);
