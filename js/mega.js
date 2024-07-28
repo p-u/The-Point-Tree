@@ -149,7 +149,7 @@ addLayer("mega", {
                 if (upgEffect.gte(new Decimal("e1e15")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return "This upgrade boosts Prestige Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Prestige Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
         },
         21: {
@@ -205,7 +205,7 @@ addLayer("mega", {
                 if (upgEffect.gte(new Decimal("e4e15")) ) {
                     softcapDescription = " (Supercapped)"
                 }
-                return "This upgrade boosts PF by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts PF by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
         },
         32: {
@@ -257,7 +257,7 @@ addLayer("mega", {
                 if (upgEffect.gte(new Decimal("e8000")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return "This upgrade boosts Mega Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Mega Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
         },
         43: {
@@ -385,7 +385,7 @@ addLayer("mega", {
                 if (upgEffect.gte(new Decimal("e1e15")) ) {
                     softcapDescription = " (Supercapped)"
                 }
-                return "This upgrade boosts Mega Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Mega Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 83) },
         },
@@ -430,7 +430,7 @@ addLayer("mega", {
                 let ds4u2exp = 1
                 return player["mega"].points.add(1).pow(ds4u2exp)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 24) },
         },
         35: {
@@ -683,7 +683,7 @@ addLayer("mega", {
                 return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Point Fragments gain by x" + format(buyableEffect(this.layer, this.id))
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Point Fragments gain by x" + notationChooser(buyableEffect(this.layer, this.id))
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -728,7 +728,7 @@ addLayer("mega", {
                 return new Decimal("1e474").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Mega Point gain by x" + format(buyableEffect(this.layer, this.id))
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Mega Point gain by x" + notationChooser(buyableEffect(this.layer, this.id))
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -767,7 +767,7 @@ addLayer("mega", {
                 return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(1 + exp3 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + format(buyableEffect(this.layer, this.id))
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + notationChooser(buyableEffect(this.layer, this.id))
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -800,7 +800,7 @@ addLayer("mega", {
                 return new Decimal("e23460000").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: +^" + format(buyableEffect(this.layer, this.id)) + " Energy."
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: +^" + format(buyableEffect(this.layer, this.id)) + " Energy."
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -950,7 +950,7 @@ addLayer("mega", {
             if (layerEffect.gte(new Decimal("e500e9")) ) {
                 softcapDescription = " (Supercapped)"
             }
-            let desc = "which is boosting all previous reset layers by x" + format(tmp[this.layer].effect) + softcapDescription;
+            let desc = "which is boosting all previous reset layers by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;
         },
     branches: ["prestige"], 

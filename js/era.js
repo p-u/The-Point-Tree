@@ -33,14 +33,14 @@ addLayer("era", {
                         let a = ""
                         a = a + `You have 
                         <h2><span style="color: blue; text-shadow: 0px 0px 10px #AD6F69; font-family: Lucida Console, Courier New, monospace">
-                            ${format(player.era.ec)}</span></h2> Era Crystals`
+                            ${notationChooser(player.era.ec)}</span></h2> Era Crystals`
                         return a
                     }
                 ],
                 ["display-text",
                     function(){
                         let a = ""
-                        a = a + "You are gaining " + format(player.era.ecg) + " Era Crystals a second."
+                        a = a + "You are gaining " + notationChooser(player.era.ecg) + " Era Crystals a second."
                         return a
                     }
                 ],
@@ -60,14 +60,14 @@ addLayer("era", {
                         let a = ""
                         a = a + `You have 
                         <h2><span style="color: blue; text-shadow: 0px 0px 10px #AD6F69; font-family: Lucida Console, Courier New, monospace">
-                            ${format(player.era.ec)}</span></h2> Era Crystals`
+                            ${notationChooser(player.era.ec)}</span></h2> Era Crystals`
                         return a
                     }
                 ],
                 ["display-text",
                     function(){
                         let a = ""
-                        a = a + "You are gaining " + format(player.era.ecg) + " Era Crystals a second."
+                        a = a + "You are gaining " + notationChooser(player.era.ecg) + " Era Crystals a second."
                         return a
                     }
                 ],
@@ -605,7 +605,7 @@ addLayer("era", {
                 if (hasUpgrade("era", 33)) eracompexp = 0.14
                 return player["era"].ec.add(1).pow(eracompexp)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         151: {
             title: "ErUp 24B",
@@ -1464,7 +1464,7 @@ addLayer("era", {
                 let eraups = player.era.upgrades.length
                 return Math.pow(euiec, eraups)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         92: {
             title: "ErUp 11e1A",
@@ -1519,7 +1519,7 @@ addLayer("era", {
                 let logxec = 10
                 return player.era.ec.log(logxec)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         65: {
             title: "ErUp 7e1",
@@ -1571,7 +1571,7 @@ addLayer("era", {
                 return new Decimal(1e14).mul(Decimal.pow(1.15, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + format(buyableEffect(this.layer, this.id))
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + notationChooser(buyableEffect(this.layer, this.id))
             },
             canAfford() {
                 return player.era.ec.gte(this.cost())
@@ -1599,7 +1599,7 @@ addLayer("era", {
                 return new Decimal(5e23).mul(Decimal.pow(1.15, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + format(buyableEffect(this.layer, this.id))
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + notationChooser(buyableEffect(this.layer, this.id))
             },
             canAfford() {
                 return player.era.ec.gte(this.cost())
@@ -1627,7 +1627,7 @@ addLayer("era", {
                 return new Decimal(3.5e96).mul(Decimal.pow(1.1, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + format(buyableEffect(this.layer, this.id)) + " and Mastery Points by x" + format(buyableEffect(this.layer, this.id).pow(0.4))
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + notationChooser(buyableEffect(this.layer, this.id)) + " and Mastery Points by x" + notationChooser(buyableEffect(this.layer, this.id).pow(0.4))
             },
             canAfford() {
                 return player.era.ec.gte(this.cost())

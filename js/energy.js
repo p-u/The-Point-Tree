@@ -258,7 +258,7 @@ addLayer("e", {
                 if (upgEffect.gte(new Decimal("e700")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             },
             21: {
@@ -311,7 +311,7 @@ addLayer("e", {
                 if (upgEffect.gte(new Decimal("e1e15")) ) {
                     softcapDescription = " (Hypercapped)"
                 }
-                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
                 unlocked() { return hasUpgrade("e", 23) },
             },
@@ -421,7 +421,7 @@ addLayer("e", {
                     if (hasUpgrade("era", 253)) e200EUExp = 0.133
                     return player["e"].points.add(1).div(1e175).pow(e200EUExp)
                 },
-                effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+                effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             },
             72: {
                 title: "Use the energy to generate insane tech for our workers",
@@ -905,7 +905,7 @@ addLayer("e", {
     return softcappedEffect
        },
         effectDescription() {
-            let desc = "which is boosting Point Fragments by x" + format(tmp[this.layer].effect);
+            let desc = "which is boosting Point Fragments by x" + notationChooser(tmp[this.layer].effect);
             return desc;
         },
     row: 4, // Row the layer is in on the tree (0 is the first row)

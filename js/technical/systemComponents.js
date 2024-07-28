@@ -51,8 +51,8 @@ var systemComponents = {
 			<tooltip
       v-if="tmp[layer].tooltip != ''"
 			:text="(tmp[layer].isLayer) ? (
-				player[layer].unlocked ? (tmp[layer].tooltip ? tmp[layer].tooltip : formatWhole(player[layer].points) + ' ' + tmp[layer].resource)
-				: (tmp[layer].tooltipLocked ? tmp[layer].tooltipLocked : 'Reach ' + formatWhole(tmp[layer].requires) + ' ' + tmp[layer].baseResource + ' to unlock (You have ' + formatWhole(tmp[layer].baseAmount) + ' ' + tmp[layer].baseResource + ')')
+				player[layer].unlocked ? (tmp[layer].tooltip ? tmp[layer].tooltip : notationChooser(player[layer].points) + ' ' + tmp[layer].resource)
+				: (tmp[layer].tooltipLocked ? tmp[layer].tooltipLocked : 'Reach ' + notationChooser(tmp[layer].requires) + ' ' + tmp[layer].baseResource + ' to unlock (You have ' + notationChooser(tmp[layer].baseAmount) + ' ' + tmp[layer].baseResource + ')')
 			)
 			: (
 				tmp[layer].canClick ? (tmp[layer].tooltip ? tmp[layer].tooltip : 'I am a button!')
@@ -113,10 +113,10 @@ var systemComponents = {
 		</span>
 		<br>
 		<span v-if="player.points.lt('1e1000')"  class="overlayThing">You have </span>
-		<h2  class="overlayThing" id="points">{{format(player.points)}}</h2>
+		<h2  class="overlayThing" id="points">{{notationChooser(player.points)}}</h2>
 		<span v-if="player.points.lt('1e1e6')"  class="overlayThing"> {{modInfo.pointsName}}</span>
 		<br>
-		<span v-if="canGenPoints()"  class="overlayThing">({{tmp.other.oompsMag != 0 ? format(tmp.other.oomps) + " OOM" + (tmp.other.oompsMag < 0 ? "^OOM" : tmp.other.oompsMag > 1 ? "^" + tmp.other.oompsMag : "") + "s" : formatSmall(getPointGen())}}/sec)</span>
+		<span v-if="canGenPoints()"  class="overlayThing">({{tmp.other.oompsMag != 0 ? notationChooser(tmp.other.oomps) + " OOM" + (tmp.other.oompsMag < 0 ? "^OOM" : tmp.other.oompsMag > 1 ? "^" + tmp.other.oompsMag : "") + "s" : notationChooser(getPointGen())}}/sec)</span>
 		<div v-for="thing in tmp.displayThings" class="overlayThing"><span v-if="thing" v-html="thing"></span></div>
 	</div>
 	`
@@ -144,6 +144,9 @@ var systemComponents = {
 		<br>
 		<br>
 		Minigame inspired from 'The Mario Maker 2 Tree'
+		<br>
+		<br>
+		Infinity Notation by unicodes
 		<br>
 		<br>
 		<br>
@@ -182,8 +185,9 @@ var systemComponents = {
 				<td><button class="opt" onclick="toggleOpt('forceTooltips'); needsCanvasUpdate = true">Shift-Click to Toggle Tooltips: {{ options.forceTooltips?"ON":"OFF" }}</button></td>
 				</tr> 
 			<tr>
-                <td><button class="opt" onclick="changeEFormat()">Change to 'e' notation: 10^ {{ player.formatE }}</button></td>
-				<td><button class="opt" onclick="changeDP()">Current decimal places behind 'e': {{ player.showdp }}</button></td>
+                <td><button class="opt" onclick="changeEFormat()">Change to 'e' notation: 10^ {{ options.formatE }}</button></td>
+				<td><button class="opt" onclick="changeDP()">Current decimal places behind 'e': {{ options.showdp }}</button></td>
+				<td><button class="opt" onclick="changeNotation()">Notation: {{ getNotationName() }}</button></td>
 				</tr> 
         </table>`
     },

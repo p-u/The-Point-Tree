@@ -166,7 +166,7 @@ addLayer("m", {
                 if (hasUpgrade('m', 72)) mmp6exp = 0.139
                 return player["m"].points.add(1).pow(mmp6exp)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         52: {
             title: "MM 2",
@@ -345,7 +345,7 @@ addLayer("m", {
                 let ectomasteryexp = 0.06
                 return player["era"].ec.add(1).pow(ectomasteryexp).log(1.8)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         104: {
             title: "More Rebirth = More PF",

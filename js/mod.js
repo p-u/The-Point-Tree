@@ -13,11 +13,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.1",
-	name: "Endgame: About 5ee19",
+	num: "3.1.2",
+	name: "Sac Strength",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.1.2 </h3><br>
+Added an infinity notation. This took a long time.<br>
+Fixed some number formatting issues.<br>
+
+<h3>v3.1.1 </h3><br>
+Changed MA52 and MA53 description, added 10 new minigame titles! <br>
+
 <h3>v3.1: Sac Strength and Extended Upgrades </h3><br>
 Added a hardcap for Mega Buyable 4 (+^1) <br>
 Added Era 2: Extension part <br>
@@ -930,51 +937,51 @@ function addedPlayerData() { return {
 var displayThings = [
 	function() {
 		if ((player.points.lte(1e17)) && (player.points.gte(1e15))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(3800000000))) + " fermions."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(3800000000))) + " fermions."
 		}
 	},
 	function() {
 		if ((player.points.lte(2.75e25)) && (player.points.gte(1e17))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1e17))) + " quarks."		}
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1e17))) + " quarks."		}
 	},
 	function() {
 		if ((player.points.lte(7e29)) && (player.points.gte(2.75e25))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(2.75e25))) + " water molecules."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(2.75e25))) + " water molecules."
 		}
 	},
 	function() {
 		if ((player.points.lte(1.7e35)) && (player.points.gte(7e29))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(7e29))) + " red blood cells."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(7e29))) + " red blood cells."
 		}
 	},
 	function() {
 		if ((player.points.lte(8.28e37)) && (player.points.gte(1.7e35))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1.7e35))) + " adult humans."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.7e35))) + " adult humans."
 		}
 	},
 	function() {
 		if ((player.points.lte(1.2742e42)) && (player.points.gte(8.28e37))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(8.28e37))) + " Burj Khalifas."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(8.28e37))) + " Burj Khalifas."
 		}
 	},
 	function() {
 		if ((player.points.lte(1.392e44)) && (player.points.gte(1.2742e42))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1.2742e42))) + " Earths."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.2742e42))) + " Earths."
 		}
 	},
 	function() {
 		if ((player.points.lte(9.460528405e50)) && (player.points.gte(1.392e44))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(1.392e44))) + " Suns."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.392e44))) + " Suns."
 		}
 	},
 	function() {
 		if ((player.points.lte(9.460528405e62)) && (player.points.gte(9.460528405e50))) {
-			return "If every point was a planck length, the length of all the points stacked together would take light " + format(player.points.div(new Decimal(9.460528405e50))) + " years to travel."
+			return "If every point was a planck length, the length of all the points stacked together would take light " + notationChooser(player.points.div(new Decimal(9.460528405e50))) + " years to travel."
 		}
 	},
 	function() {
 		if ((player.points.lte(9.460528405e68)) && (player.points.gte(9.460528405e62))) {
-			return "If every point was a planck length, then you can make " + format(player.points.div(new Decimal(9.460528405e62))) + " universes (Assuming 1 universe is 1T ly)."
+			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(9.460528405e62))) + " universes (Assuming 1 universe is 1T ly)."
 		}
 	},
 	function() {
@@ -984,17 +991,17 @@ var displayThings = [
 	},
 	function() {
 		if ((player.points.gte("e70e9")) && (player.points.lte("e1e12"))) {
-			return "If you write 1 number per second, writing down your point amount will need " + format(player.points.add(1).log10().div(31536000)) + " years. You will need to start in " + format(Math.floor((player.points.add(1).log10().div(31536000)).sub(2024))) + " BCE to complete it by this year (2024)."
+			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years. You will need to start in " + format(Math.floor((player.points.add(1).log10().div(31536000)).sub(2024))) + " BCE to complete it by this year (2024)."
 		}
 	},
 	function() {
 		if ((player.points.gte("e1e12")) && (player.points.lte("e434250720000000000"))) {
-			return "If you write 1 number per second, writing down your point amount will need " + format(player.points.add(1).log10().div(31536000)) + " years."
+			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years."
 		}
 	},
 	function() {
 		if (player.points.gte("e434250720000000000")) {
-			return "If you write 1 number per second, writing down your point amount will need " + format(player.points.add(1).log10().div(434250720000000000)) + " times the current universe age. That's a lot of time!"
+			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(434250720000000000)) + " times the current universe age. That's a lot of time!"
 		}
 	},
 ]

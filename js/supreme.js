@@ -211,7 +211,7 @@ addLayer("s", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("s", 14) },
         },
@@ -296,7 +296,7 @@ addLayer("s", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Supreme Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Supreme Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
         },
         52: {
@@ -316,7 +316,7 @@ addLayer("s", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Water by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Water by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("s", 51) },
         },
@@ -366,7 +366,7 @@ addLayer("s", {
                 if (upgEffect.gte(new Decimal("e100")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return "This upgrade boosts Supreme Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Supreme Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             cost: new Decimal(2.5e59),
             unlocked() { return hasUpgrade("s", 63) },
@@ -602,7 +602,7 @@ addLayer("s", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Water by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Water by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("s", 55) && hasMilestone("sac", 87) },
         },
@@ -617,7 +617,7 @@ addLayer("s", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Supreme Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Supreme Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("s", 65) && hasMilestone("sac", 87) },
         },
@@ -655,7 +655,7 @@ addLayer("s", {
             return new Decimal(200).mul(Decimal.pow(1.2, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Supreme Points gain by x" + format(buyableEffect(this.layer, this.id))
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Supreme Points gain by x" + notationChooser(buyableEffect(this.layer, this.id))
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -693,7 +693,7 @@ addLayer("s", {
             return new Decimal(100000).mul(Decimal.pow(1.175, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Gain " + format(buyableEffect(this.layer, this.id)) + "x of manual reset"
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Gain " + notationChooser(buyableEffect(this.layer, this.id)) + "x of manual reset"
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -725,7 +725,7 @@ addLayer("s", {
             return new Decimal(1e30).mul(Decimal.pow(1.195, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply water by " + format(buyableEffect(this.layer, this.id)) + "."
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply water by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -761,7 +761,7 @@ addLayer("s", {
             return new Decimal(1e50).mul(Decimal.pow(1.5, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply SP AND WATER by " + format(buyableEffect(this.layer, this.id)) + "."
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply SP AND WATER by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -798,7 +798,7 @@ addLayer("s", {
             return new Decimal("1e1266").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + (tmp.s.sb5effect) + " Point Fragments."
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + (tmp.s.sb5effect) + " Point Fragments."
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -817,7 +817,7 @@ addLayer("s", {
             return new Decimal("1e182341000").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
-            return "Cost: " + format(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: -" + format(buyableEffect(this.layer, this.id)) + " to Sacrifice Scaling."
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: -" + format(buyableEffect(this.layer, this.id)) + " to Sacrifice Scaling."
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())

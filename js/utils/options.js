@@ -17,20 +17,33 @@ function getStartOptions() {
 		dp: 3,
 		showdp: 5,
 		theme: "default",
+		notation: "default",
 	}
 }
 let formatEList = ['3','6','9','12','15']
-let dpList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+let dpList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 function changeEFormat() {
-	player.formatE = formatEList[(formatEList.indexOf(player.formatE) + 1) % formatEList.length]
+	options.formatE = formatEList[(formatEList.indexOf(options.formatE) + 1) % formatEList.length]
 }
 
 function changeDP() {
-	player.dp = dpList[(dpList.indexOf(player.dp) + 1) % dpList.length]
-	player.showdp = (player.dp) + 2
-	if (player.dp > 100) player.dp = 20
-	if (player.dp < 0) player.dp = 0
+	options.dp = dpList[(dpList.indexOf(options.dp) + 1) % dpList.length]
+	options.showdp = (options.dp) + 2
+	if (options.dp > 100) options.dp = 20
+	if (options.dp < 0) options.dp = 0
+}
+
+function changeNotation() {
+	if (options.notation === 'default') { 
+		options.notation = 'infinity'
+	} else if (options.notation === 'infinity'){ 
+		options.notation = 'default'
+	}
+}
+
+function getNotationName() {
+	return options.notation
 }
 
 

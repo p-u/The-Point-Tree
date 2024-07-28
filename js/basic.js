@@ -97,7 +97,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e1.25e12")) ) {
                     softcapDescription = " (Supercapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("basic", 11) },
 
@@ -123,7 +123,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e25000000")) ) {
                     softcapDescription = " (Supercapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("basic", 12) },
         },
@@ -156,7 +156,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e1e12")) ) {
                     softcapDescription = " (Supercapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("basic", 14) },
         },
@@ -197,7 +197,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e15e12")) ) {
                     softcapDescription = " (Hypercapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("basic", 23) },
         },
@@ -229,7 +229,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e100000000")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("basic", 31) },
         },
@@ -358,7 +358,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e2.5e12")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 74) },
         },
@@ -380,7 +380,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e2.5e12")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return format(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 81) },
         },
@@ -394,7 +394,7 @@ addLayer("basic", {
                 if (hasUpgrade('m', 33)) bb3exp = 0.000036
                 return player.points.add(1).pow(bb3exp)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 82) },
         },
         84: {
@@ -414,7 +414,7 @@ addLayer("basic", {
                 if (upgEffect.gte(new Decimal("e175")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return "This upgrade boosts Energy by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 83) },
         },
@@ -460,7 +460,7 @@ addLayer("basic", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts SP by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts SP by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 101) },
         },
@@ -494,7 +494,7 @@ addLayer("basic", {
             effectDisplay() {
                 let softcapDescription = ""
                 let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Water by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Water by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 105) },
         },

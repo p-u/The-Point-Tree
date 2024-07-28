@@ -74,7 +74,7 @@ addLayer("w", {
                 if (hasUpgrade('era', 252)) w3exp = new Decimal(0.225)
                 return player["w"].points.add(1).pow(w3exp)
             },
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         14: {
             title: "Super Water",
@@ -372,7 +372,7 @@ addLayer("w", {
         return softcappedEffect
            },
             effectDescription() {
-                let desc = "which is boosting Energy by x" + format(tmp[this.layer].effect);
+                let desc = "which is boosting Energy by x" + notationChooser(tmp[this.layer].effect);
                 return desc;
             },
     row: 5, // Row the layer is in on the tree (0 is the first row)

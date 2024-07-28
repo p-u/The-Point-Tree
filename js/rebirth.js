@@ -566,7 +566,7 @@ addLayer("rebirth", {
             if (layerEffect.gte(new Decimal("e5e15")) ) {
                 softcapDescription = " (Insanitycapped)"
             }
-            let des = "which is boosting point fragments by x" + format(layerEffect) + softcapDescription
+            let des = "which is boosting point fragments by x" + notationChooser(layerEffect) + softcapDescription
             return des;
         },
     branches: ["basic"], 

@@ -70,7 +70,7 @@ addLayer("prestige", {
                 if (upgEffect.gte(new Decimal("e1111111")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                return "This upgrade boosts Rebirth Points by " + format(upgEffect)+"x" + softcapDescription
+                return "This upgrade boosts Rebirth Points by " + notationChooser(upgEffect)+"x" + softcapDescription
             },
         },
         23: {
@@ -536,7 +536,7 @@ addLayer("prestige", {
             if (layerEffect.gte(new Decimal("e1e12")) ) {
                 softcapDescription = " (Hypercapped)"
             }
-            let desc = "which is boosting basic points and point fragments by x" + format(tmp[this.layer].effect) + softcapDescription;
+            let desc = "which is boosting basic points and point fragments by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;
         },
     branches: ["rebirth"],  

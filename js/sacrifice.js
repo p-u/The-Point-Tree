@@ -65,7 +65,7 @@ addLayer("sac", {
                         let a = ""
                         a = a + `You have 
                         <h2><span style="color: red; text-shadow: 0px 0px 10px #AD6F69; font-family: Lucida Console, Courier New, monospace">
-                            ${format(player.sac.sacstr)}</span></h2> Sacrifice Strength.`
+                            ${notationChooser(player.sac.sacstr)}</span></h2> Sacrifice Strength.`
                         return a
                     }
                 ],
@@ -909,7 +909,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(14))
-                    return "Unlock dimensional shift 1: " + format(player.sac.points) + "/15 sacrifices."
+                    return "Unlock dimensional shift 1: " + notationChooser(player.sac.points) + "/15 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 1. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Basic Upgrades."
             }
@@ -927,7 +927,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(26))
-                    return "Unlock dimensional shift 2: " + format(player.sac.points) + "/27 sacrifices."
+                    return "Unlock dimensional shift 2: " + notationChooser(player.sac.points) + "/27 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 2. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Rebirth Upgrades."
             },
@@ -946,7 +946,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(40))
-                    return "Unlock dimensional shift 3: " + format(player.sac.points) + "/41 sacrifices."
+                    return "Unlock dimensional shift 3: " + notationChooser(player.sac.points) + "/41 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 3. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Prestige Upgrades."
             },
@@ -965,7 +965,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(91))
-                    return "Unlock dimensional shift 4: " + format(player.sac.points) + "/92 sacrifices. [Wait, how do I get so many?]"
+                    return "Unlock dimensional shift 4: " + notationChooser(player.sac.points) + "/92 sacrifices. [Wait, how do I get so many?]"
                 else
                     return "You have unlocked Dimensional Shift 4. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to MEGA Upgrades."
             },
@@ -984,7 +984,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(149))
-                    return "Unlock dimensional shift 5: " + format(player.sac.points) + "/150 sacrifices."
+                    return "Unlock dimensional shift 5: " + notationChooser(player.sac.points) + "/150 sacrifices."
                 else
                     return "You have unlocked Dimensional Shift 5. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to ENERGY Upgrades. You may control the world's power supply after this."
             },
@@ -1003,7 +1003,7 @@ addLayer("sac", {
             },
             display() {
                 if (player.sac.best.lte(3999))
-                    return "Unlock dimensional shift 6: " + format(player.sac.points) + "/4000 sacrifices. Wait... What?"
+                    return "Unlock dimensional shift 6: " + notationChooser(player.sac.points) + "/4000 sacrifices. Wait... What?"
                 else
                     return "You have unlocked Dimensional Shift 6. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to SUPREME Upgrades. That's err... 11 upgrades??"
             },
@@ -1021,7 +1021,7 @@ addLayer("sac", {
                 return prog
             },
             display() {
-                return "You have " + format(player.sac.sacstr) + " Sac Strength. (" + format(player.sac.points) + "/" + format(player.sac.nextsstr) + ")"
+                return "You have " + notationChooser(player.sac.sacstr) + " Sac Strength. (" + notationChooser(player.sac.points) + "/" + notationChooser(player.sac.nextsstr) + ")"
             },
             unlocked() { return hasMilestone("sac", 100) }
         },

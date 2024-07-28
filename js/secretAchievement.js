@@ -905,7 +905,7 @@ addLayer("sa", {
     clickables: {
         11: {
             title(){
-                title = minigameFormat(player[this.layer].minigameNum)
+                title = notationChooserMinigame(player[this.layer].minigameNum)
                 return title
             },
             display() { dis = ""
@@ -950,7 +950,7 @@ addLayer("sa", {
         },
         12: {
             title(){
-                title = formatWhole(player[this.layer].pdx) + " pdx"
+                title = notationChooser(player[this.layer].pdx) + " pdx"
                 return title
             },
             display() { 
