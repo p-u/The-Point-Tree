@@ -816,7 +816,7 @@ addLayer("sa", {
                     return "nicely done [Extreme 03] Unlock pdx value show up"
                 }
                 else {
-                    return "Hint: 1 button, then press and hold a button"
+                    return "Hint: Only need 2 unique buttons!"
                 }
             },
             unlocked() { 
@@ -856,7 +856,7 @@ addLayer("sa", {
                     return "nicely done [Extreme 05] Unlock ^10 button :)"
                 }
                 else {
-                    return "Hint: 1 button, then press and hold a button"
+                    return "might take a while"
                 }
             },
             unlocked() { 
@@ -883,9 +883,9 @@ addLayer("sa", {
             }
         },
         156: {
-            name: "UTTER INSANITY (ee1.25M)",
+            name: "UTTER INSANITY (ee1.5M)",
             done() {
-                   if (player.sa.minigameNum.gte("ee1.25e6")) {
+                   if (player.sa.minigameNum.gte("ee1.5e6")) {
                        return true
                    }
                },
@@ -911,21 +911,31 @@ addLayer("sa", {
             display() { dis = ""
                 if (player.sa.minigameNum.eq(0)) dis = "how"
                 if (player.sa.minigameNum.lt(0)) dis = "below negative?"
+                if ((player.sa.minigameNum.lte(1.61803)) && (player.sa.minigameNum.lte(1.61804))) dis = "The Golden Ratio"
+                if ((player.sa.minigameNum.lte(2.71828)) && (player.sa.minigameNum.lte(2.71829))) dis = "e"
+                if ((player.sa.minigameNum.lte(3.14159)) && (player.sa.minigameNum.lte(3.1416))) dis = "pi"
                 if (player.sa.minigameNum.eq(69)) dis = "nice"
+                if (player.sa.minigameNum.eq(404)) dis = "404 ERROR"
                 if (player.sa.minigameNum.eq(420)) dis = "not funny"
+                if (player.sa.minigameNum.eq(666)) dis = "devil"
+                if (player.sa.minigameNum.eq(777)) dis = "lucky"
+                if (player.sa.minigameNum.eq(911)) dis = "what's your emergency?"
+                if (player.sa.minigameNum.eq(1337)) dis = "leet"
                 if (player.sa.minigameNum.eq(69420)) dis = "very nice"
+                if (player.sa.minigameNum.eq(9223372036854775807)) dis = "if you know, you know."
                 if (player.sa.minigameNum.gte("1e100")) dis = "Breaking bounds"
                 if (player.sa.minigameNum.gte("1e10000")) dis = "Order of Exponentiating Magnitude"
                 if (player.sa.minigameNum.gte("ee6")) dis = "Impressive."
                 if (player.sa.minigameNum.gte("ee10")) dis = "Hyperion"
                 if (player.sa.minigameNum.gte("ee15")) dis = "Insanity"
+                if (player.sa.minigameNum.gte("e5.011135425235e19")) dis = "Past the Endgame"
                 if (player.sa.minigameNum.gte("ee100")) dis = "Transcending"
                 if (player.sa.minigameNum.gte("ee500")) dis = "Omega"
                 if (player.sa.minigameNum.gte("ee2000")) dis = "Infinite"
                 if (player.sa.minigameNum.gte("ee25000")) dis = "Èternal"
                 if (player.sa.minigameNum.gte("ee150000")) dis = "Infinite Eternal"
                 if (player.sa.minigameNum.gte("eee6")) dis = "Utter Infinite Eternal"
-                if (player.sa.minigameNum.gte("ee2e7")) dis = "oNlY 1% oF pEoPlE cAn gEt ThIs!"
+                if (player.sa.minigameNum.gte("eee7")) dis = "oNlY 1% oF pEoPlE cAn gEt ThIs!"
                 if (player.sa.minigameNum.gte("eee8")) dis = "True No-Life"
                 if (player.sa.minigameNum.gte("eee9")) dis = "Absolute True No-Life"
                 if (player.sa.minigameNum.gte("ee4e9")) dis = "Another 5 more to go!"

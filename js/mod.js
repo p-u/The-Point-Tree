@@ -21,6 +21,7 @@ let changelog = `<h1>Changelog:</h1><br>
 <h3>v3.1: Sac Strength and Extended Upgrades </h3><br>
 Added a hardcap for Mega Buyable 4 (+^1) <br>
 Added Era 2: Extension part <br>
+Added Minigame Part 2 <br>
 Added Combos and Extended Upgrades <br>
 Changed some achievement names <br>
 Changed morse code to reflect correctly <br>
