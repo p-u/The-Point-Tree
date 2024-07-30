@@ -13,25 +13,24 @@ function getStartOptions() {
 		forceOneTab: false,
 		oldStyle: false,
 		tooltipForcing: true,
-		formatE: '12',
-		dp: 3,
+		formatE: '3',
+		dp: 8,
 		showdp: 5,
 		theme: "default",
 		notation: "default",
 	}
 }
-let formatEList = ['3','6','9','12','15']
-let dpList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+let formatEList = ['12','15','3','6','9']
 
 function changeEFormat() {
-	options.formatE = formatEList[(formatEList.indexOf(options.formatE) + 1) % formatEList.length]
-}
-
-function changeDP() {
-	options.dp = dpList[(dpList.indexOf(options.dp) + 1) % dpList.length]
-	options.showdp = (options.dp) + 2
-	if (options.dp > 100) options.dp = 20
-	if (options.dp < 0) options.dp = 0
+	let index = formatEList.indexOf(options.formatE)
+	if (options.formatE === null || index >= formatEList.length-1 || index < 0) {
+		options.formatE = formatEList[0];
+	}
+	else {
+		index ++;
+		options.formatE = formatEList[index];
+	}
 }
 
 function changeNotation() {

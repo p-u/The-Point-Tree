@@ -64,23 +64,23 @@ addLayer("sa", {
         13: {
             name: "I hate long numbers!",
             done() {
-                 if(player.formatE == "3") {
+                 if(options.formatE == "3") {
                     return true
                  }
                 },
             tooltip() {
                 if (hasAchievement('sa', 13)) {
-                    return "Make formatE 6"
+                    return "Make formatE 3"
                 }
                 else {
-                    return "Lower than e1,000,000"
+                    return "Lower than e1,000"
                 }
             },
         },
         14: {
             name: "I love long numbers!!",
             done() {
-                if(player.formatE == "15") {
+                if(options.formatE == "15") {
                    return true
                 }
                },
@@ -94,34 +94,34 @@ addLayer("sa", {
            },
         },
         15: {
-            name: "a challenge",
+            name: "Infinite possibilities",
             done() {
-                if(player.dp = -1) {
+                if(options.notation == 'infinity') {
                    return true
                 }
                },
            tooltip() {
                if (hasAchievement('sa', 15)) {
-                   return "Make dp (showdp) 1"
+                   return "Infinite Notation"
                }
                else {
-                   return "e1.1e111"
+                   return "Antimatter Dimensions"
                }
            },
         },
         16: {
-            name: "Best combo ever",
+            name: "Verdantly beautiful",
             done() {
-                 if((player.dp = 12) && (player.formatE = "3")) {
+                 if(options.theme == "verdant") {
                     return true
                  }
                 },
             tooltip() {
                 if (hasAchievement('sa', 16)) {
-                    return "showdp 14 and formatE 3"
+                    return "Switch to Verdant theme"
                 }
                 else {
-                    return "e8.284927582940e3 Sacrifices"
+                    return "Trees."
                 }
             },
         },
@@ -911,9 +911,9 @@ addLayer("sa", {
             display() { dis = ""
                 if (player.sa.minigameNum.eq(0)) dis = "how"
                 if (player.sa.minigameNum.lt(0)) dis = "below negative?"
-                if ((player.sa.minigameNum.lte(1.61803)) && (player.sa.minigameNum.lte(1.61804))) dis = "The Golden Ratio"
-                if ((player.sa.minigameNum.lte(2.71828)) && (player.sa.minigameNum.lte(2.71829))) dis = "e"
-                if ((player.sa.minigameNum.lte(3.14159)) && (player.sa.minigameNum.lte(3.1416))) dis = "pi"
+                if ((player.sa.minigameNum.gte(1.61803)) && (player.sa.minigameNum.lte(1.61804))) dis = "The Golden Ratio"
+                if ((player.sa.minigameNum.gte(2.71828)) && (player.sa.minigameNum.lte(2.71829))) dis = "e"
+                if ((player.sa.minigameNum.gte(3.14159)) && (player.sa.minigameNum.lte(3.1416))) dis = "pi"
                 if (player.sa.minigameNum.eq(69)) dis = "nice"
                 if (player.sa.minigameNum.eq(404)) dis = "404 ERROR"
                 if (player.sa.minigameNum.eq(420)) dis = "not funny"

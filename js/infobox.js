@@ -14,13 +14,22 @@ addLayer("i", {
                 ["infobox", "main"],
                 "blank",
                 "blank",
+                ["infobox", "ns"],
+                "blank",
+                "blank",
                 ["infobox", "ach"],
+                "blank",
+                "blank",
+                ["infobox", "upgrade"],
                 "blank",
                 "blank",
                 ["infobox", "milestone"],
                 "blank",
                 "blank",
-                ["infobox", "NSU"],
+                ["infobox", "buyable"],
+                "blank",
+                "blank",
+                ["infobox", "challenge"],
                 "blank",
                 "blank",
                 ["infobox", "ext"],
@@ -35,13 +44,13 @@ addLayer("i", {
                 ["infobox", "cap"],
                 "blank",
                 "blank",
-                ["infobox", "buyable"],
-                "blank",
-                "blank",
-                ["infobox", "challenge"],
+                ["infobox", "NSU"],
                 "blank",
                 "blank",
                 ["infobox", "repups"],
+                "blank",
+                "blank",
+                ["infobox", "catch"],
             ],
         },
         "Basic Layer": {
@@ -105,6 +114,14 @@ addLayer("i", {
                 "blank",
             ],
         },
+        "Era": {
+            unlocked() { return player.era.points.gte(1)},
+            content: [
+                ["infobox", "era"],
+                "blank",
+                "blank",
+            ],
+        },
     },
     infoboxes: {
         main: {
@@ -112,12 +129,20 @@ addLayer("i", {
             body() { return "Explore many unique upgrades, and get the biggest numbers possible! In this game, you will go through many different layers, unlock new and unique features like upgrades, milestones and buyables. Please visit this layer often." },
         },
         ach: {
-            title: "Achievements",
+            title: "Achievements [Ach]",
             body() { return "Achievements give you a sense of progress. Every row of the achievements means a new stage. Achievements can have rewards. Red-bordered achievements unlock more achievements. Thick red-bordered achievements unlock a new ????" },
         },
+        ns: {
+            title: "Naming System",
+            body() { return "In every layer, there may or may not be one (or two) letters to identify the layer. This is given in the layer infobox. U stands for Upgrades, M stands for Milestones, B stands for buyables. In a milestone, the naming is just [Layer]M[MS#]. However, things get complicated in upgrades. First upgrades may say the upgrade number, while later upgrades will say [Layer]U[Row][Column]. Same goes with achievements. (Ach [Row][Column])" },
+        },
         basic: {
-            title: "The Basic layer",
+            title: "The Basic layer [B]",
             body() { return "The first layer of the game, requires 10 Point Fragments. The start to big numbers." },
+        },
+        upgrades: {
+            title: "Upgrades",
+            body() { return "Upgrades are basically a broad class that only can be bought once, and gives a boost. It could be static (x), to effects, non-static, power (^), or boosts to later features" },
         },
         NSU: {
             title: "Non-static Upgrades",
@@ -125,7 +150,7 @@ addLayer("i", {
             unlocked() { return (hasUpgrade('basic', 11))}
         },
         reb: {
-            title: "The rebirth Layer",
+            title: "The rebirth Layer (R, or Reb)",
             body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000 and Hypercaps at xe200M." },
             unlocked() { return (hasUpgrade('basic', 34))}
         },
@@ -155,12 +180,12 @@ addLayer("i", {
             unlocked() { return player.rebirth.points.gte(new Decimal(1))}
         },
         pres: {
-            title: "Prestige Layer",
+            title: "Prestige Layer (P, or Pres)",
             body() { return "In here, you can get numbers up to e1,500! For now, choose whether you want to buy the upgrade. Prestige effect softcaps at xe6,500 and supercaps at xe1M." },
             unlocked() { return player.prestige.points.gte(new Decimal("1"))}
         },
         mega: {
-            title: "Mega Layer",
+            title: "Mega Layer [M]",
             body() { return "Legend says that this layer is super OP. Effect: multiplies all previous layers. Caps at e30,000, with a ^0.3" },
             unlocked() { return player.mega.points.gte(new Decimal("1"))}
         },
@@ -170,8 +195,8 @@ addLayer("i", {
             unlocked() { return (hasUpgrade('mega', 33))}
         },
         sac: {
-            title: "Sacrifice Layer",
-            body() { return "Sacrifice is the first static layer, which means that the price will change based on how many sacrifices you have. Anyways, this is the MOST OP Layer, and it is used to provide insane boosts." },
+            title: "Sacrifice Layer [Sac]",
+            body() { return "Sacrifice is the first static layer, which means that the price will change based on how many sacrifices you have. Anyways, this is the MOST OP Layer, and it is used to provide insane boosts. There will be new features on this." },
             unlocked() { return player.sac.points.gte(new Decimal("1"))}
         },
         dimshift: {
@@ -180,7 +205,7 @@ addLayer("i", {
             unlocked() { return player.sac.points.gte(new Decimal("10"))}
         },
         energy: {
-            title: "Energy Layer",
+            title: "Energy Layer [E]",
             body() { return "Energy is the first resource that can be passively generated by its own. This layer boosts Point Fragments immensely!" },
             unlocked() { return player.e.points.gte(new Decimal("1"))}
         },
@@ -190,24 +215,39 @@ addLayer("i", {
             unlocked() { return player.sac.points.gte(new Decimal("20"))}
         },
         supreme: {
-            title: "The SUPREME Layer",
+            title: "The SUPREME Layer [S]",
             body() { return "Remember the MEGA LAYER? It is OP, alright. But, this requires e82,500 Mega Points to unlock. That's how OP it is! And, sacrifice milestones will not come every 1 sac." },
             unlocked() { return player.s.points.gte(new Decimal("1"))}
         },
         water: {
-            title: "The Water Layer",
+            title: "The Water Layer [W]",
             body() { return "Basically, a more advanced version of energy. Boosts energy." },
             unlocked() { return player.w.points.gte(new Decimal("1"))}
         },
         mastery: {
-            title: "The Mastery Layer",
-            body() { return "The king of all layers. Resets all layers when going into challenge, even future ones! Buy all previous column's upgrades to unlock a new column. Stacks up to 5. Unlock new rows by completing mastery challenge." },
+            title: "The Mastery Layer [NO SHORT FORM]",
+            body() { return "The endgame of stage 1 layers. Resets all layers when going into challenge, even future ones! Buy all previous column's upgrades to unlock a new column. Stacks up to 5. Unlock new rows by completing mastery challenge." },
             unlocked() { return player.m.points.gte(new Decimal("1"))}
         },
         repups: {
             title: "Rep Upgrades",
             body() { return "Upgrades that do things repeatedly. Can be a formula, or just a static boost. Also can boost multiple things at once." },
             unlocked() { return hasUpgrade("mega", 61)}
+        },
+        era: {
+            title: "The Era Layer [NO SHORT FORM]",
+            body() { return "You will progress for a long time here, scrolling through upgrades, getting extensions, and occasionally unlocking new features. Most of the info of the layer is found in the Era Infobox, but Era 4+ info will be found here!" },
+            unlocked() { return player.era.points.gte(new Decimal("1"))}
+        },
+        catch: {
+            title: "Catch Upgrades",
+            body() { return "Your first catch upgrade unlocks at Prestige Upgrade 31. Basically, it gives a HUGE boost, but with a nerf. Overall, it will be a small buff. [However, in later challenges, catch upgrades may not be worth buying due to a small static increase VS a big exponent decrease.]" },
+            unlocked() { return hasUpgrade("prestige", 31)}
+        },
+        combo: {
+            title: "Combos!",
+            body() { return "Era 3 new feature: Combos. Combos happen when all of shown upgrades are bought, and give a boost." },
+            unlocked() { return hasUpgrade("era", 105)}
         },
     },
 }, 

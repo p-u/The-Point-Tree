@@ -79,13 +79,16 @@ function notationChooserMinigame(decimal) {
 
 function infinityFormat(decimal) { 
     const pow1024 = new Decimal(2).pow(1024);
-    const logPow1024 = decimal.log(pow1024).floor();
-    const powLogPow1024 = pow1024.pow(logPow1024);
-    const logPowLogPow1024 = decimal.log(powLogPow1024);
-
     if (decimal.lt(pow1024)) {
         return formatWhole(decimal);
-    } else return formatWhole(decimal.div(powLogPow1024)) + "*" + format(logPow1024) + "∞"; 
+    }
+    if (decimal.lt(pow1024.pow(1e12))) {
+        return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor()) + "∞"
+    }
+    if (decimal.lt(pow1024.tetrate(4))) {
+        return format(decimal.log(pow1024).floor()) + "∞" // added beacuse what's the point of showing 1* at the start
+    }
+    return "∞^(" + decimal.slog(pow1024) + ")" // very specific
 }
 
 

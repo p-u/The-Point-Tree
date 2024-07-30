@@ -186,7 +186,6 @@ var systemComponents = {
 				</tr> 
 			<tr>
                 <td><button class="opt" onclick="changeEFormat()">Change to 'e' notation: 10^ {{ options.formatE }}</button></td>
-				<td><button class="opt" onclick="changeDP()">Current decimal places behind 'e': {{ options.showdp }}</button></td>
 				<td><button class="opt" onclick="changeNotation()">Notation: {{ getNotationName() }}</button></td>
 				</tr> 
         </table>`
