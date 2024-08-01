@@ -372,6 +372,7 @@ function doPopup(type = "none", text = "This is a test popup.", title = "", time
 		default:
 			popupTitle = "Something Happened?";
 			popupType = "default-popup"
+			// yay!
 			break;
 	}
 	if (title != "") popupTitle = title;

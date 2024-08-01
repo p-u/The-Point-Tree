@@ -77,7 +77,7 @@ function notationChooserMinigame(decimal) {
     }  
 }
 
-function infinityFormat(decimal) { 
+function infinityFormat(decimal) {
     const pow1024 = new Decimal(2).pow(1024);
     if (decimal.lt(pow1024)) {
         return formatWhole(decimal);

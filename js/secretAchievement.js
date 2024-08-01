@@ -358,7 +358,9 @@ addLayer("sa", {
             name: "Reach the leet number",
             done() {
                    if (player.sa.minigameNum.eq(1337)) {
-                       return true
+                        if (hasAchievement("sa", 111)) {
+                            return true
+                        }
                    }
                },
             tooltip() {
@@ -377,7 +379,9 @@ addLayer("sa", {
             name: "Reach the very nice number",
             done() {
                    if (player.sa.minigameNum.eq(69420)) {
-                       return true
+                    if (hasAchievement("sa", 112)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -396,7 +400,9 @@ addLayer("sa", {
             name: "Reach the Dragon Ball Z number",
             done() {
                    if (player.sa.minigameNum.eq(9001)) {
-                       return true
+                    if (hasAchievement("sa", 113)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -415,7 +421,9 @@ addLayer("sa", {
             name: "Reach the Insanity Number (10^69)",
             done() {
                    if (player.sa.minigameNum.eq(1e69)) {
-                       return true
+                    if (hasAchievement("sa", 114)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -434,7 +442,9 @@ addLayer("sa", {
             name: "Reach the ULTIMATE LEET Number",
             done() {
                    if ((player.sa.minigameNum.gte("9.99e1336")) && (player.sa.minigameNum.lte("1.01e1337"))) {
-                       return true
+                    if (hasAchievement("sa", 115)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -580,7 +590,9 @@ addLayer("sa", {
             name: "Reach 0.134765625",
             done() {
                    if (player.sa.minigameNum.eq(0.134765625)) {
-                       return true
+                    if (hasAchievement("sa", 131)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -599,7 +611,9 @@ addLayer("sa", {
             name: "Reach 446.34375",
             done() {
                    if (player.sa.minigameNum.eq(446.34375)) {
-                       return true
+                    if (hasAchievement("sa", 132)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -618,7 +632,9 @@ addLayer("sa", {
             name: "Reach 3.74897119 [some buffer] {When all previous achievements are done, Unlock The LAST HARD ACHIEVEMENT.}",
             done() {
                 if ((player.sa.minigameNum.gte(3.74897)) && (player.sa.minigameNum.lte(3.748972))) {
-                    return true
+                    if (hasAchievement("sa", 133)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -637,7 +653,9 @@ addLayer("sa", {
             name: "Reach 1e-200 and lower.",
             done() {
                 if (player.sa.minigameNum.lte(1e-200)) {
-                    return true
+                    if(hasAchievement("sa", 134) && hasAchievement("sa", 126) && hasAchievement("sa", 116)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -656,7 +674,9 @@ addLayer("sa", {
             name: "Reach 3.029679879579 [some buffer] (Extreme 01/07)",
             done() {
                 if ((player.sa.minigameNum.gte(3.02967987)) && (player.sa.minigameNum.lte(3.02967988))) {
-                    return true
+                    if (hasAchievement("sa", 146)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -675,7 +695,9 @@ addLayer("sa", {
             name: "Even higher (e1M)",
             done() {
                    if (player.sa.minigameNum.gte("ee6")) {
-                       return true
+                    if (hasAchievement("sa", 135)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -694,7 +716,9 @@ addLayer("sa", {
             name: "Even higher (e1B)",
             done() {
                    if (player.sa.minigameNum.gte("ee9")) {
-                       return true
+                    if (hasAchievement("sa", 141)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -713,7 +737,9 @@ addLayer("sa", {
             name: "Even higher (e1 Qt)",
             done() {
                    if (player.sa.minigameNum.gte("ee18")) {
-                       return true
+                    if (hasAchievement("sa", 142)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -732,7 +758,9 @@ addLayer("sa", {
             name: "Even higher (ee75)",
             done() {
                    if (player.sa.minigameNum.gte("ee75")) {
-                       return true
+                    if (hasAchievement("sa", 143)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -751,7 +779,9 @@ addLayer("sa", {
             name: "Even higher (ee200)",
             done() {
                    if (player.sa.minigameNum.gte("ee200")) {
-                       return true
+                    if (hasAchievement("sa", 144)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -770,7 +800,9 @@ addLayer("sa", {
             name: "LAST ACHIEVEMENT WOW FOR MINIGAME (EE500)",
             done() {
                    if (player.sa.minigameNum.gte("ee500")) {
-                       return true
+                    if (hasAchievement("sa", 145)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -789,7 +821,9 @@ addLayer("sa", {
             name: "Reach 8.856444797045 [some buffer] (Extreme 02/07)",
             done() {
                 if ((player.sa.minigameNum.gte(8.8564447970)) && (player.sa.minigameNum.lte(8.8564447971))) {
-                    return true
+                    if (hasAchievement("sa", 136)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -808,7 +842,9 @@ addLayer("sa", {
             name: "Reach pi (wait what, pi??) yes, to 15 digits [3.14159265358979] (Extreme 03/07)",
             done() {
                 if ((player.sa.minigameNum.gte(3.14159265358979)) && (player.sa.minigameNum.lte(3.1415926535898))) {
-                    return true
+                    if (hasAchievement("sa", 151)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -827,7 +863,9 @@ addLayer("sa", {
             name: "Get less than 1.0000000001, and more than 1.000000000001, without using more than 3 pdx.",
             done() {
                 if ((player.sa.minigameNum.lte(1.0000000001)) && (player.sa.minigameNum.gte(1.000000000001)) && (player.sa.pdx.lte(3))) {
-                    return true
+                    if (hasAchievement("sa", 152)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -848,7 +886,9 @@ addLayer("sa", {
                 let MNL = player.sa.minigameNum.layer
                 let MNM = player.sa.minigameNum.mag
                 if ((MNL >= 2) && (MNM < -20)) {
-                    return true
+                    if (hasAchievement("sa", 153)) {
+                        return true
+                    }
                 }
                },
             tooltip() {
@@ -867,7 +907,9 @@ addLayer("sa", {
             name: "Astronomical (ee70k)",
             done() {
                    if (player.sa.minigameNum.gte("ee70000")) {
-                       return true
+                    if (hasAchievement("sa", 154)) {
+                        return true
+                    }
                    }
                },
             tooltip() {
@@ -886,7 +928,9 @@ addLayer("sa", {
             name: "UTTER INSANITY (ee1.5M)",
             done() {
                    if (player.sa.minigameNum.gte("ee1.5e6")) {
-                       return true
+                    if (hasAchievement("sa", 155)) {
+                        return true
+                    }
                    }
                },
             tooltip() {

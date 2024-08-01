@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "basic.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -13,11 +13,25 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.1.2",
+	num: "3.1.4",
 	name: "Sac Strength",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.1.4 </h3><br>
+Updated Break Eternity to latest version! <br>
+Fixed Minigame achievements completing when not shown<br>
+
+<h3>v3.1.3. I'm sorry, but change dp format is now removed, due to unable to change button. DP remains at 8 for standard. </h3><br>
+You can still change your dp though, by going to the console and typing 'options.dp = 10', for example.<br>
+Changed SA13 and SA14 to options, instead of player.<br>
+Changed SA15 and SA16 achievements<br>
+Fixed pi being on everything (minigame)<br>
+Extended Infinity Notation<br>
+Changed infobox placements.<br>
+Added identifying layer things in infobox title.<br>
+Added 5 infoboxes.<br>
+
 <h3>v3.1.2 </h3><br>
 Added an infinity notation. This took a long time.<br>
 Fixed some number formatting issues.<br>
@@ -633,7 +647,7 @@ function getPointGen() {
 	if (inChallenge("sac", 14)) {
 		if (hasUpgrade('e', 143)) gain = gain.times("1e125000")
 		if (hasUpgrade('e', 145)) gain = gain.times("e300000")
-	}
+	} // hi :)
 	if (hasMilestone('sac', 29)) gain = gain.times("e292929")
 	if (hasMilestone('sac', 30)) gain = gain.times("e300000")
 	if (hasUpgrade('e', 92)) gain = gain.times("e350000")
