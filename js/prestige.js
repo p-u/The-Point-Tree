@@ -455,6 +455,7 @@ addLayer("prestige", {
         if (hasUpgrade('e', 152)) mult = mult.times("e100e12")
         if (hasUpgrade('mega', 103)) mult = mult.times("e5e14")
         if (hasUpgrade('era', 95)) mult = mult.times("e6e15")
+        if (hasUpgrade('m', 122)) mult = mult.times("e2e16")
 
         return mult
     },
@@ -494,6 +495,8 @@ addLayer("prestige", {
         if (hasUpgrade('basic', 114)) exp = exp.add(0.09)
         if (hasUpgrade('prestige', 82)) exp = exp.sub(0.05)
         if (hasUpgrade('prestige', 83)) exp = exp.add(0.08)
+        if (hasUpgrade('era', 302)) exp = exp.add(0.04)
+        if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (player.sac.sacstr.gte(2)) exp = exp.add(player.sac.se2)
         return exp
     },
@@ -516,12 +519,16 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 53)) cap = 0.78
         if (hasUpgrade('prestige', 25)) cap = 0.89
         if (hasUpgrade('s', 92)) sc = 0.95
+        if ((inChallenge("m", 11)) && (hasUpgrade("m", 1115))) sc = 1
         softcappedEffect = softcap(eff, new Decimal("e6500"), new Decimal(cap))
         if (hasMilestone('prestige', 8)) spreff = 0.67
         if (hasUpgrade('prestige', 72)) spreff = 0.75
         if (hasUpgrade('s', 95)) spreff = 0.95
+        if ((inChallenge("m", 11)) && (hasUpgrade("m", 1115))) spreff = 1
         softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
         softcappedEffect = softcap(softcappedEffect, new Decimal("ee12"), new Decimal(hcapeff))
+        let inscapeff = 0.2
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e4e18"), new Decimal(inscapeff))
         return softcappedEffect
        },
         effectDescription() {
@@ -535,6 +542,9 @@ addLayer("prestige", {
             }
             if (layerEffect.gte(new Decimal("e1e12")) ) {
                 softcapDescription = " (Hypercapped)"
+            }
+            if (layerEffect.gte(new Decimal("e4e18")) ) {
+                softcapDescription = " (Insanitycapped)"
             }
             let desc = "which is boosting basic points and point fragments by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;

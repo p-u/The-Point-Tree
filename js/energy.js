@@ -175,6 +175,8 @@ addLayer("e", {
         if (hasMilestone('sac', 31)) mult = mult.times(2)
         if (hasUpgrade('e', 151)) mult = mult.times("e30e9")
         if (hasUpgrade('era', 282)) mult = mult.times("e70e9")
+        if (hasUpgrade('s', 121)) mult = mult.times("e1.1e12")
+        if (hasUpgrade('m', 125)) mult = mult.times("e3e13")
         mult = mult.times(buyableEffect('mega', 13))
 
         // supreme
@@ -197,6 +199,7 @@ addLayer("e", {
         if (hasUpgrade('mega', 104)) mult = mult.times("e1e11")
         if (hasUpgrade('era', 145)) mult = mult.times("e5e11")
         if (hasUpgrade('era', 25)) mult = mult.times("e1e12")
+        if (hasAchievement('a', 242)) mult = mult.times("e8.72e12")
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
@@ -213,8 +216,10 @@ addLayer("e", {
         if (hasMilestone('e', 14)) exp = exp.add(0.025)
         if (hasUpgrade('e', 35)) exp = exp.add(buyableEffect('mega', 14))
         if (hasMilestone('e', 21)) exp = exp.add(0.05)
-            if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
-        if (inChallenge('m', 11)) exp = exp.mul(0.4)
+        if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        let expinmc1 = new Decimal(0.4)
+        if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
+        if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
         return exp
     },
     upgrades: {
@@ -905,7 +910,12 @@ addLayer("e", {
     return softcappedEffect
        },
         effectDescription() {
-            let desc = "which is boosting Point Fragments by x" + notationChooser(tmp[this.layer].effect);
+            let softcapDescription = ""
+            let layerEffect = tmp[this.layer].effect
+            if (layerEffect.gte(new Decimal("e7.5e17")) ) {
+                softcapDescription = " (Softcapped)"
+            }
+            let desc = "which is boosting Point Fragments by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;
         },
     row: 4, // Row the layer is in on the tree (0 is the first row)

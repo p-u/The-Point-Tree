@@ -13,11 +13,32 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.1.4",
-	name: "Sac Strength",
+	num: "3.2",
+	name: "Multi Challenge",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.2: Multi-Challenges? Mastery Extension </h3><br>
+Fixed hardcap for Sac Strength effect 1 and 2 (No effect currently) <br>
+Rebalanced Sac Strength effect 3 (future) <br>
+Rebalanced Infobox Layer to show stages <br>
+Recommended Completion of challenges moved to infobox layer instead of on the challenge <br>
+Removed 'Please do not complain' notes in era layer <br>
+Added amount of achievements that you have out of total number <br>
+Added Mastery Point gain per second <br>
+Added pre-1e15 point Point Representation <br>
+Added one more Point Representation (for future update) <br>
+Added more softcaps, and pushed back some <br>
+Added a continuation of a challenge (2nd completion) <br>
+You can get SA32 now if you have not gotten it! <br>
+Endgames now require Era Crystals. <br>
+Added 1 savebank for Pre-MC1x2 <br>
+Added 1 buyable <br>
+Added 42 upgrades [30 is Mastery!] <br>
+Added 2 milestones (with one more gotten from previous update) <br>
+Added 6 achievements, with 4 giving boosts/continuation <br>
+Endgames: 5e163, 6.4e164, 1.6e166, 1.6e167 Era Crystals respectively <br>
+
 <h3>v3.1.4 </h3><br>
 Updated Break Eternity to latest version! <br>
 Fixed Minigame achievements completing when not shown<br>
@@ -761,12 +782,15 @@ function getPointGen() {
 	if (hasUpgrade('s', 115)) gain = gain.times("e50e12")
 	if (hasMilestone('s', 9)) gain = gain.times("e50e12")
 	if (hasUpgrade('w', 84)) gain = gain.times("e10e15")
+	if (hasUpgrade("s", 123)) gain = gain.times("e1e17")
 
 	// mastery
 
 	if (hasUpgrade('m', 53)) gain = gain.times("e70e6")
 	if (hasUpgrade('m', 55)) gain = gain.times("e130e6")
 	if (hasUpgrade('m', 105)) gain = gain.times("e1e15")
+	if (hasUpgrade('m', 1124)) gain = gain.times("e1.17e17")
+	if (hasUpgrade('m', 123)) gain = gain.times("e2.5e17")
 
 
 	// era
@@ -795,6 +819,8 @@ function getPointGen() {
 	if (hasUpgrade("era", 24)) gain = gain.times("e2.4e16")
 	if (hasUpgrade("era", 92)) gain = gain.times("e3e16")
 	if (hasUpgrade("era", 195)) gain = gain.times("e4e16")
+	if (hasUpgrade("era", 225)) gain = gain.times("e5e16")
+	if (hasUpgrade("era", 235)) gain = gain.times("e5e16")
 
 
 	// power (^)
@@ -864,7 +890,10 @@ function getPointGen() {
 	if (hasUpgrade('m', 24)) gain = gain.pow(1.025)
 	if (hasUpgrade('m', 25)) gain = gain.pow(1.05)
 	if (hasAchievement('a', 145)) gain = gain.pow(1.029)
-	if (inChallenge('m', 11)) gain = gain.pow(0.1)
+	let expinmc1 = new Decimal(0.1)
+	if (hasUpgrade("m", 1123)) expinmc1 = new Decimal(0.111)
+	if (hasUpgrade("m", 1133)) expinmc1 = new Decimal(0.12)
+	if (inChallenge('m', 11)) gain = gain.pow(expinmc1)
 	if (inChallenge("m", 11)) {
 		if (hasMilestone("basic", 4)) gain = gain.pow(1.05)
 		if (hasMilestone("sac", 10)) gain = gain.pow(1.05)
@@ -873,6 +902,7 @@ function getPointGen() {
 		if (hasMilestone("e", 17)) gain = gain.pow(1.2)
 		if (hasMilestone("prestige", 9)) gain = gain.pow(1.2)
 		if (hasMilestone("e", 18)) gain = gain.pow(1.3)
+		if (hasUpgrade("m", 1112)) gain = gain.pow(1.05)
 	}
 	if (hasChallenge("m", 11)) gain = gain.pow(1.12)
 	if (hasMilestone('sac', 45)) gain = gain.pow(1.0081)
@@ -936,8 +966,16 @@ function getPointGen() {
 	if (hasUpgrade("w", 83)) gain = gain.pow(1.001)
 	if (hasUpgrade("era", 55)) gain = gain.pow(1.0075)
 	if (hasUpgrade("era", 35)) gain = gain.pow(1.01)
+	if (hasUpgrade("era", 305)) gain = gain.pow(1.01)
 	if (hasMilestone('sac', 102)) gain = gain.pow(1.008)
 	if (hasUpgrade("prestige", 85)) gain = gain.pow(0.99)
+	if (hasUpgrade("s", 125)) gain = gain.pow(1.01)
+	if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) gain = gain.pow(1.038)
+	if ((hasUpgrade('m', 1135)) && inChallenge("m", 11)) gain = gain.pow(1.11)
+	if (inChallenge("m", 11)) gain = gain.pow(buyableEffect('era', 21))
+	if (challengeCompletions("m", 11) == 2) gain = gain.pow(1.0333)
+	if (hasUpgrade("m", 135)) gain = gain.pow(1.015)
+	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);
 	return gain
@@ -949,6 +987,26 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+	function() {
+		if ((player.points.lte(80000))) {
+			return "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(240.49))) + " iPhone XRs."
+		}
+	},
+	function() {
+		if ((player.points.lte(150e6)) && (player.points.gte(80000))) {
+			return "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(800000))) + " homes."
+		}
+	},
+	function() {
+		if ((player.points.lte(180e9)) && (player.points.gte(150e6))) {
+			return "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(1.5e9))) + " Burj Khalifas."
+		}
+	},
+	function() {
+		if ((player.points.lte(1e15)) && (player.points.gte(180e9))) {
+			return "If every point was a US Dollar, then you can buy approximately " + notationChooser(player.points.div(new Decimal(1.5e9))) + " Moons."
+		}
+	},
 	function() {
 		if ((player.points.lte(1e17)) && (player.points.gte(1e15))) {
 			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(3800000000))) + " fermions."
@@ -1014,8 +1072,13 @@ var displayThings = [
 		}
 	},
 	function() {
-		if (player.points.gte("e434250720000000000")) {
+		if ((player.points.gte("e434250720000000000")) && (player.points.lte("e1.36945307e25"))){
 			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(434250720000000000)) + " times the current universe age. That's a lot of time!"
+		}
+	},
+	function() {
+		if ((player.points.gte("e1.36945307e25"))){
+			return "If you write 1 number per year, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(1.36945307e25)) + " times the current universe age. That's a lot of time!"
 		}
 	},
 ]

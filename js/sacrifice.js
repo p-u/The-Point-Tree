@@ -51,6 +51,7 @@ addLayer("sac", {
                 "main-display",
                 "blank",
                 "blank",
+                ["display-text", "Look inside Info layer to see recommended completion of Sacrifice Challenges!"],
                 "blank",
                 "challenges",
             ],
@@ -99,7 +100,7 @@ addLayer("sac", {
                         return a
                     }
                 ],
-                ["display-text", "Formula: log1.234(SS+0.5)/30, with cap at +^1"],
+                ["display-text", "Formula: log1.234(SS+0.5)/30, with cap at +^0.5"],
                 "blank",
                 "blank",
                 ["display-text",
@@ -116,7 +117,7 @@ addLayer("sac", {
                     function(){
                         let a = ""
                         if (player.sac.sacstr.gte(2)) {
-                            a = a + "Formula: log1.275(SS-1)/33, with cap at +^1"
+                            a = a + "Formula: log1.275(SS-1)/33, with cap at +^0.5"
                         }
                         return a
                     }
@@ -136,8 +137,8 @@ addLayer("sac", {
                 ["display-text",
                     function(){
                         let a = ""
-                        if (player.sac.sacstr.gte(2)) {
-                            a = a + "Formula: (log2.2(SS-2.5)+1)/50, with cap at ^1.4"
+                        if (player.sac.sacstr.gte(5)) {
+                            a = a + "Formula: (log2.2(SS-3))/50, with cap at ^1.4"
                         }
                         return a
                     }
@@ -780,6 +781,18 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(140000)},
             done() { return player["sac"].points.gte(175000) }
         },
+        105: {
+            requirementDescription: "Sacrifice 250,000",
+            effectDescription: "Autobuy Era Buyable 3.",
+            unlocked() {return player["sac"].points.gte(200000)},
+            done() { return player["sac"].points.gte(250000) }
+        },
+        106: {
+            requirementDescription: "Sacrifice 333,333",
+            effectDescription: "xe3.33e18 Basic Points",
+            unlocked() {return player["sac"].points.gte(200000)},
+            done() { return player["sac"].points.gte(250000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -845,26 +858,26 @@ addLayer("sac", {
         }
 
         if (player.sac.points.gte(50000)) { 
-            player.sac.se1 = player.sac.sacstr.add(0.5).log(1.234).div(30).min(2)
+            player.sac.se1 = player.sac.sacstr.add(0.5).log(1.234).div(30).min(0.5)
         } else {
             player.sac.se1 = new Decimal(1)
         }
 
         if (player.sac.sacstr.gte(2)) { 
-            player.sac.se2 = player.sac.sacstr.sub(0.75).log(1.275).div(33).min(2)
+            player.sac.se2 = player.sac.sacstr.sub(0.75).log(1.275).div(33).min(0.5)
         } else {
             player.sac.se2 = new Decimal(0)
         }
 
         if (player.sac.sacstr.gte(5)) { 
-            player.sac.se3 = player.sac.sacstr.sub(2.5).log(2.2).div(50).add(1).min(1.4)
+            player.sac.se3 = player.sac.sacstr.sub(3).log(2.2).div(50).min(1.4)
         } else {
             player.sac.se3 = new Decimal(1)
         }
     },
     challenges: {
         11: {
-            name: "Sac Challenge 1 [Recommended Having 'The last of it all' achievement",
+            name: "Sac Challenge 1",
             challengeDescription: "^0.5 Point Fragments",
             canComplete: function() {return player.points.gte("e516500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
             goalDescription: "Get e516.5K PF.",
@@ -872,7 +885,7 @@ addLayer("sac", {
         },
         12: {
             name: "Sac Challenge 2",
-            challengeDescription: "Basic Upgrades 8,10 gives no boost. [Recommended Sac 21]",
+            challengeDescription: "Basic Upgrades 8,10 gives no boost.",
             canComplete: function() {return player.points.gte("e1552500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
             goalDescription: "Get e1,552,500 PF.",
             rewardDescription: "xe75K PF",
@@ -880,7 +893,7 @@ addLayer("sac", {
         },
         13: {
             name: "Sac Challenge 3",
-            challengeDescription: "^0.1 PF. [Recommended Sac 24]",
+            challengeDescription: "^0.1 PF.",
             canComplete: function() {return player.points.gte("e191200") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
             goalDescription: "Get e191,200 PF.",
             rewardDescription: "xe400K PF",
@@ -888,7 +901,7 @@ addLayer("sac", {
         },
         14: {
             name: "Sac Challenge 4",
-            challengeDescription: "All layers ^0.5. [Recommended Sac 28]",
+            challengeDescription: "All layers ^0.5.",
             canComplete: function() {return player.points.gte("e3153153") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))}, 
             goalDescription: "Get e3,153,153 PF.", 
             rewardDescription: "^1.015 PF, xe20 Energy",

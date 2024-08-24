@@ -264,6 +264,9 @@ addLayer("sa", {
                         return true
                     }
                  }
+                 if (hasAchievement("a", 243)) {
+                    return true
+                 }
                 },
             tooltip() {
                 if (hasAchievement('sa', 32)) {
@@ -277,7 +280,7 @@ addLayer("sa", {
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e5.011135425235e19")) {
+                   if (player.era.ec.gte("5e163")) {
                        return true
                    }
                },
@@ -293,7 +296,7 @@ addLayer("sa", {
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e5.01113542524e19")) {
+                   if (player.era.ec.gte("6.4e164")) {
                        return true
                    }
                },
@@ -309,7 +312,7 @@ addLayer("sa", {
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e5.011135425243e19")) {
+                   if (player.era.ec.gte("1.6e166")) {
                        return true
                    }
                },
@@ -325,7 +328,7 @@ addLayer("sa", {
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e5.011135425246e19")) {
+                   if (player.era.ec.gte("1.6e167")) {
                        return true
                    }
                },

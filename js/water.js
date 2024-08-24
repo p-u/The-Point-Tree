@@ -72,6 +72,7 @@ addLayer("w", {
                 if (hasUpgrade('w', 52)) w3exp = 0.175
                 if (hasUpgrade('s', 25)) w3exp = new Decimal(0.2)
                 if (hasUpgrade('era', 252)) w3exp = new Decimal(0.225)
+                if (hasUpgrade('s', 122)) w3exp = new Decimal(0.237)
                 return player["w"].points.add(1).pow(w3exp)
             },
             effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -174,7 +175,7 @@ addLayer("w", {
         },
         54: {
             title: "Break Infinity",
-            description: "^1.011 PF",
+            description: "^1.011 PF, x100 Mastery Points if have Mastery Challenge 1",
             cost: new Decimal(5e307),
             unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 53) },
         },
@@ -335,6 +336,7 @@ addLayer("w", {
         if (hasUpgrade('w', 81)) mult = mult.times("e10e9")
         if (hasUpgrade('w', 83)) mult = mult.times("e10e9")
         if (hasUpgrade('era', 93)) mult = mult.times("e50e9")
+        if (hasUpgrade('s', 121)) mult = mult.times("e50e9")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
 
         
@@ -355,6 +357,7 @@ addLayer("w", {
         if (hasUpgrade('w', 83)) exp = exp.add(0.1)
         if (hasMilestone('w', 5)) exp = exp.add(0.1)
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
+        if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -368,11 +371,16 @@ addLayer("w", {
         if (hasUpgrade("era", 133)) weffpow = 17.5
         let eff = player.w.points.add(1).pow(weffpow)
         let cap = 0.3
-        softcappedEffect = softcap(eff, new Decimal("e1e15"), new Decimal(cap))
+        softcappedEffect = softcap(eff, new Decimal("e5e13"), new Decimal(cap))
         return softcappedEffect
            },
             effectDescription() {
-                let desc = "which is boosting Energy by x" + notationChooser(tmp[this.layer].effect);
+                let softcapDescription = ""
+                let layerEffect = tmp[this.layer].effect
+                if (layerEffect.gte(new Decimal("e5e13")) ) {
+                    softcapDescription = " (Softcapped)"
+                }
+                let desc = "which is boosting Energy by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
                 return desc;
             },
     row: 5, // Row the layer is in on the tree (0 is the first row)

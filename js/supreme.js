@@ -287,11 +287,12 @@ addLayer("s", {
             cost: new Decimal(1.7e19),
             unlocked() { return hasUpgrade("mega", 84) && hasUpgrade("s", 44) },
             effect() {
-                let c9exp = 0.0325
-                if (hasUpgrade('m', 32)) c9exp = new Decimal(0.075)
-                if (hasUpgrade('s', 25)) c9exp = new Decimal(0.115)
-                if (hasUpgrade('era', 251)) c9exp = new Decimal(0.14)
-                return player["s"].points.add(1).pow(c9exp)
+                let cxexp = 0.0325
+                if (hasUpgrade('m', 32)) cxexp = new Decimal(0.075)
+                if (hasUpgrade('s', 25)) cxexp = new Decimal(0.115)
+                if (hasUpgrade('era', 251)) cxexp = new Decimal(0.14)
+                if (hasUpgrade('s', 122)) cxexp = new Decimal(0.165)
+                return player["s"].points.add(1).pow(cxexp)
             },
             effectDisplay() {
                 let softcapDescription = ""
@@ -645,6 +646,38 @@ addLayer("s", {
             cost: new Decimal("5e424451358"),
             unlocked() { return hasUpgrade("s", 105) && hasMilestone("sac", 87) },
         },
+
+
+        121: {
+            title: "Even Bias",
+            description: "All Even Layer# are boosted. [Reb, Mega, Energy, Water, Era]",
+            cost: new Decimal("e5.38789735353e12"),
+            unlocked() { return hasUpgrade("s", 115) && hasUpgrade("era", 305) },
+        },
+        122: {
+            title: "Hycomp",
+            description: "Compounding 9-11 is stronger.",
+            cost: new Decimal("e5.685027196305e12"),
+            unlocked() { return hasUpgrade("s", 121) && hasUpgrade("era", 305) },
+        },
+        123: {
+            title: "yay ig",
+            description: "xe1e17 PF!!",
+            cost: new Decimal("e5.8231486151189e12"),
+            unlocked() { return hasUpgrade("s", 122) && hasUpgrade("era", 305) },
+        },
+        124: {
+            title: "Super Unoriginal Title, yea",
+            description: "Oh yea, I forgot to bring the boost to you. It's err... +^0.01 SB5 cap? well, hope that's op enough for you",
+            cost: new Decimal("e6.4666410712209e12"),
+            unlocked() { return hasUpgrade("s", 123) && hasUpgrade("era", 305) },
+        },
+        125: {
+            title: "Finaling ro twel fff",
+            description: "Something imminent is coming up. ^1.01 PF.",
+            cost: new Decimal("e6.72782802933975e12"),
+            unlocked() { return hasUpgrade("s", 124) && hasUpgrade("era", 305) },
+        },
     },
     buyables: {
     11: {
@@ -678,6 +711,7 @@ addLayer("s", {
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(333))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(40000))
             if (hasUpgrade('era', 221)) base2 = x.mul(new Decimal(225000))
+            if (hasUpgrade('m', 114)) base2 = x.mul(new Decimal(1e6))
             if (hasUpgrade("w", 82)) base2 = base2.pow(1.3)
             if (hasUpgrade("era", 75)) base2 = base2.pow(1.1)
             let expo = new Decimal(1.001)
@@ -745,6 +779,7 @@ addLayer("s", {
             let base2 = x
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(123))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(12345))
+            if (hasUpgrade('m', 114)) base2 = x.mul(new Decimal(33333))
             if (hasUpgrade("w", 82)) base2 = base2.pow(1.4)
             if (hasUpgrade("era", 75)) base2 = base2.pow(1.15)
             let expo = new Decimal(1.005)
@@ -782,6 +817,7 @@ addLayer("s", {
             let base2 = x
             if (hasUpgrade('era', 44)) base2 = x.mul(new Decimal(100))
             if (hasUpgrade('s', 35)) base2 = x.mul(new Decimal(10000))
+            if (hasUpgrade('m', 114)) base2 = x.mul(new Decimal(40000))
             if (hasUpgrade("w", 82)) base2 = base2.pow(1.5)
             if (hasUpgrade("era", 75)) base2 = base2.pow(1.1)
             let expo = new Decimal(1.005)
@@ -873,6 +909,10 @@ addLayer("s", {
             if(hasUpgrade("era", 134)) hcap = hcap.add(0.01)
             if(hasMilestone("sac", 104)) hcap = hcap.add(0.01)
             if(hasMilestone("s", 10)) hcap = hcap.add(0.01)
+            if(hasUpgrade("s", 124)) hcap = hcap.add(0.01)
+            if(hasUpgrade("m", 112)) hcap = hcap.add(0.01)
+            if (hasAchievement("a", 246)) hcap = hcap.add(0.01)
+            if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) hcap = hcap.add(0.038)
         if (eff.gte(hcap)) eff = hcap
         return eff
     },
@@ -903,6 +943,7 @@ addLayer("s", {
         if (hasMilestone('sac', 63)) mult = mult.times(13.5)
         if (hasUpgrade('s', 75)) mult = mult.times(upgradeEffect('s', 75))
         if (hasUpgrade('mega', 105)) mult = mult.times("e50e9")
+        if (hasUpgrade('m', 121)) mult = mult.times("e1e12")
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)
@@ -919,6 +960,7 @@ addLayer("s", {
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
             if (hasUpgrade('era', 273)) exp = exp.add(0.125)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
+        if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
         return exp
     },
     row: 5, // Row the layer is in on the tree (0 is the first row)

@@ -6,6 +6,7 @@ addLayer("m", {
         return {
             unlocked: true,
 		    points: new Decimal(0),
+            mpps: new Decimal(0),
         }
     },
     layerShown(){
@@ -28,6 +29,14 @@ addLayer("m", {
             content: [
                 "main-display",
                 "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "You are gaining " + notationChooser(player.m.mpps) + " Mastery Points a second."
+                        return a
+                    }
+                ],
+                "blank",
                 "blank",
                 "upgrades",
             ],
@@ -37,6 +46,7 @@ addLayer("m", {
                 "main-display",
                 "blank",
                 "blank",
+                ["display-text", "Look inside Info layer to see recommended completion of Mastery Challenges (Pre-Era and Post-Era)!"],
                 "blank",
                 "challenges",
             ],
@@ -164,6 +174,7 @@ addLayer("m", {
             effect() {
                 let mmp6exp = 0.111
                 if (hasUpgrade('m', 72)) mmp6exp = 0.139
+                if (hasUpgrade('s', 122)) mmp6exp = 0.157
                 return player["m"].points.add(1).pow(mmp6exp)
             },
             effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -343,6 +354,7 @@ addLayer("m", {
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 102)) },
             effect() {
                 let ectomasteryexp = 0.06
+                if ((inChallenge("m", 11)) && (hasUpgrade("m", 1114))) ectomasteryexp = 0.1
                 return player["era"].ec.add(1).pow(ectomasteryexp).log(1.8)
             },
             effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -359,22 +371,217 @@ addLayer("m", {
             cost: new Decimal(2e41), 
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 104)) },
         },
+        111: {
+            title: "BB [Buyable Boost] I",
+            description: "Mega Buyable 2 is stronger. [Every set of upgrades has a combo of x10 Mastery Points]",
+            cost: new Decimal(5e58), 
+            unlocked() { return ((challengeCompletions("m", 11) == 2) && hasUpgrade("m", 105)) },
+        },
+        121: {
+            title: "MM 6",
+            description: "xee12 Supreme Points",
+            cost: new Decimal(3.8e58), 
+            unlocked() { return ((challengeCompletions("m", 11) == 2) && hasUpgrade("m", 105)) },
+        },
+        131: {
+            title: "PU 6",
+            description: "+^0.0125 Basic Points",
+            cost: new Decimal(4.5e58), 
+            unlocked() { return ((challengeCompletions("m", 11) == 2) && hasUpgrade("m", 105)) },
+        },
+        112: {
+            title: "BB II",
+            description: "SB5 HC +^0.01",
+            cost: new Decimal(6e59), 
+            unlocked() { return ((hasUpgrade("m", 111)) && (hasUpgrade("m", 121)) && (hasUpgrade("m", 131))) },
+        },
+        122: {
+            title: "MM VII",
+            description: "xe2e16 Pres Pts",
+            cost: new Decimal(6e59), 
+            unlocked() { return ((hasUpgrade("m", 111)) && (hasUpgrade("m", 121)) && (hasUpgrade("m", 131))) },
+        },
+        132: {
+            title: "PU 7",
+            description: "+^0.015 Basic Points",
+            cost: new Decimal(7e59), 
+            unlocked() { return ((hasUpgrade("m", 111)) && (hasUpgrade("m", 121)) && (hasUpgrade("m", 131))) },
+        },
+        113: {
+            title: "BB III",
+            description: "Era Buyable 3 Mastery Points boost is stronger (^0.3 to ^0.4)",
+            cost: new Decimal(1.11e63), 
+            unlocked() { return  ((hasUpgrade("m", 112)) && (hasUpgrade("m", 122)) && (hasUpgrade("m", 132))) },
+        },
+        123: {
+            title: "MM VIII",
+            description: "xe2.5e17 Point Fragments",
+            cost: new Decimal(8.4e64), 
+            unlocked() { return ((hasUpgrade("m", 112)) && (hasUpgrade("m", 122)) && (hasUpgrade("m", 132))) },
+        },
+        133: {
+            title: "PU 2^3",
+            description: "^1.03 Era Crystals",
+            cost: new Decimal(6.4e64), 
+            unlocked() { return ((hasUpgrade("m", 112)) && (hasUpgrade("m", 122)) && (hasUpgrade("m", 132))) },
+        },
+        114: {
+            title: "BBIV",
+            description: "Supreme Buyables 1,3,4 are stronger",
+            cost: new Decimal(3e66), 
+            unlocked() { return  ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+        124: {
+            title: "MMIX",
+            description: "xe3e15 MP",
+            cost: new Decimal(3e66), 
+            unlocked() { return ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+        134: {
+            title: "PU 2^3 +1 / 3^2",
+            description: "+^0.03 Rebirth Points",
+            cost: new Decimal(3e66), 
+            unlocked() { return ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+        115: {
+            title: "BB V",
+            description: "Supreme Buyables 1,3,4 are stronger",
+            cost: new Decimal(3.75e67), 
+            unlocked() { return  ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+        125: {
+            title: "MM 2x5",
+            description: "xe1e14 Energy",
+            cost: new Decimal(3.5e67), 
+            unlocked() { return ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+        135: {
+            title: "PU X",
+            description: "^1.015 PF",
+            cost: new Decimal(4e67), 
+            unlocked() { return ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+
+        1111: {
+            title: "The Second Completion",
+            description: "In mastery challenges, reduce EC and Mastery Points nerf from ^0.1 to ^0.12",
+            cost: new Decimal(250000), 
+            unlocked() { return (inChallenge("m", 11) && hasAchievement("a", 243)) },
+        },
+        1112: {
+            title: "Choose [1]",
+            description: "^1.05 PF. x1.2 Mastery Points",
+            cost: new Decimal(700000), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1111)) },
+        },
+        1113: {
+            title: "Choose [2]",
+            description: "+^0.15 SP and Water. x1.3 Mastery Points",
+            cost: new Decimal(750000), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1111)) },
+        },
+        1114: {
+            title: "Choose [3]",
+            description: "EC boosts Mastery much more",
+            cost: new Decimal(800000), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1111)) },
+        },
+        1115: {
+            title: "Choose [4]",
+            description: "Reduce Prestige Softcap. x1.5 Mastery Points",
+            cost: new Decimal(900000), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1111)) },
+        },
+        1121: {
+            title: "Less Nerfage",
+            description: "In mastery challenges, reduce EC and Mastery Points nerf from ^0.12 to ^0.14",
+            cost: new Decimal(1e6), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1112) && hasUpgrade("m", 1113) && hasUpgrade("m", 1114) && hasUpgrade("m", 1115)) },
+        },
+        1122: {
+            title: "Even Less Nerfage",
+            description: "In mastery challenges, reduce EC and Mastery Points nerf from ^0.14 to ^0.16",
+            cost: new Decimal(7e6), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1121)) },
+        },
+        1123: {
+            title: "Just MORE.",
+            description: "In mastery challenges, reduce PF nerf from ^0.1 to ^0.111",
+            cost: new Decimal(1.6e8), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1122)) },
+        },
+        1124: {
+            title: "BOOST of PF",
+            description: "xe1.17e17 PF",
+            cost: new Decimal(2.5e8), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1123)) },
+        },
+        1125: {
+            title: "Hyper Less Nerfage",
+            description: "In MC1, reduce Mastery Points nerf from ^0.16 to ^0.2!",
+            cost: new Decimal(2.75e8), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1124)) },
+        },
+        1131: {
+            title: "Powering Intelligence",
+            description: "+^0.05 Basic-Mega Points",
+            cost: new Decimal(1.2e10), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1125)) },
+        },
+        1132: {
+            title: "Less electric boundaries",
+            description: "In MC1, reduce Energy nerf from ^0.4 to ^0.75!",
+            cost: new Decimal(1.4e10), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1131)) },
+        },
+        1133: {
+            title: "Tri-Less Nerfage",
+            description: "In MC1, reduce PF nerf from ^0.111 to ^0.12, Mastery Points from ^0.2 to ^0.23 and EC from ^0.16 to ^0.18!",
+            cost: new Decimal(1.5e10), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1132)) },
+        },
+        1134: {
+            title: "2^38",
+            description: "+0.038 SB5 cap, ^1.038 PF, Increase Era Buyable 4 softcap start to 38",
+            cost: new Decimal(2).pow(38), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1133)) },
+        },
+        1135: {
+            title: "The Last MC1x2 Upgrade",
+            description: "^1.11 PF",
+            cost: new Decimal(7.5e11), 
+            unlocked() { return (inChallenge("m", 11) && hasUpgrade("m", 1134)) },
+        },
     },
     challenges: {
         11: {
-            name: "Mastery Challenge 1. [OP Reward] [Need Ach 146]",
+            name: "Mastery Challenge 1. [OP Reward]",
             challengeDescription: "^0.1 PF, ^0.2 BP to MP, ^0.1 Mastery Points, ^0.4 Energy to SP",
-            canComplete: function() {return player.points.gte("e29880000")},
-            goalDescription: "Get e29.88M PF.",
-            rewardDescription: "Unlock new Mastery Upgrades and x100 Mastery Points [Only after WU54 bought], ^1.12 PF"
+            goal(){
+                if (challengeCompletions("m", 11) == 0) return new Decimal("e29880000");
+                if (challengeCompletions("m", 11) == 1) return new Decimal("e2.1649521425112e19"); // placeholder
+            },
+            currencyDisplayName: "points",
+            completionLimit: 2,
+            rewardDescription() {
+                let rd = "First Completion: Unlock new Mastery Upgrades, a BIG exponent to PF gain."
+                if (challengeCompletions("m", 11) == 1) rd = rd + " Second Completion: Unlock more Mastery Upgrades, ^1.0333 PF, x1e9 Mastery Points."
+                return rd
+            },
+            onEnter() {
+                player.m.points = new Decimal(0)
+            }
         },
         12: {
-            name: "Mastery Challenge 2. [Need Ach 182]",
+            name: "Mastery Challenge 2.",
             challengeDescription: "Sacrifice Cost Scaling is now increased from 3.6 to 7.5 exponent.",
             canComplete: function() {return player.points.gte("e81643000000")},
             goalDescription: "Get e81.643B PF.",
             rewardDescription: "Unlock new Mastery Upgrades and x10,000 Mastery Points, Sac Scaling decreased to 3.5, but you cannot enter sacrifice challenges",
             unlocked() { return hasAchievement("a", 182) },
+            onEnter() {
+                player.m.points = new Decimal(0)
+            }
         },
     },
     gainMult() { // Prestige multiplier
@@ -408,13 +615,36 @@ addLayer("m", {
         if (hasUpgrade('m', 74)) mult = mult.times(420)
         if (hasMilestone('sac', 93)) mult = mult.times(1e10)
         if (hasUpgrade('m', 103)) mult = mult.times(upgradeEffect('m', 103))
-        if (hasAchievement('a', 232)) mult = mult.times(buyableEffect('era', 13).pow(0.3))
+        let mpow = new Decimal(0.3)
+        if (hasUpgrade("m", 113)) mpow = new Decimal(0.4)
+        if (hasAchievement('a', 232)) mult = mult.times(buyableEffect('era', 13).pow(mpow))
+        if (inChallenge("m", 11)) {
+            if (hasUpgrade("m", 1112)) mult = mult.times(1.2)
+            if (hasUpgrade("m", 1113)) mult = mult.times(1.3)
+            if (hasUpgrade("m", 1115)) mult = mult.times(1.5)
+        }
+        if (challengeCompletions("m", 11) == 2) mult = mult.times(1e9)
+        if ((hasUpgrade("m", 111)) && (hasUpgrade("m", 121)) && (hasUpgrade("m", 131))) mult = mult.times(10)
+        if ((hasUpgrade("m", 112)) && (hasUpgrade("m", 122)) && (hasUpgrade("m", 132))) mult = mult.times(10)
+        if ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) mult = mult.times(10)
+        if ((hasUpgrade("m", 114)) && (hasUpgrade("m", 124)) && (hasUpgrade("m", 134))) mult = mult.times(10)
+        if ((hasUpgrade("m", 115)) && (hasUpgrade("m", 125)) && (hasUpgrade("m", 135))) mult = mult.times(10)
+        if (hasAchievement('a', 245)) mult = mult.times(61)
+        if (inChallenge("m", 11)) mult = mult.pow(buyableEffect('era', 21))
+        player.m.mpps = mult
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
-        if (inChallenge('m', 11)) exp = exp.mul(0.1)
+        let expinmc1 = new Decimal(0.1)
+        if (hasUpgrade("m", 1111)) expinmc1 = new Decimal(0.12)
+        if (hasUpgrade("m", 1121)) expinmc1 = new Decimal(0.14)
+        if (hasUpgrade("m", 1122)) expinmc1 = new Decimal(0.16)
+        if (hasUpgrade("m", 1125)) expinmc1 = new Decimal(0.2)
+        if (hasUpgrade("m", 1133)) expinmc1 = new Decimal(0.23)
+        if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
+        player.m.mpps = player.m.mpps.pow(exp)
         return exp
     },
     branches: ["s", "sac", "w"],

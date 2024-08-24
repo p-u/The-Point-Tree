@@ -709,6 +709,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(1e6))
                 if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(1e10))
                 if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(1e13))
+                if (hasUpgrade("m", 115)) base2 = x.mul(new Decimal(1e14))
                 let expo = new Decimal(1.005)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -749,6 +750,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 43)) base2 = x.mul(new Decimal(400000))
                 if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(6e9))
                 if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(4e12))
+                if (hasUpgrade("m", 111)) base2 = x.mul(new Decimal(2.5e13))
                 let expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -880,6 +882,9 @@ addLayer("mega", {
         if (hasUpgrade('era', 224)) mult = mult.times("e750e9")
         if (hasUpgrade('mega', 103)) mult = mult.times("e5e13")
         if (hasUpgrade('era', 94)) mult = mult.times("e8e14")
+        if (hasUpgrade('era', 304)) mult = mult.times("e2.1e15")
+        if (hasUpgrade('s', 121)) mult = mult.times("e6e14")
+        if (hasUpgrade('m', 124)) mult = mult.times("e3e15")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         return mult
@@ -923,6 +928,7 @@ addLayer("mega", {
         if (hasMilestone("sac", 100)) exp = exp.add(player.sac.se1)
         if (hasUpgrade('prestige', 81)) exp = exp.sub(0.03)
         if (hasUpgrade('prestige', 82)) exp = exp.add(0.08)
+        if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
@@ -933,12 +939,14 @@ addLayer("mega", {
         let eff = player.mega.points.add(1).pow(effectBoost)
         let cap = 0.3
         let sprcap = 0.5
+        let hypcap = 0.4
         if (hasUpgrade('mega', 81)) cap = 0.45
         if (hasUpgrade('mega', 83)) cap = 0.6125
         if (hasUpgrade('m', 91)) cap = 0.825
         softcappedEffect = softcap(eff, new Decimal("e30000"), new Decimal(cap))
         if (hasUpgrade('era', 264)) sprcap = 0.565
         softcappedEffect = softcap(softcappedEffect, new Decimal("e500e9"), new Decimal(sprcap))
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e5e17"), new Decimal(hypcap))
         return softcappedEffect
        },
         effectDescription() {
@@ -949,6 +957,9 @@ addLayer("mega", {
             }
             if (layerEffect.gte(new Decimal("e500e9")) ) {
                 softcapDescription = " (Supercapped)"
+            }
+            if (layerEffect.gte(new Decimal("e5e17")) ) {
+                softcapDescription = " (Hypercapped)"
             }
             let desc = "which is boosting all previous reset layers by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;

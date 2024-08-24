@@ -53,7 +53,7 @@ addLayer("i", {
                 ["infobox", "catch"],
             ],
         },
-        "Basic Layer": {
+        "Pre-Sacrifice Layers [Early-game]": {
             content: [
                 ["infobox", "basic"],
                 "blank",
@@ -67,25 +67,7 @@ addLayer("i", {
                 ["infobox", "mega"],
             ],
         },
-        "Rebirth Layer": {
-            unlocked() { return player.rebirth.points.gte(1)},
-            content: [
-                ["infobox", "reb"],
-            ],
-        },
-        "Prestige Layer": {
-            unlocked() { return player.prestige.points.gte(1)},
-            content: [
-                ["infobox", "pres"],
-            ],
-        },
-        "Mega Layer": {
-            unlocked() { return player.mega.points.gte(1)},
-            content: [
-                ["infobox", "mega"],
-            ],
-        },
-        "Sacrifice and Energy Layer": {
+        "Sacrifice to Pre-Era [Mid-game]": {
             unlocked() { return player.sac.points.gte(1)},
             content: [
                 ["infobox", "sac"],
@@ -95,31 +77,36 @@ addLayer("i", {
                 "blank",
                 "blank",
                 ["infobox", "dimshift"],
-            ],
-        },
-        "Supreme and Water Layer": {
-            unlocked() { return player.s.points.gte(1)},
-            content: [
+                "blank",
+                "blank",
                 ["infobox", "supreme"],
                 "blank",
                 "blank",
                 ["infobox", "water"],
-            ],
-        },
-        "Mastery": {
-            unlocked() { return player.m.points.gte(1)},
-            content: [
+                "blank",
+                "blank",
                 ["infobox", "mastery"],
-                "blank",
-                "blank",
             ],
         },
-        "Era": {
+        "Era to Endgame [Late-game]": {
             unlocked() { return player.era.points.gte(1)},
             content: [
                 ["infobox", "era"],
                 "blank",
                 "blank",
+                ["infobox", "combo"],
+            ],
+        },
+        "Recommended Completion of challenges": {
+            unlocked() { return player.sac.points.gte(15)},
+            content: [
+                ["infobox", "sacrecenter"],
+                "blank",
+                "blank",
+                ["infobox", "mastrecenter"],
+                "blank",
+                "blank",
+                ["infobox", "mastrecenterpera"],
             ],
         },
     },
@@ -236,7 +223,7 @@ addLayer("i", {
         },
         era: {
             title: "The Era Layer [NO SHORT FORM]",
-            body() { return "You will progress for a long time here, scrolling through upgrades, getting extensions, and occasionally unlocking new features. Most of the info of the layer is found in the Era Infobox, but Era 4+ info will be found here!" },
+            body() { return "You will progress for a long time here, scrolling through upgrades, getting extensions, and occasionally unlocking new features. Most of the info of the layer is found in the Era Infobox, but Era 3+ info will be found here!" },
             unlocked() { return player.era.points.gte(new Decimal("1"))}
         },
         catch: {
@@ -248,6 +235,21 @@ addLayer("i", {
             title: "Combos!",
             body() { return "Era 3 new feature: Combos. Combos happen when all of shown upgrades are bought, and give a boost." },
             unlocked() { return hasUpgrade("era", 105)}
+        },
+        sacrecenter: {
+            title: "Recommended (Intended) enter period of Sacrifice Challenges",
+            body() { return "Sac Challenge 1: Sac 15, have Ach 86. Sac Challenge 2: Sac 21. Sac Challenge 3: Sac 24. Sac Challenge 4: Sac 28" },
+            unlocked() { return player.sac.points.gte(new Decimal("15"))}
+        },
+        mastrecenter: {
+            title: "[Pre-Era] Intended Enter Period of Mastery Challenges",
+            body() { return "Mastery Challenge 1: Sac 15, have Ach 146. Mastery Challenge 2: Ach 182" },
+            unlocked() { return hasUpgrade('m', 11)}
+        },
+        mastrecenterpera: {
+            title: "[Era 3 and Beyond] Intended Enter Period of Mastery Challenges",
+            body() { return "Mastery Challenge 1x2: Ach 63 in Achievements [2] tab" },
+            unlocked() { return hasMilestone('era', 3)}
         },
     },
 }, 

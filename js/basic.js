@@ -721,6 +721,8 @@ addLayer("basic", {
         if (hasUpgrade('era', 171)) mult = mult.times("e50e12")
         if (hasUpgrade('era', 283)) mult = mult.times("e1.25e16")
         if (hasUpgrade('mega', 102)) mult = mult.times("e5e16")
+        if (hasUpgrade('era', 303)) mult = mult.times("e7.1e17")
+        if (hasMilestone('sac', 106)) mult = mult.times("e3.33e18")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -751,6 +753,9 @@ addLayer("basic", {
         if (hasUpgrade('era', 231)) exp = exp.add(0.025)
         if (hasUpgrade('prestige', 84)) exp = exp.sub(0.011)
         if (hasUpgrade('prestige', 85)) exp = exp.add(0.06)
+        if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
+        if (hasUpgrade('m', 131)) exp = exp.add(0.0125)
+        if (hasUpgrade('m', 132)) exp = exp.add(0.015)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },
