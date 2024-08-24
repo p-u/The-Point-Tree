@@ -559,7 +559,7 @@ addLayer("m", {
             challengeDescription: "^0.1 PF, ^0.2 BP to MP, ^0.1 Mastery Points, ^0.4 Energy to SP",
             goal(){
                 if (challengeCompletions("m", 11) == 0) return new Decimal("e29880000");
-                if (challengeCompletions("m", 11) == 1) return new Decimal("e2.1649521425112e19"); // placeholder
+                if (challengeCompletions("m", 11) == 1) return new Decimal("e1.9302786560611e19"); // placeholder
             },
             currencyDisplayName: "points",
             completionLimit: 2,
