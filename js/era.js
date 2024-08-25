@@ -554,7 +554,7 @@ addLayer("era", {
         121: {
             title: "ErUp 16A",
             description: "xe10B MP",
-            cost: new Decimal(2.25e12),
+            cost: new Decimal(2e12),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -564,7 +564,7 @@ addLayer("era", {
         125: {
             title: "ErUp 16B",
             description: "xe1T PF",
-            cost: new Decimal(2.25e12),
+            cost: new Decimal(2.2e12),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -605,7 +605,7 @@ addLayer("era", {
             title: "ErUp 19",
             description: "Extend Rebirth Upgrades, ^1.006 PF",
             branches: ['142', '151', '152', '153', '154', '155'],
-            cost: new Decimal(1.8e13),
+            cost: new Decimal(1.6e13),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -614,7 +614,7 @@ addLayer("era", {
         142: {
             title: "ErUp 20",
             description: "Sac scaling is weaker",
-            cost: new Decimal(2.4e14),
+            cost: new Decimal(2.2e14),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -660,7 +660,7 @@ addLayer("era", {
         151: {
             title: "ErUp 24B",
             description: "+^0.05 MP",
-            cost: new Decimal(2e19),
+            cost: new Decimal(1.6e19),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -670,7 +670,7 @@ addLayer("era", {
         152: {
             title: "ErUp 23",
             description: "SB5 HC +^0.005",
-            cost: new Decimal(5e18),
+            cost: new Decimal(8e18),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -680,7 +680,7 @@ addLayer("era", {
         154: {
             title: "ErUp 24A",
             description: "xe2.5T PF",
-            cost: new Decimal(1.6e19),
+            cost: new Decimal(1.4e19),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -690,7 +690,7 @@ addLayer("era", {
         155: {
             title: "ErUp 24C",
             description: "^1.01 PF",
-            cost: new Decimal(2.5e19),
+            cost: new Decimal(2.2e19),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -700,7 +700,7 @@ addLayer("era", {
         162: {
             title: "ErUp 25A",
             description: "x1.11 Era Crystals",
-            cost: new Decimal(1e19),
+            cost: new Decimal(1.5e19),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -710,7 +710,7 @@ addLayer("era", {
         163: {
             title: "ErUp 25B",
             description: "xe10T PF",
-            cost: new Decimal(3e19),
+            cost: new Decimal(2.5e19),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -720,7 +720,7 @@ addLayer("era", {
         161: {
             title: "ErUp 26A",
             description: "Extend Water Upgrades AND add NEW MILESTONES",
-            cost: new Decimal(8e21),
+            cost: new Decimal(9e21),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -730,7 +730,7 @@ addLayer("era", {
         164: {
             title: "ErUp 26B",
             description: "xe20T PF",
-            cost: new Decimal(1.3e22),
+            cost: new Decimal(1.22e22),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -750,7 +750,7 @@ addLayer("era", {
         172: {
             title: "ErUp 28A",
             description: "xe1T PP",
-            cost: new Decimal(8.888e34),
+            cost: new Decimal(8e34),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -760,7 +760,7 @@ addLayer("era", {
         174: {
             title: "ErUp 28B",
             description: "xe11.11T RP",
-            cost: new Decimal(8.888e34),
+            cost: new Decimal(8e34),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -770,7 +770,7 @@ addLayer("era", {
         171: {
             title: "ErUp 29A",
             description: "xe50T BP, x1.4 Era Crystals",
-            cost: new Decimal(9.999e34),
+            cost: new Decimal(1e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -780,7 +780,7 @@ addLayer("era", {
         175: {
             title: "ErUp 29B",
             description: "xe77.77B MP, x1.4 Era Crystals",
-            cost: new Decimal(1.123e35),
+            cost: new Decimal(1.1e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -790,7 +790,7 @@ addLayer("era", {
         181: {
             title: "ErUp 30A",
             description: "^1.0111 PF",
-            cost: new Decimal(2e34),
+            cost: new Decimal(1.5e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -800,7 +800,7 @@ addLayer("era", {
         182: {
             title: "ErUp 30B",
             description: "+^0.055 BP",
-            cost: new Decimal(1e34),
+            cost: new Decimal(1e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -810,7 +810,7 @@ addLayer("era", {
         183: {
             title: "ErUp 30C",
             description: "+^0.07 RP",
-            cost: new Decimal(1.2e34),
+            cost: new Decimal(1.2e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -820,7 +820,7 @@ addLayer("era", {
         184: {
             title: "ErUp 30D",
             description: "+^0.12 PP",
-            cost: new Decimal(1.25e34),
+            cost: new Decimal(1.25e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -830,7 +830,7 @@ addLayer("era", {
         185: {
             title: "ErUp 30E",
             description: "+^0.12 MP",
-            cost: new Decimal(1.2e34),
+            cost: new Decimal(1.2e35),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -870,7 +870,7 @@ addLayer("era", {
         194: {
             title: "ErUp 33",
             description: "xe33T PF",
-            cost: new Decimal(2.5e39),
+            cost: new Decimal(2.2e39),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -880,7 +880,7 @@ addLayer("era", {
         201: {
             title: "ErUp 34A",
             description: "xe20T PF",
-            cost: new Decimal(4.5e42),
+            cost: new Decimal(6e42),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -900,7 +900,7 @@ addLayer("era", {
         203: {
             title: "ErUp 34C",
             description: "All Mega Buyables are better",
-            cost: new Decimal(7e42),
+            cost: new Decimal(5.55e42),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -910,7 +910,7 @@ addLayer("era", {
         204: {
             title: "ErUp 34D",
             description: "+^0.1 PP",
-            cost: new Decimal(5e42),
+            cost: new Decimal(6e42),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -920,7 +920,7 @@ addLayer("era", {
         205: {
             title: "ErUp 34E",
             description: "+^0.1 MP",
-            cost: new Decimal(5e42),
+            cost: new Decimal(6e42),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -930,7 +930,7 @@ addLayer("era", {
         211: {
             title: "ErUp 35: This row will have longer waits, BUT BETTER BOOSTS!",
             description: "x2 EC, ^1.007 PF",
-            cost: new Decimal(1e43),
+            cost: new Decimal(8e42),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -940,7 +940,7 @@ addLayer("era", {
         212: {
             title: "ErUp 36",
             description: "Era Buyable 1 effect increased from 2x to 2.5x per buy",
-            cost: new Decimal(2e43),
+            cost: new Decimal(1.7e43),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -950,7 +950,7 @@ addLayer("era", {
         213: {
             title: "ErUp 37",
             description: "x2 EC, xe37T PF",
-            cost: new Decimal(1.25e46),
+            cost: new Decimal(1e46),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -960,7 +960,7 @@ addLayer("era", {
         214: {
             title: "ErUp 38A",
             description: "Decrease Sacrifice Scaling by quite a lot",
-            cost: new Decimal(1.5e47),
+            cost: new Decimal(1.2e47),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -970,7 +970,7 @@ addLayer("era", {
         215: {
             title: "ErUp 38B",
             description: "^1.01 PF",
-            cost: new Decimal(1.5e47),
+            cost: new Decimal(1.2e47),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -980,7 +980,7 @@ addLayer("era", {
         221: {
             title: "ErUp 39A: Hardening III",
             description: "Remember Hardening I and II? Hardening III Gives: SB1 and SB6 is stronger",
-            cost: new Decimal(2e47),
+            cost: new Decimal(1.5e47),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -990,7 +990,7 @@ addLayer("era", {
         222: {
             title: "ErUp 39B",
             description: "+^0.07 MP",
-            cost: new Decimal(1.5e47),
+            cost: new Decimal(1.6e47),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1000,7 +1000,7 @@ addLayer("era", {
         223: {
             title: "ErUp 39C",
             description: "SB5 HC +^0.01",
-            cost: new Decimal(1.9e47),
+            cost: new Decimal(1.5e47),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1010,7 +1010,7 @@ addLayer("era", {
         224: {
             title: "ErUp 39D",
             description: "xe750B MP",
-            cost: new Decimal(1.9e47),
+            cost: new Decimal(1.6e47),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1070,7 +1070,7 @@ addLayer("era", {
         242: {
             title: "ErUp 44: ECComp",
             description: "'Compounding XII' is stronger",
-            cost: new Decimal(5e56),
+            cost: new Decimal(4.5e56),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1080,7 +1080,7 @@ addLayer("era", {
         243: {
             title: "ErUp 45: EB2+ (1)",
             description: "Era Buyable 2 effect increased from 5x to 6x a buy",
-            cost: new Decimal(1.5e58),
+            cost: new Decimal(1.4e58),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1090,7 +1090,7 @@ addLayer("era", {
         244: {
             title: "ErUp 46: EB2+ (2)",
             description: "Era Buyable 2 effect increased from 6x to 7x a buy",
-            cost: new Decimal(1.75e61),
+            cost: new Decimal(1.5e61),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1110,7 +1110,7 @@ addLayer("era", {
         251: {
             title: "Stronger Boosts Series (1)",
             description: "SU51 is stronger",
-            cost: new Decimal(4.5e66),
+            cost: new Decimal(3.8e66),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1120,7 +1120,7 @@ addLayer("era", {
         252: {
             title: "Stronger Boosts Series (2)",
             description: "WU13 is stronger",
-            cost: new Decimal(4.5e66),
+            cost: new Decimal(4.4e66),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1190,7 +1190,7 @@ addLayer("era", {
         264: {
             title: "Stronger Boosts Series (9)",
             description: "Mega Supercap is weaker",
-            cost: new Decimal(3.8e69),
+            cost: new Decimal(3.5e69),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1200,7 +1200,7 @@ addLayer("era", {
         265: {
             title: "Stronger Boosts Series (FINAL)",
             description: "MU31 is better.",
-            cost: new Decimal(4.3e69),
+            cost: new Decimal(3.8e69),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1230,7 +1230,7 @@ addLayer("era", {
         273: {
             title: "ErUp 59B: More SP = More MP = More Sac = More PF",
             description: "+^0.125 SP",
-            cost: new Decimal(1.4e74),
+            cost: new Decimal(1.2e74),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1250,7 +1250,7 @@ addLayer("era", {
         275: {
             title: "ErUp 59D",
             description: "^1.01 PF, Extend Energy Upgrades",
-            cost: new Decimal(1.8e74),
+            cost: new Decimal(1.4e74),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1260,7 +1260,7 @@ addLayer("era", {
         281: {
             title: "ErUp 60: Highest EVER EC Mult!",
             description: "x1,000 Era Crystals",
-            cost: new Decimal(1.8e78),
+            cost: new Decimal(1.6e78),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1270,7 +1270,7 @@ addLayer("era", {
         282: {
             title: "ErUp 61A",
             description: "xe70B Energy",
-            cost: new Decimal(4.7e81),
+            cost: new Decimal(4.4e81),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1280,7 +1280,7 @@ addLayer("era", {
         283: {
             title: "ErUp 61B",
             description: "xe1.25e16 BP",
-            cost: new Decimal(5.5e81),
+            cost: new Decimal(5.2e81),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1290,7 +1290,7 @@ addLayer("era", {
         284: {
             title: "ErUp 61C",
             description: "xe5e15 PF",
-            cost: new Decimal(6.9e81),
+            cost: new Decimal(6e81),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1310,7 +1310,7 @@ addLayer("era", {
         291: {
             title: "ErUp 63: Big EC boost",
             description: "x100 EC",
-            cost: new Decimal(5e91),
+            cost: new Decimal(4.9e91),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1363,7 +1363,7 @@ addLayer("era", {
         53: {
             title: "ErUp 6e1: Nice mult",
             description: "x25 Era Crystals",
-            cost: new Decimal(2e95),
+            cost: new Decimal(1.8e95),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1373,7 +1373,7 @@ addLayer("era", {
         54: {
             title: "ErUp 6e2A: Mult",
             description: "x6e15 PF",
-            cost: new Decimal(2.5e96),
+            cost: new Decimal(2.2e96),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1383,7 +1383,7 @@ addLayer("era", {
         55: {
             title: "ErUp 6e2B: or Power?",
             description: "^1.0075 PF",
-            cost: new Decimal(2.5e96),
+            cost: new Decimal(2.2e96),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1393,7 +1393,7 @@ addLayer("era", {
         104: {
             title: "ErUp 12e1: Power",
             description: "^1.026 EC",
-            cost: new Decimal(4.2e109),
+            cost: new Decimal(4e109),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1403,7 +1403,7 @@ addLayer("era", {
         105: {
             title: "ErUp 12e2: Way more PFx",
             description: "xe1.6e16 PF",
-            cost: new Decimal(1.6e114),
+            cost: new Decimal(1.4e114),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1413,7 +1413,7 @@ addLayer("era", {
         134: {
             title: "ErUp 18e1A: SB5 (Combo: x1.3 EC)",
             description: "SB5 is stronger",
-            cost: new Decimal(1.7e114),
+            cost: new Decimal(1.3e114),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1423,7 +1423,7 @@ addLayer("era", {
         135: {
             title: "ErUp 18e1B: Basic Upgrades (Combo: x1.3 EC)",
             description: "BU21 is stronger",
-            cost: new Decimal(1.6e114),
+            cost: new Decimal(1.3e114),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1433,7 +1433,7 @@ addLayer("era", {
         144: {
             title: "ErUp 21e1A: Another HUGE PF boost (Combo: x1.4 EC)",
             description: "xe2e16 PF",
-            cost: new Decimal(2e114),
+            cost: new Decimal(1.7e114),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1443,7 +1443,7 @@ addLayer("era", {
         145: {
             title: "ErUp 21e1B: Solar Flares (Combo: x1.4 EC)",
             description: "Solar Flares occur more frequently! xe5e11 Energy",
-            cost: new Decimal(2e114),
+            cost: new Decimal(1.7e114),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1453,7 +1453,7 @@ addLayer("era", {
         33: {
             title: "ErUp 4e1",
             description: "Era Compoundation is stronger!",
-            cost: new Decimal(4e114),
+            cost: new Decimal(3.4e114),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1463,7 +1463,7 @@ addLayer("era", {
         34: {
             title: "ErUp 4e2A",
             description: "Sacrifice formulae is weaker",
-            cost: new Decimal(3e119),
+            cost: new Decimal(3.9e119),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1483,7 +1483,7 @@ addLayer("era", {
         24: {
             title: "ErUp 3e1",
             description: "xe2.4e16 PF :)",
-            cost: new Decimal(2.4e125),
+            cost: new Decimal(2e125),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1493,7 +1493,7 @@ addLayer("era", {
         25: {
             title: "ErUp 3e2: Lightning Strikes",
             description: "Lightning occurs 10x more frequently! [x1e1e12 Energy]",
-            cost: new Decimal(2.5e127),
+            cost: new Decimal(2.2e127),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1503,7 +1503,7 @@ addLayer("era", {
         12: {
             title: "ErUp 1e1: Oh, that's nice.",
             description: "Amount of Era Upgrades increases EC gain.",
-            cost: new Decimal(4.5e127),
+            cost: new Decimal(4e127),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1519,7 +1519,7 @@ addLayer("era", {
         92: {
             title: "ErUp 11e1A",
             description: "xe3e16 PF",
-            cost: new Decimal(5.5e131),
+            cost: new Decimal(4.9e131),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1529,7 +1529,7 @@ addLayer("era", {
         93: {
             title: "ErUp 11e1B",
             description: "xe40B Water",
-            cost: new Decimal(4.5e131),
+            cost: new Decimal(4e131),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1539,7 +1539,7 @@ addLayer("era", {
         94: {
             title: "ErUp 11e1C",
             description: "xe8e14 MP",
-            cost: new Decimal(5e131),
+            cost: new Decimal(4.7e131),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1549,7 +1549,7 @@ addLayer("era", {
         95: {
             title: "ErUp 11e1D",
             description: "xe6e15 PP",
-            cost: new Decimal(5e131),
+            cost: new Decimal(4.7e131),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1575,7 +1575,7 @@ addLayer("era", {
         65: {
             title: "ErUp 7e1",
             description: "Mega Buyables 1-3 are better",
-            cost: new Decimal(3e135),
+            cost: new Decimal(2.6e135),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1585,7 +1585,7 @@ addLayer("era", {
         75: {
             title: "ErUp 8e1",
             description: "Supreme Buyables 1,3,4 are better",
-            cost: new Decimal(2.5e135),
+            cost: new Decimal(2.2e135),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1595,7 +1595,7 @@ addLayer("era", {
         165: {
             title: "ErUp 26e1",
             description: "+^0.05 Water and SP",
-            cost: new Decimal(4.2e135),
+            cost: new Decimal(3e135),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1615,7 +1615,7 @@ addLayer("era", {
         225: {
             title: "ErUp 39e1",
             description: "x5e16 PF",
-            cost: new Decimal(5e135),
+            cost: new Decimal(4.4e135),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1625,7 +1625,7 @@ addLayer("era", {
         235: {
             title: "ErUp 39e2",
             description: "xe5e16 PF",
-            cost: new Decimal(5e135),
+            cost: new Decimal(4.4e135),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1635,7 +1635,7 @@ addLayer("era", {
         301: {
             title: "The Last Row of Tree 1",
             description: "To start us off, let's increase Era Buyable 1 and 2 exponent by 0.02!",
-            cost: new Decimal(6e135),
+            cost: new Decimal(5.5e135),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1645,7 +1645,7 @@ addLayer("era", {
         302: {
             title: "Finally, no more scrolling 30 rows",
             description: "+^0.04 PP",
-            cost: new Decimal(7e138),
+            cost: new Decimal(6.8e138),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1655,7 +1655,7 @@ addLayer("era", {
         303: {
             title: "It's really a pain, but not this upgrade",
             description: "xe7.1e17 BP",
-            cost: new Decimal(8e138),
+            cost: new Decimal(7.1e138),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1665,7 +1665,7 @@ addLayer("era", {
         304: {
             title: "Some mega mults, not many",
             description: "xe2.1e15 MP",
-            cost: new Decimal(9e138),
+            cost: new Decimal(8.8e138),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
@@ -1675,7 +1675,7 @@ addLayer("era", {
         305: {
             title: "More",
             description: "Point Fragments are powered by 1.01. Extend Supreme Upgrades.",
-            cost: new Decimal(1.1e139),
+            cost: new Decimal(1e139),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",

@@ -13,11 +13,25 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.2",
+	num: "3.2.RB",
 	name: "Multi Challenge",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.2.RB </h3><br>
+Fixed Era Upgrades 29 and 30 price (+1 OOM) <br>
+Rebalanced Era 2+ upgrades to be faster to get, on average 5-10%. <br>
+Rebalanced Mastery Row 10 upgrades to be 10% faster to get. <br>
+Light theme colours got a change to have better UI <br>
+Added Sky Theme <br>
+
+<h3>v3.2.2 </h3><br>
+Fixed endgame req <br>
+Added heading to v2.0.0 changelog <br>
+
+<h3>v3.2.1 </h3><br>
+Fixed MC1x2 Req <br>
+
 <h3>v3.2: Multi-Challenges? Mastery Extension </h3><br>
 Fixed hardcap for Sac Strength effect 1 and 2 (No effect currently) <br>
 Rebalanced Sac Strength effect 3 (future) <br>
@@ -260,6 +274,7 @@ Added 5 milestones <br>
 Added 1 buyable! <br>
 Added 24 upgrades <br>
 Added 2 new extensions <br>
+
 <h3>v2.00 - Supreme and Water</h3><br>
 Hotfixes</h3><br>
 v2.01: Added keep energy milestone milestone in sac</h3><br>
@@ -274,7 +289,7 @@ Increased MU11 Effect, to x2.9 <br>
 Decreased SU22-SU42 price <br>
 Decreased SM5 Price <br>
 
-Changes (v2.0.0) </h3><br>
+</h3>Changes (v2.0.0) </h3><br>
 Bye Bye Autobuy… Hello Keep Upgrades! No more autobuying of upgrades! Milestones will keep the upgrades! Added 6 achievements (keep upgs) <br>
 Added 1 Sac Challenge 4 Upg <br>
 
@@ -1085,7 +1100,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e5.011135425235e19"))
+	return player.era.ec.gte(new Decimal("5e163"))
 }
 
 

@@ -338,19 +338,19 @@ addLayer("m", {
         101: {
             title: "Sac is even more OP",
             description: "SU21 and SU52 is better",
-            cost: new Decimal(8.5e39), 
+            cost: new Decimal(7.9e39), 
             unlocked() { return (hasMilestone("sac", 93)) },
         },
         102: {
             title: "More Mega = More Sacs",
             description: "Mega Exponent +^0.08",
-            cost: new Decimal(1e40), 
+            cost: new Decimal(9e39), 
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 101)) },
         },
         103: {
             title: "More EC = More Mastery",
             description: "EC boosts Mastery by a very little bit",
-            cost: new Decimal(1.2e40), 
+            cost: new Decimal(1e40), 
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 102)) },
             effect() {
                 let ectomasteryexp = 0.06
@@ -362,13 +362,13 @@ addLayer("m", {
         104: {
             title: "More Rebirth = More PF",
             description: "RP Exponent +^0.04",
-            cost: new Decimal(1.5e41), 
+            cost: new Decimal(1.4e41), 
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 103)) },
         },
         105: {
             title: "Multi-dimensional-fold upgrade",
             description: "xe1 Qd PF, add more era upgrades, x100 EC",
-            cost: new Decimal(2e41), 
+            cost: new Decimal(1.8e41), 
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 104)) },
         },
         111: {

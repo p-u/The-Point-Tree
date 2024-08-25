@@ -201,7 +201,7 @@ addLayer("a", {
         },
     },
     achievements: {
-        rows: 25,
+        rows: 40,
         cols: 6,
         11: {
             name: "The first boost",
