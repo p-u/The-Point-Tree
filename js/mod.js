@@ -13,11 +13,20 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.2.RB",
+	num: "3.2.MBF+",
 	name: "Multi Challenge",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.2.MBF+ (QoL changes) </h3><br>
+Added whether you are reccomended to enter the Mastery Challenge, and whether you hit the max completion of that challenge. <br>
+Added amount of Mastery Challenge Completions you have <br>
+Added 'better' hints for minigame <br>
+
+<h3>v3.2.MBF </h3><br>
+Major bug fix! Post-Era 3 to Pre-Ach 246 Era Crystals decreased dramatically by 1e10x. <br>
+Highly recommend anyone who started from Pre-Era 3 and progressed on to revert to Era Savebank 3, due to major balancing issues. <br>
+
 <h3>v3.2.RB </h3><br>
 Fixed Era Upgrades 29 and 30 price (+1 OOM) <br>
 Rebalanced Era 2+ upgrades to be faster to get, on average 5-10%. <br>

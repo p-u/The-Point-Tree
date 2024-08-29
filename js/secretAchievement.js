@@ -585,7 +585,7 @@ addLayer("sa", {
                     return "good job [1/5 HARD]"
                 }
                 else {
-                    return "how do you get below 1??"
+                    return "how do you get below 1?? Hint: Hard achievements require working backwards, and using different operations."
                 }
             },
         },
@@ -687,7 +687,7 @@ addLayer("sa", {
                     return "good job [Extreme 01]"
                 }
                 else {
-                    return "Hint: 7 buttons [not including =1]"
+                    return "Hint: 7 buttons [not including =1], usage of ^0.99 needed"
                 }
             },
             unlocked() { 

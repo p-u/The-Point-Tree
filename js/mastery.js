@@ -556,10 +556,21 @@ addLayer("m", {
     challenges: {
         11: {
             name: "Mastery Challenge 1. [OP Reward]",
-            challengeDescription: "^0.1 PF, ^0.2 BP to MP, ^0.1 Mastery Points, ^0.4 Energy to SP",
+            challengeDescription() { 
+                let cd = "^0.1 PF, ^0.2 BP to MP, ^0.1 Mastery Points, ^0.4 Energy to SP. "
+                let ec = "You are currently not recommended to enter this challenge."
+                if ((challengeCompletions("m", 11) == 1) && (hasAchievement("a", 243))) ec = "You are recommended to enter this challenge to progress."
+                if ((challengeCompletions("m", 11) == 0) && (hasUpgrade("m", 15) && hasUpgrade("m", 25) && hasUpgrade("m", 35))) ec = "You are recommended to enter this challenge to progress."
+                if ((challengeCompletions("m", 11) == 2)) ec = "You have the maximum amount of completions of this challenge."
+                cd = cd + ec + " You completed this challenge " + (challengeCompletions("m", 11)) + " times."
+                return cd
+            },
             goal(){
                 if (challengeCompletions("m", 11) == 0) return new Decimal("e29880000");
                 if (challengeCompletions("m", 11) == 1) return new Decimal("e1.9302786560611e19"); // placeholder
+            },
+            unlocked() { 
+                return (hasUpgrade("m", 15) && hasUpgrade("m", 25) && hasUpgrade("m", 35)) 
             },
             currencyDisplayName: "points",
             completionLimit: 2,
@@ -574,7 +585,13 @@ addLayer("m", {
         },
         12: {
             name: "Mastery Challenge 2.",
-            challengeDescription: "Sacrifice Cost Scaling is now increased from 3.6 to 7.5 exponent.",
+            challengeDescription() { 
+                let cd = "Sacrifice Cost Scaling is now increased from 3.6 to 7.5 exponent. "
+                let ec = "You are recommended to enter this challenge to progress."
+                if ((challengeCompletions("m", 12) == 1)) ec = "You have the maximum amount of completions of this challenge."
+                cd = cd + ec + " You completed this challenge " + (challengeCompletions("m", 12)) + " time."
+                return cd
+            },
             canComplete: function() {return player.points.gte("e81643000000")},
             goalDescription: "Get e81.643B PF.",
             rewardDescription: "Unlock new Mastery Upgrades and x10,000 Mastery Points, Sac Scaling decreased to 3.5, but you cannot enter sacrifice challenges",
