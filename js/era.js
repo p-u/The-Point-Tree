@@ -1890,7 +1890,7 @@ addLayer("era", {
             if (hasAchievement('sa', 36)) gain = gain.times(1.1)
             if ((hasUpgrade("era", 134)) && (hasUpgrade("era", 135))) gain = gain.times(1.3)
             if ((hasUpgrade("era", 144)) && (hasUpgrade("era", 145))) gain = gain.times(1.4)
-            if (hasAchievement('a', 232)) gain = gain.times(1e10)
+            if (hasAchievement('a', 246)) gain = gain.times(1e10)
 
 
             // power
