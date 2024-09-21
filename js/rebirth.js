@@ -368,6 +368,12 @@ addLayer("rebirth", {
             },
             unlocked() {return inChallenge("m", 12)},
         },
+        14: {
+            requirementDescription: "Extreme Rebirth [e1e20 Rebirth Points]",
+            effectDescription: "Extend Rebirth Upgrades",
+            unlocked() {return hasUpgrade("era", 371)},
+            done() { return player["rebirth"].points.gte("e1e20") }
+        },
     },
     color: "#0F52BA",
     requires: new Decimal(50000000), // Can be a function that takes requirement increases into account
@@ -515,6 +521,7 @@ addLayer("rebirth", {
         if (hasUpgrade('prestige', 83)) exp = exp.sub(0.05)
         if (hasUpgrade('prestige', 84)) exp = exp.add(0.11)
         if (hasUpgrade('m', 134)) exp = exp.add(0.03)
+        if (hasUpgrade('era', 371)) exp = exp.add(0.02)
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp

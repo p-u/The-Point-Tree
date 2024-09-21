@@ -13,11 +13,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.2.MBF+",
-	name: "Multi Challenge",
+	num: "3.3",
+	name: "EC is useful!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.3: EC is useful now! </h3><br>
+Extended rarities to the Achievements <br>
+Added Minigame Part 3: Below the Negatives, and added negative titles <br>
+Added a new feature: Buyable base change <br>
+Endgames now require Point Fragments, due to an upgrade which makes EC boost MP. <br>
+Added 1 buyable <br>
+Added 29 upgrades <br>
+Added 4 milestones (two currently cannot be gotten) <br>
+Added 3 achievements, 1 giving boosts <br>
+Endgames: e9.1553e20, e9.15555555e20, e9.156e20, e9.156565656e20 PF respectively <br>
+
 <h3>v3.2.MBF+ (QoL changes) </h3><br>
 Added whether you are reccomended to enter the Mastery Challenge, and whether you hit the max completion of that challenge. <br>
 Added amount of Mastery Challenge Completions you have <br>
@@ -767,6 +778,7 @@ function getPointGen() {
 	if (hasAchievement('a', 186)) gain = gain.times("e7e9")
 	if (hasAchievement('a', 211)) gain = gain.times("e15e12")
 	if (hasAchievement('a', 225)) gain = gain.times("e777e12")
+	if (hasAchievement('a', 253)) gain = gain.times("e1e18")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -845,6 +857,9 @@ function getPointGen() {
 	if (hasUpgrade("era", 195)) gain = gain.times("e4e16")
 	if (hasUpgrade("era", 225)) gain = gain.times("e5e16")
 	if (hasUpgrade("era", 235)) gain = gain.times("e5e16")
+	if (hasUpgrade("era", 353)) gain = gain.times("e5e17")
+	if (hasUpgrade("era", 374)) gain = gain.times("e7e17")
+	if (hasUpgrade("era", 381)) gain = gain.times("e1e18")
 
 
 	// power (^)
@@ -999,6 +1014,7 @@ function getPointGen() {
 	if (inChallenge("m", 11)) gain = gain.pow(buyableEffect('era', 21))
 	if (challengeCompletions("m", 11) == 2) gain = gain.pow(1.0333)
 	if (hasUpgrade("m", 135)) gain = gain.pow(1.015)
+	if (hasUpgrade("era", 363)) gain = gain.pow(1.008)
 	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);
@@ -1109,7 +1125,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.era.ec.gte(new Decimal("5e163"))
+	return player.era.ec.gte(new Decimal("e9.1553e20"))
 }
 
 

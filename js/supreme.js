@@ -292,6 +292,7 @@ addLayer("s", {
                 if (hasUpgrade('s', 25)) cxexp = new Decimal(0.115)
                 if (hasUpgrade('era', 251)) cxexp = new Decimal(0.14)
                 if (hasUpgrade('s', 122)) cxexp = new Decimal(0.165)
+                if (hasUpgrade('era', 362)) cxexp = new Decimal(0.2)
                 return player["s"].points.add(1).pow(cxexp)
             },
             effectDisplay() {
@@ -357,6 +358,7 @@ addLayer("s", {
             effect() {
                 let sppfbe = 0.0000000025
                 if (hasUpgrade("m", 61)) sppfbe = 0.0000000035
+                if (hasUpgrade("era", 331)) sppfbe = 0.0000000175
                 let eff = player.points.add(1).pow(sppfbe)
                 eff = softcap(eff, new Decimal("1e100"), 0.5)
                 return eff
@@ -912,6 +914,8 @@ addLayer("s", {
             if(hasUpgrade("s", 124)) hcap = hcap.add(0.01)
             if(hasUpgrade("m", 112)) hcap = hcap.add(0.01)
             if (hasAchievement("a", 246)) hcap = hcap.add(0.01)
+            if(hasUpgrade("era", 332)) hcap = hcap.add(0.01)
+            if(hasUpgrade("era", 382)) hcap = hcap.add(0.01)
             if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) hcap = hcap.add(0.038)
         if (eff.gte(hcap)) eff = hcap
         return eff
@@ -944,6 +948,7 @@ addLayer("s", {
         if (hasUpgrade('s', 75)) mult = mult.times(upgradeEffect('s', 75))
         if (hasUpgrade('mega', 105)) mult = mult.times("e50e9")
         if (hasUpgrade('m', 121)) mult = mult.times("e1e12")
+        if (hasUpgrade('era', 393)) mult = mult.times("e4.2e12")
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)

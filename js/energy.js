@@ -217,6 +217,7 @@ addLayer("e", {
         if (hasUpgrade('e', 35)) exp = exp.add(buyableEffect('mega', 14))
         if (hasMilestone('e', 21)) exp = exp.add(0.05)
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade('era', 364)) exp = exp.add(0.025)
         let expinmc1 = new Decimal(0.4)
         if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
         if (inChallenge('m', 11)) exp = exp.mul(expinmc1)

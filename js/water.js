@@ -73,6 +73,7 @@ addLayer("w", {
                 if (hasUpgrade('s', 25)) w3exp = new Decimal(0.2)
                 if (hasUpgrade('era', 252)) w3exp = new Decimal(0.225)
                 if (hasUpgrade('s', 122)) w3exp = new Decimal(0.237)
+                if (hasUpgrade('era', 361)) w3exp = new Decimal(0.25)
                 return player["w"].points.add(1).pow(w3exp)
             },
             effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -337,6 +338,7 @@ addLayer("w", {
         if (hasUpgrade('w', 83)) mult = mult.times("e10e9")
         if (hasUpgrade('era', 93)) mult = mult.times("e50e9")
         if (hasUpgrade('s', 121)) mult = mult.times("e50e9")
+        if (hasUpgrade('era', 394)) mult = mult.times("e7e11")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
 
         

@@ -142,6 +142,7 @@ addLayer("basic", {
                 if (inChallenge("sac", 12)) expu5 = 0.111
                 if (hasUpgrade("era", 263)) expu5 = 0.275
                 if (hasUpgrade("era", 135)) expu5 = 0.313
+                if (hasUpgrade("era", 312)) expu5 = 0.388
                 let eff = player.basic.points.add(1).pow(expu5)
                 eff = softcap(eff, new Decimal("1e5000000"), 0.5)
                 eff = softcap(eff, new Decimal("e1e12"), 0.4)
@@ -723,6 +724,7 @@ addLayer("basic", {
         if (hasUpgrade('mega', 102)) mult = mult.times("e5e16")
         if (hasUpgrade('era', 303)) mult = mult.times("e7.1e17")
         if (hasMilestone('sac', 106)) mult = mult.times("e3.33e18")
+        if (hasUpgrade('era', 373)) mult = mult.times("e8e18")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

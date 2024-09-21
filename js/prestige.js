@@ -495,6 +495,7 @@ addLayer("prestige", {
         if (hasUpgrade('basic', 114)) exp = exp.add(0.09)
         if (hasUpgrade('prestige', 82)) exp = exp.sub(0.05)
         if (hasUpgrade('prestige', 83)) exp = exp.add(0.08)
+        if (hasUpgrade('era', 323)) exp = exp.add(0.02)
         if (hasUpgrade('era', 302)) exp = exp.add(0.04)
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (player.sac.sacstr.gte(2)) exp = exp.add(player.sac.se2)

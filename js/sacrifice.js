@@ -793,6 +793,18 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(200000)},
             done() { return player["sac"].points.gte(250000) }
         },
+        107: {
+            requirementDescription: "Sacrifice 400,000",
+            effectDescription: "x4 EC",
+            unlocked() {return player["sac"].points.gte(377777)},
+            done() { return player["sac"].points.gte(400000) }
+        },
+        108: {
+            requirementDescription: "Sacrifice 500,000",
+            effectDescription: "x10 EC, Autobuy Era Buyable 4",
+            unlocked() {return player["sac"].points.gte(444444)},
+            done() { return player["sac"].points.gte(500000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -1082,6 +1094,7 @@ addLayer("sac", {
         if (hasUpgrade("era", 34)) exp = exp.sub(0.0122)
         if (hasUpgrade("prestige", 81)) exp = exp.sub(0.12)
         if (hasMilestone("sac", 103)) exp = exp.sub(0.0103)
+        if (hasUpgrade("era", 351)) exp = exp.sub(0.0077)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

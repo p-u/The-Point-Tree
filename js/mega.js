@@ -665,6 +665,12 @@ addLayer("mega", {
             unlocked() {return hasUpgrade("era", 161)},
             done() { return player["mega"].points.gte("e10e12") }
         },
+        24: {
+            requirementDescription: "e1e19 MP",
+            effectDescription: "+^0.02 Mega Points",
+            unlocked() {return hasUpgrade("era", 372)},
+            done() { return player["mega"].points.gte("e1e19") }
+        },
     },
     buyables: {
         11: {
@@ -885,6 +891,7 @@ addLayer("mega", {
         if (hasUpgrade('era', 304)) mult = mult.times("e2.1e15")
         if (hasUpgrade('s', 121)) mult = mult.times("e6e14")
         if (hasUpgrade('m', 124)) mult = mult.times("e3e15")
+        if (hasUpgrade('era', 375)) mult = mult.times("e1e16")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         return mult
@@ -923,11 +930,15 @@ addLayer("mega", {
         if (hasUpgrade('era', 185)) exp = exp.add(0.12)
         if (hasUpgrade('era', 205)) exp = exp.add(0.1)
         if (hasUpgrade('era', 222)) exp = exp.add(0.07)
+        if (hasUpgrade('era', 323)) exp = exp.add(0.02)
         if (hasUpgrade('m', 102)) exp = exp.add(0.08)
         if (hasMilestone('sac', 99)) exp = exp.add(0.04)
         if (hasMilestone("sac", 100)) exp = exp.add(player.sac.se1)
         if (hasUpgrade('prestige', 81)) exp = exp.sub(0.03)
         if (hasUpgrade('prestige', 82)) exp = exp.add(0.08)
+        if (hasUpgrade('era', 372)) exp = exp.add(0.02)
+        if (hasMilestone('mega', 24)) exp = exp.add(0.02)
+        if (hasUpgrade('era', 391)) exp = exp.add(upgradeEffect('era', 391))
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
