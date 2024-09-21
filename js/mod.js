@@ -13,11 +13,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.3",
+	num: "3.3.1",
 	name: "EC is useful!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.3.1 </h3><br>
+Fixed ErUp 4a not influencing ErUp 4b price <br>
+MA66 description fixed <br>
+
 <h3>v3.3: EC is useful now! </h3><br>
 Extended rarities to the Achievements <br>
 Added Minigame Part 3: Below the Negatives, and added negative titles <br>

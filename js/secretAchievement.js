@@ -1063,7 +1063,7 @@ addLayer("sa", {
                    }
                },
             tooltip() {
-                if (hasAchievement('sa', 165)) {
+                if (hasAchievement('sa', 166)) {
                     return "Great job for spending 8 hours on this minigame. DOUBLE the waits. DOUBLE the difficulty...Part 4 has it."
                 }
                 else {

@@ -82,7 +82,7 @@ function infinityFormat(decimal) {
     if (decimal.lt(pow1024)) {
         return formatWhole(decimal);
     }
-    if (decimal.lt(pow1024.pow(1e12))) {
+    if (decimal.lt(pow1024.pow(1e13))) {
         return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor()) + "∞"
     }
     if (decimal.lt(pow1024.tetrate(4))) {

@@ -1738,7 +1738,7 @@ addLayer("era", {
             description: "Mega Point +^0.02 and 2.5x EC. Advanced ErUp 4a is 3.5x more expensive.",
             cost() {
                 let c = new Decimal(8e170)
-                if (hasUpgrade("era", 323)) c = c.times(3.5)
+                if (hasUpgrade("era", 321)) c = c.times(3.5)
                 return c
             },
             currencyDisplayName: "Era Crystals",
