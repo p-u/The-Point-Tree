@@ -8,16 +8,20 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 2,  // In hours
+	offlineLimit: 0.5,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.3.1",
+	num: "3.3.2",
 	name: "EC is useful!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.3.2 </h3><br>
+Reduced Offline limit to 30mins instead of 2hrs <br>
+Sac Strength tab updated to have a unlocked function <br>
+
 <h3>v3.3.1 </h3><br>
 Fixed ErUp 4a not influencing ErUp 4b price <br>
 MA66 description fixed <br>

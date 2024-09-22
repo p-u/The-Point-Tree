@@ -144,6 +144,7 @@ addLayer("sac", {
                     }
                 ],
             ],
+            unlocked() {return player.sac.points.gte(50000)}
         },
     },
     canBuyMax(){
