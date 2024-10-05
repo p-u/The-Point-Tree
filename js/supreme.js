@@ -152,7 +152,7 @@ addLayer("s", {
                     }
                 }
             },
-            unlocked() {return (inChallenge("s", 12))},
+            unlocked() {return (inChallenge("m", 12))},
         },
         9: {
             requirementDescription: "e2B Supreme",

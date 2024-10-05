@@ -871,11 +871,11 @@ addLayer("e", {
             unlocked() {return inChallenge("m", 12)},
         },
         23: {
-            requirementDescription: "MC2S (Energy 2) - 5e18,980 Energy",
+            requirementDescription: "MC2S (Energy 2) - 5e18,979 Energy",
             effectDescription: "^1.1 PF",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["e"].points.gte("5e18980")) {
+                    if (player["e"].points.gte("5e18979")) {
                         return true
                     }
                 }

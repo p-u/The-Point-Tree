@@ -636,24 +636,24 @@ addLayer("mega", {
             },
         },
         21: {
-            requirementDescription: "Mastery Challenge 2 Specific - Sacrifice cost scaling is weaker (e6,768,462 MP)",
-            effectDescription: "[Down Arrow] Cost Scaling",
+            requirementDescription: "Mastery Challenge 2 Specific - Sacrifice cost scaling is weaker (e6,768,455 MP)",
+            effectDescription: "[Down Arrow] Sac Cost Scaling",
             unlocked() {return inChallenge("m", 12)},
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["mega"].points.gte("e6768462")) {
+                    if (player["mega"].points.gte("e6768455")) {
                         return true
                     }
                 }
             },
         },
         22: {
-            requirementDescription: "Mastery Challenge 2 Specific - Final Upgrade. (e18,785,015 MP)",
+            requirementDescription: "Mastery Challenge 2 Specific - Final Upgrade. (e18,785,008 MP)",
             effectDescription: "^1.1 PF, Sac Scaling INCREASED (MAKE SURE YOU HAVE 31 SAC)",
             unlocked() {return inChallenge("m", 12)},
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["mega"].points.gte("e18785015")) {
+                    if (player["mega"].points.gte("e18785008")) {
                         return true
                     }
                 }

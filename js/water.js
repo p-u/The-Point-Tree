@@ -267,11 +267,11 @@ addLayer("w", {
             unlocked() {return player["sac"].points.gte(132)},
         },
         3: {
-            requirementDescription: "OP Mastery Challenge 2 Specific Milestone (1e300 Water)",
+            requirementDescription: "OP Mastery Challenge 2 Specific Milestone (7.99e299 Water)",
             effectDescription: "^1.05 PF, Water Milestone 1 is visible in Mastery Challenge 2, PP +^0.1, MP +^0.055",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["w"].points.gte("e300")) {
+                    if (player["w"].points.gte("7.99e299")) {
                         return true
                     }
                 }

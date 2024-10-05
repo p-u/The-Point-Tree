@@ -13,11 +13,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.3.2",
+	num: "3.3.3",
 	name: "EC is useful!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.3.3 </h3><br>
+Fixed MC2-Mega 1 milestone effect text, reduced cost of some MC2 milestones, made MC2-Supreme milestone be shown <br>
+
 <h3>v3.3.2 </h3><br>
 Reduced Offline limit to 30mins instead of 2hrs <br>
 Sac Strength tab updated to have a unlocked function <br>

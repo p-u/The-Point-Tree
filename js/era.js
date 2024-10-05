@@ -1948,7 +1948,7 @@ addLayer("era", {
             unlocked() {return (hasUpgrade("era", 375))},
         },
         391: {
-            title: "Advanced ErUp 17",
+            title: "Advanced ErUp 17: Game-changer",
             description: "Era Crystals increase Mega Point Exponent",
             cost: new Decimal(4e243),
             currencyDisplayName: "Era Crystals",
