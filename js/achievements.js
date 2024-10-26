@@ -1146,6 +1146,30 @@ addLayer("a", {
             tooltip: "Get 1e245 Era Crystals. Reward: Another xe1e18 PF",
             unlocked() { return hasAchievement("a", 242) },
         },
+        254: {
+            name: "44440",
+            done() { return player.points.gte(new Decimal("e1.44440444404444e21")) },
+            tooltip: "Get 1.4444044440... PF. Reward: xe2.444404444e18 PF",
+            unlocked() { return hasAchievement("a", 242) },
+        },
+        255: {
+            name: "A NEW LAYER!",
+            done() { return player.sac.points.gte(new Decimal(700000)) },
+            tooltip: "Unlock the next layer.",
+            unlocked() { return hasAchievement("a", 242) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "3px"
+                }
+            },
+        },
+        256: {
+            name: "250,000x",
+            done() { return player.c.points.gte(new Decimal(250000)) },
+            tooltip: "Get 250,000 cells.",
+            unlocked() { return hasAchievement("a", 255) },
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 

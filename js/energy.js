@@ -218,6 +218,7 @@ addLayer("e", {
         if (hasMilestone('e', 21)) exp = exp.add(0.05)
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('era', 364)) exp = exp.add(0.025)
+        if (hasUpgrade("era", 433)) exp = exp.add(0.03)
         let expinmc1 = new Decimal(0.4)
         if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
         if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
@@ -246,26 +247,33 @@ addLayer("e", {
                 description: "Energy gets boosted based on itself.",
                 cost: new Decimal(3300),
                 unlocked() { return hasUpgrade("e", 13) },
-                effect() {
-                    let e4exp = 0.125
+                main() {
+                    e4exp = 0.125
                     if (hasUpgrade('e', 33)) e4exp = 0.16
                     if (hasMilestone('e', 9)) e4exp = 0.195
                     if (hasUpgrade('e', 15)) e4exp = 0.25
                     if (hasUpgrade("era", 131)) e4exp = 0.29
+                    softcapDescriptione14 = ""
+                    sdsc = ""
+                    scpow = 0.5
+                    if (hasUpgrade('m', 92)) scpow = 0.52
+                    upgEffecte14 = upgradeEffect(this.layer, this.id)
+                    if (upgEffecte14.gte(new Decimal("e700")) ) {
+                        softcapDescriptione14 = " (Softcapped)"
+                        sdsc = ". Softcaps ^" + scpow + " at e700"
+                    }
+                },
+                effect() {
                     let eff = player["e"].points.add(1).pow(e4exp)
-                    let softcapExp = 0.5
-                    if (hasUpgrade('m', 92)) softcapExp = 0.52
-                    eff = softcap(eff, new Decimal("1e700"), softcapExp)
+                    eff = softcap(eff, new Decimal("1e700"), scpow)
                     return eff
                 },
-            effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e700")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
-            },
+                effectDisplay() {
+                    return notationChooser(upgEffecte14)+"x" + softcapDescriptione14
+                },
+                tooltip() {
+                    return "Formula: Energy^"  + e4exp + sdsc
+                },
             },
             21: {
                 title: "Quadra Energy",
@@ -289,8 +297,8 @@ addLayer("e", {
                 title: "Boost Boost",
                 description: "A gigawatt of energy. That can power 750K Homes. That's a lot. Anyways, Mega Points now boost energy, by a little. x1e40 MP (If in Mastery Challenge, Increase boost to xe500 MP.).",
                 cost: new Decimal(1e9),
-                effect() {
-                    let e8exp = 0.00075
+                main() {
+                    e8exp = 0.00075
                     if (hasMilestone('e', 5)) e8exp = 0.001
                     if (hasMilestone('e', 6)) e8exp = 0.00125
                     if (hasMilestone('sac', 16)) e8exp = 0.00165
@@ -299,26 +307,38 @@ addLayer("e", {
                     }
                     if (hasUpgrade('e', 82)) e8exp = 0.001825
                     if (hasUpgrade('basic', 113)) e8exp = 0.01
+                    softcapDescriptione24 = ""
+                    sdsc = ""
+                    scpow = 0.3
+                    sppow = 0.3
+                    hycpow = 0.2
+                    upgEffecte24 = upgradeEffect(this.layer, this.id)
+                    if (upgEffecte24.gte(new Decimal("e5000")) ) {
+                        softcapDescriptione24 = " (Softcapped)"
+                        sdsc = ". Softcaps ^" + scpow + " at e5000"
+                    }
+                    if (upgEffecte24.gte(new Decimal("e100e6")) ) {
+                        softcapDescriptione24 = " (Supercapped)"
+                        sdsc = sdsc + ", Supercaps ^" + sppow + " at e100e6"
+                    }
+                    if (upgEffecte24.gte(new Decimal("e1e15")) ) {
+                        softcapDescriptione24 = " (Hypercapped)"
+                        sdsc = sdsc + ", Supercaps ^" + sppow + " at e1e15"
+                    }
+                },
+                effect() {
                     let eff = player["mega"].points.add(1).pow(e8exp)
-                    eff = softcap(eff, new Decimal("1e5000"), 0.3)
-                    eff = softcap(eff, new Decimal("e100e6"), 0.3)
-                    eff = softcap(eff, new Decimal("e1e15"), 0.2)
+                    eff = softcap(eff, new Decimal("1e5000"), scpow)
+                    eff = softcap(eff, new Decimal("e100e6"), sppow)
+                    eff = softcap(eff, new Decimal("e1e15"), hycpow)
                     return eff
                 },
-            effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e5000")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                if (upgEffect.gte(new Decimal("e100e6")) ) {
-                    softcapDescription = " (Supercapped)"
-                }
-                if (upgEffect.gte(new Decimal("e1e15")) ) {
-                    softcapDescription = " (Hypercapped)"
-                }
-                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
-            },
+                effectDisplay() {
+                    return notationChooser(upgEffecte24)+"x" + softcapDescriptione24
+                },
+                tooltip() {
+                    return "Formula: MP^"  + e8exp + sdsc
+                },
                 unlocked() { return hasUpgrade("e", 23) },
             },
             31: {
@@ -422,12 +442,29 @@ addLayer("e", {
                 description: "Energy gets boosted based on itself, but starts at 1e175.",
                 cost: new Decimal(2e200),
                 unlocked() { return hasUpgrade("e", 64) },
-                effect() {
-                    let e200EUExp = 0.125
+                main() {
+                    e200EUExp = 0.125
                     if (hasUpgrade("era", 253)) e200EUExp = 0.133
-                    return player["e"].points.add(1).div(1e175).pow(e200EUExp)
+                    softcapDescriptione71 = ""
+                    sdsc = ""
+                    scpow = 0.75
+                    upgEffecte71 = upgradeEffect(this.layer, this.id)
+                    if (upgEffecte71.gte(new Decimal("e1e15")) ) {
+                        softcapDescriptione71 = " (Softcapped)"
+                        sdsc = ". Softcaps ^" + scpow + " at e1e15"
+                    }
                 },
-                effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+                effect() {
+                    let eff = player["e"].points.add(1).div(1e175).pow(e200EUExp)
+                    eff = softcap(eff, new Decimal("e1e15"), scpow)
+                    return eff
+                },
+                effectDisplay() {
+                    return notationChooser(upgEffecte71)+"x" + softcapDescriptione71
+                },
+                tooltip() {
+                    return "Formula: (Energy / 1e175)^"  + e200EUExp + sdsc
+                },
             },
             72: {
                 title: "Use the energy to generate insane tech for our workers",
@@ -739,51 +776,61 @@ addLayer("e", {
         4: {
             requirementDescription: "110 TW of Energy - 1.10e14",
             effectDescription: "1e7,500 PF, x9 Energy",
+            unlocked() { return hasMilestone("e", 1)},
             done() { return player["e"].points.gte(1.1e14) }
         },
         5: {
             requirementDescription: "1E19 Energy [10 Qt Energy]",
             effectDescription: "x1e10,000 PF, Energy Upgrade 8 is stronger",
+            unlocked() { return hasMilestone("e", 4)},
             done() { return player["e"].points.gte(1e19) }
         },
         6: {
             requirementDescription: "1E34 Energy [10 Decillion Energy]",
             effectDescription: "Energy boost is stronger, Energy Upgrade 8 is stronger",
+            unlocked() { return hasMilestone("e", 5)},
             done() { return player["e"].points.gte(1e34) }
         },
         7: {
             requirementDescription: "3e61 Energy",
             effectDescription: "Energy boost is ^2 stronger",
+            unlocked() { return hasMilestone("e", 6)},
             done() { return player["e"].points.gte(3e61) }
         },
         8: {
             requirementDescription: "5e128 Energy: BIG TRADE-OFF",
             effectDescription: "Energy boost is ^0.4, BUT xe100K PF and x1T Energy",
+            unlocked() { return player.e.points.gte(1e100)},
             done() { return player["e"].points.gte(5e128) }
         },
         9: {
             requirementDescription: "1.7e164 Energy",
             effectDescription: "'Compounding 6' is stronger.",
+            unlocked() { return hasMilestone("e", 8)},
             done() { return player["e"].points.gte(1.7e164) }
         },
         10: {
             requirementDescription: "4e323 Energy",
             effectDescription: "Energy Milestone 4 effect is ^20!",
+            unlocked() { return hasMilestone("e", 9)},
             done() { return player["e"].points.gte("4e323") }
         },
         11: {
             requirementDescription: "1.2e456 Energy",
             effectDescription: "Energy xe10, PP xe10K",
+            unlocked() { return hasMilestone("e", 10)},
             done() { return player["e"].points.gte("1.2e456") }
         },
         12: {
             requirementDescription: "8e575 Energy: MASSIVE CHANGE",
             effectDescription: "-^0.1 BP, -^0.2 RP, -^0.1 PP, -^0.15 MP, ^1.22 PF",
+            unlocked() { return hasMilestone("e", 11)},
             done() { return player["e"].points.gte("8e575") }
         },
         13: {
             requirementDescription: "The Power Milestone (5e2,463 Energy)",
             effectDescription: "x2.5 SP, xe2e6 PF, x10 Water, +^0.01 Energy",
+            unlocked() { return hasMilestone("e", 12)},
             done() { return player["e"].points.gte("5e2463") }
         },
         14: {

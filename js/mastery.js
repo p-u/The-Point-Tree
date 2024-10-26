@@ -171,13 +171,24 @@ addLayer("m", {
             description: "Mastery Points gets boosted based on itself (Compounding XI / 11)",
             cost: new Decimal(3500000),
             unlocked() { return (hasUpgrade("m", 41) && hasUpgrade("m", 51) && hasUpgrade("m", 61)) },
-            effect() {
-                let mmp6exp = 0.111
+            main() {
+                mmp6exp = 0.111
                 if (hasUpgrade('m', 72)) mmp6exp = 0.139
                 if (hasUpgrade('s', 122)) mmp6exp = 0.157
-                return player["m"].points.add(1).pow(mmp6exp)
+                softcapDescriptionmast42 = ""
+                sdsc = ""
+                upgEffectmast42 = upgradeEffect(this.layer, this.id)
             },
-            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effect() {
+                let eff = player["m"].points.add(1).pow(mmp6exp)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgEffectmast42)+"x" + softcapDescriptionmast42
+            },
+            tooltip() {
+                return "Formula: (Mastery Points + 1)^"  + mmp6exp + sdsc
+            },
         },
         52: {
             title: "MM 2",
@@ -352,12 +363,23 @@ addLayer("m", {
             description: "EC boosts Mastery by a very little bit",
             cost: new Decimal(1e40), 
             unlocked() { return (hasMilestone("sac", 93) && hasUpgrade("m", 102)) },
-            effect() {
-                let ectomasteryexp = 0.06
+            main() {
+                ectomasteryexp = 0.06
                 if ((inChallenge("m", 11)) && (hasUpgrade("m", 1114))) ectomasteryexp = 0.1
-                return player["era"].ec.add(1).pow(ectomasteryexp).log(1.8)
+                softcapDescriptionmast103 = ""
+                sdsc = ""
+                upgEffectmast103 = upgradeEffect(this.layer, this.id)
             },
-            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effect() {
+                let eff = player["era"].ec.add(1).pow(ectomasteryexp).log(1.8)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgEffectmast103)+"x" + softcapDescriptionmast103
+            },
+            tooltip() {
+                return "Formula: log1.8((EC + 1)^"  + ectomasteryexp + ") " + sdsc
+            },
         },
         104: {
             title: "More Rebirth = More PF",

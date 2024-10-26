@@ -3,21 +3,40 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
 	offlineLimit: 0.5,  // In hours
+	// remember to change to 0 in dev
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.3.3",
-	name: "EC is useful!",
+	num: "3.4",
+	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.4: The 11th Layer </h3><br>
+Added a new layer with new functionality! <br>
+Added 2 buyables, 32 upgrades, 3 milestones, 3 achievements, 1 giving boosts <br>
+Added a new QoL feature: Able to see Buyable and Upgrade formulas via hovering on them; Revamped Upgrade and Buyable code for non-static upgrades <br>
+Fixed Energy Upgrade 21 and 31 not showing (Softcapped) or other capped <br>
+Changed Row 7-9 Advanced Era Upgrade branches <br>
+Added unlocked effect to Rebirth, Prestige, Mega and Energy Milestones <br>
+Added a new Era feature: Infinite Era Crystals <br>
+Added miliseconds to time formating below 1 min. <br>
+Added more number formatting cases <br>
+Sac Strength formula after 10 reworked, Sac Strength 3 reworked [FOR THE FUTURE] <br>
+Autobuy Era Buyable 2 and 4 delayed <br>
+Fixed Sac MS 109 effect <br>
+Fixed pdx for /2 and /7 buttons on hold <br>
+Minigame text doubled in width <br>
+Added more minigame titles <br>
+Endgames: e2.96732323e21, e2.967375e21, e2.96741721e21, e2.96755315e21 PF respectively <br>
+
 <h3>v3.3.3 </h3><br>
 Fixed MC2-Mega 1 milestone effect text, reduced cost of some MC2 milestones, made MC2-Supreme milestone be shown <br>
 
@@ -752,6 +771,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 97)) gain = gain.times("e2.8e15")
 	if (hasMilestone('sac', 100)) gain = gain.times("e1.66e16")
 	if (hasMilestone('sac', 102)) gain = gain.times("e8e15")
+	if (hasMilestone('sac', 111)) gain = gain.times("e2.5e18")
 
 
 	// achievement
@@ -790,6 +810,7 @@ function getPointGen() {
 	if (hasAchievement('a', 211)) gain = gain.times("e15e12")
 	if (hasAchievement('a', 225)) gain = gain.times("e777e12")
 	if (hasAchievement('a', 253)) gain = gain.times("e1e18")
+	if (hasAchievement('a', 254)) gain = gain.times("e2.444404444e18")
 
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
@@ -871,6 +892,7 @@ function getPointGen() {
 	if (hasUpgrade("era", 353)) gain = gain.times("e5e17")
 	if (hasUpgrade("era", 374)) gain = gain.times("e7e17")
 	if (hasUpgrade("era", 381)) gain = gain.times("e1e18")
+	if (hasUpgrade("era", 422)) gain = gain.times("e2.8e18")
 
 
 	// power (^)
@@ -1026,6 +1048,9 @@ function getPointGen() {
 	if (challengeCompletions("m", 11) == 2) gain = gain.pow(1.0333)
 	if (hasUpgrade("m", 135)) gain = gain.pow(1.015)
 	if (hasUpgrade("era", 363)) gain = gain.pow(1.008)
+	if (hasUpgrade("era", 421)) gain = gain.pow(1.005)
+	if (hasUpgrade("era", 412)) gain = gain.pow(0.995)
+	if (hasUpgrade("era", 413)) gain = gain.pow(1.005)
 	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);
@@ -1136,7 +1161,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.era.ec.gte(new Decimal("e9.1553e20"))
+	return player.era.ec.gte(new Decimal("e2.96732323e21"))
 }
 
 

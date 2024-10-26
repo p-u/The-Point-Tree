@@ -280,7 +280,7 @@ addLayer("sa", {
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e9.1553e20")) {
+                   if (player.points.gte("e2.96732323e21")) {
                        return true
                    }
                },
@@ -296,7 +296,7 @@ addLayer("sa", {
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e9.15555555e20")) {
+                   if (player.points.gte("e2.967375e21")) {
                        return true
                    }
                },
@@ -312,7 +312,7 @@ addLayer("sa", {
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e9.156e20")) {
+                   if (player.points.gte("e2.96741721e21")) {
                        return true
                    }
                },
@@ -328,12 +328,12 @@ addLayer("sa", {
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e9.156565656e20")) {
+                   if (player.points.gte("e2.96755315e21")) {
                        return true
                    }
                },
             tooltip() {
-                if (hasAchievement('sa', 35)) {
+                if (hasAchievement('sa', 36)) {
                     return "Congrats! You have reached Insanity True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points)"
                 }
                 else {
@@ -1083,18 +1083,35 @@ addLayer("sa", {
             },
             display() { dis = ""
                 if (player.sa.minigameNum.eq(0)) dis = "how"
+                if (player.sa.minigameNum.eq(1)) dis = "The Start"
+                if (player.sa.minigameNum.eq(2)) dis = "Doing a double (or +1)"
+                if (player.sa.minigameNum.eq(10)) dis = "10^Start"
+                if (player.sa.minigameNum.eq(10000000000)) dis = "10^10^Start"
+                if ((player.sa.minigameNum.gte(0.30102)) && (player.sa.minigameNum.lte(0.30103))) dis = "log(2)"
+                if ((player.sa.minigameNum.gte(1.41421)) && (player.sa.minigameNum.lte(1.41422))) dis = "sqrt(2)"
                 if ((player.sa.minigameNum.gte(1.61803)) && (player.sa.minigameNum.lte(1.61804))) dis = "The Golden Ratio"
                 if ((player.sa.minigameNum.gte(2.71828)) && (player.sa.minigameNum.lte(2.71829))) dis = "e"
                 if ((player.sa.minigameNum.gte(3.14159)) && (player.sa.minigameNum.lte(3.1416))) dis = "pi"
+                if ((player.sa.minigameNum.gte(6.28318)) && (player.sa.minigameNum.lte(6.28319))) dis = "tau"
                 if (player.sa.minigameNum.eq(69)) dis = "nice"
+                if (player.sa.minigameNum.eq(100)) dis = "100 years makes a century"
+                if (player.sa.minigameNum.eq(365)) dis = "Days in a standard year"
                 if (player.sa.minigameNum.eq(404)) dis = "404 ERROR"
                 if (player.sa.minigameNum.eq(420)) dis = "not funny"
                 if (player.sa.minigameNum.eq(666)) dis = "devil"
                 if (player.sa.minigameNum.eq(777)) dis = "lucky"
                 if (player.sa.minigameNum.eq(911)) dis = "what's your emergency?"
+                if (player.sa.minigameNum.eq(1000)) dis = "The first suffix (K)"
                 if (player.sa.minigameNum.eq(1337)) dis = "leet"
                 if (player.sa.minigameNum.eq(69420)) dis = "very nice"
+                if (player.sa.minigameNum.eq(86400)) dis = "Seconds in a day"
+                if (player.sa.minigameNum.eq(31536000)) dis = "Seconds in a year"
+                if (player.sa.minigameNum.eq(123456789)) dis = "Every number, 0 to 9"
                 if (player.sa.minigameNum.eq(9223372036854775807)) dis = "if you know, you know."
+                if (player.sa.minigameNum.eq(new Decimal(10).pow(69))) dis = "10^Nice"
+                if (player.sa.minigameNum.eq(new Decimal(2).pow(1024))) dis = "Infinite"
+                if (player.sa.minigameNum.eq(new Decimal(2).pow(2).pow(1024))) dis = "Eternal"
+                if (player.sa.minigameNum.eq(new Decimal(2).pow(2).pow(2).pow(1024))) dis = "Transcend"
                 if (player.sa.minigameNum.gte("1e100")) dis = "Breaking bounds"
                 if (player.sa.minigameNum.gte("1e10000")) dis = "Order of Exponentiating Magnitude"
                 if (player.sa.minigameNum.gte("ee6")) dis = "Impressive."
@@ -1116,8 +1133,7 @@ addLayer("sa", {
                 if (player.sa.minigameNum.gte("ee5e10")) dis = "Transcending Eternity"
                 if (player.sa.minigameNum.gte("ee7.5e10")) dis = "Meta-Reality"
                 if (player.sa.minigameNum.gte("ee1e11")) dis = "Absolute True Insane Transcedental Meta-Reality"
-
-                if (player.sa.minigameNum.lt(0)) dis = "below negative?"
+                if (player.sa.minigameNum.lt(0)) dis = "negative?"
                 if (player.sa.minigameNum.lt("-1e100")) dis = "big negative"
                 if (player.sa.minigameNum.lt("-ee100")) dis = "huge negative"
                 if (player.sa.minigameNum.lt("-ee10000")) dis = "nega-megative"
@@ -1128,6 +1144,9 @@ addLayer("sa", {
                 if (player.sa.minigameNum.lt("-eee11")) dis = "negodtivextremegabsolute"
                 return dis
             },
+            style() {return {
+                'width': '267px',
+            }},
             canClick() {return false},
         },
         12: {
@@ -1227,6 +1246,7 @@ addLayer("sa", {
             unlocked() {return hasAchievement("sa", 126)},
             onHold() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)
+                player[this.layer].pdx = player[this.layer].pdx.add(3)
             }
         },
         44: {
@@ -1320,6 +1340,7 @@ addLayer("sa", {
             unlocked() {return hasAchievement("sa", 146)},
             onHold() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(7)
+                player[this.layer].pdx = player[this.layer].pdx.add(1)
             }
         },
         64: {

@@ -51,26 +51,33 @@ addLayer("prestige", {
             description: "Rebirth Points boosts itself.",
             cost: new Decimal(8000),
             unlocked() { return hasUpgrade("prestige", 21) },
-            effect() {
-                let pu6exp = 0.05
+            main() {
+                pu6exp = 0.05
                 if (hasUpgrade("mega", 41)) pu6exp = 0.08
                 if (hasMilestone("prestige", 8)) pu6exp = 0.16
                 if (hasUpgrade("era", 254)) pu6exp = 0.22
-                let eff = player["rebirth"].points.add(1).pow(pu6exp)
-                let softcapStart = new Decimal("1e1111111")
+                softcapDescriptionp22 = ""
+                softcapStart = new Decimal("1e1111111")
                 if (hasMilestone("rebirth", 8)) softcapStart = new Decimal("e2.5e6")
-                let softcapExp = 0.35
-                if (hasUpgrade('m', 94)) softcapExp = 0.375
-                eff = softcap(eff, softcapStart, softcapExp)
+                sdsc = ""
+                scpow = 0.35
+                if (hasUpgrade('m', 94)) scpow = 0.375
+                upgEffectp22 = upgradeEffect(this.layer, this.id)
+                if (upgEffectp22.gte(new Decimal(softcapStart)) ) {
+                    softcapDescriptionp22 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at " + notationChooser(softcapStart)
+                }
+            },
+            effect() {
+                let eff = player["rebirth"].points.add(1).pow(pu6exp)
+                eff = softcap(eff, softcapStart, scpow)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e1111111")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                return "This upgrade boosts Rebirth Points by " + notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffectp22)+"x" + softcapDescriptionp22
+            },
+            tooltip() {
+                return "Formula: RP^"  + pu6exp + sdsc
             },
         },
         23: {
@@ -310,11 +317,13 @@ addLayer("prestige", {
         6: {
             requirementDescription: "15,000,000 PP",
             effectDescription: "Generate 10,000% of Rebirth Points a second.",
+            unlocked() { return hasMilestone("prestige", 4)},
             done() { return player["prestige"].points.gte(15e6) }
         },
         7: {
             requirementDescription: "250M PP",
             effectDescription: "Keep Row 2 Rebirth Upgrades and RU32",
+            unlocked() { return hasMilestone("prestige", 6)},
             done() { return player["prestige"].points.gte(250e6) }
         },
         8: {
@@ -456,6 +465,7 @@ addLayer("prestige", {
         if (hasUpgrade('mega', 103)) mult = mult.times("e5e14")
         if (hasUpgrade('era', 95)) mult = mult.times("e6e15")
         if (hasUpgrade('m', 122)) mult = mult.times("e2e16")
+        if (hasUpgrade('rebirth', 93)) mult = mult.times("e2.7e17")
 
         return mult
     },

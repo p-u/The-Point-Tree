@@ -64,8 +64,8 @@ addLayer("w", {
             description: "Water gets boosted based on itself.",
             cost: new Decimal(1250),
             unlocked() { return hasUpgrade("w", 12) },
-            effect() {
-                let w3exp = 0.111
+            main() {
+                w3exp = 0.111
                 if (hasUpgrade('w', 31)) w3exp = 0.13
                 if (hasUpgrade('w', 43)) w3exp = 0.145
                 if (hasMilestone('w', 1)) w3exp = 0.16
@@ -74,9 +74,26 @@ addLayer("w", {
                 if (hasUpgrade('era', 252)) w3exp = new Decimal(0.225)
                 if (hasUpgrade('s', 122)) w3exp = new Decimal(0.237)
                 if (hasUpgrade('era', 361)) w3exp = new Decimal(0.25)
-                return player["w"].points.add(1).pow(w3exp)
+                softcapDescriptionw13 = ""
+                sdsc = ""
+                scpow = 0.7
+                upgEffectw13 = upgradeEffect(this.layer, this.id)
+                if (upgEffectw13.gte(new Decimal("e1e14")) ) {
+                    softcapDescriptionw13 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e1e14"
+                }
             },
-            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effect() {
+                let eff = player["w"].points.add(1).pow(w3exp)
+                eff = softcap(eff, new Decimal("e1e14"), scpow)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgEffectw13)+"x" + softcapDescriptionw13
+            },
+            tooltip() {
+                return "Formula: Water^"  + w3exp + sdsc
+            },
         },
         14: {
             title: "Super Water",
@@ -339,6 +356,7 @@ addLayer("w", {
         if (hasUpgrade('era', 93)) mult = mult.times("e50e9")
         if (hasUpgrade('s', 121)) mult = mult.times("e50e9")
         if (hasUpgrade('era', 394)) mult = mult.times("e7e11")
+        if (hasUpgrade('rebirth', 91)) mult = mult.times("e2.2e12")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
 
         
@@ -359,6 +377,7 @@ addLayer("w", {
         if (hasUpgrade('w', 83)) exp = exp.add(0.1)
         if (hasMilestone('w', 5)) exp = exp.add(0.1)
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
+        if (hasUpgrade("era", 432)) exp = exp.add(0.08)
         if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp

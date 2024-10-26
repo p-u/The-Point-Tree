@@ -274,6 +274,36 @@ addLayer("rebirth", {
             cost: new Decimal("e43816900550e3"),
             unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 84) },
         },
+        91: {
+            title: "REvamp upgrades",
+            description: "Every upgrade in this row gives x10 EC. U1: xe2.2e12 Water",
+            cost: new Decimal("e1.030228e20"),
+            unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 85) },
+        },
+        92: {
+            title: "REvamp upgrades [2]",
+            description: "U2: xe1.9e19 Basic Points",
+            cost: new Decimal("e1.035342e20"),
+            unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 91) },
+        },
+        93: {
+            title: "REvamp upgrades [3]",
+            description: "U3: xe2.7e17 Prestige Points",
+            cost: new Decimal("e1.276746e20"),
+            unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 92) },
+        },
+        94: {
+            title: "REvamp upgrades [4]",
+            description: "U4: xe8e18 Rebirth Points",
+            cost: new Decimal("e1.32064e20"),
+            unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 93) },
+        },
+        95: {
+            title: "REvamp upgrades [5]",
+            description: "U5: Reduce rebirth hypercap",
+            cost: new Decimal("e1.44027e20"),
+            unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 94) },
+        },
     },
     milestones: {
         1: {
@@ -294,16 +324,19 @@ addLayer("rebirth", {
         4: {
             requirementDescription: "7,000 RP",
             effectDescription: "Keep Row 4 Basic Point Upgrades",
+            unlocked() { return hasMilestone("rebirth", 2)},
             done() { return player["rebirth"].points.gte(7000) }
         },
         5: {
             requirementDescription: "5M RP",
             effectDescription: "Generate 10,000% of Basic Points a sec",
+            unlocked() { return hasMilestone("rebirth", 3)},
             done() { return player["rebirth"].points.gte(5000000) }
         },
         6: {
             requirementDescription: "10B RP",
             effectDescription: "4 MOAR BP Upgrades",
+            unlocked() { return hasMilestone("rebirth", 5)},
             done() { return player["rebirth"].points.gte(10000000000) }
         },
         7: {
@@ -483,6 +516,7 @@ addLayer("rebirth", {
         if (hasUpgrade('era', 174)) mult = mult.times("e11.11e12")
         if (hasUpgrade('mega', 102)) mult = mult.times("e2e16")
         if (hasUpgrade('s', 121)) mult = mult.times("e3.3333333e17")
+        if (hasUpgrade('rebirth', 94)) mult = mult.times("e8e18")
 
         // secret achievement
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
@@ -556,8 +590,10 @@ addLayer("rebirth", {
         softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
         let hyprcap = 0.3
         if (hasUpgrade('rebirth', 71)) hyprcap = 0.375
+        if (hasUpgrade("rebirth", 95)) hyprcap = 0.44
         softcappedEffect = softcap(softcappedEffect, new Decimal("e200000000"), new Decimal(hyprcap))
         let inscap = 0.2
+        if (hasUpgrade("era", 404)) inscap = 0.23
         softcappedEffect = softcap(softcappedEffect, new Decimal("e5e15"), new Decimal(inscap))
         return softcappedEffect
        },

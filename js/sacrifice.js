@@ -129,7 +129,7 @@ addLayer("sac", {
                         let a = ""
                         if (player.sac.sacstr.gte(5)) {
                             a = a + `Your Point Fragments are getting powered by 
-                            <h2> ${format(player.sac.se3)}</span></h2>.`
+                            <h2> ${minigameFormat(player.sac.se3)}</span></h2>.`
                         }
                         return a
                     }
@@ -138,7 +138,7 @@ addLayer("sac", {
                     function(){
                         let a = ""
                         if (player.sac.sacstr.gte(5)) {
-                            a = a + "Formula: (log2.2(SS-3))/50, with cap at ^1.4"
+                            a = a + "Formula: (log1.38(SS-3.4))/180, with cap at ^1.4"
                         }
                         return a
                     }
@@ -688,7 +688,7 @@ addLayer("sac", {
         },
         89: {
             requirementDescription: "Sacrifice 5,000",
-            effectDescription: "Autobuy Era Buyables 1 and 2",
+            effectDescription: "Autobuy Era Buyable 1",
             unlocked() {return player["sac"].points.gte(4700)},
             done() { return player["sac"].points.gte(5000) }
         },
@@ -706,7 +706,7 @@ addLayer("sac", {
         },
         92: {
             requirementDescription: "Sacrifice 10K",
-            effectDescription: "xe100T PF, ^1.01 PF, x100 EC",
+            effectDescription: "xe100T PF, ^1.01 PF, x100 EC, Autobuy Era Buyable 2",
             unlocked() {return player["sac"].points.gte(9000)},
             done() { return player["sac"].points.gte(10000) }
         },
@@ -791,8 +791,8 @@ addLayer("sac", {
         106: {
             requirementDescription: "Sacrifice 333,333",
             effectDescription: "xe3.33e18 Basic Points",
-            unlocked() {return player["sac"].points.gte(200000)},
-            done() { return player["sac"].points.gte(250000) }
+            unlocked() {return player["sac"].points.gte(275000)},
+            done() { return player["sac"].points.gte(333333) }
         },
         107: {
             requirementDescription: "Sacrifice 400,000",
@@ -802,9 +802,27 @@ addLayer("sac", {
         },
         108: {
             requirementDescription: "Sacrifice 500,000",
-            effectDescription: "x10 EC, Autobuy Era Buyable 4",
+            effectDescription: "x10 EC",
             unlocked() {return player["sac"].points.gte(444444)},
             done() { return player["sac"].points.gte(500000) }
+        },
+        109: {
+            requirementDescription: "Sacrifice 640,000",
+            effectDescription: "+^0.0064 to SB5 HC",
+            unlocked() {return player["sac"].points.gte(555555)},
+            done() { return player["sac"].points.gte(640000) }
+        },
+        110: {
+            requirementDescription: "Sacrifice 700,000",
+            effectDescription: "Unlock a NEW LAYER!",
+            unlocked() {return player["sac"].points.gte(660000)},
+            done() { return player["sac"].points.gte(700000) }
+        },
+        111: {
+            requirementDescription: "Sacrifice 750,000",
+            effectDescription: "Automate Era Buyable 4, xe2.5e18 PF",
+            unlocked() {return player["sac"].points.gte(720000)},
+            done() { return player["sac"].points.gte(750000) }
         },
     },
     sacms58eff() {
@@ -839,35 +857,49 @@ addLayer("sac", {
             player.sac.sacstr = player.sac.points.div(50000).log(3).add(1).floor()
         }
         if (player.sac.sacstr.gte(10)) {
-            player.sac.sacstr = player.sac.points.div(50000).log(7).add(1).floor()
+            player.sac.sacstr = player.sac.points.div(50000).log(5).add(1).floor()
             if (player.sac.sacstr.lte(10)) player.sac.sacstr = new Decimal(10)
         }
         if (player.sac.sacstr.gte(100)) {
-            player.sac.sacstr = player.sac.points.div(50000).log(15).add(1).floor()
+            player.sac.sacstr = player.sac.points.div(50000).log(9).add(1).floor()
             if (player.sac.sacstr.lte(100)) player.sac.sacstr = new Decimal(100)
         }
         if (player.sac.sacstr.gte(1000)) {
-            player.sac.sacstr = player.sac.points.div(50000).log(50).add(1).floor()
+            player.sac.sacstr = player.sac.points.div(50000).log(15).add(1).floor()
             if (player.sac.sacstr.lte(1000)) player.sac.sacstr = new Decimal(1000)
         }
         if (player.sac.sacstr.gte(10000)) {
-            player.sac.sacstr = player.sac.points.div(50000).log(500).add(1).floor()
+            player.sac.sacstr = player.sac.points.div(50000).log(25).add(1).floor()
             if (player.sac.sacstr.lte(10000)) player.sac.sacstr = new Decimal(10000)
+        }
+        if (player.sac.sacstr.gte(100000)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(40).add(1).floor()
+            if (player.sac.sacstr.lte(100000)) player.sac.sacstr = new Decimal(100000)
+        }
+        if (player.sac.sacstr.gte(1000000)) {
+            player.sac.sacstr = player.sac.points.div(50000).log(70).add(1).floor()
+            if (player.sac.sacstr.lte(1000000)) player.sac.sacstr = new Decimal(1000000)
         }
 
         // next sstr
         player.sac.nextsstr = new Decimal(3).pow(player.sac.sacstr).mul(50000)
         if (player.sac.sacstr.gte(10)) {
-            player.sac.nextsstr = new Decimal(7).pow(player.sac.sacstr).mul(50000)
+            player.sac.nextsstr = new Decimal(5).pow(player.sac.sacstr).mul(50000)
         }
         if (player.sac.sacstr.gte(100)) {
-            player.sac.nextsstr = new Decimal(15).pow(player.sac.sacstr).mul(50000)
+            player.sac.nextsstr = new Decimal(9).pow(player.sac.sacstr).mul(50000)
         }
         if (player.sac.sacstr.gte(1000)) {
-            player.sac.nextsstr = new Decimal(50).pow(player.sac.sacstr).mul(50000)
+            player.sac.nextsstr = new Decimal(15).pow(player.sac.sacstr).mul(50000)
         }
         if (player.sac.sacstr.gte(10000)) {
-            player.sac.nextsstr = new Decimal(500).pow(player.sac.sacstr).mul(50000)
+            player.sac.nextsstr = new Decimal(25).pow(player.sac.sacstr).mul(50000)
+        }
+        if (player.sac.sacstr.gte(100000)) {
+            player.sac.nextsstr = new Decimal(40).pow(player.sac.sacstr).mul(50000)
+        }
+        if (player.sac.sacstr.gte(1000000)) {
+            player.sac.nextsstr = new Decimal(70).pow(player.sac.sacstr).mul(50000)
         }
 
         if (player.sac.points.gte(50000)) { 
@@ -883,7 +915,7 @@ addLayer("sac", {
         }
 
         if (player.sac.sacstr.gte(5)) { 
-            player.sac.se3 = player.sac.sacstr.sub(3).log(2.2).div(50).min(1.4)
+            player.sac.se3 = player.sac.sacstr.sub(3.4).log(1.38).div(180).add(1).min(1.4)
         } else {
             player.sac.se3 = new Decimal(1)
         }
@@ -1096,6 +1128,8 @@ addLayer("sac", {
         if (hasUpgrade("prestige", 81)) exp = exp.sub(0.12)
         if (hasMilestone("sac", 103)) exp = exp.sub(0.0103)
         if (hasUpgrade("era", 351)) exp = exp.sub(0.0077)
+        if (hasUpgrade("era", 401)) exp = exp.sub(0.0021)
+        if (hasUpgrade("era", 412)) exp = exp.sub(0.005)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

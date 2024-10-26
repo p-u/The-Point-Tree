@@ -78,26 +78,36 @@ addLayer("basic", {
             title: "Boosting I",
             description: "Basic points boost point fragments.",
             cost: new Decimal(3),
-            effect() {
-                let expu2 = 0.35
+            main() {
+                expu2 = 0.35
                 if (hasUpgrade("basic", 62)) expu2 = 0.3575
                 if (hasMilestone("rebirth", 13)) expu2 = 0.365
                 if (hasUpgrade("era", 103)) expu2 = 0.365
+                softcapDescription12 = ""
+                sdsc = ""
+                scpow = 0.5
+                sppow = 0.4
+                upgEffect12 = upgradeEffect(this.layer, this.id)
+                if (upgEffect12.gte(new Decimal("e50000000")) ) {
+                    softcapDescription12 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e50M"
+                }
+                if (upgEffect12.gte(new Decimal("e1.25e12")) ) {
+                    softcapDescription12 = " (Supercapped)"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e1.25e12"
+                }
+            },
+            effect() {
                 let eff = player[this.layer].points.add(1).pow(expu2)
-                eff = softcap(eff, new Decimal("1e50000000"), 0.5)
-                eff = softcap(eff, new Decimal("e1.25e12"), 0.4)
+                eff = softcap(eff, new Decimal("1e50000000"), scpow)
+                eff = softcap(eff, new Decimal("e1.25e12"), sppow)
                 return eff
             },
+            tooltip() {
+                return "Formula: Basic Points^"  + expu2 + sdsc
+            },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e50000000")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                if (upgEffect.gte(new Decimal("e1.25e12")) ) {
-                    softcapDescription = " (Supercapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect12)+"x" + softcapDescription12
             },
             unlocked() { return hasUpgrade("basic", 11) },
 
@@ -106,24 +116,34 @@ addLayer("basic", {
             title: "Boosting II",
             description: "Point Fragments boost basic points.",
             cost: new Decimal(10),
-            effect() {
-                let expu3 = 0.16
+            main() {
+                expu3 = 0.16
                 if (hasMilestone("rebirth", 13)) expu3 = 0.161616
+                softcapDescription13 = ""
+                sdsc = ""
+                scpow = 0.5
+                sppow = 0.3
+                upgEffect13 = upgradeEffect(this.layer, this.id)
+                if (upgEffect13.gte(new Decimal("e5e6")) ) {
+                    softcapDescription13 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e5M"
+                }
+                if (upgEffect13.gte(new Decimal("e25e6")) ) {
+                    softcapDescription13 = " (Supercapped)"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e25e6"
+                }
+            },
+            effect() {
                 let eff = player.points.add(1).pow(expu3)
-                eff = softcap(eff, new Decimal("1e5000000"), 0.5)
-                eff = softcap(eff, new Decimal("1e25000000"), 0.3)
+                eff = softcap(eff, new Decimal("1e5000000"), scpow)
+                eff = softcap(eff, new Decimal("1e25000000"), sppow)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e5000000")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                if (upgEffect.gte(new Decimal("e25000000")) ) {
-                    softcapDescription = " (Supercapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect13)+"x" + softcapDescription13
+            },
+            tooltip() {
+                return "Formula: PF^"  + expu3 + sdsc
             },
             unlocked() { return hasUpgrade("basic", 12) },
         },
@@ -137,27 +157,37 @@ addLayer("basic", {
             title: "Compounding",
             description: "Basic Points boosts itself.",
             cost: new Decimal(50),
-            effect() {
-                let expu5 = 0.175
+            main() {
+                expu5 = 0.175
                 if (inChallenge("sac", 12)) expu5 = 0.111
                 if (hasUpgrade("era", 263)) expu5 = 0.275
                 if (hasUpgrade("era", 135)) expu5 = 0.313
                 if (hasUpgrade("era", 312)) expu5 = 0.388
+                upgEffect21 = upgradeEffect(this.layer, this.id)
+                softcapDescription21 = ""
+                sdsc = ""
+                scpow = 0.5
+                sppow = 0.4
+                if (upgEffect21.gte(new Decimal("e5e6")) ) {
+                    softcapDescription21 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e5M"
+                }
+                if (upgEffect21.gte(new Decimal("e1e12")) ) {
+                    softcapDescription21 = " (Supercapped)"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e1e12"
+                }
+            },
+            effect() {
                 let eff = player.basic.points.add(1).pow(expu5)
-                eff = softcap(eff, new Decimal("1e5000000"), 0.5)
-                eff = softcap(eff, new Decimal("e1e12"), 0.4)
+                eff = softcap(eff, new Decimal("1e5000000"), scpow)
+                eff = softcap(eff, new Decimal("e1e12"), sppow)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e5000000")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                if (upgEffect.gte(new Decimal("e1e12")) ) {
-                    softcapDescription = " (Supercapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect21)+"x" + softcapDescription21
+            },
+            tooltip() {
+                return "Formula: Basic Points^"  + expu5 + sdsc
             },
             unlocked() { return hasUpgrade("basic", 14) },
         },
@@ -177,9 +207,29 @@ addLayer("basic", {
             title: "Compounding II",
             description: "Point Fragments boosts itself",
             cost: new Decimal(1000),
-            effect() {
-                let expu8 = 0.1625
+            main() {
+                expu8 = 0.1625
                 if (inChallenge("sac", 12)) expu8 = 0
+                upgEffect24 = upgradeEffect(this.layer, this.id)
+                softcapDescription24 = ""
+                sdsc = ""
+                scpow = 0.5
+                sppow = 0.4
+                hycpow = 0.5
+                if (upgEffect24.gte(new Decimal("e40e6")) ) {
+                    softcapDescription24 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e40M"
+                }
+                if (upgEffect24.gte(new Decimal("e200e6")) ) {
+                    softcapDescription24 = " (Supercapped)"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e200M"
+                }
+                if (upgEffect24.gte(new Decimal("e15e12")) ) {
+                    softcapDescription24 = " (Hypercapped)"
+                    sdsc = sdsc + ", Hypercaps ^" + hycpow + " at e15e12"
+                }
+            },
+            effect() {
                 let eff = player.points.add(1).pow(expu8)
                 eff = softcap(eff, new Decimal("1e40000000"), 0.5)
                 eff = softcap(eff, new Decimal("1e200000000"), 0.4)
@@ -187,18 +237,10 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e40000000")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                if (upgEffect.gte(new Decimal("e200000000")) ) {
-                    softcapDescription = " (Supercapped)"
-                }
-                if (upgEffect.gte(new Decimal("e15e12")) ) {
-                    softcapDescription = " (Hypercapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect24)+"x" + softcapDescription24
+            },
+            tooltip() {
+                return "Formula: PF^"  + expu8 + sdsc
             },
             unlocked() { return hasUpgrade("basic", 23) },
         },
@@ -212,25 +254,37 @@ addLayer("basic", {
             title: "Compounding III",
             description: "Point fragments boost itself, again, but less",
             cost: new Decimal(10000),
-            effect() {
-                let expu10 = 0.055
+            main() {
+                expu10 = 0.055
                 if (hasUpgrade('rebirth', 31)) expu10 = 0.075
                 if (hasUpgrade('prestige', 32)) expu10 = 0.09
                 if (inChallenge("sac", 12)) expu10 = 0
+                upgEffect32 = upgradeEffect(this.layer, this.id)
+                softcapDescription32 = ""
+                sdsc = ""
+                scpow = 0.5
+                if (hasUpgrade('m', 95)) scpow = 0.522
+                sppow = 0.4
+                if (upgEffect32.gte(new Decimal("e100e6")) ) {
+                    softcapDescription32 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e100M"
+                }
+                if (upgEffect32.gte(new Decimal("e2.5e9")) ) {
+                    softcapDescription32 = " (Supercapped)"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e2.5e9"
+                }
+            },
+            effect() {
                 let eff = player.points.add(300000).pow(expu10)
-                let softcapExp = 0.5
-                if (hasUpgrade('m', 95)) softcapExp = 0.522
-                eff = softcap(eff, new Decimal("1e100000000"), softcapExp)
+                eff = softcap(eff, new Decimal("1e100000000"), scpow)
                 eff = softcap(eff, new Decimal("1e2500000000"), 0.4)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e100000000")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect32)+"x" + softcapDescription32
+            },
+            tooltip() {
+                return "Formula: PF^"  + expu10 + sdsc
             },
             unlocked() { return hasUpgrade("basic", 31) },
         },
@@ -346,20 +400,29 @@ addLayer("basic", {
             title: "Basic Boost 1.",
             description: "Basic Points boosts Rebirth Points, by a little",
             cost: new Decimal("e13610000"),
-            effect() {
-                let bb1exp = 0.006
+            main() {
+                bb1exp = 0.006
                 if (hasUpgrade('basic', 85)) bb1exp = 0.009
+                if (hasUpgrade('era', 402)) bb1exp = 0.01
+                upgEffect81 = upgradeEffect(this.layer, this.id)
+                softcapDescription81 = ""
+                sdsc = ""
+                scpow = 0.5
+                if (upgEffect81.gte(new Decimal("e2.5e12")) ) {
+                    softcapDescription81 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e2.5e12"
+                }
+            },
+            effect() {
                 let eff = player.points.add(1).pow(bb1exp)
-                eff = softcap(eff, new Decimal("e2.5e12"), 0.5)
+                eff = softcap(eff, new Decimal("e2.5e12"), scpow)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e2.5e12")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect81)+"x" + softcapDescription81
+            },
+            tooltip() {
+                return "Formula: Basic Points ^"  + bb1exp + sdsc
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 74) },
         },
@@ -367,21 +430,29 @@ addLayer("basic", {
             title: "Basic Boost 2.",
             description: "Basic Points boosts Prestige Points, by very little",
             cost: new Decimal("e13842250"),
-            effect() {
-                let bb2exp = 0.0004
+            main() {
+                bb2exp = 0.0004
                 if (hasUpgrade('basic', 85)) bb2exp = 0.0006
                 if (hasUpgrade('era', 262)) bb2exp = 0.0007
+                upgEffect82 = upgradeEffect(this.layer, this.id)
+                softcapDescription82 = ""
+                sdsc = ""
+                scpow = 0.4
+                if (upgEffect82.gte(new Decimal("e5e11")) ) {
+                    softcapDescription82 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e5e11"
+                }
+            },
+            effect() {
                 let eff =  player.points.add(1).pow(bb2exp)
-                eff = softcap(eff, new Decimal("e5e11"), 0.4)
+                eff = softcap(eff, new Decimal("e5e11"), scpow)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e2.5e12")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                return notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect82)+"x" + softcapDescription82
+            },
+            tooltip() {
+                return "Formula: Basic Points ^"  + bb2exp + sdsc
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 81) },
         },
@@ -389,33 +460,51 @@ addLayer("basic", {
             title: "Basic Boost 3.",
             description: "Basic Points boosts Mega Points, by very very little",
             cost: new Decimal("e14019250"),
-            effect() {
-                let bb3exp = 0.0000175
+            main() {
+                bb3exp = 0.0000175
                 if (hasUpgrade('basic', 85)) bb3exp = 0.0000225
                 if (hasUpgrade('m', 33)) bb3exp = 0.000036
+                upgEffect83 = upgradeEffect(this.layer, this.id)
+                softcapDescription83 = ""
+                sdsc = ""
+            },
+            effect() {
                 return player.points.add(1).pow(bb3exp)
             },
-            effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            effectDisplay() {
+                return notationChooser(upgEffect83)+"x" + softcapDescription83
+            },
+            tooltip() {
+                return "Formula: Basic Points ^"  + bb3exp + sdsc
+            },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 82) },
         },
         84: {
             title: "Basic Boost 4.",
             description: "Basic Points boosts Energy, by insanely little",
             cost: new Decimal("e14151000"),
+            main() {
+                bb4exp = 0.0000007
+                if (hasUpgrade('basic', 85)) bb4exp = 0.00000088
+                upgEffect84 = upgradeEffect(this.layer, this.id)
+                softcapDescription84 = ""
+                sdsc = ""
+                scpow = 0.3
+                if (upgEffect84.gte(new Decimal("e175")) ) {
+                    softcapDescription84 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at e175"
+                }
+            },
             effect() {
-                let bb3exp = 0.0000007
-                if (hasUpgrade('basic', 85)) bb3exp = 0.00000088
-                let eff = player.points.add(1).pow(bb3exp)
-                eff = softcap(eff, new Decimal("e175"), 0.3)
+                let eff = player.points.add(1).pow(bb4exp)
+                eff = softcap(eff, new Decimal("e175"), scpow)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                if (upgEffect.gte(new Decimal("e175")) ) {
-                    softcapDescription = " (Softcapped)"
-                }
-                return "This upgrade boosts Energy by " + notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect84)+"x" + softcapDescription84
+            },
+            tooltip() {
+                return "Formula: Basic Points ^"  + bb4exp + sdsc
             },
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 83) },
         },
@@ -453,15 +542,21 @@ addLayer("basic", {
             title: "5 Types of Upgrades. Type 2: Currency boost Currency",
             description: "Basic Points boost Supreme Points",
             cost: new Decimal("e39155400e3"),
+            main() {
+                bb5exp = 0.0000000045
+                upgEffect102 = upgradeEffect(this.layer, this.id)
+                softcapDescription102 = ""
+                sdsc = ""
+            },
             effect() {
-                let bb5exp = 0.0000000045
                 let eff = player.points.add(1).pow(bb5exp)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts SP by " + notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect102)+"x" + softcapDescription102
+            },
+            tooltip() {
+                return "Formula: Basic Points ^"  + bb5exp + sdsc
             },
             unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 101) },
         },
@@ -487,15 +582,21 @@ addLayer("basic", {
             title: "Influx of Water",
             description: "Basic Points boosts Water",
             cost: new Decimal("e2.1969443645e16"),
+            main() {
+                bb6exp = 0.00000000045
+                upgEffect111 = upgradeEffect(this.layer, this.id)
+                softcapDescription111 = ""
+                sdsc = ""
+            },
             effect() {
-                let bb5exp = 0.00000000045
-                let eff = player.points.add(1).pow(bb5exp)
+                let eff = player.points.add(1).pow(bb6exp)
                 return eff
             },
             effectDisplay() {
-                let softcapDescription = ""
-                let upgEffect = upgradeEffect(this.layer, this.id)
-                return "This upgrade boosts Water by " + notationChooser(upgEffect)+"x" + softcapDescription
+                return notationChooser(upgEffect111)+"x" + softcapDescription111
+            },
+            tooltip() {
+                return "Formula: Basic Points ^"  + bb6exp + sdsc
             },
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 105) },
         },
@@ -725,6 +826,7 @@ addLayer("basic", {
         if (hasUpgrade('era', 303)) mult = mult.times("e7.1e17")
         if (hasMilestone('sac', 106)) mult = mult.times("e3.33e18")
         if (hasUpgrade('era', 373)) mult = mult.times("e8e18")
+        if (hasUpgrade("rebirth", 92)) mult = mult.times("e1.9e19")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -758,6 +860,7 @@ addLayer("basic", {
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade('m', 131)) exp = exp.add(0.0125)
         if (hasUpgrade('m', 132)) exp = exp.add(0.015)
+        if (hasUpgrade("era", 434)) exp = exp.add(0.014)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

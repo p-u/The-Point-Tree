@@ -9,10 +9,6 @@ function exponentialFormat(num, precision, mantissa = true) {
         e = e.add(1)
     }
     let elimit = new Decimal(1e12)
-    if (options.formatE == '15') elimit = new Decimal(1e15)
-    if (options.formatE == '9') elimit = new Decimal(1e9)
-    if (options.formatE == '6') elimit = new Decimal(1e6)
-    if (options.formatE == '3') elimit = new Decimal(1e3)
     let amtdp = options.dp
     e = (e.gte(elimit) ? format(e, amtdp) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     if (mantissa)
@@ -38,7 +34,7 @@ function minigameFormat(num, precision) {
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.0001) return (0).toFixed(precision)
     if (num.mag < 0.1 && precision !==0) precision = Math.max(precision, 4)
-    if (num.mag > 0.0001) precision = options.dp
+    if (num.mag > 0.0001) precision = (options.dp + 4)
     return num.toStringWithDecimalPlaces(precision)
 }
 
@@ -114,8 +110,14 @@ function format(decimal, precision = options.dp, small) {
     else if (options.formatE === '6' && decimal.gte("1ee6")) return exponentialFormat(decimal, 0, false) 
     else if (decimal.gte("1ee12")) return exponentialFormat(decimal, 0, false)
     else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
-    else if (decimal.gte(1e12)) return exponentialFormat(decimal, (precision + 2))
-    else if (decimal.gte(1)) return commaFormat(decimal, 0)
+    else if (decimal.gte(1e12)) return exponentialFormat(decimal, precision)
+    else if (decimal.gte(1)) {
+        if ((decimal.sub(Math.floor(decimal))).eq(0)) {
+            return commaFormat(decimal, 0)
+        } else {
+            return commaFormat(decimal, 4)
+        }
+    }
     else if (decimal.gte(0.0001) || !small) return regularFormat(decimal, precision)
     else if (decimal.eq(0)) return (0).toFixed(precision)
 
@@ -138,7 +140,7 @@ function formatWhole(decimal) {
 }
 
 function formatTime(s) {
-    if (s < 60) return format(s) + "s"
+    if (s < 60) return (Math.floor(s)) + "s " + ((s % 1) * 1000).toPrecision(3) + "ms"
     else if (s < 3600) return formatWhole(Math.floor(s / 60)) + "m " + format(s % 60) + "s"
     else if (s < 86400) return formatWhole(Math.floor(s / 3600)) + "h " + formatWhole(Math.floor(s / 60) % 60) + "m " + format(s % 60) + "s"
     else if (s < 31536000) return formatWhole(Math.floor(s / 86400) % 365) + "d " + formatWhole(Math.floor(s / 3600) % 24) + "h " + formatWhole(Math.floor(s / 60) % 60) + "m " + format(s % 60) + "s"
