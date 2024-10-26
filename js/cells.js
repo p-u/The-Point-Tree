@@ -44,7 +44,7 @@ addLayer("c", {
 
 
         // main code
-        if (player.sac.points.gte(700000)) {
+        if (player.sac.points.gte(695000)) {
             player.c.nextReplicateSecs = player.c.nextReplicateSecs.sub(diff)
             if (player.c.nextReplicateSecs.gt(player.c.replicateTime)) player.c.nextReplicateSecs = player.c.replicateTime
             if (player.c.nextReplicateSecs.lt(0)) {
