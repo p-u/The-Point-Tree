@@ -16,7 +16,7 @@ addLayer("c", {
     }},
     layerShown(){
         let visible = false
-        if (player.sac.points.gte(700000)) visible = true
+        if (player.sac.points.gte(695000)) visible = true
        return visible
     },
     update(diff) {
@@ -188,7 +188,7 @@ addLayer("c", {
         },
     },
     color: "#63e5ff",
-    requires: new Decimal(700000), // Can be a function that takes requirement increases into account
+    requires: new Decimal(695000), // Can be a function that takes requirement increases into account
     resource: "Cells", // Name of currency
     baseResource: "Sacrifices", // Name of resource prestige is based on
     baseAmount() {return player.sac.points}, // Get the current amount of baseResource

@@ -813,10 +813,10 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(640000) }
         },
         110: {
-            requirementDescription: "Sacrifice 700,000",
+            requirementDescription: "Sacrifice 695,000",
             effectDescription: "Unlock a NEW LAYER!",
             unlocked() {return player["sac"].points.gte(660000)},
-            done() { return player["sac"].points.gte(700000) }
+            done() { return player["sac"].points.gte(695000) }
         },
         111: {
             requirementDescription: "Sacrifice 750,000",
