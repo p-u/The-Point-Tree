@@ -14,11 +14,20 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.1.2",
+	num: "3.4.2",
 	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.4.2 </h3><br>
+Made it that it will increase to 1 cell when cell < 0 <br>
+
+<h3>v3.4.1.1, v3.4.1.2 </h3><br>
+Fixed cells unlock <br>
+
+<h3>v3.4.1 </h3><br>
+Fixed AdvErUp 25 unlock <br>
+
 <h3>v3.4: The 11th Layer </h3><br>
 Added a new layer with new functionality! <br>
 Added 2 buyables, 32 upgrades, 3 milestones, 3 achievements, 1 giving boosts <br>

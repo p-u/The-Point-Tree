@@ -42,6 +42,10 @@ addLayer("c", {
         player.c.replicateTime = player.c.preRT
         player.c.baseMultiplier = player.c.preBM
 
+        if (player.c.points.lte(1)) {
+            player.c.points = new Decimal(1)
+        }
+
 
         // main code
         if (player.sac.points.gte(695000)) {
