@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4",
+	num: "3.4.1.1",
 	name: "The 11th Layer",
 }
 
