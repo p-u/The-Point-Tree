@@ -2137,7 +2137,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: ['412', '441', '442'],
-            unlocked() {return ((hasUpgrade("era", 441)) && (hasUpgrade("era", 442)))},
+            unlocked() {return ((hasUpgrade("era", 421)) && (hasUpgrade("era", 422)))},
         },
         432: {
             title: "Advanced ErUp 25b",
@@ -2147,7 +2147,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: ['412', '441', '442'],
-            unlocked() {return ((hasUpgrade("era", 441)) && (hasUpgrade("era", 442)))},
+            unlocked() {return ((hasUpgrade("era", 421)) && (hasUpgrade("era", 422)))},
         },
         433: {
             title: "Advanced ErUp 25c",
@@ -2157,7 +2157,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: ['412', '441', '442'],
-            unlocked() {return ((hasUpgrade("era", 441)) && (hasUpgrade("era", 442)))},
+            unlocked() {return ((hasUpgrade("era", 421)) && (hasUpgrade("era", 422)))},
         },
         434: {
             title: "Advanced ErUp 25d",
@@ -2167,7 +2167,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: ['412', '441', '442'],
-            unlocked() {return ((hasUpgrade("era", 441)) && (hasUpgrade("era", 442)))},
+            unlocked() {return ((hasUpgrade("era", 421)) && (hasUpgrade("era", 422)))},
         },
         435: {
             title: "Advanced ErUp 25e",
@@ -2177,7 +2177,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: ['412', '441', '442'],
-            unlocked() {return ((hasUpgrade("era", 441)) && (hasUpgrade("era", 442)))},
+            unlocked() {return ((hasUpgrade("era", 421)) && (hasUpgrade("era", 422)))},
         },
         412: {
             title: "Trade-off Beta",
