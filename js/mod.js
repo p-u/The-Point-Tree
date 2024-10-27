@@ -22,6 +22,7 @@ let changelog = `<h1>Changelog:</h1><br>
 <h3>v3.4.3 </h3><br>
 AdvErUp 26 now unlocks correctly <br>
 Added a cells savebank <br>
+Changed req properly of achievement <br>
 
 <h3>v3.4.2 </h3><br>
 Made it that it will increase to 1 cell when cell < 0 <br>

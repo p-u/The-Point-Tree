@@ -1166,7 +1166,7 @@ addLayer("a", {
         },
         255: {
             name: "A NEW LAYER!",
-            done() { return player.sac.points.gte(new Decimal(700000)) },
+            done() { return player.sac.points.gte(new Decimal(695000)) },
             tooltip: "Unlock the next layer.",
             unlocked() { return hasAchievement("a", 242) },
             style() {
