@@ -2197,7 +2197,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: [],
-            unlocked() {return hasUpgrade("era", 412)},
+            unlocked() {return hasUpgrade("c", 14)},
         },
         442: {
             title: "Advanced ErUp 26b",
@@ -2207,7 +2207,7 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: [],
-            unlocked() {return hasUpgrade("era", 412)},
+            unlocked() {return hasUpgrade("c", 14)},
         },
         451: {
             title: "Advanced ErUp 27",

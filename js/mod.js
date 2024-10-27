@@ -14,11 +14,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.2",
+	num: "3.4.3",
 	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.4.3 </h3><br>
+AdvErUp 26 now unlocks correctly <br>
+Added a cells savebank <br>
+
 <h3>v3.4.2 </h3><br>
 Made it that it will increase to 1 cell when cell < 0 <br>
 
