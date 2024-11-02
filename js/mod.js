@@ -14,11 +14,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.3",
+	num: "3.4.4",
 	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.4.4 </h3><br>
+Added Playtime Milestones <br>
+
 <h3>v3.4.3 </h3><br>
 AdvErUp 26 now unlocks correctly <br>
 Added a cells savebank <br>
@@ -908,6 +911,10 @@ function getPointGen() {
 	if (hasUpgrade("era", 381)) gain = gain.times("e1e18")
 	if (hasUpgrade("era", 422)) gain = gain.times("e2.8e18")
 
+	// playtime milestone
+	if (hasMilestone("a", 4)) gain = gain.times(1.5)
+	if (hasMilestone("a", 8)) gain = gain.times(1e100)
+
 
 	// power (^)
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
@@ -1195,4 +1202,5 @@ function maxTickLength() {
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
+
 }

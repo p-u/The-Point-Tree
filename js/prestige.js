@@ -467,6 +467,8 @@ addLayer("prestige", {
         if (hasUpgrade('m', 122)) mult = mult.times("e2e16")
         if (hasUpgrade('rebirth', 93)) mult = mult.times("e2.7e17")
 
+        if (hasMilestone("a", 7)) mult = mult.times(3)
+
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

@@ -5,6 +5,7 @@ addLayer("rebirth", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+        rebirthTime: 0,
     }},
     layerShown(){
         let visible = false
@@ -427,6 +428,11 @@ addLayer("rebirth", {
             body() { return "In Mastery Challenge, DO NOT RESET FOR PRESTIGE IF YOU DID NOT GET THE FIRST BASIC MILESTONE. Get it by buying all upgs in Basic, Rebirth, then buy more upgrades, then rebirth, then buy last row of basic, then you can get milestone." },
         },
     },  
+    setRT() {
+        if ((player.rebirth.points.gte(1)) && (player.rebirth.rebirthTime == 0)) {
+            player.rebirth.rebirthTime = player.timePlayed
+        }
+    },
     doReset(rebirth) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
         if (layers[rebirth].row <= this.row) return;
@@ -521,6 +527,8 @@ addLayer("rebirth", {
         // secret achievement
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
         if (hasAchievement('sa', 22)) mult = mult.times(1.25)
+
+        if (hasMilestone("a", 7)) mult = mult.times(20)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -620,5 +628,4 @@ addLayer("rebirth", {
     hotkeys: [
         {key: "r", description: "R: Reset for Rebirth points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-
 })
