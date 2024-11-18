@@ -95,6 +95,9 @@ addLayer("i", {
                 "blank",
                 "blank",
                 ["infobox", "combo"],
+                "blank",
+                "blank",
+                ["infobox", "cells"],
             ],
         },
         "Recommended Completion of challenges": {
@@ -250,6 +253,11 @@ addLayer("i", {
             title: "[Era 3 and Beyond] Intended Enter Period of Mastery Challenges",
             body() { return "Mastery Challenge 1x2: Ach 63 in Achievements [2] tab" },
             unlocked() { return hasMilestone('era', 3)}
+        },
+        cells: {
+            title: "The Cells Layer [NO SHORT FORM]",
+            body() { return "Finally! A new layer! Mechanic: Replicate: Multiply cells by 2 at first, upgrades to increase that. At first, replicate time is 20 seconds, upgrades and buyables to decrease that as well. At 1,000 cells there is a softcap, mult decreases as cells increase after 1,000. Strategy of whether to buy buyable/save up/buy upgrade is crucial for progression." },
+            unlocked() { return player.c.points.gte(new Decimal("1"))}
         },
     },
 }, 
