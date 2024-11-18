@@ -18,6 +18,8 @@ function getStartOptions() {
 		showdp: 5,
 		theme: "default",
 		notation: "default",
+		forceTooltips: true,
+		hideMilestonePopups: false,
 	}
 }
 let formatEList = ['12','15','3','6','9']
@@ -105,3 +107,5 @@ function milestoneShown(layer, id) {
 	}
 	return false;
 }
+
+let formatOption = (opt) => opt ? 'ON' : 'OFF'

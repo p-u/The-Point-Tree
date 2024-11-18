@@ -133,7 +133,7 @@ var systemComponents = {
             Made by {{modInfo.author}}	
         </span>
         <br>
-        The Modding Tree <a v-bind:href="'https://github.com/Acamaeda/The-Modding-Tree/blob/master/changelog.md'" target="_blank" class="link" v-bind:style = "{'font-size': '14px', 'display': 'inline'}" >{{TMT_VERSION.tmtNum}}</a> by Acamaeda
+        The Modding Tree <a v-bind:href="'https://github.com/Acamaeda/The-Modding-Tree/blob/master/changelog.md'" target="_blank" class="link" v-bind:style = "{'font-size': '14px', 'display': 'inline'}" >{{TMT_VERSION.tmtNum}}</a> by Acamaeda and FlamemasterNXF
         <br>
         The Prestige Tree made by Jacorb and Aarex
 		<br><br>
@@ -187,7 +187,9 @@ var systemComponents = {
 			<tr>
                 <td><button class="opt" onclick="changeEFormat()">Change to 'e' notation: 10^ {{ options.formatE }}</button></td>
 				<td><button class="opt" onclick="changeNotation()">Notation: {{ getNotationName() }}</button></td>
+                <td><button class="opt" onclick="toggleOpt('hideMilestonePopups')">Show Milestone Popups: {{ formatOption(!options.hideMilestonePopups) }}</button></td>
 				</tr> 
+            </tr>
         </table>`
     },
 
@@ -216,7 +218,7 @@ var systemComponents = {
 	'particle': {
 		props: ['data', 'index'],
 		template: `<div><div class='particle instant' v-bind:style="[constructParticleStyle(data), data.style]" 
-			v-on:click="run(data.onClick, data)"  v-on:mouseenter="run(data.onMouseOver, data)" v-on:mouseleave="run(data.onMouseLeave, data)" ><span v-html="data.text"></span>
+			v-on:click="run(data.onClick, data)"  v-on:mouseenter="run(data.onMouseEnter, data)" v-on:mouseleave="run(data.onMouseLeave, data)" ><span v-html="data.text"></span>
 		</div>
 		<svg version="2" v-if="data.color">
 		<mask v-bind:id="'pmask' + data.id">
