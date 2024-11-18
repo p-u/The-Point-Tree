@@ -14,11 +14,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.4",
+	num: "3.4.4.2.8",
 	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.4.4.2.8 </h3><br>
+Updated TMT to v2.8 <br>
+
 <h3>v3.4.4 </h3><br>
 Added Playtime Milestones <br>
 
