@@ -184,7 +184,7 @@ addLayer("m", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectmast42)+"x" + softcapDescriptionmast42
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionmast42
             },
             tooltip() {
                 return "Formula: (Mastery Points + 1)^"  + mmp6exp + sdsc
@@ -375,7 +375,7 @@ addLayer("m", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectmast103)+"x" + softcapDescriptionmast103
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionmast103
             },
             tooltip() {
                 return "Formula: log1.8((EC + 1)^"  + ectomasteryexp + ") " + sdsc

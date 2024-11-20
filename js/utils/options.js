@@ -13,25 +13,10 @@ function getStartOptions() {
 		forceOneTab: false,
 		oldStyle: false,
 		tooltipForcing: true,
-		formatE: '3',
-		dp: 8,
-		showdp: 5,
 		theme: "default",
 		notation: "default",
 		forceTooltips: true,
 		hideMilestonePopups: false,
-	}
-}
-let formatEList = ['12','15','3','6','9']
-
-function changeEFormat() {
-	let index = formatEList.indexOf(options.formatE)
-	if (options.formatE === null || index >= formatEList.length-1 || index < 0) {
-		options.formatE = formatEList[0];
-	}
-	else {
-		index ++;
-		options.formatE = formatEList[index];
 	}
 }
 

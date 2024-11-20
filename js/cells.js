@@ -85,7 +85,7 @@ addLayer("c", {
                         let a = ""
                         if (player.c.points.gte(1000)) { 
                                 a = a + `Multiplier after softcap: 
-                                ${((player.c.baseMultiplier.div(player.c.scscale.pow((player.c.points.div(player.c.softcapStart)).log2()).mul(10))).add(1))}</span></h2>`
+                                ${notationChooser((player.c.baseMultiplier.div(player.c.scscale.pow((player.c.points.div(player.c.softcapStart)).log2()).mul(10))).add(1))}</span></h2>`
                         }
                         return a
                     }

@@ -74,7 +74,7 @@ addLayer("prestige", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectp22)+"x" + softcapDescriptionp22
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionp22
             },
             tooltip() {
                 return "Formula: RP^"  + pu6exp + sdsc

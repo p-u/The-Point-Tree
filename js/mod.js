@@ -14,15 +14,23 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.4.28",
+	num: "3.4.5",
 	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h3>v3.4.4.28 </h3><br>
+<h3>v3.4.5 </h3><br>
+Improved number formatting <br>
+Utilised Number Formatting on Cells gain after softcap <br>
+Added a new theme: Void <br>
+Added the last 2 playtime milestones <br>
+Removed change e format setting <br>
+For non-static upgrades, description is live-updated! <br>
+
+<h3>v3.4.4.3 </h3><br>
 Added Cells Infobox <br>
 
-<h3>v3.4.4.2.8 </h3><br>
+<h3>v3.4.4.2.7 </h3><br>
 Updated TMT to v2.8 <br>
 
 <h3>v3.4.4 </h3><br>
@@ -920,6 +928,7 @@ function getPointGen() {
 	// playtime milestone
 	if (hasMilestone("a", 4)) gain = gain.times(1.5)
 	if (hasMilestone("a", 8)) gain = gain.times(1e100)
+	if (hasMilestone("a", 10)) gain = gain.times("ee6")
 
 
 	// power (^)

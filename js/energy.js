@@ -269,7 +269,7 @@ addLayer("e", {
                     return eff
                 },
                 effectDisplay() {
-                    return notationChooser(upgEffecte14)+"x" + softcapDescriptione14
+                    return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptione14
                 },
                 tooltip() {
                     return "Formula: Energy^"  + e4exp + sdsc
@@ -334,7 +334,7 @@ addLayer("e", {
                     return eff
                 },
                 effectDisplay() {
-                    return notationChooser(upgEffecte24)+"x" + softcapDescriptione24
+                    return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptione24
                 },
                 tooltip() {
                     return "Formula: MP^"  + e8exp + sdsc
@@ -460,7 +460,7 @@ addLayer("e", {
                     return eff
                 },
                 effectDisplay() {
-                    return notationChooser(upgEffecte71)+"x" + softcapDescriptione71
+                    return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptione71
                 },
                 tooltip() {
                     return "Formula: (Energy / 1e175)^"  + e200EUExp + sdsc

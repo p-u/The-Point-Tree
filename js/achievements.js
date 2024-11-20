@@ -89,6 +89,18 @@ addLayer("a", {
             done() { return player.timePlayed > (60 * 60 * 24 * 100) },
             unlocked() { return hasMilestone("a", 8) }
         },
+        10: {
+            requirementDescription: "200 days of playtime",
+            effectDescription: "You either are a cheater OR a absolute true godly no-life... Fun fact 4: If you have just left your computer on for 200 days, it will use 1200 kWh for a desktop and 360 kWh for a laptop (averages). Assuming you are in Los Angeles, you can drive a Tesla Model 3 to Beaumont, Texas for a laptop and to Montreal, Canada there, back and there again for a desktop... Oh also xe1,000,000 PF...",
+            done() { return player.timePlayed > (60 * 60 * 24 * 200) },
+            unlocked() { return hasMilestone("a", 9) }
+        },
+        11: {
+            requirementDescription: "1 year of playtime",
+            effectDescription: "I don't think anyone is daring enough to sit there and wait for a FULL YEAR for a single achievement... Well played. You 100%ed the game.",
+            done() { return player.timePlayed > (60 * 60 * 24 * 365) },
+            unlocked() { return hasMilestone("a", 10) }
+        },
     },
 
     clickables: {

@@ -89,7 +89,7 @@ addLayer("w", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectw13)+"x" + softcapDescriptionw13
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionw13
             },
             tooltip() {
                 return "Formula: Water^"  + w3exp + sdsc

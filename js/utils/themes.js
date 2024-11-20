@@ -1,5 +1,5 @@
 // ************ Themes ************
-var themes = ["default", "aqua", "verdant", "sky", "lava", "light"]
+var themes = ["default", "aqua", "verdant", "sky", "lava", "light", "void"]
 
 var colors = {
 	default: {
@@ -62,6 +62,16 @@ var colors = {
 		background: "#E2EAF4",
 		background_tooltip: "rgba(255, 255, 255, 0.25)",
 	},
+	void: {
+		1: "#1C1C1C", 
+		2: "#333333",
+		3: "#4D4D4D", 
+		color: "#E0E0E0", 
+		points: "#9E9E9E",
+		locked: "#666666", 
+		background: "#0A0A0A", 
+		background_tooltip: "rgba(255, 255, 255, 0.1)", 
+	}	
 }
 function changeTheme() {
 

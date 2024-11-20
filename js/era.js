@@ -697,7 +697,7 @@ addLayer("era", {
                 return player["era"].ec.pow(eracompexp).add(1)
             },
             effectDisplay() {
-                return notationChooser(upgEffecterup153)+"x" + softcapDescriptionerup153
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionerup153
             },
             tooltip() {
                 return "Formula: EC^"  + eracompexp + sdsc
@@ -1569,7 +1569,7 @@ addLayer("era", {
                 return Math.pow(euiec, eraups)
             },
             effectDisplay() {
-                return notationChooser(upgEffecterup12)+"x" + softcapDescriptionerup12
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionerup12
             },
             tooltip() {
                 return "Formula: "  + euiec + "^Amt of ErUps" + sdsc

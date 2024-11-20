@@ -107,7 +107,7 @@ addLayer("basic", {
                 return "Formula: Basic Points^"  + expu2 + sdsc
             },
             effectDisplay() {
-                return notationChooser(upgEffect12)+"x" + softcapDescription12
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription12
             },
             unlocked() { return hasUpgrade("basic", 11) },
 
@@ -140,7 +140,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect13)+"x" + softcapDescription13
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription13
             },
             tooltip() {
                 return "Formula: PF^"  + expu3 + sdsc
@@ -184,7 +184,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect21)+"x" + softcapDescription21
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription21
             },
             tooltip() {
                 return "Formula: Basic Points^"  + expu5 + sdsc
@@ -237,7 +237,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect24)+"x" + softcapDescription24
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription24
             },
             tooltip() {
                 return "Formula: PF^"  + expu8 + sdsc
@@ -281,7 +281,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect32)+"x" + softcapDescription32
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription32
             },
             tooltip() {
                 return "Formula: PF^"  + expu10 + sdsc
@@ -419,7 +419,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect81)+"x" + softcapDescription81
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription81
             },
             tooltip() {
                 return "Formula: Basic Points ^"  + bb1exp + sdsc
@@ -449,7 +449,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect82)+"x" + softcapDescription82
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription82
             },
             tooltip() {
                 return "Formula: Basic Points ^"  + bb2exp + sdsc
@@ -472,7 +472,7 @@ addLayer("basic", {
                 return player.points.add(1).pow(bb3exp)
             },
             effectDisplay() {
-                return notationChooser(upgEffect83)+"x" + softcapDescription83
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription83
             },
             tooltip() {
                 return "Formula: Basic Points ^"  + bb3exp + sdsc
@@ -501,7 +501,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect84)+"x" + softcapDescription84
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription84
             },
             tooltip() {
                 return "Formula: Basic Points ^"  + bb4exp + sdsc
@@ -553,7 +553,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect102)+"x" + softcapDescription102
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription102
             },
             tooltip() {
                 return "Formula: Basic Points ^"  + bb5exp + sdsc
@@ -593,7 +593,7 @@ addLayer("basic", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffect111)+"x" + softcapDescription111
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescription111
             },
             tooltip() {
                 return "Formula: Basic Points ^"  + bb6exp + sdsc

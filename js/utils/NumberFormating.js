@@ -1,24 +1,18 @@
 
 function exponentialFormat(num, precision, mantissa = true) {
-    if (precision > 100) precision = 100
-	if (precision < 0) precision = 0
     let e = num.log10().floor()
     let m = num.div(Decimal.pow(10, e))
     if (m.toStringWithDecimalPlaces(precision) == 10) {
         m = decimalOne
         e = e.add(1)
     }
-    let elimit = new Decimal(1e12)
-    let amtdp = options.dp
-    e = (e.gte(elimit) ? format(e, amtdp) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+    e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     if (mantissa)
         return m.toStringWithDecimalPlaces(precision) + "e" + e
     else return "e" + e
 }
 
 function commaFormat(num, precision) {
-    if (precision > 100) precision = 100
-	if (precision < 0) precision = 0
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.001) return (0).toFixed(precision)
     let init = num.toStringWithDecimalPlaces(precision)
@@ -27,6 +21,7 @@ function commaFormat(num, precision) {
     if (portions.length == 1) return portions[0]
     return portions[0] + "." + portions[1]
 }
+
 
 function minigameFormat(num, precision) {
     if (precision > 100) precision = 100
@@ -39,8 +34,6 @@ function minigameFormat(num, precision) {
 }
 
 function regularFormat(num, precision) {
-    if (precision > 100) precision = 100
-	if (precision < 0) precision = 0
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.0001) return (0).toFixed(precision)
     if (num.mag < 0.1 && precision !==0) precision = Math.max(precision, 4)
@@ -78,7 +71,7 @@ function infinityFormat(decimal) {
     if (decimal.lt(pow1024)) {
         return formatWhole(decimal);
     }
-    if (decimal.lt(pow1024.pow(1e13))) {
+    if (decimal.lt(pow1024.pow(1e12))) {
         return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor()) + "∞"
     }
     if (decimal.lt(pow1024.tetrate(4))) {
@@ -88,9 +81,7 @@ function infinityFormat(decimal) {
 }
 
 
-function format(decimal, precision = options.dp, small) {
-    if (precision > 100) precision = 100
-	if (precision < 0) precision = 0
+function format(decimal, precision = 3, small) {
     small = small || modInfo.allowSmall
     decimal = new Decimal(decimal)
     if (isNaN(decimal.sign) || isNaN(decimal.layer) || isNaN(decimal.mag)) {
@@ -104,18 +95,15 @@ function format(decimal, precision = options.dp, small) {
         if (slog.gte(1e6)) return "F" + format(slog.floor())
         else return Decimal.pow(10, slog.sub(slog.floor())).toStringWithDecimalPlaces(3) + "F" + commaFormat(slog.floor(), 0)
     }
-    else if (options.formatE === '3' && decimal.gte("1e1000")) return exponentialFormat(decimal, 0, false)
-    else if (options.formatE === '15' && decimal.gte("1ee15")) return exponentialFormat(decimal, 0, false) 
-    else if (options.formatE === '9' && decimal.gte("1ee9")) return exponentialFormat(decimal, 0, false) 
-    else if (options.formatE === '6' && decimal.gte("1ee6")) return exponentialFormat(decimal, 0, false) 
-    else if (decimal.gte("1ee12")) return exponentialFormat(decimal, 0, false)
+    else if (decimal.gte("1e1000000")) return exponentialFormat(decimal, 0, false)
     else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
-    else if (decimal.gte(1e12)) return exponentialFormat(decimal, precision)
+    else if (decimal.gte(1e9)) return exponentialFormat(decimal, precision)
+    else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
     else if (decimal.gte(1)) {
         if ((decimal.sub(Math.floor(decimal))).eq(0)) {
             return commaFormat(decimal, 0)
         } else {
-            return commaFormat(decimal, 4)
+            return commaFormat(decimal, 3)
         }
     }
     else if (decimal.gte(0.0001) || !small) return regularFormat(decimal, precision)
@@ -134,9 +122,9 @@ function format(decimal, precision = options.dp, small) {
 
 function formatWhole(decimal) {
     decimal = new Decimal(decimal)
-    if (decimal.gte(1e12)) return format(decimal)
-    if (decimal.lte(0.99) && !decimal.eq(0)) return format(decimal)
-    return format(decimal)
+    if (decimal.gte(1e9)) return format(decimal, 2)
+    if (decimal.lte(0.99) && !decimal.eq(0)) return format(decimal, 2)
+    return format(decimal, 0)
 }
 
 function formatTime(s) {

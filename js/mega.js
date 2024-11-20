@@ -154,7 +154,7 @@ addLayer("mega", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectm14)+"x" + softcapDescriptionm14
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionm14
             },
             tooltip() {
                 return "Formula: PP^"  + mu4exp + sdsc
@@ -220,7 +220,7 @@ addLayer("mega", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectm31)+"x" + softcapDescriptionm31
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionm31
             },
             tooltip() {
                 return "Formula: MP^"  + mu9exp + sdsc
@@ -279,7 +279,7 @@ addLayer("mega", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectm42)+"x" + softcapDescriptionm42
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionm42
             },
             tooltip() {
                 return "Formula: MP^"  + mbiupgexp + sdsc
@@ -416,7 +416,7 @@ addLayer("mega", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectm84)+"x" + softcapDescriptionm84
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionm84
             },
             tooltip() {
                 return "Formula: SP^"  + sprmegaexp + sdsc
@@ -471,7 +471,7 @@ addLayer("mega", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffectm25)+"x" + softcapDescriptionm25
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionm25
             },
             tooltip() {
                 return "Formula: (Mega Points + 1)^"  + ds4u2exp + sdsc

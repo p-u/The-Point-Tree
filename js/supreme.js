@@ -214,7 +214,7 @@ addLayer("s", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffects21)+"x" + softcapDescriptions21
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptions21
             },
             tooltip() {
                 return "Formula: " + supu5 + "^Sac *"  + exp + sdsc
@@ -314,7 +314,7 @@ addLayer("s", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffects51)+"x" + softcapDescriptions51
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptions51
             },
             tooltip() {
                 return "Formula: Supreme Points^"  + cxexp + sdsc
@@ -343,7 +343,7 @@ addLayer("s", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffects52)+"x" + softcapDescriptions52
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptions52
             },
             tooltip() {
                 return "Formula: (" + supu5 + "^(Sac-30))"  + ext
@@ -402,7 +402,7 @@ addLayer("s", {
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgEffects64)+"x" + softcapDescriptions64
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptions64
             },
             tooltip() {
                 return "Formula: PF^"  + sppfbe + sdsc
@@ -644,7 +644,7 @@ addLayer("s", {
                 return player["s"].points.add(1).pow(spbw)
             },
             effectDisplay() {
-                return notationChooser(upgEffects65)+"x" + softcapDescriptions65
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptions65
             },
             tooltip() {
                 return "Formula: SP^"  + spbw + sdsc
@@ -665,7 +665,7 @@ addLayer("s", {
                 return player["w"].points.add(1).pow(wbsp)
             },
             effectDisplay() {
-                return notationChooser(upgEffects75)+"x" + softcapDescriptions75
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptions75
             },
             tooltip() {
                 return "Formula: Water^"  + wbsp + sdsc
