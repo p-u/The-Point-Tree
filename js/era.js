@@ -1681,16 +1681,6 @@ addLayer("era", {
             branches: ['171', '172', '173', '174', '175'],
             unlocked() {return (hasAchievement("a", 236))},
         },
-        235: {
-            title: "ErUp 39e2",
-            description: "xe5e16 PF",
-            cost: new Decimal(4.4e135),
-            currencyDisplayName: "Era Crystals",
-            currencyInternalName: "ec",
-            currencyLayer: "era",
-            branches: ['171', '172', '173', '174', '175'],
-            unlocked() {return (hasUpgrade("era", 165))},
-        },
         301: {
             title: "The Last Row of Tree 1",
             description: "To start us off, let's increase Era Buyable 1 and 2 exponent by 0.02!",
