@@ -19,6 +19,11 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>av1.1</h2><br>
+	- 3 more upgrades<br>
+	- 3 more milestones <br>
+	- 2 more achievements <br>
+	- Endgame: 25,000 total Matter <br>
 <h2>av1.0</h2><br>
 	- A total of 26 upgrades!<br>
 	- 4 total main currencies <br>
@@ -69,6 +74,8 @@ function getPointGen() {
 	if (hasUpgrade("en", 52)) gain = gain.times(50)
 	if (hasUpgrade("ma", 12)) gain = gain.times(4)
 	if (hasUpgrade("ma", 14)) gain = gain.times(8)
+	if (hasMilestone("ma", 4)) gain = gain.times(2.5)
+	if (hasUpgrade("en", 54)) gain = gain.times(2)
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
@@ -78,6 +85,8 @@ function getPointGen() {
 	if (hasAchievement("a", 12)) gain = gain.times(1.05)
 	if (hasAchievement("a", 16)) gain = gain.times(1.05)
 	if (hasAchievement("a", 23)) gain = gain.times(1.08)
+	if (hasAchievement("a", 31)) gain = gain.times(1.02)
+	if (hasAchievement("a", 32)) gain = gain.times(1.025)
 
 
 	// exponent
@@ -96,7 +105,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return (hasUpgrade("ma", 14) && hasAchievement("a", 26))
+	return player.ma.total.gte(25000)
 }
 
 

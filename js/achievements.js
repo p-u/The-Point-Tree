@@ -194,6 +194,24 @@ addLayer("a", {
             tooltip: "Get 1,000,000,000 of the first generator. Reward: +1% Gen 1 generation",
             unlocked() { return hasAchievement("a", 23) },
         },
+        31: {
+            name: "Tiered",
+            done() { return player.w.points.gte(2) },
+            tooltip: "Get World Tier 2. Reward: +2% Atom gain",
+            unlocked() { return hasAchievement("a", 23) },
+            style() {
+                return {
+                "border-color": "blue",
+                "border-width": "3px"
+                }
+            }
+        },
+        32: {
+            name: "Energy Burst",
+            done() { return player.en.points.gte(1e25) },
+            tooltip: "Get 10^25 Energy. Reward: +2.5% Atom gain",
+            unlocked() { return hasAchievement("a", 31) },
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 

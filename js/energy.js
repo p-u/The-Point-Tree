@@ -37,10 +37,28 @@ addLayer("en", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.4, // Prestige currency exponent
     passiveGeneration() {
+        if (hasMilestone("ma", 4)) return 0.2
         if (hasMilestone("ma", 2)) return 0.1
         if (hasMilestone('ma', 1)) return 0.025
         return 0
     },
+    doReset(en) {
+        // Stage 1: Prevent resetting if the layer is too high
+        if (layers[en].row <= this.row) return;
+    
+        // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
+        let keptUpgrades = [];
+        let keep = [];
+        if (hasMilestone("w", 1)) {
+            keep.push("gen4amt");
+        }
+    
+        // Stage 4: Perform the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5: Add back the specific subfeatures saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    },    
     tabFormat: {
         "Main tab": {
             content: [
@@ -315,6 +333,24 @@ addLayer("en", {
             cost: new Decimal(8e13),
             unlocked() { return hasUpgrade("en", 51) }, 
         },
+        53: {
+            title: "Primed Boost",
+            description: "x1.3 Gen 2,3,5 generation",
+            cost: new Decimal(1e18),
+            currencyDisplayName: "Power",
+            currencyInternalName: "power",
+            currencyLayer: "en",
+            unlocked() { return hasUpgrade("en", 52) }, 
+        },
+        54: {
+            title: "It Matters",
+            description: "x2 Atom and Matter gain",
+            cost: new Decimal(2e20),
+            currencyDisplayName: "Power",
+            currencyInternalName: "power",
+            currencyLayer: "en",
+            unlocked() { return hasUpgrade("en", 53) }, 
+        },
     },
     buyables: {
         11: {
@@ -535,6 +571,7 @@ addLayer("en", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade("ma", 13)) exp = exp.add(0.05)
+        if (hasMilestone("ma", 5)) exp = exp.add(0.05)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -554,6 +591,9 @@ addLayer("en", {
             if (hasUpgrade("en", 44)) player.en.gen2multi = player.en.gen2multi.times(1.2)
             if (hasUpgrade("en", 44)) player.en.gen3multi = player.en.gen3multi.times(1.3)
             if (hasUpgrade("en", 44)) player.en.gen4multi = player.en.gen4multi.times(1.4)
+            if (hasUpgrade("en", 53)) player.en.gen2multi = player.en.gen2multi.times(1.3)
+            if (hasUpgrade("en", 53)) player.en.gen3multi = player.en.gen3multi.times(1.3)
+            if (hasUpgrade("en", 53)) player.en.gen5multi = player.en.gen5multi.times(1.3)
             
             if (hasUpgrade("ma", 12)) player.en.gen3multi = player.en.gen3multi.times(1.5)
             if (hasUpgrade("ma", 12)) player.en.gen4multi = player.en.gen4multi.times(1.5)
@@ -567,12 +607,14 @@ addLayer("en", {
             // power exponents
             if (hasUpgrade("en", 35)) player.en.powerexpoatom = new Decimal(0.2)
             if (hasUpgrade("en", 35)) player.en.powerexpoener = new Decimal(0.3)
+            if (hasUpgrade("ma", 15)) player.en.powerexpoatom = new Decimal(0.22)
+            if (hasUpgrade("ma", 15)) player.en.powerexpoener = new Decimal(0.32)
 
 
             // generation adding
             player.en.gen5amt = getBuyableAmount("en", 31)
 
-            if (getBuyableAmount("en", 31).gte(1)) {
+            if (getBuyableAmount("en", 31).gte(1) || hasMilestone("w", 1)) {
                 player.en.gen4amt = player.en.gen4amt.sub(getBuyableAmount("en", 22))
                 player.en.gen4gain = player.en.gen5amt.times(player.en.gen5multi).div(1.5)
                 player.en.gen4amt = player.en.gen4amt.add(player.en.gen4gain.times(diff))
@@ -581,7 +623,7 @@ addLayer("en", {
                 player.en.gen4amt = getBuyableAmount("en", 22)
             }
 
-            if (getBuyableAmount("en", 22).gte(1)) {
+            if (getBuyableAmount("en", 22).gte(1) || hasMilestone("w", 1)) {
                 player.en.gen3amt = player.en.gen3amt.sub(getBuyableAmount("en", 21))
                 player.en.gen3gain = player.en.gen4amt.times(player.en.gen4multi).div(1.5)
                 player.en.gen3amt = player.en.gen3amt.add(player.en.gen3gain.times(diff))
@@ -590,7 +632,7 @@ addLayer("en", {
                 player.en.gen3amt = getBuyableAmount("en", 21)
             }
 
-            if (getBuyableAmount("en", 21).gte(1)) {
+            if (getBuyableAmount("en", 21).gte(1) || hasMilestone("w", 1)) {
                 player.en.gen2amt = player.en.gen2amt.sub(getBuyableAmount("en", 12))
                 player.en.gen2gain = player.en.gen3amt.times(player.en.gen3multi.div(1.2))
                 player.en.gen2amt = player.en.gen2amt.add(player.en.gen2gain.times(diff))
@@ -599,7 +641,7 @@ addLayer("en", {
                 player.en.gen2amt = getBuyableAmount("en", 12)
             }
 
-            if (getBuyableAmount("en", 12).gte(1)) {
+            if (getBuyableAmount("en", 12).gte(1) || hasMilestone("w", 1)) {
                 player.en.gen1amt = player.en.gen1amt.sub(getBuyableAmount("en", 11))
                 player.en.gen1gain = player.en.gen2amt.times(player.en.gen2multi)
                 player.en.gen1amt = player.en.gen1amt.add(player.en.gen1gain.times(diff))

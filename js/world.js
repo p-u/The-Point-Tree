@@ -9,7 +9,7 @@ addLayer("w", {
         };
     },
     color: "#4caf50",
-    requires: new Decimal(1e20),
+    requires: new Decimal(5e19),
     resource: "World Tier",
     baseResource: "atoms",
     baseAmount() { return player.points; },
@@ -26,18 +26,22 @@ addLayer("w", {
     layerShown() {
         return true;
     },
-    progress() {
-        let progress = Decimal.log10(player.points.add(1)).div(Decimal.log10(this.requires));
-        return progress.gte(1) ? new Decimal(1) : progress;
+    milestones: {
+        1: {
+            requirementDescription: "World Tier 2",
+            effectDescription: "Keep Generators on reset, x1.5 Matter",
+            done() { return player.w.points.gte(2) }
+        },
     },
     tabFormat: {
         "World Tiers": {
             content: [
-                ["display-text", () => `Progress to next World Tier: ${format(layers["w"].progress().mul(100))}%`],
                 "blank",
                 "main-display",
                 "blank",
                 "prestige-button",
+                "blank",
+                "milestones",
             ],
         },
     },

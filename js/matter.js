@@ -46,16 +46,25 @@ addLayer("ma", {
             title: "Boosts all around",
             description: "x1.5 Gen 3 and 4 generation, x4 Atoms",
             cost: new Decimal(2),
+            unlocked() { return hasUpgrade("ma", 11) }, 
         },
         13: {
             title: "Five",
             description: "^1.05 Atoms, +^0.05 Energy, x1.5 Gen 1,5 generation",
             cost: new Decimal(8),
+            unlocked() { return hasUpgrade("ma", 12) }, 
         },
         14: {
             title: "Next.",
             description: "x8 Atoms, x2 Gen 2 production",
             cost: new Decimal(60),
+            unlocked() { return hasUpgrade("ma", 13) }, 
+        },
+        15: {
+            title: "Powerful",
+            description: "+^0.02 Power-Atom and Power-Energy boost",
+            cost: new Decimal(2500),
+            unlocked() { return hasUpgrade("ma", 14) }, 
         },
     },
     milestones: {
@@ -74,6 +83,16 @@ addLayer("ma", {
             effectDescription: "x3.0 Power",
             done() { return player.ma.total.gte(30) }
         },
+        4: {
+            requirementDescription: "1,000 total Matter",
+            effectDescription: "x2 Energy Passive Generation, x2.5 Atoms",
+            done() { return player.ma.total.gte(1000) }
+        },
+        5: {
+            requirementDescription: "17,500 total Matter",
+            effectDescription: "+^0.05 Energy Gain",
+            done() { return player.ma.total.gte(17500) }
+        },
     },
     infoboxes: {
         mat: {
@@ -88,6 +107,8 @@ addLayer("ma", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (hasMilestone("w", 1)) mult = mult.times(1.5)
+        if (hasUpgrade("en", 54)) mult = mult.times(2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
