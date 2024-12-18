@@ -622,6 +622,7 @@ addLayer("en", {
             } else {
                 player.en.gen4amt = getBuyableAmount("en", 22)
             }
+            if (hasMilestone("w", 1) && player.en.gen4amt.lte(0)) player.en.gen4amt = new Decimal(1)
 
             if (getBuyableAmount("en", 22).gte(1) || hasMilestone("w", 1)) {
                 player.en.gen3amt = player.en.gen3amt.sub(getBuyableAmount("en", 21))
