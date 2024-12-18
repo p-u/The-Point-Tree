@@ -1,5 +1,5 @@
 // ************ Themes ************
-var themes = ["default", "aqua", "verdant", "sky", "lava", "light"]
+var themes = ["default", "aqua", "verdant", "sky", "lava", "light", "void"]
 
 var colors = {
 	default: {
@@ -23,45 +23,55 @@ var colors = {
 		background_tooltip: "rgba(0, 15, 31, 0.75)",
 	},
 	verdant: {
-		1: "#a8efd7",
+		1: "#98f5c4",
 		2: "#ffffff",
-		3: "#191668",
-		color: "#54e1b1",
-		points: "#dfefff",
-		locked: "#bf8f8f",
-		background: "#12674a",
-		background_tooltip: "rgba(0, 0, 0, 0.75)",
+		3: "#0a0d2b",
+		color: "#4de1b3",
+		points: "#c7f1ff",
+		locked: "#a07878",
+		background: "#104d39",
+		background_tooltip: "rgba(0, 0, 0, 0.85)",
 	},
 	sky: {
-		1: "#404040",
-		2: "#7c7c7c",
-		3: "#5f6f7f",
-		color: "#404040",
-		points: "#000000",
-		locked: "#c4a7b3",
-		background: "#87ceeb",
-		background_tooltip: "rgba(255, 255, 255, 0.25)",
+		1: "#505050",
+		2: "#929292",
+		3: "#7a8b9d",
+		color: "#505050",
+		points: "#101010",
+		locked: "#d8b8cd",
+		background: "#64b5f6",
+		background_tooltip: "rgba(255, 255, 255, 0.3)",
 	},
 	lava: {
-		1: "#bfdfff",
-		2: "#8fa7bf",
-		3: "#b5332e",
-		color: "#bfdfff",
-		points: "#dfefff",
-		locked: "#c4a7b3",
-		background: "#f7342b",
-		background_tooltip: "rgba(0, 15, 31, 0.75)",
+		1: "#accaff",
+		2: "#7891b1",
+		3: "#d74432",
+		color: "#9fc9ff",
+		points: "#c4d9ff",
+		locked: "#d6aec0",
+		background: "#fa3928",
+		background_tooltip: "rgba(0, 10, 25, 0.8)",
 	},
 	light: {
-		1: "#404040",//Branch color 1
-		2: "#7c7c7c",//Branch color 2
-		3: "#3f3e3e",//Branch color 3
-		color: "#404040",
-		points: "#000000",
-		locked: "#333333",
-		background: "#E2EAF4",
-		background_tooltip: "rgba(255, 255, 255, 0.25)",
-	},
+		1: "#595959",
+		2: "#8d8d8d",
+		3: "#555555",
+		color: "#595959",
+		points: "#1c1c1c",
+		locked: "#4d4d4d",
+		background: "#d9e3f3",
+		background_tooltip: "rgba(255, 255, 255, 0.35)",
+	},	
+	void: {
+		1: "#1C1C1C", 
+		2: "#333333",
+		3: "#4D4D4D", 
+		color: "#E0E0E0", 
+		points: "#9E9E9E",
+		locked: "#666666", 
+		background: "#0A0A0A", 
+		background_tooltip: "rgba(255, 255, 255, 0.1)", 
+	}
 }
 function changeTheme() {
 
