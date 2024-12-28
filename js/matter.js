@@ -38,33 +38,45 @@ addLayer("ma", {
     exponent: 0.2, // Prestige currency exponent
     upgrades: {
         11: {
-            title: "The Matter layer",
+            title: "01: Hydrogen",
             description: "x3 Power, x2 Energy",
             cost: new Decimal(1),
         },
         12: {
-            title: "Boosts all around",
+            title: "02: Helium",
             description: "x1.5 Gen 3 and 4 generation, x4 Atoms",
             cost: new Decimal(2),
             unlocked() { return hasUpgrade("ma", 11) }, 
         },
         13: {
-            title: "Five",
+            title: "03: Lithium",
             description: "^1.05 Atoms, +^0.05 Energy, x1.5 Gen 1,5 generation",
             cost: new Decimal(8),
             unlocked() { return hasUpgrade("ma", 12) }, 
         },
         14: {
-            title: "Next.",
+            title: "04: Beryllium",
             description: "x8 Atoms, x2 Gen 2 production",
             cost: new Decimal(60),
             unlocked() { return hasUpgrade("ma", 13) }, 
         },
         15: {
-            title: "Powerful",
+            title: "05: Boron",
             description: "+^0.02 Power-Atom and Power-Energy boost",
             cost: new Decimal(2500),
             unlocked() { return hasUpgrade("ma", 14) }, 
+        },
+        21: {
+            title: "06: Carbon",
+            description: "Gen 1-3 cost nothing and are automated, and have at least 10 Gen 5s on Matter reset",
+            cost: new Decimal(34567),
+            unlocked() { return hasUpgrade("ma", 15) }, 
+        },
+        22: {
+            title: "07: Nitrogen",
+            description: "Gen 4 costs nothing, Gain 100% of your energy on reset, x7 Power",
+            cost: new Decimal(2e6),
+            unlocked() { return hasUpgrade("ma", 21) }, 
         },
     },
     milestones: {
@@ -93,6 +105,11 @@ addLayer("ma", {
             effectDescription: "+^0.05 Energy Gain",
             done() { return player.ma.total.gte(17500) }
         },
+        6: {
+            requirementDescription: "125,000 total Matter",
+            effectDescription: "Unlock Gen 6 and more upgrades",
+            done() { return player.ma.total.gte(125000) }
+        },
     },
     infoboxes: {
         mat: {
@@ -109,6 +126,8 @@ addLayer("ma", {
         let mult = new Decimal(1)
         if (hasMilestone("w", 1)) mult = mult.times(1.5)
         if (hasUpgrade("en", 54)) mult = mult.times(2)
+        if (hasUpgrade("en", 62)) mult = mult.times(3)
+        if (hasAchievement("a", 33)) mult = mult.times(1.05)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

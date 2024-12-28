@@ -212,6 +212,12 @@ addLayer("a", {
             tooltip: "Get 10^25 Energy. Reward: +2.5% Atom gain",
             unlocked() { return hasAchievement("a", 31) },
         },
+        33: {
+            name: "Mini matterpocalypse",
+            done() { return player.ma.points.gte(200000) },
+            tooltip: "Get 200K Matter. Reward: +5% Matter gain",
+            unlocked() { return hasAchievement("a", 31) },
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 

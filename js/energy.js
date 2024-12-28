@@ -37,6 +37,7 @@ addLayer("en", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.4, // Prestige currency exponent
     passiveGeneration() {
+        if (hasUpgrade("ma", 22)) return 1
         if (hasMilestone("ma", 4)) return 0.2
         if (hasMilestone("ma", 2)) return 0.1
         if (hasMilestone('ma', 1)) return 0.025
@@ -113,7 +114,10 @@ addLayer("en", {
                     if (player.en.gen4amt.gte(1)) return "You have "+ notationChooser(player.en.gen4amt) +" Generator 4. (+" + notationChooser(player.en.gen4gain) + "/s)" 
                 }], 
                 ["display-text", function() {
-                    if (player.en.gen5amt.gte(1)) return "You have "+ notationChooser(player.en.gen5amt) +" Generator 5." 
+                    if (player.en.gen5amt.gte(1)) return "You have "+ notationChooser(player.en.gen5amt) +" Generator 5. (+" + notationChooser(player.en.gen5gain) + "/s)" 
+                }], 
+                ["display-text", function() {
+                    if (player.en.gen6amt.gte(1)) return "You have "+ notationChooser(player.en.gen6amt) +" Generator 6." 
                 }], 
                 "blank",
                 "blank",
@@ -128,6 +132,19 @@ addLayer("en", {
             unlocked() {return hasUpgrade("en", 25)}
         },
     },
+    automate() {
+		if (hasUpgrade('ma', 21)) {
+			if (layers.en.buyables[11].canAfford()) {
+				layers.en.buyables[11].buy();
+			};
+            if (layers.en.buyables[12].canAfford()) {
+				layers.en.buyables[12].buy();
+			};
+            if (layers.en.buyables[21].canAfford()) {
+				layers.en.buyables[21].buy();
+			};
+		};
+	},
     upgrades: {
         11: {
             title: "Atomize",
@@ -325,7 +342,7 @@ addLayer("en", {
             title: "Generator²⁺",
             description: "Generator² increased to 1.06x",
             cost: new Decimal(2e12),
-            unlocked() { return hasMilestone("ma", 2) }, 
+            unlocked() { return (hasMilestone("ma", 2) && hasUpgrade("en", 45))  }, 
         },
         52: {
             title: "Hyper BOOST!",
@@ -351,6 +368,27 @@ addLayer("en", {
             currencyLayer: "en",
             unlocked() { return hasUpgrade("en", 53) }, 
         },
+        55: {
+            title: "Genetic Alteration",
+            description: "Due to a new set of genes, production of atoms increase by 20x!",
+            cost: new Decimal(3.2e32),
+            unlocked() { return (hasMilestone('ma', 6) && hasUpgrade("en", 54)) }, 
+        },
+        61: {
+            title: "First things first",
+            description: "x3 Gen 1 generation (x3 energy)",
+            cost: new Decimal(1e36),
+            unlocked() { return (hasMilestone('ma', 6) && hasUpgrade("en", 55)) }, 
+        },
+        62: {
+            title: "Ma(s)ttering",
+            description: "x3 Matter gain",
+            cost: new Decimal(1.26e26),
+            currencyDisplayName: "Power",
+            currencyInternalName: "power",
+            currencyLayer: "en",
+            unlocked() { return hasUpgrade("en", 61) }, 
+        },
     },
     buyables: {
         11: {
@@ -369,7 +407,7 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.en.points = player.en.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -406,7 +444,7 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.en.points = player.en.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -443,7 +481,7 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.en.points = player.en.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -480,7 +518,7 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.en.points = player.en.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("ma", 22))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -538,6 +576,43 @@ addLayer("en", {
                 'height': '115px',
             }},
         },
+        32: {
+            title: "Buy Generator 6",
+            unlocked() { return hasMilestone("ma", 6) },
+            cost(x) {
+                return new Decimal(1e27).mul(Decimal.pow(1000, x)).floor()
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 6."
+                if (hasUpgrade("en", 33)) dis = dis + " Generator 6 amount multiply Generator 5 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                return dis
+            },
+            canAfford() {
+                return player.en.points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.en.points = player.en.points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                if (hasUpgrade("en", 33)) {
+                    gensqboost = new Decimal(1.05)
+                    if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
+                    eff = new Decimal(gensqboost).pow(x)
+                } else {
+                    eff = new Decimal(1)
+                }
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e27 x 1,000^Amt. Generation formula: Generator 6 amt*1.1"
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+        },
     },
     infoboxes: {
         main: {
@@ -586,6 +661,7 @@ addLayer("en", {
             player.en.gen3multi = buyableEffect("en", 21)
             player.en.gen4multi = buyableEffect("en", 22)
             player.en.gen5multi = buyableEffect("en", 31)
+            player.en.gen6multi = buyableEffect("en", 32)
             
             if (hasUpgrade("en", 44)) player.en.gen1multi = player.en.gen1multi.times(1.1)
             if (hasUpgrade("en", 44)) player.en.gen2multi = player.en.gen2multi.times(1.2)
@@ -602,6 +678,8 @@ addLayer("en", {
             
             if (hasAchievement("a", 26)) player.en.gen1multi = player.en.gen1multi.times(1.01)
             if (hasUpgrade("ma", 14)) player.en.gen2multi = player.en.gen2multi.times(2)
+            
+            if (hasUpgrade("en", 55)) player.en.gen1multi = player.en.gen1multi.times(3)
 
         
             // power exponents
@@ -611,8 +689,31 @@ addLayer("en", {
             if (hasUpgrade("ma", 15)) player.en.powerexpoener = new Decimal(0.32)
 
 
+
+            player.en.gen6amt = getBuyableAmount("en", 32)
+
+
             // generation adding
-            player.en.gen5amt = getBuyableAmount("en", 31)
+            if (getBuyableAmount("en", 32).gte(1)) {
+                if (!(hasUpgrade("ma", 21))) {
+                    player.en.gen5amt = player.en.gen5amt.sub(getBuyableAmount("en", 31))
+                } else {
+                    player.en.gen5amt = player.en.gen5amt.sub(getBuyableAmount("en", 31).max(10))
+                }
+                player.en.gen5gain = player.en.gen6amt.times(player.en.gen6multi).mul(1.1)
+                player.en.gen5amt = player.en.gen5amt.add(player.en.gen5gain.times(diff))
+                if (!(hasUpgrade("ma", 21))) {
+                    player.en.gen5amt = player.en.gen5amt.add(getBuyableAmount("en", 31))
+                } else {
+                    player.en.gen5amt = player.en.gen5amt.add(getBuyableAmount("en", 31).max(10))
+                }
+            } else {
+                if (!(hasUpgrade("ma", 21))) {
+                    player.en.gen5amt = getBuyableAmount("en", 31)
+                } else {
+                    player.en.gen5amt = getBuyableAmount("en", 31).max(10)
+                }
+            }
 
             if (getBuyableAmount("en", 31).gte(1) || hasMilestone("w", 1)) {
                 player.en.gen4amt = player.en.gen4amt.sub(getBuyableAmount("en", 22))
@@ -656,6 +757,7 @@ addLayer("en", {
             if (hasUpgrade("en", 35)) gain = gain.times(1.7)
             if (hasUpgrade("en", 42)) gain = gain.times(1.4)
             if (hasUpgrade("ma", 11)) gain = gain.times(3)
+            if (hasUpgrade("ma", 22)) gain = gain.times(7)
             if (hasMilestone("ma", 2)) gain = gain.times(2.5)
             if (hasMilestone("ma", 3)) gain = gain.times(3)
             if (hasAchievement("a", 15)) gain = gain.times(1.02)

@@ -14,12 +14,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av1.1",
-	name: "Release!",
+	num: "av1.2",
+	name: "Periodic",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h2>av1.1</h2><br>
+<h3>av1.2</h3><br>
+	- 5 more upgrades<br>
+	- 1 new generator <br>
+	- 1 more achievement and milestone <br>
+	- Renamed all matter upgrades' title to periodic table elements <br>
+	- Endgame: Nitrogen upgrade <br>
+<h3>av1.1</h3><br>
 	- 3 more upgrades<br>
 	- 3 more milestones <br>
 	- 2 more achievements <br>
@@ -76,6 +82,7 @@ function getPointGen() {
 	if (hasUpgrade("ma", 14)) gain = gain.times(8)
 	if (hasMilestone("ma", 4)) gain = gain.times(2.5)
 	if (hasUpgrade("en", 54)) gain = gain.times(2)
+	if (hasUpgrade("en", 55)) gain = gain.times(20)
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
@@ -105,7 +112,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.ma.total.gte(25000)
+	return hasUpgrade("ma", 22)
 }
 
 
