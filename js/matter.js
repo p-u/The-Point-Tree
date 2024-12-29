@@ -133,7 +133,7 @@ addLayer("ma", {
         8: {
             requirementDescription: "4B total Matter",
             effectDescription: "Keep first 4 rows of energy upgrades on reset, x2 energy and power",
-            done() { return player.ma.total.gte(10e6) }
+            done() { return player.ma.total.gte(4e9) }
         },
     },
     infoboxes: {
