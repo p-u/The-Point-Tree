@@ -49,7 +49,7 @@ addLayer("en", {
     
         // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
         let keptUpgrades = [];
-        for(i=1;i<5;i++){ //rows
+        for(i=1;i<6;i++){ //rows
             for(v=1;v<5;v++){ //columns
               if ((hasMilestone('ma', 8)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
