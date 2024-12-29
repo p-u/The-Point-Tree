@@ -16,6 +16,9 @@ addLayer("ma", {
         "Main tab": {
             content: [
                 "main-display",
+                ["display-text", function() {
+                    return "You have "+ notationChooser(player.ma.total) +" total Matter" 
+                }],
                 "blank",
                 "prestige-button",
                 "blank",
@@ -78,6 +81,18 @@ addLayer("ma", {
             cost: new Decimal(2e6),
             unlocked() { return hasUpgrade("ma", 21) }, 
         },
+        23: {
+            title: "08: Oxygen",
+            description: "x8 atoms",
+            cost: new Decimal(20e6),
+            unlocked() { return hasUpgrade("ma", 22) }, 
+        },
+        24: {
+            title: "09: Fluorine",
+            description: "Auto Gen 4, ^1.029 Atoms, x2.9 Power, unlock more upgrades",
+            cost: new Decimal(100e6),
+            unlocked() { return hasUpgrade("ma", 23) }, 
+        },
     },
     milestones: {
         1: {
@@ -110,6 +125,16 @@ addLayer("ma", {
             effectDescription: "Unlock Gen 6 and more upgrades",
             done() { return player.ma.total.gte(125000) }
         },
+        7: {
+            requirementDescription: "10M total Matter",
+            effectDescription: "Unlock Click Mastery (Optional, but recommended to get at least 1-5K clicks)",
+            done() { return player.ma.total.gte(10e6) }
+        },
+        8: {
+            requirementDescription: "4B total Matter",
+            effectDescription: "Keep first 4 rows of energy upgrades on reset, x2 energy and power",
+            done() { return player.ma.total.gte(10e6) }
+        },
     },
     infoboxes: {
         mat: {
@@ -128,6 +153,7 @@ addLayer("ma", {
         if (hasUpgrade("en", 54)) mult = mult.times(2)
         if (hasUpgrade("en", 62)) mult = mult.times(3)
         if (hasAchievement("a", 33)) mult = mult.times(1.05)
+        if (player.cm.clickmastery.gte(8e6)) mult = mult.times(player.cm.clickmastery.div(3333).log(333))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

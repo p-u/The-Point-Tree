@@ -3,7 +3,7 @@ let modInfo = {
 	id: "RD82:WG",
 	author: "randim82",
 	pointsName: "Atoms",
-	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js"],
+	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -14,16 +14,28 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av1.2",
-	name: "Periodic",
+	num: "av1.3",
+	name: "Clicks",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av1.3</h3><br>
+	- Added the Click Mastery layer, comprising clicks and Click Level, with 11 milestones!<br>
+	- 1 new infobox <br>
+	- Increased World Tier scaling <br>
+	- Added total matter display on top <br>
+	- New feature: Keeping upgrades <br>
+	- 2 more achievements and main-game milestones<br>
+	- 3 more upgrades<br>
+	- You need 10 Gen 5s as well as the milestone to be able to buy a Gen 6 now <br>
+	- Endgame: Matter Milestone 8 + Ach 35 <br>
 <h3>av1.2</h3><br>
 	- 5 more upgrades<br>
 	- 1 new generator <br>
 	- 1 more achievement and milestone <br>
 	- Renamed all matter upgrades' title to periodic table elements <br>
+	- New feature: Buyable automation <br>
+	- Fixed EU51 showing without EU45 <br>
 	- Endgame: Nitrogen upgrade <br>
 <h3>av1.1</h3><br>
 	- 3 more upgrades<br>
@@ -83,6 +95,7 @@ function getPointGen() {
 	if (hasMilestone("ma", 4)) gain = gain.times(2.5)
 	if (hasUpgrade("en", 54)) gain = gain.times(2)
 	if (hasUpgrade("en", 55)) gain = gain.times(20)
+	if (hasUpgrade("ma", 23)) gain = gain.times(8)
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
@@ -94,10 +107,17 @@ function getPointGen() {
 	if (hasAchievement("a", 23)) gain = gain.times(1.08)
 	if (hasAchievement("a", 31)) gain = gain.times(1.02)
 	if (hasAchievement("a", 32)) gain = gain.times(1.025)
+	if (hasAchievement("a", 35)) gain = gain.times(1.05)
+	
+	// click mastery
+	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.log(9))
+	if (player.cm.clickmastery.gte(10000)) gain = gain.times(player.cm.clickmastery.div(77).log(14))
+	if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(188888).log(18))
 
 
 	// exponent
 	if (hasUpgrade("ma", 13)) gain = gain.pow(1.05)
+	if (hasUpgrade("ma", 24)) gain = gain.pow(1.029)
 	return gain
 }
 
@@ -112,7 +132,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return hasUpgrade("ma", 22)
+	return (hasMilestone("ma", 8) && hasAchievement("a", 35))
 }
 
 

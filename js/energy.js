@@ -49,6 +49,11 @@ addLayer("en", {
     
         // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
         let keptUpgrades = [];
+        for(i=1;i<5;i++){ //rows
+            for(v=1;v<5;v++){ //columns
+              if ((hasMilestone('ma', 8)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+        }
         let keep = [];
         if (hasMilestone("w", 1)) {
             keep.push("gen4amt");
@@ -142,6 +147,11 @@ addLayer("en", {
 			};
             if (layers.en.buyables[21].canAfford()) {
 				layers.en.buyables[21].buy();
+			};
+		};
+        if (hasUpgrade('ma', 24)) {
+            if (layers.en.buyables[22].canAfford()) {
+				layers.en.buyables[22].buy();
 			};
 		};
 	},
@@ -389,6 +399,12 @@ addLayer("en", {
             currencyLayer: "en",
             unlocked() { return hasUpgrade("en", 61) }, 
         },
+        63: {
+            title: "More energy",
+            description: "+^0.047 Energy",
+            cost: new Decimal(4.7e47),
+            unlocked() { return (hasUpgrade('ma', 24) && hasUpgrade("en", 62)) }, 
+        },
     },
     buyables: {
         11: {
@@ -578,7 +594,7 @@ addLayer("en", {
         },
         32: {
             title: "Buy Generator 6",
-            unlocked() { return hasMilestone("ma", 6) },
+            unlocked() { return (hasMilestone("ma", 6) && getBuyableAmount("en", 31).gte(10))  },
             cost(x) {
                 return new Decimal(1e27).mul(Decimal.pow(1000, x)).floor()
             },
@@ -641,12 +657,17 @@ addLayer("en", {
         if (hasMilestone("a", 7)) mult = mult.times(100)
         if (hasUpgrade("en", 15)) mult = mult.times(upgradeEffect("en", 15))
         if (hasUpgrade("en", 32)) mult = mult.times(upgradeEffect("en", 32))
+        if (hasMilestone("ma", 8)) mult = mult.times(2)
+        if (player.cm.clickmastery.gte(50e6)) mult = mult.times(player.cm.clickmastery.div(188888).log(18))
+        if (player.cm.clickmastery.gte(1000)) mult = mult.times(player.cm.clickmastery.div(5).log(11))
+        
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade("ma", 13)) exp = exp.add(0.05)
         if (hasMilestone("ma", 5)) exp = exp.add(0.05)
+        if (hasUpgrade("en", 63)) exp = exp.add(0.047)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -758,10 +779,14 @@ addLayer("en", {
             if (hasUpgrade("en", 42)) gain = gain.times(1.4)
             if (hasUpgrade("ma", 11)) gain = gain.times(3)
             if (hasUpgrade("ma", 22)) gain = gain.times(7)
+            if (hasUpgrade("ma", 24)) gain = gain.times(2.9)
             if (hasMilestone("ma", 2)) gain = gain.times(2.5)
             if (hasMilestone("ma", 3)) gain = gain.times(3)
+            if (hasMilestone("ma", 8)) gain = gain.times(2)
             if (hasAchievement("a", 15)) gain = gain.times(1.02)
             if (hasAchievement("a", 21)) gain = gain.times(1.03)
+            if (player.cm.clickmastery.gte(200000)) gain = gain.times(player.cm.clickmastery.div(333).log(16))
+            if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(188888).log(18))
             player.en.powgain = gain
             gain = gain.times(diff)
             player.en.power = player.en.power.add(gain)

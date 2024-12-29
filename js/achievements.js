@@ -218,6 +218,18 @@ addLayer("a", {
             tooltip: "Get 200K Matter. Reward: +5% Matter gain",
             unlocked() { return hasAchievement("a", 31) },
         },
+        34: {
+            name: "Clicker",
+            done() { return hasMilestone("ma", 7) },
+            tooltip: "Unlock Click Mastery",
+            unlocked() { return hasAchievement("a", 31) },
+        },
+        35: {
+            name: "Atomic Insanity",
+            done() { return player.points.gte(1e50) },
+            tooltip: "Get 10^50 Atoms (+5% Atom gain)",
+            unlocked() { return hasAchievement("a", 14) },
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 

@@ -14,7 +14,7 @@ addLayer("w", {
     baseResource: "atoms",
     baseAmount() { return player.points; },
     type: "static",
-    exponent: 6.62,
+    exponent: 7.13,
     gainMult() {
         let mult = new Decimal(1);
         return mult;
