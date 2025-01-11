@@ -62,34 +62,34 @@ addLayer("sa", {
             },
         },
         13: {
-            name: "I hate long numbers!",
+            name: "The intended way to play",
             done() {
-                 if(options.formatE == "3") {
+                 if(options.offlineProd == false) {
                     return true
                  }
                 },
             tooltip() {
                 if (hasAchievement('sa', 13)) {
-                    return "Make formatE 3"
+                    return "Turn off offline progress"
                 }
                 else {
-                    return "Lower than e1,000"
+                    return "In Settings"
                 }
             },
         },
         14: {
-            name: "I love long numbers!!",
+            name: "Not annoying anymore",
             done() {
-                if(options.formatE == "15") {
+                if(options.hideMilestonePopups == true) {
                    return true
                 }
                },
            tooltip() {
                if (hasAchievement('sa', 14)) {
-                   return "Make formatE 15"
+                   return "Hide popups"
                }
                else {
-                   return "I can deal with e787,392,693,204!"
+                   return "In Settings"
                }
            },
         },
