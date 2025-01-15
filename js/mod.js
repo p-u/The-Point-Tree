@@ -14,11 +14,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.5.1",
+	num: "3.4.5.2",
 	name: "The 11th Layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.4.5.2 </h3><br>
+Made SA13 and SA14 available to get
+
 <h3>v3.4.5.1 </h3><br>
 Fixed achievements not showing due to TMT v2.7 <br>
 
