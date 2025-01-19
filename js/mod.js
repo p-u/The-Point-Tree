@@ -14,11 +14,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.5.2",
-	name: "The 11th Layer",
+	num: "3.(4.5)",
+	name: "Minigame Pt. 5",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.(4.5) </h3><br>
+Added Minigame Part 5! <br>
+Featuring a new sub-currency, 4 new buttons and 6 new achievements <br>
+Added 15 new minigame number titles to bridge the gap from ee10 to ee150K <br>
+Changed Minigame Number format <br>
+
 <h3>v3.4.5.2 </h3><br>
 Made SA13 and SA14 available to get
 

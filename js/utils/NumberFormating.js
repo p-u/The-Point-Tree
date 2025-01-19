@@ -62,7 +62,7 @@ function notationChooserMinigame(decimal) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
     } else {
-        return minigameFormat(decimal)
+        return format(decimal, precision=6)
     }  
 }
 

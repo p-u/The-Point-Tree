@@ -2,7 +2,8 @@ addLayer("sa", {
     startData() { return {
         unlocked: true,
         minigameNum: new Decimal(1),
-        pdx: new Decimal(0)
+        pdx: new Decimal(0),
+        bp: new Decimal(0)
     }},
     color: "grey",
     row: "side",
@@ -1064,7 +1065,7 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 166)) {
-                    return "Great job for spending 8 hours on this minigame. DOUBLE the waits. DOUBLE the difficulty...Part 4 has it."
+                    return "Great job for spending 8 hours on this minigame. Add a new sub-currency"
                 }
                 else {
                     return "HOW the fk.."
@@ -1072,6 +1073,132 @@ addLayer("sa", {
             },
             unlocked() { 
                 if(hasAchievement("sa", 165)) return true
+            }
+        },
+        171: {
+            name: "Less Button Press 1 (LBP1): Get 8436.57 in less than 5 button presses",
+            done() {
+                   if ((player.sa.minigameNum.gt(8436.57)) && (player.sa.minigameNum.lt(8436.58)) && (player.sa.bp.lt(5))) {
+                    if (hasAchievement("sa", 166)) {
+                        return true
+                    }
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 171)) {
+                    return "Oh, so now you are doing this."
+                }
+                else {
+                    return "Semi-easy Difficulty"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 166)) return true
+            }
+        },
+        172: {
+            name: "LBP2: Get 277585344 in less than 7 button presses",
+            done() {
+                   if ((player.sa.minigameNum.gt(277585343.999)) && (player.sa.minigameNum.lt(277585344.001)) && (player.sa.bp.lt(7))) {
+                    if (hasAchievement("sa", 171)) {
+                        return true
+                    }
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 172)) {
+                    return "Reward: Add 2 buttons"
+                }
+                else {
+                    return "Medium Difficulty"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 171)) return true
+            }
+        },
+        173: {
+            name: "LBP3: Get 5075.57 (+-0.002) in less than 7 button presses",
+            done() {
+                   if ((player.sa.minigameNum.gt(5075.57)) && (player.sa.minigameNum.lt(5075.572)) && (player.sa.bp.lt(7))) {
+                    if (hasAchievement("sa", 172)) {
+                        return true
+                    }
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 173)) {
+                    return "Now more complex!"
+                }
+                else {
+                    return "Looks simple at first"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 172)) return true
+            }
+        },
+        174: {
+            name: "LBP4: Get 1718664748210526 (+-1) in less than 8 button presses",
+            done() {
+                   if ((player.sa.minigameNum.gt(1718664748210526)) && (player.sa.minigameNum.lt(1718664748210527)) && (player.sa.bp.lt(8))) {
+                    if (hasAchievement("sa", 173)) {
+                        return true
+                    }
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 174)) {
+                    return "Add 2 more buttons :)"
+                }
+                else {
+                    return "Semi-Hard Difficulty"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 173)) return true
+            }
+        },
+        175: {
+            name: "LBP5: Get 1.621683e16 in less than 9 button presses",
+            done() {
+                   if ((player.sa.minigameNum.gt(1.621683e16)) && (player.sa.minigameNum.lt(1.621684e16)) && (player.sa.bp.lt(9))) {
+                    if (hasAchievement("sa", 174)) {
+                        return true
+                    }
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 175)) {
+                    return "Now you are prepared for the final challenge."
+                }
+                else {
+                    return "Hard Difficulty"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 174)) return true
+            }
+        },
+        176: {
+            name: "LBP6: Get 2.423357e58 in less than 10 button presses",
+            done() {
+                   if ((player.sa.minigameNum.gt(2.423356e58)) && (player.sa.minigameNum.lt(2.423358e58)) && (player.sa.bp.lt(10))) {
+                    if (hasAchievement("sa", 175)) {
+                        return true
+                    }
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 176)) {
+                    return "CONGRATS! You finished Minigame Part 5: LBP! Minigame Part 6 will be the last part, encompassing what you have done across grinds and strategic manipulation. It will also feature some upgrades to push you to the numerical limits!"
+                }
+                else {
+                    return "Very Hard Difficulty"
+                }
+            },
+            unlocked() { 
+                if(hasAchievement("sa", 175)) return true
             }
         },
     },
@@ -1112,16 +1239,28 @@ addLayer("sa", {
                 if (player.sa.minigameNum.eq(new Decimal(2).pow(1024))) dis = "Infinite"
                 if (player.sa.minigameNum.eq(new Decimal(2).pow(2).pow(1024))) dis = "Eternal"
                 if (player.sa.minigameNum.eq(new Decimal(2).pow(2).pow(2).pow(1024))) dis = "Transcend"
+                if (player.sa.minigameNum.eq(new Decimal(2).pow(2).pow(2).pow(2).pow(1024))) dis = "Quantum"
+                if (player.sa.minigameNum.gte("1e25")) dis = "Pushing through"
                 if (player.sa.minigameNum.gte("1e100")) dis = "Breaking bounds"
+                if (player.sa.minigameNum.gte("1e1000")) dis = "Increasing faster"
                 if (player.sa.minigameNum.gte("1e10000")) dis = "Order of Exponentiating Magnitude"
-                if (player.sa.minigameNum.gte("ee6")) dis = "Impressive."
+                if (player.sa.minigameNum.gte("1e100000")) dis = "Speeding Up"
+                if (player.sa.minigameNum.gte("ee6")) dis = "Great."
+                if (player.sa.minigameNum.gte("ee8")) dis = "Impressive."
                 if (player.sa.minigameNum.gte("ee10")) dis = "Hyperion"
                 if (player.sa.minigameNum.gte("ee15")) dis = "Insanity"
+                if (player.sa.minigameNum.gte("ee25")) dis = "Super Insanity"
+                if (player.sa.minigameNum.gte("ee50")) dis = "Mega Insanity"
+                if (player.sa.minigameNum.gte("ee75")) dis = "Giga Insanity"
                 if (player.sa.minigameNum.gte("e5.011135425235e19")) dis = "Past the Endgame"
                 if (player.sa.minigameNum.gte("ee100")) dis = "Transcending"
+                if (player.sa.minigameNum.gte("ee200")) dis = "Transcending Mk.2"
                 if (player.sa.minigameNum.gte("ee500")) dis = "Omega"
+                if (player.sa.minigameNum.gte("ee1000")) dis = "Epsilon"
                 if (player.sa.minigameNum.gte("ee2000")) dis = "Infinite"
-                if (player.sa.minigameNum.gte("ee25000")) dis = "Èternal"
+                if (player.sa.minigameNum.gte("ee5000")) dis = "Infinite+"
+                if (player.sa.minigameNum.gte("ee10000")) dis = "Inter-finite"
+                if (player.sa.minigameNum.gte("ee25000")) dis = "Crazed Eternal"
                 if (player.sa.minigameNum.gte("ee150000")) dis = "Infinite Eternal"
                 if (player.sa.minigameNum.gte("eee6")) dis = "Utter Infinite Eternal"
                 if (player.sa.minigameNum.gte("eee7")) dis = "oNlY 1% oF pEoPlE cAn gEt ThIs!"
@@ -1133,15 +1272,18 @@ addLayer("sa", {
                 if (player.sa.minigameNum.gte("ee5e10")) dis = "Transcending Eternity"
                 if (player.sa.minigameNum.gte("ee7.5e10")) dis = "Meta-Reality"
                 if (player.sa.minigameNum.gte("ee1e11")) dis = "Absolute True Insane Transcedental Meta-Reality"
+                if (player.sa.minigameNum.gte("ee2e11")) dis = "Crazed Absolute True Insane Transcedental Meta-Reality"
                 if (player.sa.minigameNum.lt(0)) dis = "negative?"
                 if (player.sa.minigameNum.lt("-1e100")) dis = "big negative"
-                if (player.sa.minigameNum.lt("-ee100")) dis = "huge negative"
+                if (player.sa.minigameNum.lt("-ee1000")) dis = "huge negative"
                 if (player.sa.minigameNum.lt("-ee10000")) dis = "nega-megative"
+                if (player.sa.minigameNum.lt("-ee100000")) dis = "nega-hypertive"
                 if (player.sa.minigameNum.lt("-eee6")) dis = "negodtive"
-                if (player.sa.minigameNum.lt("-eee8")) dis = "negativextreme"
-                if (player.sa.minigameNum.lt("-eee9")) dis = "negodtivextreme"
-                if (player.sa.minigameNum.lt("-eee10")) dis = "negodtivextremega"
-                if (player.sa.minigameNum.lt("-eee11")) dis = "negodtivextremegabsolute"
+                if (player.sa.minigameNum.lt("-eee7")) dis = "negativextreme"
+                if (player.sa.minigameNum.lt("-eee8")) dis = "negodtivextreme"
+                if (player.sa.minigameNum.lt("-eee9")) dis = "negodtivextremega"
+                if (player.sa.minigameNum.lt("-eee10")) dis = "negodtivextremegabsolute"
+                if (player.sa.minigameNum.lt("-eee11")) dis = "negodtivextremegabsolutera"
                 return dis
             },
             style() {return {
@@ -1161,17 +1303,41 @@ addLayer("sa", {
             unlocked() {return hasAchievement("sa", 151)},
             canClick() {return false},
         },
+        13: {
+            title(){
+                title = notationChooser(player[this.layer].bp) + " button presses"
+                return title
+            },
+            display() { 
+                dis = "Any operation gives +1 button press."
+                return dis
+            },
+            unlocked() {return hasAchievement("sa", 166)},
+            canClick() {return false},
+        },
         21: {
             title: "+1",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.add(1)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.add(1)}
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.add(1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.add(1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         22: {
             title: "x2",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(2)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(2)}
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(2)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(2)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         23: {
             title: "=1",
@@ -1179,28 +1345,47 @@ addLayer("sa", {
             onClick() {
                 player[this.layer].minigameNum = decimalOne
                 player[this.layer].pdx = new Decimal(0)
+                player[this.layer].bp = new Decimal(0)
             },
         },
         24: {
             title: "-0.01",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.sub(0.01)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.sub(0.01)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 156)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.sub(0.01)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.sub(0.01)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         31: {
             title: "x69",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(69)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(69)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 113)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(69)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(69)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         32: {
             title: "x911",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(911)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(911)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 116)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(911)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(911)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         33: {
             title: "/3",
@@ -1208,33 +1393,53 @@ addLayer("sa", {
             onClick() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)
                 player[this.layer].pdx = player[this.layer].pdx.add(1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             },
             unlocked() {return hasAchievement("sa", 116)},
             onHold() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)
                 player[this.layer].pdx = player[this.layer].pdx.add(1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             }
         },
         34: {
             title: "x(-1)",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 162)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         41: {
             title: "x10^10",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(1e10)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times("1e10")
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 125)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(1e10)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times("1e10")
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         42: {
             title: "x3",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(3)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(3)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 126)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(3)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(3)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         43: {
             title: "/2",
@@ -1242,39 +1447,55 @@ addLayer("sa", {
             onClick() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)
                 player[this.layer].pdx = player[this.layer].pdx.add(3)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             },
             unlocked() {return hasAchievement("sa", 126)},
             onHold() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)
                 player[this.layer].pdx = player[this.layer].pdx.add(3)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             }
         },
         44: {
             title: "x5",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(5)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(5)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 162)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(5)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(5)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         51: {
             title: "x10",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(10)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(10)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 133)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(10)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(10)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         52: {
             title: "^1.01 [All ^ buttons require a positive number to work]",
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.01)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.01)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 135)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.01)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.01)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
@@ -1283,35 +1504,45 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.99)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.99)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 135)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.99)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.99)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
         54: {
             title: "x7",
             canClick() {return true},
-            onClick() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(7)},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(7)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
             unlocked() {return hasAchievement("sa", 164)},
-            onHold() {return player[this.layer].minigameNum = player[this.layer].minigameNum.times(7)}
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(7)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
         },
         61: {
             title: "^1.1",
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.1)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.1)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 143)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.1)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1.1)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
@@ -1320,13 +1551,15 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 146)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(2)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
@@ -1336,11 +1569,13 @@ addLayer("sa", {
             onClick() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(7)
                 player[this.layer].pdx = player[this.layer].pdx.add(1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             },
             unlocked() {return hasAchievement("sa", 146)},
             onHold() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(7)
                 player[this.layer].pdx = player[this.layer].pdx.add(1)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             }
         },
         64: {
@@ -1348,13 +1583,15 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow("1e5000")
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow("1e5000")
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 165)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow("1e5000")
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow("1e5000")
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
@@ -1364,11 +1601,13 @@ addLayer("sa", {
             onClick() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(10)
                 player[this.layer].pdx = player[this.layer].pdx.add(10)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             },
             unlocked() {return hasAchievement("sa", 151)},
             onHold() {
                 player[this.layer].minigameNum = player[this.layer].minigameNum.div(10)
                 player[this.layer].pdx = player[this.layer].pdx.add(10)
+                player[this.layer].bp = player[this.layer].bp.add(1)
             }
         },
         72: {
@@ -1376,13 +1615,15 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(10)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(10)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 154)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(10)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(10)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
@@ -1391,13 +1632,15 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e10)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e10)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 155)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e10)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e10)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
@@ -1406,13 +1649,75 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e250)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e250)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasAchievement("sa", 156)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    return player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e250)
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(1e250)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
+                }
+            }
+        },
+        81: {
+            title: "x13",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(13)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
+            unlocked() {return hasAchievement("sa", 172)},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.times(13)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
+        },
+        82: {
+            title: "/99",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(99)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            },
+            unlocked() {return hasAchievement("sa", 172)},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+            }
+        },
+        83: {
+            title: "^3",
+            canClick() {return true},
+            onClick() {
+                if (player[this.layer].minigameNum.gte(0)) {
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(3)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
+                }
+            },
+            unlocked() {return hasAchievement("sa", 174)},
+            onHold() {
+                if (player[this.layer].minigameNum.gte(0)) {
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(3)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
+                }
+            }
+        },
+        84: {
+            title: "^0.5",
+            canClick() {return true},
+            onClick() {
+                if (player[this.layer].minigameNum.gte(0)) {
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.5)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
+                }
+            },
+            unlocked() {return hasAchievement("sa", 174)},
+            onHold() {
+                if (player[this.layer].minigameNum.gte(0)) {
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.5)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
         },
