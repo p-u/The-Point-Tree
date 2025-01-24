@@ -414,7 +414,7 @@ addLayer("sa", {
                     return "funny?"
                 }
                 else {
-                    return "It's over ___!"
+                    return "It's over ___! (add 1 to it)"
                 }
             },
             unlocked() { 
