@@ -14,12 +14,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.(4.5)",
+	num: "3.4.X.1",
 	name: "Minigame Pt. 5",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h3>v3.(4.5) </h3><br>
+<h3>v3.4.X.1 </h3><br>
+Added some leeway to exact numbers in Minigame due to rounding error in numbers <br>
+Added better hint to MA14 <br>
+Changed version number <br>
+
+<h3>v3.4.X </h3><br>
 Added Minigame Part 5! <br>
 Featuring a new sub-currency, 4 new buttons and 6 new achievements <br>
 Added 15 new minigame number titles to bridge the gap from ee10 to ee150K <br>

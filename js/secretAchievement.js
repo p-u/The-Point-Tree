@@ -345,7 +345,7 @@ addLayer("sa", {
         111: {
             name: "Reach the nice number",
             done() {
-                   if (player.sa.minigameNum.eq(69)) {
+                   if ((player.sa.minigameNum.gte(68.9999)) && (player.sa.minigameNum.lte(69.0001))) {
                        return true
                    }
                },
@@ -361,7 +361,7 @@ addLayer("sa", {
         112: {
             name: "Reach the leet number",
             done() {
-                   if (player.sa.minigameNum.eq(1337)) {
+                   if ((player.sa.minigameNum.gte(1336.999)) && (player.sa.minigameNum.lte(1337.001))) {
                         if (hasAchievement("sa", 111)) {
                             return true
                         }
@@ -382,7 +382,7 @@ addLayer("sa", {
         113: {
             name: "Reach the very nice number",
             done() {
-                   if (player.sa.minigameNum.eq(69420)) {
+                   if ((player.sa.minigameNum.gte(69419.999)) && (player.sa.minigameNum.lte(69420.001))) {
                     if (hasAchievement("sa", 112)) {
                         return true
                     }
@@ -403,7 +403,7 @@ addLayer("sa", {
         114: {
             name: "Reach the Dragon Ball Z number",
             done() {
-                   if (player.sa.minigameNum.eq(9001)) {
+                   if ((player.sa.minigameNum.gte(9000.99)) && (player.sa.minigameNum.lte(9001.001))) {
                     if (hasAchievement("sa", 113)) {
                         return true
                     }
@@ -414,7 +414,7 @@ addLayer("sa", {
                     return "funny?"
                 }
                 else {
-                    return "one above it"
+                    return "It's over ___!"
                 }
             },
             unlocked() { 
@@ -424,7 +424,7 @@ addLayer("sa", {
         115: {
             name: "Reach the Insanity Number (10^69)",
             done() {
-                   if (player.sa.minigameNum.eq(1e69)) {
+                   if ((player.sa.minigameNum.gte(9.999e68)) && (player.sa.minigameNum.lte(1.0001e69))) {
                     if (hasAchievement("sa", 114)) {
                         return true
                     }
@@ -577,7 +577,7 @@ addLayer("sa", {
         131: {
             name: "Reach 0.6328125",
             done() {
-                   if (player.sa.minigameNum.eq(0.6328125)) {
+                   if ((player.sa.minigameNum.gte(0.632812)) && (player.sa.minigameNum.lte(0.632813))) {
                        return true
                    }
                },
@@ -593,7 +593,7 @@ addLayer("sa", {
         132: {
             name: "Reach 0.134765625",
             done() {
-                   if (player.sa.minigameNum.eq(0.134765625)) {
+                   if ((player.sa.minigameNum.gte(0.13476562)) && (player.sa.minigameNum.lte(0.13476563))) {
                     if (hasAchievement("sa", 131)) {
                         return true
                     }
@@ -614,7 +614,7 @@ addLayer("sa", {
         133: {
             name: "Reach 446.34375",
             done() {
-                   if (player.sa.minigameNum.eq(446.34375)) {
+                   if ((player.sa.minigameNum.gte(446.3437)) && (player.sa.minigameNum.lte(446.3438))) {
                     if (hasAchievement("sa", 132)) {
                         return true
                     }
