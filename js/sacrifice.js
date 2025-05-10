@@ -839,8 +839,8 @@ addLayer("sac", {
         114: {
             requirementDescription: "Sacrifice 1,250,000",
             effectDescription: "x12.5 EC, xe5e13 Water",
-            unlocked() {return player["sac"].points.gte(900000)},
-            done() { return player["sac"].points.gte(1000000) }
+            unlocked() {return player["sac"].points.gte(1100000)},
+            done() { return player["sac"].points.gte(1250000) }
         },
     },
     sacms58eff() {
