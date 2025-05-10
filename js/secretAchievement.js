@@ -271,74 +271,74 @@ addLayer("sa", {
                 },
             tooltip() {
                 if (hasAchievement('sa', 32)) {
-                    return "Get e29,245,225e6 PF before Era 1 (Reward: x1.03 Era Crystals)"
+                    return "Get e29,245,225e6 PF before Era 1 (Reward: x1.04 Era Crystals)"
                 }
                 else {
-                    return "It is also High Endgame in v2.5! (Reward: x1.03 Era Crystals)"
+                    return "It is also High Endgame in v2.5! (Reward: x1.04 Era Crystals)"
                 }
             },
         },
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e2.96732323e21")) {
+                   if (player.points.gte("e1.0830250e22")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 33)) {
-                    return "Congrats! You have reached endgame at least once. (Reward: x1.2 Water and SP)"
+                    return "Congrats! You have reached endgame at least once. (Reward: x1.2 Water and SP, x1.02 Era Crystals)"
                 }
                 else {
-                    return "Reach Endgame. (Reward: x1.2 Water and SP)"
+                    return "Reach Endgame. (Reward: x1.2 Water and SP, x1.02 Era Crystals)"
                 }
             },
         },
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e2.967375e21")) {
+                   if (player.points.gte("e1.08308e22")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 34)) {
-                    return "Congrats! You have reached high endgame at least once. (Reward: x1.03 Era Crystals, x1.01 Mastery Points)"
+                    return "Congrats! You have reached high endgame at least once. (Reward: x1.04 Era Crystals, x1.03 Mastery Points)"
                 }
                 else {
-                    return "Reach High Endgame. (Reward: x1.03 Era Crystals, x1.01 Mastery Points)"
+                    return "Reach High Endgame. (Reward: x1.04 Era Crystals, x1.03 Mastery Points)"
                 }
             },
         },
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e2.96741721e21")) {
+                   if (player.points.gte("e1.10278e22")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 35)) {
-                    return "Congrats! You have reached Absolute True endgame at least once. (Reward: x1.05 Era Crystals, x1.03 Mastery Points)"
+                    return "Congrats! You have reached Absolute True endgame at least once. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
                 }
                 else {
-                    return "Reach Absolute True Endgame. (Reward: x1.05 Era Crystals, x1.03 Mastery Points)"
+                    return "Reach Absolute True Endgame. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
                 }
             },
         },
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e2.96755315e21")) {
+                   if (player.points.gte("e1.1028038e22")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 36)) {
-                    return "Congrats! You have reached Insanity True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points)"
+                    return "Congrats! You have reached Insanity True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier)"
                 }
                 else {
-                    return "Reach Insanity True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points)"
+                    return "Reach Insanity True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier)"
                 }
             },
         },

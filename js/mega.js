@@ -818,6 +818,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(4e12))
                 if (hasUpgrade("m", 111)) base2 = x.mul(new Decimal(2.5e13))
                 if (hasUpgrade("era", 452)) base2 = x.mul(new Decimal(2.5e14))
+                if (hasUpgrade("c", 53)) base2 = x.mul(new Decimal(2.5e15))
                 expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -963,6 +964,7 @@ addLayer("mega", {
         if (hasUpgrade('s', 121)) mult = mult.times("e6e14")
         if (hasUpgrade('m', 124)) mult = mult.times("e3e15")
         if (hasUpgrade('era', 375)) mult = mult.times("e1e16")
+        if (hasUpgrade('era', 471)) mult = mult.times("e3e17")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         return mult

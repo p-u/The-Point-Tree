@@ -2196,7 +2196,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['451', '452', '453', '454', '455'],
             unlocked() {return hasUpgrade("c", 14)},
         },
         442: {
@@ -2206,7 +2206,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['451', '452', '453', '454', '455'],
             unlocked() {return hasUpgrade("c", 14)},
         },
         451: {
@@ -2216,7 +2216,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['461', '462', '463'],
             unlocked() {return (hasUpgrade("era", 441) && hasUpgrade("era", 442))},
         },
         452: {
@@ -2226,7 +2226,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['461', '462', '463'],
             unlocked() {return hasUpgrade("era", 451)},
         },
         453: {
@@ -2236,7 +2236,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['461', '462', '463'],
             unlocked() {return hasUpgrade("era", 451)},
         },
         454: {
@@ -2246,7 +2246,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['461', '462', '463'],
             unlocked() {return hasUpgrade("era", 453)},
         },
         455: {
@@ -2256,7 +2256,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['461', '462', '463'],
             unlocked() {return hasUpgrade("era", 454)},
         },
         461: {
@@ -2266,7 +2266,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['462'],
             unlocked() {return (hasUpgrade("era", 454) && hasUpgrade("era", 455))},
         },
         413: {
@@ -2276,8 +2276,48 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['471', '472'],
             unlocked() {return hasUpgrade("era", 461)},
+        },
+        462: {
+            title: "Advanced ErUp 31: The 200th Era Upgrade",
+            description: "x20 EC, +^0.02 PP, Unlock a few future milestones",
+            cost: new Decimal("2e318"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['471', '472'],
+            unlocked() {return hasUpgrade("era", 413)},
+        },
+        463: {
+            title: "Advanced ErUp 32: I love buyables",
+            description: "Add 2 era buyables",
+            cost: new Decimal("1e320"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['471', '472'],
+            unlocked() {return hasUpgrade("era", 462)},
+        },
+        471: {
+            title: "Advanced ErUp 33: Mega Mega Mega (a mega mega amount of mega points)",
+            description: "Mega Points xe3e17",
+            cost: new Decimal("1e352"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: [],
+            unlocked() {return hasUpgrade("era", 463)},
+        },
+        472: {
+            title: "Advanced ErUp 34: Another Power",
+            description: "^1.0034 PF and EC",
+            cost: new Decimal("5e361"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: [],
+            unlocked() {return hasUpgrade("era", 471)},
         },
     },
     buyables: {
@@ -2352,6 +2392,7 @@ addLayer("era", {
             unlocked() { return (hasAchievement('a', 232)) },
             cost(x) {
                 exp2 = new Decimal(1.19)
+                if (hasUpgrade("c", 23)) exp2 = new Decimal(1.17)
                 return new Decimal(3.5e96).mul(Decimal.pow(1.1, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -2405,6 +2446,66 @@ addLayer("era", {
             },
             tooltip() {
                 return "Cost Formula: 1e174 x 1.1^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        15: {
+            title: "Era Buyable 5: Minibooster",
+            unlocked() { return (hasUpgrade('era', 463)) },
+            cost(x) {
+                exp2 = new Decimal(1.09)
+                return new Decimal("1e319").mul(Decimal.pow(1.09, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + notationChooser(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player.era.ec.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(3)
+                base2 = x
+                expo = new Decimal(1.02)
+                eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e319 x 1.09^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        16: {
+            title: "Era Buyable 6: Pointer",
+            unlocked() { return (hasUpgrade('era', 463)) },
+            cost(x) {
+                exp2 = new Decimal(1.14)
+                if (hasUpgrade("c", 54)) exp2 = new Decimal(1.139)
+                return new Decimal("1e345").mul(Decimal.pow(1.09, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Point Fragments gain by x" + notationChooser(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player.era.ec.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal("1ee18")
+                if (hasUpgrade("c", 54)) base1 = new Decimal("e1.58e18")
+                base2 = x
+                expo = new Decimal(1.026)
+                eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e319 x 1.09^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
             }
         },
         21: {
@@ -2472,11 +2573,13 @@ addLayer("era", {
             if (hasUpgrade('era', 173)) gain = gain.times(buyableEffect('era', 12))
             if (hasAchievement('a', 232)) gain = gain.times(buyableEffect('era', 13))
             if (hasUpgrade('era', 341)) gain = gain.times(buyableEffect('era', 14))
+            if (hasUpgrade('era', 463)) gain = gain.times(buyableEffect('era', 15))
             
             // upgs
             if (hasUpgrade('era', 153)) gain = gain.times(upgradeEffect('era', 153))
             if (hasUpgrade('era', 12)) gain = gain.times(upgradeEffect('era', 12))
             if (hasUpgrade('era', 45)) gain = gain.times(upgradeEffect('era', 45))
+            if (hasUpgrade('c', 54)) gain = gain.times(upgradeEffect('c', 54))
             if (hasUpgrade("era", 11)) gain = gain.times(2)
             if (hasUpgrade("era", 22)) gain = gain.times(3)
             if (hasUpgrade("era", 31)) gain = gain.times(2)
@@ -2529,9 +2632,10 @@ addLayer("era", {
             if (hasUpgrade("era", 311)) gain = gain.times(100)
             if (hasUpgrade("era", 321)) gain = gain.times(2.5)
             if (hasUpgrade("era", 323)) gain = gain.times(2.5)
-            if (hasAchievement('sa', 32)) gain = gain.times(1.03)
-            if (hasAchievement('sa', 34)) gain = gain.times(1.03)
-            if (hasAchievement('sa', 35)) gain = gain.times(1.05)
+            if (hasAchievement('sa', 32)) gain = gain.times(1.04)
+            if (hasAchievement('sa', 33)) gain = gain.times(1.02)
+            if (hasAchievement('sa', 34)) gain = gain.times(1.04)
+            if (hasAchievement('sa', 35)) gain = gain.times(1.07)
             if (hasAchievement('sa', 36)) gain = gain.times(1.1)
             if (hasUpgrade("era", 365)) gain = gain.times(1000)
             if (hasMilestone("sac", 107)) gain = gain.times(4)
@@ -2548,6 +2652,10 @@ addLayer("era", {
             if (hasUpgrade("c", 14)) gain = gain.times(5000)
             if (hasUpgrade("era", 461)) gain = gain.times(1e13)
             if (hasUpgrade("era", 413)) gain = gain.div(5)
+            if (hasUpgrade("era", 462)) gain = gain.times(20)
+            if(hasMilestone("sac", 112)) gain = gain.times(9)
+            if(hasMilestone("sac", 113)) gain = gain.times(100)
+            if(hasMilestone("sac", 114)) gain = gain.times(12.5)
 
             // infinity
             if (player.era.ec.gte(new Decimal(2).pow(1024))) gain = gain.times(new Decimal(10).pow(player.era.infec))
@@ -2562,6 +2670,7 @@ addLayer("era", {
             if (hasUpgrade("era", 403)) gain = gain.pow(1.02)
             if (hasUpgrade("era", 411)) gain = gain.pow(1.01)
             if (hasUpgrade("era", 451)) gain = gain.pow(1.02)
+            if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
             let expinmc1 = new Decimal(0.1)
             if (hasUpgrade("m", 1111)) expinmc1 = new Decimal(0.12)
             if (hasUpgrade("m", 1121)) expinmc1 = new Decimal(0.14)

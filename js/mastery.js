@@ -642,9 +642,9 @@ addLayer("m", {
         if (hasUpgrade('m', 45)) mult = mult.times(100)
         if (hasUpgrade('m', 11)) mult = mult.times(base)
         if (hasAchievement('sa', 31)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 34)) mult = mult.times(1.01)
-        if (hasAchievement('sa', 35)) mult = mult.times(1.03)
-        if (hasAchievement('sa', 36)) mult = mult.times(1.07)
+        if (hasAchievement('sa', 34)) mult = mult.times(1.03)
+        if (hasAchievement('sa', 35)) mult = mult.times(1.06)
+        if (hasAchievement('sa', 36)) mult = mult.times(1.1)
         if (hasUpgrade("w", 54)) {
             if (hasChallenge("m", 11)) mult = mult.times(100)
         }

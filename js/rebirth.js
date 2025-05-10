@@ -475,7 +475,7 @@ addLayer("rebirth", {
         if (hasMilestone('prestige', 5)) keep.push("milestones");
         if (hasMilestone("era", 3)) keep.push("upgrades");
         if (hasMilestone("era", 3)) keep.push("milestones");
-    
+        
         // Stage 4, do the actual data reset
         layerDataReset(this.layer, keep);
     
@@ -565,6 +565,7 @@ addLayer("rebirth", {
         if (hasUpgrade('m', 134)) exp = exp.add(0.03)
         if (hasUpgrade('era', 371)) exp = exp.add(0.02)
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
+        if (hasUpgrade("era", 462)) exp = exp.add(0.02)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

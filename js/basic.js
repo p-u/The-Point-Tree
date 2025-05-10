@@ -759,10 +759,16 @@ addLayer("basic", {
             unlocked() {return hasUpgrade("era", 161)},
         },
         10: {
-            requirementDescription: "Woah, a lot (Req e5e18 BP)",
+            requirementDescription: "Woah, a lot 2 (Req e5e18 BP)",
             effectDescription: "xe1.6e16 PF",
             done() { return player["basic"].points.gte("e5e18") },
             unlocked() {return hasUpgrade("era", 35)},
+        },
+        11: {
+            requirementDescription: "Woah, a lot 3 (Req e1.5e21 BP)",
+            effectDescription: "xe4e18 PF",
+            done() { return player["basic"].points.gte("e1.5e21") },
+            unlocked() {return hasUpgrade("era", 462)},
         },
     },
     color: "#add8e6",

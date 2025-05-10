@@ -26,17 +26,50 @@ addLayer("c", {
         player.c.baseMultiplier = new Decimal(2),
         player.c.preBM = new Decimal(2),
         player.c.multiplier = new Decimal(2),
+        player.c.softcapStart = new Decimal(1000),
 
         // reset time
         player.c.preRT = player.c.preRT.div(buyableEffect('c', 11))
         if(hasUpgrade("c", 13)) player.c.preRT = player.c.preRT.div(1.25)
+        if(hasMilestone("sac", 112)) player.c.preRT = player.c.preRT.div(1.5)
+        if(hasUpgrade("c", 22)) player.c.preRT = player.c.preRT.div(1.3)
+        if(hasUpgrade("c", 24)) player.c.preRT = player.c.preRT.div(1.2)
+        if(hasUpgrade("c", 32)) player.c.preRT = player.c.preRT.div(1.1)
+        if(hasUpgrade("c", 34)) player.c.preRT = player.c.preRT.div(1.2)
 
         // base mult
+        if (hasAchievement('sa', 35)) player.c.preBM = player.c.preBM.mul(1.01)
+        if (hasAchievement('sa', 36)) player.c.preBM = player.c.preBM.mul(1.04)
         if(hasUpgrade("c", 11)) player.c.preBM = player.c.preBM.mul(1.5)
         player.c.preBM = player.c.preBM.mul(buyableEffect('c', 12))
+        if(hasMilestone("sac", 112)) player.c.preBM = player.c.preBM.mul(3)
+        if(hasUpgrade("c", 21)) player.c.preBM = player.c.preBM.mul(1.25)
+        if(hasUpgrade("c", 24)) player.c.preBM = player.c.preBM.mul(1.15)
+        if(hasUpgrade("c", 33)) player.c.preBM = player.c.preBM.mul(1.3)
+        if(hasUpgrade("c", 34)) player.c.preBM = player.c.preBM.mul(1.1)
+        if(hasUpgrade("c", 41)) player.c.preBM = player.c.preBM.mul(2)
+        if (hasAchievement("a", 263)) player.c.preBM = player.c.preBM.mul(1.5)
+        if(hasUpgrade("c", 43)) player.c.preBM = player.c.preBM.mul(1.5)
+        if(hasUpgrade("c", 52)) player.c.preBM = player.c.preBM.mul(2)
 
         // softcap decrease
         if(hasUpgrade("c", 12)) player.c.scscale = new Decimal(1.3)
+        if(hasUpgrade("c", 21)) player.c.scscale = new Decimal(1.25)
+        if(hasUpgrade("c", 24)) player.c.scscale = new Decimal(1.22)
+        if (hasMilestone("c", 1)) player.c.scscale = new Decimal(1.19)
+        if(hasUpgrade("c", 34)) player.c.scscale = new Decimal(1.17)
+        if (hasMilestone("c", 2)) player.c.scscale = new Decimal(1.15)
+        if (hasMilestone("c", 3)) player.c.scscale = new Decimal(1.14)
+        
+        // delayed softcap start
+        if (hasUpgrade("c", 31)) player.c.softcapStart = new Decimal(5000)
+        if (hasAchievement("a", 262)) player.c.softcapStart = new Decimal(11111)
+        if (hasUpgrade("c", 34)) player.c.softcapStart = new Decimal(20000)
+        if (hasUpgrade("c", 42)) player.c.softcapStart = new Decimal(100000)
+        if (hasUpgrade("c", 43)) player.c.softcapStart = new Decimal(250000)
+        if(hasMilestone("sac", 113)) player.c.softcapStart = new Decimal(2500000)
+        if (hasMilestone("c", 3)) player.c.softcapStart = new Decimal(80e6)
+        if (buyableEffect('c', 13).gte(1)) player.c.softcapStart = player.c.softcapStart.mul(buyableEffect('c', 13))
 
         // init
         player.c.replicateTime = player.c.preRT
@@ -90,10 +123,30 @@ addLayer("c", {
                         return a
                     }
                 ],
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + `Softcap starts at 
+                            ${notationChooser(player.c.softcapStart)} cells</span></h2>`
+                        return a
+                    }
+                ],
                 "blank",
                 "blank",
                 "upgrades",
             ],
+        },
+        "Cell Milestones": {
+            content: [
+                "main-display",
+                "blank",
+                ["bar", "replicate"],
+                "blank",
+                "blank",
+                "blank",
+                "milestones",
+            ],
+            unlocked() {return hasAchievement("a", 262)},
         },
         "Cell Buyables": {
             content: [
@@ -107,31 +160,163 @@ addLayer("c", {
             ],
         },
     },
+    milestones: {
+        1: {
+            requirementDescription: "Cell Milestone 1 (1.25e12 Cells: Tier 1)",
+            effectDescription: "Unlock Cell Buyable 3, and reduce cell softcap",
+            done() { return player.c.points.gte(new Decimal(1.25e12)) },
+        },
+        2: {
+            requirementDescription: "Cell Milestone 2 (6e16 Cells: Tier 1.2)",
+            effectDescription: "Reduce cell softcap",
+            unlocked() { return hasMilestone("c", 1)},
+            done() { return player.c.points.gte(new Decimal(6e16)) },
+        },
+        3: {
+            requirementDescription: "Cell Milestone 3 (5e25 Cells: Tier 1.5)",
+            effectDescription: "Reduce cell softcap",
+            unlocked() { return hasMilestone("c", 2)},
+            done() { return player.c.points.gte(new Decimal(5e25)) },
+        },
+        4: {
+            requirementDescription: "Cell Milestone 4 (3.2e32 Cells: Tier 1.7)",
+            effectDescription: "Cell softcap starts 32x later",
+            unlocked() { return hasMilestone("c", 3)},
+            done() { return player.c.points.gte(new Decimal(3.2e32)) },
+        },
+    },
     upgrades: {
         11: {
-            title: "Cell Upgrade 1",
+            title: "Cytoplasm",
             description: "Increase base multiplier by 1.5.",
             cost: new Decimal(1600),
             unlocked() { return true },
         },
         12: {
-            title: "Cell Upgrade 2",
+            title: "Plasma Membrane",
             description: "Decrease softcap scaling",
             cost: new Decimal(3000),
             unlocked() { return (hasUpgrade("c", 11)) },
         },
         13: {
-            title: "Cell Upgrade 3",
-            description: "SPEEEED: x1.25 replicate speed",
+            title: "Ribosome",
+            description: "SPEEEED: /1.25 replicate speed",
             cost: new Decimal(7000),
             unlocked() { return (hasUpgrade("c", 12)) },
         },
         14: {
-            title: "Cell Upgrade 4",
+            title: "Mitochondria",
             description: "Back to main: Extend Era Upgrades. x5,000 EC",
             cost: new Decimal(15000),
             unlocked() { return (hasUpgrade("c", 13)) },
         },
+        21: {
+            title: "Endoplasmic Reticulum",
+            description: "Slightly decrease softcap scaling, and increase base multiplier",
+            cost: new Decimal(5000000),
+            unlocked() { return (hasMilestone("sac", 112)) },
+        },
+        22: {
+            title: "Centrosome",
+            description: "Sonic Cell: /1.3 replicate speed",
+            cost: new Decimal(12500000),
+            unlocked() { return (hasUpgrade("c", 21)) },
+        },
+        23: {
+            title: "Golgi Apparatus",
+            description: "Cell Buyable 2's effect is stronger and scaling is weaker",
+            cost: new Decimal(30000000),
+            unlocked() { return (hasUpgrade("c", 22)) },
+        },
+        24: {
+            title: "Nucleus",
+            description: "Less softcap scaling, less replicate speed, more base multiplier",
+            cost: new Decimal(100000000),
+            unlocked() { return (hasUpgrade("c", 23)) },
+        },
+        31: {
+            title: "Vacuole",
+            description: "Softcap starts x5 later",
+            cost: new Decimal(700000000),
+            unlocked() { return (hasUpgrade("c", 24)) },
+        },
+        32: {
+            title: "Spindle Fiber",
+            description: "/1.1 cell replication speed, Cell buyable 1's effect is stronger",
+            cost: new Decimal(5e9),
+            unlocked() { return (hasUpgrade("c", 31)) },
+        },
+        33: {
+            title: "ATP Synthesis",
+            description: "x1.3 Cell Base Multiplier",
+            cost: new Decimal(1.5e11),
+            unlocked() { return (hasUpgrade("c", 32)) },
+        },
+        34: {
+            title: "Metabolic Cascade",
+            description: "Less softcap scaling, less replicate speed, more base multiplier, delayed softcap start",
+            cost: new Decimal(1e13),
+            unlocked() { return (hasUpgrade("c", 33)) },
+        },
+        41: {
+            title: "Metabolic SURGE",
+            description: "x2 Cell Base Multiplier",
+            cost: new Decimal(4.1e14),
+            unlocked() { return (hasUpgrade("c", 34)) },
+        },
+        42: {
+            title: "Improved Vacuole",
+            description: "Softcap starts x5 later again",
+            cost: new Decimal(2e18),
+            unlocked() { return (hasUpgrade("c", 41)) },
+        },
+        43: {
+            title: "Overclocked Nucleus",
+            description: "x1.5 Cell Base Multiplier, Softcap starts x2.5 later",
+            cost: new Decimal(4e21),
+            unlocked() { return (hasUpgrade("c", 42)) },
+        },
+        44: {
+            title: "Budgeted Expression",
+            description: "Reduce the scaling of Cell Buyables 2,3 and Era Buyable 3",
+            cost: new Decimal(3e23),
+            unlocked() { return (hasUpgrade("c", 43)) },
+        },
+        51: {
+            title: "Expression Amplifier",
+            description: "Increase the effect of Cell Buyable 3",
+            cost: new Decimal(1e27),
+            unlocked() { return (hasUpgrade("c", 44)) },
+        },
+        52: {
+            title: "Cellular Mastery",
+            description: "x2 Cell Base Multiplier",
+            cost: new Decimal(5e28),
+            unlocked() { return (hasUpgrade("c", 51)) },
+        },
+        53: {
+            title: "Expression Amplifier 2",
+            description: "Increase the effect of Cell Buyable 2 and Mega Buyable 2",
+            cost: new Decimal(3.03e30),
+            unlocked() { return (hasUpgrade("c", 52)) },
+        },
+        54: {
+            title: "Metabolic Hyper-Surge",
+            description: "Cells boost Era Crystals, Reduced Sacrifice Scaling, very slightly reduce Era Buyable 6 scaling and increase its effect",
+            cost: new Decimal(3.33e33),
+            effect() {
+                return player.c.points.log(9)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade multiplies Era Crystals by x" + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: log_9(Cells)"
+            },
+            unlocked() { return (hasUpgrade("c", 53)) },
+        },
+        // go till row 5, then publish v3.5
     },
     buyables: {
         11: {
@@ -153,6 +338,7 @@ addLayer("c", {
             },
             effect(x) {
                 base1 = new Decimal(1.125)
+                if (hasUpgrade("c", 32)) base1 = new Decimal(1.175)
                 base2 = x
                 expo = new Decimal(1)
                 let eff = (base1.pow(Decimal.pow(base2, expo)))
@@ -166,6 +352,8 @@ addLayer("c", {
             title: "Cell Buyable 2: Multiply!",
             cost(x) {
                 exp2 = 1.25
+                if (hasUpgrade("c", 23)) exp2 = 1.2
+                if (hasUpgrade("c", 44)) exp2 = 1.17
                 return new Decimal(4000).mul(Decimal.pow(1.15, x)).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
             },
             display() {
@@ -181,6 +369,9 @@ addLayer("c", {
             },
             effect(x) {
                 base1 = new Decimal(1.1)
+                if (hasUpgrade("c", 23)) base1 = new Decimal(1.15)
+                if (hasAchievement("a", 263)) base1 = new Decimal(1.16)
+                if (hasUpgrade("c", 53)) base1 = new Decimal(1.2)
                 base2 = x
                 expo = new Decimal(1)
                 let eff = (base1.pow(Decimal.pow(base2, expo)))
@@ -188,6 +379,37 @@ addLayer("c", {
             },
             tooltip() {
                 return "Cost Formula: 4,000 x 1.15^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + base1 + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        13: {
+            title: "Cell Buyable 3: Procrastinate (Delay softcap start)",
+            cost(x) {
+                exp2 = 1.11
+                if (hasUpgrade("c", 23)) exp2 = 1.1
+                return new Decimal(1e11).mul(Decimal.pow(1.12, (x))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: " + format(buyableEffect(this.layer, this.id)) + "x later softcap."
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(1.1)
+                if (hasAchievement("a", 263)) base1 = new Decimal(1.15)
+                if (hasUpgrade("c", 51)) base1 = new Decimal(1.3)
+                base2 = x
+                expo = new Decimal(1.01)
+                let eff = (base1.pow(Decimal.pow(base2, expo)))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e11 x 1.12^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + base1 + "^(" + notationChooser(base2) + "^" + expo + ")."
             }
         },
     },

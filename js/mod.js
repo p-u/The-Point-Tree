@@ -14,11 +14,20 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.4.X.1",
-	name: "Minigame Pt. 5",
+	num: "3.5",
+	name: "Cell Explosion",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.5: Cell Explosion </h3><br>
+Added 3 buyables, 20 upgrades, 9 milestones, 3 achievements, 2 giving boosts <br>
+Changed CU11-14 upgrades to be cell terms instead of being generic <br>
+Improved Endgame achievement boosts <br>
+Added branches to some era upgrades <br>
+Changed cell infobox <br>
+Fixed name of 1 basic milestone <br>
+Endgames: e1.0830250e22, e1.08308e22, e1.10278e22, e1.1028038e22 PF respectively <br>
+
 <h3>v3.4.X.1 </h3><br>
 Added some leeway to exact numbers in Minigame due to rounding error in numbers <br>
 Added better hint to MA14 <br>
@@ -639,6 +648,9 @@ function getPointGen() {
 	if (hasUpgrade('basic', 24)) gain = gain.times(upgradeEffect('basic', 24))
 	if (hasUpgrade('basic', 32)) gain = gain.times(upgradeEffect('basic', 32))
 	if (hasUpgrade('mega', 31)) gain = gain.times(upgradeEffect('mega', 31))
+
+	// buyable
+	if (hasUpgrade('era', 463) && gain.times(buyableEffect('era', 16)).gte(1000)) gain = gain.times(buyableEffect('era', 16))
 	
 	
 	
@@ -673,6 +685,7 @@ function getPointGen() {
 	if (hasMilestone('basic', 9)) gain = gain.times("e25e12")
 	if (hasUpgrade('basic', 115)) gain = gain.times("e250e12")
 	if (hasMilestone('basic', 10)) gain = gain.times("e1.6e16")
+	if (hasMilestone('basic', 11)) gain = gain.times("e4e18")
 
 	
 	
@@ -820,6 +833,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 100)) gain = gain.times("e1.66e16")
 	if (hasMilestone('sac', 102)) gain = gain.times("e8e15")
 	if (hasMilestone('sac', 111)) gain = gain.times("e2.5e18")
+	if (hasMilestone('sac', 113)) gain = gain.times("e1e19")
 
 
 	// achievement
@@ -1104,6 +1118,7 @@ function getPointGen() {
 	if (hasUpgrade("era", 421)) gain = gain.pow(1.005)
 	if (hasUpgrade("era", 412)) gain = gain.pow(0.995)
 	if (hasUpgrade("era", 413)) gain = gain.pow(1.005)
+	if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
 	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);

@@ -256,7 +256,7 @@ addLayer("i", {
         },
         cells: {
             title: "The Cells Layer [NO SHORT FORM]",
-            body() { return "Finally! A new layer! Mechanic: Replicate: Multiply cells by 2 at first, upgrades to increase that. At first, replicate time is 20 seconds, upgrades and buyables to decrease that as well. At 1,000 cells there is a softcap, mult decreases as cells increase after 1,000. Strategy of whether to buy buyable/save up/buy upgrade is crucial for progression." },
+            body() { return "Finally! A new layer! Mechanic: Replicate: Multiply cells by 2 at first, upgrades to increase that. At first, replicate time is 20 seconds, upgrades and buyables to decrease that as well. At 1,000 cells there is a softcap, the multiplier decreases as cells increase after 1,000. Strategy of whether to buy buyable/save up/buy upgrade is crucial for progression. Upgrades and buyables can delay the softcap, reduce the softcap strength, increase cell gain on replicate and reduce cell replication time" },
             unlocked() { return player.c.points.gte(new Decimal("1"))}
         },
     },

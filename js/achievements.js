@@ -1227,13 +1227,13 @@ addLayer("a", {
         252: {
             name: "Sac Strength 3",
             done() { return player.sac.sacstr.gte(3) },
-            tooltip: "Get the 3rd Sac Strength.",
+            tooltip: "Get the 3rd Sac Strength. [Universal Rarity]",
             unlocked() { return hasAchievement("a", 242) },
         },
         253: {
             name: "More and more EC",
             done() { return player.era.ec.gte(new Decimal("1e245")) },
-            tooltip: "Get 1e245 Era Crystals. Reward: Another xe1e18 PF",
+            tooltip: "Get 1e245 Era Crystals. Reward: Another xe1e18 PF [Universal Rarity]",
             unlocked() { return hasAchievement("a", 242) },
         },
         254: {
@@ -1245,7 +1245,7 @@ addLayer("a", {
         255: {
             name: "A NEW LAYER!",
             done() { return player.sac.points.gte(new Decimal(695000)) },
-            tooltip: "Unlock the next layer.",
+            tooltip: "Unlock the next layer. [Multiversal Rarity]",
             unlocked() { return hasAchievement("a", 242) },
             style() {
                 return {
@@ -1258,6 +1258,24 @@ addLayer("a", {
             name: "250,000x",
             done() { return player.c.points.gte(new Decimal(250000)) },
             tooltip: "Get 250,000 cells.",
+            unlocked() { return hasAchievement("a", 255) },
+        },
+        261: {
+            name: "6 Era Buyables",
+            done() { return hasUpgrade("era", 463) },
+            tooltip: "Unlock the 5th and 6th era buyable. [Multiversal Rarity]",
+            unlocked() { return hasAchievement("a", 255) },
+        },
+        262: {
+            name: "11,111,111,111",
+            done() { return player.c.points.gte(new Decimal(1.11e11)) },
+            tooltip: "Get 1.11e11 cells. Cell softcap starts at 11,111 cells, and unlock the Cell Milestones tab",
+            unlocked() { return hasAchievement("a", 255) },
+        },
+        263: {
+            name: "player.c.points.mag = 20",
+            done() { return player.c.points.gte(new Decimal(1e20)) },
+            tooltip: "Get 10^20 cells. x1.5 cell base mult, increase effect of Cell Buyable 2 and 3 [Multiversal Rarity]",
             unlocked() { return hasAchievement("a", 255) },
         },
     tabFormat: [

@@ -824,6 +824,24 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(720000)},
             done() { return player["sac"].points.gte(750000) }
         },
+        112: {
+            requirementDescription: "Sacrifice 850,000",
+            effectDescription: "/1.5 Cell Replication Rate, x3 cells, x9 EC",
+            unlocked() {return player["sac"].points.gte(800000)},
+            done() { return player["sac"].points.gte(850000) }
+        },
+        113: {
+            requirementDescription: "Sacrifice 1,000,000",
+            effectDescription: "x10 delayed cell softcap start, xee19 PF, x100 EC",
+            unlocked() {return player["sac"].points.gte(900000)},
+            done() { return player["sac"].points.gte(1000000) }
+        },
+        114: {
+            requirementDescription: "Sacrifice 1,250,000",
+            effectDescription: "x12.5 EC, xe5e13 Water",
+            unlocked() {return player["sac"].points.gte(900000)},
+            done() { return player["sac"].points.gte(1000000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -1130,6 +1148,7 @@ addLayer("sac", {
         if (hasUpgrade("era", 351)) exp = exp.sub(0.0077)
         if (hasUpgrade("era", 401)) exp = exp.sub(0.0021)
         if (hasUpgrade("era", 412)) exp = exp.sub(0.005)
+        if (hasUpgrade("c", 54)) exp = exp.sub(0.0072)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

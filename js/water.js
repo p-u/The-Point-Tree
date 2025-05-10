@@ -357,6 +357,7 @@ addLayer("w", {
         if (hasUpgrade('s', 121)) mult = mult.times("e50e9")
         if (hasUpgrade('era', 394)) mult = mult.times("e7e11")
         if (hasUpgrade('rebirth', 91)) mult = mult.times("e2.2e12")
+        if (hasMilestone('sac', 114)) mult = mult.times("e5e13")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
 
         

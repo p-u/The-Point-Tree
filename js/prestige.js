@@ -366,6 +366,12 @@ addLayer("prestige", {
             done() { return player["prestige"].points.gte("e5e13") },
             unlocked() {return hasUpgrade("era", 161)},
         },
+        12: {
+            requirementDescription: "e2.2e19 PP (e22 Qn PP)",
+            effectDescription: "Prestige Hypercap is weaker",
+            done() { return player["prestige"].points.gte("e2.2e19") },
+            unlocked() {return hasUpgrade("era", 462)},
+        },
     },
     doReset(prestige) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
@@ -539,6 +545,7 @@ addLayer("prestige", {
         if (hasUpgrade('s', 95)) spreff = 0.95
         if ((inChallenge("m", 11)) && (hasUpgrade("m", 1115))) spreff = 1
         softcappedEffect = softcap(softcappedEffect, new Decimal("e1000000"), new Decimal(spreff))
+        if (hasMilestone('prestige', 12)) hcapeff = 0.53
         softcappedEffect = softcap(softcappedEffect, new Decimal("ee12"), new Decimal(hcapeff))
         let inscapeff = 0.2
         softcappedEffect = softcap(softcappedEffect, new Decimal("e4e18"), new Decimal(inscapeff))

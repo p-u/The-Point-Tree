@@ -50,11 +50,11 @@ function sumValues(x) {
     return x.reduce((a, b) => Decimal.add(a, b))
 }
 
-function notationChooser(decimal) {
+function notationChooser(decimal, precision=3) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
     } else {
-        return format(decimal)
+        return format(decimal, precision)
     }  
 }
 
