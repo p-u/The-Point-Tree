@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.52",
+	num: "3.5.2",
 	name: "Cell Explosion",
 }
 
