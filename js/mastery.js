@@ -608,7 +608,7 @@ addLayer("m", {
         12: {
             name: "Mastery Challenge 2.",
             challengeDescription() { 
-                let cd = "Sacrifice Cost Scaling is now increased from 3.6 to 7.5 exponent. "
+                let cd = "Sacrifice Cost Scaling is now increased from 3.6 to 7.5 exponent. [Super Nerf: At e100B PF, PF gain ^0.1 and sacrifice exponent is permanently at 100.] "
                 let ec = "You are recommended to enter this challenge to progress."
                 if ((challengeCompletions("m", 12) == 1)) ec = "You have the maximum amount of completions of this challenge."
                 cd = cd + ec + " You completed this challenge " + (challengeCompletions("m", 12)) + " time."

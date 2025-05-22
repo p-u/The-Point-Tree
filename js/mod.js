@@ -14,12 +14,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5",
+	num: "3.52",
 	name: "Cell Explosion",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h3>v3.5: Cell Explosion </h3><br>
+<h3>v3.5.2 </h3><br>
+Addressed the issue of inflation in MC2 by adding a Super Nerf. <br>
+
+<h3>v3.5.1 </h3><br>
+Fixed 1.25M Sac Milestone unlocking at 1M Sac. <br>
+
+<h2>v3.5: Cell Explosion </h2><br>
 Added 3 buyables, 20 upgrades, 9 milestones, 3 achievements, 2 giving boosts <br>
 Changed CU11-14 upgrades to be cell terms instead of being generic <br>
 Improved Endgame achievement boosts <br>
@@ -76,7 +82,7 @@ Fixed cells unlock <br>
 <h3>v3.4.1 </h3><br>
 Fixed AdvErUp 25 unlock <br>
 
-<h3>v3.4: The 11th Layer </h3><br>
+<h2>v3.4: The 11th Layer </h2><br>
 Added a new layer with new functionality! <br>
 Added 2 buyables, 32 upgrades, 3 milestones, 3 achievements, 1 giving boosts <br>
 Added a new QoL feature: Able to see Buyable and Upgrade formulas via hovering on them; Revamped Upgrade and Buyable code for non-static upgrades <br>
@@ -105,7 +111,7 @@ Sac Strength tab updated to have a unlocked function <br>
 Fixed ErUp 4a not influencing ErUp 4b price <br>
 MA66 description fixed <br>
 
-<h3>v3.3: EC is useful now! </h3><br>
+<h2>v3.3: EC is useful now! </h2><br>
 Extended rarities to the Achievements <br>
 Added Minigame Part 3: Below the Negatives, and added negative titles <br>
 Added a new feature: Buyable base change <br>
@@ -139,7 +145,7 @@ Added heading to v2.0.0 changelog <br>
 <h3>v3.2.1 </h3><br>
 Fixed MC1x2 Req <br>
 
-<h3>v3.2: Multi-Challenges? Mastery Extension </h3><br>
+<h2>v3.2: Multi-Challenges? Mastery Extension </h2><br>
 Fixed hardcap for Sac Strength effect 1 and 2 (No effect currently) <br>
 Rebalanced Sac Strength effect 3 (future) <br>
 Rebalanced Infobox Layer to show stages <br>
@@ -181,7 +187,7 @@ Fixed some number formatting issues.<br>
 <h3>v3.1.1 </h3><br>
 Changed MA52 and MA53 description, added 10 new minigame titles! <br>
 
-<h3>v3.1: Sac Strength and Extended Upgrades </h3><br>
+<h2>v3.1: Sac Strength and Extended Upgrades </h2><br>
 Added a hardcap for Mega Buyable 4 (+^1) <br>
 Added Era 2: Extension part <br>
 Added Minigame Part 2 <br>
@@ -219,7 +225,7 @@ Changed A185 req, changed MU91-95 price<br>
 Fixed clickable 10^10x unlock<br>
 Era milestones now unlock at previous era amount<br>
 
-<h2>v3.0.0 (The Biggest Update)</h2><br>
+<h1>v3.0.0 (The Biggest Update)</h1><br>
 Endgame: e1.3294765716e18 PF <br>
 High Endgame: e1.32947657162222e18 PF <br>
 Abs True Endgame: e1.32947657164e18 PF <br>
@@ -265,7 +271,7 @@ You cannot enter any of Sac Challenges in the Mastery Challenge 2.<br>
 You cannot enter any of Sac Challenges after completing Mastery Challenge 2.<br>
 
 
-<h3>v2.5.0 - RAPID INFLATION COMES</h3><br>
+<h2>v2.5.0 - RAPID INFLATION COMES</h2><br>
 Added a hardcap for Supreme Buyable 5 (^1.25) <br>
 Added a softcap and a hardcap for Sacrifice Milestone 58 (SC: ^1.075, HC: ^1.1) <br>
 Changed description of some Sac Milestones <br>
@@ -283,7 +289,7 @@ High Endgame: e29,425,225,000,000 PF <br>
 Absolute True Endgame: e29,425,235,000,000 PF <br>
 
 
-<h3>v2.4.0 - Dim Shift 5 and ???</h3><br>
+<h2>v2.4.0 - Dim Shift 5 and ???</h2><br>
 Base number formatting precision increased from 2 to 3 <br>
 Infobox layer got a revamp! Most things are now updated, and shifted locations <br>
 Renamed savebanks from 'Sac Stage 3' to 'Supreme Stage 5' <br>
@@ -301,7 +307,7 @@ v2.41 - Fixed some bugs
 v2.42 - Added Light Theme and a setting to change to e notation
 v2.43 - Added Lava Theme
 
-<h3>Changes (v2.3: Dimensional Shift 4 and Supreme Buyable 5) </h3><br>
+<h2>Changes (v2.3: Dimensional Shift 4 and Supreme Buyable 5) </h2><br>
 Bug Fix: Ach 144 desc, MU73 desc, DS3 bar desc, SU94 unlock. <br>
 
 <h3>Hotfixes </h3><br>
@@ -332,7 +338,7 @@ Added 3 water upgrades <br>
 v2.21<br>
 Added more reqs for unlocking all Mastery Challenge-Specific Milestones (Check if in Challenge). <br>
 Water Milestone 1 req fixed <br>
-<h3>Changes (v2.2: Mastery) </h3><br>
+<h2>Changes (v2.2: Mastery) </h2><br>
 Bug Fix: Finsihed. <br>
 Shows req of secret achievement after completing. <br>
 Added 3 secret achievements <br>
@@ -360,9 +366,9 @@ Increased MU23, MM2, MM8, MM11 Prices <br>
 Nerfed MU11 effect and buffed MU12. <br>
 Changed PU32 to be kept at MU7 instead of MU5. Also let PU31 be kept at MU7. <br>
 Changed Ach51 desc, increased Ach52 req and decreased Ach55 req. <br>
-<h3>v2.1 - Choice Row Upgrades</h3><br>
+<h2>v2.1 - Choice Row Upgrades</h3><br>
 
-Changes (v2.1) </h3><br>
+Changes (v2.1) </h2><br>
 Swapped PU3 and 4 position, changed PU3 and 4 price <br>
 Changed price of Sac Challenge 3 Upgs. <br>
 Severely nerfed Secret Achievement Effect <br>
@@ -396,7 +402,7 @@ Increased MU11 Effect, to x2.9 <br>
 Decreased SU22-SU42 price <br>
 Decreased SM5 Price <br>
 
-</h3>Changes (v2.0.0) </h3><br>
+</h1>Changes (v2.0.0) </h1><br>
 Bye Bye Autobuy… Hello Keep Upgrades! No more autobuying of upgrades! Milestones will keep the upgrades! Added 6 achievements (keep upgs) <br>
 Added 1 Sac Challenge 4 Upg <br>
 
@@ -411,7 +417,7 @@ Added the 3rd Dimensional Shift <br>
 Endgame: e511.3e6 PF <br>
 <h3>v1.3.1 - Mega Price DECREASE</h3><br>
 Some upgrades are decreased in price <br>
-<h3>v1.3.0 - Achievement Row 10</h3><br>
+<h2>v1.3.0 - Achievement Row 10</h2><br>
 Sacrifice and Mega Buyable Milestones are hidden until you get the previous mega buyable/sac milestone<br>
 Upgrade Effect Softcap <br>
 In layer effect/upg effect, shows (Softcapped) / (Supercapped) when reaching softcap or supercap <br>
@@ -423,7 +429,7 @@ Added 4 challenge-specific upgrades <br>
 Added 4 milestones and 1 challenge <br>
 Added 6 achievements, 2 giving boosts <br>
 Endgame: e151,551,551 PF <br>
-<h3>v1.2.0 - The TRUE Biggest Update</h3><br>
+<h2>v1.2.0 - The TRUE Biggest Update</h2><br>
 Added names to Mega Buyables <br>
 The FULL Rebalance <br>
 Rebalanced prices of all upgrades, from Sac 10 to Sac 22. <br>
@@ -435,7 +441,7 @@ Added 12 challenge-specific upgrades <br>
 Added 1 milestone and 1 challenge <br>
 Added 2 achievements <br>
 Endgame: e26022000 PF <br>
-<h3>v1.1.0</h3><br>
+<h2>v1.1.0</h2><br>
 Renamed all Upgrades <br>
 Added Branches <br>
 Decreased price of Energy Upg 4 to 16 <br>
@@ -447,7 +453,7 @@ Added 5 new upgrades <br>
 Added a new milestone <br>
 Added 3 new infoboxes <br>
 Endgame: e15511500 PF <br>
-<h3>v1.0.0: True Release (on Galaxy.click)</h3><br>
+<h2>v1.0.0: True Release (on Galaxy.click)</h2><br>
 - Decreased Prices of all new (v14.0) energy upgrades <br>
 <h3>v14.0: The TRUE BIGGEST UPDATE</h3><br>
 - Rebalanced Rebirth Stage [Increased Prices] <br>
@@ -1119,6 +1125,7 @@ function getPointGen() {
 	if (hasUpgrade("era", 412)) gain = gain.pow(0.995)
 	if (hasUpgrade("era", 413)) gain = gain.pow(1.005)
 	if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
+	if (player.points.gte("e100e9") && inChallenge("m", 12)) gain = gain.pow(0.1)
 	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);

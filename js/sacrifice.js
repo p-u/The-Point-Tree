@@ -1150,6 +1150,7 @@ addLayer("sac", {
         if (hasUpgrade("era", 412)) exp = exp.sub(0.005)
         if (hasUpgrade("c", 54)) exp = exp.sub(0.0072)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
+        if (player.points.gte("e100e9") && inChallenge("m", 12)) exp = new Decimal(100)
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
     gainMult() { // Prestige multiplier
