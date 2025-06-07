@@ -241,8 +241,8 @@ addLayer("i", {
         },
         sacrecenter: {
             title: "Recommended (Intended) enter period of Sacrifice Challenges",
-            body() { return "Sac Challenge 1: Sac 15, have Ach 86. Sac Challenge 2: Sac 21. Sac Challenge 3: Sac 24. Sac Challenge 4: Sac 28" },
-            unlocked() { return player.sac.points.gte(new Decimal("15"))}
+            body() { return "Sac Challenge 1: Sac 20, have Ach 86. Sac Challenge 2: Sac 21. Sac Challenge 3: Sac 24. Sac Challenge 4: Sac 28" },
+            unlocked() { return player.sac.points.gte(new Decimal("20"))}
         },
         mastrecenter: {
             title: "[Pre-Era] Intended Enter Period of Mastery Challenges",

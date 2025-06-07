@@ -635,6 +635,7 @@ addLayer("m", {
         if (hasUpgrade('m', 75)) base = new Decimal(5e6)
         // mult
         if (hasUpgrade('m', 42)) mult = mult.times(upgradeEffect('m', 42))
+        mult = mult.times(1.2) // 100k event
         if (hasUpgrade('m', 13)) mult = mult.times(2.5)
         if (hasUpgrade('m', 14)) mult = mult.times(4)
         if (hasUpgrade('m', 41)) mult = mult.times(5)

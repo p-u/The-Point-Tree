@@ -487,6 +487,7 @@ addLayer("rebirth", {
         if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
         if (hasUpgrade('prestige', 22)) mult = mult.times(upgradeEffect('prestige', 22))
         if (hasUpgrade('basic', 81)) mult = mult.times(upgradeEffect('basic', 81))
+        mult = mult.times(1.8) // 100k event
         if (hasUpgrade('basic', 41)) mult = mult.times(1.19)
         if (hasUpgrade('basic', 42)) mult = mult.times(1.277)
         if (hasUpgrade('basic', 44)) mult = mult.times(2)

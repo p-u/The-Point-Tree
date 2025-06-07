@@ -987,9 +987,11 @@ addLayer("s", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (hasAchievement('sa', 156)) mult = mult.times(2)
         mult = mult.times(buyableEffect('s', 11))
         if (hasUpgrade('basic', 102)) mult = mult.times(upgradeEffect('basic', 102))
         if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
+        mult = mult.times(1.5) // 100k event
         if (hasUpgrade('w', 21)) mult = mult.times(1.25)
         if (hasUpgrade('w', 24)) mult = mult.times(3)
         if (hasUpgrade('s', 43)) mult = mult.times(1.8)

@@ -24,6 +24,8 @@ function changeNotation() {
 	if (options.notation === 'default') { 
 		options.notation = 'infinity'
 	} else if (options.notation === 'infinity'){ 
+		options.notation = 'standard'
+	} else {
 		options.notation = 'default'
 	}
 }

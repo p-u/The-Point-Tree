@@ -14,11 +14,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.2",
-	name: "Cell Explosion",
+	num: "3.5.5",
+	name: "Cell Explosion/Final Minigame Part and 100K Event",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>v3.5.5: 100K Playhours Event, Minigame Final Part and more! </h2><br>
+Minigame Parts 1-5 revamped: Added boosts to MA46,66,76, Buffed boosts for MA56. <br>
+Big Number minigame achievements: Number has been increased by alot for MA43,44,45,46 <br>
+Number has been decreased drastically for MA55,56,65,66, resulting in a ~-30% decrease in time overall <br>
+Added Standard Notation <br>
+The main part of the update is the huge extension for the Minigame. 20 new MINIGAME ????s, 1 new currency, 12 new achievements, 2 new features, up to the Fs and more! <br>
+Void titles: e(11), e(42), e(107), e(353) Number respectively <br>
+
 <h3>v3.5.2 </h3><br>
 Addressed the issue of inflation in MC2 by adding a Super Nerf. <br>
 
@@ -661,6 +669,7 @@ function getPointGen() {
 	
 	
 	// basic
+	gain = gain.times(3) // 100k event
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
 	if (hasUpgrade('basic', 22)) gain = gain.times(2)
 	if (hasUpgrade('basic', 31)) gain = gain.times(3)
@@ -880,6 +889,9 @@ function getPointGen() {
 	if (hasAchievement('a', 253)) gain = gain.times("e1e18")
 	if (hasAchievement('a', 254)) gain = gain.times("e2.444404444e18")
 
+
+	if (hasAchievement('sa', 146)) gain = gain.times(1.01)
+	if (hasAchievement('sa', 156)) gain = gain.times(2)
 	// buyables
 	gain = gain.times(buyableEffect('mega', 11))
 
@@ -1139,98 +1151,65 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
+		display = "Thanks for 100,000 Playhours on Galaxy.click! To celebrate that, here's a x3 PF boost, x1.8 RP, PP, x1.5 MP-Water (excluding Sac), x1.2 MaP, x1.1 EC (14 DAYS ONLY)."
 		if ((player.points.lte(80000))) {
-			return "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(240.49))) + " iPhone XRs."
+			display = display + "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(240.49))) + " iPhone XRs."
 		}
-	},
-	function() {
 		if ((player.points.lte(150e6)) && (player.points.gte(80000))) {
-			return "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(800000))) + " homes."
+			display = display + "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(800000))) + " homes."
 		}
-	},
-	function() {
 		if ((player.points.lte(180e9)) && (player.points.gte(150e6))) {
-			return "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(1.5e9))) + " Burj Khalifas."
+			display = display + "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(1.5e9))) + " Burj Khalifas."
 		}
-	},
-	function() {
 		if ((player.points.lte(1e15)) && (player.points.gte(180e9))) {
-			return "If every point was a US Dollar, then you can buy approximately " + notationChooser(player.points.div(new Decimal(1.5e9))) + " Moons."
+			display = display + "If every point was a US Dollar, then you can buy approximately " + notationChooser(player.points.div(new Decimal(1.5e9))) + " Moons."
 		}
-	},
-	function() {
 		if ((player.points.lte(1e17)) && (player.points.gte(1e15))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(3800000000))) + " fermions."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(3800000000))) + " fermions."
 		}
-	},
-	function() {
 		if ((player.points.lte(2.75e25)) && (player.points.gte(1e17))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1e17))) + " quarks."		}
-	},
-	function() {
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1e17))) + " quarks."
+		}
 		if ((player.points.lte(7e29)) && (player.points.gte(2.75e25))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(2.75e25))) + " water molecules."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(2.75e25))) + " water molecules."
 		}
-	},
-	function() {
 		if ((player.points.lte(1.7e35)) && (player.points.gte(7e29))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(7e29))) + " red blood cells."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(7e29))) + " red blood cells."
 		}
-	},
-	function() {
 		if ((player.points.lte(8.28e37)) && (player.points.gte(1.7e35))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.7e35))) + " adult humans."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.7e35))) + " adult humans."
 		}
-	},
-	function() {
 		if ((player.points.lte(1.2742e42)) && (player.points.gte(8.28e37))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(8.28e37))) + " Burj Khalifas."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(8.28e37))) + " Burj Khalifas."
 		}
-	},
-	function() {
 		if ((player.points.lte(1.392e44)) && (player.points.gte(1.2742e42))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.2742e42))) + " Earths."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.2742e42))) + " Earths."
 		}
-	},
-	function() {
 		if ((player.points.lte(9.460528405e50)) && (player.points.gte(1.392e44))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.392e44))) + " Suns."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(1.392e44))) + " Suns."
 		}
-	},
-	function() {
 		if ((player.points.lte(9.460528405e62)) && (player.points.gte(9.460528405e50))) {
-			return "If every point was a planck length, the length of all the points stacked together would take light " + notationChooser(player.points.div(new Decimal(9.460528405e50))) + " years to travel."
+			display = display + "If every point was a planck length, the length of all the points stacked together would take light " + notationChooser(player.points.div(new Decimal(9.460528405e50))) + " years to travel."
 		}
-	},
-	function() {
 		if ((player.points.lte(9.460528405e68)) && (player.points.gte(9.460528405e62))) {
-			return "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(9.460528405e62))) + " universes (Assuming 1 universe is 1T ly)."
+			display = display + "If every point was a planck length, then you can make " + notationChooser(player.points.div(new Decimal(9.460528405e62))) + " universes (Assuming 1 universe is 1T ly)."
 		}
-	},
-	function() {
 		if ((player.points.gte(9.460528405e68)) && (player.points.lte("e70e9"))) {
-			return "If you write 1 number per second, writing down your point amount will need " + formatTime(player.points.add(1).log10()) + "."
+			display = display + "If you write 1 number per second, writing down your point amount will need " + formatTime(player.points.add(1).log10()) + "."
 		}
-	},
-	function() {
 		if ((player.points.gte("e70e9")) && (player.points.lte("e1e12"))) {
-			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years. You will need to start in " + format(Math.floor((player.points.add(1).log10().div(31536000)).sub(2024))) + " BCE to complete it by this year (2024)."
+			display = display + "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years. You will need to start in " + format(Math.floor((player.points.add(1).log10().div(31536000)).sub(2024))) + " BCE to complete it by this year (2024)."
 		}
-	},
-	function() {
 		if ((player.points.gte("e1e12")) && (player.points.lte("e434250720000000000"))) {
-			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years."
+			display = display + "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years."
 		}
-	},
-	function() {
 		if ((player.points.gte("e434250720000000000")) && (player.points.lte("e1.36945307e25"))){
-			return "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(434250720000000000)) + " times the current universe age. That's a lot of time!"
+			display = display + "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(434250720000000000)) + " times the current universe age. That's a lot of time!"
 		}
-	},
-	function() {
 		if ((player.points.gte("e1.36945307e25"))){
-			return "If you write 1 number per year, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(1.36945307e25)) + " times the current universe age. That's a lot of time!"
+			display = display + "If you write 1 number per year, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(1.36945307e25)) + " times the current universe age. That's a lot of time!"
 		}
+		return display
 	},
 ]
 

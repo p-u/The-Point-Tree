@@ -12,6 +12,103 @@ function exponentialFormat(num, precision, mantissa = true) {
     else return "e" + e
 }
 
+function standardFormat(num, precision = 3) {
+    if (num === null || num === undefined) return "NaN"
+    if (num.mag < 0.0001) return (0).toFixed(precision)
+    if (num.lt(1e3)) return num.toStringWithDecimalPlaces(precision)
+
+    const STANDARD_SUFFIXES = [
+        "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No",
+        "De", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod",
+        "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg", "Novg"
+    ];
+
+    let e = num.log10().floor().toNumber();
+    let tier = Math.floor(e / 3);
+
+    if (tier < STANDARD_SUFFIXES.length) {
+        let m = num.div(Decimal.pow(10, tier * 3)).toStringWithDecimalPlaces(precision);
+        return `${m}${STANDARD_SUFFIXES[tier]}`
+    }
+
+    const ONES = ["", "U", "D", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"]
+    const TENS = ["", "De", "Vg", "Tg", "Qa", "Qt", "Sxg", "Spg", "Ocg", "Ng"]
+    const HUNDREDS = ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"]
+
+    function generateSuffix(tier) {
+        tier -= 1
+        if (tier < 1000) {
+            let one = tier % 10
+            let ten = Math.floor(tier / 10) % 10
+            let hundred = Math.floor(tier / 100) % 10
+
+            let suffix = ONES[one] + TENS[ten] + HUNDREDS[hundred]
+            return suffix
+        } else {
+            let one = tier % 10;
+            let ten = Math.floor(tier / 10) % 10;
+            let hundred = Math.floor(tier / 100) % 10;
+            let thousand = Math.floor(tier / 1000) % 10;
+            let tthousand = Math.floor(tier / 10000) % 10;
+            let hthousand = Math.floor(tier / 1e5) % 10;
+            let million = Math.floor(tier / 1e6) % 10;
+            let tmillion = Math.floor(tier / 1e7) % 10;
+            let hmillion = Math.floor(tier / 1e8) % 10;
+            let billion = Math.floor(tier / 1e9) % 10;
+            let tbillion = Math.floor(tier / 1e10) % 10;
+            let hbillion = Math.floor(tier / 1e11) % 10;
+            let trillion = Math.floor(tier / 1e12) % 10;
+            let ttrillion = Math.floor(tier / 1e13) % 10;
+            let htrillion = Math.floor(tier / 1e14) % 10;
+            let quintillion = Math.floor(tier / 1e15) % 10;
+            let tquintillion = Math.floor(tier / 1e16) % 10;
+            let hquintillion = Math.floor(tier / 1e17) % 10;
+            let sextillion = Math.floor(tier / 1e18) % 10;
+            let tsextillion = Math.floor(tier / 1e19) % 10;
+            let hsextillion = Math.floor(tier / 1e20) % 10;
+            let septillion = Math.floor(tier / 1e21) % 10;
+            let tseptillion = Math.floor(tier / 1e22) % 10;
+            let hseptillion = Math.floor(tier / 1e23) % 10;
+            let octillion = Math.floor(tier / 1e24) % 10;
+            let toctillion = Math.floor(tier / 1e25) % 10;
+            let hoctillion = Math.floor(tier / 1e26) % 10;
+            if (tier < 1e6) {
+                let suffix = ONES[thousand] + TENS[tthousand] + HUNDREDS[hthousand] + "Mi" + ONES[one] + TENS[ten] + HUNDREDS[hundred];
+                return suffix;
+            } else if (tier < 1e9) {
+                let suffix = ONES[million] + TENS[tmillion] + HUNDREDS[hmillion] + "Mc" + ONES[thousand] + TENS[tthousand] + HUNDREDS[hthousand] + "Mi" + ONES[one] + TENS[ten] + HUNDREDS[hundred];
+                return suffix;
+            } else if (tier < 1e12) {
+                let suffix = ONES[billion] + TENS[tbillion] + HUNDREDS[hbillion] + "Na" + ONES[million] + TENS[tmillion] + HUNDREDS[hmillion] + "Mc" + ONES[thousand] + TENS[tthousand] + HUNDREDS[hthousand] + "Mi" + ONES[one] + TENS[ten] + HUNDREDS[hundred];
+                return suffix;
+            } else if (tier < 1e15) {
+                let suffix = ONES[trillion] + TENS[ttrillion] + HUNDREDS[htrillion] + "Pc" + ONES[billion] + TENS[tbillion] + HUNDREDS[hbillion] + "Na" + ONES[million] + TENS[tmillion] + HUNDREDS[hmillion] + "Mc" + ONES[thousand] + TENS[tthousand] + HUNDREDS[hthousand] + "Mi" + "...";
+                return suffix;
+            } else if (tier < 1e18) {
+                let suffix = ONES[quintillion] + TENS[tquintillion] + HUNDREDS[hquintillion] + "Fm" + ONES[trillion] + TENS[ttrillion] + HUNDREDS[htrillion] + "Pc" + ONES[billion] + TENS[tbillion] + HUNDREDS[hbillion] + "Na" + ONES[million] + TENS[tmillion] + HUNDREDS[hmillion] + "Mc" + "...";
+                return suffix;
+            } else if (tier < 1e21) {
+                let suffix = ONES[sextillion] + TENS[tsextillion] + HUNDREDS[hsextillion] + "At" + ONES[quintillion] + TENS[tquintillion] + HUNDREDS[hquintillion] + "Fm" + ONES[trillion] + TENS[ttrillion] + HUNDREDS[htrillion] + "Pc" + ONES[billion] + TENS[tbillion] + HUNDREDS[hbillion] + "Na" + "...";
+                return suffix;
+            } else if (tier < 1e24) {
+                let suffix = ONES[septillion] + TENS[tseptillion] + HUNDREDS[hseptillion] + "Zp" + ONES[sextillion] + TENS[tsextillion] + HUNDREDS[hsextillion] + "At" + ONES[quintillion] + TENS[tquintillion] + HUNDREDS[hquintillion] + "Fm" + ONES[trillion] + TENS[ttrillion] + HUNDREDS[htrillion] + "Pc" + "...";
+                return suffix;
+            } else if (tier < 1e27) {
+                let suffix = ONES[octillion] + TENS[toctillion] + HUNDREDS[hoctillion] + "Yc" + ONES[septillion] + TENS[tseptillion] + HUNDREDS[hseptillion] + "Zp" + ONES[sextillion] + TENS[tsextillion] + HUNDREDS[hsextillion] + "At" + ONES[quintillion] + TENS[tquintillion] + HUNDREDS[hquintillion] + "Fm" + "...";
+                return suffix;
+            }
+        }
+    }
+
+    if (tier < 1e27) {
+        let m = num.div(Decimal.pow(10, tier * 3)).toStringWithDecimalPlaces(precision);
+        return `${m}${generateSuffix(tier)}`
+    }
+    
+    return exponentialFormat(num, precision, true)
+}
+
+
 function commaFormat(num, precision) {
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.001) return (0).toFixed(precision)
@@ -53,17 +150,21 @@ function sumValues(x) {
 function notationChooser(decimal, precision=3) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
-    } else {
+    } else if (options.notation === 'default'){
         return format(decimal, precision)
-    }  
+    } else {
+        return standardFormat(decimal, precision)
+    }
 }
 
 function notationChooserMinigame(decimal) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
-    } else {
+    } else if (options.notation === 'default'){
         return format(decimal, precision=6)
-    }  
+    } else {
+        return standardFormat(decimal, precision=6)
+    }
 }
 
 function infinityFormat(decimal) {
