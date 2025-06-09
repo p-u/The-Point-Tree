@@ -1447,7 +1447,7 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 186)) {
-                    return "Push on! Don't give up!"
+                    return "Push on! Don't give up! (Reward: x1.02 Mastery Points, x2 Water)"
                 }
                 else {
                     return "Yup, don't get bored."
@@ -1573,7 +1573,7 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 196)) {
-                    return "Get the 'Infinite Void' title!"
+                    return "Get the 'Infinite Void' title! (Reward: x1.05 EC, x100 BP-MP, x10 Energy)"
                 }
                 else {
                     return "Thats the last achievement!"
@@ -2265,7 +2265,7 @@ addLayer("sa", {
                 }
             }
         },
-        93: {
+        94: {
             title: "^1e10M",
             canClick() {return true},
             onClick() {
@@ -2292,7 +2292,7 @@ addLayer("sa", {
                 }
             }
         },
-        94: {
+        95: {
             title: "^e10B",
             canClick() {return true},
             onClick() {

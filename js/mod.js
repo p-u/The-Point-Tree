@@ -14,16 +14,23 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.5",
+	num: "3.5.51",
 	name: "Cell Explosion/Final Minigame Part and 100K Event",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>v3.5.51: Bug Fixes </h2><br>
+Added 100K event to v3.5.5 changelog <br>
+Fixed a bug with Minigame Part 6 regarding the ^e500K button not showing <br>
+Added boosts to MA86 and 96 <br>
+Nerfed the 100K event <br>
+
 <h2>v3.5.5: 100K Playhours Event, Minigame Final Part and more! </h2><br>
 Minigame Parts 1-5 revamped: Added boosts to MA46,66,76, Buffed boosts for MA56. <br>
 Big Number minigame achievements: Number has been increased by alot for MA43,44,45,46 <br>
 Number has been decreased drastically for MA55,56,65,66, resulting in a ~-30% decrease in time overall <br>
 Added Standard Notation <br>
+Added the 100K Event, boosting most stats. (Ends in 2 weeks) <br>
 The main part of the update is the huge extension for the Minigame. 20 new MINIGAME ????s, 1 new currency, 12 new achievements, 2 new features, up to the Fs and more! <br>
 Void titles: e(11), e(42), e(107), e(353) Number respectively <br>
 
@@ -669,7 +676,7 @@ function getPointGen() {
 	
 	
 	// basic
-	gain = gain.times(3) // 100k event
+	gain = gain.times(2.5) // 100k event
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
 	if (hasUpgrade('basic', 22)) gain = gain.times(2)
 	if (hasUpgrade('basic', 31)) gain = gain.times(3)
@@ -1151,7 +1158,7 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		display = "Thanks for 100,000 Playhours on Galaxy.click! To celebrate that, here's a x3 PF boost, x1.8 RP, PP, x1.5 MP-Water (excluding Sac), x1.2 MaP, x1.1 EC (14 DAYS ONLY)."
+		display = "Thanks for 100,000 Playhours on Galaxy.click! To celebrate that, here's a x2.5 PF boost, x1.8 RP, x1.6 PP, x1.4 MP, x1.3 Energy and Water, x1.2 SP, x1.1 MaP, x1.05 EC (14 DAYS ONLY)."
 		if ((player.points.lte(80000))) {
 			display = display + "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(240.49))) + " iPhone XRs."
 		}

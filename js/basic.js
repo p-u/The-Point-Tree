@@ -791,6 +791,7 @@ addLayer("basic", {
         if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
         if (hasUpgrade('basic', 13)) mult = mult.times(upgradeEffect('basic', 13))
         if (hasUpgrade('basic', 21)) mult = mult.times(upgradeEffect('basic', 21))
+        if (hasAchievement('sa', 196)) mult = mult.times(100)
         if (hasUpgrade('basic', 14)) mult = mult.times(1.35)
         if (hasUpgrade('basic', 23)) mult = mult.times(1.39)
         if (hasUpgrade('basic', 41)) mult = mult.times(1.91)

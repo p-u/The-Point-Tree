@@ -113,7 +113,8 @@ addLayer("e", {
         let mult = new Decimal(1)
         if (layers.w.effect().gte(1)) mult = mult.times(layers.w.effect())
         if (hasUpgrade('basic', 84)) mult = mult.times(upgradeEffect('basic', 84))
-        mult = mult.times(1.5) // 100k event
+        mult = mult.times(1.3) // 100k event
+        if (hasAchievement('sa', 196)) mult = mult.times(10)
         if (hasUpgrade('e', 11)) mult = mult.times(2)
         if (hasUpgrade('e', 13)) mult = mult.times(3)
         if (hasUpgrade('e', 14)) mult = mult.times(upgradeEffect('e', 14))

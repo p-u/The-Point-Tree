@@ -917,7 +917,7 @@ addLayer("mega", {
     exponent: 0.1, // Prestige currency exponent
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
-        mult = mult.times(1.5) // 100k event
+        mult = mult.times(1.4) // 100k event
         if (hasAchievement('sa', 156)) mult = mult.times(2)
         if (hasUpgrade('mega', 42)) mult = mult.times(upgradeEffect('mega', 42))
         if (hasUpgrade('mega', 84)) mult = mult.times(upgradeEffect('mega', 84))
@@ -969,6 +969,7 @@ addLayer("mega", {
         if (hasUpgrade('era', 471)) mult = mult.times("e3e17")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
+        if (hasAchievement('sa', 196)) mult = mult.times(100)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
