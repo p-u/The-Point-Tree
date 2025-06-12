@@ -2335,7 +2335,7 @@ addLayer("sa", {
                     if (hasUpgrade("sa", 35)) {
                         cost = 4
                         mult = mult * 5
-                        mult = mult * (Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.1, 0.4))+0.6
+                        mult = mult * (Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.22, 0.5))
                     }
                     if (hasUpgrade("sa", 41)) {
                         cost = 1
@@ -2364,7 +2364,7 @@ addLayer("sa", {
                     if (hasUpgrade("sa", 35)) {
                         cost = 4
                         mult = mult * 5
-                        mult = mult * (Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.1, 0.4))+0.6
+                        mult = mult * (Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.22, 0.5))
                     }
                     if (hasUpgrade("sa", 41)) {
                         cost = 1
