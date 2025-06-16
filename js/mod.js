@@ -14,12 +14,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.51",
+	num: "3.5.55",
 	name: "Cell Explosion/Final Minigame Part and 100K Event",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h2>v3.5.51: Bug Fixes </h2><br>
+<h3>v3.5.55: Minigame Milestones </h2><br>
+Added 10 Minigame Milestones and more Void titles! <br>
+
+<h4>v3.5.52: Bug Fixes </h2><br>
+Fixed some more bugs <br>
+
+<h4>v3.5.51: Bug Fixes </h2><br>
 Added 100K event to v3.5.5 changelog <br>
 Fixed a bug with Minigame Part 6 regarding the ^e500K button not showing <br>
 Added boosts to MA86 and 96 <br>
@@ -1158,7 +1164,7 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		display = "Thanks for 100,000 Playhours on Galaxy.click! To celebrate that, here's a x2.5 PF boost, x1.8 RP, x1.6 PP, x1.4 MP, x1.3 Energy and Water, x1.2 SP, x1.1 MaP, x1.05 EC (14 DAYS ONLY)."
+		display = "Thanks for 100,000 Playhours on Galaxy.click! To celebrate that, here's a x2.5 PF boost, x1.8 RP, x1.6 PP, x1.4 MP, x1.3 Energy and Water, x1.2 SP, x1.1 MaP, x1.05 EC (Ends on 21 June 2025)."
 		if ((player.points.lte(80000))) {
 			display = display + "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(240.49))) + " iPhone XRs."
 		}
