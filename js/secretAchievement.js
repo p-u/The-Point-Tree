@@ -2824,21 +2824,19 @@ addLayer("sa", {
                 expopow = new Decimal("e2e9")
             }
             if (hasMilestone("sa", 6)) {
-                player.sa.baseUpdateFreq = new Decimal(10)
-                egain = 1
+                player.sa.baseUpdateFreq = new Decimal(0.05)
+                egain = 1/200
             }
             if (hasMilestone("sa", 7)) {
-                player.sa.baseUpdateFreq = new Decimal(1)
+                egain = 1/20
             }
             if (hasMilestone("sa", 8)) {
-                player.sa.baseUpdateFreq = new Decimal(0.1)
+                egain = 1/2
             }
             if (hasMilestone("sa", 9)) {
-                player.sa.baseUpdateFreq = new Decimal(0.1)
-                egain = 5
+                egain = 5/2
             }
             if (hasMilestone("sa", 10)) {
-                player.sa.baseUpdateFreq = new Decimal(0.05)
                 egain = 10
             }
             player.sa.updateFreq = player.sa.updateFreq.sub(diff)
