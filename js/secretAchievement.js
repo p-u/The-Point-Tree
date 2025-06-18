@@ -1713,16 +1713,29 @@ addLayer("sa", {
                 if (player.sa.minigameNum.layer > 3000) dis = "Unlimited Void"
                 if (player.sa.minigameNum.layer > 10000) dis = "Immense Void"
                 if (player.sa.minigameNum.layer > 50000) dis = "Infinite Void"
-                if (player.sa.minigameNum.layer > 100000) dis = "Infinite Vast Void"
-                if (player.sa.minigameNum.layer > 500000) dis = "Eternal Void"
-                if (player.sa.minigameNum.layer > 1e6) dis = "Eternal Vast Void"
-                if (player.sa.minigameNum.layer > 5e6) dis = "Infinite Eternal Void"
-                if (player.sa.minigameNum.layer > 50e6) dis = "Transcending Void"
-                if (player.sa.minigameNum.layer > 100e6) dis = "Transcending Vast Void"
-                if (player.sa.minigameNum.layer > 500e6) dis = "Transcending Infinite Void"
-                if (player.sa.minigameNum.layer > 2e9) dis = "Transcending Eternal Void"
-                if (player.sa.minigameNum.layer > 5e9) dis = "Transcending Infinite Eternal Void"
-                if (player.sa.minigameNum.layer > 1e10) dis = "Transcending Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 200000) dis = "Infinite Vast Void"
+                if (player.sa.minigameNum.layer > 1000000) dis = "Eternal Void"
+                if (player.sa.minigameNum.layer > 3e6) dis = "Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 20e6) dis = "Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 500e6) dis = "Transcending Void"
+                if (player.sa.minigameNum.layer > 2e9) dis = "Transcending Vast Void"
+                if (player.sa.minigameNum.layer > 2e10) dis = "Transcending Infinite Void"
+                if (player.sa.minigameNum.layer > 1e12) dis = "Transcending Eternal Void"
+                if (player.sa.minigameNum.layer > 1e14) dis = "Transcending Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 1e16) dis = "Transcending Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 1e20) dis = "Reality Void"
+                if (player.sa.minigameNum.layer > 1e21) dis = "Reality Vast Void"
+                if (player.sa.minigameNum.layer > 1e22) dis = "Reality Infinite Void"
+                if (player.sa.minigameNum.layer > 1e24) dis = "Reality Eternal Void"
+                if (player.sa.minigameNum.layer > 1e26) dis = "Reality Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 1e27) dis = "Reality Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 1e30) dis = "Reality Transcending Void"
+                if (player.sa.minigameNum.layer > 1e31) dis = "Reality Transcending Vast Void"
+                if (player.sa.minigameNum.layer > 1e33) dis = "Reality Transcending Infinite Void"
+                if (player.sa.minigameNum.layer > 1e36) dis = "Reality Transcending Eternal Void"
+                if (player.sa.minigameNum.layer > 1e40) dis = "Reality Transcending Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 1e45) dis = "Reality Transcending Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 1e50) dis = "Reality Transcending Infinite Eternal Endless Vast Void"
                 if (player.sa.minigameNum.lt(0)) dis = "negative?"
                 if (player.sa.minigameNum.lt("-1e100")) dis = "big negative"
                 if (player.sa.minigameNum.lt("-ee1000")) dis = "huge negative"
@@ -2452,6 +2465,7 @@ addLayer("sa", {
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let mult = 1
+                    let einc = 0
                     mult = mult * (Math.max(player.sa.minigameNum.slog()-1, 1)/9)+1
                     mult = mult * (Math.max(player.points.slog(), 2)/10)+1
                     let cost = 5000
@@ -2479,25 +2493,42 @@ addLayer("sa", {
                     if (hasMilestone("sa", 7)) mult = mult * 4
                     if (hasMilestone("sa", 8)) mult = mult * 5
                     if (hasMilestone("sa", 9)) mult = mult * 10
+                    if (hasMilestone("sa", 8)) einc = 1
+                    if (hasMilestone("sa", 9)) einc = 2
                     player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag * (1 + (0.0001 * mult))
+                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + 1
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult))
                 }
             }
         },
         103: {
-            title: "Layer *= 1 + (1/1M)",
+            title: "Layer *= 1 + (1/200K)",
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * 1.000001
+                    let mult = 1
+                    if (hasMilestone("sa", 11)) {
+                        mult = mult * (Math.max(player.points.slog(), 2)/50)+1
+                        mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/15)+1
+                        mult = mult * 1.8
+                    }
+                    if (hasMilestone("sa", 12)) mult = mult * 1.5
+                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * (1 + (0.000005 * mult))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             },
             unlocked() {return hasMilestone("sa", 10)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * 1.000001
+                    let mult = 1
+                    if (hasMilestone("sa", 11)) {
+                        mult = mult * (Math.max(player.points.slog(), 2)/50)+1
+                        mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/15)+1
+                        mult = mult * 1.8
+                    }
+                    if (hasMilestone("sa", 12)) mult = mult * 1.5
+                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * (1 + (0.000005 * mult))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                 }
             }
@@ -2723,28 +2754,40 @@ addLayer("sa", {
             unlocked() { return (hasMilestone("sa", 5) && hasMilestone("era", 1))},
         },
         7: {
-            requirementDescription: "Minigame Milestone 7: e(1,000,000) 10 Number",
-            effectDescription: "Make the *= button 4 times stronger!! Minigame Points x1,000!!! Passive generation is 10 times faster.",
-            done() { return player.sa.minigameNum.layer > 999999.9 },
+            requirementDescription: "Minigame Milestone 7: e(500,000) 10 Number",
+            effectDescription: "Make the *= button 4 times stronger!! Minigame Points x1,000!!! Passive generation is 10 times stronger.",
+            done() { return player.sa.minigameNum.layer > 499999.9 },
             unlocked() { return (hasMilestone("sa", 6) && hasMilestone("era", 1))},
         },
         8: {
-            requirementDescription: "Minigame Milestone 8: e(5,000,000) 10 Number",
-            effectDescription: "Make the *= button 5 times stronger… Passive generation is 10 times faster...",
-            done() { return player.sa.minigameNum.layer > 4999999.9 },
+            requirementDescription: "Minigame Milestone 8: e(1,000,000) 10 Number",
+            effectDescription: "Make the *= button 5 times stronger… Passive generation is 5 times stronger... The *= button adds 1 'e' on click.",
+            done() { return player.sa.minigameNum.layer > 999999.9 },
             unlocked() { return (hasMilestone("sa", 7) && hasMilestone("era", 1))},
         },
         9: {
-            requirementDescription: "Minigame Milestone 9: e(20,000,000) 10 Number",
-            effectDescription: "Make the *= button 10 times stronger… Passive generation increases e gain by 5 instead of 1...",
-            done() { return player.sa.minigameNum.layer > 19999999.9 },
+            requirementDescription: "Minigame Milestone 9: e(4,000,000) 10 Number",
+            effectDescription: "Make the mag part of the *= button 10 times stronger… Passive generation is now 8 times stronger. The *= button adds 1 more 'e' on click.",
+            done() { return player.sa.minigameNum.layer > 3999999.9 },
             unlocked() { return (hasMilestone("sa", 8) && hasMilestone("era", 1))},
         },
         10: {
-            requirementDescription: "Minigame Milestone 10: e(70,000,000) 10 Number",
-            effectDescription: "Unlock a new button. Passive generation increases e gain by 10 and is 2 times faster... (Reward: x1.05 EC)",
-            done() { return player.sa.minigameNum.layer > 69999999.9 },
-            unlocked() { return (hasMilestone("sa", 8) && hasMilestone("era", 1))},
+            requirementDescription: "Minigame Milestone 10: e(12,000,000) 10 Number",
+            effectDescription: "Unlock a new button. Passive generation is now 100 times stronger. (Reward: x1.05 EC)",
+            done() { return player.sa.minigameNum.layer > 11999999.9 },
+            unlocked() { return (hasMilestone("sa", 9) && hasMilestone("era", 1))},
+        },
+        11: {
+            requirementDescription: "Minigame Milestone 11: F1e9, or e(1e9) Number",
+            effectDescription: "Passive generation is now 300 times stronger. Layer *= button is now 1.8 times stronger, and based on PF and Minigame Points.",
+            done() { return player.sa.minigameNum.layer >= 999999999.99 },
+            unlocked() { return (hasMilestone("sa", 10) && hasMilestone("era", 1))},
+        },
+        12: {
+            requirementDescription: "Minigame Milestone 12: F1e16, or e(1e16) Number",
+            effectDescription: "The layer *= button is now 1.5 times stronger. Every 0.05 seconds, passively generates the Layer *= button, with 1/20 of the effect.",
+            done() { return player.sa.minigameNum.layer >= 9999999999999999.99 },
+            unlocked() { return (hasMilestone("sa", 11) && hasMilestone("era", 1))},
         },
     },
     update(diff) {
@@ -2777,6 +2820,14 @@ addLayer("sa", {
             let expopow = new Decimal(120000)
             let minigameinc = new Decimal(0)
             let egain = 0
+            let mult = 0
+            if (hasMilestone("sa", 12)) mult = 1
+            if (hasMilestone("sa", 11)) {
+                mult = mult * (Math.max(player.points.slog(), 2)/50)+1
+                mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/15)+1
+                mult = mult * 1.8
+            }
+            if (hasMilestone("sa", 12)) mult = mult * 1.5
             if (hasUpgrade("sa", 24)) minigameinc = new Decimal(2)
             if (hasUpgrade("sa", 25)) minigameinc = new Decimal(10) 
             if (hasUpgrade("sa", 34)) minigameinc = new Decimal(12) 
@@ -2831,19 +2882,25 @@ addLayer("sa", {
                 egain = 1/20
             }
             if (hasMilestone("sa", 8)) {
-                egain = 1/2
+                egain = 1/4
             }
             if (hasMilestone("sa", 9)) {
-                egain = 5/2
+                egain = 2
             }
             if (hasMilestone("sa", 10)) {
-                egain = 10
+                egain = 200
+            }
+            if (hasMilestone("sa", 11)) {
+                egain = 60000
             }
             player.sa.updateFreq = player.sa.updateFreq.sub(diff)
             if (player.sa.updateFreq.lt(0)) {
                 player.sa.minigameNum = player.sa.minigameNum.pow(new Decimal(10).pow(expopow))
                 player.sa.minigamePoints = player.sa.minigamePoints.add(minigameinc.mul(player.sa.minigamePtsMult))
                 player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + egain
+                if (hasMilestone("sa", 12)) {
+                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * (1 + (0.000005 * mult / 20))
+                }
                 player.sa.updateFreq = player.sa.baseUpdateFreq
             }
         }

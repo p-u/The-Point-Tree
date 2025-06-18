@@ -14,11 +14,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.55",
+	num: "3.5.6",
 	name: "Cell Explosion/Final Minigame Part and 100K Event",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.5.6: Minigame Milestones 2 </h2><br>
+Added 13 new Void titles. <br>
+Added a new feature for balance in MM8 <br>
+Heavily nerfed prices for MM7-MM10 <br>
+Changed passive generation for MM8-MM10 <br>
+Heavily buffed MM10 button <br>
+Added MM11 and MM12 <br>
+
+<h4>v3.5.551: Bug Fixes </h2><br>
+Fixed some bugs <br>
+
 <h3>v3.5.55: Minigame Milestones </h2><br>
 Added 10 Minigame Milestones and more Void titles! <br>
 
