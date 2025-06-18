@@ -2339,7 +2339,7 @@ addLayer("sa", {
                 }
             }
         },
-        95: {
+        101: {
             title: "^e10B",
             canClick() {return true},
             onClick() {
@@ -2362,7 +2362,7 @@ addLayer("sa", {
                 }
             }
         },
-        101: {
+        102: {
             title: "Mag += 0.00005",
             canClick() {return true},
             onClick() {
@@ -2423,7 +2423,7 @@ addLayer("sa", {
                 }
             }
         },
-        102: {
+        103: {
             title: "Mag *= 1.0001",
             canClick() {return true},
             onClick() {
@@ -2502,7 +2502,7 @@ addLayer("sa", {
                 }
             }
         },
-        103: {
+        104: {
             title: "Layer *= 1 + (1/200K)",
             canClick() {return true},
             onClick() {
