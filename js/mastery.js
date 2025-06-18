@@ -598,7 +598,7 @@ addLayer("m", {
             completionLimit: 2,
             rewardDescription() {
                 let rd = "First Completion: Unlock new Mastery Upgrades, a BIG exponent to PF gain."
-                if (challengeCompletions("m", 11) == 1) rd = rd + " Second Completion: Unlock more Mastery Upgrades, ^1.0333 PF, x1e9 Mastery Points."
+                if (challengeCompletions("m", 11) == 1) rd = rd + " Second Completion: Unlock more Mastery Upgrades [AFTER GETTING WU54], ^1.0333 PF, x1e9 Mastery Points."
                 return rd
             },
             onEnter() {
