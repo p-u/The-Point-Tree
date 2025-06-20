@@ -14,11 +14,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.6",
+	num: "3.5.7",
 	name: "Cell Explosion/Final Minigame Part and 100K Event",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.5.7: Minigame Milestones 3 </h2><br>
+Added 14 new Void titles. <br>
+Added the LAST 3 MINIGAME MILESTONES <br>
+Added a hardcap at e308 layer <br>
+Fixed a bug <br>
+Era 2 is now required for MM10-15 <br>
+Added Hold Multiplier to de-incentivise autoclicking. (MU15, MM6, MM10-15) <br>
+
 <h3>v3.5.6: Minigame Milestones 2 </h2><br>
 Added 13 new Void titles. <br>
 Added a new feature for balance in MM8 <br>
