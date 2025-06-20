@@ -2398,10 +2398,12 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let mult = 1
                     let cost = 25
+                    let holdmult = 1
                     if (hasUpgrade("sa", 34)) {
                         cost = 10
                         mult = mult * 4
                         mult = mult * (Math.max(player.sa.minigameNum.slog()-1, 1)/6)+1
+                        holdmult = 1.5
                     }
                     if (hasUpgrade("sa", 33)) {
                         mult = mult * 3
@@ -2417,7 +2419,7 @@ addLayer("sa", {
                         cost = 1
                         mult = mult * 8
                     }
-                    player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag + (0.00005 * mult)
+                    player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag + (0.00005 * mult * holdmult)
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult))
                 }
@@ -2496,7 +2498,7 @@ addLayer("sa", {
                     if (hasMilestone("sa", 8)) einc = 1
                     if (hasMilestone("sa", 9)) einc = 2
                     player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag * (1 + (0.0001 * mult))
-                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + 1
+                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + einc
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult))
                 }
@@ -2654,7 +2656,7 @@ addLayer("sa", {
         },
         34: {
             title: "MiUp 14: EVEN HIGHER!!",
-            description: "x14 Minigame Points, The button's cost is decreased to 10 per press, but the cost is also multiplied by 4 together with the effect. Number affects it. Buff passive generation to ^ee28/0.2s and +12/0.2s respectively.",
+            description: "x14 Minigame Points, The button's cost is decreased to 10 per press, but the cost is also multiplied by 4 together with the effect. Number affects it. Buff passive generation to ^ee28/0.2s and +12/0.2s respectively. When you hold the button, it gives x1.5 multiplier (doesn't increase MiP cost)",
             cost: new Decimal("eee30"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
