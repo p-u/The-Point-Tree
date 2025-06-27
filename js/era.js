@@ -2580,7 +2580,6 @@ addLayer("era", {
             if (hasUpgrade('era', 12)) gain = gain.times(upgradeEffect('era', 12))
             if (hasUpgrade('era', 45)) gain = gain.times(upgradeEffect('era', 45))
             if (hasUpgrade('c', 54)) gain = gain.times(upgradeEffect('c', 54))
-            gain = gain.times(1.05) // 100k event
             if (hasAchievement('sa', 196)) gain = gain.times(1.05)
             if (hasMilestone('sa', 10)) gain = gain.times(1.05)
             if (hasUpgrade("era", 11)) gain = gain.times(2)

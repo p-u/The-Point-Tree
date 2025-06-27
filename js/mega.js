@@ -917,7 +917,6 @@ addLayer("mega", {
     exponent: 0.1, // Prestige currency exponent
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
-        mult = mult.times(1.4) // 100k event
         if (hasAchievement('sa', 156)) mult = mult.times(2)
         if (hasUpgrade('mega', 42)) mult = mult.times(upgradeEffect('mega', 42))
         if (hasUpgrade('mega', 84)) mult = mult.times(upgradeEffect('mega', 84))

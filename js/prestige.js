@@ -432,7 +432,6 @@ addLayer("prestige", {
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (layers.mega.effect().gte(1)) mult = mult.times(layers.mega.effect())
-        mult = mult.times(1.6) // 100k event
         if (hasAchievement('sa', 196)) mult = mult.times(100)
         if (hasUpgrade('basic', 82)) mult = mult.times(upgradeEffect('basic', 82))
         if (hasUpgrade('mega', 14)) mult = mult.times(upgradeEffect('mega', 14))

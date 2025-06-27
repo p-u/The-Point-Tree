@@ -318,7 +318,6 @@ addLayer("w", {
         let mult = new Decimal(1)
         if (hasUpgrade('basic', 111)) mult = mult.times(upgradeEffect('basic', 111))
         if (hasUpgrade('s', 63)) mult = mult.times(buyableEffect('s', 14))
-        mult = mult.times(1.3) // 100k event
         if (hasAchievement('sa', 186)) mult = mult.times(2)
         if (hasUpgrade('w', 11)) mult = mult.times(2)
         if (hasUpgrade('w', 12)) mult = mult.times(2)

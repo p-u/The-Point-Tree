@@ -2549,21 +2549,20 @@ addLayer("sa", {
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let mult = 1
-                    let holdmult = 1.3
+                    let holdmult = 1.8
                     if (hasMilestone("sa", 11)) {
                         mult = mult * (Math.max(player.points.slog(), 2)/50)+1
-                        mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/15)+1
+                        mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/13)+1
                         mult = mult * 1.8
-                        holdmult = 1.5
+                        holdmult = 2
                     }
                     if (hasMilestone("sa", 12)) mult = mult * 1.5
-                    if (hasMilestone("sa", 12)) holdmult = 1.8
+                    if (hasMilestone("sa", 12)) holdmult = 2.5
                     if (hasMilestone("sa", 13)) mult = mult * 2
-                    if (hasMilestone("sa", 13)) holdmult = 2.5
+                    if (hasMilestone("sa", 13)) holdmult = 3
                     if (hasMilestone("sa", 14)) mult = mult * 1.75
                     if (hasMilestone("sa", 15)) mult = mult * 1.2
-                    if (hasMilestone("sa", 14)) holdmult = 3
-                    if (hasMilestone("sa", 15)) holdmult = 5
+                    if (hasMilestone("sa", 15)) holdmult = 6
                     player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * (1 + (0.000005 * mult * holdmult))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                 }
@@ -2772,75 +2771,75 @@ addLayer("sa", {
             unlocked() { return (hasMilestone("sa", 2) && hasMilestone("era", 1))},
         },
         4: {
-            requirementDescription: "Minigame Milestone 4: e(7,500) 10 Number",
+            requirementDescription: "Minigame Milestone 4: e(6,000) 10 Number",
             effectDescription: "Make the *= button 2 times stronger, and be based on Minigame Points",
-            done() { return player.sa.minigameNum.layer > 7499.9 },
+            done() { return player.sa.minigameNum.layer > 5999.9 },
             unlocked() { return (hasMilestone("sa", 3) && hasMilestone("era", 1))},
         },
         5: {
-            requirementDescription: "Minigame Milestone 5: e(50,000) 10 Number",
+            requirementDescription: "Minigame Milestone 5: e(30,000) 10 Number",
             effectDescription: "Make the *= button 3 times stronger, and boost Minigame Points by 10x",
-            done() { return player.sa.minigameNum.layer > 49999.9 },
+            done() { return player.sa.minigameNum.layer > 29999.9 },
             unlocked() { return (hasMilestone("sa", 4) && hasMilestone("era", 1))},
         },
         6: {
-            requirementDescription: "Minigame Milestone 6: e(200,000) 10 Number",
+            requirementDescription: "Minigame Milestone 6: e(150,000) 10 Number",
             effectDescription: "Make the *= button be based on Playtime again (same effect) and make it 2 times stronger. Minigame Points gets boosted by 100x. Every 10 seconds, increase the amount of e by 1. When you hold the button, it is 5 times stronger.",
-            done() { return player.sa.minigameNum.layer > 199999.9 },
+            done() { return player.sa.minigameNum.layer > 149999.9 },
             unlocked() { return (hasMilestone("sa", 5) && hasMilestone("era", 1))},
         },
         7: {
-            requirementDescription: "Minigame Milestone 7: e(500,000) 10 Number",
+            requirementDescription: "Minigame Milestone 7: e(375,000) 10 Number",
             effectDescription: "Make the *= button 4 times stronger!! Minigame Points x1,000!!! Passive generation is 10 times stronger.",
-            done() { return player.sa.minigameNum.layer > 499999.9 },
+            done() { return player.sa.minigameNum.layer > 374999.9 },
             unlocked() { return (hasMilestone("sa", 6) && hasMilestone("era", 1))},
         },
         8: {
-            requirementDescription: "Minigame Milestone 8: e(1,000,000) 10 Number",
+            requirementDescription: "Minigame Milestone 8: e(750,000) 10 Number",
             effectDescription: "Make the *= button 5 times stronger… Passive generation is 5 times stronger... The *= button adds 1 'e' on click.",
-            done() { return player.sa.minigameNum.layer > 999999.9 },
+            done() { return player.sa.minigameNum.layer > 749999.9 },
             unlocked() { return (hasMilestone("sa", 7) && hasMilestone("era", 1))},
         },
         9: {
-            requirementDescription: "Minigame Milestone 9: e(4,000,000) 10 Number [FOR THE LAST 6 MILESTONES, REQUIRES ERA 2]",
+            requirementDescription: "Minigame Milestone 9: e(2,500,000) 10 Number [FOR THE LAST 6 MILESTONES, REQUIRES ERA 2]",
             effectDescription: "Make the mag part of the *= button 10 times stronger… Passive generation is now 8 times stronger. The *= button adds 1 more 'e' on click.",
-            done() { return player.sa.minigameNum.layer > 3999999.9 },
+            done() { return player.sa.minigameNum.layer > 2499999.9 },
             unlocked() { return (hasMilestone("sa", 8) && hasMilestone("era", 1))},
         },
         10: {
-            requirementDescription: "Minigame Milestone 10: e(12,000,000) 10 Number",
-            effectDescription: "Unlock a new button. Passive generation is now 100 times stronger. (Reward: x1.05 EC) Hold Mult is 1.3.",
-            done() { return player.sa.minigameNum.layer > 11999999.9 },
+            requirementDescription: "Minigame Milestone 10: e(8,000,000) 10 Number",
+            effectDescription: "Unlock a new button. Passive generation is now 100 times stronger. (Reward: x1.05 EC) Hold Mult is 1.8.",
+            done() { return player.sa.minigameNum.layer > 7999999.9 },
             unlocked() { return (hasMilestone("sa", 9) && hasMilestone("era", 2))},
         },
         11: {
-            requirementDescription: "Minigame Milestone 11: F1e9, or e(1e9) Number",
-            effectDescription: "Passive generation is now 300 times stronger. Layer *= button is now 1.8 times stronger, and based on PF and Minigame Points. Hold mult is increased to 1.5.",
-            done() { return player.sa.minigameNum.layer >= 999999999.99 },
+            requirementDescription: "Minigame Milestone 11: F2e8, or e(200M) Number",
+            effectDescription: "Passive generation is now 300 times stronger. Layer *= button is now 1.8 times stronger, and based on PF and Minigame Points. Hold mult is increased to 2.",
+            done() { return player.sa.minigameNum.layer >= 199999999.99 },
             unlocked() { return (hasMilestone("sa", 10) && hasMilestone("era", 2))},
         },
         12: {
-            requirementDescription: "Minigame Milestone 12: F1e16, or e(1e16) Number",
-            effectDescription: "The layer *= button is now 1.5 times stronger. Every 0.05 seconds, passively generates the Layer *= button (click, not hold part) [doesn't work if layer>e308], with 1/20 of the effect. Hold mult is increased to 1.8.",
-            done() { return player.sa.minigameNum.layer >= 9999999999999999.99 },
+            requirementDescription: "Minigame Milestone 12: F1e15, or e(1e15) Number",
+            effectDescription: "The layer *= button is now 1.5 times stronger. Every 0.05 seconds, passively generates the Layer *= button (click, not hold part) [doesn't work if layer>e308], with 1/20 of the effect. Hold mult is increased to 2.5.",
+            done() { return player.sa.minigameNum.layer >= 999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 11) && hasMilestone("era", 2))},
         },
         13: {
-            requirementDescription: "Minigame Milestone 13: F1e30, or e(1e30) Number",
-            effectDescription: "The layer *= button is now 2 times stronger. Passive button has 4x the effect. Hold mult is increased to 2.5.",
-            done() { return player.sa.minigameNum.layer >= 999999999999999999999999999999.99 },
+            requirementDescription: "Minigame Milestone 13: F1e27, or e(1e27) Number",
+            effectDescription: "The layer *= button is now 2 times stronger. Passive button has 4x the effect. Hold mult is increased to 3.",
+            done() { return player.sa.minigameNum.layer >= 999999999999999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 12) && hasMilestone("era", 2))},
         },
         14: {
-            requirementDescription: "Minigame Milestone 14: F1e70, or e(1e70) Number",
-            effectDescription: "Passive button has 1.25x the effect. The layer *= button is now 1.75 times stronger. Hold mult is increased to 3.",
-            done() { return player.sa.minigameNum.layer >= 9999999999999999999999999999999999999999999999999999999999999999999999.99 },
+            requirementDescription: "Minigame Milestone 14: F1e60, or e(1e60) Number",
+            effectDescription: "Passive button has 1.25x the effect. The layer *= button is now 1.75 times stronger.",
+            done() { return player.sa.minigameNum.layer >= 999999999999999999999999999999999999999999999999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 13) && hasMilestone("era", 2))},
         },
         15: {
-            requirementDescription: "Minigame Milestone 15: F1e150, or e(1e150) Number",
-            effectDescription: "The layer *= button is now 20% stronger. Hold mult is increased to 5!",
-            done() { return player.sa.minigameNum.layer >= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.99 },
+            requirementDescription: "Minigame Milestone 15: F1e125, or e(1e125) Number",
+            effectDescription: "The layer *= button is now 40% stronger. Hold mult is increased to 6!",
+            done() { return player.sa.minigameNum.layer >= 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 14) && hasMilestone("era", 2))},
         },
     },

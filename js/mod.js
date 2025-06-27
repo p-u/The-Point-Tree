@@ -14,11 +14,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.7",
+	num: "3.5.7.1",
 	name: "Cell Explosion/Final Minigame Part and 100K Event",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.5.7.1: Minigame Milestones 3B </h2><br>
+Reduced prices of MM4-15. <br>
+Buffed MM11 MiP boost <br>
+Increased Hold Multiplier for MM10-15 <br>
+Removed 100K Event <br>
+
 <h3>v3.5.7: Minigame Milestones 3 </h2><br>
 Added 14 new Void titles. <br>
 Added the LAST 3 MINIGAME MILESTONES <br>
@@ -701,7 +707,6 @@ function getPointGen() {
 	
 	
 	// basic
-	gain = gain.times(2.5) // 100k event
 	if (hasUpgrade('basic', 11)) gain = gain.times(2)
 	if (hasUpgrade('basic', 22)) gain = gain.times(2)
 	if (hasUpgrade('basic', 31)) gain = gain.times(3)
@@ -1183,7 +1188,7 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		display = "Thanks for 100,000 Playhours on Galaxy.click! To celebrate that, here's a x2.5 PF boost, x1.8 RP, x1.6 PP, x1.4 MP, x1.3 Energy and Water, x1.2 SP, x1.1 MaP, x1.05 EC (Ends on 21 June 2025)."
+		display = ""
 		if ((player.points.lte(80000))) {
 			display = display + "If every point was a US Dollar, then you can buy " + notationChooser(player.points.div(new Decimal(240.49))) + " iPhone XRs."
 		}
