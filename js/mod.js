@@ -24,6 +24,7 @@ Reduced prices of MM4-15. <br>
 Buffed MM11 MiP boost <br>
 Increased Hold Multiplier for MM10-15 <br>
 Removed 100K Event <br>
+fixed typo error <br>
 
 <h3>v3.5.7: Minigame Milestones 3 </h2><br>
 Added 14 new Void titles. <br>

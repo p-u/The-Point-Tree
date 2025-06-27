@@ -144,7 +144,7 @@ addLayer("sa", {
                                 a = a + "+100 MiP for ^0.5 button, "
                             }
                             if (hasUpgrade("sa", 42)) {
-                                a = a + "+1,000 MiP for ^1.01 button. "
+                                a = a + "+1,000 MiP for ^1.1 button. "
                             }
                         }
                         return a
