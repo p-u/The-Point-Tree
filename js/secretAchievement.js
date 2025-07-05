@@ -2962,7 +2962,7 @@ addLayer("sa", {
                 player.sa.minigamePoints = player.sa.minigamePoints.add(minigameinc.mul(player.sa.minigamePtsMult))
                 player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + egain
                 if (hasMilestone("sa", 12)) {
-                    if (player.sa.minigameNum.layer > 1e308) {
+                    if (player.sa.minigameNum.layer < 1e308) {
                         player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * (1 + (0.000005 * mult / (20 / butdiv)))
                     }
                 }
