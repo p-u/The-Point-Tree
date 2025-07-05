@@ -275,8 +275,8 @@ addLayer("era", {
         102: {
             requirementDescription: "EF Milestone 2 - Req 7,500 total EF",
             effectDescription: "Extend Water upgrades. Also, x1.2 EF after nerf. Unlock a new Supreme Buyable??",
-            done() { return player.era.eftotal.gte(1750) },
-            unlocked() { return hasUpgrade("era", 501) },
+            done() { return player.era.eftotal.gte(7500) },
+            unlocked() { return hasMilestone("era", 101) },
         },
     },
     upgrades: {
