@@ -201,6 +201,7 @@ addLayer("e", {
         if (hasUpgrade('era', 145)) mult = mult.times("e5e11")
         if (hasUpgrade('era', 25)) mult = mult.times("e1e12")
         if (hasAchievement('a', 242)) mult = mult.times("e8.72e12")
+        if (hasUpgrade('w', 91)) mult = mult.times("e1.5e15")
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
@@ -220,6 +221,10 @@ addLayer("e", {
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('era', 364)) exp = exp.add(0.025)
         if (hasUpgrade("era", 433)) exp = exp.add(0.03)
+        if (hasMilestone('e', 25)) exp = exp.add(0.02)
+        if (hasUpgrade("era", 492)) exp = exp.add(0.038)
+        if (hasUpgrade("w", 91)) exp = exp.add(0.05)
+        if (hasUpgrade('era', 1042)) exp = exp.add(0.025)
         let expinmc1 = new Decimal(0.4)
         if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
         if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
@@ -257,16 +262,22 @@ addLayer("e", {
                     softcapDescriptione14 = ""
                     sdsc = ""
                     scpow = 0.5
+                    sppow = 0.4
                     if (hasUpgrade('m', 92)) scpow = 0.52
                     upgEffecte14 = upgradeEffect(this.layer, this.id)
                     if (upgEffecte14.gte(new Decimal("e700")) ) {
                         softcapDescriptione14 = " (Softcapped)"
                         sdsc = ". Softcaps ^" + scpow + " at e700"
                     }
+                    if (upgEffecte14.gte(new Decimal("e1e16")) ) {
+                        softcapDescriptione14 = " (Supercapped)"
+                        sdsc = ". Supercaps ^" + sppow + " at ee16"
+                    }
                 },
                 effect() {
                     let eff = player["e"].points.add(1).pow(e4exp)
                     eff = softcap(eff, new Decimal("1e700"), scpow)
+                    eff = softcap(eff, new Decimal("e1e16"), sppow)
                     return eff
                 },
                 effectDisplay() {
@@ -324,7 +335,7 @@ addLayer("e", {
                     }
                     if (upgEffecte24.gte(new Decimal("e1e15")) ) {
                         softcapDescriptione24 = " (Hypercapped)"
-                        sdsc = sdsc + ", Supercaps ^" + sppow + " at e1e15"
+                        sdsc = sdsc + ", Hypercaps ^" + hycpow + " at e1e15"
                     }
                 },
                 effect() {
@@ -936,6 +947,12 @@ addLayer("e", {
             done() { return player["e"].points.gte("e10e9") },
             unlocked() {return hasUpgrade("era", 161)},
         },
+        25: {
+            requirementDescription: "Seemingly Unlimited Energy (10^10^16 Energy)",
+            effectDescription: "+^0.02 Energy",
+            done() { return player["e"].points.gte("ee16") },
+            unlocked() {return hasMilestone("e", 24)},
+        },
     },
     branches: ["sac", "mega"],
     effect(){
@@ -955,6 +972,7 @@ addLayer("e", {
     if (hasUpgrade('e', 154)) enpow = 11111
     let eff = player.e.points.add(1).pow(enpow)
     let cap = 0.4
+    if (hasUpgrade("w", 91)) cap = 0.45
     softcappedEffect = softcap(eff, new Decimal("e7.5e17"), new Decimal(cap))
     return softcappedEffect
        },

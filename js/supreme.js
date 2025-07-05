@@ -840,6 +840,7 @@ addLayer("s", {
             if (hasUpgrade("w", 82)) base2 = base2.pow(1.4)
             if (hasUpgrade("era", 75)) base2 = base2.pow(1.15)
             if (hasUpgrade("era", 454)) base2 = base2.pow(1.066)
+            if (hasUpgrade("era", 495)) base2 = base2.pow(1.0833)
             expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo)))
             return eff
@@ -933,6 +934,7 @@ addLayer("s", {
             if(hasUpgrade("s", 105)) base1 = new Decimal(1.0015)
             if(hasUpgrade("era", 221)) base1 = new Decimal(1.0018)
             if(hasUpgrade("w", 82)) base1 = new Decimal(1.0019)
+            if(hasMilestone("sac", 116)) base1 = new Decimal(1.002)
             let base2 = x
             let expo = new Decimal(1.006)
             let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
@@ -940,6 +942,37 @@ addLayer("s", {
             if (eff.gte(hcap)) eff = hcap
             return eff
         },
+    },
+    17: {
+        title: "Supreme Buyable 7: Water Power! [Hardcap +^1]",
+        unlocked() { return (hasMilestone('era', 102)) },
+        cost(x) {
+            exp2 = 3
+            return new Decimal("e2.225e15").mul(Decimal.pow(1.7, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+        },
+        display() {
+            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: +^" + format(buyableEffect(this.layer, this.id)) + " Water."
+        },
+        canAfford() {
+            return player[this.layer].points.gte(this.cost())
+        },
+        buy() {
+            let cost = new Decimal (1)
+            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+        },
+        effect(x) {
+            base1 = new Decimal(1.005)
+            base2 = x
+            expo = new Decimal(1.012)
+            let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
+            hcap = new Decimal(1)
+            if (eff.gte(hcap)) eff = hcap
+            return eff
+        },
+        tooltip() {
+            return "Cost Formula: e2.225e15 x 1.75^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + base1 + "^(" + notationChooser(base2) + "^" + expo + ")-1. [Hardcaps at ^" + hcap + "]"
+        }
     },
 },  
     sb5effect() {
@@ -981,6 +1014,10 @@ addLayer("s", {
             if(hasUpgrade("era", 382)) hcap = hcap.add(0.01)
             if(hasMilestone("sac", 109)) hcap = hcap.add(0.0064)
             if (hasUpgrade("era", 455)) hcap = hcap.add(0.0086)
+            if (hasUpgrade("era", 491)) hcap = hcap.add(0.005)
+            if(hasMilestone("sac", 115)) hcap = hcap.add(0.0015)
+            if (hasMilestone("era", 101)) hcap = hcap.add(buyableEffect('era', 19))
+            
             if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) hcap = hcap.add(0.038)
         if (eff.gte(hcap)) eff = hcap
         return eff
@@ -1032,6 +1069,7 @@ addLayer("s", {
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
         if (hasUpgrade('era', 273)) exp = exp.add(0.125)
         if (hasUpgrade('era', 442)) exp = exp.add(0.15)
+        if (hasUpgrade("era", 1034)) exp = exp.add(upgradeEffect("era", 1034))
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
         return exp

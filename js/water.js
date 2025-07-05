@@ -76,11 +76,11 @@ addLayer("w", {
                 if (hasUpgrade('era', 361)) w3exp = new Decimal(0.25)
                 softcapDescriptionw13 = ""
                 sdsc = ""
-                scpow = 0.7
+                scpow = 0.58
                 upgEffectw13 = upgradeEffect(this.layer, this.id)
-                if (upgEffectw13.gte(new Decimal("e1e14")) ) {
+                if (upgEffectw13.gte(new Decimal("e5e13")) ) {
                     softcapDescriptionw13 = " (Softcapped)"
-                    sdsc = ". Softcaps ^" + scpow + " at e1e14"
+                    sdsc = ". Softcaps ^" + scpow + " at e5e13"
                 }
             },
             effect() {
@@ -269,6 +269,41 @@ addLayer("w", {
             cost: new Decimal("3e87842343930"),
             unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 83)  }, 
         },
+        91: {
+            title: "Energy is everything.",
+            description: "xe1.5e15 Energy, +^0.05 Energy, Energy softcap is weaker",
+            cost: new Decimal("e4.078910111213e14"),
+            unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 84)  }, 
+        },
+        92: {
+            title: "Limitedless",
+            description: "Water softcap is weaker, and sacrifice scaling is reduced",
+            cost: new Decimal("e4.50505050505e14"),
+            unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 91)  }, 
+        },
+        93: {
+            title: "Cellular Power",
+            description: "x4 Cells Base Mult, Cell boosts EC at an increased rate, cells now boost EF (before nerf).",
+            cost: new Decimal("e4.61414141414e14"),
+            unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 92)  }, 
+            effect() {
+                return Decimal.max(player.c.points.log10()/20, 1)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade multiplies Era Fragments by x" + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: log10(Cells)/20"
+            },
+            unlocked() { return (hasUpgrade("c", 53)) },
+        },
+        94: {
+            title: "Omega Insane Upgrade!! (Timewally, but all worth the wait)",
+            description: "Base EF is multiplied by slog(EC) again. Extend EF upgrades. xee20 PF, ^1.04 EC",
+            cost: new Decimal("e4.63e14"),
+            unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 93)  }, 
+        },
     },
     milestones: {
         1: {
@@ -381,6 +416,8 @@ addLayer("w", {
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
         if (hasUpgrade("era", 432)) exp = exp.add(0.08)
         if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
+        if (hasUpgrade("era", 1034)) exp = exp.add(upgradeEffect("era", 1034))
+        if (hasMilestone('era', 102)) exp = exp.add(buyableEffect('s', 17))
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },
@@ -394,6 +431,7 @@ addLayer("w", {
         if (hasUpgrade("era", 133)) weffpow = 17.5
         let eff = player.w.points.add(1).pow(weffpow)
         let cap = 0.3
+        if (hasUpgrade("w", 92)) cap = 0.35
         softcappedEffect = softcap(eff, new Decimal("e5e13"), new Decimal(cap))
         return softcappedEffect
            },

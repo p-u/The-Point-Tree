@@ -432,7 +432,7 @@ addLayer("sa", {
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.0830250e22")) {
+                   if (player.points.gte("e2.98e22")) {
                        return true
                    }
                },
@@ -448,7 +448,7 @@ addLayer("sa", {
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.08308e22")) {
+                   if (player.points.gte("e3.02e22")) {
                        return true
                    }
                },
@@ -464,7 +464,7 @@ addLayer("sa", {
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.10278e22")) {
+                   if (player.points.gte("e3.05e22")) {
                        return true
                    }
                },
@@ -480,7 +480,7 @@ addLayer("sa", {
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e1.1028038e22")) {
+                   if (player.points.gte("e3.075e22")) {
                        return true
                    }
                },
@@ -489,7 +489,7 @@ addLayer("sa", {
                     return "Congrats! You have reached Insanity True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier)"
                 }
                 else {
-                    return "Reach Insanity True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier)"
+                    return "Reach Insanity True Endgame. (Reward: x1.15 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
             },
         },

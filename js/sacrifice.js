@@ -842,6 +842,30 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(1100000)},
             done() { return player["sac"].points.gte(1250000) }
         },
+        115: {
+            requirementDescription: "Sacrifice 1,500,000",
+            effectDescription: "SB5 HC is increased by a tiny bit.",
+            unlocked() {return player["sac"].points.gte(1300000)},
+            done() { return player["sac"].points.gte(1500000) }
+        },
+        116: {
+            requirementDescription: "Sacrifice 1,600,000",
+            effectDescription: "SB6's effect is increased by a tiny bit.",
+            unlocked() {return player["sac"].points.gte(1500000)},
+            done() { return player["sac"].points.gte(1600000) }
+        },
+        117: {
+            requirementDescription: "Sacrifice 1,700,000",
+            effectDescription: "+^0.017 MP",
+            unlocked() {return player["sac"].points.gte(1600000)},
+            done() { return player["sac"].points.gte(1700000) }
+        },
+        118: {
+            requirementDescription: "Sacrifice 1,900,000",
+            effectDescription: "x1.19 EF after nerf",
+            unlocked() {return player["sac"].points.gte(1750000)},
+            done() { return player["sac"].points.gte(1900000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -1150,6 +1174,7 @@ addLayer("sac", {
         if (hasUpgrade("era", 412)) exp = exp.sub(0.005)
         if (hasUpgrade("c", 54)) exp = exp.sub(0.0072)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
+        if (hasUpgrade("w", 92)) exp = exp.sub(0.01)
         if (player.points.gte("e100e9") && inChallenge("m", 12)) exp = new Decimal(100)
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

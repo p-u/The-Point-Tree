@@ -473,6 +473,8 @@ addLayer("prestige", {
         if (hasUpgrade('era', 95)) mult = mult.times("e6e15")
         if (hasUpgrade('m', 122)) mult = mult.times("e2e16")
         if (hasUpgrade('rebirth', 93)) mult = mult.times("e2.7e17")
+        if (hasUpgrade('era', 494)) mult = mult.times("e7e18")
+        if (hasUpgrade('era', 1022)) mult = mult.times("e3e18")
 
         if (hasMilestone("a", 7)) mult = mult.times(3)
 
@@ -516,6 +518,7 @@ addLayer("prestige", {
         if (hasUpgrade('prestige', 83)) exp = exp.add(0.08)
         if (hasUpgrade('era', 323)) exp = exp.add(0.02)
         if (hasUpgrade('era', 302)) exp = exp.add(0.04)
+        if (hasUpgrade('era', 494)) exp = exp.add(0.01)
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (player.sac.sacstr.gte(2)) exp = exp.add(player.sac.se2)
         return exp

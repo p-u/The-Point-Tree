@@ -8,17 +8,27 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 0.5,  // In hours
+	offlineLimit: 0,  // In hours
 	// remember to change to 0 in dev
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.5.7.1",
-	name: "Cell Explosion/Final Minigame Part and 100K Event",
+	num: "3.6",
+	name: "Another Era Currency",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>v3.6: Another Era Currency </h2><br>
+Added a new tab with an Era Currency! Unlocked after getting 50 rows of Era Upgrades... <br>
+Added 4 buyables, 35 upgrades, 8 milestones, 3 achievements, 1 savebank <br>
+Fixed bug in Cells layer (Milestone 4 working on Milestone 3) <br>
+Added more softcaps to layers and upgrades <br>
+Changed tiers in Cell Milestones <br>
+Changed ID of Buyable in Mastery Challenge 1 (im sorry if you were in the challenge before the update) <br>
+Buffed Insanity True Endgame abit <br>
+Endgames: e2.98e22, e3.02e22, e3.05e22, e3.075e22 PF respectively <br>
+
 <h3>v3.5.7.1: Minigame Milestones 3B </h2><br>
 Reduced prices of MM4-15. <br>
 Buffed MM11 MiP boost <br>
@@ -969,6 +979,7 @@ function getPointGen() {
 	if (hasMilestone('s', 9)) gain = gain.times("e50e12")
 	if (hasUpgrade('w', 84)) gain = gain.times("e10e15")
 	if (hasUpgrade("s", 123)) gain = gain.times("e1e17")
+	if (hasUpgrade('w', 94)) gain = gain.times("e1e20")
 
 	// mastery
 
@@ -1011,6 +1022,7 @@ function getPointGen() {
 	if (hasUpgrade("era", 374)) gain = gain.times("e7e17")
 	if (hasUpgrade("era", 381)) gain = gain.times("e1e18")
 	if (hasUpgrade("era", 422)) gain = gain.times("e2.8e18")
+	if (hasUpgrade("era", 501)) gain = gain.times("e2.5e19")
 
 	// playtime milestone
 	if (hasMilestone("a", 4)) gain = gain.times(1.5)
@@ -1167,7 +1179,7 @@ function getPointGen() {
 	if (hasUpgrade("s", 125)) gain = gain.pow(1.01)
 	if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) gain = gain.pow(1.038)
 	if ((hasUpgrade('m', 1135)) && inChallenge("m", 11)) gain = gain.pow(1.11)
-	if (inChallenge("m", 11)) gain = gain.pow(buyableEffect('era', 21))
+	if (inChallenge("m", 11)) gain = gain.pow(buyableEffect('era', 111))
 	if (challengeCompletions("m", 11) == 2) gain = gain.pow(1.0333)
 	if (hasUpgrade("m", 135)) gain = gain.pow(1.015)
 	if (hasUpgrade("era", 363)) gain = gain.pow(1.008)
@@ -1175,7 +1187,10 @@ function getPointGen() {
 	if (hasUpgrade("era", 412)) gain = gain.pow(0.995)
 	if (hasUpgrade("era", 413)) gain = gain.pow(1.005)
 	if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
+	if (hasUpgrade("era", 501)) gain = gain.pow(1.007)
+	if (hasUpgrade("era", 1054)) gain = gain.pow(1.01)
 	if (player.points.gte("e100e9") && inChallenge("m", 12)) gain = gain.pow(0.1)
+	if (hasUpgrade('era', 1014)) gain = gain.pow(upgradeEffect('era', 1014))
 	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);

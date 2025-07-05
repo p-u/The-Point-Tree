@@ -51,6 +51,7 @@ addLayer("c", {
         if (hasAchievement("a", 263)) player.c.preBM = player.c.preBM.mul(1.5)
         if(hasUpgrade("c", 43)) player.c.preBM = player.c.preBM.mul(1.5)
         if(hasUpgrade("c", 52)) player.c.preBM = player.c.preBM.mul(2)
+        if (hasUpgrade("w", 93)) player.c.preBM = player.c.preBM.mul(4)
 
         // softcap decrease
         if(hasUpgrade("c", 12)) player.c.scscale = new Decimal(1.3)
@@ -68,8 +69,9 @@ addLayer("c", {
         if (hasUpgrade("c", 42)) player.c.softcapStart = new Decimal(100000)
         if (hasUpgrade("c", 43)) player.c.softcapStart = new Decimal(250000)
         if(hasMilestone("sac", 113)) player.c.softcapStart = new Decimal(2500000)
-        if (hasMilestone("c", 3)) player.c.softcapStart = new Decimal(80e6)
+        if (hasMilestone("c", 4)) player.c.softcapStart = new Decimal(80e6)
         if (buyableEffect('c', 13).gte(1)) player.c.softcapStart = player.c.softcapStart.mul(buyableEffect('c', 13))
+        if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul(player.sac.points.pow(0.5))
 
         // init
         player.c.replicateTime = player.c.preRT
@@ -167,22 +169,28 @@ addLayer("c", {
             done() { return player.c.points.gte(new Decimal(1.25e12)) },
         },
         2: {
-            requirementDescription: "Cell Milestone 2 (6e16 Cells: Tier 1.2)",
+            requirementDescription: "Cell Milestone 2 (6e16 Cells: Tier 1.1)",
             effectDescription: "Reduce cell softcap",
             unlocked() { return hasMilestone("c", 1)},
             done() { return player.c.points.gte(new Decimal(6e16)) },
         },
         3: {
-            requirementDescription: "Cell Milestone 3 (5e25 Cells: Tier 1.5)",
+            requirementDescription: "Cell Milestone 3 (5e25 Cells: Tier 1.25)",
             effectDescription: "Reduce cell softcap",
             unlocked() { return hasMilestone("c", 2)},
             done() { return player.c.points.gte(new Decimal(5e25)) },
         },
         4: {
-            requirementDescription: "Cell Milestone 4 (3.2e32 Cells: Tier 1.7)",
+            requirementDescription: "Cell Milestone 4 (3.2e32 Cells: Tier 1.33)",
             effectDescription: "Cell softcap starts 32x later",
             unlocked() { return hasMilestone("c", 3)},
             done() { return player.c.points.gte(new Decimal(3.2e32)) },
+        },
+        5: {
+            requirementDescription: "Cell Milestone 5 (1e42 Cells: Tier 1.4)",
+            effectDescription: "Cell softcap starts (Sac^0.5)x later",
+            unlocked() { return hasMilestone("c", 4)},
+            done() { return player.c.points.gte(new Decimal(1e42)) },
         },
     },
     upgrades: {
@@ -305,7 +313,11 @@ addLayer("c", {
             description: "Cells boost Era Crystals, Reduced Sacrifice Scaling, very slightly reduce Era Buyable 6 scaling and increase its effect",
             cost: new Decimal(3.33e33),
             effect() {
-                return player.c.points.log(9)
+                if (hasUpgrade("w", 93)) {
+                    return player.c.points.log(5)
+                } else {
+                    return player.c.points.log(9)
+                }
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
@@ -316,7 +328,6 @@ addLayer("c", {
             },
             unlocked() { return (hasUpgrade("c", 53)) },
         },
-        // go till row 5, then publish v3.5
     },
     buyables: {
         11: {

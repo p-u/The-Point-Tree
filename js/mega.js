@@ -142,15 +142,21 @@ addLayer("mega", {
                 softcapDescriptionm14 = ""
                 sdsc = ""
                 scpow = 0.8
+                sppow = 0.7
                 upgEffectm14 = upgradeEffect(this.layer, this.id)
                 if (upgEffectm14.gte(new Decimal("e1e15")) ) {
                     softcapDescriptionm14 = " (Softcapped)"
                     sdsc = ". Softcaps ^" + scpow + " at e1e15"
                 }
+                if (upgEffectm14.gte(new Decimal("e1e19")) ) {
+                    softcapDescriptionm14 = " (Supercapped)"
+                    sdsc = ". Supercaps ^" + sppow + " at e1e19"
+                }
             },
             effect() {
                 let eff = player["prestige"].points.add(1).pow(mu4exp)
                 eff = softcap(eff, new Decimal("e1e15"), scpow)
+                eff = softcap(eff, new Decimal("e1e19"), sppow)
                 return eff
             },
             effectDisplay() {
@@ -773,6 +779,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(1e13))
                 if (hasUpgrade("m", 115)) base2 = x.mul(new Decimal(1e14))
                 if (hasUpgrade("era", 453)) base2 = x.mul(new Decimal(1e15))
+                if (hasUpgrade("era", 483)) base2 = x.mul(new Decimal(1e16))
                 expo = new Decimal(1.005)
                 eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -819,6 +826,7 @@ addLayer("mega", {
                 if (hasUpgrade("m", 111)) base2 = x.mul(new Decimal(2.5e13))
                 if (hasUpgrade("era", 452)) base2 = x.mul(new Decimal(2.5e14))
                 if (hasUpgrade("c", 53)) base2 = x.mul(new Decimal(2.5e15))
+                if (hasUpgrade("era", 483)) base2 = x.mul(new Decimal(4e15))
                 expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
@@ -860,6 +868,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 203)) base2 = x.mul(new Decimal(1.5e7))
                 if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(1e10))
                 if (hasUpgrade("era", 452)) base2 = x.mul(new Decimal(2.5e12))
+                if (hasUpgrade("era", 483)) base2 = x.mul(new Decimal(9e12))
                 expo = new Decimal(1.015)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
@@ -890,6 +899,7 @@ addLayer("mega", {
             effect(x) {
                 base1 = new Decimal(1.008)
                 if (hasUpgrade("era", 203)) base1 = new Decimal(1.0088)
+                if (hasUpgrade("era", 474)) base1 = new Decimal(1.0092)
                 base2 = x
                 expo = new Decimal(1.008)
                 let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
@@ -966,6 +976,7 @@ addLayer("mega", {
         if (hasUpgrade('m', 124)) mult = mult.times("e3e15")
         if (hasUpgrade('era', 375)) mult = mult.times("e1e16")
         if (hasUpgrade('era', 471)) mult = mult.times("e3e17")
+        if (hasUpgrade('era', 1022)) mult = mult.times("e2.5e17")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         if (hasAchievement('sa', 196)) mult = mult.times(100)
@@ -1015,6 +1026,7 @@ addLayer("mega", {
         if (hasMilestone('mega', 24)) exp = exp.add(0.02)
         if (hasUpgrade('era', 405)) exp = exp.add(0.022)
         if (hasUpgrade('era', 435)) exp = exp.add(0.014)
+        if (hasMilestone('sac', 117)) exp = exp.add(0.017)
         if (hasUpgrade('era', 391)) exp = exp.add(upgradeEffect('era', 391))
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)

@@ -8,6 +8,12 @@ addLayer("era", {
         ec: new Decimal(0),
         ecg: new Decimal(0),
         infec: new Decimal(0),
+        ef: new Decimal(0),
+        eftotal: new Decimal(0),
+        baseef: new Decimal(0),
+        nerf: new Decimal(1),
+        nerfexponent: new Decimal(3),
+        multaftnerf: new Decimal(1),
     }},
     layerShown(){
         let visible = false
@@ -71,7 +77,7 @@ addLayer("era", {
                 "prestige-button",
                 "blank",
                 "blank",
-                "milestones",
+                ["milestones", [1,2,3,4]]
             ],
         },
         "The Tree": {
@@ -153,6 +159,54 @@ addLayer("era", {
                 "buyables"
             ],
         },
+        "Era Fragments and its upgrades": {
+            content: [
+                "main-display",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + `You have 
+                        <h2><span style="color: green; text-shadow: 0px 0px 10px #AD6F69; font-family: Lucida Console, Courier New, monospace">
+                            ${notationChooser(player.era.ef)}</span></h2> Era Fragments`
+                        return a
+                    }
+                ],
+                "blank",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "You are gaining " + notationChooser((player.era.baseef.div(player.era.nerf).mul(player.era.multaftnerf))) + " Era Fragments a second. "
+                        a = a + "(Base EF: " + notationChooser((player.era.baseef)) + "), affected by stuff that boosts base EF, EF after nerf, and the slog of PF and EC. "
+                        return a
+                    }
+                ],
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "You have a total of " + notationChooser(player.era.eftotal) + " Era Fragments. (Unlike the other layers, EF Milestones require TOTAL EF and not CURRENT EF. Thus, you may not want to instantly buy the upgrade/buy buyables when you have enough.)"
+                        return a
+                    }
+                ],
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "Nerf: /" + notationChooser((player.era.nerf)) + ". (For every doubling of EF past 10, the function multiplies by " + notationChooser((player.era.nerfexponent)) + "). [If Base EF gain is <100, min nerf is 1. Else, min nerf is BaseEF^0.4]. "
+                        a = a + "The multiplier of x" + notationChooser((player.era.multaftnerf)) + " to EF gain bypasses the nerf."
+                        return a
+                    }
+                ],
+                "blank",
+                "blank",
+                ["milestones", [101,102,103,104,105,106,107,108,109,110]],
+                "blank",
+                "blank",
+                ["upgrades", [101,102,103,104,105,106,107,108,109,110]],
+            ],
+            unlocked() {return hasUpgrade("era", 501)}
+        },
         "Info after Era": {
             content: [
                 ["display-text", "Firstly, let's talk about softcaps. There are many softcaps after e1T effect, ranging from e1T to e15T and some at ee15. You will see some caps."],
@@ -188,6 +242,11 @@ addLayer("era", {
 				layers.era.buyables[14].buy();
 			};
 		};
+        if (hasMilestone('era', 101)) {
+			if (layers.era.buyables[15].canAfford()) {
+				layers.era.buyables[15].buy();
+			};
+		};
 	},
     milestones: {
         1: {
@@ -205,7 +264,19 @@ addLayer("era", {
             requirementDescription: "Era Three: What more?",
             effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups",
             done() { return player["era"].points.gte(3) },
-            unlocked() { return hasMilestone("era", 1) },
+            unlocked() { return hasMilestone("era", 2) },
+        },
+        101: {
+            requirementDescription: "EF Milestone 1 - Req 1,750 total EF",
+            effectDescription: "Unlock 1 new Era Buyable. Automate Era Buyable 5. Also, unlock more EF upgrades.",
+            done() { return player.era.eftotal.gte(1750) },
+            unlocked() { return hasUpgrade("era", 501) },
+        },
+        102: {
+            requirementDescription: "EF Milestone 2 - Req 7,500 total EF",
+            effectDescription: "Extend Water upgrades. Also, x1.2 EF after nerf. Unlock a new Supreme Buyable??",
+            done() { return player.era.eftotal.gte(1750) },
+            unlocked() { return hasUpgrade("era", 501) },
         },
     },
     upgrades: {
@@ -1560,6 +1631,7 @@ addLayer("era", {
                 if (hasUpgrade("era", 322)) euiec = new Decimal(1.1)
                 if (hasUpgrade("era", 352)) euiec = new Decimal(1.2)
                 if (hasUpgrade("era", 411)) euiec = new Decimal(1.1)
+                if (hasUpgrade("era", 473)) euiec = new Decimal(1.25)
                 softcapDescriptionerup12 = ""
                 sdsc = ""
                 upgEffecterup12 = upgradeEffect(this.layer, this.id)
@@ -2286,7 +2358,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['471', '472'],
+            branches: ['471', '472', '473', '474'],
             unlocked() {return hasUpgrade("era", 413)},
         },
         463: {
@@ -2296,7 +2368,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['471', '472'],
+            branches: ['471', '472', '473', '474'],
             unlocked() {return hasUpgrade("era", 462)},
         },
         471: {
@@ -2306,7 +2378,7 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['481', '482', '483'],
             unlocked() {return hasUpgrade("era", 463)},
         },
         472: {
@@ -2316,8 +2388,406 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: [],
+            branches: ['481', '482', '483'],
             unlocked() {return hasUpgrade("era", 471)},
+        },
+        473: {
+            title: "Advanced ErUp 35: No more trade-off Alpha, and increased!",
+            description: "Every upgrade now boosts EC gain by 1.25 (instead of 1.1)",
+            cost: new Decimal("6e371"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['481', '482', '483'],
+            unlocked() {return hasUpgrade("era", 472)},
+        },
+        474: {
+            title: "Advanced ErUp 36d: Why is this here?",
+            description: "Increase the effect of Mega Buyable 4",
+            cost: new Decimal("3e392"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['481', '482', '483'],
+            unlocked() {return hasUpgrade("era", 472)},
+        },
+        481: {
+            title: "Advanced ErUp 36a: Hypermaxing",
+            description: "Increase the effect of Mega Buyable 1",
+            cost: new Decimal("1.5e392"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['491', '492', '493', '494', '495'],
+            unlocked() {return hasUpgrade("era", 473)},
+        },
+        482: {
+            title: "Advanced ErUp 36b: Hypermaxing",
+            description: "Increase the effect of Mega Buyable 2",
+            cost: new Decimal("1.3e392"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['491', '492', '493', '494', '495'],
+            unlocked() {return hasUpgrade("era", 473)},
+        },
+        483: {
+            title: "Advanced ErUp 36c: Hypermaxing",
+            description: "Increase the effect of Mega Buyable 3",
+            cost: new Decimal("1.1e392"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['491', '492', '493', '494', '495'],
+            unlocked() {return hasUpgrade("era", 473)},
+        },
+        491: {
+            title: "Advanced ErUp 37: Soft-hardcap",
+            description: "Increase SB5 HC by 0.005.",
+            cost: new Decimal("3.9e392"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501'],
+            unlocked() {return ((hasUpgrade("era", 474)) && (hasUpgrade("era", 481)) && (hasUpgrade("era", 482)) && (hasUpgrade("era", 483)))},
+        },
+        492: {
+            title: "Advanced ErUp 38a: EPower",
+            description: "^1.01 EC and +^0.038 Energy",
+            cost: new Decimal("9e392"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501'],
+            unlocked() {return hasUpgrade("era", 491)},
+        },
+        493: {
+            title: "Advanced ErUp 38b: IncRease",
+            description: "xee20 RP and +^0.01 RP",
+            cost: new Decimal("6.5e399"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501'],
+            unlocked() {return hasUpgrade("era", 491)},
+        },
+        494: {
+            title: "Advanced ErUp 38c: Prestigar",
+            description: "xe7e18 PP and +^0.01 PP",
+            cost: new Decimal("7.5e399"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501'],
+            unlocked() {return hasUpgrade("era", 491)},
+        },
+        495: {
+            title: "Advanced ErUp 38d: Watup",
+            description: "SB3 is stronger",
+            cost: new Decimal("5.5e399"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501'],
+            unlocked() {return hasUpgrade("era", 491)},
+        },
+        501: {
+            title: "Advanced ErUp 39: Era Phase 2!",
+            description: "xe2.5e19 PF, ^1.007 PF, unlock a new currency in the Era Layer and its upgrades and milestones. It is based off of EC and PF.",
+            cost: new Decimal("1e400"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501'],
+            unlocked() {return ((hasUpgrade("era", 492)) && (hasUpgrade("era", 493)) && (hasUpgrade("era", 494)) && (hasUpgrade("era", 495)))},
+        },
+        1011: {
+            title: "EFUp 1: Upgrade Compoundation",
+            description: "For every upgrade after 214 era upgrades, x1.2 EF base gain",
+            cost: new Decimal(33),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 501))},
+            main() {
+                euiec = new Decimal(1.2)
+                softcapDescriptionerup12 = ""
+                sdsc = ""
+                upgEffecterup12 = upgradeEffect(this.layer, this.id)
+            },
+            effect() {
+                let eraups = player.era.upgrades.length - 214
+                return Math.pow(euiec, eraups)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionerup12
+            },
+            tooltip() {
+                return "Formula: "  + euiec + "^(Amt of ErUps-214)" + sdsc
+            },
+        },
+        1012: {
+            title: "EFUp 2: Crystals and Fragments",
+            description: "x1.1 EF after nerf, also x1,000 EC.",
+            cost: new Decimal(42),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1011))},
+        },
+        1013: {
+            title: "EFUp 3: Crystals and Fragments 2",
+            description: "Era Fragments boosts Era Crystals gain.",
+            cost: new Decimal(50),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return hasUpgrade("era", 1012)},
+            main() {
+                cf2exp = 1
+                softcapDescriptionef3 = ""
+                sdsc = ""
+                upgEffectef3 = upgradeEffect(this.layer, this.id)
+            },
+            effect() {
+                return player["era"].ef.pow(cf2exp).add(1)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x EC" + softcapDescriptionef3
+            },
+            tooltip() {
+                return "Formula: EC^"  + cf2exp + sdsc
+            },
+        },
+        1014: {
+            title: "EFUp 4: (Point/Era) Fragments",
+            description: "Era Fragments boosts Point Fragments exponent",
+            cost: new Decimal(60),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return hasUpgrade("era", 1013)},
+            effect() {
+                return ((Decimal.max(player.era.ef.slog()-1, 0))/50)+1
+            },
+            effectDisplay() {
+                return "^" + notationChooser(upgradeEffect(this.layer, this.id))+" PF"
+            },
+            tooltip() {
+                return "Formula: (slog(EF)-1)/50 +1"
+            },
+        },
+        1021: {
+            title: "EFUp 5: EF = EF++",
+            description: "Era Fragments boosts its gain (before nerf)",
+            cost: new Decimal(60),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return hasUpgrade("era", 1014)},
+            effect() {
+                return Decimal.max(player["era"].ef.log(5), 1)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x EF" + softcapDescriptionef3
+            },
+            tooltip() {
+                return "Formula: log5(EF)x EF"
+            },
+        },
+        1022: {
+            title: "EFUp 6: Early-game boost",
+            description: "xe2.5e20 BP, xe6e19 RP, xe3e18 PP, xe2.5e17 MP",
+            cost: new Decimal(90),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1021))},
+        },
+        1023: {
+            title: "EFUp 7: Crystals and Fragments 3",
+            description: "x1.2 EF (after nerf). Also, x10B EC",
+            cost: new Decimal(105),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1022))},
+        },
+        1024: {
+            title: "EFUp 8: Buy this!! Many times!!",
+            description: "Unlock 2 new Era Buyables.",
+            cost: new Decimal(130),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1023))},
+        },
+        1031: {
+            title: "EFUp 9: Upgrade Compoundation 2",
+            description: "EFUp 1 also boosts EF gain after nerf by 1.05 per upgrade",
+            cost: new Decimal(225),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasMilestone("era", 101))},
+            main() {
+                euiec = new Decimal(1.05)
+                softcapDescriptionerup12 = ""
+                sdsc = ""
+                upgEffecterup12 = upgradeEffect(this.layer, this.id)
+            },
+            effect() {
+                let eraups = player.era.upgrades.length - 214
+                return Math.pow(euiec, eraups)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionerup12
+            },
+            tooltip() {
+                return "Formula: "  + euiec + "^(Amt of ErUps-214)" + sdsc
+            },
+        },
+        1032: {
+            title: "EFUp 10: Upgrade Compoundation 3",
+            description: "EFUp 1 also multiplies EC gain by 10 per upgrade",
+            cost: new Decimal(260),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1031))},
+            main() {
+                euiec = new Decimal(10)
+                softcapDescriptionerup12 = ""
+                sdsc = ""
+                upgEffecterup12 = upgradeEffect(this.layer, this.id)
+            },
+            effect() {
+                let eraups = player.era.upgrades.length - 214
+                return Math.pow(euiec, eraups)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionerup12
+            },
+            tooltip() {
+                return "Formula: "  + euiec + "^(Amt of ErUps-214)" + sdsc
+            },
+        },
+        1033: {
+            title: "EFUp 11: Strengthen",
+            description: "Era Buyable 8 (EF Buyable 1)'s effect is stronger (1.1 -> 1.15)",
+            cost: new Decimal(333),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1032))},
+        },
+        1034: {
+            title: "EFUp 12: Powering mid-game currencies",
+            description: "Era Fragments boosts exponent of Supreme Points and Water",
+            cost: new Decimal(600),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return hasUpgrade("era", 1033)},
+            effect() {
+                return ((Decimal.max(player.era.ef.slog()-1, 0))/10)
+            },
+            effectDisplay() {
+                return "+^" + notationChooser(upgradeEffect(this.layer, this.id))+" SP and Water"
+            },
+            tooltip() {
+                return "Formula: +^(slog(EF)-1)/10"
+            },
+        },
+        1041: {
+            title: "EFUp 13: EF Douboost",
+            description: "x1.2 EF after nerf and x2 EF before nerf",
+            cost: new Decimal(1500),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("w", 94))},
+        },
+        1042: {
+            title: "EFUp 14: Powers",
+            description: "^1.02 EC, +^0.025 Energy",
+            cost: new Decimal(2500),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1041))},
+        },
+        1043: {
+            title: "EFUp 15: Lessenerf",
+            description: "Era Fragments nerf decreased from 3 to 2.9",
+            cost: new Decimal(2750),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1042))},
+        },
+        1044: {
+            title: "EFUp 16: Crystals and Fragments IV",
+            description: "x2 EF (before nerf). Also, x1e16 EC",
+            cost: new Decimal(3750),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1043))},
+        },
+        1051: {
+            title: "EFUp 17: The worst Era Buyable for EC -> The second best",
+            description: "Era Buyable 3's base is now based on Mastery Points, exactly, slog(MaP)^slog(MaP)^1.3",
+            cost: new Decimal(5000),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1044))},
+        },
+        1052: {
+            title: "EFUp 18: Making Mastery Points useful",
+            description: "MaP increases EC exponent",
+            cost: new Decimal(6666),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1051))},
+            effect() {
+                return Decimal.max(player.m.points.slog().sub(1.5).div(40), 0).add(1)
+            },
+            effectDisplay() {
+                return "^" + notationChooser(upgradeEffect(this.layer, this.id))+" EC"
+            },
+            tooltip() {
+                return "Formula: (slog(MaP)-1.5)/40 +1"
+            },
+        },
+        1053: {
+            title: "EFUp 19: Making Mastery Points even more useful",
+            description: "MaP multiplies EF gain before nerf",
+            cost: new Decimal(7277),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1052))},
+            effect() {
+                return Decimal.max(player.m.points.log10().div(50), 1)
+            },
+            effectDisplay() {
+                return "x" + notationChooser(upgradeEffect(this.layer, this.id))+" EF"
+            },
+            tooltip() {
+                return "Formula: log(MaP)/50"
+            },
+        },
+        1054: {
+            title: "EFUp 20: Uptick",
+            description: "^1.01 PF.",
+            cost: new Decimal(10000),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasUpgrade("era", 1053))},
         },
     },
     buyables: {
@@ -2408,6 +2878,7 @@ addLayer("era", {
             },
             effect(x) {
                 base1 = new Decimal(4)
+                if (hasUpgrade("era", 1051)) base1 = player.m.points.slog().pow(player.m.points.slog()).pow(1.3)
                 base2 = x
                 expo = new Decimal(1.047)
                 eff = base1.pow(Decimal.pow(base2, expo))
@@ -2508,7 +2979,103 @@ addLayer("era", {
                 return "Cost Formula: 1e319 x 1.09^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
             }
         },
-        21: {
+        17: {
+            title: "Era Buyable 7: OOM increaser",
+            unlocked() { return (hasUpgrade('era', 1024)) },
+            cost(x) {
+                exp2 = new Decimal(1.09)
+                return new Decimal("1e427").mul(Decimal.pow(1.07, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Crystals." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + notationChooser(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player.era.ec.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(10)
+                base2 = x
+                expo = new Decimal(1)
+                eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e420 x 1.07^Amt x Amt^(" + exp2+ "^Amt). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        18: {
+            title: "Era Buyable 8 (EF Buyable 1): EF Up (Before nerf)",
+            unlocked() { return (hasUpgrade('era', 1024)) },
+            cost(x) {
+                if (x < 10) {
+                    return new Decimal(40).mul(Decimal.pow(1.1, x))
+                } else {
+                    return new Decimal(40).mul(Decimal.pow(1.1, Decimal.pow(x, 0.75+x/40)))
+                }
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Fragments." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Fragments gain before nerf by x" + notationChooser(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player.era.ef.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.era.ef = player.era.ef.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(1.1)
+                if (hasUpgrade("era", 1033)) base1 = new Decimal(1.15)
+                base2 = x
+                expo = new Decimal(1)
+                eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 40 x 1.1^Amt (below 10), 40 x 1.1^(Amt ^ 0.75+Amt/40) (after 9). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        19: {
+            title: "Era Buyable 9 (EF Buyable 2): Helping out a good friend (Increasing hardcap of SB5)",
+            unlocked() { return (hasMilestone('era', 101)) },
+            cost(x) {
+                if (x < 5) {
+                    return new Decimal(75).mul(Decimal.pow(1.15, x))
+                } else {
+                    return new Decimal(75).mul(Decimal.pow(1.19, Decimal.pow(x, 0.75+x/50)))
+                }
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Era Fragments." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Increase SB5 HC by +" + notationChooser(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player.era.ef.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.era.ef = player.era.ef.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(1.0014)
+                base2 = x
+                expo = new Decimal(1)
+                let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
+                hcap = new Decimal(1)
+                if (eff.gte(hcap)) eff = hcap
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 75 x 1.15^Amt (below 5), 75 x 1.19^(Amt ^ 0.75+Amt/50) (after 4). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        111: {
             title: "Era Buyable [Mastery Challenge 1 only]: PF power (Scales MUCH more after a certain value)",
             unlocked() { return ((hasAchievement('a', 243)) && inChallenge("m", 11)) },
             cost(x) {
@@ -2574,12 +3141,15 @@ addLayer("era", {
             if (hasAchievement('a', 232)) gain = gain.times(buyableEffect('era', 13))
             if (hasUpgrade('era', 341)) gain = gain.times(buyableEffect('era', 14))
             if (hasUpgrade('era', 463)) gain = gain.times(buyableEffect('era', 15))
+            if (hasUpgrade('era', 1024)) gain = gain.times(buyableEffect('era', 17))
             
             // upgs
             if (hasUpgrade('era', 153)) gain = gain.times(upgradeEffect('era', 153))
             if (hasUpgrade('era', 12)) gain = gain.times(upgradeEffect('era', 12))
             if (hasUpgrade('era', 45)) gain = gain.times(upgradeEffect('era', 45))
             if (hasUpgrade('c', 54)) gain = gain.times(upgradeEffect('c', 54))
+            if (hasUpgrade('era', 1013)) gain = gain.times(upgradeEffect('era', 1013))
+            if (hasUpgrade('era', 1032)) gain = gain.times(upgradeEffect('era', 1032))
             if (hasAchievement('sa', 196)) gain = gain.times(1.05)
             if (hasMilestone('sa', 10)) gain = gain.times(1.05)
             if (hasUpgrade("era", 11)) gain = gain.times(2)
@@ -2638,7 +3208,7 @@ addLayer("era", {
             if (hasAchievement('sa', 33)) gain = gain.times(1.02)
             if (hasAchievement('sa', 34)) gain = gain.times(1.04)
             if (hasAchievement('sa', 35)) gain = gain.times(1.07)
-            if (hasAchievement('sa', 36)) gain = gain.times(1.1)
+            if (hasAchievement('sa', 36)) gain = gain.times(1.15)
             if (hasUpgrade("era", 365)) gain = gain.times(1000)
             if (hasMilestone("sac", 107)) gain = gain.times(4)
             if (hasMilestone("sac", 108)) gain = gain.times(10)
@@ -2658,6 +3228,9 @@ addLayer("era", {
             if(hasMilestone("sac", 112)) gain = gain.times(9)
             if(hasMilestone("sac", 113)) gain = gain.times(100)
             if(hasMilestone("sac", 114)) gain = gain.times(12.5)
+            if (hasUpgrade("era", 1012)) gain = gain.times(1000)
+            if (hasUpgrade('era', 1023)) gain = gain.times(1e10)
+            if (hasUpgrade('era', 1044)) gain = gain.times(1e16)
 
             // infinity
             if (player.era.ec.gte(new Decimal(2).pow(1024))) gain = gain.times(new Decimal(10).pow(player.era.infec))
@@ -2673,17 +3246,71 @@ addLayer("era", {
             if (hasUpgrade("era", 411)) gain = gain.pow(1.01)
             if (hasUpgrade("era", 451)) gain = gain.pow(1.02)
             if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
+            if (hasUpgrade("era", 492)) gain = gain.pow(1.01)
+            if (hasUpgrade("w", 94)) gain = gain.pow(1.04)
+            if (hasUpgrade("era", 1042)) gain = gain.pow(1.02)
+            if (hasUpgrade("era", 1052)) gain = gain.pow(upgradeEffect('era', 1052))
             let expinmc1 = new Decimal(0.1)
             if (hasUpgrade("m", 1111)) expinmc1 = new Decimal(0.12)
             if (hasUpgrade("m", 1121)) expinmc1 = new Decimal(0.14)
             if (hasUpgrade("m", 1122)) expinmc1 = new Decimal(0.16)
             if (hasUpgrade("m", 1133)) expinmc1 = new Decimal(0.18)
             if ((hasAchievement("a", 243)) && (inChallenge("m", 11))) gain = gain.pow(expinmc1)
+            
 
             // statements above this line
             player.era.ecg = gain
             gain = gain.times(diff)
             player.era.ec = player.era.ec.add(gain)
+
+
+
+            // era fragments
+            // absolute base formula is slog(EC)^(slog(PF)-1), where slog(EC) and slog(PF)-1 returns at least 1.
+            player.era.baseef = new Decimal(Math.max(player.era.ec.slog(),1)).pow(new Decimal(Math.max(player.points.slog()-1,1)))
+
+            // stuff that boosts base EF
+            if (hasUpgrade('era', 1011)) player.era.baseef = player.era.baseef.times(upgradeEffect('era', 1011))
+            if (hasUpgrade('era', 1021)) player.era.baseef = player.era.baseef.times(upgradeEffect('era', 1021))
+            if (hasUpgrade('era', 1024)) player.era.baseef = player.era.baseef.times(buyableEffect('era', 18))
+            if (hasUpgrade("w", 93)) player.era.baseef = player.era.baseef.times(upgradeEffect("w", 93))
+            if (hasUpgrade("w", 94)) player.era.baseef = player.era.baseef.times(Math.max(player.era.ec.slog(),1))
+            if (hasUpgrade('era', 1053)) player.era.baseef = player.era.baseef.times(upgradeEffect('era', 1053))
+
+            if (hasUpgrade('era', 1041)) player.era.baseef = player.era.baseef.times(2)
+            if (hasUpgrade('era', 1044)) player.era.baseef = player.era.baseef.times(2)
+            
+            // nerf, stuff that boosts mult after nerf and reduces nerf exponent
+            if (hasUpgrade("era", 1043)) player.era.nerfexponent = new Decimal(2.9)
+            if (player.era.ef.lte(10)) {
+                if (player.era.baseef.lte(2000)) {
+                    player.era.nerf = 1
+                } else {
+                    player.era.nerf = player.era.baseef.pow(0.4)
+                }
+            } else {
+                if (player.era.baseef.lte(100)) {
+                    player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.div(5).log(2)), 1)
+                } else {
+                    player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.div(5).log(2)), 1)
+                    if (player.era.nerf.lte(player.era.baseef.pow(0.4))) {
+                        player.era.nerf = player.era.baseef.pow(0.4)
+                    }
+                }
+            }
+            player.era.multaftnerf = new Decimal(1)
+            if (hasUpgrade('era', 1012)) player.era.multaftnerf = player.era.multaftnerf.times(1.1)
+            if (hasUpgrade('era', 1023)) player.era.multaftnerf = player.era.multaftnerf.times(1.2)
+            if (hasUpgrade('era', 1031)) player.era.multaftnerf = player.era.multaftnerf.times(upgradeEffect('era', 1031))
+            if (hasUpgrade('era', 1041)) player.era.multaftnerf = player.era.multaftnerf.times(1.2)
+            if (hasMilestone('sac', 118)) player.era.multaftnerf = player.era.multaftnerf.times(1.19)
+            if (hasMilestone("sa", 36)) player.era.multaftnerf = player.era.multaftnerf.times(1.02)
+            
+            // final formula and adding
+            gainef = player.era.baseef.div(player.era.nerf).times(player.era.multaftnerf)
+            gainef = gainef.times(diff)
+            player.era.ef = player.era.ef.add(gainef)
+            player.era.eftotal = player.era.eftotal.add(gainef)
         }
     },
 })

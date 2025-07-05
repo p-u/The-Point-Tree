@@ -87,6 +87,7 @@ addLayer("basic", {
                 sdsc = ""
                 scpow = 0.5
                 sppow = 0.4
+                hcpow = 0.3
                 upgEffect12 = upgradeEffect(this.layer, this.id)
                 if (upgEffect12.gte(new Decimal("e50000000")) ) {
                     softcapDescription12 = " (Softcapped)"
@@ -96,11 +97,16 @@ addLayer("basic", {
                     softcapDescription12 = " (Supercapped)"
                     sdsc = sdsc + ", Supercaps ^" + sppow + " at e1.25e12"
                 }
+                if (upgEffect12.gte(new Decimal("e2.5e20")) ) {
+                    softcapDescription12 = " (Hypercapped)"
+                    sdsc = sdsc + ", Hypercaps ^" + hcpow + " at e2.5e20"
+                }
             },
             effect() {
                 let eff = player[this.layer].points.add(1).pow(expu2)
                 eff = softcap(eff, new Decimal("1e50000000"), scpow)
                 eff = softcap(eff, new Decimal("e1.25e12"), sppow)
+                eff = softcap(eff, new Decimal("e2.5e20"), hcpow)
                 return eff
             },
             tooltip() {
@@ -834,6 +840,7 @@ addLayer("basic", {
         if (hasMilestone('sac', 106)) mult = mult.times("e3.33e18")
         if (hasUpgrade('era', 373)) mult = mult.times("e8e18")
         if (hasUpgrade("rebirth", 92)) mult = mult.times("e1.9e19")
+        if (hasUpgrade('era', 1022)) mult = mult.times("e2.5e20")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
