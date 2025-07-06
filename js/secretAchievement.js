@@ -1751,16 +1751,16 @@ addLayer("sa", {
                 if (player.sa.minigameNum.layer > 1e275) dis = "RTIEEV Void [Era II]"
                 if (player.sa.minigameNum.layer > 1e300) dis = "RTIEEV Void [Era III]"
                 if (player.sa.minigameNum.lt(0)) dis = "negative?"
-                if (player.sa.minigameNum.lt("-1e100")) dis = "big negative"
-                if (player.sa.minigameNum.lt("-ee1000")) dis = "huge negative"
-                if (player.sa.minigameNum.lt("-eee6")) dis = "nega-megative"
-                if (player.sa.minigameNum.lt("-eee10")) dis = "nega-hypertive"
-                if (player.sa.minigameNum.lt("-eee100")) dis = "negodtive"
-                if (player.sa.minigameNum.lt("-eee1000")) dis = "negativextreme"
-                if (player.sa.minigameNum.lt("-eeee6")) dis = "negodtivextreme"
-                if (player.sa.minigameNum.lt("-eeee8")) dis = "negodtivextremega"
-                if (player.sa.minigameNum.lt("-eeee10")) dis = "negodtivextremegabsolute"
-                if (player.sa.minigameNum.lt("-eeee12")) dis = "negodtivextremegabsolutera"
+                if (player.sa.minigameNum.lt("-1e10")) dis = "big negative"
+                if (player.sa.minigameNum.lt("-ee10")) dis = "huge negative"
+                if (player.sa.minigameNum.lt("-eee3")) dis = "nega-megative"
+                if (player.sa.minigameNum.lt("-eee6")) dis = "nega-hypertive"
+                if (player.sa.minigameNum.lt("-eee20")) dis = "negodtive"
+                if (player.sa.minigameNum.lt("-eee100")) dis = "negativextreme"
+                if (player.sa.minigameNum.lt("-eeee3")) dis = "negodtivextreme"
+                if (player.sa.minigameNum.lt("-eeee5")) dis = "negodtivextremega"
+                if (player.sa.minigameNum.lt("-eeee7")) dis = "negodtivextremegabsolute"
+                if (player.sa.minigameNum.lt("-eeee9")) dis = "negodtivextremegabsolutera"
                 return dis
             },
             style() {return {
@@ -1797,6 +1797,15 @@ addLayer("sa", {
             },
             unlocked() {return hasAchievement("sa", 166)},
             canClick() {return false},
+        },
+        14: {
+            title: "Minigame Points is now 50,000, but Minigame Number's layer (amount of 'e') is decreased by 1...",
+            canClick() {return true},
+            onClick() {
+                player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer - 1
+                player[this.layer].minigamePoints = new Decimal(50000)
+            },
+            unlocked() {return hasUpgrade("sa", 25)},
         },
         21: {
             title: "+1",
@@ -1895,14 +1904,12 @@ addLayer("sa", {
             title: "x(-1)",
             canClick() {return true},
             onClick() {
-                player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
-                player[this.layer].bp = player[this.layer].bp.add(1)
+                if (player.sa.minigameNum.slog().mag < 5) {
+                    player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
+                    player[this.layer].bp = player[this.layer].bp.add(1)
+                }
             },
             unlocked() {return hasAchievement("sa", 162)},
-            onHold() {
-                player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
-                player[this.layer].bp = player[this.layer].bp.add(1)
-            }
         },
         41: {
             title: "x10^10",
@@ -2653,7 +2660,7 @@ addLayer("sa", {
         },
         25: {
             title: "MiUp 10: Minigame Points Supremacy",
-            description: "The ^0.99 button now has +30 minigame points... and x5 minigame points. Also x5 the passive gen MiP amount :)",
+            description: "The ^0.99 button now has +30 minigame points... and x5 minigame points. Also x5 the passive gen MiP amount :) Add a new button to facilitate MiP going below 0",
             cost: new Decimal("ee3e13"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
