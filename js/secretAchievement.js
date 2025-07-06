@@ -1752,15 +1752,12 @@ addLayer("sa", {
                 if (player.sa.minigameNum.layer > 1e300) dis = "RTIEEV Void [Era III]"
                 if (player.sa.minigameNum.lt(0)) dis = "negative?"
                 if (player.sa.minigameNum.lt("-1e10")) dis = "big negative"
-                if (player.sa.minigameNum.lt("-ee10")) dis = "huge negative"
-                if (player.sa.minigameNum.lt("-eee3")) dis = "nega-megative"
-                if (player.sa.minigameNum.lt("-eee6")) dis = "nega-hypertive"
-                if (player.sa.minigameNum.lt("-eee20")) dis = "negodtive"
-                if (player.sa.minigameNum.lt("-eee100")) dis = "negativextreme"
-                if (player.sa.minigameNum.lt("-eeee3")) dis = "negodtivextreme"
-                if (player.sa.minigameNum.lt("-eeee5")) dis = "negodtivextremega"
-                if (player.sa.minigameNum.lt("-eeee7")) dis = "negodtivextremegabsolute"
-                if (player.sa.minigameNum.lt("-eeee9")) dis = "negodtivextremegabsolutera"
+                if (player.sa.minigameNum.lt("-e100")) dis = "nega-megative"
+                if (player.sa.minigameNum.lt("-ee6")) dis = "nega-hypertive"
+                if (player.sa.minigameNum.lt("-eee2")) dis = "negodtive"
+                if (player.sa.minigameNum.lt("-eee4")) dis = "negativextreme"
+                if (player.sa.minigameNum.lt("-eee10")) dis = "negodtivextremega"
+                if (player.sa.minigameNum.lt("-eee25")) dis = "negodtivextremegabsolute"
                 return dis
             },
             style() {return {
@@ -1904,7 +1901,7 @@ addLayer("sa", {
             title: "x(-1)",
             canClick() {return true},
             onClick() {
-                if (player.sa.minigameNum.slog().mag < 5) {
+                if (player.sa.minigameNum.slog().mag < 4.5) {
                     player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
                     player[this.layer].bp = player[this.layer].bp.add(1)
                 }
