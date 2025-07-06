@@ -89,9 +89,36 @@ addLayer("ma", {
         },
         24: {
             title: "09: Fluorine",
-            description: "Auto Gen 4, ^1.029 Atoms, x2.9 Power, unlock more upgrades",
+            description: "Auto Gen 4, ^1.029 Atoms, x2.9 Power, unlock 1 energy upgrade",
             cost: new Decimal(100e6),
             unlocked() { return hasUpgrade("ma", 23) }, 
+        },
+        25: {
+            title: "10: Neon",
+            description: "Buy Max Gen 1 and 2, Matter effect is stronger, unlock 2 new Energy upgrades",
+            cost: new Decimal(10e9),
+            unlocked() { return hasUpgrade("ma", 24) }, 
+        },
+        31: {
+            title: "11: Sodium",
+            description: "Increases Matter gain based on Energy",
+            cost: new Decimal(5e12),
+            effect() {
+                return player.en.points.log10().div(10)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x"
+            },
+            tooltip() {
+                return "Formula: log10(Energy)/10"
+            },
+            unlocked() { return hasUpgrade("ma", 25) }, 
+        },
+        32: {
+            title: "12: Magnesium",
+            description: "Generator 6 and 7 generations is increased by x1.25, x10 Power",
+            cost: new Decimal(7e16),
+            unlocked() { return (hasUpgrade("ma", 31) && hasMilestone("w", 2)) }, 
         },
     },
     milestones: {
@@ -127,13 +154,18 @@ addLayer("ma", {
         },
         7: {
             requirementDescription: "10M total Matter",
-            effectDescription: "Unlock Click Mastery (Optional, but recommended to get at least 1-5K clicks)",
+            effectDescription: "Unlock Click Mastery (Optional, but recommended to get at least 1-5K clicks) and unlock 6 achievements related to Click Mastery.",
             done() { return player.ma.total.gte(10e6) }
         },
         8: {
             requirementDescription: "4B total Matter",
             effectDescription: "Keep first 4 rows of energy upgrades on reset, x2 energy and power",
             done() { return player.ma.total.gte(4e9) }
+        },
+        9: {
+            requirementDescription: "2.5e15 total Matter",
+            effectDescription: "Autobuy Gen 5, Buy Max Gen 3, x1.25 Click Multiplier (With this upgrade, it is now recommended to get 10K-200K Clicks), ^1.01 Power and Atoms",
+            done() { return player.ma.total.gte(2.5e15) }
         },
     },
     infoboxes: {
@@ -153,6 +185,9 @@ addLayer("ma", {
         if (hasUpgrade("en", 54)) mult = mult.times(2)
         if (hasUpgrade("en", 62)) mult = mult.times(3)
         if (hasAchievement("a", 33)) mult = mult.times(1.05)
+        if (hasUpgrade("en", 65)) mult = mult.times(1.1)
+        if (hasUpgrade("ma", 31)) mult = mult.times(upgradeEffect("ma", 31))
+        if (hasMilestone("w", 2)) mult = mult.times(new Decimal(1.1).pow(player.w.points))
         if (player.cm.clickmastery.gte(8e6)) mult = mult.times(player.cm.clickmastery.div(3333).log(333))
         return mult
     },
@@ -162,6 +197,7 @@ addLayer("ma", {
     },
     effect(){
         let effectBoost = 1.7
+        if (hasUpgrade("ma", 25)) effectBoost = 1.85
         let eff = player.ma.points.add(1).pow(effectBoost)
         return eff
     },

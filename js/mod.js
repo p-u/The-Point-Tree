@@ -14,11 +14,20 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av1.3",
-	name: "Clicks",
+	num: "av1.4",
+	name: "World Tier 3",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av1.4</h3><br>
+	- You can get World Tier 3, and there is a milestone for it <br>
+	- Added 2 new click mastery milestones and 1 new matter milestone <br>
+	- New feature: Buy max buyables, Increasing layer effect! <br>
+	- 8 new achievements (6 are Click Mastery) <br>
+	- 5 more upgrades <br>
+	- 1 new generator! <br>
+	- Added Standard notation <br>
+	- Endgame: Magnesium Upgrade + 2 Gen 7s <br>
 <h3>av1.3</h3><br>
 	- Added the Click Mastery layer, comprising clicks and Click Level, with 11 milestones!<br>
 	- 1 new infobox <br>
@@ -96,6 +105,8 @@ function getPointGen() {
 	if (hasUpgrade("en", 54)) gain = gain.times(2)
 	if (hasUpgrade("en", 55)) gain = gain.times(20)
 	if (hasUpgrade("ma", 23)) gain = gain.times(8)
+	if (hasUpgrade("en", 65)) gain = gain.times(1.2)
+	if (hasMilestone("w", 2)) gain = gain.times(new Decimal(3).pow(player.w.points))
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
@@ -113,11 +124,13 @@ function getPointGen() {
 	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.log(9))
 	if (player.cm.clickmastery.gte(10000)) gain = gain.times(player.cm.clickmastery.div(77).log(14))
 	if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(188888).log(18))
+	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
 
 
 	// exponent
 	if (hasUpgrade("ma", 13)) gain = gain.pow(1.05)
 	if (hasUpgrade("ma", 24)) gain = gain.pow(1.029)
+	if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
 	return gain
 }
 
@@ -132,7 +145,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return (hasMilestone("ma", 8) && hasAchievement("a", 35))
+	return (hasUpgrade("ma", 32) && player.en.gen7amt.gte(2))
 }
 
 

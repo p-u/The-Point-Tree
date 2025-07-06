@@ -32,6 +32,11 @@ addLayer("w", {
             effectDescription: "Keep Generator 4 on reset, x1.5 Matter",
             done() { return player.w.points.gte(2) }
         },
+        2: {
+            requirementDescription: "World Tier 3",
+            effectDescription: "Gen 5 and 6 does not cost anything, unlock Gen 7, 3^World Tierx Atoms, 2^World Tierx Energy, 1.1^World Tierx Matter.",
+            done() { return player.w.points.gte(3) },
+        },
     },
     tabFormat: {
         "World Tiers": {

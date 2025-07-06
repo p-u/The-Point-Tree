@@ -228,7 +228,61 @@ addLayer("a", {
             name: "Atomic Insanity",
             done() { return player.points.gte(1e50) },
             tooltip: "Get 10^50 Atoms (+5% Atom gain)",
-            unlocked() { return hasAchievement("a", 14) },
+            unlocked() { return hasAchievement("a", 31) },
+        },
+        36: {
+            name: "Tiered, again",
+            done() { return player.w.points.gte(3) },
+            tooltip: "Get World Tier 3. Reward: +3% Gen 3 generation",
+            unlocked() { return hasAchievement("a", 31) },
+            style() {
+                return {
+                "border-color": "blue",
+                "border-width": "3px"
+                }
+            }
+        },
+        41: {
+            name: "Crazily Energetic",
+            done() { return player.en.points.gte(1e80) },
+            tooltip: "Get 10^80 Energy (+8% Energy gain)",
+            unlocked() { return hasAchievement("a", 36) },
+        },
+        101: {
+            name: "Click Mastery Milestone 1 (Optional) - Even a baby can click that much",
+            done() { return player.cm.clickmastery.gte(250) },
+            tooltip: "Get 250 clicks (+2.5% clicks)",
+            unlocked() { return hasMilestone("ma", 7) },
+        },
+        102: {
+            name: "Click Mastery Milestone 2 (Optional) - Amateur Clicker",
+            done() { return player.cm.clickmastery.gte(50000) },
+            tooltip: "Get 50,000 clicks (+5% clicks)",
+            unlocked() { return hasAchievement("a", 101) },
+        },
+        103: {
+            name: "Click Mastery Milestone 3 (Optional) - Great Clicker",
+            done() { return player.cm.clickmastery.gte(1e6) },
+            tooltip: "Get 1,000,000 clicks (Click Level scaling is reduced)",
+            unlocked() { return hasAchievement("a", 102) },
+        },
+        104: {
+            name: "Click Mastery Milestone 4 (Optional) - Hypertapper",
+            done() { return player.cm.clickmastery.gte(15e6) },
+            tooltip: "Get 15,000,000 clicks (Click Level scaling is reduced, again)",
+            unlocked() { return hasAchievement("a", 103) },
+        },
+        105: {
+            name: "Click Mastery Milestone 5 (Optional) - Maniac Tapper",
+            done() { return player.cm.clickmastery.gte(500e6) },
+            tooltip: "Get 500,000,000 clicks (+5% clicks)",
+            unlocked() { return hasAchievement("a", 104) },
+        },
+        106: {
+            name: "Click Mastery Milestone 6 (Optional) - Professional Clicker",
+            done() { return player.cm.clickmastery.gte(10e9) },
+            tooltip: "Get 10,000,000,000 clicks (Click level mult to clicks and atoms is increased)",
+            unlocked() { return hasAchievement("a", 105) },
         },
     tabFormat: [
         "blank", 

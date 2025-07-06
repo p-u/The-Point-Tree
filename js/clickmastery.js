@@ -3,7 +3,9 @@ addLayer("cm", {
         unlocked: true,
         clickmastery: new Decimal(0),
         cpc: new Decimal(1),
-        cmlvl: new Decimal(1)
+        cmlvl: new Decimal(1),
+        clmult: new Decimal(1.1),
+        clscale: new Decimal(3),
     }},
     color: "grey",
     row: "side",
@@ -19,7 +21,7 @@ addLayer("cm", {
                 }],
                 "blank",
                 ["display-text", function() {
-                    return "Your Click Level is "+ notationChooser(player.cm.cmlvl) +". This boosts clicks by " + notationChooser(new Decimal(1.1).pow(player.cm.cmlvl)) + "x. (Next Level: " + notationChooser(new Decimal(3).pow(player.cm.cmlvl.add(1)).times(50).sub(50)) + " clicks)"
+                    return "Your Click Level is "+ notationChooser(player.cm.cmlvl) +". This boosts clicks by " + notationChooser(player.cm.clmult.pow(player.cm.cmlvl)) + "x. (Next Level: " + notationChooser(player.cm.clscale.pow(player.cm.cmlvl.add(1)).times(50).sub(50)) + " clicks)"
                 }],
                 "blank",
                 ["display-text", function() {
@@ -114,6 +116,22 @@ addLayer("cm", {
                     } 
                 }],
                 "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(50e6)){
+                        return "[100M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog()) + "x. [slog(CM)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(100e6)){
+                        return "[250M Clicks] Click level mult to clicks is increased from 1.1 to 1.15. It also boosts Atoms at that rate."
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
                 "blank",
                 "clickables",
                 "blank",
@@ -123,13 +141,29 @@ addLayer("cm", {
     },
     clickcalculation() {
         player[this.layer].cpc = new Decimal(1)
-        player[this.layer].cmlvl = (((player[this.layer].clickmastery.div(50)).add(1)).log(3)).floor()
+        player[this.layer].cmlvl = (((player[this.layer].clickmastery.div(50)).add(1)).log(player.cm.clscale)).floor()
         player[this.layer].cpc = player[this.layer].cpc.times(new Decimal(1.1).pow(player.cm.cmlvl))
         if (player.cm.clickmastery.gte(2000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(40).log(8))
         if (player.cm.cmlvl.gte(6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.cmlvl.div(2))
         if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(4000).log(10))
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(20e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
+        if (player.cm.clickmastery.gte(100e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog())
+
+
+        if (player.cm.clickmastery.gte(250e6)) player.cm.clmult = new Decimal(1.15)
+
+        // main game boosts
+        if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
+        if (hasMilestone("ma", 9)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
+
+        player.cm.clscale = new Decimal(3)
+        if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)
+        if (hasAchievement("a", 102)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
+        if (hasAchievement("a", 103)) player.cm.clscale = player.cm.clscale.sub(0.05)
+        if (hasAchievement("a", 104)) player.cm.clscale = player.cm.clscale.sub(0.05)
+        if (hasAchievement("a", 105)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
+        if (hasAchievement("a", 106)) player.cm.clmult = new player.cm.clmult.add(0.015)
     },
     clickables: {
         11: {
