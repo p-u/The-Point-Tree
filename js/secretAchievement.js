@@ -2630,7 +2630,7 @@ addLayer("sa", {
         },
         22: {
             title: "MiUp 7: Point Fragment-Number",
-            description: "Point Fragments affect the ^e500K button and Minigame Points at a low rate. [NEXT UP REQUIRES eee12 Minigame Points to Unlock]",
+            description: "Point Fragments affect the ^e500K button and Minigame Points at a low rate. [NEXT UP REQUIRES eee12 Minigame Number to Unlock]",
             cost: new Decimal("ee3.5e11"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
