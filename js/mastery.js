@@ -670,7 +670,7 @@ addLayer("m", {
         if ((hasUpgrade("m", 114)) && (hasUpgrade("m", 124)) && (hasUpgrade("m", 134))) mult = mult.times(10)
         if ((hasUpgrade("m", 115)) && (hasUpgrade("m", 125)) && (hasUpgrade("m", 135))) mult = mult.times(10)
         if (hasAchievement('a', 245)) mult = mult.times(61)
-        if (inChallenge("m", 11)) mult = mult.pow(buyableEffect('era', 21))
+        if (inChallenge("m", 11)) mult = mult.pow(buyableEffect('era', 111))
         player.m.mpps = mult
         return mult
     },
