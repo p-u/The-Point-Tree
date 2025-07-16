@@ -262,7 +262,7 @@ addLayer("a", {
         },
         42: {
             name: "Isn't it supposed to be hard to get?",
-            done() { return player.en.gen7amt.gte(10) },
+            done() { return getBuyableAmount("en", 41).gte(10) },
             tooltip: "Get 10 Generator 7s",
             unlocked() { return hasAchievement("a", 36) },
         },
