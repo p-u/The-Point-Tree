@@ -14,11 +14,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.0",
+	num: "av2.0.2",
 	name: "New Layer!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av2.0.2</h3><br>
+	- Many bug fixes including: Gen 7 acts as Gen 6, Inconsistent numbering, not applying Molecule boosts, not Buy Maxxing Gen 3 <br>
+	- Added Buy Max Gen 4 in Molecule U3 <br>
 <h3>av2.0</h3><br>
 	- Added a side layer and a new layer! <br>
 	- World Tier 1, Matter Upgrade 4 and Matter Milestone 4's effects are switched <br>

@@ -98,7 +98,7 @@ addLayer("mo", {
         },
         13: {
             title: "U3: Industry",
-            description: "x4 Power, ^1.04 Power",
+            description: "x4 Power, ^1.04 Power, Buy Max Gen 4",
             cost: new Decimal(27.5),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",

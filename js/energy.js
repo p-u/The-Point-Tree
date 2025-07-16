@@ -579,7 +579,7 @@ addLayer("en", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
-                if (hasMilestone("ma", 31)) {
+                if (hasUpgrade("ma", 31)) {
                     setBuyableAmount(this.layer, this.id, player.en.points.div(400000).log(4).floor().add(1))
                 } else {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
@@ -621,7 +621,11 @@ addLayer("en", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("ma", 22))) player.en.points = player.en.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("mo", 14)) {
+                    setBuyableAmount(this.layer, this.id, player.en.points.div(80e6).log(7).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 if (hasUpgrade("en", 33)) {

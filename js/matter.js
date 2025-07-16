@@ -231,6 +231,7 @@ addLayer("ma", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
+        if (layers.mo.effect().gte(1)) mult = mult.times(layers.mo.effect())
         if (hasMilestone("w", 1)) mult = mult.times(1.5)
         if (hasUpgrade("en", 54)) mult = mult.times(2)
         if (hasUpgrade("en", 62)) mult = mult.times(3)
