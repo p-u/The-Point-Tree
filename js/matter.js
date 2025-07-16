@@ -194,13 +194,13 @@ addLayer("ma", {
             done() { return player.ma.total.gte(125000) }
         },
         7: {
-            requirementDescription: "10M total Matter",
+            requirementDescription: "1e7 total Matter",
             effectDescription: "Unlock Click Mastery (Optional, but recommended to get at least 1-5K clicks) and unlock 6 achievements related to Click Mastery.",
             unlocked() { return hasMilestone("ma", 6)},
             done() { return player.ma.total.gte(10e6) }
         },
         8: {
-            requirementDescription: "4B total Matter",
+            requirementDescription: "4e9 total Matter",
             unlocked() { return hasMilestone("ma", 7)},
             effectDescription: "Keep first 4 rows of energy upgrades on reset, x2 energy and power",
             done() { return player.ma.total.gte(4e9) }
