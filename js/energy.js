@@ -841,8 +841,8 @@ addLayer("en", {
         if (hasUpgrade("mo", 12)) mult = mult.times(3)
         if (hasUpgrade("mo", 14)) mult = mult.times(7)
         if (hasUpgrade("mo", 15)) mult = mult.times(4)
-        if (player.cm.clickmastery.gte(50e6)) mult = mult.times(player.cm.clickmastery.div(188888).log(18))
-        if (player.cm.clickmastery.gte(1000)) mult = mult.times(player.cm.clickmastery.div(5).log(11))
+        if (player.cm.clickmastery.gte(50e6)) mult = mult.times(player.cm.clickmastery.div(288888).log(28))
+        if (player.cm.clickmastery.gte(1000)) mult = mult.times(player.cm.clickmastery.div(5).log(25))
         
         return mult
     },
@@ -1011,8 +1011,8 @@ addLayer("en", {
             if (hasAchievement("a", 43)) gain = gain.times(1.2)
             if (hasUpgrade("mo", 15)) gain = gain.times(3)
             if (hasMilestone("w", 2)) gain = gain.times(new Decimal(2).pow(player.w.points))
-            if (player.cm.clickmastery.gte(200000)) gain = gain.times(player.cm.clickmastery.div(333).log(16))
-            if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(188888).log(18))
+            if (player.cm.clickmastery.gte(200000)) gain = gain.times(player.cm.clickmastery.div(33).log(333))
+            if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(288888).log(28))
             if (player.cm.clickmastery.gte(4e9)) gain = gain.times(player.cm.clickmastery.mul(888).log(88888))
             
 

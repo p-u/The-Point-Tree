@@ -208,7 +208,7 @@ addLayer("ma", {
         9: {
             requirementDescription: "2.5e15 total Matter",
             unlocked() { return hasMilestone("ma", 8)},
-            effectDescription: "Autobuy Gen 5, Buy Max Gen 3, x1.25 Click Multiplier (With this upgrade, it is now recommended to get 10K-200K Clicks), ^1.01 Power and Atoms",
+            effectDescription: "Autobuy Gen 5, Buy Max Gen 3, ^1.01 Power and Atoms",
             done() { return player.ma.total.gte(2.5e15) }
         },
         10: {
@@ -244,7 +244,7 @@ addLayer("ma", {
         if (hasUpgrade("ma", 31)) mult = mult.times(upgradeEffect("ma", 31))
         if (hasUpgrade("ma", 33)) mult = mult.times(upgradeEffect("ma", 33))
         if (hasMilestone("w", 2)) mult = mult.times(new Decimal(1.1).pow(player.w.points))
-        if (player.cm.clickmastery.gte(1e7)) mult = mult.times(player.cm.clickmastery.div(3333).log(333))
+        if (player.cm.clickmastery.gte(1e7)) mult = mult.times(player.cm.clickmastery.div(333).log(3333))
         if (player.cm.clickmastery.gte(2e9)) mult = mult.times(player.cm.clickmastery.mul(70).log(700000))
         return mult
     },

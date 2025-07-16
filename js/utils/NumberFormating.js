@@ -29,8 +29,8 @@ function standardFormat(num, precision = 3) {
         return `${m}${STANDARD_SUFFIXES[tier]}`
     }
 
-    const ONES = ["", "U", "D", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"]
-    const TENS = ["", "De", "Vg", "Tg", "Qa", "Qt", "Sxg", "Spg", "Ocg", "Ng"]
+    const ONES = ["", "U", "D", "T", "Qd", "Qt", "Sx", "Sp", "Oc", "No"]
+    const TENS = ["", "De", "Vg", "Tg", "Qa", "Qn", "Sxg", "Spg", "Ocg", "Ng"]
     const HUNDREDS = ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"]
 
     function generateSuffix(tier) {

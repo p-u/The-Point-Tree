@@ -139,9 +139,9 @@ function getPointGen() {
 	if (hasAchievement("a", 44)) gain = gain.times(1.1)
 	
 	// click mastery
-	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.log(9))
-	if (player.cm.clickmastery.gte(10000)) gain = gain.times(player.cm.clickmastery.div(77).log(14))
-	if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(188888).log(18))
+	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.log(25))
+	if (player.cm.clickmastery.gte(10000)) gain = gain.times(player.cm.clickmastery.div(77).log(47))
+	if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(288888).log(28))
 	if (player.cm.clickmastery.gte(3e9)) gain = gain.times(player.cm.clickmastery.mul(225).log(22500))
 	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
 

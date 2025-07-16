@@ -81,7 +81,7 @@ addLayer("mo", {
     upgrades: {
         11: {
             title: "U1: Basic Bonding",
-            description: "Double Energy, Atom and Click Mastery Gain",
+            description: "Double Energy, Atom and x1.25 Click Mastery Gain",
             cost: new Decimal(5),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
@@ -131,7 +131,7 @@ addLayer("mo", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
-        if (player.cm.clickmastery.gte(5.5e9)) mult = mult.times(player.cm.clickmastery.div(1234).log(1234))
+        if (player.cm.clickmastery.gte(5.5e9)) mult = mult.times(player.cm.clickmastery.div(4000).log(4000))
         if (hasUpgrade("mo", 15)) mult = mult.times(1.5)
         return mult
     },

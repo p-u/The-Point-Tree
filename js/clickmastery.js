@@ -4,7 +4,7 @@ addLayer("cm", {
         clickmastery: new Decimal(0),
         cpc: new Decimal(1),
         cmlvl: new Decimal(1),
-        clmult: new Decimal(1.1),
+        clmult: new Decimal(1.09),
         clscale: new Decimal(3),
     }},
     color: "grey",
@@ -30,7 +30,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(0)){
-                        return "[100 Clicks] Clicks boosts atom gain. Currently:" + notationChooser(player.cm.clickmastery.log(9)) + "x. [log9(CM)]"
+                        return "[100 Clicks] Clicks boosts atom gain. Currently:" + notationChooser(player.cm.clickmastery.log(25)) + "x. [log25(CM)]"
                     } else {
                         return ""
                     } 
@@ -38,7 +38,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(100)){
-                        return "[1,000 Clicks] Clicks boosts energy gain. Currently:" + notationChooser(player.cm.clickmastery.div(5).log(11)) + "x. [log11(CM/5)]"
+                        return "[1,000 Clicks] Clicks boosts energy gain. Currently:" + notationChooser(player.cm.clickmastery.div(5).log(25)) + "x. [log25(CM/5)]"
                     } else {
                         return ""
                     } 
@@ -54,7 +54,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(3000)){
-                        return "[10,000 Clicks] Clicks boosts atom gain again. Currently:" + notationChooser(player.cm.clickmastery.div(77).log(14)) + "x. [log14(CM/77)]"
+                        return "[10,000 Clicks] Clicks boosts atom gain again. Currently:" + notationChooser(player.cm.clickmastery.div(77).log(47)) + "x. [log47(CM/77)]"
                     } else {
                         return ""
                     } 
@@ -70,7 +70,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.cmlvl.gte(6)){
-                        return "[200,000 Clicks] Clicks boosts Power. Currently:" + notationChooser(player.cm.clickmastery.div(333).log(16)) + "x. [log16(CM/333)]"
+                        return "[200,000 Clicks] Clicks boosts Power. Currently:" + notationChooser(player.cm.clickmastery.div(333).log(16)) + "x. [log333(CM/33)]"
                     } else {
                         return ""
                     } 
@@ -94,7 +94,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(2.5e6)){
-                        return "[10e6 Clicks] Clicks boosts Matter gain. Currently:" + notationChooser(player.cm.clickmastery.div(3333).log(333)) + "x. [log333(CM/3333)]"
+                        return "[10e6 Clicks] Clicks boosts Matter gain. Currently:" + notationChooser(player.cm.clickmastery.div(333).log(3333)) + "x. [log333(CM/3333)]"
                     } else {
                         return ""
                     } 
@@ -110,7 +110,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(25e6)){
-                        return "[50e6 Clicks] Clicks boosts Atoms, Energy and Power. Currently:" + notationChooser(player.cm.clickmastery.div(188888).log(18)) + "x. [log18(CM/188888)]"
+                        return "[50e6 Clicks] Clicks boosts Atoms, Energy and Power. Currently:" + notationChooser(player.cm.clickmastery.div(288888).log(28)) + "x. [log28(CM/288888)]"
                     } else {
                         return ""
                     } 
@@ -118,15 +118,15 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(50e6)){
-                        return "[1e8 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog()) + "x. [slog(CM)]"
+                        return "[125e6 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog()) + "x. [slog(CM)]"
                     } else {
                         return ""
                     } 
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(100e6)){
-                        return "[2.5e8 Clicks] Click level mult to clicks is increased from 1.1 to 1.15. It also boosts Atoms at that rate."
+                    if (player.cm.clickmastery.gte(125e6)){
+                        return "[3e8 Clicks] Click level mult to clicks is increased from 1.09 to 1.12. It also boosts Atoms at that rate."
                     } else {
                         return ""
                     } 
@@ -158,7 +158,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(3e9)){
-                        return "[4e9 Clicks] Clicks boosts Energy gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(888).log(88888)) + "x. [log88888(CM*888)]"
+                        return "[4e9 Clicks] Clicks boosts Power gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(888).log(88888)) + "x. [log88888(CM*888)]"
                     } else {
                         return ""
                     } 
@@ -166,7 +166,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(4e9)){
-                        return "[5.5e9 Clicks] Clicks boosts Molecules gain. Currently:" + notationChooser(player.cm.clickmastery.div(1234).log(1234)) + "x. [log1234(CM/1234)]"
+                        return "[6e9 Clicks] Clicks boosts Molecules gain. Currently:" + notationChooser(player.cm.clickmastery.div(4000).log(4000)) + "x. [log4K(CM/4K)]"
                     } else {
                         return ""
                     } 
@@ -182,24 +182,23 @@ addLayer("cm", {
     clickcalculation() {
         player[this.layer].cpc = new Decimal(1)
         player[this.layer].cmlvl = (((player[this.layer].clickmastery.div(50)).add(1)).log(player.cm.clscale)).floor()
-        player[this.layer].cpc = player[this.layer].cpc.times(new Decimal(1.1).pow(player.cm.cmlvl))
+        player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clmult.pow(player.cm.cmlvl))
         if (player.cm.clickmastery.gte(2000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(40).log(8))
         if (player.cm.cmlvl.gte(6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.cmlvl.div(2))
         if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(4000).log(10))
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
-        if (player.cm.clickmastery.gte(100e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog())
+        if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog())
         if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
 
 
-        if (player.cm.clickmastery.gte(250e6)) player.cm.clmult = new Decimal(1.15)
+        if (player.cm.clickmastery.gte(300e6)) player.cm.clmult = new Decimal(1.12)
 
         // main game boosts
         if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
-        if (hasMilestone("ma", 9)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
-        if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(2)
+        if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
 
-        player.cm.clscale = new Decimal(3)
+        player.cm.clscale = new Decimal(3.5)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)
         if (hasAchievement("a", 102)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
         if (hasAchievement("a", 103)) player.cm.clscale = player.cm.clscale.sub(0.05)
