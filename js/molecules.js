@@ -131,7 +131,7 @@ addLayer("mo", {
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
-        if (player.cm.clickmastery.gte(5.5e9)) mult = mult.times(player.cm.clickmastery.div(4000).log(4000))
+        if (player.cm.clickmastery.gte(6e9)) mult = mult.times(player.cm.clickmastery.div(4000).log(4000))
         if (hasUpgrade("mo", 15)) mult = mult.times(1.5)
         return mult
     },
