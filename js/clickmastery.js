@@ -86,7 +86,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(500000)){
-                        return "[2.5M Clicks] Clicks boosts itself again. Currently:" + notationChooser(player.cm.clickmastery.div(7).log(777)) + "x. [log777(CM/7)]"
+                        return "[2.5e6 Clicks] Clicks boosts itself again. Currently:" + notationChooser(player.cm.clickmastery.div(7).log(777)) + "x. [log777(CM/7)]"
                     } else {
                         return ""
                     } 
@@ -94,7 +94,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(2.5e6)){
-                        return "[10M Clicks] Clicks boosts Matter gain. Currently:" + notationChooser(player.cm.clickmastery.div(3333).log(333)) + "x. [log333(CM/3333)]"
+                        return "[10e6 Clicks] Clicks boosts Matter gain. Currently:" + notationChooser(player.cm.clickmastery.div(3333).log(333)) + "x. [log333(CM/3333)]"
                     } else {
                         return ""
                     } 
@@ -102,7 +102,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(1e7)){
-                        return "[25M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(53535).log(53)) + "x. [log53(CM/53535)]"
+                        return "[25e6 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(53535).log(53)) + "x. [log53(CM/53535)]"
                     } else {
                         return ""
                     } 
@@ -110,7 +110,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(25e6)){
-                        return "[50M Clicks] Clicks boosts Atoms, Energy and Power. Currently:" + notationChooser(player.cm.clickmastery.div(188888).log(18)) + "x. [log18(CM/188888)]"
+                        return "[50e6 Clicks] Clicks boosts Atoms, Energy and Power. Currently:" + notationChooser(player.cm.clickmastery.div(188888).log(18)) + "x. [log18(CM/188888)]"
                     } else {
                         return ""
                     } 
@@ -118,7 +118,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(50e6)){
-                        return "[100M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog()) + "x. [slog(CM)]"
+                        return "[1e8 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog()) + "x. [slog(CM)]"
                     } else {
                         return ""
                     } 
@@ -126,7 +126,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(100e6)){
-                        return "[250M Clicks] Click level mult to clicks is increased from 1.1 to 1.15. It also boosts Atoms at that rate."
+                        return "[2.5e8 Clicks] Click level mult to clicks is increased from 1.1 to 1.15. It also boosts Atoms at that rate."
                     } else {
                         return ""
                     } 
@@ -134,7 +134,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(2.5e8)){
-                        return "[750M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(1212).log(1212)) + "x. [log1212(CM/1212)]"
+                        return "[7.5e8 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(1212).log(1212)) + "x. [log1212(CM/1212)]"
                     } else {
                         return ""
                     } 
@@ -142,7 +142,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(7.5e8)){
-                        return "[2B Clicks] Clicks boosts Matter gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(70).log(700000)) + "x. [log700K(CM*70)]"
+                        return "[2e9 Clicks] Clicks boosts Matter gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(70).log(700000)) + "x. [log700K(CM*70)]"
                     } else {
                         return ""
                     } 
@@ -150,7 +150,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(2e9)){
-                        return "[3B Clicks] Clicks boosts Atom gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(225).log(22500)) + "x. [log22.5K(CM*225)]"
+                        return "[3e9 Clicks] Clicks boosts Atom gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(225).log(22500)) + "x. [log22.5K(CM*225)]"
                     } else {
                         return ""
                     } 
@@ -158,7 +158,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(3e9)){
-                        return "[4B Clicks] Clicks boosts Energy gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(888).log(88888)) + "x. [log88888(CM*888)]"
+                        return "[4e9 Clicks] Clicks boosts Energy gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(888).log(88888)) + "x. [log88888(CM*888)]"
                     } else {
                         return ""
                     } 
@@ -166,7 +166,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(4e9)){
-                        return "[5.5B Clicks] Clicks boosts Molecules gain. Currently:" + notationChooser(player.cm.clickmastery.div(1234).log(1234)) + "x. [log1234(CM/1234)]"
+                        return "[5.5e9 Clicks] Clicks boosts Molecules gain. Currently:" + notationChooser(player.cm.clickmastery.div(1234).log(1234)) + "x. [log1234(CM/1234)]"
                     } else {
                         return ""
                     } 
