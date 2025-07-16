@@ -94,22 +94,22 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(2.5e6)){
-                        return "[8M Clicks] Clicks boosts Matter gain. Currently:" + notationChooser(player.cm.clickmastery.div(3333).log(333)) + "x. [log333(CM/3333)]"
+                        return "[10M Clicks] Clicks boosts Matter gain. Currently:" + notationChooser(player.cm.clickmastery.div(3333).log(333)) + "x. [log333(CM/3333)]"
                     } else {
                         return ""
                     } 
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(8e6)){
-                        return "[20M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(53535).log(53)) + "x. [log53(CM/53535)]"
+                    if (player.cm.clickmastery.gte(1e7)){
+                        return "[25M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(53535).log(53)) + "x. [log53(CM/53535)]"
                     } else {
                         return ""
                     } 
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(20e6)){
+                    if (player.cm.clickmastery.gte(25e6)){
                         return "[50M Clicks] Clicks boosts Atoms, Energy and Power. Currently:" + notationChooser(player.cm.clickmastery.div(188888).log(18)) + "x. [log18(CM/188888)]"
                     } else {
                         return ""
@@ -132,6 +132,46 @@ addLayer("cm", {
                     } 
                 }],
                 "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2.5e8)){
+                        return "[750M Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(1212).log(1212)) + "x. [log1212(CM/1212)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(7.5e8)){
+                        return "[2B Clicks] Clicks boosts Matter gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(70).log(700000)) + "x. [log700K(CM*70)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2e9)){
+                        return "[3B Clicks] Clicks boosts Atom gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(225).log(22500)) + "x. [log22.5K(CM*225)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(3e9)){
+                        return "[4B Clicks] Clicks boosts Energy gain again. Currently:" + notationChooser(player.cm.clickmastery.mul(888).log(88888)) + "x. [log88888(CM*888)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(4e9)){
+                        return "[5.5B Clicks] Clicks boosts Molecules gain. Currently:" + notationChooser(player.cm.clickmastery.div(1234).log(1234)) + "x. [log1234(CM/1234)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
                 "blank",
                 "clickables",
                 "blank",
@@ -147,8 +187,9 @@ addLayer("cm", {
         if (player.cm.cmlvl.gte(6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.cmlvl.div(2))
         if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(4000).log(10))
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
-        if (player.cm.clickmastery.gte(20e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
+        if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
         if (player.cm.clickmastery.gte(100e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog())
+        if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
 
 
         if (player.cm.clickmastery.gte(250e6)) player.cm.clmult = new Decimal(1.15)
@@ -156,6 +197,7 @@ addLayer("cm", {
         // main game boosts
         if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
         if (hasMilestone("ma", 9)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
+        if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(2)
 
         player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)
@@ -163,7 +205,7 @@ addLayer("cm", {
         if (hasAchievement("a", 103)) player.cm.clscale = player.cm.clscale.sub(0.05)
         if (hasAchievement("a", 104)) player.cm.clscale = player.cm.clscale.sub(0.05)
         if (hasAchievement("a", 105)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
-        if (hasAchievement("a", 106)) player.cm.clmult = new player.cm.clmult.add(0.015)
+        if (hasAchievement("a", 106)) player.cm.clmult = player.cm.clmult.add(0.015)
     },
     clickables: {
         11: {

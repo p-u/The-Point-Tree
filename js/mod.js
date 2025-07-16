@@ -3,7 +3,7 @@ let modInfo = {
 	id: "RD82:WG",
 	author: "randim82",
 	pointsName: "Atoms",
-	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js"],
+	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js", "content_features.js", "molecules.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -14,11 +14,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av1.4",
-	name: "World Tier 3",
+	num: "av2.0",
+	name: "New Layer!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av2.0</h3><br>
+	- Added a side layer and a new layer! <br>
+	- World Tier 1, Matter Upgrade 4 and Matter Milestone 4's effects are switched <br>
+	- Matter Milestone 4 got a price nerf <br>
+	- Heavily buffed Matter Upgrade 13 <br>
+	- Added 5 Click Mastery Milestones <br>
+	- Added 1 savebank, 1 generator and 1 infobox <br>
+	- fixed a bug <br>
+	- Added Unlocking of milestones <br>
+	- Added 3 milestones and 13 upgrades <br>
+	- Endgame: Molecule U5 <br>
 <h3>av1.4</h3><br>
 	- You can get World Tier 3, and there is a milestone for it <br>
 	- Added 2 new click mastery milestones and 1 new matter milestone <br>
@@ -101,29 +112,34 @@ function getPointGen() {
 	if (hasUpgrade("en", 52)) gain = gain.times(50)
 	if (hasUpgrade("ma", 12)) gain = gain.times(4)
 	if (hasUpgrade("ma", 14)) gain = gain.times(8)
-	if (hasMilestone("ma", 4)) gain = gain.times(2.5)
+	if (hasMilestone("w", 1)) gain = gain.times(5)
 	if (hasUpgrade("en", 54)) gain = gain.times(2)
 	if (hasUpgrade("en", 55)) gain = gain.times(20)
-	if (hasUpgrade("ma", 23)) gain = gain.times(8)
+	if (hasUpgrade("ma", 23)) gain = gain.times(4)
 	if (hasUpgrade("en", 65)) gain = gain.times(1.2)
+	if (hasUpgrade("en", 71)) gain = gain.times(7)
+	if (hasUpgrade("en", 74)) gain = gain.times(100)
+	if (hasUpgrade("mo", 11)) gain = gain.times(2)
+	if (hasUpgrade("mo", 12)) gain = gain.times(3)
+	if (hasUpgrade("en", 75)) gain = gain.times(8)
+	if (hasUpgrade("mo", 15)) gain = gain.times(5)
 	if (hasMilestone("w", 2)) gain = gain.times(new Decimal(3).pow(player.w.points))
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
-	if (hasMilestone("a", 7)) gain = gain.times(1e6)
-	if (hasMilestone("a", 8)) gain = gain.times(1e25)
-	if (hasMilestone("a", 10)) gain = gain.times(1e100)
 	if (hasAchievement("a", 12)) gain = gain.times(1.05)
 	if (hasAchievement("a", 16)) gain = gain.times(1.05)
 	if (hasAchievement("a", 23)) gain = gain.times(1.08)
 	if (hasAchievement("a", 31)) gain = gain.times(1.02)
 	if (hasAchievement("a", 32)) gain = gain.times(1.025)
 	if (hasAchievement("a", 35)) gain = gain.times(1.05)
+	if (hasAchievement("a", 44)) gain = gain.times(1.1)
 	
 	// click mastery
 	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.log(9))
 	if (player.cm.clickmastery.gte(10000)) gain = gain.times(player.cm.clickmastery.div(77).log(14))
 	if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(188888).log(18))
+	if (player.cm.clickmastery.gte(3e9)) gain = gain.times(player.cm.clickmastery.mul(225).log(22500))
 	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
 
 
@@ -131,6 +147,7 @@ function getPointGen() {
 	if (hasUpgrade("ma", 13)) gain = gain.pow(1.05)
 	if (hasUpgrade("ma", 24)) gain = gain.pow(1.029)
 	if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
+	if (hasUpgrade("en", 73)) gain = gain.pow(1.03)
 	return gain
 }
 
@@ -145,7 +162,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return (hasUpgrade("ma", 32) && player.en.gen7amt.gte(2))
+	return hasUpgrade("mo", 15)
 }
 
 

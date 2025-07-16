@@ -29,7 +29,7 @@ addLayer("w", {
     milestones: {
         1: {
             requirementDescription: "World Tier 2",
-            effectDescription: "Keep Generator 4 on reset, x1.5 Matter",
+            effectDescription: "x5 Atoms, x1.5 Matter",
             done() { return player.w.points.gte(2) }
         },
         2: {
