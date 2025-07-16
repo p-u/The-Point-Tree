@@ -913,7 +913,7 @@ addLayer("en", {
                 player.en.gen7amt = player.en.gen7amt.add(player.en.gen7gain.times(diff))
                 player.en.gen7amt = player.en.gen7amt.add(getBuyableAmount("en", 41))
             } else {
-                player.en.gen6amt = getBuyableAmount("en", 41)
+                player.en.gen7amt = getBuyableAmount("en", 41)
             }
 
 
