@@ -19,8 +19,6 @@ function standardFormat(num, precision = 3) {
 
     const STANDARD_SUFFIXES = [
         "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No",
-        "De", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod",
-        "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg", "Novg"
     ];
 
     let e = num.log10().floor().toNumber();
@@ -103,9 +101,9 @@ function standardFormat(num, precision = 3) {
     if (tier < 1e27) {
         let m = num.div(Decimal.pow(10, tier * 3)).toStringWithDecimalPlaces(precision);
         return `${m}${generateSuffix(tier)}`
+    } else {
+        return format(num, precision)
     }
-    
-    return exponentialFormat(num, precision, true)
 }
 
 

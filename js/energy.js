@@ -484,7 +484,7 @@ addLayer("en", {
                 return new Decimal(200).mul(Decimal.pow(1.5, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 1."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 1."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 1 amount multiply Power generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -525,7 +525,7 @@ addLayer("en", {
                 return new Decimal(4000).mul(Decimal.pow(2.5, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 2."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 2."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 2 amount multiply Generator 1 generation "
                 if ((hasMilestone("mo", 2)) && (hasUpgrade("en", 33))) dis = dis + "and power gain "
                 dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
@@ -569,7 +569,7 @@ addLayer("en", {
                 return new Decimal(400000).mul(Decimal.pow(4, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 3."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 3."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 3 amount multiply Generator 2 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -611,7 +611,7 @@ addLayer("en", {
                 return new Decimal(80e6).mul(Decimal.pow(7, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 4."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 4."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 4 amount multiply Generator 3 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -653,7 +653,7 @@ addLayer("en", {
                 return new Decimal(2.5e13).mul(Decimal.pow(10, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 5."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 5."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 5 amount multiply Generator 4 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -691,7 +691,7 @@ addLayer("en", {
                 return new Decimal(1e27).mul(Decimal.pow(1000, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 6."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 6."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 6 amount multiply Generator 5 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -731,7 +731,7 @@ addLayer("en", {
                 return new Decimal(g7cost).mul(Decimal.pow(1e7, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 7."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 7."
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 7 amount multiply Generator 6 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
