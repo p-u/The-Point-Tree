@@ -19,9 +19,9 @@ addLayer("mo", {
                 ["display-text",
                     function(){
                         let a = ""
-                        a = a + `You have resetted for a total of
+                        a = a + `You have 
                         <h2><span style="color: #A3D5FF; text-shadow: 0px 0px 10px #FFFFFF; font-family: Lucida Console, Courier New, monospace">
-                            ${notationChooser(player.mo.points)}</span></h2> Molecules, which multiplies Matter gain by `
+                            ${notationChooser(player.mo.points)}</span></h2> Molecule Bonds, which multiplies Matter gain by `
                         a = a + notationChooser(tmp[this.layer].effect) + "x."
                         return a
                     }
@@ -54,7 +54,7 @@ addLayer("mo", {
     },
     color: "#A3D5FF",
     requires: new Decimal(1e150), // Can be a function that takes requirement increases into account
-    resource: "Molecules", // Name of currency
+    resource: "Molecule Bonds", // Name of currency
     baseResource: "Atoms", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -62,20 +62,20 @@ addLayer("mo", {
     infoboxes: {
         mol: {
             title: "Molecules",
-            body() { return "The second layer. Molecules resets all previous progress, but don't fret, Click Mastery and Achievements stay! Molecule Milestone 1 is OP, cherish that! Gain molecules a second based on your total resetted molecules / 10. This is a big step in your journey to grow the world. Oh, and also, Molecules boost Matter gain." },
+            body() { return "The second layer. Molecules resets all previous progress, but don't fret, Click Mastery and Achievements stay! Molecule Milestone 1 is OP, cherish that! Gain molecules a second based on Molecule Bonds / 10. This is a big step in your journey to grow the world. Oh, and also, Molecules boost Matter gain." },
         },
     },
     milestones: {
         1: {
-            requirementDescription: "1 total resetted molecules",
+            requirementDescription: "1 Molecule Bonds",
             effectDescription: "Generate 10% of Energy reset and 1% of Matter reset a sec!",
-            done() { return player.mo.total.gte(1) }
+            done() { return player.mo.points.gte(1) }
         },
         2: {
-            requirementDescription: "4 total resetted molecules [VERY OP]",
+            requirementDescription: "4 Molecule Bonds [VERY OP]",
             effectDescription: "Gen 2's boost also boosts Power gain (Requires Generator² Upgrade).",
             unlocked() { return hasMilestone("mo", 1)},
-            done() { return player.mo.total.gte(4) }
+            done() { return player.mo.points.gte(4) }
         },
     },
     upgrades: {
