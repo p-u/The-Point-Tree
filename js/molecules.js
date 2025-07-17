@@ -81,7 +81,7 @@ addLayer("mo", {
     upgrades: {
         11: {
             title: "U1: Basic Bonding",
-            description: "Double Energy, Atom and x1.25 Click Mastery Gain",
+            description: "Double Energy, Atom and x1.5 Click Mastery Gain",
             cost: new Decimal(5),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",

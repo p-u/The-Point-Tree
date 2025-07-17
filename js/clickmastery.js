@@ -196,9 +196,9 @@ addLayer("cm", {
 
         // main game boosts
         if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
-        if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
+        if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.5)
 
-        player.cm.clscale = new Decimal(3.5)
+        player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)
         if (hasAchievement("a", 102)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
         if (hasAchievement("a", 103)) player.cm.clscale = player.cm.clscale.sub(0.05)
