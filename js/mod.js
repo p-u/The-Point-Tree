@@ -14,11 +14,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.0.2",
+	num: "av2.0.4",
 	name: "New Layer!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av2.0.4</h3><br>
+	- Buffed Click Mastery gain, but not as strong as before <br>
+	- Changed 'total resetted molecules' to 'molecule bonds' <br>
+<h3>av2.0.3</h3><br>
+	- Heavily nerfed Click Mastery gain and effect (at 10B Clicks, /2 Atom-Power, -20% Matter and Molecules) <br>
 <h3>av2.0.2</h3><br>
 	- Many bug fixes including: Gen 7 acts as Gen 6, Inconsistent numbering, not applying Molecule boosts, not Buy Maxxing Gen 3 <br>
 	- Added Buy Max Gen 4 in Molecule U3 <br>
