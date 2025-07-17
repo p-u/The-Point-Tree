@@ -30,7 +30,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(0)){
-                        return "[100 Clicks] Clicks boosts atom gain. Currently:" + notationChooser(player.cm.clickmastery.log(25)) + "x. [log25(CM)]"
+                        return "[100 Clicks] Clicks boosts atom gain. Currently:" + notationChooser(player.cm.clickmastery.mul(25).log(25)) + "x. [log25(CM*25)]"
                     } else {
                         return ""
                     } 
@@ -38,7 +38,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(100)){
-                        return "[1,000 Clicks] Clicks boosts energy gain. Currently:" + notationChooser(player.cm.clickmastery.div(5).log(25)) + "x. [log25(CM/5)]"
+                        return "[1,000 Clicks] Clicks boosts energy gain. Currently:" + notationChooser(player.cm.clickmastery.mul(5).log(25)) + "x. [log25(CM*5)]"
                     } else {
                         return ""
                     } 
@@ -54,7 +54,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(3000)){
-                        return "[10,000 Clicks] Clicks boosts atom gain again. Currently:" + notationChooser(player.cm.clickmastery.div(77).log(47)) + "x. [log47(CM/77)]"
+                        return "[10,000 Clicks] Clicks boosts atom gain again. Currently:" + notationChooser(player.cm.clickmastery.log(47)) + "x. [log47(CM)]"
                     } else {
                         return ""
                     } 

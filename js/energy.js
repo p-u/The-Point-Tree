@@ -842,7 +842,7 @@ addLayer("en", {
         if (hasUpgrade("mo", 14)) mult = mult.times(7)
         if (hasUpgrade("mo", 15)) mult = mult.times(4)
         if (player.cm.clickmastery.gte(50e6)) mult = mult.times(player.cm.clickmastery.div(288888).log(28))
-        if (player.cm.clickmastery.gte(1000)) mult = mult.times(player.cm.clickmastery.div(5).log(25))
+        if (player.cm.clickmastery.gte(1000)) mult = mult.times(player.cm.clickmastery.mul(5).log(25))
         
         return mult
     },
