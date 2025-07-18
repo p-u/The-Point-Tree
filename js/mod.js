@@ -8,7 +8,7 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 0,  // In hours
+	offlineLimit: 0.5,  // In hours
 	// remember to change to 0 in dev
 }
 
