@@ -158,7 +158,6 @@ function getPointGen() {
 	if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
 	if (hasUpgrade("en", 73)) gain = gain.pow(1.03)
 	// nerf
-	if (player.points.gte(new Decimal(2).pow(1024)))gain = gain.pow(player.points.slog().minus(new Decimal(2).pow(1024).slog()))
 	return gain
 }
 
