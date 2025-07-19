@@ -256,11 +256,16 @@ addLayer("ma", {
         let effectBoost = 1.7
         if (hasUpgrade("ma", 25)) effectBoost = 1.85
         let eff = player.ma.points.add(1).pow(effectBoost)
-        return eff
+        let sc = 0.7
+        softcappedEffect = softcap(eff, new Decimal(1e150), new Decimal(sc))
+        return softcappedEffect
     },
     effectDescription() {
         let softcapDescription = ""
         let layerEffect = tmp[this.layer].effect
+        if (layerEffect.gte(new Decimal(1e150)) ) {
+            softcapDescription = " (Softcapped at e150x)"
+        }
         let des = "which is boosting atoms by x" + notationChooser(layerEffect) + softcapDescription
         return des;
     },

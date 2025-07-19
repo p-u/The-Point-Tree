@@ -14,15 +14,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.0.4",
+	num: "av2.0.5",
 	name: "New Layer!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av2.0.5</h3><br>
+	- Added a softcap to Matter Effect and a nerf to atoms after e308 <br>
 <h3>av2.0.4</h3><br>
 	- Buffed early Click Mastery milestones <br>
 	- Buffed Click Mastery gain, but not as strong as before <br>
 	- Changed 'total resetted molecules' to 'molecule bonds' <br>
+	- Bug fixes <br>
 <h3>av2.0.3</h3><br>
 	- Heavily nerfed Click Mastery gain and effect (at 10B Clicks, /2 Atom-Power, -20% Matter and Molecules) <br>
 <h3>av2.0.2</h3><br>
@@ -158,6 +161,7 @@ function getPointGen() {
 	if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
 	if (hasUpgrade("en", 73)) gain = gain.pow(1.03)
 	// nerf
+	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(1).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
 	return gain
 }
 
@@ -167,8 +171,16 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-
+	function() {
+		display = ""
+		if (player.points.gte(new Decimal(2).pow(1024))) {
+			let overloadPower = (new Decimal(1).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
+			display = "<span style='color: red;'>Due to Overload after 2^1024 Atoms, Atoms are raised to the power of " + format(overloadPower, 5) + ". </span>"
+		}
+		return display
+	}
 ]
+
 
 // Determines when the game "ends"
 function isEndgame() {
