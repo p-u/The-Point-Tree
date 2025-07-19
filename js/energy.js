@@ -933,27 +933,15 @@ addLayer("en", {
 
             // generation adding
             if (getBuyableAmount("en", 32).gte(1)) {
-                if (!(hasUpgrade("ma", 21))) {
-                    player.en.gen5amt = player.en.gen5amt.sub(getBuyableAmount("en", 31))
-                } else {
-                    player.en.gen5amt = player.en.gen5amt.sub(getBuyableAmount("en", 31).max(10))
-                }
+                player.en.gen5amt = player.en.gen5amt.sub(getBuyableAmount("en", 31))
                 player.en.gen5gain = player.en.gen6amt.times(player.en.gen6multi).mul(1.1)
                 player.en.gen5amt = player.en.gen5amt.add(player.en.gen5gain.times(diff))
-                if (!(hasUpgrade("ma", 21))) {
-                    player.en.gen5amt = player.en.gen5amt.add(getBuyableAmount("en", 31))
-                } else {
-                    player.en.gen5amt = player.en.gen5amt.add(getBuyableAmount("en", 31).max(10))
-                }
+                player.en.gen5amt = player.en.gen5amt.add(getBuyableAmount("en", 31))
             } else {
-                if (!(hasUpgrade("ma", 21))) {
-                    player.en.gen5amt = getBuyableAmount("en", 31)
-                } else {
-                    player.en.gen5amt = getBuyableAmount("en", 31).max(10)
-                }
+                player.en.gen5amt = getBuyableAmount("en", 31)
             }
 
-            if (getBuyableAmount("en", 31).gte(1) || hasMilestone("w", 1)) {
+            if (getBuyableAmount("en", 31).gte(1)) {
                 player.en.gen4amt = player.en.gen4amt.sub(getBuyableAmount("en", 22))
                 player.en.gen4gain = player.en.gen5amt.times(player.en.gen5multi).div(1.5)
                 player.en.gen4amt = player.en.gen4amt.add(player.en.gen4gain.times(diff))
@@ -962,7 +950,7 @@ addLayer("en", {
                 player.en.gen4amt = getBuyableAmount("en", 22)
             }
 
-            if (getBuyableAmount("en", 22).gte(1) || hasMilestone("w", 1)) {
+            if (getBuyableAmount("en", 22).gte(1)) {
                 player.en.gen3amt = player.en.gen3amt.sub(getBuyableAmount("en", 21))
                 player.en.gen3gain = player.en.gen4amt.times(player.en.gen4multi).div(1.5)
                 player.en.gen3amt = player.en.gen3amt.add(player.en.gen3gain.times(diff))
@@ -971,7 +959,7 @@ addLayer("en", {
                 player.en.gen3amt = getBuyableAmount("en", 21)
             }
 
-            if (getBuyableAmount("en", 21).gte(1) || hasMilestone("w", 1)) {
+            if (getBuyableAmount("en", 21).gte(1)) {
                 player.en.gen2amt = player.en.gen2amt.sub(getBuyableAmount("en", 12))
                 player.en.gen2gain = player.en.gen3amt.times(player.en.gen3multi.div(1.2))
                 player.en.gen2amt = player.en.gen2amt.add(player.en.gen2gain.times(diff))
@@ -980,7 +968,7 @@ addLayer("en", {
                 player.en.gen2amt = getBuyableAmount("en", 12)
             }
 
-            if (getBuyableAmount("en", 12).gte(1) || hasMilestone("w", 1)) {
+            if (getBuyableAmount("en", 12).gte(1)) {
                 player.en.gen1amt = player.en.gen1amt.sub(getBuyableAmount("en", 11))
                 player.en.gen1gain = player.en.gen2amt.times(player.en.gen2multi)
                 player.en.gen1amt = player.en.gen1amt.add(player.en.gen1gain.times(diff))
