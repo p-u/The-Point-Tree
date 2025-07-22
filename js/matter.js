@@ -13,7 +13,9 @@ addLayer("ma", {
        return visible
      },
     passiveGeneration() {
-        if (hasMilestone("mo", 1)) return 0.01
+        if (hasMilestone("mo", 3)) return 0.025
+        if (hasUpgrade("mo", 14)) return 0.01
+        if (hasMilestone("mo", 1)) return 0.005
         return 0
     },
     tabFormat: {
@@ -108,13 +110,22 @@ addLayer("ma", {
             description: "Increases Matter gain based on Energy",
             cost: new Decimal(5e12),
             effect() {
-                return player.en.points.log10().div(10)
+                if (hasUpgrade("en", 82)) {
+                    return player.en.points.log(2).div(10)
+                } else {
+                    return player.en.points.log10().div(10)
+                }
             },
             effectDisplay() {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x"
             },
             tooltip() {
-                return "Formula: log10(Energy)/10"
+                if (hasUpgrade("en", 82)) {
+                    return "Formula: log2(Energy)/10"
+                }
+                else {
+                    return "Formula: log10(Energy)/10"
+                }
             },
             unlocked() { return hasUpgrade("ma", 25) }, 
         },
@@ -217,6 +228,18 @@ addLayer("ma", {
             unlocked() { return hasMilestone("ma", 9)},
             done() { return player.ma.total.gte(2e20) }
         },
+        11: {
+            requirementDescription: "7.8e56 total Matter",
+            effectDescription: "Autobuy Gen 6, x3 Energy and Atoms, x2 Matter and Power",
+            unlocked() { return hasMilestone("ma", 10)},
+            done() { return player.ma.total.gte(7.8e56) }
+        },
+        12: {
+            requirementDescription: "1.6e116 total Matter",
+            effectDescription: "Matter softcap is reduced.",
+            unlocked() { return hasMilestone("ma", 11)},
+            done() { return player.ma.total.gte(1.6e116) }
+        },
     },
     infoboxes: {
         mat: {
@@ -244,8 +267,13 @@ addLayer("ma", {
         if (hasUpgrade("ma", 31)) mult = mult.times(upgradeEffect("ma", 31))
         if (hasUpgrade("ma", 33)) mult = mult.times(upgradeEffect("ma", 33))
         if (hasMilestone("w", 2)) mult = mult.times(new Decimal(1.1).pow(player.w.points))
+        if (hasMilestone("ma", 11)) mult = mult.times(2)
+        if (hasUpgrade("en", 82)) mult = mult.times(3)
+        if ((hasUpgrade("en", 81)) && (hasUpgrade("mo", 23))) mult = mult.times(19).div(4)
+        if (hasUpgrade("en", 83)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomatter))
         if (player.cm.clickmastery.gte(1e7)) mult = mult.times(player.cm.clickmastery.div(333).log(3333))
         if (player.cm.clickmastery.gte(2e9)) mult = mult.times(player.cm.clickmastery.mul(70).log(700000))
+        if (hasUpgrade("en", 85)) mult = mult.times(1.8)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -257,6 +285,7 @@ addLayer("ma", {
         if (hasUpgrade("ma", 25)) effectBoost = 1.85
         let eff = player.ma.points.add(1).pow(effectBoost)
         let sc = 0.7
+        if (hasMilestone("ma", 11)) sc = 0.73
         softcappedEffect = softcap(eff, new Decimal(1e150), new Decimal(sc))
         return softcappedEffect
     },

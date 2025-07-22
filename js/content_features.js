@@ -8,7 +8,7 @@ addLayer("cf", {
     }},
     layerShown(){
         let visible = false
-        if (hasMilestone('ma', 10)) visible = true
+        if ((hasMilestone('ma', 10)) || player.mo.points.gte(1)) visible = true
        return visible
     },
     color: "#FFFFFF",
@@ -31,6 +31,11 @@ addLayer("cf", {
             requirementDescription: "e150 Atoms",
             effectDescription: "Unlock the next layer...",
             done() { return player.points.gte("e150") }
+        },
+        2: {
+            requirementDescription: "2^1024 Atoms - Start of Overload",
+            effectDescription: "Unlock a new feature in the Molecules Layer. Extend Energy and Molecule Upgrades. Add a nerf. Double Click Mastery gain (Recommended to get 10M Clicks).",
+            done() { return player.points.gte(new Decimal(2).pow(1024)) }
         },
     },
     tabFormat: {

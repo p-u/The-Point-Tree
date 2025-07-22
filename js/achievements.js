@@ -284,11 +284,65 @@ addLayer("a", {
             tooltip: "Get 100 Molecules (+10% Atoms gain)",
             unlocked() { return hasAchievement("a", 43) },
         },
+        45: {
+            name: "200 Molecule Bonds",
+            done() { return player.mo.points.gte(200) },
+            tooltip: "Get 200 Molecule Bonds (+10% Atoms gain)",
+            unlocked() { return hasAchievement("a", 43) },
+        },
+        46: {
+            name: "Get a Booster",
+            done() { return getBuyableAmount("mo", 11).gte(1) },
+            tooltip: "Get 1 Booster 1 (+10% Power gain)",
+            unlocked() { return hasAchievement("a", 43) },
+            style() {
+                return {
+                "border-color": "blue",
+                "border-width": "3px"
+                }
+            }
+        },
+        51: {
+            name: "Get 1 T2-Booster",
+            done() { return getBuyableAmount("mo", 12).gte(1) },
+            tooltip: "Get 1 Booster 2 (+2% Power gain)",
+            unlocked() { return hasAchievement("a", 46) },
+        },
+        52: {
+            name: "Get 2 T2-Boosters",
+            done() { return getBuyableAmount("mo", 12).gte(2) },
+            tooltip: "Get 2 Booster 2 (+4% Power gain)",
+            unlocked() { return hasAchievement("a", 46) },
+        },
+        53: {
+            name: "Get 1 T3-Booster",
+            done() { return getBuyableAmount("mo", 21).gte(1) },
+            tooltip: "Get 1 Booster 3 (+3% Power gain)",
+            unlocked() { return hasAchievement("a", 46) },
+        },
+        54: {
+            name: "Get 2 T3-Boosters",
+            done() { return getBuyableAmount("mo", 21).gte(2) },
+            tooltip: "Get 2 Booster 3 (+6% Power gain)",
+            unlocked() { return hasAchievement("a", 46) },
+        },
+        55: {
+            name: "Get 1 T4-Booster",
+            done() { return getBuyableAmount("mo", 22).gte(1) },
+            tooltip: "Get 1 Booster 4 (+4% Power gain)",
+            unlocked() { return hasAchievement("a", 46) },
+        },
+        56: {
+            name: "Get 2 T4-Boosters",
+            done() { return getBuyableAmount("mo", 22).gte(2) },
+            tooltip: "Get 2 Booster 4 (+8% Power gain)",
+            unlocked() { return hasAchievement("a", 46) },
+        },
         101: {
             name: "Click Mastery Milestone 1 (Optional) - Even a baby can click that much",
             done() { return player.cm.clickmastery.gte(250) },
             tooltip: "Get 250 clicks (+2.5% clicks)",
-            unlocked() { return hasMilestone("ma", 7) },
+            unlocked() { return (hasMilestone("ma", 7) || hasAchievement("a", 101)) },
         },
         102: {
             name: "Click Mastery Milestone 2 (Optional) - Amateur Clicker",

@@ -14,24 +14,37 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.0.5",
-	name: "New Layer!",
+	num: "av2.1",
+	name: "New Feature!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h3>av2.0.5</h3><br>
+<h3>av2.1</h3><br>
+	- Added a new feature in the Molecule layer, unlocked by getting 1.97e308 Atoms! <br>
+	- Added 4 of that new feature <br>
+	- Added 8 Achievements and 1 Infobox <br>
+	- Added 7 milestones, 9 upgrades and 1 Click Mastery Milestone <br>
+	- Some bug fixes and balance changes <br>
+	- Endgame: 1e12 Molecules/e550 Atoms <br>
+	- Is World Tier 4 possible? <br>
+<h4>av2.0.6</h4>
+	- Nerfed molecule effect exponent slightly <br>
+	- Nerfed Molecule MS1 Matter Gen%, increased to 1% at MoU4 <br>
+	- Updated first infobox <br>
+	- Your atoms now cannot be over the next world tier requirement <br>
+<h4>av2.0.5</h4>
 	- Added a softcap to Matter Effect and a nerf to atoms after e308 <br>
-<h3>av2.0.4</h3><br>
+<h4>av2.0.4</h4>
 	- Buffed early Click Mastery milestones <br>
 	- Buffed Click Mastery gain, but not as strong as before <br>
 	- Changed 'total resetted molecules' to 'molecule bonds' <br>
 	- Bug fixes <br>
-<h3>av2.0.3</h3><br>
+<h4>av2.0.3</h4>
 	- Heavily nerfed Click Mastery gain and effect (at 10B Clicks, /2 Atom-Power, -20% Matter and Molecules) <br>
-<h3>av2.0.2</h3><br>
+<h4>av2.0.2</h4>
 	- Many bug fixes including: Gen 7 acts as Gen 6, Inconsistent numbering, not applying Molecule boosts, not Buy Maxxing Gen 3 <br>
 	- Added Buy Max Gen 4 in Molecule U3 <br>
-<h3>av2.0</h3><br>
+<h2>av2.0</h2><br>
 	- Added a side layer and a new layer! <br>
 	- World Tier 1, Matter Upgrade 4 and Matter Milestone 4's effects are switched <br>
 	- Matter Milestone 4 got a price nerf <br>
@@ -74,7 +87,7 @@ let changelog = `<h1>Changelog:</h1><br>
 	- 3 more milestones <br>
 	- 2 more achievements <br>
 	- Endgame: 25,000 total Matter <br>
-<h2>av1.0</h2><br>
+<h1>av1.0</h1><br>
 	- A total of 26 upgrades!<br>
 	- 4 total main currencies <br>
 	- 3 milestones <br>
@@ -113,6 +126,7 @@ function getPointGen() {
 	if (hasUpgrade("en", 25)) gain = gain.times(player.en.power.add(1).pow(player.en.powerexpoatom))
 	if (hasUpgrade("en", 22)) gain = gain.times(upgradeEffect("en", 22))
 	if (hasUpgrade("en", 41)) gain = gain.times(upgradeEffect("en", 41))
+	if (hasUpgrade("en", 84)) gain = gain.times(upgradeEffect("en", 84))
 	
 	if (hasUpgrade("en", 12)) gain = gain.times(1.5)
 	if (hasUpgrade("en", 13)) gain = gain.times(1.75)
@@ -136,6 +150,13 @@ function getPointGen() {
 	if (hasUpgrade("en", 75)) gain = gain.times(8)
 	if (hasUpgrade("mo", 15)) gain = gain.times(5)
 	if (hasMilestone("w", 2)) gain = gain.times(new Decimal(3).pow(player.w.points))
+	if (hasMilestone("ma", 11)) gain = gain.times(3)
+	if (hasUpgrade("mo", 23)) {
+		if (hasUpgrade("en", 81)) gain = gain.times(new Decimal(1.4).pow(19))
+	} else{
+		if (hasUpgrade("en", 81)) gain = gain.times(13)
+	}
+	if (hasUpgrade("en", 85)) gain = gain.times(88)
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
@@ -146,6 +167,7 @@ function getPointGen() {
 	if (hasAchievement("a", 32)) gain = gain.times(1.025)
 	if (hasAchievement("a", 35)) gain = gain.times(1.05)
 	if (hasAchievement("a", 44)) gain = gain.times(1.1)
+	if (hasAchievement("a", 46)) gain = gain.times(1.1)
 	
 	// click mastery
 	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.times(25).log(25))
@@ -160,8 +182,13 @@ function getPointGen() {
 	if (hasUpgrade("ma", 24)) gain = gain.pow(1.029)
 	if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
 	if (hasUpgrade("en", 73)) gain = gain.pow(1.03)
+	if (hasMilestone("mo", 3)) gain = gain.pow(1.0175)
 	// nerf
-	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(1).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
+	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
+	if (player.points.gte(tmp.w.nextAt)) {
+		player.points = tmp.w.nextAt
+		gain = new Decimal(0) // if you reach the next world tier, you get no gain
+	}
 	return gain
 }
 
@@ -174,7 +201,7 @@ var displayThings = [
 	function() {
 		display = ""
 		if (player.points.gte(new Decimal(2).pow(1024))) {
-			let overloadPower = (new Decimal(1).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
+			let overloadPower = (new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
 			display = "<span style='color: red;'>Due to Overload after 2^1024 Atoms, Atoms are raised to the power of " + format(overloadPower, 5) + ". </span>"
 		}
 		return display
@@ -184,7 +211,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return hasUpgrade("mo", 15)
+	return player.mo.points.gte(1e12)
 }
 
 
