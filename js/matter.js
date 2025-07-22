@@ -18,6 +18,31 @@ addLayer("ma", {
         if (hasMilestone("mo", 1)) return 0.005
         return 0
     },
+    doReset(ma) {
+        // Stage 1: Prevent resetting if the layer is too high
+        if (layers[ma].row <= this.row) return;
+    
+        // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
+        let keptUpgrades = [];
+        for(i=1;i<6;i++){ //rows
+            for(v=1;v<3;v++){ //columns
+              if ((hasMilestone('mo', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=3;v<4;v++){ //columns
+              if ((hasMilestone('mo', 6)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+        }
+        let keep = [];
+        if (hasMilestone("ma", 4)) {
+            keep.push("gen4amt");
+        }
+    
+        // Stage 4: Perform the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5: Add back the specific subfeatures saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    },    
     tabFormat: {
         "Main tab": {
             content: [

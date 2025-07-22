@@ -126,19 +126,19 @@ addLayer("mo", {
         },
         4: {
             requirementDescription: "2M Molecule Bonds",
-            effectDescription: "Gen 3's boost also boosts Power gain (Requires Generator² Upgrade).",
+            effectDescription: "Gen 3's boost also boosts Power gain (Requires Generator² Upgrade). Keep the first and second row of Matter Upgrades",
             unlocked() { return hasMilestone("mo", 3)},
             done() { return player.mo.points.gte(2e6) }
         },
         5: {
             requirementDescription: "90M Molecule Bonds",
-            effectDescription: "Gen 4's boost also boosts Power gain (Requires Generator² Upgrade). Gen 7 resets nothing, and Gen 5 buys max.",
+            effectDescription: "Gen 4's boost also boosts Power gain (Requires Generator² Upgrade). Gen 7 resets nothing, and Gen 5 buys max. Keep the first 5 rows of Energy upgrades.",
             unlocked() { return hasMilestone("mo", 4)},
             done() { return player.mo.points.gte(9e7) }
         },
         6: {
             requirementDescription: "8B Molecule Bonds",
-            effectDescription: "Increase Booster Base to 6",
+            effectDescription: "Increase Booster Base to 6. Keep the third row of Matter Upgrades.",
             unlocked() { return hasMilestone("mo", 5)},
             done() { return player.mo.points.gte(8e9) }
         },

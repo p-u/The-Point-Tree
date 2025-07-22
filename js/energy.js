@@ -62,6 +62,9 @@ addLayer("en", {
             for(v=1;v<5;v++){ //columns
               if ((hasMilestone('ma', 8)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
+            for(v=1;v<5;v++){ //columns
+              if ((hasMilestone('mo', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
         }
         let keep = [];
         if (hasMilestone("ma", 4)) {
