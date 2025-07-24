@@ -118,7 +118,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(50e6)){
-                        return "[125e6 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog()) + "x. [slog(CM)]"
+                        return "[125e6 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.slog().div(1.25)) + "x. [slog(CM)/1.25]"
                     } else {
                         return ""
                     } 
@@ -171,9 +171,10 @@ addLayer("cm", {
                         return ""
                     } 
                 }],
+                "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(6e9)){
-                        return "[1e10 Clicks] Double Clicks Gain (First Static Milestone)"
+                        return "[1e10 Clicks] x1.75 Clicks Gain (First Static Milestone)"
                     } else {
                         return ""
                     } 
@@ -195,9 +196,9 @@ addLayer("cm", {
         if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(4000).log(10))
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
-        if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog())
+        if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.25))
         if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
-        if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(2)
+        if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(1.75)
 
 
         if (player.cm.clickmastery.gte(300e6)) player.cm.clmult = new Decimal(1.12)

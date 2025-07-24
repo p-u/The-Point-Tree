@@ -14,11 +14,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.1",
+	num: "av2.1.3",
 	name: "New Feature!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h4>av2.1.3</h4>
+	- Nerfed last 2 click mastery milestones (-30% gain at 10B) <br>
+<h4>av2.1.2</h4>
+	- Fixed a bug (not keeping Gen 4 on MaMS4) <br>
+<h4>av2.1.1</h4>
+	- Added QoL features (keeping ups) for Molecule MS4-6 <br>
 <h3>av2.1</h3><br>
 	- Added a new feature in the Molecule layer, unlocked by getting 1.97e308 Atoms! <br>
 	- Added 4 of that new feature <br>
