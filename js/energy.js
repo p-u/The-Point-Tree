@@ -1084,6 +1084,10 @@ addLayer("en", {
                 player.en.gen1amt = getBuyableAmount("en", 11)
             }
 
+            if (hasMilestone("ma", 4) && getBuyableAmount("en", 22).lt(1)) {
+                player.en.gen4amt = new Decimal(1)
+            }
+
             let gain = player.en.gen1amt.times(1.5).times(player.en.gen1multi)
             if ((hasMilestone("mo", 2)) && (hasUpgrade("en", 33))) gain = gain.times(buyableEffect("en", 12))
             if ((hasMilestone("mo", 4)) && (hasUpgrade("en", 33))) gain = gain.times(buyableEffect("en", 21))
