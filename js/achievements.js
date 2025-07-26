@@ -68,13 +68,13 @@ addLayer("a", {
         },
         7: {
             requirementDescription: "1 week of playtime",
-            effectDescription: "Reminder 3 to drink water, rest your eyes, eat and sleep, take a walk. Fun fact 3: Assuming you read at an average pace of 0.5 pages/minute, you would have read about 5,040 pages by now if you did not sleep... That's probably more than you've ever read. Anyway, here's a x10,000 atom boost if you are still there... Plus an additional x100 Energy boost",
+            effectDescription: "Reminder 3 to drink water, rest your eyes, eat and sleep, take a walk. Fun fact 3: Assuming you read at an average pace of 0.5 pages/minute, you would have read about 5,040 pages by now if you did not sleep... That's probably more than you've ever read. ",
             done() { return player.timePlayed > (60 * 60 * 24 * 7) },
             unlocked() { return hasMilestone("a", 6) }
         },
         8: {
             requirementDescription: "1 month of playtime",
-            effectDescription: "You could watch the ENTIRE Avengers Cinematic Universe 11.625 times... well... and also xe25 atoms",
+            effectDescription: "You could watch the ENTIRE Avengers Cinematic Universe 11.625 times...",
             done() { return player.timePlayed > (60 * 60 * 24 * 30) },
             unlocked() { return hasMilestone("a", 7) }
         },
@@ -86,7 +86,7 @@ addLayer("a", {
         },
         10: {
             requirementDescription: "200 days of playtime",
-            effectDescription: "You either are a cheater OR a absolute true godly no-life... Fun fact 4: If you have just left your computer on for 200 days, it will use 1200 kWh for a desktop and 360 kWh for a laptop (averages). Assuming you are in Los Angeles, you can drive a Tesla Model 3 to Beaumont, Texas for a laptop and to Montreal, Canada there, back and there again for a desktop... Oh also xe100 atoms...",
+            effectDescription: "You either are a cheater OR a absolute true godly no-life... Fun fact 4: If you have just left your computer on for 200 days, it will use 1200 kWh for a desktop and 360 kWh for a laptop (averages). Assuming you are in Los Angeles, you can drive a Tesla Model 3 to Beaumont, Texas for a laptop and to Montreal, Canada there, back and there again for a desktop...",
             done() { return player.timePlayed > (60 * 60 * 24 * 200) },
             unlocked() { return hasMilestone("a", 9) }
         },

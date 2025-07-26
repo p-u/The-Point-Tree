@@ -143,7 +143,7 @@ var systemComponents = {
 		Savebank from 'The Plant Tree'
 		<br>
 		<br>
-		Minigame inspired from 'The Mario Maker 2 Tree'
+		Inspiration from other TMT games, Roblox games and Web Incremental Games
 		<br>
 		<br>
 		Infinity Notation by unicodes
