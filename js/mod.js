@@ -234,7 +234,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.mo.points.gte(1e12)
+	return (player.points.gte("e850") && hasUpgrade("ma", 45))
 }
 
 
