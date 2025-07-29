@@ -180,6 +180,30 @@ addLayer("cm", {
                     } 
                 }],
                 "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1e10)){
+                        return "[2e10 Clicks] Clicks boosts Energy and Matter gain. Currently:" + notationChooser(player.cm.clickmastery.times(500).log(5000000)) + "x. [log5M(CM*500)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2e10)){
+                        return "[3e10 Clicks] Triple Atom Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(3e10)){
+                        return "[5e10 Clicks] Clicks boosts itself. Currently:" + notationChooser(player.cm.clickmastery.slog().div(1.7)) + "x. [slog(CM)/1.7]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
                 "blank",
                 "clickables",
                 "blank",
@@ -199,6 +223,7 @@ addLayer("cm", {
         if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.25))
         if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
         if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(1.75)
+        if (player.cm.clickmastery.gte(5e10)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.7))
 
 
         if (player.cm.clickmastery.gte(300e6)) player.cm.clmult = new Decimal(1.12)
@@ -206,7 +231,8 @@ addLayer("cm", {
         // main game boosts
         if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
         if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.5)
-        if (hasMilestone("cf", 2)) player[this.layer].cpc = player[this.layer].cpc.times(2)
+        if (hasMilestone("cf", 2)) player[this.layer].cpc = player[this.layer].cpc.times(1.6)
+        if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(1.4)
 
         player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)

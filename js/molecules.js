@@ -99,11 +99,11 @@ addLayer("mo", {
     infoboxes: {
         mol: {
             title: "Molecules",
-            body() { return "The third layer. Molecules resets all previous progress, but don't fret, Click Mastery and Achievements stay! Molecule Milestone 1 is OP, cherish that! Gain molecules a second based on Molecule Bonds / 10. This is a big step in your journey to grow the world. Oh, and also, Molecules boost Matter gain." },
+            body() { return "The third layer. Molecules resets all previous progress, but don't fret, Click Mastery and Achievements stay! Molecule Milestone 1 is OP, cherish that! Gain molecules a second based on Molecule Bonds / 10. This is a big step in your journey to grow the world. Oh, and also, Molecules boost Matter gain. Recommended and Intended: After about x4 Molecules, reset" },
         },
         boost: {
             title: "Boosters",
-            body() { return "Boosters boost respective generator gain by 5 times per buy (can be increased with future upgrades)! However, it costs Molecule Bonds..." },
+            body() { return "Boosters boost respective generator gain by 5 times per buy (can be increased with future upgrades)! However, it costs Molecule Bonds... Future upgrades will be more timewally (you might want to get more clicks to 50-250M), takes 2-6mins per upgrade" },
         },
     },
     milestones: {
@@ -141,6 +141,24 @@ addLayer("mo", {
             effectDescription: "Increase Booster Base to 6. Keep the third row of Matter Upgrades.",
             unlocked() { return hasMilestone("mo", 5)},
             done() { return player.mo.points.gte(8e9) }
+        },
+        7: {
+            requirementDescription: "5e12 Molecule Bonds",
+            effectDescription: "Automate Gen 7 (Requires Matter milestone 11). x77 Power, Atoms and Matter. Keep the first 7 rows of energy upgrades.",
+            unlocked() { return hasMilestone("mo", 6)},
+            done() { return player.mo.points.gte(5e12) }
+        },
+        8: {
+            requirementDescription: "2.5e15 Molecule Bonds",
+            effectDescription: "Generator 7 gives extra levels to Generator 5",
+            unlocked() { return hasMilestone("mo", 7)},
+            done() { return player.mo.points.gte(2.5e15) }
+        },
+        9: {
+            requirementDescription: "2.25e17 Molecule Bonds",
+            effectDescription: "Generator 6-8 also boosts Power gain",
+            unlocked() { return hasMilestone("mo", 8)},
+            done() { return player.mo.points.gte(2.25e17) }
         },
     },
     upgrades: {
@@ -223,6 +241,15 @@ addLayer("mo", {
             currencyInternalName: "molecule",
             currencyLayer: "mo",
             unlocked() { return hasUpgrade("mo", 23) }, 
+        },
+        25: {
+            title: "U10: Chrono Amplifier",
+            description: "Increase Booster Base to 7. Unlock Tickspeed (In Generators Subtab, requires 1 Generator 8)",
+            cost: new Decimal(1.25e15),
+            currencyDisplayName: "Molecules",
+            currencyInternalName: "molecule",
+            currencyLayer: "mo",
+            unlocked() { return hasUpgrade("mo", 24) }, 
         },
     },
     buyables: {
@@ -317,7 +344,7 @@ addLayer("mo", {
             }},
         },
         22: {
-            title: "Buy Booster 4",
+            title: "Buy Booster 4 [increasing base until 4 bought]",
             unlocked() { return getBuyableAmount("mo", 21).gte(3) },
             cost(x) {
                 return new Decimal(1e10).mul(Decimal.pow(64, x)).floor()
@@ -335,11 +362,41 @@ addLayer("mo", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
-                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
+                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0)).pow(Decimal.max(x/4,1))
                 return eff
             },
             tooltip() {
                 return "Cost Formula: 1e10 x 64^Amt. x" + notationChooser(player.mo.boosterBase, 0) + " Gen 4 gen per buy."
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+        },
+        31: {
+            title: "Buy Booster 5",
+            unlocked() { return getBuyableAmount("mo", 22).gte(4) },
+            cost(x) {
+                return new Decimal(1e18).mul(Decimal.pow(500, x)).floor()
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Molecule Bonds." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Booster 5, multiplying Generator 5 generation by x" + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                return dis
+            },
+            canAfford() {
+                return player.mo.points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e18 x 500^Amt. x" + notationChooser(player.mo.boosterBase, 0) + " Gen 5 gen per buy."
             },
             style() {return {
                 'width': '250px',
@@ -357,6 +414,10 @@ addLayer("mo", {
         if (player.cm.clickmastery.gte(6e9)) mult = mult.times(player.cm.clickmastery.div(4000).log(4000))
         if (hasUpgrade("mo", 15)) mult = mult.times(1.5)
         if (hasUpgrade("en", 85)) mult = mult.times(1.08)
+        if (hasAchievement("a", 61)) mult = mult.times(1.03)
+        if (hasUpgrade("ma", 41)) mult = mult.times(6)
+        if (hasMilestone("w", 3)) mult = mult.times(2)
+        if (hasAchievement("a", 62)) mult = mult.times(1.08)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -389,5 +450,6 @@ addLayer("mo", {
             player.mo.molecule = player.mo.molecule.add(gain)
         }
         if (hasMilestone("mo", 6)) player.mo.boosterBase = new Decimal(6)
+        if (hasUpgrade("mo", 25)) player.mo.boosterBase = new Decimal(7)
     }
 })

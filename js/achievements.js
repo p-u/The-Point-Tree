@@ -337,6 +337,30 @@ addLayer("a", {
             done() { return getBuyableAmount("mo", 22).gte(2) },
             tooltip: "Get 2 Booster 4 (+8% Power gain)",
             unlocked() { return hasAchievement("a", 46) },
+            style() {
+                return {
+                "border-color": "blue",
+                "border-width": "3px"
+                }
+            }
+        },
+        61: {
+            name: "Of course it doesn't stop at 15",
+            done() { return hasMilestone("cf", 3) },
+            tooltip: "Get the third Content Feature Milestone (+3% Molecules gain)",
+            unlocked() { return hasAchievement("a", 56) },
+        },
+        62: {
+            name: "Additional",
+            done() { return hasMilestone("mo", 8) },
+            tooltip: "Get the eighth Molecule Milestone (+8% Molecules gain)",
+            unlocked() { return hasAchievement("a", 56) },
+        },
+        63: {
+            name: "Tiered up 3",
+            done() { return hasMilestone("w", 3) },
+            tooltip: "WORLD TIER 4! (+14% Gen 4 generation)",
+            unlocked() { return hasAchievement("a", 56) },
         },
         101: {
             name: "Click Mastery Milestone 1 (Optional) - Even a baby can click that much",

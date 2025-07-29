@@ -65,6 +65,9 @@ addLayer("en", {
             for(v=1;v<5;v++){ //columns
               if ((hasMilestone('mo', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
+            for(v=5;v<8;v++){ //columns
+              if ((hasMilestone('mo', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
         }
         let keep = [];
         if (hasMilestone("ma", 4)) {
@@ -184,6 +187,11 @@ addLayer("en", {
             if (layers.en.buyables[32].canAfford()) {
 				layers.en.buyables[32].buy();
 			};
+            if (hasMilestone('mo', 7)) {
+                if (layers.en.buyables[41].canAfford()) {
+				    layers.en.buyables[41].buy();
+			    };
+		    };
 		};
 	},
     upgrades: {
@@ -504,7 +512,7 @@ addLayer("en", {
         },  
         82: {
             title: "Matter is the foundation of everything",
-            description: "x3 Matter, Molecule effect is stronger, Sodium Upgrade is stronger",
+            description: "x3 Matter, Molecule effect is stronger, Sodium Upgrade is stronger, World Tier exponent is weaker",
             cost: new Decimal("3e330"),
             unlocked() { return hasUpgrade("en", 81) }, 
         },
@@ -548,7 +556,11 @@ addLayer("en", {
             title: "Buy Generator 1",
             unlocked() { return (hasUpgrade('en', 25)) },
             cost(x) {
-                return new Decimal(200).mul(Decimal.pow(1.5, x)).floor()
+                if (x < 5000) {
+                    return new Decimal(200).mul(Decimal.pow(1.5, x)).floor()
+                } else {
+                    return new Decimal("e888").mul(Decimal.pow(1.6, x-5000)).floor()
+                }
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 1."
@@ -579,7 +591,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 200 x 1.5^Amt. Generation formula: Generator 1 amt x 1.5"
+                return "Cost Formula: 200 x 1.5^Amt [Before 5000, after 5000 its e888 x 1.6^(Amt-5000)]. Generation formula: Generator 1 amt x 1.5"
             },
             style() {return {
                 'width': '250px',
@@ -590,7 +602,11 @@ addLayer("en", {
             title: "Buy Generator 2",
             unlocked() { return getBuyableAmount("en", 11).gte(3) },
             cost(x) {
-                return new Decimal(4000).mul(Decimal.pow(2.5, x)).floor()
+                if (x < 2000) {
+                    return new Decimal(4000).mul(Decimal.pow(2.5, x)).floor()
+                } else {
+                    return new Decimal("e800").mul(Decimal.pow(3, x-2000)).floor()
+                }
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 2."
@@ -624,7 +640,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 4,000 x 2.5^Amt. Generation formula: Generator 2 amt"
+                return "[Before 2000] Cost Formula: 4,000 x 2.5^Amt. [After 2000] Cost Formula: e800 x 3^(Amt-2000)Generation formula: Generator 2 amt"
             },
             style() {return {
                 'width': '250px',
@@ -635,7 +651,11 @@ addLayer("en", {
             title: "Buy Generator 3",
             unlocked() { return getBuyableAmount("en", 12).gte(3) },
             cost(x) {
-                return new Decimal(400000).mul(Decimal.pow(4, x)).floor()
+                if (x < 1500) {
+                    return new Decimal(400000).mul(Decimal.pow(4, x)).floor()
+                } else {
+                    return new Decimal("e920").mul(Decimal.pow(5, x-1500)).floor()
+                }
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 3."
@@ -669,7 +689,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 400,000 x 4^Amt. Generation formula: Generator 3 amt/1.2"
+                return "Cost Formula: 400,000 x 4^Amt [Before 1500, after 1500 its e920 x 5^(Amt-1500)]. Generation formula: Generator 3 amt/1.2"
             },
             style() {return {
                 'width': '250px',
@@ -680,14 +700,28 @@ addLayer("en", {
             title: "Buy Generator 4",
             unlocked() { return getBuyableAmount("en", 21).gte(3) },
             cost(x) {
-                return new Decimal(80e6).mul(Decimal.pow(7, x)).floor()
+                if (x < 800) {
+                    return new Decimal(80e6).mul(Decimal.pow(7, x)).floor()
+                } else {
+                    return new Decimal("e700").mul(Decimal.pow(12, x-800)).floor()
+                }
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 4."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy. <br>"
+                if (hasUpgrade("ma", 45)) {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + formatWhole(this.extra()) + " Generator 4."
+                } else {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 4."
+                }
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 4 amount multiply Generator 3 generation "
                 if ((hasMilestone("mo", 5)) && (hasUpgrade("en", 33))) dis = dis + "and power gain "
                 dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
+            },
+            extra(){
+                let extra = new Decimal(0)
+                if (hasUpgrade("ma", 45)) extra = extra.plus(getBuyableAmount(this.layer, 32).div(2).floor())
+                return extra
             },
             canAfford() {
                 return player.en.points.gte(this.cost())
@@ -701,7 +735,8 @@ addLayer("en", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 if (hasUpgrade("en", 33)) {
                     gensqboost = new Decimal(1.05)
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
@@ -714,7 +749,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 8e7 x 7^Amt. Generation formula: Generator 4 amt/1.5"
+                return "Cost Formula: 8e7 x 7^Amt [Before 800, after 800 its e700 x 12^(Amt-700)]. Generation formula: Generator 4 amt/1.5"
             },
             style() {return {
                 'width': '250px',
@@ -725,10 +760,19 @@ addLayer("en", {
             title: "Buy Generator 5",
             unlocked() { return getBuyableAmount("en", 22).gte(3) },
             cost(x) {
-                return new Decimal(2.5e13).mul(Decimal.pow(10, x)).floor()
+                if (x < 1000) {
+                    return new Decimal(2.5e13).mul(Decimal.pow(10, x)).floor()
+                } else {
+                    return new Decimal("e1000").mul(Decimal.pow(125, x-1000)).floor()
+                }
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 5."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy. <br>"
+                if (hasMilestone("mo", 8)) {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + formatWhole(this.extra()) + " Generator 5."
+                } else {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 5."
+                }
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 5 amount multiply Generator 4 generation "
                 if ((hasUpgrade("mo", 24)) && (hasUpgrade("en", 33))) dis = dis + "and power gain "
                 dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
@@ -736,6 +780,11 @@ addLayer("en", {
             },
             canAfford() {
                 return player.en.points.gte(this.cost())
+            },
+            extra(){
+                let extra = new Decimal(0)
+                if (hasMilestone("mo", 8)) extra = extra.plus(getBuyableAmount(this.layer, 41))
+                return extra
             },
             buy() {
                 let cost = new Decimal(1)
@@ -745,7 +794,8 @@ addLayer("en", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 if (hasUpgrade("en", 33)) {
                     gensqboost = new Decimal(1.05)
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
@@ -758,7 +808,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 2.5e13 x 10^Amt. Generation formula: Generator 5 amt/1.5"
+                return "Cost Formula: 2.5e13 x 10^Amt [Before 1e3, after 1e3 its e1000 x 125^(Amt-1e3)]. Generation formula: Generator 5 amt/1.5"
             },
             style() {return {
                 'width': '250px',
@@ -769,11 +819,19 @@ addLayer("en", {
             title: "Buy Generator 6",
             unlocked() { return (hasMilestone("ma", 6) && getBuyableAmount("en", 31).gte(10))  },
             cost(x) {
-                return new Decimal(1e27).mul(Decimal.pow(1000, x)).floor()
+                if (x < 750) {
+                    return new Decimal(1e27).mul(Decimal.pow(1000, x)).floor()
+                } else {
+                    return new Decimal("e2300").mul(Decimal.pow(10000, x-750)).floor()
+                }
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 6."
-                if (hasUpgrade("en", 33)) dis = dis + " Generator 6 amount multiply Generator 5 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                if (hasUpgrade("en", 33)) { 
+                    dis = dis + " Generator 6 amount multiply Generator 5 generation "
+                    if (hasMilestone("mo", 9)) dis = dis + "and power gain "
+                    dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                }
                 return dis
             },
             canAfford() {
@@ -797,7 +855,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 1e27 x 1,000^Amt. Generation formula: Generator 6 amt*1.1"
+                return "Cost Formula: 1e27 x 1,000^Amt [Before 750, after 750 its e2300 x 1e4^(Amt-750)]. Generation formula: Generator 6 amt*1.1"
             },
             style() {return {
                 'width': '250px',
@@ -810,11 +868,19 @@ addLayer("en", {
             cost(x) {
                 let g7cost = 1e70
                 if (hasUpgrade("en", 71)) g7cost = 1e50
-                return new Decimal(g7cost).mul(Decimal.pow(1e7, x)).floor()
+                if (x < 600) {
+                    return new Decimal(g7cost).mul(Decimal.pow(1e7, x)).floor()
+                } else {
+                    return new Decimal("e4444").mul(Decimal.pow(1e9, x-600)).floor()
+                }
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 7."
-                if (hasUpgrade("en", 33)) dis = dis + " Generator 7 amount multiply Generator 6 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                if (hasUpgrade("en", 33)) { 
+                    dis = dis + " Generator 7 amount multiply Generator 6 generation "
+                    if (hasMilestone("mo", 9)) dis = dis + "and power gain "
+                    dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                }
                 return dis
             },
             canAfford() {
@@ -841,7 +907,7 @@ addLayer("en", {
                 if (!(hasUpgrade("en", 71))) {
                     return "Cost Formula: 1e70 x 1e7^Amt. Generation formula: Generator 7 amt/2"
                 } else {
-                    return "Cost Formula: 1e50 x 1e7^Amt. Generation formula: Generator 7 amt/2"
+                    return "Cost Formula: 1e50 x 1e7^Amt [Before 600, after 600 its e4444 x 1e9^(Amt-600)]. Generation formula: Generator 7 amt/2"
                 }
             },
             style() {return {
@@ -854,11 +920,19 @@ addLayer("en", {
             unlocked() { return ((hasUpgrade("en", 75)) && getBuyableAmount("en", 41).gte(20)) },
             cost(x) {
                 let g8cost = 1e200
-                return new Decimal(g8cost).mul(Decimal.pow(1e12, x)).floor()
+                if (x < 420) {
+                    return new Decimal(g8cost).mul(Decimal.pow(1e12, x)).floor()
+                } else {
+                    return new Decimal("e5250").mul(Decimal.pow(1e23, x-420)).floor()
+                }
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Generator 8."
-                if (hasUpgrade("en", 33)) dis = dis + " Generator 8 amount multiply Generator 7 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                if (hasUpgrade("en", 33)) { 
+                    dis = dis + " Generator 8 amount multiply Generator 7 generation "
+                    if (hasMilestone("mo", 9)) dis = dis + "and power gain "
+                    dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                }
                 return dis
             },
             canAfford() {
@@ -882,12 +956,56 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 1e200 x 1e12^Amt. Generation formula: Generator 8 amt/1.33"
+                return "Cost Formula: 1e200 x 1e12^Amt [Before 420, after 420 its e5250 x e23^(Amt-420)]. Generation formula: Generator 8 amt/1.33"
             },
             style() {return {
                 'width': '250px',
                 'height': '115px',
             }},
+        },
+        51: {
+            title: "Buy Tickspeed",
+            unlocked() { return ((hasUpgrade("mo", 25)) && getBuyableAmount("en", 42).gte(1)) },
+            cost(x) {
+                let tspd = "1e500"
+                return new Decimal(tspd).mul(Decimal.pow(1e10, x)).floor()
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + getBuyableAmount(this.layer, this.id) + " Tickspeed."
+                dis = dis + " Tickspeed multiplies Gen 1-8 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                return dis
+            },
+            canAfford() {
+                return player.en.points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.en.points = player.en.points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                tspdboost = new Decimal(1.1)
+                eff = new Decimal(tspdboost).pow(Decimal.max(x.sub(1), 0))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e500 x 1e10^Amt. Does not generate anything."
+            },
+            
+            style() {
+                if (canBuyBuyable(this.layer, this.id)) {
+                    return {
+                        'width': '500px',
+                        'height': '60px',
+                        'background-color': '#FFD700',
+                    }
+                } else {
+                    return {
+                        'width': '500px',
+                        'height': '60px',
+                    }
+                }
+            }
         },
     },
     infoboxes: {
@@ -927,6 +1045,7 @@ addLayer("en", {
         if (hasUpgrade("mo", 15)) mult = mult.times(4)
         if (hasMilestone("ma", 11)) mult = mult.times(3)
         if (hasUpgrade("en", 81)) mult = mult.times(13).div(4)
+        if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (hasUpgrade("en", 85)) mult = mult.times(8)
         if (hasUpgrade("mo", 23)) {
 		    if (hasUpgrade("en", 81)) mult = mult.times(19)
@@ -965,6 +1084,8 @@ addLayer("en", {
             player.en.gen1multi = player.en.gen1multi.times(buyableEffect("mo", 11))
             player.en.gen2multi = player.en.gen2multi.times(buyableEffect("mo", 12))
             player.en.gen3multi = player.en.gen3multi.times(buyableEffect("mo", 21))
+            player.en.gen4multi = player.en.gen4multi.times(buyableEffect("mo", 22))
+            player.en.gen5multi = player.en.gen5multi.times(buyableEffect("mo", 31))
             
             if (hasUpgrade("en", 44)) player.en.gen1multi = player.en.gen1multi.times(1.1)
             if (hasUpgrade("en", 44)) player.en.gen2multi = player.en.gen2multi.times(1.2)
@@ -1004,6 +1125,18 @@ addLayer("en", {
             if (hasUpgrade("en", 85)) player.en.gen6multi = player.en.gen6multi.times(8)
             if (hasUpgrade("en", 85)) player.en.gen7multi = player.en.gen7multi.times(8)
             if (hasUpgrade("en", 85)) player.en.gen8multi = player.en.gen8multi.times(8)
+
+            if (hasAchievement("a", 63)) player.en.gen4multi = player.en.gen4multi.times(1.14)
+
+
+            if (hasUpgrade("mo", 25)) player.en.gen1multi = player.en.gen1multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen2multi = player.en.gen2multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen3multi = player.en.gen3multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen4multi = player.en.gen4multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen5multi = player.en.gen5multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen6multi = player.en.gen6multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen7multi = player.en.gen7multi.times(buyableEffect("en", 51))
+            if (hasUpgrade("mo", 25)) player.en.gen8multi = player.en.gen8multi.times(buyableEffect("en", 51))
 
         
             // power exponents
@@ -1093,6 +1226,13 @@ addLayer("en", {
             if ((hasMilestone("mo", 4)) && (hasUpgrade("en", 33))) gain = gain.times(buyableEffect("en", 21))
             if ((hasMilestone("mo", 5)) && (hasUpgrade("en", 33))) gain = gain.times(buyableEffect("en", 22))
             if ((hasUpgrade("mo", 24)) && (hasUpgrade("en", 33))) gain = gain.times(buyableEffect("en", 31))
+            if (hasUpgrade("en", 33)) {
+                if (hasMilestone("mo", 9)) {
+                    gain = gain.times(buyableEffect("en", 32))
+                    gain = gain.times(buyableEffect("en", 41))
+                    gain = gain.times(buyableEffect("en", 42))
+                }
+            }
             if (hasUpgrade("en", 31)) gain = gain.times(2)
             if (hasUpgrade("en", 35)) gain = gain.times(1.7)
             if (hasUpgrade("en", 42)) gain = gain.times(1.4)
@@ -1124,6 +1264,7 @@ addLayer("en", {
             if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(288888).log(28))
             if (player.cm.clickmastery.gte(4e9)) gain = gain.times(player.cm.clickmastery.mul(888).log(88888))
             if (hasMilestone("ma", 11)) gain = gain.times(2)
+            if (hasMilestone("mo", 7)) gain = gain.times(77)
             
 
             if (hasMilestone("ma", 9)) gain = gain.pow(1.01)

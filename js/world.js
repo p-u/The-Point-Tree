@@ -14,7 +14,11 @@ addLayer("w", {
     baseResource: "atoms",
     baseAmount() { return player.points; },
     type: "static",
-    exponent: 7.13,
+    exponent() {
+        let expo = new Decimal(7.13)
+        if (hasUpgrade("en", 82)) expo = expo.sub(0.01)
+        return expo
+    },
     gainMult() {
         let mult = new Decimal(1);
         return mult;
@@ -34,8 +38,13 @@ addLayer("w", {
         },
         2: {
             requirementDescription: "World Tier 3",
-            effectDescription: "Gen 5 and 6 does not cost anything, unlock Gen 7, 3^World Tierx Atoms, 2^World Tierx Energy, 1.1^World Tierx Matter.",
+            effectDescription: "Gen 5 and 6 does not cost anything, unlock Gen 7. <br> 3^World Tierx Atoms, 2^World Tierx Energy, 1.1^World Tierx Matter.",
             done() { return player.w.points.gte(3) },
+        },
+        3: {
+            requirementDescription: "World Tier 4",
+            effectDescription: "Double Molecule Bonds gain, ^1.01 Atom gain. <br> Unlock new Click Mastery Milestones and (v1.0) Unlock a new CM Feature with a new tab and upgrades. +40% CM gain. <br> Also, unlock a new layer (v1.0).",
+            done() { return player.w.points.gte(4) },
         },
     },
     tabFormat: {

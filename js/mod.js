@@ -14,11 +14,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.1.3",
-	name: "New Feature!",
+	num: "av2.2",
+	name: "World Tier 4, Extra Buyables, and more!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>av2.2</h3><br>
+	- Added a new World Tier Milestone (Main features coming in next update) <br>
+	- Added 1 booster and a new Content Feature Milestone <br>
+	- Added 3 Achievements and 3 Click Mastery Milestones <br>
+	- Added 3 milestones, 6 upgrades and 1 Click Mastery Milestone <br>
+	- Added a new effect to EU82, and added softcaps to all generators. <br>
+	- Added a new feature: Extra buyables. <br>
+	- Added a new buyable in the Generator tab <br>
+	- Second Content Feature milestone multiplies CM by less, and Gen 4 has an effect now. Reworked Gen 4 formula to make base scale <br>
+	- Other tweaks and features not significant enough to mention <br>
+	- Endgame: All 20 Matter upgrades/e850 Atoms <br>
 <h4>av2.1.3</h4>
 	- Nerfed last 2 click mastery milestones (-30% gain at 10B) <br>
 <h4>av2.1.2</h4>
@@ -133,6 +144,8 @@ function getPointGen() {
 	if (hasUpgrade("en", 22)) gain = gain.times(upgradeEffect("en", 22))
 	if (hasUpgrade("en", 41)) gain = gain.times(upgradeEffect("en", 41))
 	if (hasUpgrade("en", 84)) gain = gain.times(upgradeEffect("en", 84))
+	if (hasUpgrade("ma", 43)) gain = gain.times(upgradeEffect("ma", 43))
+	
 	
 	if (hasUpgrade("en", 12)) gain = gain.times(1.5)
 	if (hasUpgrade("en", 13)) gain = gain.times(1.75)
@@ -162,6 +175,7 @@ function getPointGen() {
 	} else{
 		if (hasUpgrade("en", 81)) gain = gain.times(13)
 	}
+	if (hasMilestone("mo", 7)) gain = gain.times(77)
 	if (hasUpgrade("en", 85)) gain = gain.times(88)
 
 	// playtime milestones
@@ -181,6 +195,7 @@ function getPointGen() {
 	if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(288888).log(28))
 	if (player.cm.clickmastery.gte(3e9)) gain = gain.times(player.cm.clickmastery.mul(225).log(22500))
 	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
+	if (player.cm.clickmastery.gte(3e10)) gain = gain.times(3)
 
 
 	// exponent
@@ -189,6 +204,7 @@ function getPointGen() {
 	if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
 	if (hasUpgrade("en", 73)) gain = gain.pow(1.03)
 	if (hasMilestone("mo", 3)) gain = gain.pow(1.0175)
+	if (hasMilestone("w", 3)) gain = gain.pow(1.01)
 	// nerf
 	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
 	if (player.points.gte(tmp.w.nextAt)) {

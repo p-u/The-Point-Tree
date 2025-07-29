@@ -34,8 +34,13 @@ addLayer("cf", {
         },
         2: {
             requirementDescription: "2^1024 Atoms - Start of Overload",
-            effectDescription: "Unlock a new feature in the Molecules Layer. Extend Energy and Molecule Upgrades. Add a nerf. Double Click Mastery gain (Recommended to get 10M Clicks).",
+            effectDescription: "Unlock a new feature in the Molecules Layer. Extend Energy and Molecule Upgrades. Add a nerf. x1.6 Click Mastery gain (Recommended to get 10M Clicks).",
             done() { return player.points.gte(new Decimal(2).pow(1024)) }
+        },
+        3: {
+            requirementDescription: "e600 Atoms",
+            effectDescription: "Extend Matter Upgrades",
+            done() { return player.points.gte("e600") }
         },
     },
     tabFormat: {

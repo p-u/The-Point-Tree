@@ -192,6 +192,60 @@ addLayer("ma", {
             cost: new Decimal(3e31),
             unlocked() { return (hasUpgrade("ma", 34) && hasMilestone("w", 2)) }, 
         },
+        41: {
+            title: "16: Sulfur",
+            description: "x6 Molecules gain (wow!)",
+            cost: new Decimal(6.5e156),
+            unlocked() { return (hasMilestone("cf", 3) && hasMilestone("w", 2)) }, 
+        },
+        42: {
+            title: "17: Chlorine",
+            description: "For every Matter upgrade, x1.25 Matter gain",
+            cost: new Decimal(1e165),
+            effect() {
+                matterups = player.ma.upgrades.length
+                scale = new Decimal(1.25)
+                let eff = scale.pow(matterups)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x"
+            },
+            tooltip() {
+                return "Formula: " + scale + "^Matter Upgrades"
+            },
+            unlocked() { return hasUpgrade("ma", 41) }, 
+        },
+        43: {
+            title: "18: Argon",
+            description: "For every Matter upgrade, double Atom gain",
+            cost: new Decimal(1.7e171),
+            effect() {
+                matterups = player.ma.upgrades.length
+                scaleatom = new Decimal(2)
+                let eff = scaleatom.pow(matterups)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x"
+            },
+            tooltip() {
+                return "Formula: " + scaleatom + "^Matter Upgrades"
+            },
+            unlocked() { return hasUpgrade("ma", 42) }, 
+        },
+        44: {
+            title: "19: Potassium",
+            description: "Delay the Matter layer softcap by e16",
+            cost: new Decimal(1e190),
+            unlocked() { return hasUpgrade("ma", 43) }, 
+        },
+        45: {
+            title: "20: Calcium",
+            description: "Every 2 Generator 6s, give 1 additional Generator 4.",
+            cost: new Decimal(9.3e213), // change this
+            unlocked() { return hasUpgrade("ma", 44) }, 
+        },
     },
     milestones: {
         1: {
@@ -290,14 +344,17 @@ addLayer("ma", {
         if (hasAchievement("a", 33)) mult = mult.times(1.05)
         if (hasUpgrade("en", 65)) mult = mult.times(1.1)
         if (hasUpgrade("ma", 31)) mult = mult.times(upgradeEffect("ma", 31))
+        if (hasUpgrade("ma", 42)) mult = mult.times(upgradeEffect("ma", 42))
         if (hasUpgrade("ma", 33)) mult = mult.times(upgradeEffect("ma", 33))
         if (hasMilestone("w", 2)) mult = mult.times(new Decimal(1.1).pow(player.w.points))
         if (hasMilestone("ma", 11)) mult = mult.times(2)
         if (hasUpgrade("en", 82)) mult = mult.times(3)
+        if (hasMilestone("mo", 7)) mult = mult.times(77)
         if ((hasUpgrade("en", 81)) && (hasUpgrade("mo", 23))) mult = mult.times(19).div(4)
         if (hasUpgrade("en", 83)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomatter))
         if (player.cm.clickmastery.gte(1e7)) mult = mult.times(player.cm.clickmastery.div(333).log(3333))
         if (player.cm.clickmastery.gte(2e9)) mult = mult.times(player.cm.clickmastery.mul(70).log(700000))
+        if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (hasUpgrade("en", 85)) mult = mult.times(1.8)
         return mult
     },
@@ -311,14 +368,22 @@ addLayer("ma", {
         let eff = player.ma.points.add(1).pow(effectBoost)
         let sc = 0.7
         if (hasMilestone("ma", 11)) sc = 0.73
-        softcappedEffect = softcap(eff, new Decimal(1e150), new Decimal(sc))
+        softcapstart = new Decimal(1e150)
+        if (hasUpgrade("ma", 44)) {
+            softcapstart = new Decimal(1e166)
+        }
+        softcappedEffect = softcap(eff, new Decimal(softcapstart), new Decimal(sc))
         return softcappedEffect
     },
     effectDescription() {
         let softcapDescription = ""
         let layerEffect = tmp[this.layer].effect
-        if (layerEffect.gte(new Decimal(1e150)) ) {
-            softcapDescription = " (Softcapped at e150x)"
+        softcapstart = new Decimal(1e150)
+        if (hasUpgrade("ma", 44)) {
+            softcapstart = new Decimal(1e166)
+        }
+        if (layerEffect.gte(softcapstart) ) {
+            softcapDescription = " (Softcapped at "+ notationChooser(softcapstart) +"x)"
         }
         let des = "which is boosting atoms by x" + notationChooser(layerEffect) + softcapDescription
         return des;
