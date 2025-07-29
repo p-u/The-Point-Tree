@@ -58,5 +58,38 @@ addLayer("w", {
                 "milestones",
             ],
         },
+        "Reset Timings": {
+            content: [
+                "blank",
+                "blank",
+                ["display-text", function() {
+                    if (player.points.gte(1e6)){
+                        if (hasAchievement("a", 23)) {
+                            return "Your first Matter Reset is " + formatTime(player.ma.MResetTime) + " after you started the game."
+                        } else {
+                            return "Your first Matter Reset is in: TBC, you have not resetted for Matter yet"
+                        }
+                    } else {
+                        return "Reach 1M Atoms to unlock this thing"
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                   if (hasAchievement("a", 33)){
+                        if (hasAchievement("a", 43)) {
+                            return "Your first Molecule Reset is " + formatTime(player.mo.MResetTime) + " after you started the game."
+                        } else {
+                            return "Your first Molecule Reset is in: TBC, you have not resetted for Molecules yet"
+                        }
+                    } else {
+                        if (hasAchievement("a", 23)) {
+                            return "Reach 200K Matter to unlock this thing"
+                        } else {
+                            return ""
+                        }
+                    }
+                }],
+            ],
+        },
     },
 });

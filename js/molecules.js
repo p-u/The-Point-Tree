@@ -362,7 +362,7 @@ addLayer("mo", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
-                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0)).pow(Decimal.max(x/4,1))
+                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0)).pow(Math.min(1, getBuyableAmount("mo", 22)/4))
                 return eff
             },
             tooltip() {

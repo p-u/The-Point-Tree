@@ -27,6 +27,7 @@ let changelog = `<h1>Changelog:</h1><br>
 	- Added a new effect to EU82, and added softcaps to all generators. <br>
 	- Added a new feature: Extra buyables. <br>
 	- Added a new buyable in the Generator tab <br>
+	- Added the 'Reset Timings' tab in the World layer <br>
 	- Second Content Feature milestone multiplies CM by less, and Gen 4 has an effect now. Reworked Gen 4 formula to make base scale <br>
 	- Other tweaks and features not significant enough to mention <br>
 	- Endgame: All 20 Matter upgrades/e850 Atoms <br>
