@@ -78,7 +78,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(200000)){
-                        return "[500,000 Clicks] Clicks boosts itself again. Currently:" + notationChooser(player.cm.clickmastery.div(4000).log(10)) + "x. [log10(CM/4000)]"
+                        return "[500,000 Clicks] Clicks boosts itself again. Currently:" + notationChooser(Decimal.min(player.cm.clickmastery.div(4000).log(10), 5)) + "x. [log10(CM/4000)], MAX 5x]"
                     } else {
                         return ""
                     } 
@@ -217,7 +217,7 @@ addLayer("cm", {
         player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clmult.pow(player.cm.cmlvl))
         if (player.cm.clickmastery.gte(2000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(40).log(8))
         if (player.cm.cmlvl.gte(6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.cmlvl.div(2))
-        if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(4000).log(10))
+        if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(Decimal.min(player.cm.clickmastery.div(4000).log(10), 5))
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
         if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.25))
