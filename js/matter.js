@@ -327,7 +327,7 @@ addLayer("ma", {
         },
     },
     setRT() {
-        if ((player.ma.points.gte(1)) && (player.ma.MResetTime == 0)) {
+        if ((hasAchievement("a", 23)) && (player.ma.MResetTime == 0)) {
             player.ma.MResetTime = player.timePlayed
         }
     },
