@@ -14,11 +14,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.2",
+	num: "av2.21",
 	name: "World Tier 4, Extra Buyables, and more!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h4>av2.21</h4>
+	- Many balance changes <br>
 <h3>av2.2</h3><br>
 	- Added a new World Tier Milestone (Main features coming in next update) <br>
 	- Added 1 booster and a new Content Feature Milestone <br>

@@ -232,7 +232,7 @@ addLayer("cm", {
         if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
         if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.5)
         if (hasMilestone("cf", 2)) player[this.layer].cpc = player[this.layer].cpc.times(1.6)
-        if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(1.4)
+        if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
 
         player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)

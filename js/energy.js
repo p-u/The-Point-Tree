@@ -556,10 +556,10 @@ addLayer("en", {
             title: "Buy Generator 1",
             unlocked() { return (hasUpgrade('en', 25)) },
             cost(x) {
-                if (x < 5000) {
+                if (x < 6000) {
                     return new Decimal(200).mul(Decimal.pow(1.5, x)).floor()
                 } else {
-                    return new Decimal("e888").mul(Decimal.pow(1.6, x-5000)).floor()
+                    return new Decimal("e1070").mul(Decimal.pow(1.7, x-6000)).floor()
                 }
             },
             display() {
@@ -574,7 +574,11 @@ addLayer("en", {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 if (hasUpgrade("ma", 25)) {
-                    setBuyableAmount(this.layer, this.id, player.en.points.div(200).log(1.5).floor().add(1))
+                    if (getBuyableAmount(this.layer, this.id).gte(6000)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e1070").log(1.7).floor().add(6001))
+                    } else { 
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(200).log(1.5).floor().add(1))
+                    }
                 } else {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
@@ -591,7 +595,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 200 x 1.5^Amt [Before 5000, after 5000 its e888 x 1.6^(Amt-5000)]. Generation formula: Generator 1 amt x 1.5"
+                return "Cost Formula: 200 x 1.5^Amt [Before 6000, after 6000 its e1070 x 1.7^(Amt-6000)]. Generation formula: Generator 1 amt x 1.5"
             },
             style() {return {
                 'width': '250px',
@@ -602,10 +606,10 @@ addLayer("en", {
             title: "Buy Generator 2",
             unlocked() { return getBuyableAmount("en", 11).gte(3) },
             cost(x) {
-                if (x < 2000) {
+                if (x < 2250) {
                     return new Decimal(4000).mul(Decimal.pow(2.5, x)).floor()
                 } else {
-                    return new Decimal("e800").mul(Decimal.pow(3, x-2000)).floor()
+                    return new Decimal("e900").mul(Decimal.pow(3, x-2250)).floor()
                 }
             },
             display() {
@@ -622,7 +626,11 @@ addLayer("en", {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 if (hasUpgrade("ma", 25)) {
-                    setBuyableAmount(this.layer, this.id, player.en.points.div(4000).log(2.5).floor().add(1))
+                    if (getBuyableAmount(this.layer, this.id).gte(2250)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e900").log(3).floor().add(2251))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(4000).log(2.5).floor().add(1))
+                    }
                 } else {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
@@ -640,7 +648,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "[Before 2000] Cost Formula: 4,000 x 2.5^Amt. [After 2000] Cost Formula: e800 x 3^(Amt-2000)Generation formula: Generator 2 amt"
+                return "[Before 2000] Cost Formula: 4,000 x 2.5^Amt. [After 2250] Cost Formula: e900 x 3^(Amt-2250)Generation formula: Generator 2 amt"
             },
             style() {return {
                 'width': '250px',
@@ -671,7 +679,11 @@ addLayer("en", {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("ma", 21))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 if (hasUpgrade("ma", 31)) {
-                    setBuyableAmount(this.layer, this.id, player.en.points.div(400000).log(4).floor().add(1))
+                    if (getBuyableAmount(this.layer, this.id).gte(1500)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e920").log(5).floor().add(1501))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(400000).log(4).floor().add(1))
+                    }
                 } else {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
@@ -700,10 +712,10 @@ addLayer("en", {
             title: "Buy Generator 4",
             unlocked() { return getBuyableAmount("en", 21).gte(3) },
             cost(x) {
-                if (x < 800) {
+                if (x < 1100) {
                     return new Decimal(80e6).mul(Decimal.pow(7, x)).floor()
                 } else {
-                    return new Decimal("e700").mul(Decimal.pow(12, x-800)).floor()
+                    return new Decimal("e960").mul(Decimal.pow(12, x-1100)).floor()
                 }
             },
             display() {
@@ -730,7 +742,11 @@ addLayer("en", {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("ma", 22))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 if (hasUpgrade("mo", 14)) {
-                    setBuyableAmount(this.layer, this.id, player.en.points.div(80e6).log(7).floor().add(1))
+                    if (getBuyableAmount(this.layer, this.id).gte(1100)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e960").log(12).floor().add(1101))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(80e6).log(7).floor().add(1))
+                    }
                 } else {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
@@ -749,7 +765,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: 8e7 x 7^Amt [Before 800, after 800 its e700 x 12^(Amt-700)]. Generation formula: Generator 4 amt/1.5"
+                return "Cost Formula: 8e7 x 7^Amt [Before 1100, after 1100 its e960 x 12^(Amt-1100)]. Generation formula: Generator 4 amt/1.5"
             },
             style() {return {
                 'width': '250px',
@@ -789,7 +805,11 @@ addLayer("en", {
             buy() {
                 let cost = new Decimal(1)
                 if (hasMilestone("mo", 5)) {
-                    setBuyableAmount(this.layer, this.id, player.en.points.div(2.5e13).log(10).floor().add(1))
+                    if (getBuyableAmount(this.layer, this.id).gte(1000)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e1000").log(125).floor().add(1001))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(2.5e13).log(10).floor().add(1))
+                    }
                 } else {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
