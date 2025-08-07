@@ -63,6 +63,7 @@ addLayer("a", {
                 ["display-text", function() { return "Penultimate Points: " + notationChooser(player.a.penultimate) + ". Formula: (UP/1e100)^(1/(10^2slog(UP)))" }],
                 ["display-text", function() { return "Godlike Points: " + notationChooser(player.a.godlike) + ". Formula: (PUP/1e308)^(1/(777*slog(PUP)))" }],
                 ["display-text", function() { return "Level Points: " + notationChooser(player.a.level) + ". Formula: slog(Point)^slog(PF)^slog(Point)^slog(PF)" }],
+                ["display-text", function() { return "Mastery Points: " + notationChooser(player.m.points) }],
             ],
             unlocked() { return options.theme == 'void'},
         },
