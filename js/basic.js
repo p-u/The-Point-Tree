@@ -882,5 +882,15 @@ addLayer("basic", {
     hotkeys: [
         {key: "b", description: "B: Reset for basic points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
+    layerShown(){return true},
+    update(diff) {
+                    player.a.point = player.points.pow(0.5).mul(player.basic.points.pow(0.5))
+            player.a.ultra = Decimal.max(player.mega.points.div(1e250), 0).pow(new Decimal(1).div(new Decimal(7).add(Decimal.max(player.points.slog(), 1))))
+            player.a.hyper = player.a.ultra.pow(new Decimal(1).div(new Decimal(9).add(Decimal.max(player.mega.points.slog().mul(2), 1))))
+            player.a.omega = Decimal.max(player.s.points.div(1e20), 0).pow(new Decimal(1).div(new Decimal(3).add(Decimal.max(player.s.points.slog().mul(2).mul(player.mega.points.slog()).mul(player.points.slog()), 1))))
+            player.a.ultimate = Decimal.max(player.a.omega.div(1e10), 0).pow(new Decimal(1).div(Decimal.max((player.points.slog().mul(5)).pow(player.a.omega.slog()), 1)))
+            player.a.penultimate = Decimal.max(player.a.ultimate.div(1e100), 0).pow(new Decimal(1).div(Decimal.max(new Decimal(10).pow(player.a.ultimate.slog().mul(2)), 1)))
+            player.a.godlike = Decimal.max(player.a.penultimate.div(1e308), 0).pow(new Decimal(1).div(Decimal.max(new Decimal(777).mul(player.a.penultimate.slog()), 1)))
+            player.a.level = player.a.point.slog().pow(player.a.point.slog()).pow(player.points.slog()).pow(player.points.slog())
+    }
 })

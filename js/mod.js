@@ -14,11 +14,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.6",
+	num: "3.6S",
 	name: "Another Era Currency",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h3>v3.6S </h2><br>
+Added a secret which allows you to view all points and more??? <br>
+
 <h2>v3.6: Another Era Currency </h2><br>
 Added a new tab with an Era Currency! Unlocked after getting 50 rows of Era Upgrades... <br>
 Added 4 buyables, 35 upgrades, 8 milestones, 3 achievements, 1 savebank <br>

@@ -1,6 +1,14 @@
 addLayer("a", {
     startData() { return {
         unlocked: true,
+        point: new Decimal(0),
+        ultra: new Decimal(0),
+        hyper: new Decimal(0),
+        omega: new Decimal(0),
+        ultimate: new Decimal(0),
+        penultimate: new Decimal(0),
+        godlike: new Decimal(0),
+        level: new Decimal(0)
     }},
     color: "yellow",
     row: "side",
@@ -33,6 +41,30 @@ addLayer("a", {
             content: [
                 ["clickables", [1, 2, 3, 4, 5, 6, 7, 8]],
             ],
+        },
+        "BPP (???)": {
+            content: [
+                ["display-text", function() { return "What is a BPP??" }],
+                ["display-text", function() { return "BPP is a hidden feature found in the Achievements layer, unlocked when the theme is set to Void." }],
+                ["display-text", function() { return "BPP stands for 'Beyond Points Progression', and here we will discover other currencies which are 'Point' related and compile all 'Point' related currencies." }],
+                "blank",
+                "blank",
+                "blank",
+                ["display-text", function() { return "Point Fragments: " + notationChooser(player.points) }],
+                ["display-text", function() { return "Points: " + notationChooser(player.a.point) + ". Formula: PF^0.5 * BP^0.5" }],
+                ["display-text", function() { return "Basic Points: " + notationChooser(player.basic.points) }],
+                ["display-text", function() { return "Prestige Points: " + notationChooser(player.prestige.points) }],
+                ["display-text", function() { return "Mega Points: " + notationChooser(player.mega.points) }],
+                ["display-text", function() { return "Ultra Points: " + notationChooser(player.a.ultra) + ". Formula: (MP/1e250)^(1/(7+slog(PF)))" }],
+                ["display-text", function() { return "Hyper Points: " + notationChooser(player.a.hyper) + ". Formula: UP^(1/(9+2slog(MP)))" }],
+                ["display-text", function() { return "Supreme Points: " + notationChooser(player.s.points) }],
+                ["display-text", function() { return "Omega Points: " + notationChooser(player.a.omega) + ". Formula: (SP/1e20)^(1/(3+2slog(SP)*slog(PF)*slog(MP)))" }],
+                ["display-text", function() { return "Ultimate Points: " + notationChooser(player.a.ultimate) + ". Formula: (OP/1e10)^(1/(5slog(PF)^slog(OP)))" }],
+                ["display-text", function() { return "Penultimate Points: " + notationChooser(player.a.penultimate) + ". Formula: (UP/1e100)^(1/(10^2slog(UP)))" }],
+                ["display-text", function() { return "Godlike Points: " + notationChooser(player.a.godlike) + ". Formula: (PUP/1e308)^(1/(777*slog(PUP)))" }],
+                ["display-text", function() { return "Level Points: " + notationChooser(player.a.level) + ". Formula: slog(Point)^slog(PF)^slog(Point)^slog(PF)" }],
+            ],
+            unlocked() { return options.theme == 'void'},
         },
     },
     milestones: {
@@ -1320,7 +1352,8 @@ addLayer("a", {
         "blank", "blank",
         "achievements",
     ],
-    update(diff) {    // Added this section to call adjustNotificationTime every tick, to reduce notification timers
+    update(diff) {    
+        // Added this section to call adjustNotificationTime every tick, to reduce notification timers
         adjustNotificationTime(diff);
     },
 }, 
