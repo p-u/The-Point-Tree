@@ -9,7 +9,7 @@ addLayer("cm", {
     }},
     color: "grey",
     row: "side",
-    layerShown() {return hasMilestone("ma", 7)}, 
+    layerShown() {return (hasMilestone("ma", 7) || hasMilestone("mo", 1))}, 
     tooltip() { // Optional, tooltip displays when the layer is locked
         return ("Click Mastery")
     },

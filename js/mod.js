@@ -3,7 +3,7 @@ let modInfo = {
 	id: "RD82:WG",
 	author: "randim82",
 	pointsName: "Atoms",
-	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js", "content_features.js", "molecules.js"],
+	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js", "content_features.js", "molecules.js", "particles.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -167,10 +167,13 @@ function getPointGen() {
 	if (hasUpgrade("en", 65)) gain = gain.times(1.2)
 	if (hasUpgrade("en", 71)) gain = gain.times(7)
 	if (hasUpgrade("en", 74)) gain = gain.times(100)
+	if (hasUpgrade("mo", 31)) gain = gain.times(12)
+	if (hasUpgrade("mo", 32)) gain = gain.times(100e3)
 	if (hasUpgrade("mo", 11)) gain = gain.times(2)
 	if (hasUpgrade("mo", 12)) gain = gain.times(3)
 	if (hasUpgrade("en", 75)) gain = gain.times(8)
 	if (hasUpgrade("mo", 15)) gain = gain.times(5)
+	if (hasMilestone("mo", 11)) gain = gain.times(new Decimal(player.timePlayed).pow(0.8))
 	if (hasMilestone("w", 2)) gain = gain.times(new Decimal(3).pow(player.w.points))
 	if (hasMilestone("ma", 11)) gain = gain.times(3)
 	if (hasUpgrade("mo", 23)) {
@@ -180,6 +183,8 @@ function getPointGen() {
 	}
 	if (hasMilestone("mo", 7)) gain = gain.times(77)
 	if (hasUpgrade("en", 85)) gain = gain.times(88)
+	if (hasMilestone("cf", 4)) gain = gain.times(Decimal.min(new Decimal(4).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(1e7)))
+	if (hasUpgrade("pa", 11)) gain = gain.times(5)
 
 	// playtime milestones
 	if (hasMilestone("a", 4)) gain = gain.times(2)
@@ -199,6 +204,7 @@ function getPointGen() {
 	if (player.cm.clickmastery.gte(3e9)) gain = gain.times(player.cm.clickmastery.mul(225).log(22500))
 	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
 	if (player.cm.clickmastery.gte(3e10)) gain = gain.times(3)
+	gain = gain.times(layers.pa.getAlphaEff())
 
 
 	// exponent

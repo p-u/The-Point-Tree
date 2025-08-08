@@ -5,7 +5,6 @@ addLayer("ma", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
-        MResetTime: 0,
     }},
     layerShown(){
         let visible = false
@@ -25,12 +24,15 @@ addLayer("ma", {
         // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
         let keptUpgrades = [];
         for(i=1;i<6;i++){ //rows
+            let cutoff = 4
+            if (hasUpgrade("pa", 12)) cutoff = 5
             for(v=1;v<3;v++){ //columns
               if ((hasMilestone('mo', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
-            for(v=3;v<4;v++){ //columns
+            for(v=3;v<cutoff;v++){ //columns
               if ((hasMilestone('mo', 6)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
+
         }
         let keep = [];
         if (hasMilestone("ma", 4)) {
@@ -136,7 +138,11 @@ addLayer("ma", {
             cost: new Decimal(5e12),
             effect() {
                 if (hasUpgrade("en", 82)) {
-                    return player.en.points.log(2).div(10)
+                    if (hasUpgrade("pa", 14)) {
+                        return player.en.points.log(3)
+                    } else{
+                        return player.en.points.log(2).div(10)
+                    }
                 } else {
                     return player.en.points.log10().div(10)
                 }
@@ -195,16 +201,17 @@ addLayer("ma", {
         41: {
             title: "16: Sulfur",
             description: "x6 Molecules gain (wow!)",
-            cost: new Decimal(6.5e156),
+            cost: new Decimal(6e155),
             unlocked() { return (hasMilestone("cf", 3) && hasMilestone("w", 2)) }, 
         },
         42: {
             title: "17: Chlorine",
             description: "For every Matter upgrade, x1.25 Matter gain",
-            cost: new Decimal(1e165),
+            cost: new Decimal(6e163),
             effect() {
                 matterups = player.ma.upgrades.length
                 scale = new Decimal(1.25)
+                if (hasMilestone("ma", 13)) scale = new Decimal(1.4)
                 let eff = scale.pow(matterups)
                 return eff
             },
@@ -219,10 +226,11 @@ addLayer("ma", {
         43: {
             title: "18: Argon",
             description: "For every Matter upgrade, double Atom gain",
-            cost: new Decimal(1.7e171),
+            cost: new Decimal(3.1e170),
             effect() {
                 matterups = player.ma.upgrades.length
                 scaleatom = new Decimal(2)
+                if (hasMilestone("ma", 13)) scaleatom = new Decimal(3)
                 let eff = scaleatom.pow(matterups)
                 return eff
             },
@@ -237,13 +245,13 @@ addLayer("ma", {
         44: {
             title: "19: Potassium",
             description: "Delay the Matter layer softcap by e16",
-            cost: new Decimal(1e190),
+            cost: new Decimal(3e189),
             unlocked() { return hasUpgrade("ma", 43) }, 
         },
         45: {
             title: "20: Calcium",
             description: "Every 2 Generator 6s, give 1 additional Generator 4.",
-            cost: new Decimal(9.3e213), // change this
+            cost: new Decimal(3e213), // change this
             unlocked() { return hasUpgrade("ma", 44) }, 
         },
     },
@@ -319,17 +327,18 @@ addLayer("ma", {
             unlocked() { return hasMilestone("ma", 11)},
             done() { return player.ma.total.gte(1.6e116) }
         },
+        13: {
+            requirementDescription: "1e228 total Matter",
+            effectDescription: "'Chlorine', 'Argon' and 'Potassium' upgrades are stronger.",
+            unlocked() { return hasUpgrade("ma", 45)},
+            done() { return player.ma.total.gte(1e228) }
+        },
     },
     infoboxes: {
         mat: {
             title: "Matter",
             body() { return "You did your first reset! All of your hard-earned progress, generators, energy and atoms, are just wiped. However, it unlocks new upgrades, and a new layer with more features. Enter Milestones, where total Matter is used, and it gives boosts without spending any of your Matter!" },
         },
-    },
-    setRT() {
-        if ((hasAchievement("a", 23)) && (player.ma.MResetTime == 0)) {
-            player.ma.MResetTime = player.timePlayed
-        }
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
@@ -349,7 +358,10 @@ addLayer("ma", {
         if (hasMilestone("w", 2)) mult = mult.times(new Decimal(1.1).pow(player.w.points))
         if (hasMilestone("ma", 11)) mult = mult.times(2)
         if (hasUpgrade("en", 82)) mult = mult.times(3)
+        if (hasUpgrade("pa", 11)) mult = mult.times(2)
         if (hasMilestone("mo", 7)) mult = mult.times(77)
+        if (hasMilestone("cf", 4)) mult = mult.times(Decimal.min(new Decimal(1.7).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(50)))
+        mult = mult.times(layers.pa.getBetaEff())
         if ((hasUpgrade("en", 81)) && (hasUpgrade("mo", 23))) mult = mult.times(19).div(4)
         if (hasUpgrade("en", 83)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomatter))
         if (player.cm.clickmastery.gte(1e7)) mult = mult.times(player.cm.clickmastery.div(333).log(3333))
@@ -372,6 +384,7 @@ addLayer("ma", {
         if (hasUpgrade("ma", 44)) {
             softcapstart = new Decimal(1e166)
         }
+        if (hasMilestone("ma", 13)) softcapstart = new Decimal(1e175)
         softcappedEffect = softcap(eff, new Decimal(softcapstart), new Decimal(sc))
         return softcappedEffect
     },
@@ -382,6 +395,8 @@ addLayer("ma", {
         if (hasUpgrade("ma", 44)) {
             softcapstart = new Decimal(1e166)
         }
+        if (hasMilestone("ma", 13)) softcapstart = new Decimal(1e175)
+
         if (layerEffect.gte(softcapstart) ) {
             softcapDescription = " (Softcapped at "+ notationChooser(softcapstart) +"x)"
         }

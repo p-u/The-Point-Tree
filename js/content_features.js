@@ -42,6 +42,11 @@ addLayer("cf", {
             effectDescription: "Extend Matter Upgrades",
             done() { return player.points.gte("e600") }
         },
+        4: {
+            requirementDescription: "e930 Atoms",
+            effectDescription: "Molecules are temporarily, super OP! Quadruple Atoms, x1.7 Matter and x1.1 Molecule Bonds gain per x2 Molecule Bonds starting from 1e25. <br>(Cap: 1e7x, 50x and 10x respectively -> 3.16e27, 5.74e26, 1.88e31 Molecule Bonds)",
+            done() { return player.points.gte("e930") }
+        },
     },
     tabFormat: {
         "Content Features": {

@@ -35,6 +35,7 @@ addLayer("en", {
         gen6multi: new Decimal(1),
         gen7multi: new Decimal(1),
         gen8multi: new Decimal(1),
+        bleh: 0,
     }},
     color: "#4BDC13",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -59,14 +60,14 @@ addLayer("en", {
         // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
         let keptUpgrades = [];
         for(i=1;i<6;i++){ //rows
+            let cutoff = 5
+            if (hasMilestone("mo", 7)) cutoff = 8
+            if (hasUpgrade("pa", 12)) cutoff = 9
             for(v=1;v<5;v++){ //columns
               if ((hasMilestone('ma', 8)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
-            for(v=1;v<5;v++){ //columns
+            for(v=1;v<cutoff;v++){ //columns
               if ((hasMilestone('mo', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
-            }
-            for(v=5;v<8;v++){ //columns
-              if ((hasMilestone('mo', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
         }
         let keep = [];
@@ -87,6 +88,8 @@ addLayer("en", {
                 "blank",
                 "prestige-button",
                 "blank",
+                "blank",
+                "milestones",
                 "blank",
                 "upgrades",
                 "blank",
@@ -513,13 +516,13 @@ addLayer("en", {
         82: {
             title: "Matter is the foundation of everything",
             description: "x3 Matter, Molecule effect is stronger, Sodium Upgrade is stronger, World Tier exponent is weaker",
-            cost: new Decimal("3e330"),
+            cost: new Decimal("3e329"),
             unlocked() { return hasUpgrade("en", 81) }, 
         },
         83: {
             title: "Insana-power",
             description: "Power boosts Matter at a hyper-reduced rate (^0.008)",
-            cost: new Decimal(1e214),
+            cost: new Decimal(2e213),
             currencyDisplayName: "Power",
             currencyInternalName: "power",
             currencyLayer: "en",
@@ -528,16 +531,18 @@ addLayer("en", {
         84: {
             title: "Atomic Fusion",
             description: "Molecules now boost Atoms gain by Molecule Effect^0.5.",
-            cost: new Decimal("4e432"),
+            cost: new Decimal("4e431"),
             unlocked() { return hasUpgrade("en", 81) }, 
             effect() {
                 powerful = 0.5
+                if (hasMilestone("mo", 10)) powerful = 0.8
+                if (hasUpgrade("mo", 34)) powerful = 0.9
                 sdsc = ""
-                softcapDescriptionen41 = ""
+                softcapDescriptionen84 = ""
                 return layers.mo.effect().pow(powerful)
             },
             effectDisplay() {
-                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionen41
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionen84
             },
             tooltip() {
                 return "Formula: Molecule Effect^"  + powerful + sdsc
@@ -563,7 +568,12 @@ addLayer("en", {
                 }
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 1."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy. <br>"
+                if (hasUpgrade("pa", 13)) {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + formatWhole(this.extra()) + " Generator 1."
+                } else {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 1."
+                }
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 1 amount multiply Power generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -583,7 +593,13 @@ addLayer("en", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            extra(){
+                let extra = new Decimal(0)
+                if (hasUpgrade("pa", 13)) extra = extra.plus(getBuyableAmount(this.layer, 51).mul(2))
+                return extra
+            },
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 gensqboost = new Decimal(1.05)
                 if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
                 if (hasUpgrade("mo", 22)) gensqboost = new Decimal(1.061)
@@ -666,7 +682,12 @@ addLayer("en", {
                 }
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 3."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy. <br>"
+                if (hasUpgrade("mo", 33)) {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + formatWhole(this.extra()) + " Generator 3."
+                } else {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 3."
+                }
                 if (hasUpgrade("en", 33)) dis = dis + " Generator 3 amount multiply Generator 2 generation "
                 if ((hasMilestone("mo", 4)) && (hasUpgrade("en", 33))) dis = dis + "and power gain "
                 dis = dis + "by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
@@ -674,6 +695,11 @@ addLayer("en", {
             },
             canAfford() {
                 return player.en.points.gte(this.cost())
+            },
+            extra(){
+                let extra = new Decimal(0)
+                if (hasUpgrade("mo", 33)) extra = extra.plus(getBuyableAmount(this.layer, 31).div(3).floor())
+                return extra
             },
             buy() {
                 let cost = new Decimal(1)
@@ -688,7 +714,8 @@ addLayer("en", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 if (hasUpgrade("en", 33)) {
                     gensqboost = new Decimal(1.05)
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
@@ -821,6 +848,7 @@ addLayer("en", {
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
                     if (hasUpgrade("ma", 34)) gensqboost = new Decimal(1.0665)
                     if (hasUpgrade("mo", 22)) gensqboost = new Decimal(1.072)
+                    if (hasUpgrade("pa", 14)) gensqboost = new Decimal(1.076)
                     eff = new Decimal(gensqboost).pow(Decimal.max(x.sub(1), 0))
                 } else {
                     eff = new Decimal(1)
@@ -860,7 +888,15 @@ addLayer("en", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasMilestone("w", 2))) player.en.points = player.en.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("pa", 11)) {
+                    if (getBuyableAmount(this.layer, this.id).gte(750)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e2300").log(10000).floor().add(751))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(1e27).log(1000).floor().add(1))
+                    }
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 if (hasUpgrade("en", 33)) {
@@ -868,6 +904,7 @@ addLayer("en", {
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
                     if (hasUpgrade("ma", 34)) gensqboost = new Decimal(1.07)
                     if (hasUpgrade("mo", 22)) gensqboost = new Decimal(1.078)
+                    if (hasUpgrade("pa", 14)) gensqboost = new Decimal(1.085)
                     eff = new Decimal(gensqboost).pow(Decimal.max(x.sub(1), 0))
                 } else {
                     eff = new Decimal(1)
@@ -909,7 +946,15 @@ addLayer("en", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasMilestone("mo", 5))) player.en.points = player.en.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("pa", 11)) {
+                    if (getBuyableAmount(this.layer, this.id).gte(600)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e4444").log(1e9).floor().add(601))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(1e50).log(1e7).floor().add(1))
+                    }
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 if (hasUpgrade("en", 33)) {
@@ -917,6 +962,7 @@ addLayer("en", {
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
                     if (hasUpgrade("ma", 34)) gensqboost = new Decimal(1.075)
                     if (hasUpgrade("mo", 22)) gensqboost = new Decimal(1.085)
+                    if (hasUpgrade("pa", 14)) gensqboost = new Decimal(1.1)
                     eff = new Decimal(gensqboost).pow(Decimal.max(x.sub(1), 0))
                 } else {
                     eff = new Decimal(1)
@@ -960,8 +1006,16 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.en.points = player.en.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasUpgrade("pa", 11)) player.en.points = player.en.points.sub(this.cost().mul(cost))
+                if (hasUpgrade("pa", 11)) {
+                    if (getBuyableAmount(this.layer, this.id).gte(420)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e5250").log(1e23).floor().add(421))
+                    } else {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div(1e200).log(1e12).floor().add(1))
+                    }
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 if (hasUpgrade("en", 33)) {
@@ -969,6 +1023,7 @@ addLayer("en", {
                     if (hasUpgrade("en", 51)) gensqboost = new Decimal(1.06)
                     if (hasUpgrade("ma", 34)) gensqboost = new Decimal(1.0825)
                     if (hasUpgrade("mo", 22)) gensqboost = new Decimal(1.1)
+                    if (hasUpgrade("pa", 14)) gensqboost = new Decimal(1.125)
                     eff = new Decimal(gensqboost).pow(Decimal.max(x.sub(1), 0))
                 } else {
                     eff = new Decimal(1)
@@ -1000,11 +1055,16 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.en.points = player.en.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasUpgrade("pa", 11))player.en.points = player.en.points.sub(this.cost().mul(cost))
+                if (hasUpgrade("pa", 11)) {
+                    setBuyableAmount(this.layer, this.id, player.en.points.div("1e500").log(1e10).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 tspdboost = new Decimal(1.1)
+                if (hasUpgrade("pa", 13)) tspdboost = new Decimal(1.11)
                 eff = new Decimal(tspdboost).pow(Decimal.max(x.sub(1), 0))
                 return eff
             },
@@ -1106,6 +1166,7 @@ addLayer("en", {
             player.en.gen3multi = player.en.gen3multi.times(buyableEffect("mo", 21))
             player.en.gen4multi = player.en.gen4multi.times(buyableEffect("mo", 22))
             player.en.gen5multi = player.en.gen5multi.times(buyableEffect("mo", 31))
+            player.en.gen6multi = player.en.gen6multi.times(buyableEffect("mo", 32))
             
             if (hasUpgrade("en", 44)) player.en.gen1multi = player.en.gen1multi.times(1.1)
             if (hasUpgrade("en", 44)) player.en.gen2multi = player.en.gen2multi.times(1.2)
@@ -1276,6 +1337,7 @@ addLayer("en", {
             if (hasAchievement("a", 41)) gain = gain.times(1.08)
             if (hasUpgrade("mo", 13)) gain = gain.times(4)
             if (hasAchievement("a", 43)) gain = gain.times(1.2)
+            if (hasAchievement("a", 65)) gain = gain.times(1.25)
             if (hasUpgrade("mo", 15)) gain = gain.times(3)
             if (hasAchievement("a", 46)) gain = gain.times(1.1)
             if (hasUpgrade("mo", 21)) gain = gain.times(1000)
@@ -1289,9 +1351,14 @@ addLayer("en", {
 
             if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
             if (hasUpgrade("mo", 13)) gain = gain.pow(1.04)
+            
+            gain = softcap(gain, new Decimal("e720"), new Decimal(0.6))
             player.en.powgain = gain
             gain = gain.times(diff)
             player.en.power = player.en.power.add(gain)
+            if (player.en.points.gte(10) && player.en.bleh == 0) {
+                player.en.bleh = player.timePlayed
+            }
         }
     },
     layerShown(){return true}

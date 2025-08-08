@@ -6,6 +6,9 @@ addLayer("w", {
         return {                  
             unlocked: true,
             points: new Decimal(1),
+            MaResetTime: 0,
+            MoResetTime: 0,
+            PaResetTime: 0,
         };
     },
     color: "#4caf50",
@@ -65,7 +68,7 @@ addLayer("w", {
                 ["display-text", function() {
                     if (player.points.gte(1e6)){
                         if (hasAchievement("a", 23)) {
-                            return "Your first Matter Reset is " + formatTime(player.ma.MResetTime) + " after you started the game."
+                            return "Your first Matter Reset is " + formatTime(player.w.MaResetTime) + " after you started the game."
                         } else {
                             return "Your first Matter Reset is in: TBC, you have not resetted for Matter yet"
                         }
@@ -77,7 +80,7 @@ addLayer("w", {
                 ["display-text", function() {
                    if (hasAchievement("a", 33)){
                         if (hasAchievement("a", 43)) {
-                            return "Your first Molecule Reset is " + formatTime(player.mo.MResetTime) + " after you started the game."
+                            return "Your first Molecule Reset is " + formatTime(player.w.MoResetTime) + " after you started the game."
                         } else {
                             return "Your first Molecule Reset is in: TBC, you have not resetted for Molecules yet"
                         }
@@ -89,7 +92,35 @@ addLayer("w", {
                         }
                     }
                 }],
+                "blank",
+                ["display-text", function() {
+                   if (player.mo.points.gte(1e20)){
+                        if (hasAchievement("a", 65)) {
+                            return "Your first Particle Reset is " + formatTime(player.w.PaResetTime) + " after you started the game."
+                        } else {
+                            return "Your first Particle Reset is in: TBC, you have not resetted for Particles yet"
+                        }
+                    } else {
+                        if (hasAchievement("a", 43)) {
+                            return "Reach 1e20 Molecules to unlock this thing"
+                        } else {
+                            return ""
+                        }
+                    }
+                }],
             ],
         },
+    },
+    update(diff) {
+        if ((hasAchievement("a", 23)) && (player.w.MaResetTime == 0)) {
+            player.w.MaResetTime = player.timePlayed
+        }
+        if ((hasAchievement("a", 43)) && (player.w.MoResetTime == 0)) {
+            player.w.MoResetTime = player.timePlayed
+        }
+        if ((hasAchievement("a", 65)) && (player.w.PaResetTime == 0)) {
+            player.w.PaResetTime = player.timePlayed
+        }
+        player.pa.totalParticles = player.pa.clickableamt.alpha.add(player.pa.clickableamt.beta).add(player.pa.clickableamt.gamma)
     },
 });
