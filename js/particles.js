@@ -24,7 +24,7 @@ addLayer("pa", {
        return visible
     },
     color: "#2E6F40",
-    requires: new Decimal("1e1000"),
+    requires: new Decimal("1e10000"),
     resource: "Particles", // Name of currency
     baseResource: "Atoms", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
