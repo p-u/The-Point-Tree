@@ -215,7 +215,7 @@ addLayer("a", {
         26: {
             name: "Giga Machine",
             done() { return player.en.gen1amt.gte(1e9) },
-            tooltip: "Get 1,000,000,000 of the first generator. Reward: +1% Gen 1 generation",
+            tooltip: "Get 1,000,000,000 of the first generator. Reward: +1 x 10^0% Gen 1 generation",
             unlocked() { return hasAchievement("a", 23) },
         },
         31: {
@@ -391,6 +391,60 @@ addLayer("a", {
                 "border-width": "3px"
                 }
             }
+        },
+        66: {
+            name: "Particles I",
+            done() { return player.pa.totalParticles.gte(10) },
+            tooltip: "Reach 10 Particles Spent on Other Particles. (Reward: +1% Particles gain)",
+            unlocked() { return hasAchievement("a", 65) },
+        },
+        71: {
+            name: "Particles II",
+            done() { return player.pa.totalParticles.gte(100) },
+            tooltip: "Reach 100 Particles Spent on Other Particles. (Reward: +2% Particles gain)",
+            unlocked() { return hasAchievement("a", 65) },
+        },
+        72: {
+            name: "Particles III",
+            done() { return player.pa.totalParticles.gte(2500) },
+            tooltip: "Reach 2,500 Particles Spent on Other Particles. (Reward: +3% Particles gain)",
+            unlocked() { return hasAchievement("a", 65) },
+        },
+        73: {
+            name: "The Elusive 9th Generator",
+            done() { return player.en.gen9amt.gte(1) },
+            tooltip: "Get 1 Gen 9 (requires 100 Gen 8s). (Reward: +9% Gen 1 gain)",
+            unlocked() { return hasAchievement("a", 65) },
+        },
+        74: {
+            name: "Get 1 T7-Booster",
+            done() { return getBuyableAmount("mo", 41).gte(1) },
+            tooltip: "Get 1 Booster 7. (+7% Molecule Bonds gain)",
+            unlocked() { return hasAchievement("a", 65) },
+        },
+        75: {
+            name: "Permanently Keep 'Major Trade off'",
+            done() { return hasUpgrade("en", 93) },
+            tooltip: "Yes. [No additional boost]",
+            unlocked() { return hasAchievement("a", 65) },
+            style() {
+                return {
+                "border-color": "blue",
+                "border-width": "3px"
+                }
+            }
+        },
+        76: {
+            name: "9x9 = 81",
+            done() { return player.en.gen9amt.gte(9) },
+            tooltip: "Get 9 Gen 9s (requires over e2,000 Atoms). (Reward: Autobuy Gen 8 [req EN92 as well], and Booster 1-3 costs nothing.)",
+            unlocked() { return hasAchievement("a", 75) },
+        },
+        81: {
+            name: "A Millinillion",
+            done() { return player.points.gte("1e3003") },
+            tooltip: "Get 1 Mi Atoms. (Reward: Gen 9s do not reset Gen 8s anymore)",
+            unlocked() { return hasAchievement("a", 75) },
         },
         101: {
             name: "Click Mastery Milestone 1 (Optional) - Even a baby can click that much",

@@ -11,6 +11,9 @@ addLayer("w", {
             PaResetTime: 0,
         };
     },
+    canBuyMax(){
+       return player.w.points.gte(100)
+    },
     color: "#4caf50",
     requires: new Decimal(5e19),
     resource: "World Tier",
@@ -46,7 +49,7 @@ addLayer("w", {
         },
         3: {
             requirementDescription: "World Tier 4",
-            effectDescription: "Double Molecule Bonds gain, ^1.01 Atom gain. <br> Unlock new Click Mastery Milestones and (v1.0) Unlock a new CM Feature with a new tab and upgrades. +20% CM gain. <br> Also, unlock a new layer (v1.0).",
+            effectDescription: "Double Molecule Bonds gain, ^1.01 Atom gain. <br> Unlock new Click Mastery Milestones and unlock a new CM Feature with a new tab and upgrades. +20% CM gain. <br> Also, unlock a new layer.",
             done() { return player.w.points.gte(4) },
         },
     },

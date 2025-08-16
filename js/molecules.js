@@ -14,14 +14,6 @@ addLayer("mo", {
         if (hasMilestone("cf", 1)) visible = true
        return visible
      },
-    passiveGeneration() {
-        if (hasUpgrade("mo", 35)) return 0.004
-        if (hasUpgrade("mo", 34)) return 0.0035
-        if (hasUpgrade("mo", 33)) return 0.003
-        if (hasUpgrade("mo", 32)) return 0.0025
-        if (hasUpgrade("mo", 31)) return 0.0015
-        return 0
-    },
     tabFormat: {
         "Main tab": {
             content: [
@@ -97,6 +89,18 @@ addLayer("mo", {
             unlocked() {return hasMilestone("cf", 2)}
         },
     },
+    passiveGeneration() {
+        if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
+        if (hasUpgrade("mo", 42)) return 0.004
+        if (hasUpgrade("mo", 41)) return 0.008
+        if (hasUpgrade("mo", 35)) return 0.004
+        if (hasUpgrade("mo", 34)) return 0.0035
+        if (hasUpgrade("mo", 33)) return 0.003
+        if (hasUpgrade("mo", 32)) return 0.0025
+        if (hasUpgrade("mo", 31)) return 0.0015
+        return 0
+    },
+
     color: "#A3D5FF",
     requires: new Decimal(1e150), // Can be a function that takes requirement increases into account
     resource: "Molecule Bonds", // Name of currency
@@ -180,6 +184,18 @@ addLayer("mo", {
             unlocked() { return hasMilestone("mo", 10)},
             done() { return player.mo.points.gte(1.15e35) }
         },
+        12: {
+            requirementDescription: "1.2e54 Molecule Bonds",
+            effectDescription: "x1,254 Atoms, Energy and Power. Also unlock Booster 7.",
+            unlocked() { return hasMilestone("mo", 11)},
+            done() { return player.mo.points.gte(1.2e54) }
+        },
+        13: {
+            requirementDescription: "5e90 Molecule Bonds",
+            effectDescription: "Each Achievement doubles Atoms gain. Also unlock Booster 8.",
+            unlocked() { return hasMilestone("mo", 12)},
+            done() { return player.mo.points.gte(5e90) }
+        },
     },
     upgrades: {
         11: {
@@ -246,7 +262,7 @@ addLayer("mo", {
         },
         23: {
             title: "U8: True Whee",
-            description: "Energy Upgrade 'wheeeeeeeeeeeee' now has 6 more 'e's, each 'e' multiplies Energy by 1.4 instead of +x1, +x1 Energy (instead of +x0.25) and +x0.25 Matter.",
+            description: "Energy Upgrade 'wheeeeeeeeeeeee' now has 6 more 'e's, each 'e' multiplies Atoms by 1.4 instead of +x1, +x1 Energy (instead of +x0.25) and +x0.25 Matter.",
             cost: new Decimal(4e10),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
@@ -274,7 +290,7 @@ addLayer("mo", {
         31: {
             title: "U11: Is that even useful??",
             description: "Generate 0.15% of Molecules on reset per second (9%/min). Double Molecules gain and Dodecuple Atoms gain.",
-            cost: new Decimal(5e32),
+            cost: new Decimal(4e32),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
             currencyLayer: "mo",
@@ -282,8 +298,8 @@ addLayer("mo", {
         },
         32: {
             title: "U12: Even usefuler?",
-            description: "For every upgrade in this row, +0.05% generation to Molecules. x100,000 Atom gain :O",
-            cost: new Decimal(5e33),
+            description: "For every upgrade in this row, +0.05% generation to Molecules. x100,000 Atom gain and x2 Molecules gain :O",
+            cost: new Decimal(4e33),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
             currencyLayer: "mo",
@@ -292,7 +308,7 @@ addLayer("mo", {
         33: {
             title: "U13: Extra OP",
             description: "For every 3 Gen 5s, add a Gen 3.",
-            cost: new Decimal(3e34),
+            cost: new Decimal(2.5e34),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
             currencyLayer: "mo",
@@ -301,11 +317,76 @@ addLayer("mo", {
         34: {
             title: "U14: Effup",
             description: "Increase Molecule Bonds effect. Furthermore, 'Atomic Fusion' is stronger.",
-            cost: new Decimal(2e35),
+            cost: new Decimal(1.3e35),
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
             currencyLayer: "mo",
             unlocked() { return hasUpgrade("mo", 33) }, 
+        },
+        35: {
+            title: "U15: Ca(u)tion",
+            description: "Unlock a new Particle which boosts Molecule Bonds by 1.2x per double, but nerfs atoms by (Effect^1.5)x per double. The first two particles are stronger. The next upgrade requires 700 particles ON HAND.",
+            cost: new Decimal(3.7e37),
+            currencyDisplayName: "Molecules",
+            currencyInternalName: "molecule",
+            currencyLayer: "mo",
+            unlocked() { return hasUpgrade("mo", 34) }, 
+        },
+        41: {
+            title: "U16: 2⁴",
+            description: "Double Molecule Passive Generation, Generator 4 gives extra levels to Generator 2",
+            cost: new Decimal(5e38),
+            currencyDisplayName: "Molecules",
+            currencyInternalName: "molecule",
+            currencyLayer: "mo",
+            unlocked() { return (hasUpgrade("mo", 35) && player.pa.points.gte(700)) }, 
+        },
+        42: {
+            title: "U17: Unstable Fusion",
+            description: "+^0.02 Matter, but /2 passive generation",
+            cost: new Decimal(1e40),
+            currencyDisplayName: "Molecules",
+            currencyInternalName: "molecule",
+            currencyLayer: "mo",
+            unlocked() { return (hasUpgrade("mo", 41)) }, 
+        },
+        43: {
+            title: "U18: Tenet",
+            description: "'Atomic Fusion' is stronger (^0.9 -> ^1.0), Booster base increased to 10.",
+            cost: new Decimal(1.5e50),
+            currencyDisplayName: "Molecules",
+            currencyInternalName: "molecule",
+            currencyLayer: "mo",
+            unlocked() { return (hasUpgrade("mo", 42)) }, 
+        },
+        44: {
+            title: "U19: Suprema-Power [COSTS MOLECULE BONDS]",
+            description: "Power boosts Matter, Molecules and Particles more",
+            cost: new Decimal(7.8e78),
+            unlocked() { return (hasUpgrade("mo", 43)) }, 
+        },
+        45: {
+            title: "U20: Power Amplifier",
+            description: "Power boosts Atoms more but Energy less. Molecules boost Power gain.",
+            cost: new Decimal(1e103),
+            currencyDisplayName: "Molecules",
+            currencyInternalName: "molecule",
+            currencyLayer: "mo",
+            effect() {
+                molpower = 0.4
+                softcapDescriptionmo45 = ""
+                sdsc = ""
+                upgEffectmo45 = upgradeEffect(this.layer, this.id)
+                let eff = player.mo.molecule.add(1).pow(molpower)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionmo45
+            },
+            tooltip() {
+                return "Formula: (Molecules+1)^"  + molpower + sdsc
+            },
+            unlocked() { return (hasUpgrade("mo", 44)) }, 
         },
     },
     buyables: {
@@ -324,7 +405,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasAchievement("a", 76))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -354,7 +435,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasAchievement("a", 76))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -384,7 +465,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasAchievement("a", 76))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -489,21 +570,90 @@ addLayer("mo", {
                 'height': '115px',
             }},
         },
+        41: {
+            title: "Buy Booster 7",
+            unlocked() { return getBuyableAmount("mo",32).gte(6) },
+            cost(x) {
+                return new Decimal(5.5e55).mul(Decimal.pow(555555, x)).floor()
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Molecule Bonds." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Booster 7, multiplying Generator 7 generation by x" + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                return dis
+            },
+            canAfford() {
+                return player.mo.points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 5.5e55 x 555,555^Amt. x" + notationChooser(player.mo.boosterBase, 0) + " Gen 7 gen per buy."
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+        },
+
+        42: {
+            title: "Buy Booster 8",
+            unlocked() { return getBuyableAmount("mo",41).gte(7) },
+            cost(x) {
+                return new Decimal(1e100).mul(Decimal.pow(3333333333, x)).floor()
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Molecule Bonds." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Booster 8, multiplying Generator 8 generation by x" + notationChooser(buyableEffect(this.layer, this.id)) + "."
+                return dis
+            },
+            canAfford() {
+                return player.mo.points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 1e100 x 3,333,333,333^Amt. x" + notationChooser(player.mo.boosterBase, 0) + " Gen 8 gen per buy."
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+        },
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (player.cm.clickmastery.gte(6e9)) mult = mult.times(player.cm.clickmastery.div(4000).log(4000))
+        if (player.cm.clickmastery.gte(1.75e11)) mult = mult.times(1.2)
         if (hasUpgrade("mo", 15)) mult = mult.times(1.5)
         if (hasUpgrade("mo", 32)) mult = mult.times(2)
         if (hasUpgrade("en", 85)) mult = mult.times(1.08)
         if (hasAchievement("a", 61)) mult = mult.times(1.03)
         if (hasUpgrade("ma", 41)) mult = mult.times(6)
+        if (hasUpgrade("pa", 21)) mult = mult.times(upgradeEffect("pa", 21))
         if (hasMilestone("w", 3)) mult = mult.times(2)
+        mult = mult.times(layers.pa.getGammaEff())
+        if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomolecule))
         if (hasMilestone("cf", 4)) mult = mult.times(Decimal.min(new Decimal(1.1).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(10)))
         if (hasAchievement("a", 62)) mult = mult.times(1.08)
         if (hasAchievement("a", 64)) mult = mult.times(1.04)
+        if (hasAchievement("a", 74)) mult = mult.times(1.07)
+        if (hasUpgrade("en", 91)) {
+		    mult = mult.times(new Decimal(1.01).pow(player.en.wheeamt))
+        }
         if (hasUpgrade("pa", 15)) mult = mult.times(upgradeEffect("pa", 15))
-        if (hasMilestone("mo", 11)) mult = mult.times(new Decimal(player.timePlayed - player.en.bleh).log(2.5).pow(2).div(3))
+        if (hasMilestone("mo", 11)) mult = mult.times(new Decimal(player.timePlayed - player.en.bleh).log(3).pow(2).div(3))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -531,13 +681,18 @@ addLayer("mo", {
     ],
 
     update(diff) {
+        if (!player.mo) return
+        if (!player.mo.points) player.mo.points = new Decimal(0)
+        if (!player.mo.molecule) player.mo.molecule = new Decimal(0)
+
         if (player.mo.points.gt(0)) {
-            let gain = player.mo.points.div(10)
-            gain = gain.times(diff)
+            let gain = player.mo.points.div(10).times(diff)
             player.mo.molecule = player.mo.molecule.add(gain)
         }
+
         if (hasMilestone("mo", 6)) player.mo.boosterBase = new Decimal(6)
         if (hasUpgrade("mo", 25)) player.mo.boosterBase = new Decimal(7)
         if (hasUpgrade("pa", 13)) player.mo.boosterBase = new Decimal(8)
-    }
+        if (hasUpgrade("mo", 43)) player.mo.boosterBase = new Decimal(10)
+    },
 })

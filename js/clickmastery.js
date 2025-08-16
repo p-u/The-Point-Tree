@@ -6,6 +6,11 @@ addLayer("cm", {
         cmlvl: new Decimal(1),
         clmult: new Decimal(1.09),
         clscale: new Decimal(3),
+        csmscale: new Decimal(0.48),
+        csmmult: new Decimal(0.07),
+        csmdec: new Decimal(30),
+        csmgain: new Decimal(0),
+        csm: new Decimal(1),
     }},
     color: "grey",
     row: "side",
@@ -25,7 +30,7 @@ addLayer("cm", {
                 }],
                 "blank",
                 ["display-text", function() {
-                    return "You gain "+ notationChooser(player.cm.cpc) +" clicks per click."
+                    return "You gain "+ notationChooser(player.cm.cpc.times(player.cm.csm)) +" clicks per click."
                 }],
                 "blank",
                 ["display-text", function() {
@@ -133,7 +138,7 @@ addLayer("cm", {
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(2.5e8)){
+                    if ((player.cm.clickmastery.gte(3e8)) && hasMilestone("w", 3)) {
                         return "[7.5e8 Clicks] Clicks boosts itself yet again. Currently:" + notationChooser(player.cm.clickmastery.div(1212).log(1212)) + "x. [log1212(CM/1212)]"
                     } else {
                         return ""
@@ -173,7 +178,7 @@ addLayer("cm", {
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(6e9)){
+                    if (player.cm.clickmastery.gte(6e9) && hasMilestone("w", 3)){
                         return "[1e10 Clicks] x1.75 Clicks Gain (First Static Milestone)"
                     } else {
                         return ""
@@ -197,7 +202,7 @@ addLayer("cm", {
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(3e10)){
+                    if (player.cm.clickmastery.gte(3e10) && hasMilestone("w", 3)){
                         return "[5e10 Clicks] Clicks boosts itself. Currently:" + notationChooser(player.cm.clickmastery.slog().div(1.7)) + "x. [slog(CM)/1.7]"
                     } else {
                         return ""
@@ -205,10 +210,68 @@ addLayer("cm", {
                 }],
                 "blank",
                 "blank",
-                "clickables",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(5e10) && hasMilestone("w", 3)){
+                        return "[8e10 Clicks] x1.5 Matter Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(8e10) && hasMilestone("w", 3)){
+                        return "[1.2e11 Clicks] Triple Energy Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1.2e11) && hasMilestone("w", 3)){
+                        return "[1.75e11 Clicks] +20% Molecules Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1.75e11) && hasMilestone("w", 3)){
+                        return "[2.5e11 Clicks] +40% Clicks Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["clickable", 11],
                 "blank",
                 ["infobox", "cm"],
             ],
+        },
+        "Click Surge Multiplier": {
+            content: [
+                ["display-text", function() {
+                    return "You have "+ notationChooser(player.cm.clickmastery) +" Clicks. Click the button to earn clicks!" 
+                }],
+                "blank",
+                ["display-text", function() {
+                    return "Your Click Surge Multiplier is x"+ notationChooser(player.cm.csm) +". (You gain +x" + notationChooser(player.cm.csmgain) + " CSM per click of the CSM button)"
+                }],
+                "blank",
+                ["display-text", function() {
+                    return "You lose "+ notationChooser(player.cm.csm.div(30)) +" CSM a second. (min x1)"
+                }],
+                // heavily unfinished
+                "blank",
+                "blank",
+                "blank",
+                ["clickable", 12],
+                "blank",
+                "blank",
+                "blank",
+                "upgrades",
+                ["infobox", "csm"],
+            ],
+            unlocked() {return hasMilestone("w", 3)}
         },
     },
     clickcalculation() {
@@ -221,9 +284,12 @@ addLayer("cm", {
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
         if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.25))
-        if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
-        if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(1.75)
-        if (player.cm.clickmastery.gte(5e10)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.7))
+        if (hasMilestone("w", 3)) {
+            if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
+            if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(1.75)
+            if (player.cm.clickmastery.gte(2.5e11)) player[this.layer].cpc = player[this.layer].cpc.times(1.4)
+            if (player.cm.clickmastery.gte(5e10)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.7))
+        }
 
 
         if (player.cm.clickmastery.gte(300e6)) player.cm.clmult = new Decimal(1.12)
@@ -233,6 +299,7 @@ addLayer("cm", {
         if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.5)
         if (hasMilestone("cf", 2)) player[this.layer].cpc = player[this.layer].cpc.times(1.6)
         if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
+        if (hasMilestone("cf", 5)) player[this.layer].cpc = player[this.layer].cpc.times(1.16)
 
         player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)
@@ -241,6 +308,13 @@ addLayer("cm", {
         if (hasAchievement("a", 104)) player.cm.clscale = player.cm.clscale.sub(0.05)
         if (hasAchievement("a", 105)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
         if (hasAchievement("a", 106)) player.cm.clmult = player.cm.clmult.add(0.015)
+    },
+    csmalculation() {
+        player.cm.csmmult = new Decimal(0.07)
+        if (hasUpgrade("cm", 11)) player.cm.csmmult = player.cm.csmmult.add(0.01)
+        player.cm.csmscale = new Decimal(0.48)
+        if (hasUpgrade("cm", 12)) player.cm.csmscale = player.cm.csmscale.mul(1.07)
+        player[this.layer].csmgain = new Decimal(player.cm.csmscale).pow(player.cm.csm.sub(1)).mul(player.cm.csmmult)
     },
     clickables: {
         11: {
@@ -253,9 +327,70 @@ addLayer("cm", {
                 'height': '115px',
             }},
             canClick() {return true},
-            onClick() {return player[this.layer].clickmastery = player[this.layer].clickmastery.add(player[this.layer].cpc)},
-            onHold() {return player[this.layer].clickmastery =  player[this.layer].clickmastery.add(player[this.layer].cpc)}
+            onClick() {return player[this.layer].clickmastery = player[this.layer].clickmastery.add(player[this.layer].cpc.times(player.cm.csm))},
+            onHold() {return player[this.layer].clickmastery =  player[this.layer].clickmastery.add(player[this.layer].cpc.times(player.cm.csm))}
         },
+        12: {
+            title(){
+                title = "Increase your CSM!"
+                return title
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+            canClick() {return true},
+            onClick() {return player[this.layer].csm = player[this.layer].csm.add(player[this.layer].csmgain)},
+            onHold() {return player[this.layer].csm =  player[this.layer].csm.add(player[this.layer].csmgain.mul(0.8))}
+        },
+    },
+    upgrades: {
+        11: {
+            title: "CSM Up. 1 [Multiplier]",
+            description: "Increase CSM Multiplier by 0.01.",
+            cost: new Decimal(200e6),
+            currencyDisplayName: "Clicks",
+            currencyInternalName: "clickmastery",
+            currencyLayer: "cm",
+        },
+        12: {
+            title: "CSM Up. 2 [Diminishing]",
+            description: "CSM decreases slower.",
+            cost: new Decimal(5e9),
+            currencyDisplayName: "Clicks",
+            currencyInternalName: "clickmastery",
+            currencyLayer: "cm",
+            unlocked() { return (hasUpgrade("cm", 11)) },
+        },
+        13: {
+            title: "CSM Up. 3 [Scaling]",
+            description: "CSM scales slower (At higher CSM, gain more CSM)",
+            cost: new Decimal(4e11),
+            currencyDisplayName: "Clicks",
+            currencyInternalName: "clickmastery",
+            currencyLayer: "cm",
+            unlocked() { return (hasUpgrade("cm", 12)) },
+        },
+        14: {
+            title: "CSM Up. 4 [Diminishing]",
+            description: "CSM scales slower (At higher CSM, gain more CSM)",
+            cost: new Decimal(1e14),
+            currencyDisplayName: "Clicks",
+            currencyInternalName: "clickmastery",
+            currencyLayer: "cm",
+            unlocked() { return (hasUpgrade("cm", 13)) },
+        },
+    },
+    update(diff) {
+        player.cm.csmdec = new Decimal(30)
+        if (hasUpgrade("cm", 12)) player.cm.csmdec = player.cm.csmdec.mul(1.1)
+        if (hasUpgrade("cm", 14)) player.cm.csmdec = player.cm.csmdec.mul(1.17)
+        if (player.cm.csm.gt(1)) {
+            player.cm.csm = player.cm.csm.sub(player.cm.csm.div(player.cm.csmdec).times(diff))
+        }
+        if (player.cm.csm.lt(1)) {
+            player.cm.csm = new Decimal(1)
+        }
     },
     infoboxes: {
         cm: {

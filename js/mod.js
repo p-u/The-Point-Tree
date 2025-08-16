@@ -14,11 +14,28 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "av2.21",
-	name: "World Tier 4, Extra Buyables, and more!",
+	num: "1.0",
+	name: "Official Release! 4 more hours of content, 1 layer and 2 new features!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h1>v1.0</h1><br>
+	- Added a new layer! Introduces a new feature. <br>
+	- Added 3 boosters and a new Generator Tier with 1 generator <br>
+	- Added 7 milestones and 25 upgrades <br>
+	- Added 1 savebank and 8 Achievements <br>
+	- Added a new feature: Trade-off. <br>
+	- Content Features: Added 2 new milestones <br>
+	- Click Mastery: Added 4 new static milestones <br>
+	- Fixed: For 4 CM Milestones, you now need World Tier 4 <br>
+	- Added an unlocked function for Content Feature Milestones. <br>
+	- Added the Click Mastery feature in World Tier 4, with 4 upgrades <br>
+	- Added notationChooser on the reset button <br>
+	- Fixed the 'Reset Timings' subtab in the World layer <br>
+	- Reduced the cost of upgrades released in av2.1, av2.2 and some in av2.0 <br>
+	- Added a hidden softcap for the Power layer at e720. <br>
+	- Other tweaks and features not significant enough to mention <br>
+	- Endgame: All 45 Energy upgrades/e3,420 Atoms <br>
 <h4>av2.21</h4>
 	- Many balance changes <br>
 <h3>av2.2</h3><br>
@@ -143,13 +160,12 @@ function getPointGen() {
 	let gain = new Decimal(1)
 	if (layers.ma.effect().gte(1)) gain = gain.times(layers.ma.effect())
 	
+	// en, ma
 	if (hasUpgrade("en", 25)) gain = gain.times(player.en.power.add(1).pow(player.en.powerexpoatom))
 	if (hasUpgrade("en", 22)) gain = gain.times(upgradeEffect("en", 22))
 	if (hasUpgrade("en", 41)) gain = gain.times(upgradeEffect("en", 41))
 	if (hasUpgrade("en", 84)) gain = gain.times(upgradeEffect("en", 84))
 	if (hasUpgrade("ma", 43)) gain = gain.times(upgradeEffect("ma", 43))
-	
-	
 	if (hasUpgrade("en", 12)) gain = gain.times(1.5)
 	if (hasUpgrade("en", 13)) gain = gain.times(1.75)
 	if (hasUpgrade("en", 21)) gain = gain.times(2)
@@ -167,6 +183,7 @@ function getPointGen() {
 	if (hasUpgrade("en", 65)) gain = gain.times(1.2)
 	if (hasUpgrade("en", 71)) gain = gain.times(7)
 	if (hasUpgrade("en", 74)) gain = gain.times(100)
+	if (hasUpgrade("en", 95)) gain = gain.times(1e25)
 	if (hasUpgrade("mo", 31)) gain = gain.times(12)
 	if (hasUpgrade("mo", 32)) gain = gain.times(100e3)
 	if (hasUpgrade("mo", 11)) gain = gain.times(2)
@@ -177,16 +194,17 @@ function getPointGen() {
 	if (hasMilestone("w", 2)) gain = gain.times(new Decimal(3).pow(player.w.points))
 	if (hasMilestone("ma", 11)) gain = gain.times(3)
 	if (hasUpgrade("mo", 23)) {
-		if (hasUpgrade("en", 81)) gain = gain.times(new Decimal(1.4).pow(19))
+		if (hasUpgrade("en", 81)) gain = gain.times(new Decimal(1.4).pow(player.en.wheeamt))
 	} else{
-		if (hasUpgrade("en", 81)) gain = gain.times(13)
+		if (hasUpgrade("en", 81)) gain = gain.times(player.en.wheeamt)
 	}
 	if (hasMilestone("mo", 7)) gain = gain.times(77)
+	if (hasMilestone("mo", 12)) gain = gain.times(1254)
 	if (hasUpgrade("en", 85)) gain = gain.times(88)
-	if (hasMilestone("cf", 4)) gain = gain.times(Decimal.min(new Decimal(4).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(1e7)))
 	if (hasUpgrade("pa", 11)) gain = gain.times(5)
+	if (hasMilestone("mo", 13)) gain = gain.times(new Decimal(2).pow(player.a.achievements.length))
 
-	// playtime milestones
+	// playtime milestones (TBC)
 	if (hasMilestone("a", 4)) gain = gain.times(2)
 	if (hasAchievement("a", 12)) gain = gain.times(1.05)
 	if (hasAchievement("a", 16)) gain = gain.times(1.05)
@@ -196,6 +214,8 @@ function getPointGen() {
 	if (hasAchievement("a", 35)) gain = gain.times(1.05)
 	if (hasAchievement("a", 44)) gain = gain.times(1.1)
 	if (hasAchievement("a", 46)) gain = gain.times(1.1)
+	if (hasMilestone("cf", 4)) gain = gain.times(Decimal.min(new Decimal(4).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(1e7)))
+		
 	
 	// click mastery
 	if (player.cm.clickmastery.gte(100)) gain = gain.times(player.cm.clickmastery.times(25).log(25))
@@ -204,7 +224,12 @@ function getPointGen() {
 	if (player.cm.clickmastery.gte(3e9)) gain = gain.times(player.cm.clickmastery.mul(225).log(22500))
 	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
 	if (player.cm.clickmastery.gte(3e10)) gain = gain.times(3)
+
+	// particles and gens boost
 	gain = gain.times(layers.pa.getAlphaEff())
+	gain = gain.div(layers.pa.getGammaEff().pow(1.5))
+	gain = gain.times(buyableEffect("en", 61))
+
 
 
 	// exponent
@@ -214,9 +239,10 @@ function getPointGen() {
 	if (hasUpgrade("en", 73)) gain = gain.pow(1.03)
 	if (hasMilestone("mo", 3)) gain = gain.pow(1.0175)
 	if (hasMilestone("w", 3)) gain = gain.pow(1.01)
+	if (hasMilestone("pa", 1)) gain = gain.pow(1.01)
 	// nerf
 	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
-	if (player.points.gte(tmp.w.nextAt)) {
+	if (player.points.gte(tmp.w.nextAt) && (!(player.w.points.gte(100)))) {
 		player.points = tmp.w.nextAt
 		gain = new Decimal(0) // if you reach the next world tier, you get no gain
 	}
@@ -242,7 +268,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return (player.points.gte("e850") && hasUpgrade("ma", 45))
+	return (player.points.gte("e3420") && hasUpgrade("en", 95))
 }
 
 

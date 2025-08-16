@@ -210,6 +210,7 @@ addLayer("ma", {
             cost: new Decimal(6e163),
             effect() {
                 matterups = player.ma.upgrades.length
+                if (hasUpgrade("pa", 21)) matterups = matterups + player.pa.upgrades.length
                 scale = new Decimal(1.25)
                 if (hasMilestone("ma", 13)) scale = new Decimal(1.4)
                 let eff = scale.pow(matterups)
@@ -229,6 +230,7 @@ addLayer("ma", {
             cost: new Decimal(3.1e170),
             effect() {
                 matterups = player.ma.upgrades.length
+                if (hasUpgrade("pa", 21)) matterups = matterups + player.pa.upgrades.length
                 scaleatom = new Decimal(2)
                 if (hasMilestone("ma", 13)) scaleatom = new Decimal(3)
                 let eff = scaleatom.pow(matterups)
@@ -333,6 +335,12 @@ addLayer("ma", {
             unlocked() { return hasUpgrade("ma", 45)},
             done() { return player.ma.total.gte(1e228) }
         },
+        14: {
+            requirementDescription: "8e358 total Matter",
+            effectDescription: "Power:Matter effect is stronger, and reduce the Matter softcap effect",
+            unlocked() { return hasMilestone("ma", 13)},
+            done() { return player.ma.total.gte("8e358") }
+        },
     },
     infoboxes: {
         mat: {
@@ -362,29 +370,38 @@ addLayer("ma", {
         if (hasMilestone("mo", 7)) mult = mult.times(77)
         if (hasMilestone("cf", 4)) mult = mult.times(Decimal.min(new Decimal(1.7).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(50)))
         mult = mult.times(layers.pa.getBetaEff())
-        if ((hasUpgrade("en", 81)) && (hasUpgrade("mo", 23))) mult = mult.times(19).div(4)
+        if (hasUpgrade("en", 91)) {
+		    mult = mult.times(new Decimal(1.05).pow(player.en.wheeamt))
+        } else {
+            if ((hasUpgrade("en", 81)) && (hasUpgrade("mo", 23))) mult = mult.times(player.en.wheeamt).div(4)
+        }
         if (hasUpgrade("en", 83)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomatter))
         if (player.cm.clickmastery.gte(1e7)) mult = mult.times(player.cm.clickmastery.div(333).log(3333))
         if (player.cm.clickmastery.gte(2e9)) mult = mult.times(player.cm.clickmastery.mul(70).log(700000))
         if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
+        if (player.cm.clickmastery.gte(8e10)) mult = mult.times(1.5)
         if (hasUpgrade("en", 85)) mult = mult.times(1.8)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
+        if (hasUpgrade("mo", 42)) exp = exp.add(0.02)
         return exp
     },
     effect(){
         let effectBoost = 1.7
         if (hasUpgrade("ma", 25)) effectBoost = 1.85
+        if (hasUpgrade("pa", 24)) effectBoost = 1.5
         let eff = player.ma.points.add(1).pow(effectBoost)
         let sc = 0.7
         if (hasMilestone("ma", 11)) sc = 0.73
+        if (hasMilestone("ma", 14)) sc = 0.75
         softcapstart = new Decimal(1e150)
         if (hasUpgrade("ma", 44)) {
             softcapstart = new Decimal(1e166)
         }
         if (hasMilestone("ma", 13)) softcapstart = new Decimal(1e175)
+        if (hasUpgrade("pa", 24)) softcapstart = new Decimal("1eeeeeeeeeeeeee100")
         softcappedEffect = softcap(eff, new Decimal(softcapstart), new Decimal(sc))
         return softcappedEffect
     },
@@ -396,6 +413,7 @@ addLayer("ma", {
             softcapstart = new Decimal(1e166)
         }
         if (hasMilestone("ma", 13)) softcapstart = new Decimal(1e175)
+        if (hasUpgrade("pa", 24)) softcapstart = new Decimal("1eeeeeeeeeeeeee100")
 
         if (layerEffect.gte(softcapstart) ) {
             softcapDescription = " (Softcapped at "+ notationChooser(softcapstart) +"x)"
