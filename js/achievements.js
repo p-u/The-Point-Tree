@@ -424,7 +424,7 @@ addLayer("a", {
         },
         75: {
             name: "Permanently Keep 'Major Trade off'",
-            done() { return hasUpgrade("en", 93) },
+            done() { return hasUpgrade("en", 92) },
             tooltip: "Yes. [No additional boost]",
             unlocked() { return hasAchievement("a", 65) },
             style() {
