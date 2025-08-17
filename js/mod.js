@@ -19,6 +19,10 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h4>v1.01 - CSM Overhaul</h4>
+	- CSM Upgrades has been changed to Milestones <br>
+	- CSM Milestones' req has been decreased <br>
+	- CSM has been buffed severely <br>
 <h1>v1.0</h1><br>
 	- Added a new layer! Introduces a new feature. <br>
 	- Added 3 boosters and a new Generator Tier with 1 generator <br>

@@ -268,7 +268,7 @@ addLayer("cm", {
                 "blank",
                 "blank",
                 "blank",
-                "upgrades",
+                "milestones",
                 ["infobox", "csm"],
             ],
             unlocked() {return hasMilestone("w", 3)}
@@ -310,10 +310,10 @@ addLayer("cm", {
         if (hasAchievement("a", 106)) player.cm.clmult = player.cm.clmult.add(0.015)
     },
     csmalculation() {
-        player.cm.csmmult = new Decimal(0.07)
-        if (hasUpgrade("cm", 11)) player.cm.csmmult = player.cm.csmmult.add(0.01)
-        player.cm.csmscale = new Decimal(0.48)
-        if (hasUpgrade("cm", 12)) player.cm.csmscale = player.cm.csmscale.mul(1.07)
+        player.cm.csmmult = new Decimal(0.12)
+        if (hasMilestone("cm", 11)) player.cm.csmmult = player.cm.csmmult.add(0.01)
+        player.cm.csmscale = new Decimal(0.6)
+        if (hasMilestone("cm", 12)) player.cm.csmscale = player.cm.csmscale.mul(1.07)
         player[this.layer].csmgain = new Decimal(player.cm.csmscale).pow(player.cm.csm.sub(1)).mul(player.cm.csmmult)
     },
     clickables: {
@@ -344,47 +344,32 @@ addLayer("cm", {
             onHold() {return player[this.layer].csm =  player[this.layer].csm.add(player[this.layer].csmgain.mul(0.8))}
         },
     },
-    upgrades: {
+    milestones: {
         11: {
-            title: "CSM Up. 1 [Multiplier]",
-            description: "Increase CSM Multiplier by 0.01.",
-            cost: new Decimal(200e6),
-            currencyDisplayName: "Clicks",
-            currencyInternalName: "clickmastery",
-            currencyLayer: "cm",
+            requirementDescription: "2e7 Clicks",
+            effectDescription: "CSM Up. 1 [Multiplier] - Increase CSM Multiplier by 0.01.",
+            done() { return player.cm.clickmastery.gte(20e6) },
         },
         12: {
-            title: "CSM Up. 2 [Diminishing]",
-            description: "CSM decreases slower.",
-            cost: new Decimal(5e9),
-            currencyDisplayName: "Clicks",
-            currencyInternalName: "clickmastery",
-            currencyLayer: "cm",
-            unlocked() { return (hasUpgrade("cm", 11)) },
+            requirementDescription: "5e8 Clicks",
+            effectDescription: "CSM Up. 2 [Diminishing] - CSM decreases slower.",
+            done() { return player.cm.clickmastery.gte(5e8) },
         },
         13: {
-            title: "CSM Up. 3 [Scaling]",
-            description: "CSM scales slower (At higher CSM, gain more CSM)",
-            cost: new Decimal(4e11),
-            currencyDisplayName: "Clicks",
-            currencyInternalName: "clickmastery",
-            currencyLayer: "cm",
-            unlocked() { return (hasUpgrade("cm", 12)) },
+            requirementDescription: "3e10 Clicks",
+            effectDescription: "CSM Up. 3 [Scaling] - CSM scales slower (At higher CSM, gain more CSM)",
+            done() { return player.cm.clickmastery.gte(3e10) },
         },
         14: {
-            title: "CSM Up. 4 [Diminishing]",
-            description: "CSM scales slower (At higher CSM, gain more CSM)",
-            cost: new Decimal(1e14),
-            currencyDisplayName: "Clicks",
-            currencyInternalName: "clickmastery",
-            currencyLayer: "cm",
-            unlocked() { return (hasUpgrade("cm", 13)) },
+            requirementDescription: "5e11 Clicks",
+            effectDescription: "CSM Up. 4 [Diminishing] - CSM decreases slower",
+            done() { return player.cm.clickmastery.gte(5e11) },
         },
     },
     update(diff) {
-        player.cm.csmdec = new Decimal(30)
-        if (hasUpgrade("cm", 12)) player.cm.csmdec = player.cm.csmdec.mul(1.1)
-        if (hasUpgrade("cm", 14)) player.cm.csmdec = player.cm.csmdec.mul(1.17)
+        player.cm.csmdec = new Decimal(45)
+        if (hasMilestone("cm", 12)) player.cm.csmdec = player.cm.csmdec.mul(1.1)
+        if (hasMilestone("cm", 14)) player.cm.csmdec = player.cm.csmdec.mul(1.17)
         if (player.cm.csm.gt(1)) {
             player.cm.csm = player.cm.csm.sub(player.cm.csm.div(player.cm.csmdec).times(diff))
         }
