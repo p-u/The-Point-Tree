@@ -1110,9 +1110,9 @@ addLayer("en", {
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy. <br>"
                 if (this.extra().gte(1)) {
-                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + notationChooser(this.extra()) + " Generator 5."
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + notationChooser(this.extra()) + " Generator 8."
                 } else {
-                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 5."
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Generator 8."
                 }
                 if (hasUpgrade("en", 33)) { 
                     dis = dis + " Generator 8 amount multiply Generator 7 generation "
