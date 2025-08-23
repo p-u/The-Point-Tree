@@ -53,8 +53,14 @@ addLayer("cf", {
         5: {
             requirementDescription: "e1,600 Energy",
             effectDescription: "Extend Energy Upgrades. +^0.01 Energy. +16% Clicks gain.",
-            done() { return player.points.gte("e1600") },
+            done() { return player.en.points.gte("e1600") },
             unlocked() {return hasMilestone("cf", 4)}
+        },
+        6: {
+            requirementDescription: "e4,125 Atoms",
+            effectDescription: "Extend Matter Upgrades. x42.5 Matter and x4,250 Atoms gain",
+            done() { return player.points.gte("e4125") },
+            unlocked() {return hasMilestone("cf", 5)}
         },
     },
     tabFormat: {
