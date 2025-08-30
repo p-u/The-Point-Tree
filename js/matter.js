@@ -394,7 +394,7 @@ addLayer("ma", {
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
             currencyLayer: "ma",
-            unlocked() { return hasUpgrade("ma", 53) }, 
+            unlocked() { return hasUpgrade("ma", 51) }, 
         },
         212: {
             title: "s-2: Simple but strong",
