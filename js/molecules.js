@@ -91,7 +91,7 @@ addLayer("mo", {
     },
     passiveGeneration() {
         if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
-        if (hasMilestone("ma", 14)) return 1
+        if (hasMilestone("mo", 14)) return 1
         if (hasMilestone("pa", 2)) return 0.02
         if (hasUpgrade("mo", 42)) return 0.004
         if (hasUpgrade("mo", 41)) return 0.008

@@ -211,7 +211,7 @@ addLayer("pa", {
         if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
         if (hasMilestone("w", 4)) return 0.0007
         if (hasUpgrade("pa", 32)) return 0.0001
-        if (hasMilestone("ma", 14)) return 0.01
+        if (hasMilestone("mo", 14)) return 0.01
         if (hasUpgrade("ma", 211)) return 0.00625
         if (hasMilestone("pa", 2)) return 0.0025
         return 0
