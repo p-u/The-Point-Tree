@@ -14,12 +14,24 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0",
-	name: "Official Release! 4 more hours of content, 1 layer and 2 new features!",
+	num: "1.1",
+	name: "The ??? + World Tier 5",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-<h4>v1.01 - CSM Overhaul</h4>
+<h2>v1.1</h2><br>
+	- Added a new feature in the Matter Layer with its own set of upgrades! <br>
+	- Added 3 ???s <br>
+	- Added 3 milestones and 14 upgrades <br>
+	- Added 1 savebank and 4 Achievements <br>
+	- Content Features: Added 1 new milestone <br>
+	- Added 1 new World Tier and increased cost for WT5 <br>
+	- Fixed the Total Particles metric not adding Delta Particle <br>
+	- Fixed Gen 5 not costing anything when not having bought the 'not cost anything' upgrade <br>
+	- Added a softcap for 'Electric' upgrade <br>
+	- Added Particle passive gen and auto-assigning Particles <br>
+	- Endgame: e7,500 Atoms + s-6 Upgrade <br>
+<h3>v1.01 - CSM Overhaul</h3><br>
 	- CSM Upgrades has been changed to Milestones <br>
 	- CSM Milestones' req has been decreased <br>
 	- CSM has been buffed severely <br>
@@ -40,9 +52,9 @@ let changelog = `<h1>Changelog:</h1><br>
 	- Added a hidden softcap for the Power layer at e720. <br>
 	- Other tweaks and features not significant enough to mention <br>
 	- Endgame: All 45 Energy upgrades/e3,420 Atoms <br>
-<h4>av2.21</h4>
+<h3>av2.21</h3><br>
 	- Many balance changes <br>
-<h3>av2.2</h3><br>
+<h2>av2.2</h2><br>
 	- Added a new World Tier Milestone (Main features coming in next update) <br>
 	- Added 1 booster and a new Content Feature Milestone <br>
 	- Added 3 Achievements and 3 Click Mastery Milestones <br>
@@ -54,13 +66,11 @@ let changelog = `<h1>Changelog:</h1><br>
 	- Second Content Feature milestone multiplies CM by less, and Gen 4 has an effect now. Reworked Gen 4 formula to make base scale <br>
 	- Other tweaks and features not significant enough to mention <br>
 	- Endgame: All 20 Matter upgrades/e850 Atoms <br>
-<h4>av2.1.3</h4>
+<h3>av2.1 Subversions</h3><br>
 	- Nerfed last 2 click mastery milestones (-30% gain at 10B) <br>
-<h4>av2.1.2</h4>
 	- Fixed a bug (not keeping Gen 4 on MaMS4) <br>
-<h4>av2.1.1</h4>
 	- Added QoL features (keeping ups) for Molecule MS4-6 <br>
-<h3>av2.1</h3><br>
+<h2>av2.1</h2><br>
 	- Added a new feature in the Molecule layer, unlocked by getting 1.97e308 Atoms! <br>
 	- Added 4 of that new feature <br>
 	- Added 8 Achievements and 1 Infobox <br>
@@ -68,21 +78,15 @@ let changelog = `<h1>Changelog:</h1><br>
 	- Some bug fixes and balance changes <br>
 	- Endgame: 1e12 Molecules/e550 Atoms <br>
 	- Is World Tier 4 possible? <br>
-<h4>av2.0.6</h4>
+<h3>av2.0 Subversions</h4><br>
 	- Nerfed molecule effect exponent slightly <br>
 	- Nerfed Molecule MS1 Matter Gen%, increased to 1% at MoU4 <br>
 	- Updated first infobox <br>
 	- Your atoms now cannot be over the next world tier requirement <br>
-<h4>av2.0.5</h4>
 	- Added a softcap to Matter Effect and a nerf to atoms after e308 <br>
-<h4>av2.0.4</h4>
-	- Buffed early Click Mastery milestones <br>
-	- Buffed Click Mastery gain, but not as strong as before <br>
 	- Changed 'total resetted molecules' to 'molecule bonds' <br>
 	- Bug fixes <br>
-<h4>av2.0.3</h4>
-	- Heavily nerfed Click Mastery gain and effect (at 10B Clicks, /2 Atom-Power, -20% Matter and Molecules) <br>
-<h4>av2.0.2</h4>
+	- Nerfed Click Mastery gain and effect (at 10B Clicks, /2 Atom-Power, -20% Matter and Molecules) <br>
 	- Many bug fixes including: Gen 7 acts as Gen 6, Inconsistent numbering, not applying Molecule boosts, not Buy Maxxing Gen 3 <br>
 	- Added Buy Max Gen 4 in Molecule U3 <br>
 <h2>av2.0</h2><br>
@@ -170,6 +174,7 @@ function getPointGen() {
 	if (hasUpgrade("en", 41)) gain = gain.times(upgradeEffect("en", 41))
 	if (hasUpgrade("en", 84)) gain = gain.times(upgradeEffect("en", 84))
 	if (hasUpgrade("ma", 43)) gain = gain.times(upgradeEffect("ma", 43))
+	if (hasUpgrade("ma", 54)) gain = gain.times(upgradeEffect("ma", 54))
 	if (hasUpgrade("en", 12)) gain = gain.times(1.5)
 	if (hasUpgrade("en", 13)) gain = gain.times(1.75)
 	if (hasUpgrade("en", 21)) gain = gain.times(2)
@@ -179,9 +184,14 @@ function getPointGen() {
 	if (hasUpgrade("en", 45)) gain = gain.times(10)
 	if (hasUpgrade("en", 52)) gain = gain.times(50)
 	if (hasUpgrade("ma", 12)) gain = gain.times(4)
+	if (hasUpgrade("ma", 212)) gain = gain.times(2.4e24)
+	if (hasUpgrade("ma", 214)) gain = gain.times(1e50)
 	if (hasUpgrade("ma", 14)) gain = gain.times(8)
 	if (hasMilestone("w", 1)) gain = gain.times(5)
+	if (hasMilestone("cf", 6)) gain = gain.times(4250)
+	gain = gain.times(new Decimal(1000).pow(Decimal.max(player.ma.shrinkpts.add(0.000001).log(player.ma.spatomlg).add(1), 0)))
 	if (hasUpgrade("en", 54)) gain = gain.times(2)
+	
 	if (hasUpgrade("en", 55)) gain = gain.times(20)
 	if (hasUpgrade("ma", 23)) gain = gain.times(4)
 	if (hasUpgrade("en", 65)) gain = gain.times(1.2)
@@ -244,6 +254,8 @@ function getPointGen() {
 	if (hasMilestone("mo", 3)) gain = gain.pow(1.0175)
 	if (hasMilestone("w", 3)) gain = gain.pow(1.01)
 	if (hasMilestone("pa", 1)) gain = gain.pow(1.01)
+	if (hasUpgrade("pa", 32)) gain = gain.pow(1.004)
+	if (hasUpgrade("ma", 221)) gain = gain.pow(1.0036)
 	// nerf
 	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
 	if (player.points.gte(tmp.w.nextAt) && (!(player.w.points.gte(100)))) {
@@ -272,7 +284,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return (player.points.gte("e3420") && hasUpgrade("en", 95))
+	return (player.points.gte("e7500") && hasUpgrade("ma", 221))
 }
 
 

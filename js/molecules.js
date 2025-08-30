@@ -91,6 +91,8 @@ addLayer("mo", {
     },
     passiveGeneration() {
         if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
+        if (hasMilestone("ma", 14)) return 1
+        if (hasMilestone("pa", 2)) return 0.02
         if (hasUpgrade("mo", 42)) return 0.004
         if (hasUpgrade("mo", 41)) return 0.008
         if (hasUpgrade("mo", 35)) return 0.004
@@ -118,6 +120,24 @@ addLayer("mo", {
             body() { return "Boosters boost respective generator gain by 5 times per buy (can be increased with future upgrades)! However, it costs Molecule Bonds... Future upgrades will be more timewally (you might want to get more clicks to 50-250M), takes 2-6mins per upgrade" },
         },
     },
+    automate() {
+		if (hasMilestone('ma', 14)) {
+			if (layers.mo.buyables[11].canAfford()) {
+				layers.mo.buyables[11].buy();
+			};
+            if (layers.mo.buyables[12].canAfford()) {
+				layers.mo.buyables[12].buy();
+			};
+            if (layers.mo.buyables[21].canAfford()) {
+                layers.mo.buyables[21].buy();
+            }
+		};
+        if (hasMilestone('w', 4)) {
+			if (layers.mo.buyables[22].canAfford()) {
+				layers.mo.buyables[22].buy();
+			};
+		};
+	},
     milestones: {
         1: {
             requirementDescription: "1 Molecule Bonds",
@@ -195,6 +215,12 @@ addLayer("mo", {
             effectDescription: "Each Achievement doubles Atoms gain. Also unlock Booster 8.",
             unlocked() { return hasMilestone("mo", 12)},
             done() { return player.mo.points.gte(5e90) }
+        },
+        14: {
+            requirementDescription: "1.5e175 Molecule Bonds",
+            effectDescription: "Gain 100% of Molecules a second and 1% of Particles a second. Autobuy Booster 1 to 3, and Booster 4 and 5 resets nothing.",
+            unlocked() { return hasMilestone("mo", 13)},
+            done() { return player.mo.points.gte(1.5e175) }
         },
     },
     upgrades: {
@@ -495,7 +521,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasMilestone("ma", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -525,7 +551,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasMilestone("ma", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -640,9 +666,11 @@ addLayer("mo", {
         if (hasUpgrade("mo", 32)) mult = mult.times(2)
         if (hasUpgrade("en", 85)) mult = mult.times(1.08)
         if (hasAchievement("a", 61)) mult = mult.times(1.03)
+        if (hasAchievement("a", 83)) mult = mult.times(1.1)
         if (hasUpgrade("ma", 41)) mult = mult.times(6)
         if (hasUpgrade("pa", 21)) mult = mult.times(upgradeEffect("pa", 21))
         if (hasMilestone("w", 3)) mult = mult.times(2)
+        if (hasMilestone("w", 4)) mult = mult.times(100)
         mult = mult.times(layers.pa.getGammaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomolecule))
         if (hasMilestone("cf", 4)) mult = mult.times(Decimal.min(new Decimal(1.1).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(10)))
@@ -694,5 +722,6 @@ addLayer("mo", {
         if (hasUpgrade("mo", 25)) player.mo.boosterBase = new Decimal(7)
         if (hasUpgrade("pa", 13)) player.mo.boosterBase = new Decimal(8)
         if (hasUpgrade("mo", 43)) player.mo.boosterBase = new Decimal(10)
+        if (hasUpgrade("pa", 33)) player.mo.boosterBase = player.mo.boosterBase.add(new Decimal(Math.E / 5))
     },
 })

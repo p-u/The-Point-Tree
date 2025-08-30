@@ -23,6 +23,7 @@ addLayer("w", {
     exponent() {
         let expo = new Decimal(7.13)
         if (hasUpgrade("en", 82)) expo = expo.sub(0.01)
+        if (player.w.points.gte(4)) expo = expo.add(0.019)
         return expo
     },
     gainMult() {
@@ -51,6 +52,11 @@ addLayer("w", {
             requirementDescription: "World Tier 4",
             effectDescription: "Double Molecule Bonds gain, ^1.01 Atom gain. <br> Unlock new Click Mastery Milestones and unlock a new CM Feature with a new tab and upgrades. +20% CM gain. <br> Also, unlock a new layer.",
             done() { return player.w.points.gte(4) },
+        },
+        4: {
+            requirementDescription: "World Tier 5",
+            effectDescription: "Double Click Mastery gain, x1.5 Shrink Speed, x5 Particles and x100 Molecule Bonds. <br> Gen 9 and Booster 4 is automated. <br> Also, x7 Particle Passive Gen and Shrink Points boost Atoms more.",
+            done() { return player.w.points.gte(5) },
         },
     },
     tabFormat: {
@@ -124,6 +130,6 @@ addLayer("w", {
         if ((hasAchievement("a", 65)) && (player.w.PaResetTime == 0)) {
             player.w.PaResetTime = player.timePlayed
         }
-        player.pa.totalParticles = player.pa.clickableamt.alpha.add(player.pa.clickableamt.beta).add(player.pa.clickableamt.gamma)
+        player.pa.totalParticles = player.pa.clickableamt.alpha.add(player.pa.clickableamt.beta).add(player.pa.clickableamt.gamma).add(player.pa.clickableamt.delta)
     },
 });

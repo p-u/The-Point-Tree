@@ -298,7 +298,8 @@ addLayer("cm", {
         if (hasUpgrade("en", 65)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
         if (hasUpgrade("mo", 11)) player[this.layer].cpc = player[this.layer].cpc.times(1.5)
         if (hasMilestone("cf", 2)) player[this.layer].cpc = player[this.layer].cpc.times(1.6)
-        if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
+        if (hasMilestone("w", 3)) player[this.layer].cpc = player[this.layer].cpc.times(1.2)
+        if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(2)
         if (hasMilestone("cf", 5)) player[this.layer].cpc = player[this.layer].cpc.times(1.16)
 
         player.cm.clscale = new Decimal(3)

@@ -140,10 +140,10 @@ var systemComponents = {
 		<br>
 		Credits
 		<br>
-		Savebank from 'The Plant Tree'
+		Savebank from 'The Plant Tree' and features from my other game 'The Point Tree'
 		<br>
 		<br>
-		Inspiration from other TMT games, Roblox games and Web Incremental Games
+		Inspiration from other TMT games, Roblox games and Web Incremental Games [Notably 'Universe Shrinker' and 'Antimatter Dimensions' for the Shrinkenator and Generators]
 		<br>
 		<br>
 		Infinity Notation by unicodes

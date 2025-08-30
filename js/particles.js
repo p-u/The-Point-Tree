@@ -207,11 +207,26 @@ addLayer("pa", {
             }      
         },
     },
+    passiveGeneration() {
+        if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
+        if (hasMilestone("w", 4)) return 0.0007
+        if (hasUpgrade("pa", 32)) return 0.0001
+        if (hasMilestone("ma", 14)) return 0.01
+        if (hasUpgrade("ma", 211)) return 0.00625
+        if (hasMilestone("pa", 2)) return 0.0025
+        return 0
+    },
     milestones: {
         1: {
             requirementDescription: "15M spent Particles",
             effectDescription: "^1.01 Atoms",
             done() { return player.pa.totalParticles.gte(15e6) }
+        },
+        2: {
+            requirementDescription: "1e33 (1 De) spent Particles and 2e33 Particles on hand",
+            effectDescription: "On Particle reset, keep Row 9 Energy Upgrades. Quintuple passive Molecules gain and start to generate Particles a second. Extend Particle upgrades, and boost 'Six' effect.",
+            done() { return (player.pa.totalParticles.gte(1e33) && player.pa.points.gte(2e33)) },
+            unlocked() { return hasUpgrade("pa", 25)}
         },
     },
     upgrades: {
@@ -266,6 +281,7 @@ addLayer("pa", {
             effect() {
                 matterups = player.ma.upgrades.length
                 if (hasUpgrade("pa", 21)) matterups = matterups + player.pa.upgrades.length
+                if (hasMilestone("pa", 2)) matterups = matterups + player.en.upgrades.length
                 scale = new Decimal(1.1)
                 let eff = scale.pow(matterups)
                 return eff
@@ -284,6 +300,7 @@ addLayer("pa", {
             cost: new Decimal(140000),
             effect() {
                 powsq = 0.03
+                if (hasUpgrade("pa", 31)) powsq = 0.04
                 softcapDescriptionpa22 = ""
                 sdsc = ""
                 upgEffectpa22 = upgradeEffect(this.layer, this.id)
@@ -311,10 +328,28 @@ addLayer("pa", {
             unlocked() { return (hasUpgrade("pa", 23) && player.pa.totalParticles.gte(5e11)) }, 
         },
         25: {
-            title: "Ten [TBC]",
-            description: "Unlock the Delta Particle.",
+            title: "Ten [1e34]",
+            description: "Unlock the Delta Particle and the Second Particle Milestone.",
             cost: new Decimal(1.8e21),
-            unlocked() { return (hasUpgrade("pa", 23) && player.pa.totalParticles.gte(5e20)) }, 
+            unlocked() { return (hasUpgrade("pa", 24) && player.pa.totalParticles.gte(5e20)) }, 
+        },
+        31: {
+            title: "Eleven [1e49 Delta Particles]",
+            description: "'Seven' and Matter layer boost is stronger",
+            cost: new Decimal(2e35),
+            unlocked() { return (hasUpgrade("pa", 25) && player.pa.totalParticles.gte(1e34)) }, 
+        },
+        32: {
+            title: "Twelve [1e75 Alpha AND Beta Particles]",
+            description: "Keep upgrades s-1 to s-5, Shrinkenators and Scandium on Particle/Molecule reset. x250 Particles but /100 nett Particle Passive Generation. ^1.004 Atoms.",
+            cost: new Decimal(2e49),
+            unlocked() { return (hasUpgrade("pa", 31) && player.pa.clickableamt.delta.gte(1e49)) }, 
+        },
+        33: {
+            title: "Thirteen [TBC]",
+            description: "Irrational Numbers are best, right? Increase Alpha Particle base by 3pi/10, Booster base by e/5 and Delta Particle base by Phi (golden ratio)/100",
+            cost: new Decimal(2e75),
+            unlocked() { return (hasUpgrade("pa", 32) && player.pa.clickableamt.beta.gte(1e75) && player.pa.clickableamt.alpha.gte(1e75)) }, 
         },
     },
     getAlphaEff() {
@@ -322,6 +357,7 @@ addLayer("pa", {
             let base = 5
             if (hasUpgrade("mo", 35)) base = 7
             if (hasUpgrade("pa", 23)) base = 9
+            if (hasUpgrade("pa", 33)) base = base + (Math.PI * 3 / 10)
             return Decimal.max(Decimal.pow(base, player.pa.clickableamt.alpha.add(1).log(2)).mul(4), 1)
         }
         return new Decimal(1)
@@ -346,6 +382,7 @@ addLayer("pa", {
     getDeltaEff() {
         if (player.pa.clickableamt.delta.gte(1)) {
             let base = 1.1
+            if (hasUpgrade("pa", 33)) base = base + 0.0161803398874989484820
             return Decimal.max(Decimal.pow(base, player.pa.clickableamt.delta.add(1).log(5)).mul(2.5), 1)
         }
         return new Decimal(1)
@@ -356,6 +393,9 @@ addLayer("pa", {
         if (hasAchievement("a", 66)) mult = mult.times(1.01)
         if (hasAchievement("a", 71)) mult = mult.times(1.02)
         if (hasAchievement("a", 72)) mult = mult.times(1.03)
+        if (hasUpgrade("pa", 32)) mult = mult.times(250)
+        if (hasMilestone("w", 4)) mult = mult.times(5)
+        if (hasUpgrade("ma", 55)) mult = mult.times(upgradeEffect("ma", 55))
         if (hasUpgrade("pa", 25)) mult = mult.times(layers.pa.getDeltaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpoparticle))
         return mult
@@ -366,6 +406,7 @@ addLayer("pa", {
     },
     effect(){
         let effectBoost = 1.4
+        if (hasAchievement("a", 82)) effectBoost = effectBoost + 0.0123
         let eff = player.pa.points.add(1).pow(effectBoost)
         return eff
     },
@@ -384,5 +425,14 @@ addLayer("pa", {
         if (hasUpgrade("pa", 23)) player.pa.clickablenerf.beta = layers.pa.getBetaEff().pow(0.5)
         if (hasUpgrade("mo", 35)) player.pa.clickablenerf.gamma = layers.pa.getGammaEff().pow(1.5)
         if (hasUpgrade("pa", 25)) player.pa.clickablenerf.delta = layers.pa.getDeltaEff().pow(4)
+        
+
+        // passive assigning of Particles
+        if (hasUpgrade("ma", 55)) {
+            player.pa.clickableamt.alpha = player.pa.clickableamt.alpha.add(player.pa.points.div(25000).times(diff))
+            player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(player.pa.points.div(25000).times(diff))
+            player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(player.pa.points.div(25000).times(diff))
+            player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(25000).times(diff))
+        }
     },
 })

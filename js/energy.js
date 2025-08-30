@@ -81,6 +81,7 @@ addLayer("en", {
             let cutoff = 6
             if (hasMilestone("mo", 7)) cutoff = 8
             if (hasUpgrade("pa", 12)) cutoff = 9
+            if (hasMilestone("pa", 2)) cutoff = 10
             for(v=1;v<5;v++){ //columns
               if ((hasMilestone('ma', 8)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
@@ -234,6 +235,11 @@ addLayer("en", {
 				layers.en.buyables[51].buy();
 			};
 		};
+        if (hasMilestone('w', 4)) {
+            if (layers.en.buyables[61].canAfford()) {
+				layers.en.buyables[61].buy();
+			};
+		};
 	},
     upgrades: {
         11: {
@@ -303,14 +309,14 @@ addLayer("en", {
                 energyatom = 0.133
                 if (hasUpgrade("en", 64)) energyatom = 0.156
                 if (hasAchievement("a", 75)) energyatom = 0.175
-                softcapDescriptionen21 = ""
+                softcapDescriptionen22 = ""
                 sdsc = ""
-                upgEffecten21 = upgradeEffect(this.layer, this.id)
+                upgEffecten22 = upgradeEffect(this.layer, this.id)
                 let eff = player.en.points.add(1).pow(energyatom)
                 return eff
             },
             effectDisplay() {
-                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionen21
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionen22
             },
             tooltip() {
                 return "Formula: (Energy+1)^"  + energyatom + sdsc
@@ -348,13 +354,21 @@ addLayer("en", {
             title: "Electric",
             description: "Boosts energy based on energy",
             cost: new Decimal(17500),
-            effect() {
+            main() {
                 energyenergy = 0.1
                 if (hasAchievement("a", 75)) energyenergy = 0.128
                 softcapDescriptionen32 = ""
                 sdsc = ""
                 upgEffecten32 = upgradeEffect(this.layer, this.id)
+                scpow = 0.6
+                if (upgEffecten32.gte(new Decimal("1e525")) ) {
+                    softcapDescriptionen21 = " (Softcapped)"
+                    sdsc = ". Softcaps ^" + scpow + " at 1e525x"
+                }
+            },
+            effect() {
                 let eff = player.en.points.add(1).pow(energyenergy)
+                eff = softcap(eff, new Decimal("1e525"), scpow)
                 return eff
             },
             effectDisplay() {
@@ -924,6 +938,7 @@ addLayer("en", {
             },
             buy() {
                 let cost = new Decimal(1)
+                if (!(hasMilestone("w", 2))) player.en.points = player.en.points.sub(this.cost().mul(cost))
                 if (hasMilestone("mo", 5)) {
                     if (getBuyableAmount(this.layer, this.id).gte(1000)) {
                         setBuyableAmount(this.layer, this.id, player.en.points.div("e1000").log(125).floor().add(1001))
@@ -983,6 +998,7 @@ addLayer("en", {
             extra(){
                 let extra = new Decimal(0)
                 if (hasUpgrade("en", 93)) extra = extra.plus(getBuyableAmount(this.layer, 61))
+                if (hasUpgrade("ma", 52)) extra = extra.plus(getBuyableAmount(this.layer, 42).times(0.75).floor())
                 return extra
             },
             canAfford() {
@@ -1055,6 +1071,7 @@ addLayer("en", {
             extra(){
                 let extra = new Decimal(0)
                 if (hasUpgrade("en", 93)) extra = extra.plus(getBuyableAmount(this.layer, 61))
+                if (hasUpgrade("ma", 52)) extra = extra.plus(getBuyableAmount(this.layer, 42).times(0.4).floor())
                 return extra
             },
             buy() {
@@ -1140,6 +1157,7 @@ addLayer("en", {
             extra(){
                 let extra = new Decimal(0)
                 if (hasUpgrade("en", 93)) extra = extra.plus(getBuyableAmount(this.layer, 61))
+                if (hasUpgrade("ma", 52)) extra = extra.plus(getBuyableAmount(this.layer, 42).times(0.12).floor())
                 return extra
             },
             effect() {
@@ -1220,10 +1238,10 @@ addLayer("en", {
             cost(x) {
                 gen9scale = "1e90"
                 if (hasUpgrade("en", 93)) gen9scale = "1e69"
-                if (x < 1399) {
+                if (x < 999) {
                     return new Decimal("e1200").mul(Decimal.pow(gen9scale, x)).floor()
                 } else {
-                    return new Decimal("e99000").mul(Decimal.pow(1e150, x-1399)).floor()
+                    return new Decimal("e75000").mul(Decimal.pow(1e150, x-999)).floor()
                 }
             },
             display() {
@@ -1251,8 +1269,8 @@ addLayer("en", {
                 player.points = player.points.div(this.cost().pow(1/20))
                 if (!(hasAchievement("a", 81))) setBuyableAmount(this.layer, 42, new Decimal(0))
                 if (0 != 0) {
-                    if (getBuyableAmount(this.layer, this.id).gte(1399)) {
-                        setBuyableAmount(this.layer, this.id, player.en.points.div("e99000").log(1e140).floor().add(1399))
+                    if (getBuyableAmount(this.layer, this.id).gte(999)) {
+                        setBuyableAmount(this.layer, this.id, player.en.points.div("e75000").log(1e150).floor().add(999))
                     } else {
                         setBuyableAmount(this.layer, this.id, player.en.points.div("e1200").log(gen9scale).floor().add(1))
                     }
@@ -1271,7 +1289,7 @@ addLayer("en", {
                 return eff
             },
             tooltip() {
-                return "Cost Formula: e1200 x "+ gen9scale +"^Amt [Before 1399, after 1399 its e99000 x 1e140^(Amt-1399)]. Generation formula: Generator 9 amt / 25. Division Factor: ^1/20"
+                return "Cost Formula: e1200 x "+ gen9scale +"^Amt [Before 999, after 999 its e75000 x 1e150^(Amt-999)]. Generation formula: Generator 9 amt / 25. Division Factor: ^1/20"
             },
             style() {
                 if (canBuyBuyable(this.layer, this.id)) {
@@ -1323,6 +1341,7 @@ addLayer("en", {
         if (hasMilestone("a", 7)) mult = mult.times(100)
         if (hasUpgrade("en", 15)) mult = mult.times(upgradeEffect("en", 15))
         if (hasUpgrade("en", 32)) mult = mult.times(upgradeEffect("en", 32))
+        if (hasUpgrade("ma", 54) && player.en.points.gte("e5300")) mult = mult.times(upgradeEffect("ma", 54))
         if (hasMilestone("ma", 8)) mult = mult.times(2)
         if (hasMilestone("ma", 10)) mult = mult.times(2)
         if (hasUpgrade("mo", 11)) mult = mult.times(2)
@@ -1332,6 +1351,7 @@ addLayer("en", {
         if (hasMilestone("ma", 11)) mult = mult.times(3)
         if (hasUpgrade("en", 81)) mult = mult.times(13).div(4)
         if (hasMilestone("mo", 12)) mult = mult.times(1254)
+        if (hasUpgrade("ma", 213)) mult = mult.times(33e13)
         if (player.cm.clickmastery.gte(1.2e11)) mult = mult.times(3)
         if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (hasUpgrade("en", 85)) mult = mult.times(8)
@@ -1427,6 +1447,7 @@ addLayer("en", {
             if (hasUpgrade("en", 85)) player.en.gen8multi = player.en.gen8multi.times(8)
 
             if (hasAchievement("a", 63)) player.en.gen4multi = player.en.gen4multi.times(1.14)
+            if (hasAchievement("a", 84)) player.en.gen5multi = player.en.gen5multi.times(1.05)
 
 
             if (hasUpgrade("mo", 25)) player.en.gen1multi = player.en.gen1multi.times(buyableEffect("en", 51))
@@ -1574,6 +1595,7 @@ addLayer("en", {
             if (hasAchievement("a", 54)) gain = gain.times(1.06)
             if (hasAchievement("a", 55)) gain = gain.times(1.04)
             if (hasAchievement("a", 56)) gain = gain.times(1.08)
+            if (hasUpgrade("ma", 211)) gain = gain.times(1e10)
             if (hasUpgrade("en", 65)) gain = gain.times(1.1)
             if (hasMilestone("mo", 12)) gain = gain.times(1254)
             if (hasUpgrade("en", 75)) gain = gain.times(4)
@@ -1597,6 +1619,7 @@ addLayer("en", {
             if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
             if (hasUpgrade("mo", 13)) gain = gain.pow(1.04)
             if (hasUpgrade("en", 93)) gain = gain.pow(1.015)
+            if (hasUpgrade("ma", 215)) gain = gain.pow(1.02)
             
             gain = softcap(gain, new Decimal("e720"), new Decimal(0.6))
             player.en.powgain = gain
