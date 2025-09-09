@@ -1185,9 +1185,9 @@ addLayer("sa", {
             }
         },
         165: {
-            name: "Now PUSH. [Get -1ee15M]",
+            name: "Now PUSH. [Get 1ee15M]",
             done() {
-                   if ((player.sa.minigameNum.lte("-ee1.5e7"))) {
+                   if ((player.sa.minigameNum.lte("ee1.5e7"))) {
                     if (hasAchievement("sa", 164)) {
                         return true
                     }
