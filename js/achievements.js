@@ -39,7 +39,7 @@ addLayer("a", {
         },
         "Savebank": {
             content: [
-                ["clickables", [1, 2, 3, 4, 5, 6, 7, 8]],
+                ["clickables", [1, 2, 3, 4, 5]],
             ],
         },
         "BPP (???)": {
@@ -161,7 +161,7 @@ addLayer("a", {
                 'background-color': tmp.rebirth.color,
             }},
         },
-        21: {
+        13: {
             title: "Prestige",
             display: "Layer Finished",
             canClick: true,
@@ -173,7 +173,7 @@ addLayer("a", {
                 'background-color': tmp.prestige.color,
             }},
         },
-        22: {
+        14: {
             title: "Mega",
             display: "Layer Finished",
             canClick: true,
@@ -185,7 +185,7 @@ addLayer("a", {
                 'background-color': tmp.mega.color,
             }},
         },
-        31: {
+        21: {
             title: "Sacrifice Stage 1",
             display: "Sac 10 + a bit of energy upgs",
             canClick: true,
@@ -197,7 +197,7 @@ addLayer("a", {
                 'background-color': tmp.sac.color,
             }},
         },
-        32: {
+        22: {
             title: "Sacrifice Stage 2",
             display: "Sac 20",
             canClick: true,
@@ -209,7 +209,7 @@ addLayer("a", {
                 'background-color': tmp.sac.color,
             }},
         },
-        41: {
+        23: {
             title: "Supreme Layer",
             display: "Completion of Sac layer, Start of Supreme layer",
             canClick: true,
@@ -221,7 +221,7 @@ addLayer("a", {
                 'background-color': tmp.s.color,
             }},
         },
-        42: {
+        24: {
             title: "Water Layer",
             display: "Water Unlock",
             canClick: true,
@@ -233,7 +233,7 @@ addLayer("a", {
                 'background-color': tmp.w.color,
             }},
         },
-        51: {
+        31: {
             title: "Mastery Layer Part 1",
             display: "Mastery",
             canClick: true,
@@ -245,7 +245,7 @@ addLayer("a", {
                 'background-color': tmp.m.color,
             }},
         },
-        52: {
+        32: {
             title: "Mastery Layer Part 2",
             display: "End of DS5",
             canClick: true,
@@ -257,7 +257,7 @@ addLayer("a", {
                 'background-color': tmp.m.color,
             }},
         },
-        61: {
+        33: {
             title: "Mastery Layer Part 3 / Era Layer Part 1",
             display: "v2.5 ATE / Before Era 1",
             canClick: true,
@@ -269,7 +269,7 @@ addLayer("a", {
                 'background-color': tmp.m.color,
             }},
         },
-        62: {
+        34: {
             title: "Era Layer Part 2",
             display: "Before DS6 [Era 2]",
             canClick: true,
@@ -281,7 +281,7 @@ addLayer("a", {
                 'background-color': tmp.era.color,
             }},
         },
-        71: {
+        41: {
             title: "Era Layer Part 3",
             display: "Era 3 start",
             canClick: true,
@@ -293,7 +293,7 @@ addLayer("a", {
                 'background-color': tmp.era.color,
             }},
         },
-        72: {
+        42: {
             title: "Era Layer Part 4",
             display: "Pre-MC1x2",
             canClick: true,
@@ -305,7 +305,7 @@ addLayer("a", {
                 'background-color': tmp.era.color,
             }},
         },
-        81: {
+        43: {
             title: "Cells Layer Start",
             display: "The unlocking of the cells layer",
             canClick: true,
@@ -317,7 +317,7 @@ addLayer("a", {
                 'background-color': tmp.c.color,
             }},
         },
-        82: {
+        44: {
             title: "Era Fragments/Era Phase 2",
             display: "Unlock Era Phase 2!",
             canClick: true,

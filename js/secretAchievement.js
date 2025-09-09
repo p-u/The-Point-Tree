@@ -1832,7 +1832,7 @@ addLayer("sa", {
         },
         23: {
             title: "=1",
-            canClick() {return true},
+            canClick() {return player.sa.minigameNum.layer < 5},
             onClick() {
                 player[this.layer].minigameNum = decimalOne
                 player[this.layer].pdx = new Decimal(0)
@@ -1901,7 +1901,7 @@ addLayer("sa", {
             title: "x(-1)",
             canClick() {return true},
             onClick() {
-                if (player.sa.minigameNum.slog().mag < 4.5) {
+                if (player.sa.minigameNum.slog().mag < 2.5) {
                     player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
                     player[this.layer].bp = player[this.layer].bp.add(1)
                 }
@@ -2973,6 +2973,7 @@ addLayer("sa", {
                 player.sa.updateFreq = player.sa.baseUpdateFreq
             }
         }
+        if (player.sa.minigameNum.layer == "NaN") player.sa.minigameNum = new Decimal(1)
     },
     infoboxes: {
         main: {
