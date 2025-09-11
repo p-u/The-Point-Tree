@@ -103,51 +103,51 @@ addLayer("s", {
     exponent: 0.0001, 
     milestones: {
         1: {
-            requirementDescription: "The First Supreme",
+            requirementDescription: "The First Supreme Milestone",
             effectDescription: "x5 Energy, Keep Dim Shift Reb Upgs on reset",
-            done() { return player["s"].points.gte(1) }
+            done() { return player["s"].points.gte(10) }
         },
         2: {
-            requirementDescription: "Wow, QoL [15 Supreme Pts]",
+            requirementDescription: "Wow, QoL [150 Supreme Pts]",
             effectDescription: "Keep Energy Upgs row 7 and 8 on reset",
-            done() { return player["s"].points.gte(15) }
+            done() { return player["s"].points.gte(150) }
         },
         3: {
-            requirementDescription: "More QoL [50 Supreme Pts]",
+            requirementDescription: "More QoL [500 Supreme Pts]",
             effectDescription: "Keep Energy Upgs row 9 on reset",
-            unlocked() {return player["s"].points.gte(15)},
-            done() { return player["s"].points.gte(50) }
+            unlocked() {return player["s"].points.gte(150)},
+            done() { return player["s"].points.gte(500) }
         },
         4: {
-            requirementDescription: "Supreme Extension 1 - More Energy [12K Supreme Pts]",
+            requirementDescription: "Supreme Extension 1 - More Energy [120K Supreme Pts]",
             effectDescription: "Unlock 4 new upgs",
             unlocked() {return (hasUpgrade('s', 24))},
-            done() { return player["s"].points.gte(12000) }
+            done() { return player["s"].points.gte(120000) }
         },
         5: {
-            requirementDescription: "New Reset Layer [35K Supreme Pts]",
+            requirementDescription: "New Reset Layer [350K Supreme Pts]",
             effectDescription: "Unlock Reset Layer: Water",
             unlocked() {return (hasUpgrade('s', 34))},
-            done() { return player["s"].points.gte(35000) }
+            done() { return player["s"].points.gte(350000) }
         },
         6: {
-            requirementDescription: "A ton of supreme points - 25M",
+            requirementDescription: "A ton of supreme points - 250M",
             effectDescription: "xee6 PF, x15 Water",
             unlocked() {return (hasUpgrade('w', 24))},
-            done() { return player["s"].points.gte(25e6) }
+            done() { return player["s"].points.gte(250e6) }
         },
         7: {
-            requirementDescription: "Too Much SP - e13,015",
+            requirementDescription: "Too Much SP - e13,016",
             effectDescription: "SU21 and SU52 is MUCH STRONGER",
             unlocked() {return (hasMilestone('sac', 63))},
-            done() { return player["s"].points.gte("e13015") }
+            done() { return player["s"].points.gte("e13016") }
         },
         8: {
-            requirementDescription: "MC2S (Supreme I) - 1.6e1446",
+            requirementDescription: "MC2S (Supreme I) - 1.6e1447",
             effectDescription: "+^0.08 MP, Sacrifice Scaling slightly lower",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["s"].points.gte("1.6e1446")) {
+                    if (player["s"].points.gte("1.6e1447")) {
                         return true
                     }
                 }
@@ -171,30 +171,30 @@ addLayer("s", {
         11: {
             title: "Supremely Good",
             description: "xe300K PF",
-            cost: new Decimal(2),
+            cost: new Decimal(20),
         },
         12: {
             title: "Supreme Power",
             description: "^1.01 PF",
-            cost: new Decimal(7),
+            cost: new Decimal(70),
             unlocked() { return hasUpgrade("s", 11) },
         },
         13: {
             title: "Supreme Mega Good",
             description: "xe600K PF, xe1K MP",
-            cost: new Decimal(25),
+            cost: new Decimal(250),
             unlocked() { return hasUpgrade("s", 12) },
         },
         14: {
             title: "Supreme Power II",
             description: "^1.01 PF, +^0.01 PP",
-            cost: new Decimal(125),
+            cost: new Decimal(1250),
             unlocked() { return hasUpgrade("s", 13) },
         },
         21: {
             title: "Sac Energy",
             description: "Every sac x2 energy",
-            cost: new Decimal(100),
+            cost: new Decimal(1000),
             main() {
                 supu5 = new Decimal(2)
                 exp = new Decimal(1)
@@ -224,73 +224,73 @@ addLayer("s", {
         22: {
             title: "The Supremely OP UPG",
             description: "xe1.5M PF",
-            cost: new Decimal(480),
+            cost: new Decimal(4800),
             unlocked() { return hasUpgrade("s", 21) },
         },
         23: {
             title: "Choice 1",
             description: "Supreme Buyable 1 base x1.3 to x1.4",
-            cost: new Decimal(3500),
+            cost: new Decimal(35000),
             unlocked() { return hasUpgrade("s", 22) },
         },
         24: {
             title: "Choice 1",
             description: "^1.004 PF",
-            cost: new Decimal(3500),
+            cost: new Decimal(35000),
             unlocked() { return hasUpgrade("s", 23) },
         },
         31: {
             title: "Supremegy",
             description: "xe15 Energy",
-            cost: new Decimal(7000),
+            cost: new Decimal(70000),
             unlocked() { return hasUpgrade("s", 24) && hasMilestone("s", 4) },
         },
         32: {
             title: "Supremelegy",
             description: "xe25 Energy",
-            cost: new Decimal(9000),
+            cost: new Decimal(90000),
             unlocked() { return hasUpgrade("s", 31) && hasMilestone("s", 4) },
         },
         33: {
             title: "Supremeletegy",
             description: "xe30 Energy",
-            cost: new Decimal(10000),
+            cost: new Decimal(100000),
             unlocked() { return hasUpgrade("s", 32) && hasMilestone("s", 4) },
         },
         34: {
             title: "Supremeletewegy",
             description: "xe30 Energy",
-            cost: new Decimal(12000),
+            cost: new Decimal(120000),
             unlocked() { return hasUpgrade("s", 33) && hasMilestone("s", 4) },
         },
         41: {
             title: "Supreme-e-water",
             description: "xe1M PF, x2 Water",
-            cost: new Decimal(225000),
+            cost: new Decimal(2250000),
             unlocked() { return hasUpgrade("w", 24) && hasUpgrade("s", 34) },
         },
         42: {
             title: "Unlock the 2nd supreme buyable",
             description: "Yay!",
-            cost: new Decimal(9.25e5),
+            cost: new Decimal(92.5e5),
             unlocked() { return hasUpgrade("w", 24) && hasUpgrade("s", 41) },
         },
         43: {
             title: "Supremely Boost",
             description: "xe1M PF, x1.8 SP",
-            cost: new Decimal(3e6),
+            cost: new Decimal(30e6),
             unlocked() { return hasUpgrade("w", 24) && hasUpgrade("s", 42) },
         },
         44: {
             title: "Supremer than ever",
             description: "xe2.1M PF, Supreme Buyable 2 has better effect formula",
-            cost: new Decimal(7e11),
+            cost: new Decimal(70e11),
             unlocked() { return hasUpgrade("w", 24) && hasUpgrade("s", 43) },
         },
         51: {
             title: "Yes! Compounding X",
             description: "Supreme boosts itself",
-            cost: new Decimal(1.7e19),
+            cost: new Decimal(17e19),
             unlocked() { return hasUpgrade("mega", 84) && hasUpgrade("s", 44) },
             main() {
                 cxexp = 0.0325
@@ -323,7 +323,7 @@ addLayer("s", {
         52: {
             title: "Sac is OP",
             description: "Every sac above 30 x2 water, and Supreme Upg 21 is MUCH STRONGER. Extend Water Upgs",
-            cost: new Decimal(2e20),
+            cost: new Decimal(20e20),
             main() {
                 supu5 = new Decimal(2)
                 if (hasUpgrade('m', 32)) supu5 = new Decimal(4)
@@ -353,31 +353,31 @@ addLayer("s", {
         53: {
             title: "FINALLY!",
             description: "Unlock Supreme Buyable 3. Supreme Buyable 1 has better formula",
-            cost: new Decimal(3e33),
+            cost: new Decimal(30e33),
             unlocked() { return hasUpgrade("s", 52) },
         },
         54: {
             title: "8-Boost...",
             description: "PF xe2M, BP xe500K, RP xe120K, PP xe40K, MP xe6K, Energy xe20, Water xe1, SP xe0.5",
-            cost: new Decimal(7e33),
+            cost: new Decimal(70e33),
             unlocked() { return hasUpgrade("s", 53) },
         },
         61: {
             title: "Game-Changer",
             description: "^1.01 PF, xe10,000,000 PF [WOW!!]",
-            cost: new Decimal(2e41),
+            cost: new Decimal(20e41),
             unlocked() { return hasUpgrade("s", 54) },
         },
         62: {
             title: "Buyable Stronk",
             description: "SB1 and SB3 is stronger",
-            cost: new Decimal(1.25e46),
+            cost: new Decimal(12.5e46),
             unlocked() { return hasUpgrade("s", 61) },
         },
         63: {
             title: "Supremacy Buyable",
             description: "^1.03 PF, Supreme Strong, but scales insanely",
-            cost: new Decimal(1.1e50),
+            cost: new Decimal(11e50),
             unlocked() { return hasUpgrade("s", 62) },
         },
         64: {
@@ -407,15 +407,15 @@ addLayer("s", {
             tooltip() {
                 return "Formula: PF^"  + sppfbe + sdsc
             },
-            cost: new Decimal(2.5e59),
+            cost: new Decimal(25e59),
             unlocked() { return hasUpgrade("s", 63) },
         },
         71: {
             title: "Massive Choice Upgrades (1: xe5M PF)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("1.2e61")
-                if (hasUpgrade("s", 84)) price = new Decimal ("3.3e72")
+                let price = new Decimal("1.2e62")
+                if (hasUpgrade("s", 84)) price = new Decimal ("3.3e73")
                 return price
             },
             unlocked() { 
@@ -442,8 +442,8 @@ addLayer("s", {
             title: "Massive Choice Upgrades (2: xe6M PF)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("4e62")
-                if (hasUpgrade("s", 84)) price = new Decimal ("1.125e74")
+                let price = new Decimal("4e63")
+                if (hasUpgrade("s", 84)) price = new Decimal ("1.125e75")
                 return price
             },
             unlocked() { return hasUpgrade("s", 71) },
@@ -452,8 +452,8 @@ addLayer("s", {
             title: "Massive Choice Upgrades (3: xe8M PF)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("5e66")
-                if (hasUpgrade("s", 84)) price = new Decimal ("6.6e75")
+                let price = new Decimal("5e67")
+                if (hasUpgrade("s", 84)) price = new Decimal ("6.6e76")
                 return price
             },
             unlocked() { return hasUpgrade("s", 72) },
@@ -462,8 +462,8 @@ addLayer("s", {
             title: "Massive Choice Upgrades (4: xe10M PF)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("1e69")
-                if (hasUpgrade("s", 84)) price = new Decimal ("1.9e78")
+                let price = new Decimal("1e70")
+                if (hasUpgrade("s", 84)) price = new Decimal ("1.9e79")
                 return price
             },
             unlocked() { return hasUpgrade("s", 73) },
@@ -472,8 +472,8 @@ addLayer("s", {
             title: "Massive Choice Upgrades (1: x50 SP)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("1.2e61")
-                if (hasUpgrade("s", 74)) price = new Decimal ("1e72")
+                let price = new Decimal("1.2e62")
+                if (hasUpgrade("s", 74)) price = new Decimal ("2.5e73")
                 return price
             },
             unlocked() { 
@@ -500,8 +500,8 @@ addLayer("s", {
             title: "Massive Choice Upgrades (2: +^0.025 MP)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("7e62")
-                if (hasUpgrade("s", 74)) price = new Decimal ("7.35e73")
+                let price = new Decimal("7e63")
+                if (hasUpgrade("s", 74)) price = new Decimal ("3e75")
                 return price
             },
             unlocked() { return hasUpgrade("s", 81) },
@@ -510,7 +510,7 @@ addLayer("s", {
             title: "Massive Choice Upgrades (3: Supremacy Buyable is Stronger)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("8e66")
+                let price = new Decimal("8e67")
                 if (hasUpgrade("s", 74)) price = new Decimal ("4e75")
                 return price
             },
@@ -520,8 +520,8 @@ addLayer("s", {
             title: "Massive Choice Upgrades (4: +^0.025 PP)",
             description: "Choose one row. 7 or 8. The other row scales in price immensely.",
             cost:() => {
-                let price = new Decimal("1.7e71")
-                if (hasUpgrade("s", 74)) price = new Decimal ("1.45e80")
+                let price = new Decimal("1.7e72")
+                if (hasUpgrade("s", 74)) price = new Decimal ("5e81")
                 return price
             },
             unlocked() { return hasUpgrade("s", 83) },
@@ -529,73 +529,73 @@ addLayer("s", {
         91: {
             title: "Basic Love",
             description: "xe10M BP. x1.0M PF",
-            cost: new Decimal(3.33e81),
+            cost: new Decimal(3.33e82),
             unlocked() { return hasUpgrade("s", 84) },
         },
         92: {
             title: "Less Nerfs",
             description: "Rebirth and Prestige Softcap is weaker",
-            cost: new Decimal(1e105),
+            cost: new Decimal(1e1056),
             unlocked() { return hasUpgrade("s", 91) },
         },
         93: {
             title: "PP is a must.",
             description: "+^0.05 PP",
-            cost: new Decimal(2.3e136),
+            cost: new Decimal(2.3e137),
             unlocked() { return hasUpgrade("s", 92) },
         },
         94: {
             title: "The Last Upgrade, before the next Reset Layer",
             description: "^1.04 PF",
-            cost: new Decimal(3.6e179),
+            cost: new Decimal(3.6e180),
             unlocked() { return hasUpgrade("s", 93) },
         },
         101: {
             title: "More!",
             description: "xe100M PF, Autobuy Supreme Buyable 4",
-            cost: new Decimal("5e1229"),
+            cost: new Decimal("5e1230"),
             unlocked() { return hasUpgrade("s", 94) && hasMilestone("sac", 53) },
         },
         102: {
             title: "Unleash the Ultimate Weapon!",
             description: "Unlock Supreme Buyable 5. It's not the same as the others...",
-            cost: new Decimal("4.75e1266"),
+            cost: new Decimal("4.75e1267"),
             unlocked() { return hasUpgrade("s", 101) && hasMilestone("sac", 53) },
         },
         103: {
             title: "Another SB4 buff",
             description: "SB4 effect has been increased from x1e8 per buy to x1e15 per buy",
-            cost: new Decimal("1e1405"),
+            cost: new Decimal("1e1406"),
             unlocked() { return hasUpgrade("s", 102) && hasMilestone("sac", 53) },
         },
         104: {
             title: "Yes!",
             description: "^1.025 PF, xe125M PF",
-            cost: new Decimal("1.4e1529"),
+            cost: new Decimal("1.4e1530"),
             unlocked() { return hasUpgrade("s", 103) && hasMilestone("sac", 53) },
         },
         111: {
             title: "I want XTra Mult!",
             description: "xe25B PF, xe100B BP, xe35B RP, xe3B PP, xe250M MP",
-            cost: new Decimal("1.5e1331626"),
+            cost: new Decimal("1.5e1331627"),
             unlocked() { return hasUpgrade("s", 104) && hasUpgrade("era", 52) },
         },
         112: {
             title: "Capping Later",
             description: "Supreme Buyable 5 now caps at ^1.26 instead of ^1.25",
-            cost: new Decimal("5e1507864"),
+            cost: new Decimal("5e1507865"),
             unlocked() { return hasUpgrade("s", 111) && hasUpgrade("era", 52) },
         },
         113: {
             title: "More power...",
             description: "^1.012 PF",
-            cost: new Decimal("5e1566058"),
+            cost: new Decimal("5e1566059"),
             unlocked() { return hasUpgrade("s", 111) && hasUpgrade("era", 52) },
         },
         114: {
             title: "More EC and a really huge amount of mult",
             description: "xe250B PF, x15 Era Crystals, unlock more Era Ups",
-            cost: new Decimal("1e1727316"),
+            cost: new Decimal("1e1727317"),
             unlocked() { return hasUpgrade("s", 111) && hasUpgrade("era", 52) },
         },
 
@@ -603,37 +603,37 @@ addLayer("s", {
         15: {
             title: "Another DS, another struggle",
             description: "+^0.08 Supreme Points and Water",
-            cost: new Decimal("5e138615545"),
+            cost: new Decimal("5e138615546"),
             unlocked() { return hasMilestone("sac", 87) },
         },
         25: {
             title: "Compoundation",
             description: "Both SP and Water Compounding Upgrades are stronger.",
-            cost: new Decimal("9e149391536"),
+            cost: new Decimal("9e149391537"),
             unlocked() { return hasUpgrade("s", 15) && hasMilestone("sac", 87) },
         },
         35: {
             title: "Hardening",
             description: "Supreme Buyable 1, 3, 4 is stronger",
-            cost: new Decimal("2e153164040"),
+            cost: new Decimal("2e153164041"),
             unlocked() { return hasUpgrade("s", 25) && hasMilestone("sac", 87) },
         },
         45: {
             title: "Supreme Dimensional Fragmentation",
             description: "xe15T PF",
-            cost: new Decimal("6e167720991"),
+            cost: new Decimal("6e167720992"),
             unlocked() { return hasUpgrade("s", 35) && hasMilestone("sac", 87) },
         },
         55: {
             title: "Release it.",
             description: "Is it OP?",
-            cost: new Decimal("7e182341984"),
+            cost: new Decimal("7e182341985"),
             unlocked() { return hasUpgrade("s", 45) && hasMilestone("sac", 87) },
         },
         65: {
             title: "Supreme Points boost Water.",
             description: "Yeah.",
-            cost: new Decimal("1.8e239503265"),
+            cost: new Decimal("1.8e239503266"),
             main() {
                 spbw = 0.0325
                 softcapDescriptions65 = ""
@@ -654,7 +654,7 @@ addLayer("s", {
         75: {
             title: "Water boost Supreme Points.",
             description: "Yeah.",
-            cost: new Decimal("1e240514236"),
+            cost: new Decimal("1e240514237"),
             main() {
                 wbsp = 0.69
                 softcapDescriptions75 = ""
@@ -675,25 +675,25 @@ addLayer("s", {
         85: {
             title: "More Mega from SP",
             description: "MU84 is stronger",
-            cost: new Decimal("3.5e263155312"),
+            cost: new Decimal("3.5e263155313"),
             unlocked() { return hasUpgrade("s", 75) && hasMilestone("sac", 87) },
         },
         95: {
             title: "Prestige Stuff",
             description: "Supercap is weaker",
-            cost: new Decimal("4e288522191"),
+            cost: new Decimal("4e288522192"),
             unlocked() { return hasUpgrade("s", 85) && hasMilestone("sac", 87) },
         },
         105: {
             title: "Hardening II",
             description: "Supreme Buyable 5 HC +^0.005, Supreme Buyable 6 is better",
-            cost: new Decimal("3.9e308881539"),
+            cost: new Decimal("3.9e308881540"),
             unlocked() { return hasUpgrade("s", 95) && hasMilestone("sac", 87) },
         },
         115: {
             title: "Epitome of Supreme",
             description: "xe50T PF, ^1.005 PF, x115 Era Crystals, Extend EC Upgrades, Add 1 more Supreme Milestone",
-            cost: new Decimal("5e424451358"),
+            cost: new Decimal("5e424451359"),
             unlocked() { return hasUpgrade("s", 105) && hasMilestone("sac", 87) },
         },
 
@@ -701,31 +701,31 @@ addLayer("s", {
         121: {
             title: "Even Bias",
             description: "All Even Layer# are boosted. [Reb, Mega, Energy, Water, Era]",
-            cost: new Decimal("e5.38789735353e12"),
+            cost: new Decimal("e5.38789735354e12"),
             unlocked() { return hasUpgrade("s", 115) && hasUpgrade("era", 305) },
         },
         122: {
             title: "Hycomp",
             description: "Compounding 9-11 is stronger.",
-            cost: new Decimal("e5.685027196305e12"),
+            cost: new Decimal("e5.685027196306e12"),
             unlocked() { return hasUpgrade("s", 121) && hasUpgrade("era", 305) },
         },
         123: {
             title: "yay ig",
             description: "xe1e17 PF!!",
-            cost: new Decimal("e5.8231486151189e12"),
+            cost: new Decimal("e5.823148615119e12"),
             unlocked() { return hasUpgrade("s", 122) && hasUpgrade("era", 305) },
         },
         124: {
             title: "Super Unoriginal Title, yea",
             description: "Oh yea, I forgot to bring the boost to you. It's err... +^0.01 SB5 cap? well, hope that's op enough for you",
-            cost: new Decimal("e6.4666410712209e12"),
+            cost: new Decimal("e6.466641071221e12"),
             unlocked() { return hasUpgrade("s", 123) && hasUpgrade("era", 305) },
         },
         125: {
             title: "Finaling ro twel fff",
             description: "Something imminent is coming up. ^1.01 PF.",
-            cost: new Decimal("e6.72782802933975e12"),
+            cost: new Decimal("e6.72782802933976e12"),
             unlocked() { return hasUpgrade("s", 124) && hasUpgrade("era", 305) },
         },
     },
@@ -735,7 +735,7 @@ addLayer("s", {
         unlocked() { return (hasAchievement('a', 113)) },
         cost(x) {
             exp2 = new Decimal(1.1)
-            return new Decimal(200).mul(Decimal.pow(1.2, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            return new Decimal(2000).mul(Decimal.pow(1.2, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
             return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Supreme Points gain by x" + notationChooser(buyableEffect(this.layer, this.id))
@@ -778,7 +778,7 @@ addLayer("s", {
         unlocked() { return (hasUpgrade('s', 42)) },
         cost(x) {
             exp2 = new Decimal(1.1)
-            return new Decimal(100000).mul(Decimal.pow(1.175, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            return new Decimal(1000000).mul(Decimal.pow(1.175, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
             return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Gain " + notationChooser(buyableEffect(this.layer, this.id)) + "x of manual reset"
@@ -813,7 +813,7 @@ addLayer("s", {
         unlocked() { return (hasUpgrade('s', 53)) },
         cost(x) {
             exp2 = new Decimal(1.1)
-            return new Decimal(1e30).mul(Decimal.pow(1.195, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            return new Decimal(1e31).mul(Decimal.pow(1.195, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
             return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply water by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
@@ -855,7 +855,7 @@ addLayer("s", {
         cost(x) {
             exp2 = new Decimal(3)
             if (hasMilestone('sac', 53)) exp2 = new Decimal(1.75)
-            return new Decimal(1e50).mul(Decimal.pow(1.5, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            return new Decimal(1e51).mul(Decimal.pow(1.5, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
             return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply SP AND WATER by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
@@ -897,7 +897,7 @@ addLayer("s", {
         cost(x) {
             let exp2 = 2.5
             if (hasUpgrade('rebirth', 72)) exp2 = 2
-            return new Decimal("1e1266").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            return new Decimal("1e1267").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
             return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + (tmp.s.sb5effect) + " Point Fragments."
@@ -916,7 +916,7 @@ addLayer("s", {
         unlocked() { return (hasUpgrade('s', 55)) },
         cost(x) {
             let exp2 = 2
-            return new Decimal("1e182341000").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+            return new Decimal("1e182341001").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
         display() {
             return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: -" + format(buyableEffect(this.layer, this.id)) + " to Sacrifice Scaling."

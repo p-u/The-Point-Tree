@@ -37,84 +37,84 @@ addLayer("rebirth", {
         11: {
             title: "Welcome to rebirth. Here's a x4 point fragments for you.",
             description: "x4 Point fragments..",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
         },
         12: {
             title: "That's a while since the last one. How about some Point boosts?",
             description: "X5 Basic Points, X10 Point Fragments",
-            cost: new Decimal(1500),
+            cost: new Decimal(15000),
             unlocked() { return hasUpgrade("rebirth", 11) },
         },
         13: {
             title: "Boosts to all",
             description: "X1.28 Rebirth Points, Basic Points and Point Fragments",
-            cost: new Decimal(60000),
+            cost: new Decimal(600000),
             unlocked() { return hasUpgrade("rebirth", 12) },
         },
         14: {
             title: "Point Fragmenting",
-            description: "AN INSANE X50 BOOST TO Point Fragments",
+            description: "AN INSA0NE X50 BOOST TO Point Fragments",
             cost: new Decimal(300000),
             unlocked() { return hasUpgrade("rebirth", 13) },
         },
         21: {
             title: "Booster",
             description: "X1.36 RP (Rebirth Point), X2 BP (Basic Point), X100 PF (Point Fragment)",
-            cost: new Decimal(1.5e6),
+            cost: new Decimal(15e6),
             unlocked() { return hasUpgrade("rebirth", 14) },
         },
         22: {
             title: "Another Exponent?",
             description: "+^0.01 BP, ^1.02 PF",
-            cost: new Decimal(40e6),
+            cost: new Decimal(400e6),
             unlocked() { return hasUpgrade("rebirth", 21) },
         },
         23: {
             title: "Boost",
             description: "X2 RP, X10 PF",
-            cost: new Decimal(60e6),
+            cost: new Decimal(600e6),
             unlocked() { return hasUpgrade("rebirth", 21) },
         },
         24: {
             title: "Final Reb Upg before Pres",
             description: "X1.28 RP, X2.22 BP, X20 PF",
-            cost: new Decimal(2.5e9),
+            cost: new Decimal(25e9),
             unlocked() { return hasUpgrade("rebirth", 23) },
         },
         31: {
             title: "Extension 1 - Upgrade Boosting",
             description: "Basic Upgrade 10 is boosted.",
-            cost: new Decimal(4.44e44),
+            cost: new Decimal(44.4e44),
             unlocked() { return hasUpgrade("prestige", 21) && hasUpgrade("rebirth", 24) },
         },
         32: {
             title: "1111Quad",
             description: "x1.11 PP, x11.11 RP, x1111.11 BP, x1111111.11 PF",
-            cost: new Decimal(5e50),
+            cost: new Decimal(50e50),
             unlocked() { return hasUpgrade("rebirth", 31) },
         },
         33: {
             title: "Rebirth Upgrade 11: Mega Edition",
             description: "Rebirth softcap after e1,500 is less. (^0.35 to ^0.375)",
-            cost: new Decimal("e2568"),
+            cost: new Decimal("e2569"),
             unlocked() { return hasMilestone("mega", 7) && hasUpgrade("rebirth", 32) },
         },
         34: {
             title: "THE BIG TRADE-OFF",
             description: "Basic Point Exponent -^0.08, BUT Point Fragments ^1.06, Mega Points x10, Point Fragments x1e200",
-            cost: new Decimal("e2695"),
+            cost: new Decimal("e2696"),
             unlocked() { return hasMilestone("mega", 7) && hasUpgrade("rebirth", 33) },
         },
         41: {
             title: "Extension, again.",
             description: "Point Fragments x1e2,000, Mega Points x1e10",
-            cost: new Decimal("e63200"),
+            cost: new Decimal("e63201"),
             unlocked() { return hasMilestone("sac", 9) && hasUpgrade("rebirth", 34) },
         },
         42: {
             title: "Rebirth Extension 3: Finale",
             description: "Rebirth Softcap is less.",
-            cost: new Decimal("e69250"),
+            cost: new Decimal("e69251"),
             unlocked() { return hasMilestone("sac", 9) && hasUpgrade("rebirth", 41) },
         },
         43: {
@@ -126,55 +126,55 @@ addLayer("rebirth", {
         44: {
             title: "Rebirth Extension 4: End",
             description: "Rebirth Supercap is less",
-            cost: new Decimal("e312600"),
+            cost: new Decimal("e312601"),
             unlocked() { return hasMilestone("sac", 14) && hasUpgrade("rebirth", 43) },
         },
         51: {
             title: "Rebirth Rep Upgrades 1/4",
             description: "Softcap is less, +^(0.01 * (1 + ((RepUpgNo - 1) / 2))) RP",
-            cost: new Decimal("e2545360"),
+            cost: new Decimal("e2545361"),
             unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 44) },
         },
         52: {
             title: "Rebirth Rep Upgrades 2/4",
             description: "Softcap is less, +^(0.01 * (1 + ((RepUpgNo - 1) / 2))) RP",
-            cost: new Decimal("e2626100"),
+            cost: new Decimal("e2626101"),
             unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 51) },
         },
         53: {
             title: "Rebirth Rep Upgrades 3/4",
             description: "Softcap is less, +^(0.01 * (1 + ((RepUpgNo - 1) / 2))) RP",
-            cost: new Decimal("e2731050"),
+            cost: new Decimal("e2731051"),
             unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 52) },
         },
         54: {
             title: "Rebirth Rep Upgrades 4/4",
             description: "Softcap is less, +^(0.01 * (1 + ((RepUpgNo - 1) / 2))) RP",
-            cost: new Decimal("e2863400"),
+            cost: new Decimal("e2863401"),
             unlocked() { return hasMilestone("sac", 23) && hasUpgrade("rebirth", 53) },
         },
         61: {
             title: "Rebirthingation",
             description: "xe596.85750K RP",
-            cost: new Decimal("e59685750"),
+            cost: new Decimal("e59685751"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 54) },
         },
         62: {
             title: "Sixty Seventy",
             description: "+^0.0060 RP, xe700K RP",
-            cost: new Decimal("e60070000"),
+            cost: new Decimal("e60070001"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 61) },
         },
         63: {
             title: "Rebirth Fragments",
             description: "xe8M PF",
-            cost: new Decimal("e61016900"),
+            cost: new Decimal("e61016901"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 62) },
         },
         64: {
             title: "1111Quad PLUS",
             description: "xe1.11M RP, xe111.11K PP, xe11.111K MP, x111.11 SP",
-            cost: new Decimal("e64250000"),
+            cost: new Decimal("e64250001"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 63) },
         },
         71: {
@@ -230,37 +230,37 @@ addLayer("rebirth", {
         15: {
             title: "Rebirthing Master",
             description: "+^0.025 RP, Rebirth Softcap is weaker",
-            cost: new Decimal("e5260250"),
+            cost: new Decimal("e5260251"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 14) },
         },
         25: {
             title: "Exponent Switcheroo",
             description: "-^0.03 BP, -^0.08 MP, +^0.12 PP **MP NERF DO NOT APPLY IF IN MASTERY CHALLENGE 2**",
-            cost: new Decimal("e5594600"),
+            cost: new Decimal("e5594601"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 15) },
         },
         35: {
             title: "Rebirth Exponent Decrease?",
             description: "-^0.15 RP, -^0.09 MP, Rebirth Supercap is stronger **NERFS DO NOT APPLY IF IN MASTERY CHALL 2**",
-            cost: new Decimal("e6238238"),
+            cost: new Decimal("e6238239"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 25) },
         },
         45: {
             title: "Most Insane Boost",
             description: "Rebirth Upgrade 'Booster' (Upgrade 21) is ^100,001 stronger!!",
-            cost: new Decimal("e6547000"),
+            cost: new Decimal("e6547001"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 35) },
         },
         55: {
             title: "Mega Back Again!",
             description: "Mega Points +^0.05",
-            cost: new Decimal("e6815150"),
+            cost: new Decimal("e6815151"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 45) },
         },
         65: {
             title: "Ending it off with a BANG of PF!",
             description: "PF xe12.5M, PF ^1.01",
-            cost: new Decimal("e65263850"),
+            cost: new Decimal("e65263851"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 64) },
         },
         75: {
@@ -308,37 +308,37 @@ addLayer("rebirth", {
     },
     milestones: {
         1: {
-            requirementDescription: "3 RP",
+            requirementDescription: "30 RP",
             effectDescription: "4 New Basic Point Upgrades",
-            done() { return player["rebirth"].points.gte(3) }
+            done() { return player["rebirth"].points.gte(30) }
         },
         2: {
-            requirementDescription: "20 RP",
+            requirementDescription: "200 RP",
             effectDescription: "Keep Row 1-3 Basic Point Upgrades",
-            done() { return player["rebirth"].points.gte(20) }
+            done() { return player["rebirth"].points.gte(200) }
         },
         3: {
-            requirementDescription: "60 RP",
+            requirementDescription: "600 RP",
             effectDescription: "Generate 100% of Basic Points a sec",
-            done() { return player["rebirth"].points.gte(60) }
+            done() { return player["rebirth"].points.gte(600) }
         },
         4: {
-            requirementDescription: "7,000 RP",
+            requirementDescription: "70,000 RP",
             effectDescription: "Keep Row 4 Basic Point Upgrades",
             unlocked() { return hasMilestone("rebirth", 2)},
-            done() { return player["rebirth"].points.gte(7000) }
+            done() { return player["rebirth"].points.gte(70000) }
         },
         5: {
-            requirementDescription: "5M RP",
+            requirementDescription: "50M RP",
             effectDescription: "Generate 10,000% of Basic Points a sec",
             unlocked() { return hasMilestone("rebirth", 3)},
-            done() { return player["rebirth"].points.gte(5000000) }
+            done() { return player["rebirth"].points.gte(50000000) }
         },
         6: {
-            requirementDescription: "10B RP",
+            requirementDescription: "100B RP",
             effectDescription: "4 MOAR BP Upgrades",
             unlocked() { return hasMilestone("rebirth", 5)},
-            done() { return player["rebirth"].points.gte(10000000000) }
+            done() { return player["rebirth"].points.gte(100000000000) }
         },
         7: {
             requirementDescription: "THE ELUSIVE 7TH MILESTONE [E88.88M RP]",
@@ -365,13 +365,13 @@ addLayer("rebirth", {
             },
         },
         10: {
-            requirementDescription: "Power Up Plus [MCS] - e242024 PF [Req Sac 10]",
+            requirementDescription: "Power Up Plus [MCS] - e242025 PF [Req Sac 10]",
             effectDescription: "^1.25 PF, +^0.25 MP",
             unlocked() {return hasMilestone("rebirth", 9) && inChallenge("m", 11) && hasMilestone("sac", 10)},
             done() {
                 if (inChallenge("m", 11)) {
                     if (hasMilestone("sac", 10)) {
-                        if (player["rebirth"].points.gte("2.4e242024")) {
+                        if (player["rebirth"].points.gte("2.4e242025")) {
                             return true
                         }
                     }
@@ -391,11 +391,11 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte("e16101e6") }
         },
         13: {
-            requirementDescription: "MC2S (Rebirth I) - e1,634,937,700 Rebirth Points",
+            requirementDescription: "MC2S (Rebirth I) - e1,634,937,701 Rebirth Points",
             effectDescription: "Back to basics - Basic Upgrade 2 and 3 is stronger. Yes. 2. 3.",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["rebirth"].points.gte("e1634937700")) {
+                    if (player["rebirth"].points.gte("e1634937701")) {
                         return true
                     }
                 }

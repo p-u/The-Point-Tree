@@ -20,36 +20,36 @@ addLayer("prestige", {
         11: {
             title: "You Prestiged! This is the first upgrade.",
             description: "x20 PF, x5 BP, x2 RP",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
         },
         12: {
             title: "Exponent",
             description: "+^0.01 BP, x10 PF, x1.75 RP",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
             unlocked() { return hasUpgrade("prestige", 11) },
         },
         13: {
             title: "Is it a lot?",
             description: "x10 RP, x100 PF",
-            cost: new Decimal(4),
+            cost: new Decimal(40),
             unlocked() { return hasUpgrade("prestige", 12) },
         },
         14: {
             title: "Is it a lot? (2)",
             description: "x10 RP, x1K PF",
-            cost: new Decimal(16),
+            cost: new Decimal(160),
             unlocked() { return hasUpgrade("prestige", 13) },
         },
         21: {
             title: "Can Rebirth Extend",
             description: "x25 RP, BP and PF. Unlock 2 new RP Upgrades.",
-            cost: new Decimal(90),
+            cost: new Decimal(900),
             unlocked() { return hasUpgrade("prestige", 14) },
         },
         22: {
             title: "Compounding IV",
             description: "Rebirth Points boosts itself.",
-            cost: new Decimal(8000),
+            cost: new Decimal(80000),
             unlocked() { return hasUpgrade("prestige", 21) },
             main() {
                 pu6exp = 0.05
@@ -83,13 +83,13 @@ addLayer("prestige", {
         23: {
             title: "10^^2",
             description: "x10^10 PF",
-            cost: new Decimal(20000),
+            cost: new Decimal(200000),
             unlocked() { return hasUpgrade("prestige", 22) },
         },
         24: {
             title: "Exponent+",
             description: "+^0.02 BP, ^1.02 PF",
-            cost: new Decimal(600000),
+            cost: new Decimal(6000000),
             unlocked() { return hasUpgrade("prestige", 23) },
         },
         31: {
@@ -101,91 +101,91 @@ addLayer("prestige", {
         32: {
             title: "The last Upgrade before the reset",
             description: "Basic Upgrade 10 is buffed, and +^0.01 RP, +^0.03 BP",
-            cost: new Decimal(1e9),
+            cost: new Decimal(10e9),
             unlocked() { return hasUpgrade("prestige", 31) },
         },
         33: {
             title: "Era 2",
             description: "x1e300 PF, x1e200 BP, x1e100 RP, x1e50 PP",
-            cost: new Decimal("1.46e446"),
+            cost: new Decimal("14.6e446"),
             unlocked() { return hasMilestone("mega", 10) && hasUpgrade("prestige", 32) },
         },
         34: {
             title: "The devil has awakened...",
             description: "x6.66e666 PF, x6.6e66 PP, x6e6 MP",
-            cost: new Decimal("6.66e666"),
+            cost: new Decimal("66.6e666"),
             unlocked() { return hasMilestone("mega", 10) && hasUpgrade("prestige", 33) },
         },
         41: {
             title: "ERA III",
             description: "For reaching e19,315 PP, you get x1e1,000 PP",
-            cost: new Decimal("1e19315"),
+            cost: new Decimal("10e19315"),
             unlocked() { return hasMilestone("sac", 13) && hasUpgrade("prestige", 34) },
         },
         42: {
             title: "Booster",
             description: "x1,000 Energy, Prestige Softcap is weaker",
-            cost: new Decimal("2e21202"),
+            cost: new Decimal("20e21202"),
             unlocked() { return hasMilestone("sac", 13) && hasUpgrade("prestige", 41) },
         },
         43: {
             title: "You know the drill.",
             description: "+^0.03 PP, +^0.01 Energy, Prestige Softcap is weaker",
-            cost: new Decimal("1e137405"),
+            cost: new Decimal("10e137405"),
             unlocked() { return hasMilestone("sac", 22) && hasUpgrade("prestige", 42) },
         },
         44: {
             title: "That's not a big boost.",
             description: "Prestige Softcap is weaker, ^1.0025 PF",
-            cost: new Decimal("1e143912"),
+            cost: new Decimal("10e143912"),
             unlocked() { return hasMilestone("sac", 22) && hasUpgrade("prestige", 43) },
         },
         51: {
             title: "MOAR PP",
             description: "+^0.02 PP, xe5K PP",
-            cost: new Decimal("e536430"),
+            cost: new Decimal("e536431"),
             unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 44) },
         },
         52: {
             title: "MOAR PF",
             description: "xe400K PF",
-            cost: new Decimal("e557923"),
+            cost: new Decimal("e557924"),
             unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 51) },
         },
         53: {
             title: "Softcapper",
             description: "PP Softcap is less",
-            cost: new Decimal("e576100"),
+            cost: new Decimal("e576101"),
             unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 52) },
         },
         54: {
             title: "PP Wow",
             description: "xe25K PP, /e500 MP",
-            cost: new Decimal("e581346"),
+            cost: new Decimal("e581347"),
             unlocked() { return hasMilestone("sac", 30) && hasUpgrade("prestige", 53) },
         },
         61: {
             title: "Prestige REP UPGS! [1]",
             description: "Formula: e(20M + (20M * RepUpgNo)) PF",
-            cost: new Decimal("e55367367"),
+            cost: new Decimal("e55367368"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 55) },
         },
         62: {
             title: "Prestige REP UPGS! [2]",
             description: "Formula: e(20M + (20M * RepUpgNo)) PF",
-            cost: new Decimal("e55880550"),
+            cost: new Decimal("e55880551"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 61) },
         },
         63: {
             title: "Prestige REP UPGS! [3]",
             description: "Formula: e(20M + (20M * RepUpgNo)) PF",
-            cost: new Decimal("e56906906"),
+            cost: new Decimal("e56906907"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 62) },
         },
         64: {
             title: "Prestige REP UPGS! [4]",
             description: "Formula: e(20M + (20M * RepUpgNo)) PF",
-            cost: new Decimal("e58448530"),
+            cost: new Decimal("e58448531"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 63) },
         },
         71: {
@@ -209,44 +209,44 @@ addLayer("prestige", {
         74: {
             title: "More sacrifices",
             description: "Reduce sac scaling by a bit",
-            cost: new Decimal("e461007277277"),
+            cost: new Decimal("e461007277278"),
             unlocked() { return hasUpgrade("era", 91) && hasUpgrade("prestige", 73) },
         },
 
         15: {
             title: "PP!",
             description: "xe100K PP",
-            cost: new Decimal("e1928250"),
+            cost: new Decimal("e1928251"),
             unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 14) },
         },
         25: {
             title: "PP Cap-Power",
             description: "PP Effect Softcap is weaker, PP +^0.02",
-            cost: new Decimal("e2092300"),
+            cost: new Decimal("e2092301"),
             unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 15) },
         },
         35: {
             title: "PP PF Power-Up",
             description: "PF ^1.015, PP +^0.05",
-            cost: new Decimal("e2155150"),
+            cost: new Decimal("e2155151"),
             unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 25) },
         },
         45: {
             title: "Advanced Layer Boost",
             description: "SP x3, Water x5, PP xe100K",
-            cost: new Decimal("e2366200"),
+            cost: new Decimal("e2366201"),
             unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 35) },
         },
         55: {
             title: "Progressively more UNSTABLE",
             description: "SP x10, Water x35, PF xe2.8M",
-            cost: new Decimal("e2547000"),
+            cost: new Decimal("e2547001"),
             unlocked() { return hasMilestone("sac", 34) && hasUpgrade("prestige", 45) },
         },
         65: {
             title: "Prestige REP UPGS! [5]",
             description: "Formula: e(20M + (20M * RepUpgNo)) PF",
-            cost: new Decimal("e60503303"),
+            cost: new Decimal("e60503304"),
             unlocked() { return hasMilestone("sac", 51) && hasUpgrade("prestige", 64) },
         },
         75: {
@@ -290,55 +290,55 @@ addLayer("prestige", {
     },
     milestones: {
         1: {
-            requirementDescription: "2 PP",
+            requirementDescription: "20 PP",
             effectDescription: "Generate 1,000,000% of Basic Points a second",
-            done() { return player["prestige"].points.gte(2) }
+            done() { return player["prestige"].points.gte(20) }
         },
         2: {
-            requirementDescription: "8 PP",
+            requirementDescription: "80 PP",
             effectDescription: "Keep Row 1-4 Basic Point Upgs on reset",
-            done() { return player["prestige"].points.gte(8) }
+            done() { return player["prestige"].points.gte(80) }
         },
         3: {
-            requirementDescription: "35 PP",
+            requirementDescription: "350 PP",
             effectDescription: "Keep Row 5 Basic Point Upgs on Reset",
-            done() { return player["prestige"].points.gte(35) }
+            done() { return player["prestige"].points.gte(350) }
         },
         4: {
-            requirementDescription: "900 PP",
+            requirementDescription: "9000 PP",
             effectDescription: "Generate 100% of Rebirth Points a second. Also x1,000 RP.",
-            done() { return player["prestige"].points.gte(900) }
+            done() { return player["prestige"].points.gte(9000) }
         },
         5: {
-            requirementDescription: "100K PP",
+            requirementDescription: "1M PP",
             effectDescription: "Keep Rebirth Milestones, Row 1 Rebirth Upgrades, Rebirth Upgrade 9, x100 PF",
-            done() { return player["prestige"].points.gte(100000) }
+            done() { return player["prestige"].points.gte(1000000) }
         },
         6: {
-            requirementDescription: "15,000,000 PP",
+            requirementDescription: "150,000,000 PP",
             effectDescription: "Generate 10,000% of Rebirth Points a second.",
             unlocked() { return hasMilestone("prestige", 4)},
-            done() { return player["prestige"].points.gte(15e6) }
+            done() { return player["prestige"].points.gte(150e6) }
         },
         7: {
-            requirementDescription: "250M PP",
+            requirementDescription: "2.5B PP",
             effectDescription: "Keep Row 2 Rebirth Upgrades and RU32",
             unlocked() { return hasMilestone("prestige", 6)},
-            done() { return player["prestige"].points.gte(250e6) }
+            done() { return player["prestige"].points.gte(2500e6) }
         },
         8: {
-            requirementDescription: "e10,175,850 PP",
+            requirementDescription: "e10,175,851 PP",
             effectDescription: "Prestige Supercap is weaker, PU24 is way stronger",
-            done() { return player["prestige"].points.gte("e10175850") },
+            done() { return player["prestige"].points.gte("e10175851") },
             unlocked() {return player["sac"].points.gte(64)},
         },
         9: {
-            requirementDescription: "e5563 PP [Mastery Challenge Specific] [Req Sac 10]",
+            requirementDescription: "e5564 PP [Mastery Challenge Specific] [Req Sac 10]",
             effectDescription: "Well well well... ^1.2 PF!!",
             done() {
                 if (inChallenge("m", 11)) {
                     if (hasMilestone("sac", 10)) {
-                        if (player.prestige.points.gte("e5563")) {
+                        if (player.prestige.points.gte("e5564")) {
                             return true
                         }
                     }
@@ -347,12 +347,12 @@ addLayer("prestige", {
             unlocked() {return inChallenge("m", 11) && hasMilestone("sac", 10)},
         },
         10: {
-            requirementDescription: "MC2S (Pres I) - e66,136,216 PP [Req Sac 17]",
+            requirementDescription: "MC2S (Pres I) - e66,136,197 PP [Req Sac 17]",
             effectDescription: "+^0.0628 PP, Sacrifice Scaling is weaker",
             done() {
                 if (inChallenge("m", 12)) {
                     if (hasMilestone("sac", 17)) {
-                        if (player.prestige.points.gte("e66136196")) {
+                        if (player.prestige.points.gte("e66136197")) {
                             return true
                         }
                     }

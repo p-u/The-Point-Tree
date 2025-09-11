@@ -115,24 +115,24 @@ addLayer("mega", {
         11: {
             title: "Mega upgrades come with MEGA boosts.",
             description: "x10B PF, x1K BP, x10 RP",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
         },
         12: {
             title: "How about another upgrade?",
             description: "x250 RP and x10M PF",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
             unlocked() { return hasUpgrade("mega", 11) },
         },
         13: {
             title: "Is it a pain to grind?",
             description: "^1.02 PF, +^0.01 RP",
-            cost: new Decimal(5),
+            cost: new Decimal(50),
             unlocked() { return hasUpgrade("mega", 12) },
         },
         14: {
             title: "Compounding V",
             description: "Prestige Points gets boosted based on itself.",
-            cost: new Decimal(450),
+            cost: new Decimal(4500),
             unlocked() { return hasUpgrade("mega", 13) },
             main() {
                 mu4exp = 0.055
@@ -169,31 +169,31 @@ addLayer("mega", {
         21: {
             title: "THE PRICE...",
             description: "x1e50 PF",
-            cost: new Decimal(35e6),
+            cost: new Decimal(350e6),
             unlocked() { return hasUpgrade("mega", 14) },
         },
         22: {
             title: "123 Exponent",
             description: "+^0.01 PP, +^0.02 RP, +^0.03 BP",
-            cost: new Decimal(150e6),
+            cost: new Decimal(1500e6),
             unlocked() { return hasUpgrade("mega", 21) },
         },
         23: {
             title: "Exponents",
             description: "^1.03 Point Fragments...",
-            cost: new Decimal(5e9),
+            cost: new Decimal(50e9),
             unlocked() { return hasUpgrade("mega", 22) },
         },
         24: {
             title: "'To' upgrades",
             description: "x1 Qi Rebirth Points to Point Fragments",
-            cost: new Decimal(1.2e12),
+            cost: new Decimal(12e12),
             unlocked() { return hasUpgrade("mega", 23) },
         },
         31: {
             title: "Mega is useful at achieving big numbers.",
             description: "Mega boosts point fragments heavily.",
-            cost: new Decimal(1e13),
+            cost: new Decimal(10e13),
             unlocked() { return hasUpgrade("mega", 24) },
             main() {
                 mu9exp = 8.5
@@ -235,31 +235,31 @@ addLayer("mega", {
         32: {
             title: "Exponents 2",
             description: "Point fragments ^1.025.",
-            cost: new Decimal(1.8e14),
+            cost: new Decimal(18e14),
             unlocked() { return hasUpgrade("mega", 31) },
         },
         33: {
             title: "Buyablility",
             description: "Unlock Mega Buyable 1! MU9 is also stronger.",
-            cost: new Decimal(3.5e17),
+            cost: new Decimal(35e17),
             unlocked() { return hasUpgrade("mega", 32) },
         },
         34: {
             title: "Strength Plus",
             description: "Buyables are 2 TIMES AS STRONG!",
-            cost: new Decimal(2e32),
+            cost: new Decimal(20e32),
             unlocked() { return hasUpgrade("mega", 33) },
         },
         41: {
             title: "Dub-Upgrade Boost",
             description: "Prestige upgrade 6 and mega upgrade 4 is boosted.",
-            cost: new Decimal(5e141),
+            cost: new Decimal(50e141),
             unlocked() { return hasMilestone("sac", 4) && hasUpgrade("mega", 34) },
         },
         42: {
             title: "Compounding VI",
             description: "Mega boosts itself, slightly",
-            cost: new Decimal(4.44e197),
+            cost: new Decimal(44.4e197),
             unlocked() { return hasMilestone("sac", 5) && hasUpgrade("mega", 41) },
             main() {
                 mbiupgexp = 0.0325
@@ -294,109 +294,109 @@ addLayer("mega", {
         43: {
             title: "Buyable Boost Boost",
             description: "Buyables are significantly stronger",
-            cost: new Decimal(1e247),
+            cost: new Decimal(10e247),
             unlocked() { return hasMilestone("sac", 6) && hasUpgrade("mega", 42) },
         },
         44: {
             title: "A trade-off?",
             description: "Mega Buyable 1 is 2x as strong!! but less mega point (only slightly)",
-            cost: new Decimal("5.49e549"),
+            cost: new Decimal("5.49e550"),
             unlocked() { return hasMilestone("sac", 8) && hasUpgrade("mega", 43) },
         },
         51: {
             title: "BuyableX",
             description: "8x Energy, Mega Buyables 1 and 2 are stronger.",
-            cost: new Decimal("2e1424"),
+            cost: new Decimal("2e1425"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 44) },
         },
         52: {
             title: "Increasing",
             description: "Mega Upgrade 14 is stronger.",
-            cost: new Decimal("5e1634"),
+            cost: new Decimal("50e1634"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 51) },
         },
         53: {
             title: "Energy Energy",
             description: "x50 Energy.",
-            cost: new Decimal("1e2032"),
+            cost: new Decimal("10e2032"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 52) },
         },
         54: {
             title: "MASSIVE BOOST",
             description: "x1e40K PF",
-            cost: new Decimal("1.11e11007"),
+            cost: new Decimal("11.1e11007"),
             unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 53) },
         },
         61: {
             title: "Mega Rep Upgrade 1",
             description: "Each Rep Upgrade gives xe4K to PF",
-            cost: new Decimal("1e11985"),
+            cost: new Decimal("10e11985"),
             unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 54) },
         },
         62: {
             title: "Mega Rep Upgrade 2",
             description: "Each Rep Upgrade gives xe4K to PF",
-            cost: new Decimal("1e12090"),
+            cost: new Decimal("10e12090"),
             unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 61) },
         },
         63: {
             title: "Mega Rep Upgrade 3",
             description: "Each Rep Upgrade gives xe4K to PF",
-            cost: new Decimal("1e12300"),
+            cost: new Decimal("10e12300"),
             unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 62) },
         },
         64: {
             title: "Mega Rep Upgrade 4",
             description: "Each Rep Upgrade gives xe4K to PF",
-            cost: new Decimal("1e12400"),
+            cost: new Decimal("10e12400"),
             unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 63) },
         },
         71: {
             title: "HYPER MASSIVE BOOST",
             description: "x1e180K PF",
-            cost: new Decimal("2.5e32835"),
+            cost: new Decimal("25e32835"),
             unlocked() { return hasUpgrade("mega", 64) },
         },
         72: {
             title: "Boost to Previous Upgrade",
             description: "Mega Upgrade 71 effect is ^1.8.",
-            cost: new Decimal("1e33509"),
+            cost: new Decimal("10e33509"),
             unlocked() { return hasMilestone("mega", 15) && hasUpgrade("mega", 71) },
         },
         73: {
             title: "Prestigating",
             description: "Mega Upgrade 71 boosts prestige by ^0.015925 (about there) of the PF boost.",
-            cost: new Decimal("1e33509"),
+            cost: new Decimal("10e33509"),
             unlocked() { return hasMilestone("mega", 15) && hasUpgrade("mega", 72) },
         },
         74: {
             title: "Boost again",
             description: "Mega Upgrade 71 effect is ^1.5.",
-            cost: new Decimal("2e34942"),
+            cost: new Decimal("20e34942"),
             unlocked() { return hasMilestone("mega", 15) && hasUpgrade("mega", 73) },
         },
         81: {
             title: "Oh, extension, huh?",
             description: "Mega softcap is weaker",
-            cost: new Decimal("e134408"),
+            cost: new Decimal("e134409"),
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 74) },
         },
         82: {
             title: "Buyables are way better",
             description: "All buyables are much better",
-            cost: new Decimal("e136435"),
+            cost: new Decimal("e136436"),
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 81) },
         },
         83: {
             title: "Some improvement",
             description: "^1.02 PP and MP, MP Softcap weaker",
-            cost: new Decimal("e140393"),
+            cost: new Decimal("e140394"),
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 82) },
         },
         84: {
             title: "Supreme Mega",
             description: "x200 SP, x200 Water, SP boosts MP",
-            cost: new Decimal("e155039"),
+            cost: new Decimal("e155040"),
             main() {
                 sprmegaexp = 400
                 if (hasUpgrade("s", 85)) sprmegaexp = 5000
@@ -450,7 +450,7 @@ addLayer("mega", {
         94: {
             title: "Alla Pow",
             description: "+^0.005 BP, RP, PP, MP, Energy, Water, SP and Mastery Points",
-            cost: new Decimal("e2806616616"),
+            cost: new Decimal("e2806616617"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 93) },
         },
 
@@ -459,13 +459,13 @@ addLayer("mega", {
         15: {
             title: "DS4 upgrades come with Dimensional boosts.",
             description: "xe50M PF, xe25M BP, xe10M RP",
-            cost: new Decimal("e3568310"),
+            cost: new Decimal("e3568311"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 14) },
         },
         25: {
             title: "Mega Points boosts Prestige Points.",
             description: "more!",
-            cost: new Decimal("e3698678"),
+            cost: new Decimal("e3698679"),
             main() {
                 ds4u2exp = 1
                 softcapDescriptionm25 = ""
@@ -487,37 +487,37 @@ addLayer("mega", {
         35: {
             title: "Exponents 2+",
             description: "^1.025 PF",
-            cost: new Decimal("e4041290"),
+            cost: new Decimal("e4041291"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 34) },
         },
         45: {
             title: "Softcap? No, I want big number!",
             description: "Softcap 'Compounding V' is way weaker (^0.4 to ^0.68)",
-            cost: new Decimal("e4218400"),
+            cost: new Decimal("e4218401"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 44) },
         },
         55: {
             title: "PPPP",
             description: "PP Plus Powerr",
-            cost: new Decimal("e4446544"),
+            cost: new Decimal("e4446545"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 54) },
         },
         65: {
             title: "Rep Overdrive",
             description: "^5000 Rep Upg Boosts (now up to e20Mx)",
-            cost: new Decimal("e5127520"),
+            cost: new Decimal("e5127521"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 64) },
         },
         75: {
             title: "Hyper Boost",
             description: "^200 MU71 Boost (now up to e97.2Mx, Pres xe1.548Mx)",
-            cost: new Decimal("e5363530"),
+            cost: new Decimal("e5363531"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 74) },
         },
         85: {
             title: "A new record!",
             description: "xe200M PF",
-            cost: new Decimal("e5810581"),
+            cost: new Decimal("e5810582"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 84) },
         },
         95: {
@@ -533,13 +533,13 @@ addLayer("mega", {
         101: {
             title: "Currency Boost [In order] 01: PF",
             description: "xe5 Qd PF",
-            cost: new Decimal("e619538393038500"),
+            cost: new Decimal("e619538393038501"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 95)},
         },
         102: {
             title: "Currency Boost [In order] 02: BP, RP",
             description: "xe20 Qd RP, xe50 Qd BP",
-            cost: new Decimal("e728939884744444"),
+            cost: new Decimal("e728939884744445"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 101) },
         },
         103: {
@@ -563,120 +563,120 @@ addLayer("mega", {
     },
     milestones: {
         1: {
-            requirementDescription: "2 MP",
-            effectDescription: "Generate 1B% of Basic Points a second AND 1M% of Rebirth Points a second",
-            done() { return player["mega"].points.gte(2) }
-        },
-        2: {
             requirementDescription: "20 MP",
-            effectDescription: "Keep Prestige Milestones and Prestige upgrade 21",
-            unlocked() { return hasMilestone("mega", 1)},
+            effectDescription: "Generate 1B% of Basic Points a second AND 1M% of Rebirth Points a second",
             done() { return player["mega"].points.gte(20) }
         },
+        2: {
+            requirementDescription: "200 MP",
+            effectDescription: "Keep Prestige Milestones and Prestige upgrade 21",
+            unlocked() { return hasMilestone("mega", 1)},
+            done() { return player["mega"].points.gte(200) }
+        },
         3: {
-            requirementDescription: "1,600 MP",
+            requirementDescription: "16,000 MP",
             effectDescription: "Get an extension to Basic Upgrades.",
             unlocked() { return hasMilestone("mega", 2)},
-            done() { return player["mega"].points.gte(1600) }
+            done() { return player["mega"].points.gte(16000) }
         },
         4: {
-            requirementDescription: "70,000 MP",
+            requirementDescription: "700,000 MP",
             effectDescription: "Gain 100% of Prestige Points every second and keep PU11-14.",
             unlocked() { return hasMilestone("mega", 3)},
-            done() { return player["mega"].points.gte(70000) }
+            done() { return player["mega"].points.gte(700000) }
         },
         5: {
-            requirementDescription: "8e8 MP",
+            requirementDescription: "8e9 MP",
             effectDescription: "Gain 5,000% of Prestige Points every second and keep PU21-24",
             unlocked() { return hasMilestone("mega", 3)},
-            done() { return player["mega"].points.gte(8e8) }
+            done() { return player["mega"].points.gte(8e9) }
         },
         6: {
-            requirementDescription: "1e10 MP",
+            requirementDescription: "1e11 MP",
             effectDescription: "Keep Row 6 Basic Upgs.",
             unlocked() { return hasMilestone("mega", 5)},
-            done() { return player["mega"].points.gte(1e10) }
+            done() { return player["mega"].points.gte(1e11) }
         },
         7: {
-            requirementDescription: "5e24 MP",
+            requirementDescription: "5e25 MP",
             effectDescription: "Extend Rebirth Upgrades and keep PU31 and PU32.",
             unlocked() { return hasMilestone("mega", 6)},
-            done() { return player["mega"].points.gte(5e24) }
+            done() { return player["mega"].points.gte(5e25) }
         },
         8: {
-            requirementDescription: "2e37 MP",
+            requirementDescription: "2e38 MP",
             effectDescription: "x1e111 Point Fragments.",
             unlocked() { return hasMilestone("mega", 7)},
-            done() { return player["mega"].points.gte(2e37) }
+            done() { return player["mega"].points.gte(2e38) }
         },
         9: {
-            requirementDescription: "1e43 MP",
+            requirementDescription: "1e44 MP",
             effectDescription: "Keep RU33 and RU34 on Reset",
             unlocked() { return hasMilestone("mega", 7)},
-            done() { return player["mega"].points.gte(1e43) }
+            done() { return player["mega"].points.gte(1e44) }
         },
         10: {
-            requirementDescription: "4e44 MP",
+            requirementDescription: "4e45 MP",
             effectDescription: "Extend Prestige Upgrades.",
             unlocked() { return hasMilestone("mega", 7)},
-            done() { return player["mega"].points.gte(4e44) }
+            done() { return player["mega"].points.gte(4e45) }
         },
         11: {
-            requirementDescription: "4e65 MP",
+            requirementDescription: "4e66 MP",
             effectDescription: "X2.9 Mega Points",
             unlocked() { return hasMilestone("mega", 10)},
-            done() { return player["mega"].points.gte(4e65) }
+            done() { return player["mega"].points.gte(4e66) }
         },
         12: {
-            requirementDescription: "1e110 MP",
+            requirementDescription: "1e111 MP",
             effectDescription: "Unlock the next reset layer!",
             unlocked() { return hasMilestone("mega", 11)},
-            done() { return player["mega"].points.gte(1e110) }
+            done() { return player["mega"].points.gte(1e111) }
         },
         13: {
-            requirementDescription: "4.74e474 MP",
+            requirementDescription: "4.74e475 MP",
             effectDescription: "Unlock the second mega buyable!",
-            unlocked() {return player["mega"].points.gte("2e17")},
-            done() { return player["mega"].points.gte("4.74e474") }
+            unlocked() {return player["mega"].points.gte("e200")},
+            done() { return player["mega"].points.gte("4.74e475") }
         },
         14: {
-            requirementDescription: "1e9065 MP",
+            requirementDescription: "1e9066 MP",
             effectDescription: "Unlock the third mega buyable!",
-            unlocked() {return player["mega"].points.gte("4.74e474")},
-            done() { return player["mega"].points.gte("1e9065") }
+            unlocked() {return player["mega"].points.gte("4.74e475")},
+            done() { return player["mega"].points.gte("1e9066") }
         },
         15: {
-            requirementDescription: "1e32835 MP",
+            requirementDescription: "1e32836 MP",
             effectDescription: "Unlock one more row of mega upgrades!",
             unlocked() {return player["sac"].points.gte(26)},
-            done() { return player["mega"].points.gte("1e32835") }
+            done() { return player["mega"].points.gte("1e32836") }
         },
         16: {
-            requirementDescription: "1e40000 MP",
+            requirementDescription: "1e40001 MP",
             effectDescription: "Keep that row of mega upgrades!",
-            unlocked() {return player["mega"].points.gte("1e32835")},
-            done() { return player["mega"].points.gte("1e40000") }
+            unlocked() {return player["mega"].points.gte("1e32836")},
+            done() { return player["mega"].points.gte("1e40001") }
         },
         17: {
             requirementDescription: "1e200K MP",
             effectDescription: "Keep 8th row of mega upgrades!",
             unlocked() {return player["sac"].points.gte(38)},
-            done() { return player["mega"].points.gte("1e200000") }
+            done() { return player["mega"].points.gte("1e200001") }
         },
         18: {
             requirementDescription: "e1105.39e3 MP",
             effectDescription: "+^0.07 MP, ^1.011 PF, xe11.0539M PF",
             unlocked() {return player["sac"].points.gte(64)},
-            done() { return player["mega"].points.gte("e1105390") }
+            done() { return player["mega"].points.gte("e1105391") }
         },
         19: {
-            requirementDescription: "mu31 [MCS Upg] - 9.78e978 MP [Req Sac 10]",
+            requirementDescription: "mu31 [MCS Upg] - 9.78e979 MP [Req Sac 10]",
             effectDescription: "MU31 is insanely strong!",
             unlocked() {return inChallenge("m", 11)  && hasMilestone("sac", 10)},
             done() {
                 if (inChallenge("m", 11)) {
                     if (hasMilestone("sac", 10)) {
-                        if (player["mega"].points.gte("9.78e978")) {
+                        if (player["mega"].points.gte("9.78e979")) {
                             return true
                         }
                     }
@@ -684,13 +684,13 @@ addLayer("mega", {
             },
         },
         20: {
-            requirementDescription: "[MCS] e1210 MP [Req Sac 10]",
+            requirementDescription: "[MCS] e1211 MP [Req Sac 10]",
             effectDescription: "+^0.3 MP",
             unlocked() {return inChallenge("m", 11) && hasMilestone("sac", 10) && hasMilestone("mega", 19)},
             done() {
                 if (inChallenge("m", 11)) {
                     if (hasMilestone("sac", 10)) {
-                            if (player["mega"].points.gte("e1210")) {
+                            if (player["mega"].points.gte("e1211")) {
                             return true
                         }
                     }
@@ -698,24 +698,24 @@ addLayer("mega", {
             },
         },
         21: {
-            requirementDescription: "Mastery Challenge 2 Specific - Sacrifice cost scaling is weaker (e6,768,455 MP)",
+            requirementDescription: "Mastery Challenge 2 Specific - Sacrifice cost scaling is weaker (e6,768,456 MP)",
             effectDescription: "[Down Arrow] Sac Cost Scaling",
             unlocked() {return inChallenge("m", 12)},
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["mega"].points.gte("e6768455")) {
+                    if (player["mega"].points.gte("e6768456")) {
                         return true
                     }
                 }
             },
         },
         22: {
-            requirementDescription: "Mastery Challenge 2 Specific - Final Upgrade. (e18,785,008 MP)",
+            requirementDescription: "Mastery Challenge 2 Specific - Final Upgrade. (e18,785,009 MP)",
             effectDescription: "^1.1 PF, Sac Scaling INCREASED (MAKE SURE YOU HAVE 31 SAC)",
             unlocked() {return inChallenge("m", 12)},
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["mega"].points.gte("e18785008")) {
+                    if (player["mega"].points.gte("e18785009")) {
                         return true
                     }
                 }
@@ -748,7 +748,7 @@ addLayer("mega", {
                     if (hasMilestone('sac', 26)) exp2 = 1.225
                 }
                 if (hasMilestone("era", 1)) exp2 = 1.225
-                return new Decimal(1e19).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+                return new Decimal(1e20).mul(Decimal.pow(1.3, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Point Fragments gain by x" + notationChooser(buyableEffect(this.layer, this.id))
@@ -799,7 +799,7 @@ addLayer("mega", {
                     if (hasMilestone('sac', 23)) exp2 = 1.5
                 }
                 if (hasMilestone("era", 1)) exp2 = 1.5
-                return new Decimal("1e474").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+                return new Decimal("1e475").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega" + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Mega Point gain by x" + notationChooser(buyableEffect(this.layer, this.id))
@@ -845,7 +845,7 @@ addLayer("mega", {
                 if (!(inChallenge('m', 12))) {
                     if (hasMilestone('sac', 23)) exp3 = 0.5
                 }
-                return new Decimal("1e6600").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(1 + exp3 , x))).floor()
+                return new Decimal("1e6601").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(1 + exp3 , x))).floor()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boosts Energy by x" + notationChooser(buyableEffect(this.layer, this.id))
@@ -883,7 +883,7 @@ addLayer("mega", {
             cost(x) {
                 exp2 = 4
                 if (hasUpgrade('e', 45)) exp2 = 3
-                return new Decimal("e23460000").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
+                return new Decimal("e23460001").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " mega points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: +^" + format(buyableEffect(this.layer, this.id)) + " Energy."

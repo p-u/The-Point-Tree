@@ -71,13 +71,13 @@ addLayer("basic", {
         11: {
             title: "The first upgrade!",
             description: "Doubles your point fragment gain.",
-            cost: new Decimal(1),
+            cost: new Decimal(10),
 
         },
         12: {
             title: "Boosting I",
             description: "Basic points boost point fragments.",
-            cost: new Decimal(3),
+            cost: new Decimal(30),
             main() {
                 expu2 = 0.35
                 if (hasUpgrade("basic", 62)) expu2 = 0.3575
@@ -121,7 +121,7 @@ addLayer("basic", {
         13: {
             title: "Boosting II",
             description: "Point Fragments boost basic points.",
-            cost: new Decimal(10),
+            cost: new Decimal(100),
             main() {
                 expu3 = 0.16
                 if (hasMilestone("rebirth", 13)) expu3 = 0.161616
@@ -156,13 +156,13 @@ addLayer("basic", {
         14: {
             title: "Double Boost",
             description: "Boost basic points and point fragments by 1.35x.",
-            cost: new Decimal(20),
+            cost: new Decimal(200),
             unlocked() { return hasUpgrade("basic", 13) },
         },
         21: {
             title: "Compounding",
             description: "Basic Points boosts itself.",
-            cost: new Decimal(50),
+            cost: new Decimal(500),
             main() {
                 expu5 = 0.175
                 if (inChallenge("sac", 12)) expu5 = 0.111
@@ -200,19 +200,19 @@ addLayer("basic", {
         22: {
             title: "Doubling",
             description: "Point Fragments are doubled again!",
-            cost: new Decimal(250),
+            cost: new Decimal(2500),
             unlocked() { return hasUpgrade("basic", 21) },
         },
         23: {
             title: "A boost",
             description: "Basic Points are multiplied by 1.39",
-            cost: new Decimal(600),
+            cost: new Decimal(6000),
             unlocked() { return hasUpgrade("basic", 22) },
         },
         24: {
             title: "Compounding II",
             description: "Point Fragments boosts itself",
-            cost: new Decimal(1000),
+            cost: new Decimal(10000),
             main() {
                 expu8 = 0.1625
                 if (inChallenge("sac", 12)) expu8 = 0
@@ -253,13 +253,13 @@ addLayer("basic", {
         31: {
             title: "Tripling!!",
             description: "Point fragments are TRIPLED!!",
-            cost: new Decimal(2500),
+            cost: new Decimal(25000),
             unlocked() { return hasUpgrade("basic", 24) },
         },
         32: {
             title: "Compounding III",
             description: "Point fragments boost itself, again, but less",
-            cost: new Decimal(10000),
+            cost: new Decimal(100000),
             main() {
                 expu10 = 0.055
                 if (hasUpgrade('rebirth', 31)) expu10 = 0.075
@@ -297,115 +297,115 @@ addLayer("basic", {
         33: {
             title: "Another boost",
             description: "Point fragments are multiplied by 2.5",
-            cost: new Decimal(28000),
+            cost: new Decimal(280000),
             unlocked() { return hasUpgrade("basic", 32) },
         },
         34: {
             title: "Not bad a boost",
             description: "The final upgrade before the next reset layer: X5 POINT FRAGMENTS!!",
-            cost: new Decimal(100000),
+            cost: new Decimal(1000000),
             unlocked() { return hasUpgrade("basic", 33) },
         },
         41: {
             title: "Tri-boost",
             description: "Rebirth Points x1.19, Basic Points x1.91, Point Fragments x9.11",
-            cost: new Decimal(150e6),
+            cost: new Decimal(150e7),
             unlocked() { return hasMilestone("rebirth", 1) && hasUpgrade("basic", 34)},
         },
         42: {
             title: "Moar-Boost",
             description: "Rebirth Points x1.277, Point Fragments x7.77",
-            cost: new Decimal(2e11),
+            cost: new Decimal(2e12),
             unlocked() { return hasUpgrade("basic", 41) },
         },
         43: {
             title: "EXPONENTS!",
             description: "Basic Points +^0.02, Point Fragments ^1.05",
-            cost: new Decimal(4e13),
+            cost: new Decimal(4e14),
             unlocked() { return hasUpgrade("basic", 42) },
         },
         44: {
             title: "Tri-boost II",
             description: "Rebirth Points x2, Basic Points x4, Point Fragments x10",
-            cost: new Decimal(1e21),
+            cost: new Decimal(1e22),
             unlocked() { return hasUpgrade("basic", 43) },
         },
         51: {
             title: "Big Boost",
             description: "Point Fragments x100",
-            cost: new Decimal(5e70),
+            cost: new Decimal(5e71),
             unlocked() { return hasMilestone("rebirth", 6) && hasUpgrade("basic", 44)},
         },
         52: {
             title: "Tri-boost III",
             description: "PF X100, RP X2.5, BP X10",
-            cost: new Decimal(1e75),
+            cost: new Decimal(1e76),
             unlocked() { return hasUpgrade("basic", 51) },
         },
         53: {
             title: "Exponent II",
             description: "PF X10K, BP +^0.02, RP +^0.005",
-            cost: new Decimal(1e85),
+            cost: new Decimal(1e86),
             unlocked() { return hasUpgrade("basic", 52) },
         },
         54: {
             title: "MEGA INSANE UPGRADE",
             description: "PF X1K, PF^1.04, BP X100, BP+^0.02, RP X5, RP+^0.005",
-            cost: new Decimal(1e105),
+            cost: new Decimal(1e106),
             unlocked() { return hasUpgrade("basic", 53) },
         },
         61: {
             title: "Already a lot",
             description: "Multiply point fragments by...1e25...",
-            cost: new Decimal("e3960"),
+            cost: new Decimal("e3961"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 54) },
         },
         62: {
             title: "Upgrade Boosting",
             description: "Basic Upgrade 2 is boosted.",
-            cost: new Decimal("e4545"),
+            cost: new Decimal("e4546"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 61) },
         },
         63: {
             title: "Mega Insane",
             description: "Mega Upgrade 4 is boosted.",
-            cost: new Decimal("e5680"),
+            cost: new Decimal("e5681"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 62) },
         },
         64: {
             title: "Quite a lot",
             description: "Point fragments x1e50",
-            cost: new Decimal("e6250"),
+            cost: new Decimal("e6251"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 63) },
         },
         71: {
             title: "How OP can the seventh row get?",
             description: "x7e777 Point Fragments, x7.77e7 Mega Points",
-            cost: new Decimal("e209209"),
+            cost: new Decimal("e209210"),
             unlocked() { return hasMilestone("sac", 7) && hasUpgrade("basic", 64) },
         },
         72: {
             title: "Well, INSANELY OP.",
             description: "^1.01 Point Fragments",
-            cost: new Decimal("e221550"),
+            cost: new Decimal("e221551"),
             unlocked() { return hasMilestone("sac", 7) && hasUpgrade("basic", 71) },
         },
         73: {
             title: "That's a bit too OP.",
             description: "Mega Upgrade 14 is stronger. xe500 Points.",
-            cost: new Decimal("e260000"),
+            cost: new Decimal("e260001"),
             unlocked() { return hasMilestone("sac", 7) && hasUpgrade("basic", 72) },
         },
         74: {
             title: "Now there is 28 basic upgrades.",
             description: "Mega Upgrade 14 is stronger, again!",
-            cost: new Decimal("e274525"),
+            cost: new Decimal("e274526"),
             unlocked() { return hasMilestone("sac", 7) && hasUpgrade("basic", 73) },
         },
         81: {
             title: "Basic Boost 1.",
             description: "Basic Points boosts Rebirth Points, by a little",
-            cost: new Decimal("e13610000"),
+            cost: new Decimal("e13610001"),
             main() {
                 bb1exp = 0.006
                 if (hasUpgrade('basic', 85)) bb1exp = 0.009
@@ -435,7 +435,7 @@ addLayer("basic", {
         82: {
             title: "Basic Boost 2.",
             description: "Basic Points boosts Prestige Points, by very little",
-            cost: new Decimal("e13842250"),
+            cost: new Decimal("e13842251"),
             main() {
                 bb2exp = 0.0004
                 if (hasUpgrade('basic', 85)) bb2exp = 0.0006
@@ -465,7 +465,7 @@ addLayer("basic", {
         83: {
             title: "Basic Boost 3.",
             description: "Basic Points boosts Mega Points, by very very little",
-            cost: new Decimal("e14019250"),
+            cost: new Decimal("e14019251"),
             main() {
                 bb3exp = 0.0000175
                 if (hasUpgrade('basic', 85)) bb3exp = 0.0000225
@@ -488,7 +488,7 @@ addLayer("basic", {
         84: {
             title: "Basic Boost 4.",
             description: "Basic Points boosts Energy, by insanely little",
-            cost: new Decimal("e14151000"),
+            cost: new Decimal("e14151001"),
             main() {
                 bb4exp = 0.0000007
                 if (hasUpgrade('basic', 85)) bb4exp = 0.00000088
@@ -517,25 +517,25 @@ addLayer("basic", {
         91: {
             title: "How OP can the 9TH ROW GET??",
             description: "xe9.99M PF, xe999.99K RP, xe99.99 Energy, x99.99 SP",
-            cost: new Decimal("e279004000"),
+            cost: new Decimal("e279004001"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 85) },
         },
         92: {
             title: "BExp Again",
             description: "+^0.025 BP",
-            cost: new Decimal("e291288888"),
+            cost: new Decimal("e291288889"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 91) },
         },
         93: {
             title: "PFExp Again",
             description: "^1.02 PF",
-            cost: new Decimal("e303272500"),
+            cost: new Decimal("e303272501"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 92) },
         },
         94: {
             title: "Multiplicative BP",
             description: "xe10M BP",
-            cost: new Decimal("e316648000"),
+            cost: new Decimal("e316648001"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 93) },
         },
         101: {
@@ -637,83 +637,83 @@ addLayer("basic", {
         15: {
             title: "Row 5 of the basic upgrades / BU:Supreme",
             description: "Woah, a new column! x1e10,000 PF",
-            cost: new Decimal("e2578500"),
+            cost: new Decimal("e2578501"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 74) },
         },
         25: {
             title: "Again",
             description: "x1e10,000 Basic Points",
-            cost: new Decimal("e2700750"),
+            cost: new Decimal("e2700751"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 15) },
         },
         35: {
             title: "Softcap change",
             description: "Rebirth Softcap is much weaker, but Prestige softcap is slightly stronger",
-            cost: new Decimal("e3094500"),
+            cost: new Decimal("e3094501"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 25) },
         },
         45: {
             title: "Sussy Upgrade",
             description: "Sussy Upgrade",
-            cost: new Decimal("e3628500"),
+            cost: new Decimal("e3628501"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 35) },
         },
         55: {
             title: "Many many things",
             description: "Rebirth Softcap is much weaker, x1e30K PF, Energy effect stronger, but -^0.03 Basic Exponent",
-            cost: new Decimal("e4261500"),
+            cost: new Decimal("e4261501"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 45) },
         },
         65: {
             title: "Softcap Change II",
             description: "Rebirth Supercap is much weaker, but Prestige softcap is much stronger",
-            cost: new Decimal("e4727500"),
+            cost: new Decimal("e4727501"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 55) },
         },
         75: {
             title: "An exponent! Finally!",
             description: "^1.005 PF.",
-            cost: new Decimal("e6810000"),
+            cost: new Decimal("e6810001"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 65) },
         },
         85: {
             title: "Basic Boost PLUS",
             description: "Basic Boost 1-4 is Stronger.",
-            cost: new Decimal("e22290000"),
+            cost: new Decimal("e22290001"),
             unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 84) },
         },
         95: {
             title: "Biggest PF BOOST!!",
             description: "xe18.2M PF",
-            cost: new Decimal("e322159400"),
+            cost: new Decimal("e322159401"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
         },
     },
     milestones: {
         1: {
-            requirementDescription: "It's never too late to have milestones. (BM1: e421,662,500 BP)",
+            requirementDescription: "It's never too late to have milestones. (BM1: e421,662,501 BP)",
             effectDescription: "^1.025 PF, +^0.025 BP",
-            done() { return player["basic"].points.gte("e421662500") },
+            done() { return player["basic"].points.gte("e421662501") },
             unlocked() {return player["sac"].points.gte(64) || hasMilestone("basic", 7)},
         },
         2: {
-            requirementDescription: "Wait... A new currency? (BM2: e1,886,230,000 PF)",
+            requirementDescription: "Wait... A new currency? (BM2: e1,886,230,001 PF)",
             effectDescription: "^1.02 PF, xe20M PF",
-            done() { return player.points.gte("e1886230000") },
+            done() { return player.points.gte("e1886230001") },
             unlocked() {return player["sac"].points.gte(64) || hasMilestone("basic", 7)},
         },
         3: {
-            requirementDescription: "Godly-Tier PF Mult (BM3: e2,282,415,000 PF)",
+            requirementDescription: "Godly-Tier PF Mult (BM3: e2,282,415,001 PF)",
             effectDescription: "xe30M PF",
-            done() { return player.points.gte("e2282415000") },
+            done() { return player.points.gte("e2282415001") },
             unlocked() {return hasMilestone("basic", 2) || hasMilestone("basic", 7)},
         },
         4: {
-            requirementDescription: "How do I even get this? [Mastery-Challenge-Specific] (Need e9081178 PF)",
+            requirementDescription: "How do I even get this? [Mastery-Challenge-Specific] (Need e9081179 PF)",
             effectDescription: "^1.05 PF",
             done() {
                 if (inChallenge("m", 11)) {
-                    if (player.points.gte("e9081178")) {
+                    if (player.points.gte("e9081179")) {
                         return true
                     }
                 }
@@ -721,12 +721,12 @@ addLayer("basic", {
             unlocked() {return inChallenge("m", 11)},
         },
         5: {
-            requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e11.78M PF)",
+            requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e11.78M+1 PF)",
             effectDescription: "^1.15 PF, x1K Energy",
             done() {
                 if (inChallenge("m", 11)) {
                     if (hasMilestone("sac", 10)) {
-                        if (player.points.gte("e11780000")) {
+                        if (player.points.gte("e11780001")) {
                             return true
                         }
                     }
@@ -741,11 +741,11 @@ addLayer("basic", {
             unlocked() {return player["sac"].points.gte(132) || hasMilestone("basic", 7)},
         },
         7: {
-            requirementDescription: "MC2S (Basic I) - e7,963,340,000 Basic Points",
+            requirementDescription: "MC2S (Basic I) - e7,963,340,001 Basic Points",
             effectDescription: "xe250M PF, Sacrifice Scaling weaker, Basic Milestone 1-4 is visible.",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["basic"].points.gte("e7963340000")) {
+                    if (player["basic"].points.gte("e7963340001")) {
                         return true
                     }
                 }

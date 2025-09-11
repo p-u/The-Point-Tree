@@ -176,7 +176,7 @@ addLayer("era", {
                 ["display-text",
                     function(){
                         let a = ""
-                        a = a + "You are gaining " + notationChooser((player.era.baseef.div(player.era.nerf).mul(player.era.multaftnerf))) + " Era Fragments a second. "
+                        a = a + "You are gaining " + notationChooser((player.era.baseef.div(player.era.nerf).mul(player.era.multaftnerf).div(5))) + " Era Fragments a second. "
                         a = a + "(Base EF: " + notationChooser((player.era.baseef)) + "), affected by stuff that boosts base EF, EF after nerf, and the slog of PF and EC. "
                         return a
                     }
@@ -3256,6 +3256,7 @@ addLayer("era", {
             if (hasUpgrade("m", 1122)) expinmc1 = new Decimal(0.16)
             if (hasUpgrade("m", 1133)) expinmc1 = new Decimal(0.18)
             if ((hasAchievement("a", 243)) && (inChallenge("m", 11))) gain = gain.pow(expinmc1)
+            gain = gain.div(10)
             
 
             // statements above this line
@@ -3307,7 +3308,7 @@ addLayer("era", {
             if (hasMilestone("sa", 36)) player.era.multaftnerf = player.era.multaftnerf.times(1.02)
             
             // final formula and adding
-            gainef = player.era.baseef.div(player.era.nerf).times(player.era.multaftnerf)
+            gainef = player.era.baseef.div(player.era.nerf).times(player.era.multaftnerf).div(5)
             gainef = gainef.times(diff)
             player.era.ef = player.era.ef.add(gainef)
             player.era.eftotal = player.era.eftotal.add(gainef)

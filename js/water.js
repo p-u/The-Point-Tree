@@ -12,7 +12,7 @@ addLayer("w", {
        return visible
     },
     passiveGeneration() {
-        if (hasMilestone('s', 5)) return 5
+        if (hasMilestone('s', 5)) return 0.5
         return 0
     },
     doReset(w) {
