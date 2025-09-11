@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82Hell",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
