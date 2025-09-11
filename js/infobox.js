@@ -245,13 +245,13 @@ addLayer("i", {
             unlocked() { return player.sac.points.gte(new Decimal("20"))}
         },
         mastrecenter: {
-            title: "meow",
-            body() { return "purrs" },
+            title: "my game",
+            body() { return "my rules" },
             unlocked() { return hasUpgrade('m', 11)}
         },
         mastrecenterpera: {
-            title: "woof",
-            body() { return "tweet" },
+            title: "understand",
+            body() { return "yes" },
             unlocked() { return hasMilestone('era', 3)}
         },
         cells: {
