@@ -535,7 +535,7 @@ addLayer("s", {
         92: {
             title: "Less Nerfs",
             description: "Rebirth and Prestige Softcap is weaker",
-            cost: new Decimal(1e1056),
+            cost: new Decimal(1e106),
             unlocked() { return hasUpgrade("s", 91) },
         },
         93: {
