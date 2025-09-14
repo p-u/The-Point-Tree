@@ -117,15 +117,15 @@ addLayer("rng", {
                 if (hasMilestone("rng", 11)) {
                     if (x > 1000) {
                         if (x > 2000) {
-                            return new Decimal(100).mul(Decimal.pow(-70+((0.001*x-0.9)*x), x.pow(x/2000))).floor()
+                            return new Decimal(10).mul(Decimal.pow(-70+((0.001*x-0.9)*x), x.pow(x/2000))).floor()
                         } else {
-                            return new Decimal(100).mul(Decimal.pow(-70+((0.001*x-0.9)*x), x)).floor()
+                            return new Decimal(10).mul(Decimal.pow(-70+((0.001*x-0.9)*x), x)).floor()
                         }
                     } else {
-                        return new Decimal(100).mul(Decimal.pow(2+(x/30), x)).floor()
+                        return new Decimal(10).mul(Decimal.pow(2+(x/30), x)).floor()
                     }
                 } else {
-                    return new Decimal(100).mul(Decimal.pow(2+(x/20), x)).floor()
+                    return new Decimal(10).mul(Decimal.pow(2+(x/20), x)).floor()
                 }
             },
             display() {
@@ -163,15 +163,15 @@ addLayer("rng", {
                 if (hasMilestone("rng", 11)) {
                     if (x > 1000) {
                         if (x > 2049) {
-                            return new Decimal(2000).mul(Decimal.pow(4*(x*(50+(2*x-4100))*(x/2050)*(x/2050)), x.pow((x/500)-3))).floor()
+                            return new Decimal(200).mul(Decimal.pow(4*(x*(50+(2*x-4100))*(x/2050)*(x/2050)), x.pow((x/500)-3))).floor()
                         } else {
-                            return new Decimal(2000).mul(Decimal.pow(4+(x/(41-(x*0.02))), x)).floor()
+                            return new Decimal(200).mul(Decimal.pow(4+(x/(41-(x*0.02))), x)).floor()
                         }
                     } else {
-                        return new Decimal(2000).mul(Decimal.pow(4+(x/20), x)).floor()
+                        return new Decimal(200).mul(Decimal.pow(4+(x/20), x)).floor()
                     }
                 } else {
-                    return new Decimal(200000).mul(Decimal.pow(5+(x/20), x)).floor()
+                    return new Decimal(20000).mul(Decimal.pow(5+(x/20), x)).floor()
                 }
             },
             display() {
@@ -209,15 +209,15 @@ addLayer("rng", {
                 if (hasMilestone("rng", 11)) {
                     if (x > 1000) {
                         if (x > 2000) {
-                            return new Decimal(5e20).mul(Decimal.pow((100+(250*x)+(10*x*x)+(x*x*x)+(0.05*x*x*x*x)), x.pow((x/1000)-1))).floor()
+                            return new Decimal(5e19).mul(Decimal.pow((100+(250*x)+(10*x*x)+(x*x*x)+(0.05*x*x*x*x)), x.pow((x/1000)-1))).floor()
                         } else {
-                            return new Decimal(5e20).mul(Decimal.pow((50+(50*x)+(2*x*x)+(0.025*x*x*x)), x)).floor()
+                            return new Decimal(5e19).mul(Decimal.pow((50+(50*x)+(2*x*x)+(0.025*x*x*x)), x)).floor()
                         }
                     } else {
-                        return new Decimal(5e20).mul(Decimal.pow((20+(10*x)+(0.8*x*x)), x)).floor()
+                        return new Decimal(5e19).mul(Decimal.pow((20+(10*x)+(0.8*x*x)), x)).floor()
                     }
                 } else {
-                    return new Decimal(5e20).mul(Decimal.pow((20+(20*x)+(2*x*x)), x)).floor()
+                    return new Decimal(5e19).mul(Decimal.pow((20+(20*x)+(2*x*x)), x)).floor()
                 }
             },
             display() {
@@ -252,12 +252,12 @@ addLayer("rng", {
             cost(x) {
                 if (x > 1000) {
                     if (x > 2000) {
-                        return new Decimal("1e481").mul(Decimal.pow(10+1*x+(0.05*(x/1000))*x*x, x*(x/1000)*(x/1000)*(x/1000)*(x/2000)*(x/2000)*(x/2000)*(x/2000))).floor()
+                        return new Decimal("1e480").mul(Decimal.pow(10+1*x+(0.05*(x/1000))*x*x, x*(x/1000)*(x/1000)*(x/1000)*(x/2000)*(x/2000)*(x/2000)*(x/2000))).floor()
                     } else {
-                        return new Decimal("1e481").mul(Decimal.pow(10+1*x+(0.05*(x/1000))*x*x, x*(x/1000)*(x/1000)*(x/1000))).floor()
+                        return new Decimal("1e480").mul(Decimal.pow(10+1*x+(0.05*(x/1000))*x*x, x*(x/1000)*(x/1000)*(x/1000))).floor()
                     }
                 } else {
-                    return new Decimal("1e481").mul(Decimal.pow(10+1*x+0.05*x*x, x)).floor()
+                    return new Decimal("1e480").mul(Decimal.pow(10+1*x+0.05*x*x, x)).floor()
                 }
             },
             display() {
