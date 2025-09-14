@@ -49,7 +49,8 @@ addLayer("rng", {
                     function(){
                         let a = ""
                         a = a + "You have " + notationChooser(player.rng.rngpts) + " RNG Points. You have to wait " + formatTime(player.rng.cd) + " to roll again. "
-                        a = a + "Your max RarityID is " + formatWhole(player.rng.maxidx)
+                        a = a + "Your max RarityID is " + formatWhole(player.rng.maxidx) + ", and"
+                        a = a + " your luck is x" + notationChooser(player.rng.luck)
                         return a
                     }
                 ],
