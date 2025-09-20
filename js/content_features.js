@@ -5,6 +5,7 @@ addLayer("cf", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
+        ngu: new Decimal(1),
     }},
     layerShown(){
         let visible = false
@@ -66,6 +67,9 @@ addLayer("cf", {
     tabFormat: {
         "Content Features": {
             content: [
+                ["display-text", function() { return "World Growth NGU: This number increases based on your playtime. Since you played " + formatTime(player.timePlayed) + ", your current number is " + player.cf.ngu}],
+                "blank",
+                "blank",
                 "milestones",
                 "blank",
                 "upgrades",
