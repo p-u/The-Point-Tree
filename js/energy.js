@@ -1628,11 +1628,10 @@ addLayer("en", {
             if (player.en.points.gte(10) && player.en.bleh == 0) {
                 player.en.bleh = player.timePlayed
             }
+        }
 
 
-
-
-            // ngu
+        // ngu
             if (player.timePlayed < 60) {
                 player.cf.ngu = new Decimal(player.timePlayed / 60)
             } else if (player.timePlayed < 600) {
@@ -1668,7 +1667,6 @@ addLayer("en", {
             } else{
                 player.cf.ngu = notationChooser(new Decimal(player.timePlayed / (11.75 - Math.log10(player.timePlayed) - Math.log10(player.timePlayed / 60000))).pow(new Decimal(player.timePlayed / (0.05 / Math.max(Math.log10(player.timePlayed / 4000)+1, 1))).pow(new Decimal(player.timePlayed / (50 / Math.max(Math.log10(player.timePlayed / 125000)+1, 0.8)))).pow(new Decimal(player.timePlayed / (50 / Math.max(2*(Math.log10(player.timePlayed / 10000)+1)-1, 1)))).pow(new Decimal(player.timePlayed / 5000)).pow(new Decimal(player.timePlayed / 1000)).pow(new Decimal(player.timePlayed / 1000)).pow(new Decimal(player.timePlayed / 5000)).pow(new Decimal(player.timePlayed / 50000)).pow(new Decimal(player.timePlayed / 1)).pow(new Decimal(player.timePlayed / 20)).pow(new Decimal(player.timePlayed / 4e6)).pow(new Decimal(player.timePlayed / 6e6)).pow(new Decimal(player.timePlayed / 1e7)).pow(new Decimal(player.timePlayed / 1.6e7)).pow(new Decimal(player.timePlayed / 2.5e7)).pow(new Decimal(player.timePlayed / 3.6e7))))
             }
-        }
     },
     layerShown(){return true}
 })
