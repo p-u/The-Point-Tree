@@ -1,20 +1,20 @@
 let modInfo = {
 	name: "The Point Tree",
-	id: "ThepointTreeRD82",
+	id: "ThepointTreeRD82BETATESTING",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 0.5,  // In hours
+	offlineLimit: 0,  // In hours
 	// remember to change to 0 in dev
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "3.6S",
+	num: "4.0beta",
 	name: "Another Era Currency",
 }
 
@@ -1026,6 +1026,8 @@ function getPointGen() {
 	if (hasUpgrade("era", 381)) gain = gain.times("e1e18")
 	if (hasUpgrade("era", 422)) gain = gain.times("e2.8e18")
 	if (hasUpgrade("era", 501)) gain = gain.times("e2.5e19")
+	if (hasUpgrade("e", 203)) gain = gain.times("e5e19")
+	if (hasUpgrade("e", 214)) gain = gain.times("e9e19")
 
 	// playtime milestone
 	if (hasMilestone("a", 4)) gain = gain.times(1.5)
@@ -1197,6 +1199,11 @@ function getPointGen() {
 	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);
+	if (inChallenge("m", 13)) {
+		gain = gain.pow(player.m.rngpower)
+		if (hasUpgrade("e", 203)) gain = gain.pow(1.01)
+	}
+	if (hasChallenge("m", 13)) gain = gain.pow(1.01)
 	return gain
 }
 
@@ -1265,7 +1272,11 @@ var displayThings = [
 		if ((player.points.gte("e1.36945307e25"))){
 			display = display + "If you write 1 number per year, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(1.36945307e25)) + " times the current universe age. That's a lot of time!"
 		}
-		return display
+		if (inChallenge("m", 13)) {
+			return display + "\n All points gain is raised to the rng power: ^" + format(player.m.rngpower) + "."
+		} else {
+			return display
+		}
 	},
 ]
 

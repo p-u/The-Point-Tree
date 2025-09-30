@@ -395,8 +395,7 @@ addLayer("w", {
         if (hasUpgrade('rebirth', 91)) mult = mult.times("e2.2e12")
         if (hasMilestone('sac', 114)) mult = mult.times("e5e13")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
-
-        
+        if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         if (hasAchievement('sa', 33)) mult = mult.times(1.2)
         return mult
     },

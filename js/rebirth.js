@@ -530,7 +530,7 @@ addLayer("rebirth", {
         // secret achievement
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
         if (hasAchievement('sa', 22)) mult = mult.times(1.25)
-
+        if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         if (hasMilestone("a", 7)) mult = mult.times(20)
         return mult
     },
@@ -570,6 +570,7 @@ addLayer("rebirth", {
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade("era", 462)) exp = exp.add(0.02)
         if (hasUpgrade("era", 493)) exp = exp.add(0.01)
+        if (hasUpgrade("e", 205)) exp = exp.add(0.1)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

@@ -980,6 +980,7 @@ addLayer("mega", {
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         if (hasAchievement('sa', 196)) mult = mult.times(100)
+        if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -1029,6 +1030,7 @@ addLayer("mega", {
         if (hasMilestone('sac', 117)) exp = exp.add(0.017)
         if (hasUpgrade('era', 391)) exp = exp.add(upgradeEffect('era', 391))
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
+        if (hasUpgrade("e", 211)) exp = exp.add(0.04)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

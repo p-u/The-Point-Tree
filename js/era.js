@@ -30,7 +30,7 @@ addLayer("era", {
     
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
-        if (hasAchievement("a", 243)) keep.push("milestones");
+        if (hasAchievement("a", 243) && (!(hasMilestone("era", 103)))) keep.push("milestones");
         if (hasAchievement("a", 243)) keep.push("upgrades");
         
     
@@ -262,7 +262,7 @@ addLayer("era", {
         },
         3: {
             requirementDescription: "Era Three: What more?",
-            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups",
+            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups, and unlock a new row of Secret Achievements along with RNG.",
             done() { return player["era"].points.gte(3) },
             unlocked() { return hasMilestone("era", 2) },
         },
@@ -276,6 +276,12 @@ addLayer("era", {
             requirementDescription: "EF Milestone 2 - Req 7,500 total EF",
             effectDescription: "Extend Water upgrades. Also, x1.2 EF after nerf. Unlock a new Supreme Buyable??",
             done() { return player.era.eftotal.gte(7500) },
+            unlocked() { return hasMilestone("era", 101) },
+        },
+        103: {
+            requirementDescription: "EF Milestone 3 - Req 100,000 total EF and 12,500 EF on hand",
+            effectDescription: "Unlock Mastery Challenge 3.",
+            done() { return (player.era.eftotal.gte(100000) && player.era.ef.gte(12500)) },
             unlocked() { return hasMilestone("era", 101) },
         },
     },
@@ -2568,7 +2574,7 @@ addLayer("era", {
             currencyLayer: "era",
             unlocked() {return hasUpgrade("era", 1013)},
             effect() {
-                return ((Decimal.max(player.era.ef.slog()-1, 0))/50)+1
+                return ((Decimal.max(player.era.ef.add(1).slog()-1, 0))/50)+1
             },
             effectDisplay() {
                 return "^" + notationChooser(upgradeEffect(this.layer, this.id))+" PF"
@@ -2586,7 +2592,7 @@ addLayer("era", {
             currencyLayer: "era",
             unlocked() {return hasUpgrade("era", 1014)},
             effect() {
-                return Decimal.max(player["era"].ef.log(5), 1)
+                return Decimal.max(player["era"].ef.add(1).log(5), 1)
             },
             effectDisplay() {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x EF" + softcapDescriptionef3
@@ -2690,7 +2696,7 @@ addLayer("era", {
             currencyLayer: "era",
             unlocked() {return hasUpgrade("era", 1033)},
             effect() {
-                return ((Decimal.max(player.era.ef.slog()-1, 0))/10)
+                return ((Decimal.max(player.era.ef.add(1).slog()-1, 0))/10)
             },
             effectDisplay() {
                 return "+^" + notationChooser(upgradeEffect(this.layer, this.id))+" SP and Water"
@@ -2771,7 +2777,7 @@ addLayer("era", {
             currencyLayer: "era",
             unlocked() {return (hasUpgrade("era", 1052))},
             effect() {
-                return Decimal.max(player.m.points.log10().div(50), 1)
+                return Decimal.max(player.m.points.add(1).log10().div(50), 1)
             },
             effectDisplay() {
                 return "x" + notationChooser(upgradeEffect(this.layer, this.id))+" EF"
@@ -3261,7 +3267,8 @@ addLayer("era", {
             // statements above this line
             player.era.ecg = gain
             gain = gain.times(diff)
-            player.era.ec = player.era.ec.add(gain)
+            if (inChallenge("m", 13)) gain = gain.pow(player.m.rngpower)
+            player.era.ec = player.era.ec.add(Decimal.max(gain, new Decimal("e100")))
 
 
 
@@ -3270,12 +3277,12 @@ addLayer("era", {
             player.era.baseef = new Decimal(Math.max(player.era.ec.slog(),1)).pow(new Decimal(Math.max(player.points.slog()-1,1)))
 
             // stuff that boosts base EF
-            if (hasUpgrade('era', 1011)) player.era.baseef = player.era.baseef.times(upgradeEffect('era', 1011))
-            if (hasUpgrade('era', 1021)) player.era.baseef = player.era.baseef.times(upgradeEffect('era', 1021))
-            if (hasUpgrade('era', 1024)) player.era.baseef = player.era.baseef.times(buyableEffect('era', 18))
-            if (hasUpgrade("w", 93)) player.era.baseef = player.era.baseef.times(upgradeEffect("w", 93))
+            if (hasUpgrade('era', 1011)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1011), 1))
+            if (hasUpgrade('era', 1021)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1021), 1))
+            if (hasUpgrade('era', 1024)) player.era.baseef = player.era.baseef.times(Decimal.max(buyableEffect('era', 18),1))
+            if (hasUpgrade("w", 93)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect("w", 93), 1))
             if (hasUpgrade("w", 94)) player.era.baseef = player.era.baseef.times(Math.max(player.era.ec.slog(),1))
-            if (hasUpgrade('era', 1053)) player.era.baseef = player.era.baseef.times(upgradeEffect('era', 1053))
+            if (hasUpgrade('era', 1053)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1053),1))
 
             if (hasUpgrade('era', 1041)) player.era.baseef = player.era.baseef.times(2)
             if (hasUpgrade('era', 1044)) player.era.baseef = player.era.baseef.times(2)
@@ -3286,13 +3293,17 @@ addLayer("era", {
                 if (player.era.baseef.lte(2000)) {
                     player.era.nerf = 1
                 } else {
-                    player.era.nerf = player.era.baseef.pow(0.4)
+                    if (player.era.baseef.lte(2000)) {
+                        player.era.nerf = player.era.baseef.pow(0.4)
+                    } else {
+                        player.era.nerf = player.era.baseef.pow(0.16)
+                    }
                 }
             } else {
                 if (player.era.baseef.lte(100)) {
-                    player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.div(5).log(2)), 1)
+                    player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.add(1).div(5).log(2)), 1)
                 } else {
-                    player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.div(5).log(2)), 1)
+                    player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.add(1).div(5).log(2)), 1)
                     if (player.era.nerf.lte(player.era.baseef.pow(0.4))) {
                         player.era.nerf = player.era.baseef.pow(0.4)
                     }
@@ -3305,12 +3316,26 @@ addLayer("era", {
             if (hasUpgrade('era', 1041)) player.era.multaftnerf = player.era.multaftnerf.times(1.2)
             if (hasMilestone('sac', 118)) player.era.multaftnerf = player.era.multaftnerf.times(1.19)
             if (hasMilestone("sa", 36)) player.era.multaftnerf = player.era.multaftnerf.times(1.02)
-            
+            if (hasChallenge("m", 13)) player.era.multaftnerf = player.era.multaftnerf.times(2)
+            if (hasAchievement("sa", 41)) player.era.multaftnerf = player.era.multaftnerf.times(1.02)
+            if (hasAchievement("sa", 42)) player.era.multaftnerf = player.era.multaftnerf.times(1.04)
+            if (hasAchievement("sa", 43)) player.era.multaftnerf = player.era.multaftnerf.times(1.03)
             // final formula and adding
             gainef = player.era.baseef.div(player.era.nerf).times(player.era.multaftnerf)
             gainef = gainef.times(diff)
+            if (inChallenge("m", 13)) gainef = gainef.mul(player.m.rngpower.mul(player.m.rngpower))
             player.era.ef = player.era.ef.add(gainef)
             player.era.eftotal = player.era.eftotal.add(gainef)
+            if ((player.era.ec.gte("e100") && inChallenge("m", 13))) {
+                player.era.ec = new Decimal("e100")
+            }
+            
         }
     },
+
+    canBuyMax(){
+        let buyMaxEra = false
+        if (hasAchievement('sa', 43)) buyMaxEra = true
+       return buyMaxEra
+     },
 })

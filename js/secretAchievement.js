@@ -312,6 +312,9 @@ addLayer("sa", {
                     return "=XReb (Reward: x1.25 RP)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 1)
+            }
         },
         23: {
             name: "e78,000 PF but... (find the catch)",
@@ -330,6 +333,9 @@ addLayer("sa", {
                     return "e78000 point fragments. (Reward: x1.2 MP)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 1)
+            }
         },
         24: {
             name: "It's just e250 higher. What's the big deal?",
@@ -368,6 +374,9 @@ addLayer("sa", {
                     return "Morse Code (Reward: x1.04 SP)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 30)
+            }
         },
         26: {
             name: "Something to do with DS3, well, we gotta wait and see",
@@ -386,6 +395,9 @@ addLayer("sa", {
                     return " (Reward: x1.05 SP)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 30)
+            }
         },
         31: {
             name: "I'm scared of this imminent thing. Let's not.",
@@ -407,6 +419,9 @@ addLayer("sa", {
                     return "(Reward: x1.05 Mastery Points)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 40)
+            }
         },
         32: {
             name: "Stall before Era Layer.",
@@ -428,11 +443,14 @@ addLayer("sa", {
                     return "It is also High Endgame in v2.5! (Reward: x1.04 Era Crystals)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 40)
+            }
         },
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e2.98e22")) {
+                   if (player.points.gte("e2.98e2200")) {
                        return true
                    }
                },
@@ -448,7 +466,7 @@ addLayer("sa", {
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e3.02e22")) {
+                   if (player.points.gte("e3.02e2200")) {
                        return true
                    }
                },
@@ -464,7 +482,7 @@ addLayer("sa", {
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e3.05e22")) {
+                   if (player.points.gte("e3.05e2200")) {
                        return true
                    }
                },
@@ -480,7 +498,7 @@ addLayer("sa", {
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e3.075e22")) {
+                   if (player.points.gte("e3.075e2200")) {
                        return true
                    }
                },
@@ -492,6 +510,126 @@ addLayer("sa", {
                     return "Reach Insanity True Endgame. (Reward: x1.15 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
             },
+        },
+        41: {
+            name: "Overload I",
+            done() {
+                if(inChallenge('m', 12)) {
+                    if (player.points.gte("ee20")) {
+                        return true
+                    }
+                }
+            },
+            tooltip() {
+                if (hasAchievement('sa', 41)) {
+                    return "Get ee20 Points in Mastery Challenge 2 (Reward: x1.02 Era Fragments AFTER NERF, x1.05 Era Crystals)"
+                }
+                else {
+                    return "Something x2 Mastery (Reward: x1.02 Era Fragments AFTER NERF, x1.05 Era Crystals)"
+                }
+            },
+            unlocked() {
+                return hasMilestone("era", 3)
+            }
+        },
+        42: {
+            name: "Overload II",
+            done() {
+                if(inChallenge('m', 13)) {
+                    if (player.m.rngpower.gte(0.616)) {
+                        return true
+                    }
+                }
+            },
+            tooltip() {
+                if (hasAchievement('sa', 42)) {
+                    return "Get 0.616 Exponent in Mastery Challenge 3 (Reward: x1.05 Era Fragments AFTER NERF)"
+                }
+                else {
+                    return "What more can I get? (Reward: x1.04 Era Fragments AFTER NERF, x1.1 Cell Softcap Delay)"
+                }
+            },
+            unlocked() {
+                return hasMilestone("era", 3)
+            }
+        },
+        43: {
+            name: "Can I just buy MAX eras?",
+            done() {
+                if(player.era.points.eq(0)) {
+                    if (player.points.gte("e2.4e22")) {
+                        return true
+                    }
+                }
+            },
+            tooltip() {
+                if (hasAchievement('sa', 43)) {
+                    return "Get e2.4e22 PF without any Eras (Reward: x1.03 Era Fragments AFTER NERF and unlock the ability to buy MAX Eras)"
+                }
+                else {
+                    return "no, i dont believe in getting era... (Reward: x1.03 Era Fragments AFTER NERF and unlock the ability to buy MAX Eras)"
+                }
+            },
+            unlocked() {
+                return hasMilestone("era", 3)
+            }
+        },
+        44: {
+            name: "[RNG SA-1] Rare... but not rare enough!",
+            done() {
+                 if(player.rng.maxidx >= 16) {
+                    return true
+                 }
+                },
+            tooltip() {
+                if (hasAchievement('sa', 44)) {
+                    return "Get Rare Rarity (ID16). (x1.02 Era Crystals)"
+                }
+                else {
+                    return "(x1.02 Era Crystals)"
+                }
+            },
+            unlocked() {
+                return hasMilestone("era", 3)
+            }
+        },
+        45: {
+            name: "[RNG SA-2] Karity",
+            done() {
+                 if(player.rng.maxidx >= 1000) {
+                    return true
+                 }
+                },
+            tooltip() {
+                if (hasAchievement('sa', 44)) {
+                    return "RarityID 1000. (x1.04 Era Crystals)"
+                }
+                else {
+                    return "(x1.04 Era Crystals)"
+                }
+            },
+            unlocked() {
+                return hasMilestone("era", 3)
+            }
+        },
+        46: {
+            name: "[RNG SA-3] Endarity",
+            done() {
+                 if(player.rng.maxidx >= 411400) {
+                    return true
+                 }
+                },
+            tooltip() {
+                if (hasAchievement('sa', 44)) {
+                    return "RarityID 411,400. (x1.07 Era Crystals, x1.02 Mastery Points)"
+                }
+                else {
+                    return "(x1.07 Era Crystals, x1.02 Mastery Points)"
+                }
+            },
+            unlocked() {
+                return hasMilestone("era", 3)
+            }
         },
         111: {
             name: "Reach the nice number",
@@ -1716,40 +1854,52 @@ addLayer("sa", {
                 if (player.sa.minigameNum.layer > 200000) dis = "Infinite Vast Void"
                 if (player.sa.minigameNum.layer > 1000000) dis = "Eternal Void"
                 if (player.sa.minigameNum.layer > 3e6) dis = "Eternal Vast Void"
-                if (player.sa.minigameNum.layer > 20e6) dis = "Infinite Eternal Void"
-                if (player.sa.minigameNum.layer > 500e6) dis = "Transcending Void"
-                if (player.sa.minigameNum.layer > 2e9) dis = "Transcending Vast Void"
-                if (player.sa.minigameNum.layer > 2e10) dis = "Transcending Infinite Void"
-                if (player.sa.minigameNum.layer > 1e12) dis = "Transcending Eternal Void"
-                if (player.sa.minigameNum.layer > 1e14) dis = "Transcending Infinite Eternal Void"
-                if (player.sa.minigameNum.layer > 1e16) dis = "Transcending Infinite Eternal Vast Void"
-                if (player.sa.minigameNum.layer > 1e20) dis = "Reality Void"
-                if (player.sa.minigameNum.layer > 1e21) dis = "Reality Vast Void"
-                if (player.sa.minigameNum.layer > 1e22) dis = "Reality Infinite Void"
-                if (player.sa.minigameNum.layer > 1e24) dis = "Reality Eternal Void"
-                if (player.sa.minigameNum.layer > 1e26) dis = "Reality Infinite Eternal Void"
-                if (player.sa.minigameNum.layer > 1e27) dis = "Reality Infinite Eternal Vast Void"
-                if (player.sa.minigameNum.layer > 1e30) dis = "Reality Transcending Void"
-                if (player.sa.minigameNum.layer > 1e31) dis = "Reality Transcending Vast Void"
-                if (player.sa.minigameNum.layer > 1e33) dis = "Reality Transcending Infinite Void"
-                if (player.sa.minigameNum.layer > 1e36) dis = "Reality Transcending Eternal Void"
-                if (player.sa.minigameNum.layer > 1e40) dis = "Reality Transcending Infinite Eternal Void"
-                if (player.sa.minigameNum.layer > 1e45) dis = "Reality Transcending Infinite Eternal Vast Void"
-                if (player.sa.minigameNum.layer > 1e50) dis = "Reality Transcending Infinite Eternal Endless Vast Void"
-                if (player.sa.minigameNum.layer > 1e60) dis = "RTIEEV Void [Tier I]"
-                if (player.sa.minigameNum.layer > 1e70) dis = "RTIEEV Void [Tier II]"
-                if (player.sa.minigameNum.layer > 1e80) dis = "RTIEEV Void [Tetr I]"
-                if (player.sa.minigameNum.layer > 1e90) dis = "RTIEEV Void [Tetr II]"
-                if (player.sa.minigameNum.layer > 1e100) dis = "RTIEEV Void [Tetr V]"
-                if (player.sa.minigameNum.layer > 1e120) dis = "RTIEEV Void [Pent I]"
-                if (player.sa.minigameNum.layer > 1e140) dis = "RTIEEV Void [Reb I]"
-                if (player.sa.minigameNum.layer > 1e160) dis = "RTIEEV Void [Pres I]"
-                if (player.sa.minigameNum.layer > 1e180) dis = "RTIEEV Void [Mega I]"
-                if (player.sa.minigameNum.layer > 1e200) dis = "RTIEEV Void [Supr I]"
-                if (player.sa.minigameNum.layer > 1e225) dis = "RTIEEV Void [Sac I]"
-                if (player.sa.minigameNum.layer > 1e250) dis = "RTIEEV Void [Era I]"
-                if (player.sa.minigameNum.layer > 1e275) dis = "RTIEEV Void [Era II]"
-                if (player.sa.minigameNum.layer > 1e300) dis = "RTIEEV Void [Era III]"
+                if (player.sa.minigameNum.layer > 10e6) dis = "Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 50e6) dis = "Transcending Void"
+                if (player.sa.minigameNum.layer > 300e6) dis = "Transcending Vast Void"
+                if (player.sa.minigameNum.layer > 2e9) dis = "Transcending Infinite Void"
+                if (player.sa.minigameNum.layer > 1e10) dis = "Transcending Eternal Void"
+                if (player.sa.minigameNum.layer > 1e12) dis = "Transcending Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 1e14) dis = "Transcending Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 1e16) dis = "Transcending Infinite Eternal Unlimited Vast Void"
+                if (player.sa.minigameNum.layer > 1e18) dis = "Reality Void"
+                if (player.sa.minigameNum.layer > 1e19) dis = "Reality Vast Void"
+                if (player.sa.minigameNum.layer > 1e21) dis = "Reality Infinite Void"
+                if (player.sa.minigameNum.layer > 1e23) dis = "Reality Eternal Void"
+                if (player.sa.minigameNum.layer > 1e25) dis = "Reality Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 1e26) dis = "Reality Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 1e28) dis = "Reality Transcending Void"
+                if (player.sa.minigameNum.layer > 1e29) dis = "Reality Transcending Vast Void"
+                if (player.sa.minigameNum.layer > 1e32) dis = "Reality Transcending Infinite Void"
+                if (player.sa.minigameNum.layer > 1e33) dis = "Reality Transcending Eternal Void"
+                if (player.sa.minigameNum.layer > 1e35) dis = "Reality Transcending Infinite Eternal Void"
+                if (player.sa.minigameNum.layer > 1e36) dis = "Reality Transcending Infinite Eternal Vast Void"
+                if (player.sa.minigameNum.layer > 1e39) dis = "Reality Transcending Infinite Eternal Endless Vast Void"
+                if (player.sa.minigameNum.layer > 1e42) dis = "Reality Transcending Infinite Eternal Endless Unlimited Vast Void"
+                if (player.sa.minigameNum.layer > 1e45) dis = "Beyond Reality Transcending Infinite Eternal Endless Unlimited Vast Void (BRTIEEUV Void)"
+                if (player.sa.minigameNum.layer > 1e48) dis = "Ultra BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e51) dis = "Supreme BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e55) dis = "Infinite BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e60) dis = "Transcending BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e65) dis = "Reality BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e70) dis = "Beyond Reality Transcending Infinite Eternal Supreme (BRTIES) BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e75) dis = "BRTIES^2 BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e82) dis = "BRTIES^5 BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e90) dis = "BRTIES^100 BRTIEEUV Void"
+                if (player.sa.minigameNum.layer > 1e100) dis = "BRTIES BRTIEEUV Void (Myriad-Stacked!)"
+                if (player.sa.minigameNum.layer > 1e110) dis = "BRTIES BRTIEEUV Void (Alpha-Stacked!)"
+                if (player.sa.minigameNum.layer > 1e120) dis = "BRTIES BRTIEEUV Void (Omega-Stacked!)"
+                if (player.sa.minigameNum.layer > 1e140) dis = "BRTIES BRTIEEUV Void (Infini-Stacked!)"
+                if (player.sa.minigameNum.layer > 1e150) dis = "BRTIES BRTIEEUV Void (Absolute Infini-Stacked!)"
+                if (player.sa.minigameNum.layer > 1e160) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!)"
+                if (player.sa.minigameNum.layer > 1e180) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [TIER II]"
+                if (player.sa.minigameNum.layer > 1e200) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [TETR II]"
+                if (player.sa.minigameNum.layer > 1e220) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [PENT II]"
+                if (player.sa.minigameNum.layer > 1e240) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [HYPR II]"
+                if (player.sa.minigameNum.layer > 1e260) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [SAC II]"
+                if (player.sa.minigameNum.layer > 1e280) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [ERA II]"
+                if (player.sa.minigameNum.layer > 1e300) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [ERA 100]"
+                if (player.sa.minigameNum.layer > 1e308) dis = "BRTIES BRTIEEUV Void (True Absolute Infini-Stacked!) [INFINITE-TIER]"
                 if (player.sa.minigameNum.lt(0)) dis = "negative?"
                 if (player.sa.minigameNum.lt("-1e10")) dis = "big negative"
                 if (player.sa.minigameNum.lt("-e100")) dis = "nega-megative"

@@ -202,9 +202,14 @@ addLayer("e", {
         if (hasUpgrade('era', 25)) mult = mult.times("e1e12")
         if (hasAchievement('a', 242)) mult = mult.times("e8.72e12")
         if (hasUpgrade('w', 91)) mult = mult.times("e1.5e15")
+        if (hasUpgrade('e', 205)) mult = mult.times("e1e15")
 
         // secret achievement
         if (hasAchievement('sa', 24)) mult = mult.times(1.1)
+        if (inChallenge("m", 13)) {
+            mult = mult.pow(player.m.rngpower)
+            if (hasUpgrade("e", 201)) mult.pow(1.03)
+        }
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -228,6 +233,7 @@ addLayer("e", {
         let expinmc1 = new Decimal(0.4)
         if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
         if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
+        if (hasUpgrade("e", 212)) exp = exp.add(0.05)
         return exp
     },
     upgrades: {
@@ -259,6 +265,7 @@ addLayer("e", {
                     if (hasMilestone('e', 9)) e4exp = 0.195
                     if (hasUpgrade('e', 15)) e4exp = 0.25
                     if (hasUpgrade("era", 131)) e4exp = 0.29
+                    if (hasUpgrade("e", 222)) e4exp = 0.87
                     softcapDescriptione14 = ""
                     sdsc = ""
                     scpow = 0.5
@@ -457,6 +464,7 @@ addLayer("e", {
                 main() {
                     e200EUExp = 0.125
                     if (hasUpgrade("era", 253)) e200EUExp = 0.133
+                    if (hasUpgrade("e", 221)) e200EUExp = 0.665
                     softcapDescriptione71 = ""
                     sdsc = ""
                     scpow = 0.75
@@ -767,6 +775,92 @@ addLayer("e", {
                 description: "xe700M PF",
                 cost: new Decimal("e118317"),
                 unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 75) },
+            },
+
+            // Mastery Challenge 3
+            201: {
+                title: "Mastery Challenge 3-EX Upgrades One",
+                description: "^1.03 Energy.",
+                cost: new Decimal("e9e13"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 155) },
+            },
+            202: {
+                title: "Mastery Challenge 3-EX Upgrades II",
+                description: "xe3e19 PP",
+                cost: new Decimal("e1.25e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 201) },
+            },
+            203: {
+                title: "Mastery Challenge 3-EX Upgrades 3",
+                description: "xe5e19 PF and ^1.01 PF",
+                cost: new Decimal("e2.25e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 202) },
+            },
+            204: {
+                title: "Mastery Challenge 3-EX Upgrades 四",
+                description: "Reduction of Power in MC3 is weaker",
+                cost: new Decimal("e2.4e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 203) },
+            },
+            205: {
+                title: "Mastery Challenge 3-EX Upgrades cinq",
+                description: "Multiply Energy by e1e15x. Also reduced Sac Scaling. +^0.1 RP.",
+                cost: new Decimal("e2.77e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 204) },
+            },
+            211: {
+                title: "Mastery Challenge 3-EX Upgrades 육",
+                description: "Well, it's time. Every upgrade now reduces the power by 0.5% only instead of 1.5%. Furthermore, +^0.04 MP. [Req 0.21 RNG Power for next Up.]",
+                cost: new Decimal("e5e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 205) },
+            },
+            212: {
+                title: "Mastery Challenge 3-EX Upgrades sieben",
+                description: "The great reset. Increase of power in MC3 is stronger. +^0.05 Energy.",
+                cost: new Decimal(0.1),
+                currencyDisplayName: "MC3 Exponent",
+                currencyInternalName: "rngpower",
+                currencyLayer: "m",
+                unlocked() {return inChallenge("m", 13) && hasUpgrade("e", 211) && player.m.rngpower.gte(0.21)},
+            },
+            213: {
+                title: "Mastery Challenge 3-EX Upgrades ocho",
+                description: "Back to basics. But OP now. +^0.075 Basic Points.",
+                cost: new Decimal("e6.5e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 212) },
+            },
+            214: {
+                title: "Mastery Challenge 3-EX Upgrades nove",
+                description: "xe9e19 PF. Reduce of power in MC3 is weaker.",
+                cost: new Decimal("e7.6e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 213) },
+            },
+            215: {
+                title: "Mastery Challenge 3-EX Upgrades X",
+                description: "A huge upgrade: Now, nett RNG is the max of 2 RNG Functions... (for Gain of Power only)",
+                cost: new Decimal("e8.5e14"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 214) },
+            },
+            221: {
+                title: "Mastery Challenge 3-EX Upgrades 1011",
+                description: "'Compounding 8' is five times stronger (^5 effect, not x5 effect).",
+                cost: new Decimal("e1.2e15"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 215) },
+            },
+            222: {
+                title: "Mastery Challenge 3-EX Upgrades C",
+                description: "'Compounding 7' is three times stronger, and the reduction of power is weaker. (Next upg, to unlock, req 0.42 MC3 Exponent)",
+                cost: new Decimal("e1.7e15"),
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) },
+            },
+            223: {
+                title: "Mastery Challenge 3-EX Upgrades 10",
+                description: "The final push...! Increase of power in MC3 is stronger. (Largest timewall in game)",
+                cost: new Decimal(0.2),
+                currencyDisplayName: "MC3 Exponent",
+                currencyInternalName: "rngpower",
+                currencyLayer: "m",
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) && player.m.rngpower.gte(0.42) },
             },
     },
     milestones: {

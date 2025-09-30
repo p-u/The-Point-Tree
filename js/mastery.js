@@ -7,6 +7,9 @@ addLayer("m", {
             unlocked: true,
 		    points: new Decimal(0),
             mpps: new Decimal(0),
+            rngpower: new Decimal(0.01),
+            totalUps: new Decimal(0),
+            lastUps: new Decimal(0),
         }
     },
     layerShown(){
@@ -622,6 +625,26 @@ addLayer("m", {
                 player.m.points = new Decimal(0)
             }
         },
+        13: {
+            name: "Mastery Challenge 3.",
+            challengeDescription() { 
+                let cd = "You have no control. (Its up to the RNGods). ALL CURRENCIES (EXCEPT SACRIFICE) ARE NERFED TO A POWER. The power increases slowly based on RNG, and ANY UPGRADES/MILESTONES/ERAS (EXCEPT CELL UPS/MS) GOTTEN DECREASES THE EXPONENT BY 1.5%. Also, EC is always at e100. (Expect longer upgrade times for this challenge). "
+                let ec = "You are recommended to enter this challenge to progress."
+                if ((challengeCompletions("m", 13) == 1)) ec = "You have the maximum amount of completions of this challenge."
+                cd = cd + ec + " You completed this challenge " + (challengeCompletions("m", 13)) + " time."
+                return cd
+            },
+            canComplete: function() {return player.points.gte("e4.5e21")},
+            goalDescription: "Get e4.5e21 PF",
+            rewardDescription: "Unlock more ups woohoo! ^2 Cell Softcap start, x2 EF after nerf, ^1.01 PF, Double RNG Points.",
+            unlocked() { return (hasMilestone("era", 103) || inChallenge("m", 13)) },
+            onEnter() {
+                player.m.points = new Decimal(0)
+            },
+            style() {return {
+                'width': '400px',
+            }},
+        },
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
@@ -672,6 +695,7 @@ addLayer("m", {
         if (hasAchievement('a', 245)) mult = mult.times(61)
         if (inChallenge("m", 11)) mult = mult.pow(buyableEffect('era', 111))
         player.m.mpps = mult
+        if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -689,4 +713,35 @@ addLayer("m", {
     },
     branches: ["s", "sac", "w"],
     row: 7, // Row the layer is in on the tree (0 is the first row)
+
+    update(diff) {
+        if (inChallenge("m", 13)) {
+            if (hasUpgrade("e", 212)) {
+                if (hasUpgrade("e", 215)) {
+                    if (hasUpgrade("e", 215)) {
+                        player.m.rngpower = player.m.rngpower.add(Math.max(Math.random(), Math.random()) / 4200 * diff * 30)
+                    } else {
+                        player.m.rngpower = player.m.rngpower.add(Math.max(Math.random(), Math.random()) / 5750 * diff * 30)
+                    }
+                } else {
+                    player.m.rngpower = player.m.rngpower.add(Math.random() / 5750 * diff * 30)
+                }
+            } else {
+                player.m.rngpower = player.m.rngpower.add(Math.random() / 7500 * diff * 30)
+            }
+            let nnerf = new Decimal(1250)
+            if (hasUpgrade("e", 204)) nnerf = new Decimal(1600)
+            if (hasUpgrade("e", 214)) nnerf = new Decimal(1800)
+            if (hasUpgrade("e", 222)) nnerf = new Decimal(1900)
+            player.m.rngpower = player.m.rngpower.sub(player.m.rngpower.div(nnerf).mul(30).mul(diff).mul(Math.random()))
+            player.m.totalUps = new Decimal((player.basic.upgrades + player.basic.milestones + player.rebirth.milestones + player.rebirth.upgrades + player.prestige.milestones + player.prestige.upgrades + player.mega.upgrades + player.mega.milestones + player.e.milestones + player.e.upgrades + player.w.milestones + player.w.upgrades + player.sac.milestones + player.era.upgrades + player.era.milestones + player.era.points + player.s.milestones + player.s.upgrades).length)
+            let differ = player.m.totalUps.sub(player.m.lastUps)
+            if (hasUpgrade("e", 211)) {
+                player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.005).pow(differ)))
+            } else {
+                player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.015).pow(differ)))
+            }
+            player.m.lastUps = player.m.totalUps
+        }
+    }
 })

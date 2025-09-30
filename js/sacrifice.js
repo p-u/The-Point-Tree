@@ -157,7 +157,7 @@ addLayer("sac", {
     milestones: {
         1: {
             requirementDescription: "The First Sacrifice",
-            effectDescription: "x1e100 Point Fragments, x1e15 Rebirth Points, x10 Mega Points.",
+            effectDescription: "x1e100 Point Fragments, x1e15 Rebirth Points, x10 Mega Points. Unlock 2 Secret Achievements.",
             done() { return player["sac"].points.gte(1) }
         },
         2: {
@@ -330,7 +330,7 @@ addLayer("sac", {
         },
         30: {
             requirementDescription: "Sacrifice 30",
-            effectDescription: "xe300K PF, ^1.01 PF, add 1 more row of Pres Upgs.",
+            effectDescription: "xe300K PF, ^1.01 PF, add 1 more row of Pres Upgs and 2 Secret Achievements.",
             unlocked() {return player["sac"].points.gte(29)},
             done() { return player["sac"].points.gte(30) }
         },
@@ -390,7 +390,7 @@ addLayer("sac", {
         },
         40: {
             requirementDescription: "Sacrifice 64",
-            effectDescription: "xe10M PF, Unlock many milestones.",
+            effectDescription: "xe10M PF, Unlock many milestones, including 2 Secret Achievements.",
             unlocked() {return player["sac"].points.gte(62)},
             done() { return player["sac"].points.gte(64) }
         },
@@ -1141,12 +1141,12 @@ addLayer("sac", {
         let exp = new Decimal(3.6)
         if (inChallenge('m', 12)) {
             exp = new Decimal(7)
-            if (hasMilestone('mega', 21)) exp = 6.5
-            if (hasMilestone('basic', 7)) exp = 6.1
-            if (hasMilestone('prestige', 10)) exp = 5.75
-            if (hasMilestone('s', 8)) exp = 5.5
-            if (hasMilestone("w", 4)) exp = 5.25
-            if (hasMilestone("mega", 22)) exp = 5.5
+            if (hasMilestone('mega', 21)) exp = new Decimal(6.5)
+            if (hasMilestone('basic', 7)) exp = new Decimal(6.1)
+            if (hasMilestone('prestige', 10)) exp = new Decimal(5.75)
+            if (hasMilestone('s', 8)) exp = new Decimal(5.5)
+            if (hasMilestone("w", 4)) exp = new Decimal(5.25)
+            if (hasMilestone("mega", 22)) exp = new Decimal(5.5)
         }
         if ((hasChallenge('m', 12)) && (!(hasMilestone("era", 2)))) exp = new Decimal(3.5)
         if (hasUpgrade('mega', 92)) exp = new Decimal(3.6)
@@ -1175,6 +1175,7 @@ addLayer("sac", {
         if (hasUpgrade("c", 54)) exp = exp.sub(0.0072)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         if (hasUpgrade("w", 92)) exp = exp.sub(0.01)
+        if (hasUpgrade("e", 205)) exp = exp.sub(0.02)
         if (player.points.gte("e100e9") && inChallenge("m", 12)) exp = new Decimal(100)
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

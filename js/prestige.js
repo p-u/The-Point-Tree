@@ -475,9 +475,10 @@ addLayer("prestige", {
         if (hasUpgrade('rebirth', 93)) mult = mult.times("e2.7e17")
         if (hasUpgrade('era', 494)) mult = mult.times("e7e18")
         if (hasUpgrade('era', 1022)) mult = mult.times("e3e18")
+        if (hasUpgrade('e', 202)) mult = mult.times("e3e19")
 
         if (hasMilestone("a", 7)) mult = mult.times(3)
-
+        if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

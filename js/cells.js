@@ -52,6 +52,7 @@ addLayer("c", {
         if(hasUpgrade("c", 43)) player.c.preBM = player.c.preBM.mul(1.5)
         if(hasUpgrade("c", 52)) player.c.preBM = player.c.preBM.mul(2)
         if (hasUpgrade("w", 93)) player.c.preBM = player.c.preBM.mul(4)
+        if (inChallenge("m", 13)) player.c.preBM = player.c.preBM.pow(player.m.rngpower)
 
         // softcap decrease
         if(hasUpgrade("c", 12)) player.c.scscale = new Decimal(1.3)
@@ -72,6 +73,8 @@ addLayer("c", {
         if (hasMilestone("c", 4)) player.c.softcapStart = new Decimal(80e6)
         if (buyableEffect('c', 13).gte(1)) player.c.softcapStart = player.c.softcapStart.mul(buyableEffect('c', 13))
         if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul(player.sac.points.pow(0.5))
+        if (hasAchievement("sa", 42)) player.c.softcapStart = player.c.softcapStart.mul(1.1)
+        if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
 
         // init
         player.c.replicateTime = player.c.preRT

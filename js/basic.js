@@ -841,6 +841,7 @@ addLayer("basic", {
         if (hasUpgrade('era', 373)) mult = mult.times("e8e18")
         if (hasUpgrade("rebirth", 92)) mult = mult.times("e1.9e19")
         if (hasUpgrade('era', 1022)) mult = mult.times("e2.5e20")
+        if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -876,6 +877,7 @@ addLayer("basic", {
         if (hasUpgrade('m', 132)) exp = exp.add(0.015)
         if (hasUpgrade("era", 434)) exp = exp.add(0.014)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
+        if (hasUpgrade("e", 213)) exp = exp.add(0.075)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
