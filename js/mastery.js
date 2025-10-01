@@ -628,7 +628,7 @@ addLayer("m", {
         13: {
             name: "Mastery Challenge 3.",
             challengeDescription() { 
-                let cd = "You have no control. (Its up to the RNGods). ALL CURRENCIES (EXCEPT SACRIFICE) ARE NERFED TO A POWER. The power increases slowly based on RNG, and ANY UPGRADES/MILESTONES/ERAS (EXCEPT CELL UPS/MS) GOTTEN DECREASES THE EXPONENT BY 1.5%. Also, EC is always at e100. (Expect longer upgrade times for this challenge). "
+                let cd = "You have no control. (Its up to the RNGods). ALL CURRENCIES (EXCEPT SACRIFICE) ARE NERFED TO A POWER. The power increases slowly based on RNG, and ANY UPGRADES/MILESTONES/ERAS (EXCEPT CELL UPS/MS) GOTTEN DECREASES THE EXPONENT BY 1.2%. Also, EC is always at e100. (Expect longer upgrade times for this challenge, 33min Estimated Challenge Duration). "
                 let ec = "You are recommended to enter this challenge to progress."
                 if ((challengeCompletions("m", 13) == 1)) ec = "You have the maximum amount of completions of this challenge."
                 cd = cd + ec + " You completed this challenge " + (challengeCompletions("m", 13)) + " time."
@@ -642,7 +642,7 @@ addLayer("m", {
                 player.m.points = new Decimal(0)
             },
             style() {return {
-                'width': '400px',
+                'width': '500px',
             }},
         },
     },
@@ -715,10 +715,13 @@ addLayer("m", {
     row: 7, // Row the layer is in on the tree (0 is the first row)
 
     update(diff) {
+        diff = Math.min(diff, 0.5)
         if (inChallenge("m", 13)) {
+            let gain = 7500
+            if (hasUpgrade("e", 202)) gain = 7300
             if (hasUpgrade("e", 212)) {
                 if (hasUpgrade("e", 215)) {
-                    if (hasUpgrade("e", 215)) {
+                    if (hasUpgrade("e", 223)) {
                         player.m.rngpower = player.m.rngpower.add(Math.max(Math.random(), Math.random()) / 4200 * diff * 30)
                     } else {
                         player.m.rngpower = player.m.rngpower.add(Math.max(Math.random(), Math.random()) / 5750 * diff * 30)
@@ -727,7 +730,7 @@ addLayer("m", {
                     player.m.rngpower = player.m.rngpower.add(Math.random() / 5750 * diff * 30)
                 }
             } else {
-                player.m.rngpower = player.m.rngpower.add(Math.random() / 7500 * diff * 30)
+                player.m.rngpower = player.m.rngpower.add(Math.random() / gain * diff * 30)
             }
             let nnerf = new Decimal(1250)
             if (hasUpgrade("e", 204)) nnerf = new Decimal(1600)
@@ -737,9 +740,9 @@ addLayer("m", {
             player.m.totalUps = new Decimal((player.basic.upgrades + player.basic.milestones + player.rebirth.milestones + player.rebirth.upgrades + player.prestige.milestones + player.prestige.upgrades + player.mega.upgrades + player.mega.milestones + player.e.milestones + player.e.upgrades + player.w.milestones + player.w.upgrades + player.sac.milestones + player.era.upgrades + player.era.milestones + player.era.points + player.s.milestones + player.s.upgrades).length)
             let differ = player.m.totalUps.sub(player.m.lastUps)
             if (hasUpgrade("e", 211)) {
-                player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.005).pow(differ)))
+                player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.004).pow(differ)))
             } else {
-                player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.015).pow(differ)))
+                player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.012).pow(differ)))
             }
             player.m.lastUps = player.m.totalUps
         }

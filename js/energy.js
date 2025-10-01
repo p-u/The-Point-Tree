@@ -781,7 +781,7 @@ addLayer("e", {
             201: {
                 title: "Mastery Challenge 3-EX Upgrades One",
                 description: "^1.03 Energy.",
-                cost: new Decimal("e9e13"),
+                cost: new Decimal("e8.8e13"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 155) },
             },
             202: {
@@ -792,25 +792,25 @@ addLayer("e", {
             },
             203: {
                 title: "Mastery Challenge 3-EX Upgrades 3",
-                description: "xe5e19 PF and ^1.01 PF",
-                cost: new Decimal("e2.25e14"),
+                description: "xe5e19 PF and ^1.01 PF. Increase of Power in MC3 is stronger.",
+                cost: new Decimal("e2.17e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 202) },
             },
             204: {
                 title: "Mastery Challenge 3-EX Upgrades 四",
                 description: "Reduction of Power in MC3 is weaker",
-                cost: new Decimal("e2.4e14"),
+                cost: new Decimal("e2.44e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 203) },
             },
             205: {
                 title: "Mastery Challenge 3-EX Upgrades cinq",
                 description: "Multiply Energy by e1e15x. Also reduced Sac Scaling. +^0.1 RP.",
-                cost: new Decimal("e2.77e14"),
+                cost: new Decimal("e3e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 204) },
             },
             211: {
                 title: "Mastery Challenge 3-EX Upgrades 육",
-                description: "Well, it's time. Every upgrade now reduces the power by 0.5% only instead of 1.5%. Furthermore, +^0.04 MP. [Req 0.21 RNG Power for next Up.]",
+                description: "Well, it's time. Every upgrade now reduces the power by 0.5% only instead of 1.5%. Furthermore, +^0.04 MP. [Req 0.218 RNG Power for next Up.]",
                 cost: new Decimal("e5e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 205) },
             },
@@ -821,18 +821,18 @@ addLayer("e", {
                 currencyDisplayName: "MC3 Exponent",
                 currencyInternalName: "rngpower",
                 currencyLayer: "m",
-                unlocked() {return inChallenge("m", 13) && hasUpgrade("e", 211) && player.m.rngpower.gte(0.21)},
+                unlocked() {return inChallenge("m", 13) && hasUpgrade("e", 211) && player.m.rngpower.gte(0.218)},
             },
             213: {
                 title: "Mastery Challenge 3-EX Upgrades ocho",
                 description: "Back to basics. But OP now. +^0.075 Basic Points.",
-                cost: new Decimal("e6.5e14"),
+                cost: new Decimal("e6.25e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 212) },
             },
             214: {
                 title: "Mastery Challenge 3-EX Upgrades nove",
                 description: "xe9e19 PF. Reduce of power in MC3 is weaker.",
-                cost: new Decimal("e7.6e14"),
+                cost: new Decimal("e7.25e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 213) },
             },
             215: {
@@ -849,7 +849,7 @@ addLayer("e", {
             },
             222: {
                 title: "Mastery Challenge 3-EX Upgrades C",
-                description: "'Compounding 7' is three times stronger, and the reduction of power is weaker. (Next upg, to unlock, req 0.42 MC3 Exponent)",
+                description: "'Compounding 7' is three times stronger, and the reduction of power is weaker. (Next upg, to unlock, req 0.421 MC3 Exponent)",
                 cost: new Decimal("e1.7e15"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) },
             },
@@ -860,7 +860,7 @@ addLayer("e", {
                 currencyDisplayName: "MC3 Exponent",
                 currencyInternalName: "rngpower",
                 currencyLayer: "m",
-                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) && player.m.rngpower.gte(0.42) },
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) && player.m.rngpower.gte(0.421) },
             },
     },
     milestones: {
