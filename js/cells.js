@@ -331,6 +331,22 @@ addLayer("c", {
             },
             unlocked() { return (hasUpgrade("c", 53)) },
         },
+        61: {
+            title: "Cellular Point",
+            description: "For every cell upgrade bought, ^e1.2e18 PF.",
+            cost: new Decimal(5e57),
+            effect() {
+                return new Decimal("e1.2e18").pow(player.c.upgrades.length)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade multiplies Point Fragments by x" + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: e1.2e18^CUps"
+            },
+            unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 54)) },
+        },
     },
     buyables: {
         11: {

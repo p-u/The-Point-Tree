@@ -714,6 +714,7 @@ function getPointGen() {
 	if (hasUpgrade('basic', 24)) gain = gain.times(upgradeEffect('basic', 24))
 	if (hasUpgrade('basic', 32)) gain = gain.times(upgradeEffect('basic', 32))
 	if (hasUpgrade('mega', 31)) gain = gain.times(upgradeEffect('mega', 31))
+	if (hasUpgrade('c', 61)) gain = gain.times(upgradeEffect('c', 61))
 
 	// buyable
 	if (hasUpgrade('era', 463) && gain.times(buyableEffect('era', 16)).gte(1000)) gain = gain.times(buyableEffect('era', 16))

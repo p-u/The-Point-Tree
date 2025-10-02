@@ -2504,8 +2504,21 @@ addLayer("era", {
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
             currencyLayer: "era",
-            branches: ['501'],
+            branches: ['501', '502'],
             unlocked() {return ((hasUpgrade("era", 492)) && (hasUpgrade("era", 493)) && (hasUpgrade("era", 494)) && (hasUpgrade("era", 495)))},
+        },
+        502: {
+            title: "Advanced ErUp 40: Era Phase 2 - Stage 2!",
+            description: "Good job on completing Mastery Challenge 3! Now, you unlock more Cell, standard Era Crystal, Era Fragment, and Mastery upgrades (the EF and Mastery upgrades have a longer shipping time from RANDIM™ Headquarters) Also, be prepared for DIMENSIONAL SHIFT 7 AND BASIC UPGRADE EXTENSION! For now, savour this x100 Era Crystal, x1.5 Cell Softcap Delay boost. Unlock new upgrades",
+            cost: new Decimal("2.5e709"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['501', '502'],
+            unlocked() {return ((hasUpgrade("era", 501)) && (hasChallenge("m", 13)) && (hasUpgrade("era", 494)) && (hasUpgrade("era", 495)))},
+            style() {return {
+                'width': '225px',
+            }},
         },
         1011: {
             title: "EFUp 1: Upgrade Compoundation",
@@ -3267,8 +3280,9 @@ addLayer("era", {
             // statements above this line
             player.era.ecg = gain
             gain = gain.times(diff)
-            if (inChallenge("m", 13)) gain = gain.pow(player.m.rngpower)
-            player.era.ec = player.era.ec.add(Decimal.max(gain, new Decimal("e100")))
+            if (inChallenge("m", 13)) { gain = gain.pow(player.m.rngpower)
+                player.era.ec = player.era.ec.add(Decimal.max(gain, new Decimal("e100")))
+            }
 
 
 
