@@ -3341,8 +3341,10 @@ addLayer("era", {
             gainef = player.era.baseef.div(player.era.nerf).times(player.era.multaftnerf)
             gainef = gainef.times(diff)
             if (inChallenge("m", 13)) gainef = gainef.mul(player.m.rngpower.mul(player.m.rngpower))
-            player.era.ef = player.era.ef.add(gainef)
-            player.era.eftotal = player.era.eftotal.add(gainef)
+            if (hasUpgrade("era", 501)) {
+                player.era.ef = player.era.ef.add(gainef)
+                player.era.eftotal = player.era.eftotal.add(gainef)
+            }
             if ((player.era.ec.gte("e100") && inChallenge("m", 13))) {
                 player.era.ec = new Decimal("e100")
             }
