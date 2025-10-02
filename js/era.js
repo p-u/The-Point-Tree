@@ -3280,8 +3280,11 @@ addLayer("era", {
             // statements above this line
             player.era.ecg = gain
             gain = gain.times(diff)
-            if (inChallenge("m", 13)) { gain = gain.pow(player.m.rngpower)
+            if (inChallenge("m", 13)) { 
+                gain = gain.pow(player.m.rngpower)
                 player.era.ec = player.era.ec.add(Decimal.max(gain, new Decimal("e100")))
+            } else {
+                player.era.ec = player.era.ec.add(gain)
             }
 
 
