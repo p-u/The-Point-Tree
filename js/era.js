@@ -14,6 +14,7 @@ addLayer("era", {
         nerf: new Decimal(1),
         nerfexponent: new Decimal(3),
         multaftnerf: new Decimal(1),
+        everythingpower: new Decimal(0),
     }},
     layerShown(){
         let visible = false
@@ -280,9 +281,15 @@ addLayer("era", {
         },
         103: {
             requirementDescription: "EF Milestone 3 - Req 100,000 total EF and 12,500 EF on hand",
-            effectDescription: "Unlock Mastery Challenge 3.",
+            effectDescription: "Unlock Mastery Challenge 3. Also, gain a small but significant boost of x2 EC.",
             done() { return (player.era.eftotal.gte(100000) && player.era.ef.gte(12500)) },
-            unlocked() { return hasMilestone("era", 101) },
+            unlocked() { return hasMilestone("era", 102) },
+        },
+        104: {
+            requirementDescription: "EF Milestone 4 - Req 150,000 total EF, 22 Cell Buyable 2s and 1.2e768 EC",
+            effectDescription: "tbc",
+            done() { return (player.era.eftotal.gte(150000) && player.c.buyables[12].gte(22) && player.era.ec.gte("1.2e768")) },
+            unlocked() { return hasMilestone("sac", 119) },
         },
     },
     upgrades: {
@@ -2509,7 +2516,7 @@ addLayer("era", {
         },
         502: {
             title: "Advanced ErUp 40: Era Phase 2 - Stage 2!",
-            description: "Good job on completing Mastery Challenge 3! Now, you unlock more Cell, standard Era Crystal, Era Fragment, and Mastery upgrades (the EF and Mastery upgrades have a longer shipping time from RANDIM™ Headquarters) Also, be prepared for DIMENSIONAL SHIFT 7 AND BASIC UPGRADE EXTENSION! For now, savour this x100 Era Crystal, x1.5 Cell Softcap Delay boost. Unlock new upgrades",
+            description: "Good job on completing Mastery Challenge 3! Now, you unlock more Cell, standard Era Crystal, Era Fragment, and Mastery upgrades (the EF and Mastery upgrades have a longer shipping time from RANDIM™ Headquarters) Also, be prepared for DIMENSIONAL SHIFT 7 AND BASIC UPGRADE EXTENSION! For now, savour this x1,000 Era Crystal, x1.8 Cell Softcap Delay boost. Unlock new upgrades",
             cost: new Decimal("2.5e709"),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
@@ -2520,6 +2527,31 @@ addLayer("era", {
                 'width': '225px',
             }},
         },
+        423: {
+            title: "Advanced ErUp 24X: 500-fold Cross Validation",
+            description: "You discovered that your algorithms could definitely boost ALOT by doing Cross-Validation. Unlock a new Power called Everything Power (EP) that ^s BP,RP,PP,MP,Energy,Water,SP,MaP,EC.",
+            cost: new Decimal("8e719"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['421', '422', '431', '432', '433'],
+            unlocked() {return hasUpgrade("era", 502)},
+            style() {return {
+                'width': '175px',
+            }},
+        },
+        13: {
+            title: "Advanced ErUp 1X: Lategame EC Boosts",
+            description: "x2 EC gain per Era Buyable 8 and 9 bought. +25% EF gain before nerf.",
+            cost: new Decimal("3e740"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['11', '12', '13', '21', '22', '23', '24', '25'],
+            unlocked() {return hasUpgrade("era", 502)},
+        },
+
+        // ERA FRAGS
         1011: {
             title: "EFUp 1: Upgrade Compoundation",
             description: "For every upgrade after 214 era upgrades, x1.2 EF base gain",
@@ -3247,9 +3279,12 @@ addLayer("era", {
             if(hasMilestone("sac", 112)) gain = gain.times(9)
             if(hasMilestone("sac", 113)) gain = gain.times(100)
             if(hasMilestone("sac", 114)) gain = gain.times(12.5)
+            if(hasMilestone("era", 103)) gain = gain.times(2)
             if (hasUpgrade("era", 1012)) gain = gain.times(1000)
+            if (hasUpgrade("era", 502)) gain = gain.times(1000)
             if (hasUpgrade('era', 1023)) gain = gain.times(1e10)
             if (hasUpgrade('era', 1044)) gain = gain.times(1e16)
+            if (hasUpgrade("era", 13)) gain = gain.times(new Decimal(2).pow(player.era.buyables[19].add(player.era.buyables[18])))
 
             // infinity
             if (player.era.ec.gte(new Decimal(2).pow(1024))) gain = gain.times(new Decimal(10).pow(player.era.infec))
@@ -3268,6 +3303,7 @@ addLayer("era", {
             if (hasUpgrade("era", 492)) gain = gain.pow(1.01)
             if (hasUpgrade("w", 94)) gain = gain.pow(1.04)
             if (hasUpgrade("era", 1042)) gain = gain.pow(1.02)
+            if (hasUpgrade("era", 423)) gain = gain.pow(player.era.everythingpower.add(1))
             if (hasUpgrade("era", 1052)) gain = gain.pow(upgradeEffect('era', 1052))
             let expinmc1 = new Decimal(0.1)
             if (hasUpgrade("m", 1111)) expinmc1 = new Decimal(0.12)
@@ -3303,6 +3339,7 @@ addLayer("era", {
 
             if (hasUpgrade('era', 1041)) player.era.baseef = player.era.baseef.times(2)
             if (hasUpgrade('era', 1044)) player.era.baseef = player.era.baseef.times(2)
+            if (hasUpgrade("era", 13)) player.era.baseef = player.era.baseef.times(1.25)
             
             // nerf, stuff that boosts mult after nerf and reduces nerf exponent
             if (hasUpgrade("era", 1043)) player.era.nerfexponent = new Decimal(2.9)
@@ -3350,6 +3387,11 @@ addLayer("era", {
             }
             
         }
+
+        // Everything Power
+        player.era.everythingpower = new Decimal(0)
+        if (hasUpgrade("era", 423)) player.era.everythingpower = player.era.everythingpower.add(0.00675)
+        if (hasMilestone("sac", 119)) player.era.everythingpower = player.era.everythingpower.add(new Decimal(player.sac.milestones.length).mul(0.0001))
     },
 
     canBuyMax(){

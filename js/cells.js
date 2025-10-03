@@ -52,6 +52,7 @@ addLayer("c", {
         if(hasUpgrade("c", 43)) player.c.preBM = player.c.preBM.mul(1.5)
         if(hasUpgrade("c", 52)) player.c.preBM = player.c.preBM.mul(2)
         if (hasUpgrade("w", 93)) player.c.preBM = player.c.preBM.mul(4)
+        if (hasUpgrade("c", 62)) player.c.preBM = player.c.preBM.mul(upgradeEffect("c", 62))
         if (inChallenge("m", 13)) player.c.preBM = player.c.preBM.pow(player.m.rngpower)
 
         // softcap decrease
@@ -74,6 +75,7 @@ addLayer("c", {
         if (buyableEffect('c', 13).gte(1)) player.c.softcapStart = player.c.softcapStart.mul(buyableEffect('c', 13))
         if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul(player.sac.points.pow(0.5))
         if (hasAchievement("sa", 42)) player.c.softcapStart = player.c.softcapStart.mul(1.1)
+        if (hasUpgrade("era", 502)) player.c.softcapStart = player.c.softcapStart.mul(1.8)
         if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
 
         // init
@@ -346,6 +348,22 @@ addLayer("c", {
                 return "Formula: e1.2e18^CUps"
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 54)) },
+        },
+        62: {
+            title: "Cellular Cell",
+            description: "For every cell upgrade bought, x1.1 Cell Base multiplier.",
+            cost: new Decimal(1e62),
+            effect() {
+                return new Decimal(1.1).pow(player.c.upgrades.length)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade multiplies Cell Base Mult by x" + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: 1.1^CUps"
+            },
+            unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 61)) },
         },
     },
     buyables: {

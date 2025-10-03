@@ -590,13 +590,13 @@ addLayer("s", {
             title: "More power...",
             description: "^1.012 PF",
             cost: new Decimal("5e1566058"),
-            unlocked() { return hasUpgrade("s", 111) && hasUpgrade("era", 52) },
+            unlocked() { return hasUpgrade("s", 112) && hasUpgrade("era", 52) },
         },
         114: {
             title: "More EC and a really huge amount of mult",
             description: "xe250B PF, x15 Era Crystals, unlock more Era Ups",
             cost: new Decimal("1e1727316"),
-            unlocked() { return hasUpgrade("s", 111) && hasUpgrade("era", 52) },
+            unlocked() { return hasUpgrade("s", 113) && hasUpgrade("era", 52) },
         },
 
         // ds6
@@ -1070,6 +1070,7 @@ addLayer("s", {
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
         if (hasUpgrade('era', 273)) exp = exp.add(0.125)
         if (hasUpgrade('era', 442)) exp = exp.add(0.15)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (hasUpgrade("era", 1034)) exp = exp.add(upgradeEffect("era", 1034))
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)

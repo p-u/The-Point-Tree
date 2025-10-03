@@ -409,6 +409,7 @@ addLayer("w", {
         if (hasUpgrade("era", 23)) exp = exp.add(0.05)
         if (hasUpgrade('w', 72)) exp = exp.add(0.1)
         if (hasUpgrade('s', 15)) exp = exp.add(0.08)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (hasUpgrade('era', 274)) exp = exp.add(0.09)
         if (hasUpgrade('w', 83)) exp = exp.add(0.1)
         if (hasMilestone('w', 5)) exp = exp.add(0.1)

@@ -230,6 +230,7 @@ addLayer("e", {
         if (hasUpgrade("era", 492)) exp = exp.add(0.038)
         if (hasUpgrade("w", 91)) exp = exp.add(0.05)
         if (hasUpgrade('era', 1042)) exp = exp.add(0.025)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         let expinmc1 = new Decimal(0.4)
         if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
         if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
@@ -738,43 +739,43 @@ addLayer("e", {
                 title: "Energy-PF ties",
                 description: "Energy Effect is stronger.",
                 cost: new Decimal("e73468"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 15) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 24) && hasUpgrade("e", 15) },
             },
             35: {
                 title: "More Energy!",
                 description: "xe250M PF, Unlock 1 new mega buyable",
                 cost: new Decimal("e75165"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 25) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 34) && hasUpgrade("e", 25) },
             },
             45: {
                 title: "Mega Buyable 4",
                 description: "Weaker cost scaling. ",
                 cost: new Decimal("e85877"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 35) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 44) && hasUpgrade("e", 35) },
             },
             55: {
                 title: "Normal things",
                 description: "xe250m pf. ",
                 cost: new Decimal("e87994"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 45) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 54) && hasUpgrade("e", 45) },
             },
             65: {
                 title: "Even More Energy",
                 description: "Water boosts energy more.",
                 cost: new Decimal("e104202"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 55) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 64) && hasUpgrade("e", 55) },
             },
             75: {
                 title: "A well-rounded boost.",
                 description: "PF ^1.02",
                 cost: new Decimal("e112691"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 65) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 74) && hasUpgrade("e", 65) },
             },
             85: {
                 title: "Crazy amount of PF",
                 description: "xe700M PF",
                 cost: new Decimal("e118317"),
-                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 75) },
+                unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 84) && hasUpgrade("e", 75) },
             },
 
             // Mastery Challenge 3
@@ -860,7 +861,7 @@ addLayer("e", {
                 currencyDisplayName: "MC3 Exponent",
                 currencyInternalName: "rngpower",
                 currencyLayer: "m",
-                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) && player.m.rngpower.gte(0.421) },
+                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 222) && player.m.rngpower.gte(0.421) },
             },
     },
     milestones: {
@@ -1068,6 +1069,8 @@ addLayer("e", {
     let cap = 0.4
     if (hasUpgrade("w", 91)) cap = 0.45
     softcappedEffect = softcap(eff, new Decimal("e7.5e17"), new Decimal(cap))
+    let spc = 0.6
+    softcappedEffect = softcap(softcappedEffect, new Decimal("e5e20"), new Decimal(spc))
     return softcappedEffect
        },
         effectDescription() {
@@ -1075,6 +1078,9 @@ addLayer("e", {
             let layerEffect = tmp[this.layer].effect
             if (layerEffect.gte(new Decimal("e7.5e17")) ) {
                 softcapDescription = " (Softcapped)"
+            }
+            if (layerEffect.gte(new Decimal("e5e20")) ) {
+                softcapDescription = " (Supercapped)"
             }
             let desc = "which is boosting Point Fragments by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;

@@ -637,7 +637,7 @@ addLayer("m", {
             canComplete: function() {return player.points.gte("e4.5e21")},
             goalDescription: "Get e4.5e21 PF",
             rewardDescription: "Unlock more ups woohoo! ^2 Cell Softcap start, x2 EF after nerf, ^1.01 PF, Double RNG Points.",
-            unlocked() { return (hasMilestone("era", 103) || inChallenge("m", 13)) },
+            unlocked() { return ((hasMilestone("era", 103) || inChallenge("m", 13)) && (!(hasChallenge('m', 13)))) },
             onEnter() {
                 player.m.points = new Decimal(0)
             },
@@ -701,6 +701,7 @@ addLayer("m", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         let expinmc1 = new Decimal(0.1)
         if (hasUpgrade("m", 1111)) expinmc1 = new Decimal(0.12)
         if (hasUpgrade("m", 1121)) expinmc1 = new Decimal(0.14)

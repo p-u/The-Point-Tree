@@ -571,6 +571,7 @@ addLayer("rebirth", {
         if (hasUpgrade("era", 462)) exp = exp.add(0.02)
         if (hasUpgrade("era", 493)) exp = exp.add(0.01)
         if (hasUpgrade("e", 205)) exp = exp.add(0.1)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

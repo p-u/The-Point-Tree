@@ -866,6 +866,12 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(1750000)},
             done() { return player["sac"].points.gte(1900000) }
         },
+        119: {
+            requirementDescription: "Sacrifice 2,000,000",
+            effectDescription: "Unlock a new Era Fragment Milestone. Every single Sacrifice Milestone increases Everything Power by 0.0001",
+            unlocked() {return player["sac"].points.gte(1965000)},
+            done() { return player["sac"].points.gte(2000000) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;

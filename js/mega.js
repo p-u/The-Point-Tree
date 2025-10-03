@@ -433,7 +433,7 @@ addLayer("mega", {
             title: "Ayy!! Extension!",
             description: "+^0.05 MP",
             cost: new Decimal("e1257288e3"),
-            unlocked() { return hasMilestone("sac", 71) },
+            unlocked() { return (hasMilestone("sac", 71) && hasUpgrade("mega", 85)) },
         },
         92: {
             title: "The Ultima-Tradeoff",
@@ -482,49 +482,49 @@ addLayer("mega", {
             tooltip() {
                 return "Formula: (Mega Points + 1)^"  + ds4u2exp + sdsc
             },
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 24) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 24) && hasUpgrade("mega", 15) },
         },
         35: {
             title: "Exponents 2+",
             description: "^1.025 PF",
             cost: new Decimal("e4041290"),
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 34) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 34) && hasUpgrade("mega", 25) },
         },
         45: {
             title: "Softcap? No, I want big number!",
             description: "Softcap 'Compounding V' is way weaker (^0.4 to ^0.68)",
             cost: new Decimal("e4218400"),
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 44) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 44) && hasUpgrade("mega", 35) },
         },
         55: {
             title: "PPPP",
             description: "PP Plus Powerr",
             cost: new Decimal("e4446544"),
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 54) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 54) && hasUpgrade("mega", 45) },
         },
         65: {
             title: "Rep Overdrive",
             description: "^5000 Rep Upg Boosts (now up to e20Mx)",
             cost: new Decimal("e5127520"),
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 64) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 64) && hasUpgrade("mega", 55) },
         },
         75: {
             title: "Hyper Boost",
             description: "^200 MU71 Boost (now up to e97.2Mx, Pres xe1.548Mx)",
             cost: new Decimal("e5363530"),
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 74) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 74) && hasUpgrade("mega", 65) },
         },
         85: {
             title: "A new record!",
             description: "xe200M PF",
             cost: new Decimal("e5810581"),
-            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 84) },
+            unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 84) && hasUpgrade("mega", 75) },
         },
         95: {
             title: "Astronomical Amount [Tier 10]",
             description: "xe15B PF",
             cost: new Decimal("e3196800e3"),
-            unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) },
+            unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) && hasUpgrade("mega", 85) },
         },
 
 
@@ -558,7 +558,7 @@ addLayer("mega", {
             title: "Currency Boost [In order] 05: Supreme, Water",
             description: "xe50B Supreme, xe10B Water",
             cost: new Decimal("e1.15989956146e15"),
-            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 103) },
+            unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 104) },
         },
     },
     milestones: {
@@ -1031,6 +1031,7 @@ addLayer("mega", {
         if (hasUpgrade('era', 391)) exp = exp.add(upgradeEffect('era', 391))
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade("e", 211)) exp = exp.add(0.04)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         return exp
     },

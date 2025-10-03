@@ -876,6 +876,7 @@ addLayer("basic", {
         if (hasUpgrade('m', 131)) exp = exp.add(0.0125)
         if (hasUpgrade('m', 132)) exp = exp.add(0.015)
         if (hasUpgrade("era", 434)) exp = exp.add(0.014)
+        if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)
         if (hasUpgrade("e", 213)) exp = exp.add(0.075)
         return exp
