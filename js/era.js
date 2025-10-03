@@ -2529,7 +2529,7 @@ addLayer("era", {
         },
         423: {
             title: "Advanced ErUp 24X: 500-fold Cross Validation",
-            description: "You discovered that your algorithms could definitely boost ALOT by doing Cross-Validation. Unlock a new Power called Everything Power (EP) that ^s BP,RP,PP,MP,Energy,Water,SP,MaP,EC.",
+            description: "You discovered that your algorithms could definitely boost ALOT by doing Cross-Validation. Unlock a new Power called Everything Power (EP) that ^s BP,RP,PP,MP,Energy,Water,SP,MaP,EC. +0.00675 EP.",
             cost: new Decimal("8e719"),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
