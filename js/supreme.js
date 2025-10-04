@@ -1053,6 +1053,7 @@ addLayer("s", {
         if (hasUpgrade('m', 121)) mult = mult.times("e1e12")
         if (hasUpgrade('era', 393)) mult = mult.times("e4.2e12")
         if (hasUpgrade("era", 441)) mult = mult.times("e3.1e13")
+        if (hasUpgrade('era', 443)) mult = mult.times(2)
 
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)

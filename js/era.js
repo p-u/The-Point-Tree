@@ -286,9 +286,9 @@ addLayer("era", {
             unlocked() { return hasMilestone("era", 102) },
         },
         104: {
-            requirementDescription: "EF Milestone 4 - Req 150,000 total EF, 22 Cell Buyable 2s and 1.2e768 EC",
-            effectDescription: "tbc",
-            done() { return (player.era.eftotal.gte(150000) && player.c.buyables[12].gte(22) && player.era.ec.gte("1.2e768")) },
+            requirementDescription: "EF Milestone 4 - Req 150,000 total EF, 22 Cell Buyable 2, Era Buyable 9s and 1.2e768 EC",
+            effectDescription: "For every Era Milestone, x1.15 EF before nerf, x1.25 Cell Softcap Delay, x10 EC, ^(1+Era Milestones/1000). Also unlock more Era Fragment upgrades at 25 Era Buyable 8s.",
+            done() { return (player.era.eftotal.gte(150000) && player.c.buyables[12].gte(22) && player.era.buyables[19].gte(22) && player.era.ec.gte("1.2e768")) },
             unlocked() { return hasMilestone("sac", 119) },
         },
     },
@@ -2550,6 +2550,16 @@ addLayer("era", {
             branches: ['11', '12', '13', '21', '22', '23', '24', '25'],
             unlocked() {return hasUpgrade("era", 502)},
         },
+        443: {
+            title: "Advanced ErUp 26X: Is this a joke?",
+            description: "x2 Supreme points gain.",
+            cost: new Decimal("4e783"),
+            currencyDisplayName: "Era Crystals",
+            currencyInternalName: "ec",
+            currencyLayer: "era",
+            branches: ['11', '12', '13', '21', '22', '23', '24', '25'],
+            unlocked() {return hasUpgrade("era", 502)},
+        },
 
         // ERA FRAGS
         1011: {
@@ -2839,6 +2849,15 @@ addLayer("era", {
             currencyInternalName: "ef",
             currencyLayer: "era",
             unlocked() {return (hasUpgrade("era", 1053))},
+        },
+        1061: {
+            title: "EFUp 21: Colossal Cost...",
+            description: "Era Buyable 8 is stronger. Era amount boosts EF gain by x1.5 gain per (before nerf).",
+            cost: new Decimal(70000),
+            currencyDisplayName: "Era Fragments",
+            currencyInternalName: "ef",
+            currencyLayer: "era",
+            unlocked() {return (hasMilestone("era", 104) && player.era.buyables[18].gte(25))},
         },
     },
     buyables: {
@@ -3284,7 +3303,9 @@ addLayer("era", {
             if (hasUpgrade("era", 502)) gain = gain.times(1000)
             if (hasUpgrade('era', 1023)) gain = gain.times(1e10)
             if (hasUpgrade('era', 1044)) gain = gain.times(1e16)
+            if (hasAchievement('a', 273)) gain = gain.times(22)
             if (hasUpgrade("era", 13)) gain = gain.times(new Decimal(2).pow(player.era.buyables[19].add(player.era.buyables[18])))
+            if (hasMilestone("era", 104)) gain = gain.times(new Decimal(10).pow(player.era.milestones.length))
 
             // infinity
             if (player.era.ec.gte(new Decimal(2).pow(1024))) gain = gain.times(new Decimal(10).pow(player.era.infec))
@@ -3340,6 +3361,8 @@ addLayer("era", {
             if (hasUpgrade('era', 1041)) player.era.baseef = player.era.baseef.times(2)
             if (hasUpgrade('era', 1044)) player.era.baseef = player.era.baseef.times(2)
             if (hasUpgrade("era", 13)) player.era.baseef = player.era.baseef.times(1.25)
+            if (hasUpgrade("era", 1061)) player.era.baseef = player.era.baseef.times(new Decimal(1.5).pow(player.era.points))
+            if (hasMilestone("era", 104)) player.era.baseef = player.era.baseef.times(new Decimal(1.15).pow(player.era.milestones.length))
             
             // nerf, stuff that boosts mult after nerf and reduces nerf exponent
             if (hasUpgrade("era", 1043)) player.era.nerfexponent = new Decimal(2.9)

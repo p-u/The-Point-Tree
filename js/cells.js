@@ -76,6 +76,8 @@ addLayer("c", {
         if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul(player.sac.points.pow(0.5))
         if (hasAchievement("sa", 42)) player.c.softcapStart = player.c.softcapStart.mul(1.1)
         if (hasUpgrade("era", 502)) player.c.softcapStart = player.c.softcapStart.mul(1.8)
+        if (hasMilestone("c", 6)) player.c.softcapStart = player.c.softcapStart.mul(player.c.points.pow(0.05))
+        if (hasMilestone("era", 104)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.25).pow(player.era.milestones.length))
         if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
 
         // init
@@ -196,6 +198,12 @@ addLayer("c", {
             effectDescription: "Cell softcap starts (Sac^0.5)x later",
             unlocked() { return hasMilestone("c", 4)},
             done() { return player.c.points.gte(new Decimal(1e42)) },
+        },
+        6: {
+            requirementDescription: "Cell Milestone 5 (2.5e70 Cells: Tier 1.7)",
+            effectDescription: "Cell softcap starts (Cells^0.05)x later",
+            unlocked() { return hasMilestone("c", 5)},
+            done() { return player.c.points.gte(new Decimal(2.5e70)) },
         },
     },
     upgrades: {

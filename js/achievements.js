@@ -1371,6 +1371,12 @@ addLayer("a", {
             tooltip: "Is gambling fun? [Omniversal Rarity]",
             unlocked() { return hasAchievement("a", 264) },
         },
+        273: {
+            name: "e3.69e22 PF",
+            done() { return player.points.gte(new Decimal("e3.69e22")) },
+            tooltip: "Get e3.69e22 PF. Reward: xee20 PF, x22 EC",
+            unlocked() { return hasAchievement("a", 242) },
+        },
     tabFormat: [
         "blank", 
         ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-2) }], 
