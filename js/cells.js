@@ -436,6 +436,9 @@ addLayer("c", {
                 if (hasUpgrade("c", 23)) exp2 = 1.1
                 return new Decimal(1e11).mul(Decimal.pow(1.12, (x))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
             },
+            unlocked() {
+                return hasMilestone("c", 1)
+            },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: " + format(buyableEffect(this.layer, this.id)) + "x later softcap."
             },
