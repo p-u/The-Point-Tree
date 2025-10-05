@@ -21,12 +21,14 @@ function getStartOptions() {
 }
 
 function changeNotation() {
-	if (options.notation === 'default') { 
+	if (options.notation === 'default2') { 
 		options.notation = 'infinity'
 	} else if (options.notation === 'infinity'){ 
 		options.notation = 'standard'
-	} else {
+	} else if (options.notation === 'standard'){ 
 		options.notation = 'default'
+	} else {
+		options.notation = 'default2'
 	}
 }
 

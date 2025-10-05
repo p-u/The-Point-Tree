@@ -2536,6 +2536,15 @@ addLayer("era", {
             currencyLayer: "era",
             branches: ['421', '422', '431', '432', '433'],
             unlocked() {return hasUpgrade("era", 502)},
+            effect() {
+                return player.era.everythingpower
+            },
+            effectDisplay() {
+                return "Total EP: " + notationChooser(upgradeEffect(this.layer, this.id))+"."
+            },
+            tooltip() {
+                return "Formula: combination of all EP boosts"
+            },
             style() {return {
                 'width': '175px',
             }},
@@ -2548,6 +2557,15 @@ addLayer("era", {
             currencyInternalName: "ec",
             currencyLayer: "era",
             branches: ['11', '12', '13', '21', '22', '23', '24', '25'],
+            effect() {
+                return new Decimal(2).pow(player.era.buyables[19].add(player.era.buyables[18]))
+            },
+            effectDisplay() {
+                return "x" + notationChooser(upgradeEffect(this.layer, this.id))+" EC."
+            },
+            tooltip() {
+                return "Formula: combination of all EP boosts"
+            },
             unlocked() {return hasUpgrade("era", 502)},
         },
         443: {

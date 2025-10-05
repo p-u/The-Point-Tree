@@ -7,9 +7,28 @@ function exponentialFormat(num, precision, mantissa = true) {
         e = e.add(1)
     }
     e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+    if (options.notation === 'default'){
+        if (mantissa)
+            return m.toStringWithDecimalPlaces(precision) + "e" + e
+        else return "e" + e
+    } else {
+        if (mantissa)
+            return m.toStringWithDecimalPlaces(precision) + "x10^" + e
+        else return "10^" + e
+    }
+}
+
+function exponentialPlusFormat(num, precision, mantissa = true) {
+    let e = num.log10().floor()
+    let m = num.div(Decimal.pow(10, e))
+    if (m.toStringWithDecimalPlaces(precision) == 10) {
+        m = decimalOne
+        e = e.add(1)
+    }
+    e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     if (mantissa)
-        return m.toStringWithDecimalPlaces(precision) + "e" + e
-    else return "e" + e
+        return m.toStringWithDecimalPlaces(precision) + "10^" + e
+    else return "10^" + e
 }
 
 function standardFormat(num, precision = 3) {
@@ -151,6 +170,8 @@ function notationChooser(decimal, precision=3) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
     } else if (options.notation === 'default'){
+        return format(decimal, precision)
+    } else if (options.notation === 'default2'){
         return format(decimal, precision)
     } else {
         return standardFormat(decimal, precision)
