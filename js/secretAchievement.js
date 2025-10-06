@@ -601,7 +601,7 @@ addLayer("sa", {
                  }
                 },
             tooltip() {
-                if (hasAchievement('sa', 44)) {
+                if (hasAchievement('sa', 45)) {
                     return "RarityID 1000. (x1.04 Era Crystals)"
                 }
                 else {
@@ -620,7 +620,7 @@ addLayer("sa", {
                  }
                 },
             tooltip() {
-                if (hasAchievement('sa', 44)) {
+                if (hasAchievement('sa', 46)) {
                     return "RarityID 411,400. (x1.07 Era Crystals, x1.02 Mastery Points)"
                 }
                 else {

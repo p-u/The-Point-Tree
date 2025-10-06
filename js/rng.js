@@ -99,8 +99,10 @@ addLayer("rng", {
             display() {
                 if (player.rng.rngidx < 3750){
                     return "You got a " + player.rng.rarityName + " rarity (ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ", Nett RNG (irregardless of luck): " + notationChooser(new Decimal(player.rng.rng).div(player.rng.luck)) + ")"
+                } else if (player.rng.rngidx < 1e6){
+                    return "You got a " + player.rng.rarityName + " " + formatWhole(new Decimal(Math.floor(player.rng.rngidx / 3750))) + " rarity (ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ")"
                 } else {
-                    return "You got a " + player.rng.rarityName + " " + formatWhole(new Decimal(Math.floor(player.rng.rngidx / 3750))) + " rarity (ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ", Nett RNG (irregardless of luck): " + notationChooser(new Decimal(player.rng.rng).div(player.rng.luck)) + ")"
+                    return "You got a " + player.rng.rarityName + " " + notationChooser(new Decimal(Math.floor(player.rng.rngidx / 3750))) + " rarity (ID: " + notationChooser(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ")"
                 }
             },
             style() {return {
@@ -442,32 +444,32 @@ addLayer("rng", {
         21: {
             requirementDescription: "The 21st RNG Milestone (Requires Best RarityID: 45,676)",
             effectDescription: "The cap of Luck Buyables 1-3 is no longer 2,000! ^1.2 Luck.",
-            done() { return player.rng.maxidx >= 45676 },
-            unlocked() {return hasMilestone("rng",20)}
+            done() { return (player.rng.maxidx >= 45676 && hasAchievement("a", 241)) },
+            unlocked() {return (hasMilestone("rng",20) && hasAchievement("a", 241))}
         },
         22: {
             requirementDescription: "The 22nd RNG Milestone (Requires Best RarityID: 60,211)",
             effectDescription: "Unlock Luck Buyable 5",
-            done() { return player.rng.maxidx >= 60211 },
-            unlocked() {return hasMilestone("rng",21)}
+            done() { return (player.rng.maxidx >= 60211 && hasAchievement("a", 251)) },
+            unlocked() {return (hasMilestone("rng",21) && hasAchievement("a", 251))}
         },
         23: {
             requirementDescription: "The 23rd RNG Milestone (Requires Best RarityID: 93,000)",
             effectDescription: "Luck Buyable 5 scales slower",
-            done() { return player.rng.maxidx >= 93000 },
-            unlocked() {return hasMilestone("rng",22)}
+            done() { return (player.rng.maxidx >= 93000 && hasAchievement("a", 261)) },
+            unlocked() {return (hasMilestone("rng",22) && hasAchievement("a", 261))}
         },
         24: {
             requirementDescription: "The 24th RNG Milestone (Requires Best RarityID: 128,650)",
             effectDescription: "Luck Buyable 1 is WAY STRONGER!",
-            done() { return player.rng.maxidx >= 128650 },
-            unlocked() {return hasMilestone("rng",23)}
+            done() { return (player.rng.maxidx >= 128650 && hasAchievement("a", 271)) },
+            unlocked() {return (hasMilestone("rng",23) && hasAchievement("a", 271))}
         },
         25: {
             requirementDescription: "The FINAL RNG Milestone (Requires Best RarityID: 238,360)",
             effectDescription: "Luck Buyable 5 scales slower and is stronger. (ENDGAMES: 411,333 [NORMAL], 411,422 [ABSOLUTE TRUE]",
-            done() { return player.rng.maxidx >= 238360 },
-            unlocked() {return hasMilestone("rng",24)}
+            done() { return (player.rng.maxidx >= 238360 && hasAchievement("a", 281)) },
+            unlocked() {return (hasMilestone("rng",24) && hasAchievement("a", 281))}
         },
     },
     infoboxes: {

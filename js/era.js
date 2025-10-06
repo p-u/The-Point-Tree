@@ -263,7 +263,7 @@ addLayer("era", {
         },
         3: {
             requirementDescription: "Era Three: What more?",
-            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups, and unlock a new row of Secret Achievements along with RNG.",
+            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups, and unlock a new row of Secret Achievements along with RNG (base 20 achievements, for each row of achievements, add a new milestone).",
             done() { return player["era"].points.gte(3) },
             unlocked() { return hasMilestone("era", 2) },
         },
@@ -3388,8 +3388,8 @@ addLayer("era", {
                 if (player.era.baseef.lte(2000)) {
                     player.era.nerf = 1
                 } else {
-                    if (player.era.baseef.lte(2000)) {
-                        player.era.nerf = player.era.baseef.pow(0.4)
+                    if (player.era.baseef.lte(20000000)) {
+                        player.era.nerf = player.era.baseef.pow(0.3)
                     } else {
                         player.era.nerf = player.era.baseef.pow(0.16)
                     }
@@ -3399,8 +3399,8 @@ addLayer("era", {
                     player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.add(1).div(5).log(2)), 1)
                 } else {
                     player.era.nerf = Decimal.max(player.era.nerfexponent.pow(player.era.ef.add(1).div(5).log(2)), 1)
-                    if (player.era.nerf.lte(player.era.baseef.pow(0.4))) {
-                        player.era.nerf = player.era.baseef.pow(0.4)
+                    if (player.era.nerf.lte(player.era.baseef.pow(0.3))) {
+                        player.era.nerf = player.era.baseef.pow(0.3)
                     }
                 }
             }
