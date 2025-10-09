@@ -1379,8 +1379,8 @@ addLayer("a", {
         },
         274: {
             name: "The unlocking of DS7",
-            done() { return player.sac.points.gte(new Decimal("e3.69e22")) },
-            tooltip: "Get e3.69e22 PF. Reward: xee20 PF, x22 EC",
+            done() { return player.sac.points.gte(new Decimal("2558558")) },
+            tooltip: "Get 2558558 Sacs.",
             unlocked() { return hasAchievement("a", 264) },
         },
     tabFormat: [
