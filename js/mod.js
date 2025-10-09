@@ -901,6 +901,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 102)) gain = gain.times("e8e15")
 	if (hasMilestone('sac', 111)) gain = gain.times("e2.5e18")
 	if (hasMilestone('sac', 113)) gain = gain.times("e1e19")
+	if (hasMilestone('sac', 121)) gain = gain.times("e1.2558e20")
 
 
 	// achievement

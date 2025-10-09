@@ -348,6 +348,12 @@ addLayer("w", {
             done() { return player["w"].points.gte("1e1e12") },
             unlocked() {return player["sac"].points.gte(132)},
         },
+        6: {
+            requirementDescription: "Water Madness (10^7.165x10^14 Water)",
+            effectDescription: "Increase the efficacy of Supreme Buyables 4,6 and 7",
+            done() { return player["w"].points.gte("e7.165e14") },
+            unlocked() {return hasMilestone("w", 5)},
+        },
     },
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)

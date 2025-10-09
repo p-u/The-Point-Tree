@@ -799,6 +799,7 @@ addLayer("mega", {
                     if (hasMilestone('sac', 23)) exp2 = 1.5
                 }
                 if (hasMilestone("era", 1)) exp2 = 1.5
+                if (hasUpgrade("era", 1063)) exp2 = exp2 - (Math.PI / 25)
                 return new Decimal("1e474").mul(Decimal.pow(1.28, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
             },
             display() {

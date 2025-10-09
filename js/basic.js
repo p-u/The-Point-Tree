@@ -470,6 +470,7 @@ addLayer("basic", {
                 bb3exp = 0.0000175
                 if (hasUpgrade('basic', 85)) bb3exp = 0.0000225
                 if (hasUpgrade('m', 33)) bb3exp = 0.000036
+                if (hasMilestone("sac", 120)) bb3exp = 0.000048
                 upgEffect83 = upgradeEffect(this.layer, this.id)
                 softcapDescription83 = ""
                 sdsc = ""

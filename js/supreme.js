@@ -883,6 +883,7 @@ addLayer("s", {
             if (hasUpgrade("w", 82)) base2 = base2.pow(1.5)
             if (hasUpgrade("era", 75)) base2 = base2.pow(1.1)
             if (hasUpgrade("era", 454)) base2 = base2.pow(1.042)
+            if (hasMilestone("w", 6)) base2 = base2.pow(1.125)
             let expo = new Decimal(1.005)
             let eff = (base1.pow(Decimal.pow(base2, expo)))
             return eff
@@ -935,6 +936,7 @@ addLayer("s", {
             if(hasUpgrade("era", 221)) base1 = new Decimal(1.0018)
             if(hasUpgrade("w", 82)) base1 = new Decimal(1.0019)
             if(hasMilestone("sac", 116)) base1 = new Decimal(1.002)
+            if (hasMilestone("w", 6)) base1 = new Decimal(1.0022)
             let base2 = x
             let expo = new Decimal(1.006)
             let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
@@ -963,6 +965,7 @@ addLayer("s", {
         },
         effect(x) {
             base1 = new Decimal(1.005)
+            if (hasMilestone("w", 6)) base1 = new Decimal(1.0064)
             base2 = x
             expo = new Decimal(1.012)
             let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
@@ -1017,6 +1020,7 @@ addLayer("s", {
             if (hasUpgrade("era", 491)) hcap = hcap.add(0.005)
             if(hasMilestone("sac", 115)) hcap = hcap.add(0.0015)
             if (hasMilestone("era", 101)) hcap = hcap.add(buyableEffect('era', 19))
+            if (hasUpgrade("era", 503)) hcap = hcap.mul(1.02)
             
             if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) hcap = hcap.add(0.038)
         if (eff.gte(hcap)) eff = hcap

@@ -1236,7 +1236,7 @@ addLayer("a", {
         241: {
             name: "Get Tree 1 - Last row last upgrade [305]",
             done() { return hasUpgrade("era", 305) },
-            tooltip: "Finish Tree 1. [Universal Rarity]",
+            tooltip: "Finish Tree 1...Or so you thought. [Universal Rarity]",
             unlocked() { return hasAchievement("a", 231) },
         },
         242: {
@@ -1375,7 +1375,13 @@ addLayer("a", {
             name: "e3.69e22 PF",
             done() { return player.points.gte(new Decimal("e3.69e22")) },
             tooltip: "Get e3.69e22 PF. Reward: xee20 PF, x22 EC",
-            unlocked() { return hasAchievement("a", 242) },
+            unlocked() { return hasAchievement("a", 264) },
+        },
+        274: {
+            name: "The unlocking of DS7",
+            done() { return player.sac.points.gte(new Decimal("e3.69e22")) },
+            tooltip: "Get e3.69e22 PF. Reward: xee20 PF, x22 EC",
+            unlocked() { return hasAchievement("a", 264) },
         },
     tabFormat: [
         "blank", 

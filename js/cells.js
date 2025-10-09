@@ -77,7 +77,9 @@ addLayer("c", {
         if (hasAchievement("sa", 42)) player.c.softcapStart = player.c.softcapStart.mul(1.1)
         if (hasUpgrade("era", 502)) player.c.softcapStart = player.c.softcapStart.mul(1.8)
         if (hasMilestone("c", 6)) player.c.softcapStart = player.c.softcapStart.mul(player.c.points.pow(0.05))
+        if (hasUpgrade("c", 63)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("c", 63))
         if (hasMilestone("era", 104)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.25).pow(player.era.milestones.length))
+        if (hasUpgrade("era", 333)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.005).pow(new Date().getFullYear()))
         if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
 
         // init
@@ -200,10 +202,10 @@ addLayer("c", {
             done() { return player.c.points.gte(new Decimal(1e42)) },
         },
         6: {
-            requirementDescription: "Cell Milestone 5 (2.5e70 Cells: Tier 1.7)",
+            requirementDescription: "Cell Milestone 5 (1.5e70 Cells: Tier 1.7)",
             effectDescription: "Cell softcap starts (Cells^0.05)x later",
             unlocked() { return hasMilestone("c", 5)},
-            done() { return player.c.points.gte(new Decimal(2.5e70)) },
+            done() { return player.c.points.gte(new Decimal(1.5e70)) },
         },
     },
     upgrades: {
@@ -373,10 +375,42 @@ addLayer("c", {
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 61)) },
         },
+        63: {
+            title: "Cellular Procrastination",
+            description: "For every cell upgrade bought, x1.5 Cell Softcap delay (x2.25 nett due to ^2 boost).",
+            cost: new Decimal(1.5e79),
+            effect() {
+                return new Decimal(1.5).pow(player.c.upgrades.length)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade delays the start of the cell softcap by x" + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: 1.5^CUps"
+            },
+            unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 62)) },
+        },
+        64: {
+            title: "Cellular Finality",
+            description: "For every cell upgrade bought, +0.0002 EP.",
+            cost: new Decimal(1e100),
+            effect() {
+                return new Decimal(0.0002).mul(player.c.upgrades.length)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade increases EP by " + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: 0.0002*CUps"
+            },
+            unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 63)) },
+        },
     },
     buyables: {
         11: {
-            title: "Cell Buyable 1: Replicate! [Max replicate speed is 1/30 seconds]",
+            title: "Cell Buyable 1: Replicate! [Max replicate speed is 1/20 seconds]",
             cost(x) {
                 exp2 = 1.14
                 return new Decimal(50).mul(Decimal.pow(1.14, (x+1))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()

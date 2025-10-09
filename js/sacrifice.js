@@ -44,6 +44,8 @@ addLayer("sac", {
                 "blank",
                 ["bar", "DS6"],
                 "blank",
+                ["bar", "DS7"],
+                "blank",
             ],
         },
         "Challenges": {
@@ -754,7 +756,7 @@ addLayer("sac", {
         },
         100: {
             requirementDescription: "Sacrifice 50K [100th Milestone]",
-            effectDescription: "Unlock a new Sacrifice Feature, and unlock a new Era Feature.",
+            effectDescription: "Unlock the seventh bar for DS7. Unlock a new Sacrifice Feature, and unlock a new Era Feature.",
             unlocked() {return player["sac"].points.gte(45000)},
             done() { return player["sac"].points.gte(50000) }
         },
@@ -871,6 +873,18 @@ addLayer("sac", {
             effectDescription: "Unlock a new Era Fragment Milestone. Every single Sacrifice Milestone increases Everything Power by 0.0001",
             unlocked() {return player["sac"].points.gte(1965000)},
             done() { return player["sac"].points.gte(2000000) }
+        },
+        120: {
+            requirementDescription: "Sacrifice 2,390,000",
+            effectDescription: "'Basic Boost 3' is stronger.",
+            unlocked() {return player["sac"].points.gte(2.2e6)},
+            done() { return player["sac"].points.gte(2.39e6) }
+        },
+        121: {
+            requirementDescription: "Sacrifice 2,558,558",
+            effectDescription: "Unlock DS7. xe1.2558e20 PF.",
+            unlocked() {return player["sac"].points.gte(2.5e6)},
+            done() { return player["sac"].points.gte(2558558) }
         },
     },
     sacms58eff() {
@@ -1004,7 +1018,7 @@ addLayer("sac", {
     bars: {
         DS1: {
             direction: RIGHT,
-            width: 600,
+            width: 550,
             height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -1022,7 +1036,7 @@ addLayer("sac", {
         },
         DS2: {
             direction: RIGHT,
-            width: 600,
+            width: 550,
             height: 60,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -1041,7 +1055,7 @@ addLayer("sac", {
         },
         DS3: {
             direction: RIGHT,
-            width: 600,
+            width: 550,
             height: 70,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -1060,7 +1074,7 @@ addLayer("sac", {
         },
         DS4: {
             direction: RIGHT,
-            width: 650,
+            width: 600,
             height: 80,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -1079,7 +1093,7 @@ addLayer("sac", {
         },
         DS5: {
             direction: RIGHT,
-            width: 700,
+            width: 650,
             height: 80,
             fillStyle: { 'background-color': "#79029b" },
             borderStyle() { return { "border-color": "white" } },
@@ -1098,7 +1112,7 @@ addLayer("sac", {
         },
         DS6: {
             direction: RIGHT,
-            width: 750,
+            width: 700,
             height: 80,
             fillStyle: { 'background-color': "red" },
             borderStyle() { return { "border-color": "white" } },
@@ -1114,6 +1128,25 @@ addLayer("sac", {
                     return "You have unlocked Dimensional Shift 6. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to SUPREME Upgrades. That's err... 11 upgrades??"
             },
             unlocked() { return hasMilestone("era", 2) }
+        },
+        DS7: {
+            direction: RIGHT,
+            width: 750,
+            height: 80,
+            fillStyle: { 'background-color': "red" },
+            borderStyle() { return { "border-color": "white" } },
+            progress() {
+                let prog = player.sac.points.div(2558558)
+                if (player.sac.best.gte(2558558)) prog = 1
+                return prog
+            },
+            display() {
+                if (player.sac.best.lte(2558557))
+                    return "Unlock dimensional shift 7: " + notationChooser(player.sac.points) + "/2558558 sacrifices. HUH???"
+                else
+                    return "You have unlocked Dimensional Shift 7. Dimensional Shifts add another column to the upgrades (Column 5). Adds another row to Water Upgrades. Well, be lucky you got a dimension shift, I haven't forgot you!"
+            },
+            unlocked() { return hasMilestone("sac", 100) }
         },
         SacStr: {
             direction: RIGHT,
@@ -1182,6 +1215,7 @@ addLayer("sac", {
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         if (hasUpgrade("w", 92)) exp = exp.sub(0.01)
         if (hasUpgrade("e", 205)) exp = exp.sub(0.02)
+        if (hasUpgrade("era", 414)) exp = exp.sub(0.01)
         if (player.points.gte("e100e9") && inChallenge("m", 12)) exp = new Decimal(100)
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
