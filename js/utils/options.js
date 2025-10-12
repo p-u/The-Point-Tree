@@ -17,7 +17,7 @@ function getStartOptions() {
 		notation: "default",
 		forceTooltips: true,
 		hideMilestonePopups: false,
-		actionmode: false,
+		actionmode: "off",
 		soundeff: true,
 	}
 }
@@ -38,8 +38,17 @@ function getNotationName() {
 	return options.notation
 }
 
+function getActionMode() {
+	return options.actionmode
+}
 function updateAction() {
-	options.actionmode = !options.actionmode
+	if (options.actionmode == "off") {
+		options.actionmode = "on"
+	} else if (options.actionmode == "on") {
+		options.actionmode = "ultra"
+	} else {
+		options.actionmode = "off"
+	}
 }
 
 function updateSoundEff() {

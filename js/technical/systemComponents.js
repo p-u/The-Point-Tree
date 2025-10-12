@@ -192,7 +192,7 @@ var systemComponents = {
 				</tr> 
 			<tr>
 				<td><button class="opt" onclick="updateSoundEff()">Sound Effect: {{ options.soundeff?"ON":"OFF" }}</button></td>
-                <td><button class="opt" onclick="updateAction()">Action Mode (Screenshake + Particles): {{ options.actionmode?"ON":"OFF" }}</button></td>
+                <td><button class="opt" onclick="updateAction()">Action Mode (Screenshake + Particles): {{ getActionMode() }}</button></td>
 				</tr> 
             </tr>
         </table>`
