@@ -690,6 +690,24 @@ addLayer("basic", {
             cost: new Decimal("e322159400"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
         },
+        11111: {
+            title: "Biggest PF BOOST!!",
+            description: "xe18.2M PF",
+            cost: new Decimal("e322159400"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
+        },
+        11112: {
+            title: "Biggest PF BOOST!!",
+            description: "xe18.2M PF",
+            cost: new Decimal("e322159400"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
+        },
+        11113: {
+            title: "Biggest PF BOOST!!",
+            description: "xe18.2M PF",
+            cost: new Decimal("e322159400"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
+        },
     },
     milestones: {
         1: {
