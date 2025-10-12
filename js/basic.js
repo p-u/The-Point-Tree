@@ -169,6 +169,7 @@ addLayer("basic", {
                 if (hasUpgrade("era", 263)) expu5 = 0.275
                 if (hasUpgrade("era", 135)) expu5 = 0.313
                 if (hasUpgrade("era", 312)) expu5 = 0.388
+                if (hasUpgrade("m", 145)) expu5 = 0.425
                 upgEffect21 = upgradeEffect(this.layer, this.id)
                 softcapDescription21 = ""
                 sdsc = ""
@@ -777,6 +778,12 @@ addLayer("basic", {
             done() { return player["basic"].points.gte("e1.5e21") },
             unlocked() {return hasUpgrade("era", 462)},
         },
+        12: {
+            requirementDescription: "Woah, a lot 4 (Req e3.518e22 BP)",
+            effectDescription: "xe2.5e20 PF, x40 MaP",
+            done() { return player["basic"].points.gte("e3.518e22") },
+            unlocked() {return hasMilestone("basic", 11)},
+        },
     },
     color: "#add8e6",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -842,6 +849,7 @@ addLayer("basic", {
         if (hasUpgrade('era', 373)) mult = mult.times("e8e18")
         if (hasUpgrade("rebirth", 92)) mult = mult.times("e1.9e19")
         if (hasUpgrade('era', 1022)) mult = mult.times("e2.5e20")
+        if (hasUpgrade('w', 85)) mult = mult.times("e2.1e21")
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },

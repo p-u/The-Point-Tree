@@ -1,4 +1,37 @@
 // ************ Big Feature related ************
+const myParticle = {
+    image: 'resources/genericParticle.png',
+    width: 26,
+    height: 26,
+    time: 1.5,
+    fadeOutTime: 0.7,
+    speed() { return 7 + Math.random() * 5; },
+    spread: 25,
+    gravity: 1,
+    dir() { return Math.random() * 360; },
+    rotation() { return (Math.random() - 0.5) * 15; },
+    color() {
+        const colors = ["#ff4d4d","#4dff4d","#4d4dff"];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+}
+
+const myParticleShort = {
+    image: 'resources/genericParticle.png',
+    width: 22,
+    height: 22,
+    time: 0.7,
+    fadeOutTime: 0.35,
+    speed() { return 7 + Math.random() * 5; },
+    spread: 25,
+    gravity: 1,
+    dir() { return Math.random() * 360; },
+    rotation() { return (Math.random() - 0.5) * 15; },
+    color() {
+        const colors = ["#ff4d4d","#4dff4d","#4d4dff"];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+}
 
 function respecBuyables(layer) {
 	if (!layers[layer].buyables) return
@@ -62,7 +95,6 @@ function buyUpg(layer, id) {
 		run(pay, layers[layer].upgrades[id])
 	else {
 		let cost = tmp[layer].upgrades[id].cost
-
 		if (upg.currencyInternalName) {
 			let name = upg.currencyInternalName
 			if (upg.currencyLocation) {
@@ -83,6 +115,13 @@ function buyUpg(layer, id) {
 			if (player[layer].points.lt(cost)) return
 			player[layer].points = player[layer].points.sub(cost)
 		}
+	}
+	if (options.soundeff) {
+		playUpgradeSound('upg');
+	}
+	if (options.actionmode) {
+		makeParticles(myParticle, 33);
+		screenShake(60, 500);
 	}
 	player[layer].upgrades.push(id);
 	if (upg.onPurchase != undefined)
@@ -106,6 +145,13 @@ function buyBuyable(layer, id) {
 	if (!tmp[layer].buyables[id].canBuy) return
 
 	run(layers[layer].buyables[id].buy, layers[layer].buyables[id])
+	if (options.soundeff) {
+		playUpgradeSound('buyable');
+	}
+	if (options.actionmode) {
+		makeParticles(myParticle, 15);
+		screenShake(30, 100);
+	}
 	updateBuyableTemp(layer)
 }
 
@@ -261,6 +307,13 @@ function updateMilestones(layer) {
 		if (!(hasMilestone(layer, id)) && layers[layer].milestones[id].done()) {
 			player[layer].milestones.push(id)
 			if (layers[layer].milestones[id].onComplete) layers[layer].milestones[id].onComplete()
+			if (options.soundeff) {
+				playUpgradeSound('ms');
+			}
+			if (options.actionmode) {
+				makeShinies(myParticleShort, 50);
+				screenShake(25, 250);
+			}
 			if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 2, tmp[layer].color);
 			player[layer].lastMilestone = id
 		}
@@ -272,6 +325,13 @@ function updateAchievements(layer) {
 	for (id in layers[layer].achievements) {
 		if (isPlainObject(layers[layer].achievements[id]) && !(hasAchievement(layer, id)) && layers[layer].achievements[id].done()) {
 			player[layer].achievements.push(id)
+			if (options.soundeff) {
+				playUpgradeSound('ach');
+			}
+			if (options.actionmode) {
+				makeShinies(myParticle, 60);
+				screenShake(40, 400);
+			}
 			if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
 			if (tmp[layer].achievementPopups || tmp[layer].achievementPopups === undefined) doPopup("achievement", tmp[layer].achievements[id].name, "Achievement Gotten!", 2, tmp[layer].color);
 		}

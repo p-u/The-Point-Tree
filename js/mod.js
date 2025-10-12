@@ -753,6 +753,7 @@ function getPointGen() {
 	if (hasUpgrade('basic', 115)) gain = gain.times("e250e12")
 	if (hasMilestone('basic', 10)) gain = gain.times("e1.6e16")
 	if (hasMilestone('basic', 11)) gain = gain.times("e4e18")
+	if (hasMilestone("basic", 12)) gain = gain.times("e2.5e20")
 
 	
 	
@@ -902,6 +903,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 111)) gain = gain.times("e2.5e18")
 	if (hasMilestone('sac', 113)) gain = gain.times("e1e19")
 	if (hasMilestone('sac', 121)) gain = gain.times("e1.2558e20")
+	if (hasMilestone("sac", 124)) gain = gain.times("ee20")
 
 
 	// achievement
@@ -942,6 +944,7 @@ function getPointGen() {
 	if (hasAchievement('a', 253)) gain = gain.times("e1e18")
 	if (hasAchievement('a', 254)) gain = gain.times("e2.444404444e18")
 	if (hasAchievement('a', 273)) gain = gain.times("ee20")
+	if (hasAchievement('a', 275)) gain = gain.times("e9.11e19")
 
 
 	if (hasAchievement('sa', 146)) gain = gain.times(1.01)
@@ -1196,6 +1199,7 @@ function getPointGen() {
 	if (hasUpgrade("era", 413)) gain = gain.pow(1.005)
 	if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
 	if (hasUpgrade("era", 501)) gain = gain.pow(1.007)
+	if (hasUpgrade("m", 144)) gain = gain.pow(1.0075)
 	if (hasUpgrade("era", 1054)) gain = gain.pow(1.01)
 	if (hasMilestone("era", 104)) gain = gain.pow(new Decimal(player.era.milestones.length).div(1000).add(1))
 	if (player.points.gte("e100e9") && inChallenge("m", 12)) gain = gain.pow(0.1)

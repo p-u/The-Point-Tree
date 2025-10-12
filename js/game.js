@@ -35,6 +35,47 @@ function getResetGain(layer, useType = null) {
 	}
 }
 
+function screenShake(intensity = 1, duration = 200) {
+    const container = document.getElementById("tmt-container") || document.body;
+    if (!container) return;
+
+    let start = performance.now();
+
+    function shakeFrame(time) {
+        const elapsed = time - start;
+        const fraction = elapsed / duration;
+
+        if (fraction < 1) {
+            const x = (Math.random() * 2 - 1) * intensity;
+            const y = (Math.random() * 2 - 1) * intensity;
+            container.style.transform = `translate(${x}px, ${y}px)`;
+            requestAnimationFrame(shakeFrame);
+        } else {
+            container.style.transform = ""; // reset
+        }
+    }
+
+    requestAnimationFrame(shakeFrame);
+}
+
+function playUpgradeSound(type = 'upg') {
+	let audio = new Audio("resources/bonus-points-190035.mp3");
+	if (type == "upg") {
+    	audio = new Audio("resources/bonus-points-190035.mp3"); 
+	} else if (type == "ms") {
+		audio = new Audio("resources/arcade-ui-29-229501.mp3")
+	} else if (type == "ach") {
+		audio = new Audio("resources/arcade-ui-1-229498.mp3")
+	} else if (type == "buyable") {
+		audio = new Audio("resources/arcade-ui-7-229506.mp3")
+	} else {
+		console.log("Type is wrong!")
+	}
+    audio.volume = 0.4; 
+    audio.play().catch(() => {}); 
+}
+
+
 function getNextAt(layer, canMax=false, useType = null) {
 	let type = useType
 	if (!useType) {

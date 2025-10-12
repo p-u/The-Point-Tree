@@ -13,7 +13,7 @@ function exponentialFormat(num, precision, mantissa = true) {
         else return "e" + e
     } else {
         if (mantissa)
-            return m.toStringWithDecimalPlaces(precision) + "x10^" + e
+            return m.toStringWithDecimalPlaces(precision) + "x10^" +e
         else return "10^" + e
     }
 }

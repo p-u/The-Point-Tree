@@ -74,6 +74,7 @@ addLayer("w", {
                 if (hasUpgrade('era', 252)) w3exp = new Decimal(0.225)
                 if (hasUpgrade('s', 122)) w3exp = new Decimal(0.237)
                 if (hasUpgrade('era', 361)) w3exp = new Decimal(0.25)
+                if (hasUpgrade("w", 55)) w3exp = new Decimal(0.27)
                 softcapDescriptionw13 = ""
                 sdsc = ""
                 scpow = 0.58
@@ -304,6 +305,107 @@ addLayer("w", {
             cost: new Decimal("e4.63e14"),
             unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 93)  }, 
         },
+        15: {
+            title: "Bond Strengthening",
+            description: "Supreme Upgrade 65 is 30% stronger.",
+            cost: new Decimal("e1.0216e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 14)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        25: {
+            title: "Actual 'Booster Plus'",
+            description: "Era Buyable 2, 'Booster Plus' base effect is also increased based on the amount of Water upgrades. 'Booster Plus' also affects Water gain, at a rate of xe4e12 per buy.",
+            effect() {
+                return new Decimal("e4e12").pow(player.era.buyables[12])
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade multiplies Water by x" + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: e4e12^BuyableBuys"
+            },
+            cost: new Decimal("e1.1145e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 15)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        35: {
+            title: "TSUNAMI!!!! RUN!!!",
+            description: "xe2e14 Water",
+            cost: new Decimal("e1.3296e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 25)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        45: {
+            title: "Quick! Everybody, up!",
+            description: "As the immense amount of Water increases, many civillians are killed. People struggle to go on high ground. However, the water continues spreading. +^0.05 Water.",
+            cost: new Decimal("e2.19e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 35)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        55: {
+            title: "Further Amplification",
+            description: "In an instant, rain poured down the land, and further exacerbated the seriousness of the situation. The amount of water increases based on itself.",
+            cost: new Decimal("e2.2772e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 45)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        65: {
+            title: "Further Amplification",
+            description: "Due to the amount of Water, the amount of cells naturally increases. log(Water) delays Cells softcap.",
+            cost: new Decimal("e2.3205e15"),
+            effect() {
+                return player.w.points.log10()
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade delays Cells softcap by a factor of " + notationChooser(upgEffect)+"."
+            },
+            tooltip() {
+                return "Formula: lg(Water)"
+            },
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 55)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        75: {
+            title: "The Master that you, yourself are",
+            description: "As you look down below, you see the many citizens that need help, as they are injured. Well, you have to research some new technology. 'More EC = More Mastery' is stronger.",
+            cost: new Decimal("e2.357e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 65)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        85: {
+            title: "Re-building people's fundementals",
+            description: "The water rises at an impressive pace. You, as the leader of the pack, realise that you have to educate others to survive through the disaster. The fundementals would have to be re-learnt. xe2.1e21 BP.",
+            cost: new Decimal("e2.6072e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 75)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
+        95: {
+            title: "Saving the city, for good!",
+            description: "Due to your efforts, the city is saved with minimal casualties in this horrifying disaster. The water eventually subsides after 3 days. The Prime Minister honours you, thus he gives you the Nobel Prize. (Nobel Prize Benefits: xee19 MP)",
+            cost: new Decimal("e3.5188e15"),
+            unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 85)  }, 
+            style() {return {
+                'width': '150px',
+            }},
+        },
     },
     milestones: {
         1: {
@@ -363,6 +465,7 @@ addLayer("w", {
         if (hasUpgrade('w', 11)) mult = mult.times(2)
         if (hasUpgrade('w', 12)) mult = mult.times(2)
         if (hasUpgrade('w', 13)) mult = mult.times(upgradeEffect('w', 13))
+        if (hasUpgrade('w', 25)) mult = mult.times(upgradeEffect('w', 25))
         if (hasUpgrade('w', 14)) mult = mult.times(2.5)
         if (hasUpgrade('w', 21)) mult = mult.times(3.8)
         if (hasUpgrade('w', 22)) mult = mult.times(3.19)
@@ -400,6 +503,7 @@ addLayer("w", {
         if (hasUpgrade('era', 394)) mult = mult.times("e7e11")
         if (hasUpgrade('rebirth', 91)) mult = mult.times("e2.2e12")
         if (hasMilestone('sac', 114)) mult = mult.times("e5e13")
+        if (hasUpgrade('w', 35)) mult = mult.times("e2e14")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         if (hasAchievement('sa', 33)) mult = mult.times(1.2)
@@ -424,6 +528,7 @@ addLayer("w", {
         if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
         if (hasUpgrade("era", 1034)) exp = exp.add(upgradeEffect("era", 1034))
         if (hasMilestone('era', 102)) exp = exp.add(buyableEffect('s', 17))
+        if (hasUpgrade("w", 45)) exp = exp.add(0.05)
         if (inChallenge('m', 11)) exp = exp.mul(0.4)
         return exp
     },

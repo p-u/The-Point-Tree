@@ -17,6 +17,8 @@ function getStartOptions() {
 		notation: "default",
 		forceTooltips: true,
 		hideMilestonePopups: false,
+		actionmode: false,
+		soundeff: true,
 	}
 }
 
@@ -36,6 +38,13 @@ function getNotationName() {
 	return options.notation
 }
 
+function updateAction() {
+	options.actionmode = !options.actionmode
+}
+
+function updateSoundEff() {
+	options.soundeff = !options.soundeff
+}
 
 function toggleOpt(name) {
 	if (name == "oldStyle" && styleCooldown > 0)

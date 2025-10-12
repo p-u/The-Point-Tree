@@ -476,6 +476,7 @@ addLayer("prestige", {
         if (hasUpgrade('era', 494)) mult = mult.times("e7e18")
         if (hasUpgrade('era', 1022)) mult = mult.times("e3e18")
         if (hasUpgrade('e', 202)) mult = mult.times("e3e19")
+        if (hasUpgrade('m', 142)) mult = mult.times("e3e19")
 
         if (hasMilestone("a", 7)) mult = mult.times(3)
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
@@ -554,6 +555,7 @@ addLayer("prestige", {
         if (hasMilestone('prestige', 12)) hcapeff = 0.53
         softcappedEffect = softcap(softcappedEffect, new Decimal("ee12"), new Decimal(hcapeff))
         let inscapeff = 0.2
+        if (hasUpgrade("m", 143)) inscapeff = 0.25
         softcappedEffect = softcap(softcappedEffect, new Decimal("e4e18"), new Decimal(inscapeff))
         return softcappedEffect
        },

@@ -886,6 +886,24 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(2.5e6)},
             done() { return player["sac"].points.gte(2558558) }
         },
+        122: {
+            requirementDescription: "Sacrifice 2,896,000",
+            effectDescription: "+0.002896 to SB5 HC",
+            unlocked() {return player["sac"].points.gte(2.7e6)},
+            done() { return player["sac"].points.gte(2896000) }
+        },
+        123: {
+            requirementDescription: "Sacrifice 3,134,234",
+            effectDescription: "x3134234 EC, Cell Softcap Delay",
+            unlocked() {return player["sac"].points.gte(3e6)},
+            done() { return player["sac"].points.gte(3134234) }
+        },
+        124: {
+            requirementDescription: "Sacrifice 3,849,800",
+            effectDescription: "Well, it's been over 700,000 Sacrifices without a Sacrifice Milestone. xee20 PF, -0.00775 Sacrifice Scaling, -0.07 Era Scaling.",
+            unlocked() {return player["sac"].points.gte(3e6)},
+            done() { return player["sac"].points.gte(3849800) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
@@ -1216,6 +1234,7 @@ addLayer("sac", {
         if (hasUpgrade("w", 92)) exp = exp.sub(0.01)
         if (hasUpgrade("e", 205)) exp = exp.sub(0.02)
         if (hasUpgrade("era", 414)) exp = exp.sub(0.01)
+        if (hasMilestone("sac", 124)) exp = exp.sub(0.00775)
         if (player.points.gte("e100e9") && inChallenge("m", 12)) exp = new Decimal(100)
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent

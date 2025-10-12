@@ -149,6 +149,7 @@ var systemComponents = {
 		Infinity Notation by unicodes
 		<br>
 		<br>
+		Pixabay for the Upgrade/MS/Buyable/Ach sound effects
 		<br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
         <span v-if="modInfo.discordLink"><a class="link" v-bind:href="modInfo.discordLink" target="_blank">{{modInfo.discordName}}</a><br></span>
@@ -188,6 +189,10 @@ var systemComponents = {
 			<tr>
 				<td><button class="opt" onclick="changeNotation()">Notation: {{ getNotationName() }}</button></td>
                 <td><button class="opt" onclick="toggleOpt('hideMilestonePopups')">Show Milestone Popups: {{ formatOption(!options.hideMilestonePopups) }}</button></td>
+				</tr> 
+			<tr>
+				<td><button class="opt" onclick="updateSoundEff()">Sound Effect: {{ options.soundeff?"ON":"OFF" }}</button></td>
+                <td><button class="opt" onclick="updateAction()">Action Mode (Screenshake + Particles): {{ options.actionmode?"ON":"OFF" }}</button></td>
 				</tr> 
             </tr>
         </table>`

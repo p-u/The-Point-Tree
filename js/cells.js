@@ -80,6 +80,8 @@ addLayer("c", {
         if (hasUpgrade("c", 63)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("c", 63))
         if (hasMilestone("era", 104)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.25).pow(player.era.milestones.length))
         if (hasUpgrade("era", 333)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.005).pow(new Date().getFullYear()))
+        if (hasUpgrade("w", 65)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("w", 65))
+        if (hasMilestone("sac", 123)) player.c.softcapStart = player.c.softcapStart.mul(3134234)
         if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
 
         // init
@@ -202,10 +204,16 @@ addLayer("c", {
             done() { return player.c.points.gte(new Decimal(1e42)) },
         },
         6: {
-            requirementDescription: "Cell Milestone 5 (1.5e70 Cells: Tier 1.7)",
+            requirementDescription: "Cell Milestone 6 (1.5e70 Cells: Tier 1.7)",
             effectDescription: "Cell softcap starts (Cells^0.05)x later",
             unlocked() { return hasMilestone("c", 5)},
             done() { return player.c.points.gte(new Decimal(1.5e70)) },
+        },
+        7: {
+            requirementDescription: "Cell Milestone 7 (1e135 Cells: Tier 2!)",
+            effectDescription: "'Metabolic Hyper-Surge' is stronger.",
+            unlocked() { return hasMilestone("c", 6)},
+            done() { return player.c.points.gte(new Decimal(1e135)) },
         },
     },
     upgrades: {
@@ -328,6 +336,7 @@ addLayer("c", {
             description: "Cells boost Era Crystals, Reduced Sacrifice Scaling, very slightly reduce Era Buyable 6 scaling and increase its effect",
             cost: new Decimal(3.33e33),
             effect() {
+                if (hasMilestone("c", 7)) return player.c.points.pow(0.05)
                 if (hasUpgrade("w", 93)) {
                     return player.c.points.log(5)
                 } else {

@@ -636,6 +636,7 @@ addLayer("s", {
             cost: new Decimal("1.8e239503265"),
             main() {
                 spbw = 0.0325
+                if (hasUpgrade("w", 15)) spbw = 0.04225
                 softcapDescriptions65 = ""
                 sdsc = ""
                 upgEffects65 = upgradeEffect(this.layer, this.id)
@@ -1019,7 +1020,9 @@ addLayer("s", {
             if (hasUpgrade("era", 455)) hcap = hcap.add(0.0086)
             if (hasUpgrade("era", 491)) hcap = hcap.add(0.005)
             if(hasMilestone("sac", 115)) hcap = hcap.add(0.0015)
+            if (hasMilestone("sac", 122)) hcap = hcap.add(0.002896)
             if (hasMilestone("era", 101)) hcap = hcap.add(buyableEffect('era', 19))
+            if (hasMilestone("era", 105)) hcap = hcap.add(new Decimal(0.001).mul(player.era.infec))
             if (hasUpgrade("era", 503)) hcap = hcap.mul(1.02)
             
             if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) hcap = hcap.add(0.038)

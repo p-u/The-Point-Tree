@@ -178,6 +178,7 @@ addLayer("e", {
         if (hasUpgrade('era', 282)) mult = mult.times("e70e9")
         if (hasUpgrade('s', 121)) mult = mult.times("e1.1e12")
         if (hasUpgrade('m', 125)) mult = mult.times("e3e13")
+        if (hasUpgrade('era', 1064)) mult = mult.times("e2.5e16")
         mult = mult.times(buyableEffect('mega', 13))
 
         // supreme

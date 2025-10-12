@@ -374,6 +374,7 @@ addLayer("m", {
                 upgEffectmast103 = upgradeEffect(this.layer, this.id)
             },
             effect() {
+                if (hasUpgrade("w", 75)) return player.era.ec.pow(0.0175)
                 let eff = player["era"].ec.add(1).pow(ectomasteryexp).log(1.8)
                 return eff
             },
@@ -381,7 +382,11 @@ addLayer("m", {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionmast103
             },
             tooltip() {
-                return "Formula: log1.8((EC + 1)^"  + ectomasteryexp + ") " + sdsc
+                if (hasUpgrade("w", 75)) {
+                    return "Formula: EC^0.0175"
+                } else {
+                    return "Formula: log1.8((EC + 1)^"  + ectomasteryexp + ") " + sdsc
+                }
             },
         },
         104: {
@@ -485,6 +490,36 @@ addLayer("m", {
             description: "^1.015 PF",
             cost: new Decimal(4e67), 
             unlocked() { return ((hasUpgrade("m", 113)) && (hasUpgrade("m", 123)) && (hasUpgrade("m", 133))) },
+        },
+        141: {
+            title: "Technology One: Increase Research Power [NOT SUPPOSED TO BE GOTTEN DIRECTLY AFTER MC3]",
+            description: "For every Mastery Upgrade in this two rows (Row 14/15), x(Row/2)*Column MaP.",
+            cost: new Decimal(1e114), 
+            unlocked() { return (hasChallenge("m", 13)) },
+        },
+        142: {
+            title: "Technology Two: Some good boosts to lift villagers' spirits...!",
+            description: "This includes xe3e19 PP, x5000 EC",
+            cost: new Decimal(1e115), 
+            unlocked() { return (hasUpgrade("m", 141)) },
+        },
+        143: {
+            title: "Technology Three: Starting to become less bounded",
+            description: "Reduce PP Insanitycap.",
+            cost: new Decimal(4e119), 
+            unlocked() { return (hasUpgrade("m", 142)) },
+        },
+        144: {
+            title: "Technology Four: Project Escape",
+            description: "With your Computing and Engineering Knowledge, you build many robots that help to rescue people that is down there and still trapped by the Tsunami, and even build bigger/higher platforms! ^1.0075 PF.",
+            cost: new Decimal(1.8e126), 
+            unlocked() { return (hasUpgrade("m", 143)) },
+        },
+        145: {
+            title: "Technology Four: Project Escape",
+            description: "You boost the spirits of the injured, and survived. 'Compounding' and the 12th iteration of it is stronger.",
+            cost: new Decimal(1.8e126), 
+            unlocked() { return (hasUpgrade("m", 143)) },
         },
 
         1111: {
@@ -664,6 +699,16 @@ addLayer("m", {
         if (hasAchievement('sa', 186)) mult = mult.times(1.02)
         if (hasUpgrade('m', 43)) mult = mult.times(9)
         if (hasUpgrade('m', 45)) mult = mult.times(100)
+        if (hasUpgrade('m', 141)) mult = mult.times(7)
+        if (hasUpgrade('m', 142)) mult = mult.times(14)
+        if (hasUpgrade('m', 143)) mult = mult.times(21)
+        if (hasUpgrade('m', 144)) mult = mult.times(28)
+        if (hasUpgrade('m', 145)) mult = mult.times(35)
+        if (hasUpgrade('m', 151)) mult = mult.times(7.5)
+        if (hasUpgrade('m', 152)) mult = mult.times(15)
+        if (hasUpgrade('m', 153)) mult = mult.times(22.5)
+        if (hasUpgrade('m', 154)) mult = mult.times(30)
+        if (hasUpgrade('m', 155)) mult = mult.times(37.5)
         if (hasUpgrade('m', 11)) mult = mult.times(base)
         if (hasAchievement('sa', 31)) mult = mult.times(1.05)
         if (hasAchievement('sa', 34)) mult = mult.times(1.03)
@@ -676,6 +721,8 @@ addLayer("m", {
         if (hasUpgrade('m', 71)) mult = mult.times(78.2)
         if (hasAchievement('a', 183)) mult = mult.times(3.4)
         if (hasUpgrade('m', 74)) mult = mult.times(420)
+        if (hasMilestone("basic", 12)) mult = mult.times(40)
+        if (hasAchievement('a', 275)) mult = mult.times(911)
         if (hasMilestone('sac', 93)) mult = mult.times(1e10)
         if (hasUpgrade('m', 103)) mult = mult.times(upgradeEffect('m', 103))
         let mpow = new Decimal(0.3)
