@@ -47,13 +47,19 @@ function updateAction() {
 	} else if (options.actionmode == "on") {
 		options.actionmode = "ultra"
 	} else if (options.actionmode == "earthquake") {
-		options.actionmode = "off"
-	} else {
+		if ((options.notation == 'infinity') && (options.soundeff == false) && (options.theme == "verdant")) {
+			options.actionmode = "stop."
+		} else {
+			options.actionmode = "off"
+		}
+	} else if (options.actionmode == "ultra") {
 		if ((options.notation == 'default2') && (options.offlineProd == true)) {
 			options.actionmode = "earthquake"
 		} else {
 			options.actionmode = "off"
 		}
+	} else {
+		options.actionmode = "off"
 	}
 }
 

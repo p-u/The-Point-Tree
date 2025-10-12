@@ -137,6 +137,9 @@ function buyUpg(layer, id) {
 		if (options.actionmode == "earthquake") {
 			screenShake(1200, 1200);
 		}
+		if (options.actionmode == "stop.") {
+			screenShake(6000, 3000);
+		}
 	}
 	player[layer].upgrades.push(id);
 	if (upg.onPurchase != undefined)
@@ -175,6 +178,9 @@ function buyBuyable(layer, id) {
 		}
 		if (options.actionmode == "earthquake") {
 			screenShake(600, 400);
+		}
+		if (options.actionmode == "stop.") {
+			screenShake(3000, 1000);
 		}
 	}
 	updateBuyableTemp(layer)
@@ -348,6 +354,9 @@ function updateMilestones(layer) {
 				if (options.actionmode == "earthquake") {
 					screenShake(500, 600);
 				}
+				if (options.actionmode == "stop.") {
+					screenShake(3000, 1500);
+				}
 			}
 			if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 2, tmp[layer].color);
 			player[layer].lastMilestone = id
@@ -375,6 +384,9 @@ function updateAchievements(layer) {
 				}
 				if (options.actionmode == "earthquake") {
 					screenShake(800, 1100);
+				}
+				if (options.actionmode == "stop.") {
+					screenShake(4000, 2750);
 				}
 			}
 			if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
