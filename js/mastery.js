@@ -516,10 +516,10 @@ addLayer("m", {
             unlocked() { return (hasUpgrade("m", 143)) },
         },
         145: {
-            title: "Technology Four: Project Escape",
+            title: "Technology Five: To survive, and thrive",
             description: "You boost the spirits of the injured, and survived. 'Compounding' and the 12th iteration of it is stronger.",
             cost: new Decimal(1.8e126), 
-            unlocked() { return (hasUpgrade("m", 143)) },
+            unlocked() { return (hasUpgrade("m", 144)) },
         },
 
         1111: {
