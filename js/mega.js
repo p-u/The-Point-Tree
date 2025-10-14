@@ -913,6 +913,36 @@ addLayer("mega", {
                 return "Cost Formula: e23460000 x 1.75^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + base1 + "^(" + notationChooser(base2) + "^" + expo + ")-1. [Hardcaps at ^" + hcap + "]"
             }
         },
+        15: {
+            title: "Mega Buyable 5: Groundbreaking",
+            unlocked() { return (hasUpgrade('m', 151)) },
+            cost(x) {
+                exp2 = new Decimal(1.25)
+                return new Decimal("e1.7471e20").mul(Decimal.pow(1.1, x+20)).mul(Decimal.pow(x+30 , Decimal.pow(exp2 , x+9))).floor()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Mega Points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Boost Era Crystals gain by x" + notationChooser(buyableEffect(this.layer, this.id)) + " and Era Fragments (post-nerf) by x" + notationChooser(buyableEffect(this.layer, this.id).pow(efpow))
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(25)
+                base2 = x
+                expo = new Decimal(1.043)
+                eff = base1.pow(Decimal.pow(base2, expo))
+                efpow = new Decimal(0.01)
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: e1.7471e20 x 1.1^(Amt+20) x (Amt+30)^(" + exp2 + "^(Amt+9)). Effect formula: " + notationChooser(base1) + "^(" + notationChooser(base2) + "^" + expo + "). (Mastery Points ^" + efpow + " of EC mult)"
+            }
+        },
     },
     infoboxes: {
         buyable: {

@@ -3463,6 +3463,7 @@ addLayer("era", {
             if (hasUpgrade('era', 1023)) gain = gain.times(1e10)
             if (hasUpgrade('era', 1044)) gain = gain.times(1e16)
             if (hasUpgrade('era', 1064)) gain = gain.times(1e50)
+            if (hasUpgrade("m", 151)) gain = gain.times(buyableEffect('mega', 15))
             if (hasUpgrade("era", 333)) gain = gain.times(new Decimal(1.05).pow(new Date().getFullYear()))
             if (hasAchievement('a', 273)) gain = gain.times(22)
             if (hasUpgrade("era", 13)) gain = gain.times(new Decimal(2).pow(player.era.buyables[19].add(player.era.buyables[18])))
@@ -3571,6 +3572,8 @@ addLayer("era", {
             if (hasAchievement("sa", 41)) player.era.multaftnerf = player.era.multaftnerf.times(1.02)
             if (hasAchievement("sa", 42)) player.era.multaftnerf = player.era.multaftnerf.times(1.04)
             if (hasAchievement("sa", 43)) player.era.multaftnerf = player.era.multaftnerf.times(1.03)
+            let efpow = new Decimal(0.01)
+            if (hasUpgrade("m", 151)) player.era.multaftnerf = player.era.multaftnerf.times(buyableEffect('mega', 15).pow(efpow))
             if (hasMilestone("era", 105)) player.era.multaftnerf = player.era.multaftnerf.times(new Decimal(1.12).pow(player.era.infec))
             // final formula and adding
             gainef = player.era.baseef.div(player.era.nerf).times(player.era.multaftnerf)

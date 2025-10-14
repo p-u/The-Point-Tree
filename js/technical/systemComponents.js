@@ -151,11 +151,14 @@ var systemComponents = {
 		<br>
 		Pixabay for the Upgrade/MS/Buyable/Ach sound effects
 		<br>
+		<br>
+		Some beta testers
+		<br>
+		<br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
         <span v-if="modInfo.discordLink"><a class="link" v-bind:href="modInfo.discordLink" target="_blank">{{modInfo.discordName}}</a><br></span>
         <a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Modding Tree Discord</a><br>
         <a class="link" href="https://discord.gg/C3ugPsdP" target="_blank" v-bind:style="{'font-size': '16px'}">Main Point Tree server</a><br>
-		<a class="link" href="http://plaza.dsolver.ca/m/Resident_Cancel_8899" target="_blank" v-bind:style="{'font-size': '16px'}">Incremental Games Plaza Account</a><br>
 		<br><br>
         Time Played: {{ formatTime(player.timePlayed) }}<br><br>
         <h3>Hotkeys</h3><br>

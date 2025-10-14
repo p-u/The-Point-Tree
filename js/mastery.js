@@ -518,8 +518,14 @@ addLayer("m", {
         145: {
             title: "Technology Five: To survive, and thrive",
             description: "You boost the spirits of the injured, and survived. 'Compounding' and the 12th iteration of it is stronger.",
-            cost: new Decimal(2.5e128), 
+            cost: new Decimal(5e128), 
             unlocked() { return (hasUpgrade("m", 144)) },
+        },
+        151: {
+            title: "Oh great, another one",
+            description: "Unlock Mega Buyable 5",
+            cost: new Decimal(2.5e133), 
+            unlocked() { return (hasUpgrade("m", 145)) },
         },
 
         1111: {

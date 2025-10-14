@@ -37,8 +37,8 @@ function standardFormat(num, precision = 3) {
         return `${m}${STANDARD_SUFFIXES[tier]}`
     }
 
-    const ONES = ["", "U", "D", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"]
-    const TENS = ["", "De", "Vg", "Tg", "Qa", "Qt", "Sxg", "Spg", "Ocg", "Ng"]
+    const ONES = ["", "U", "D", "T", "Qd", "Qt", "Sx", "Sp", "Oc", "No"]
+    const TENS = ["", "De", "Vg", "Tg", "Qa", "Qn", "Sxg", "Spg", "Ocg", "Ng"]
     const HUNDREDS = ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"]
 
     function generateSuffix(tier) {
@@ -161,11 +161,7 @@ function notationChooser(decimal, precision=3) {
     } else if (options.notation === 'default2'){
         return format(decimal, precision)
     } else if (options.notation === 'mixed scientific'){
-        if (decimal.gte("e303")) {
-            return format(decimal, precision)
-        } else {
-            return standardFormat(decimal, precision)
-        }
+        return format(decimal, precision)
     } else {
         return standardFormat(decimal, precision)
     }
@@ -179,11 +175,7 @@ function notationChooserMinigame(decimal) {
     } else if (options.notation === 'default2'){
         return format(decimal, precision=6)
     } else if (options.notation === 'mixed scientific'){
-        if (decimal.gte("e303")) {
-            return format(decimal, precision=6)
-        } else {
-            return standardFormat(decimal, precision=6)
-        }
+        return format(decimal, precision=6)
     } else {
         return standardFormat(decimal, precision=6)
     }
@@ -213,6 +205,11 @@ function format(decimal, precision = 3, small) {
     }
     if (decimal.sign < 0) return "-" + format(decimal.neg(), precision, small)
     if (decimal.mag == Number.POSITIVE_INFINITY) return "Infinity"
+    if (options.notation === 'mixed scientific'){
+        if (decimal.lte("e100")) {
+            return standardFormat(decimal, precision)
+        }
+    }
     if (decimal.gte("eeee1000")) {
         var slog = decimal.slog()
         if (slog.gte(1e6)) return "F" + format(slog.floor())
