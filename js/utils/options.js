@@ -23,14 +23,16 @@ function getStartOptions() {
 }
 
 function changeNotation() {
-	if (options.notation === 'default2') { 
+	if (options.notation === 'mixed scientific') { 
 		options.notation = 'infinity'
 	} else if (options.notation === 'infinity'){ 
 		options.notation = 'standard'
 	} else if (options.notation === 'standard'){ 
 		options.notation = 'default'
-	} else {
+	} else if (options.notation === 'default'){
 		options.notation = 'default2'
+	} else {
+		options.notation = 'mixed scientific'
 	}
 }
 
