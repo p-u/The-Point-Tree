@@ -6,8 +6,12 @@ function exponentialFormat(num, precision, mantissa = true) {
         m = decimalOne
         e = e.add(1)
     }
-    e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
-    if (options.notation === 'default2'){
+    if (options.notation === 'mixed scientific') {
+        e = (e.gte(1e9) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+    } else {
+        e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+    }
+    if (options.notation === 'scientific2'){
         if (mantissa)
             return m.toStringWithDecimalPlaces(precision) + "x10^" + e
         else return "10^" + e
@@ -156,9 +160,9 @@ function sumValues(x) {
 function notationChooser(decimal, precision=3) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
-    } else if (options.notation === 'default'){
+    } else if (options.notation === 'scientific'){
         return format(decimal, precision)
-    } else if (options.notation === 'default2'){
+    } else if (options.notation === 'scientific2'){
         return format(decimal, precision)
     } else if (options.notation === 'mixed scientific'){
         return format(decimal, precision)
@@ -169,10 +173,10 @@ function notationChooser(decimal, precision=3) {
 
 function notationChooserMinigame(decimal) {
     if (options.notation === 'infinity') { 
-        return infinityFormat(decimal) 
-    } else if (options.notation === 'default'){
+        return infinityFormat(decimal, precision=6) 
+    } else if (options.notation === 'scientific'){
         return format(decimal, precision=6)
-    } else if (options.notation === 'default2'){
+    } else if (options.notation === 'scientific2'){
         return format(decimal, precision=6)
     } else if (options.notation === 'mixed scientific'){
         return format(decimal, precision=6)
@@ -181,13 +185,13 @@ function notationChooserMinigame(decimal) {
     }
 }
 
-function infinityFormat(decimal) {
+function infinityFormat(decimal, precision=3) {
     const pow1024 = new Decimal(2).pow(1024);
     if (decimal.lt(pow1024)) {
         return formatWhole(decimal);
     }
     if (decimal.lt(pow1024.pow(1e12))) {
-        return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor()) + "∞"
+        return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor(), precision) + "∞"
     }
     if (decimal.lt(pow1024.tetrate(4))) {
         return format(decimal.log(pow1024).floor()) + "∞" // added beacuse what's the point of showing 1* at the start
@@ -206,7 +210,7 @@ function format(decimal, precision = 3, small) {
     if (decimal.sign < 0) return "-" + format(decimal.neg(), precision, small)
     if (decimal.mag == Number.POSITIVE_INFINITY) return "Infinity"
     if (options.notation === 'mixed scientific'){
-        if (decimal.lte("e100")) {
+        if (decimal.lte("e100") && decimal.gte(1e9)) {
             return standardFormat(decimal, precision)
         }
     }

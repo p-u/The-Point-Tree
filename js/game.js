@@ -72,7 +72,6 @@ function playUpgradeSound(type = 'upg') {
 		console.log("Type is wrong!")
 	}
     audio.volume = 0.4; 
-    audio.play().catch(() => {}); 
 }
 
 

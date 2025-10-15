@@ -28,9 +28,9 @@ function changeNotation() {
 	} else if (options.notation === 'infinity'){ 
 		options.notation = 'standard'
 	} else if (options.notation === 'standard'){ 
-		options.notation = 'default'
-	} else if (options.notation === 'default'){
-		options.notation = 'default2'
+		options.notation = 'scientific'
+	} else if (options.notation === 'scientific'){
+		options.notation = 'scientific2'
 	} else {
 		options.notation = 'mixed scientific'
 	}
