@@ -900,9 +900,27 @@ addLayer("sac", {
         },
         124: {
             requirementDescription: "Sacrifice 3,849,800",
-            effectDescription: "Well, it's been over 700,000 Sacrifices without a Sacrifice Milestone. xee20 PF, -0.00775 Sacrifice Scaling, -0.07 Era Scaling.",
+            effectDescription: "Well, it's been over 700,000 Sacrifices without a Sacrifice Milestone. xee20 PF, -0.00775 Sacrifice Scaling, -0.060177 Era Scaling.",
             unlocked() {return player["sac"].points.gte(3e6)},
             done() { return player["sac"].points.gte(3849800) }
+        },
+        125: {
+            requirementDescription: "Sacrifice 4,312,213",
+            effectDescription: "Surprising how this is the second time that a MaP boost is placed. xSac^2 MaP. Also, ERA BUYABLE 6 BOOST IS NOT ENOUGH ARGH",
+            unlocked() {return player["sac"].points.gte(3e6)},
+            done() { return player["sac"].points.gte(3849800) }
+        },
+        126: {
+            requirementDescription: "Sacrifice 5,677,027",
+            effectDescription: "Increase ALOT timecap to 1,050s, +^0.005677 to SB5 HC.",
+            unlocked() {return player["sac"].points.gte(4.8e6)},
+            done() { return player["sac"].points.gte(5677027) }
+        },
+        127: {
+            requirementDescription: "Sacrifice 6.5M",
+            effectDescription: "Slight uptick - xee20 PF.",
+            unlocked() {return player["sac"].points.gte(6e6)},
+            done() { return player["sac"].points.gte(6.5e6) }
         },
     },
     sacms58eff() {

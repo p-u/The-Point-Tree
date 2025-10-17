@@ -216,6 +216,7 @@ addLayer("basic", {
             cost: new Decimal(1000),
             main() {
                 expu8 = 0.1625
+                if (hasUpgrade("basic", 122)) expu8 = 0.1725
                 if (inChallenge("sac", 12)) expu8 = 0
                 upgEffect24 = upgradeEffect(this.layer, this.id)
                 softcapDescription24 = ""
@@ -265,6 +266,7 @@ addLayer("basic", {
                 expu10 = 0.055
                 if (hasUpgrade('rebirth', 31)) expu10 = 0.075
                 if (hasUpgrade('prestige', 32)) expu10 = 0.09
+                if (hasUpgrade("era", 515)) expu10 = 0.1
                 if (inChallenge("sac", 12)) expu10 = 0
                 upgEffect32 = upgradeEffect(this.layer, this.id)
                 softcapDescription32 = ""
@@ -498,14 +500,20 @@ addLayer("basic", {
                 softcapDescription84 = ""
                 sdsc = ""
                 scpow = 0.3
+                spcpow = 0.2
                 if (upgEffect84.gte(new Decimal("e175")) ) {
                     softcapDescription84 = " (Softcapped)"
                     sdsc = ". Softcaps ^" + scpow + " at e175"
+                }
+                if (upgEffect84.gte(new Decimal("e8e16")) ) {
+                    softcapDescription84 = " (Supercapped)"
+                    sdsc = ". Supercaps ^" + spcpow + " at e8e16"
                 }
             },
             effect() {
                 let eff = player.points.add(1).pow(bb4exp)
                 eff = softcap(eff, new Decimal("e175"), scpow)
+                eff = softcap(eff, new Decimal("e8e16"), spcpow)
                 return eff
             },
             effectDisplay() {
@@ -540,6 +548,67 @@ addLayer("basic", {
             cost: new Decimal("e316648000"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 93) },
         },
+
+
+        // dimensional shift
+
+        15: {
+            title: "Row 5 of the basic upgrades / BU:Supreme",
+            description: "Woah, a new column! x1e10,000 PF",
+            cost: new Decimal("e2578500"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 74) },
+        },
+        25: {
+            title: "Again",
+            description: "x1e10,000 Basic Points",
+            cost: new Decimal("e2700750"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 15) },
+        },
+        35: {
+            title: "Softcap change",
+            description: "Rebirth Softcap is much weaker, but Prestige softcap is slightly stronger",
+            cost: new Decimal("e3094500"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 25) },
+        },
+        45: {
+            title: "Sussy Upgrade",
+            description: "Sussy Upgrade",
+            cost: new Decimal("e3628500"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 35) },
+        },
+        55: {
+            title: "Many many things",
+            description: "Rebirth Softcap is much weaker, x1e30K PF, Energy effect stronger, but -^0.03 Basic Exponent",
+            cost: new Decimal("e4261500"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 45) },
+        },
+        65: {
+            title: "Softcap Change II",
+            description: "Rebirth Supercap is much weaker, but Prestige softcap is much stronger",
+            cost: new Decimal("e4727500"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 55) },
+        },
+        75: {
+            title: "An exponent! Finally!",
+            description: "^1.005 PF.",
+            cost: new Decimal("e6810000"),
+            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 65) },
+        },
+        85: {
+            title: "Basic Boost PLUS",
+            description: "Basic Boost 1-4 is Stronger.",
+            cost: new Decimal("e22290000"),
+            unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 84) },
+        },
+        95: {
+            title: "Biggest PF BOOST!!",
+            description: "xe18.2M PF",
+            cost: new Decimal("e322159400"),
+            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
+        },
+
+        // row 10+
+
         101: {
             title: "5 Types of Upgrades. Type 1: Effect Boost/Reduce Softcap",
             description: "Mega Effect Boost increased from ^1 to ^3",
@@ -632,63 +701,35 @@ addLayer("basic", {
             cost: new Decimal("e3.351154668e16"),
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 114) },
         },
-
-
-        // dimensional shift
-
-        15: {
-            title: "Row 5 of the basic upgrades / BU:Supreme",
-            description: "Woah, a new column! x1e10,000 PF",
-            cost: new Decimal("e2578500"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 74) },
+        121: {
+            title: "Welp, we've come a long way...",
+            description: "Well, you still enjoying The Point Tree even up to this day? Well, I am too ~Randim, Coded on 15 October 2025, 13:13GMT",
+            cost: new Decimal("e69.61e21"),
+            unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 115) },
         },
-        25: {
-            title: "Again",
-            description: "x1e10,000 Basic Points",
-            cost: new Decimal("e2700750"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 15) },
+        122: {
+            title: "Wait! Before you go...",
+            description: "Woah, that Achievement, and Mastery Up. was insanely powerful... Row 12 upgrades (and the 2 other Mastery ups) is the limiter for Era 4, boost MaU153 timecap and another boost",
+            cost: new Decimal("e72.7935e21"),
+            unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 121) },
         },
-        35: {
-            title: "Softcap change",
-            description: "Rebirth Softcap is much weaker, but Prestige softcap is slightly stronger",
-            cost: new Decimal("e3094500"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 25) },
+        123: {
+            title: "wahh placeholder huh...",
+            description: "but is there really no boosts here??",
+            cost: new Decimal("e81.7828e21"),
+            unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 122) },
         },
-        45: {
-            title: "Sussy Upgrade",
-            description: "Sussy Upgrade",
-            cost: new Decimal("e3628500"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 35) },
+        124: {
+            title: "Preparing to enter a new phase.",
+            description: "Every 4 Mega Buyable 5, get 1 effective Era Buyable 3.",
+            cost: new Decimal("e83.4925e21"),
+            unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 122) },
         },
-        55: {
-            title: "Many many things",
-            description: "Rebirth Softcap is much weaker, x1e30K PF, Energy effect stronger, but -^0.03 Basic Exponent",
-            cost: new Decimal("e4261500"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 45) },
-        },
-        65: {
-            title: "Softcap Change II",
-            description: "Rebirth Supercap is much weaker, but Prestige softcap is much stronger",
-            cost: new Decimal("e4727500"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 55) },
-        },
-        75: {
-            title: "An exponent! Finally!",
-            description: "^1.005 PF.",
-            cost: new Decimal("e6810000"),
-            unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 65) },
-        },
-        85: {
-            title: "Basic Boost PLUS",
-            description: "Basic Boost 1-4 is Stronger.",
-            cost: new Decimal("e22290000"),
-            unlocked() { return hasMilestone("sac", 25) && hasUpgrade("basic", 84) },
-        },
-        95: {
-            title: "Biggest PF BOOST!!",
-            description: "xe18.2M PF",
-            cost: new Decimal("e322159400"),
-            unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
+        125: {
+            title: "Imminent.",
+            description: "You could already imagine getting to Era 4, do you? ^1.01 PF, and Era Buyable 4 is WAY stronger.",
+            cost: new Decimal("e89.1589e21"),
+            unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 122) },
         },
     },
     milestones: {
@@ -884,6 +925,7 @@ addLayer("basic", {
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade('m', 131)) exp = exp.add(0.0125)
         if (hasUpgrade('m', 132)) exp = exp.add(0.015)
+        if (hasUpgrade('m', 153)) exp = exp.sub(0.03)
         if (hasUpgrade("era", 434)) exp = exp.add(0.014)
         if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (inChallenge('m', 11)) exp = exp.mul(0.2)

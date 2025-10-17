@@ -17,25 +17,20 @@ addLayer("a", {
         return ("Achievements")
     },
     tabFormat: {
-        "Achievements [1]": {
+        "Achievements": {
             content: [
                 ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-4) }],
                 ["achievements", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]],
                 "blank",
                 ],
         },
-        "Achievements [2]": {
+        "More Achievements": {
             content: [
                 ["display-text", function() { return "Achievements: "+player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-4) }],
                 ["achievements", [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]],
                 "blank",
                 ],
                 unlocked() { return hasAchievement("a", 186)},
-        },
-        "Playtime Milestones": {
-            content: [
-                "milestones"
-            ],
         },
         "Savebank": {
             content: [
@@ -66,73 +61,6 @@ addLayer("a", {
                 ["display-text", function() { return "Mastery Points: " + notationChooser(player.m.points) }],
             ],
             unlocked() { return options.theme == 'void'},
-        },
-    },
-    milestones: {
-        1: {
-            requirementDescription: "1 minute of playtime",
-            effectDescription: "Thanks for playing my game! I hope you enjoy it",
-            done() { return player.timePlayed > 60 }
-        },
-        2: {
-            requirementDescription: "30 minutes of playtime",
-            effectDescription: "So, how do you find the game so far? Oh, btw, don't lose track of real-life time",
-            done() { return player.timePlayed > 1800 },
-            unlocked() { return hasMilestone("a", 1) }
-        },
-        3: {
-            requirementDescription: "5 hours of playtime",
-            effectDescription: "Remember to drink water :) and rest your eyes",
-            done() { return player.timePlayed > (60 * 60 * 5) },
-            unlocked() { return hasMilestone("a", 2) }
-        },
-        4: {
-            requirementDescription: "10 hours of playtime",
-            effectDescription: "You probably are at the Era stage if you did not venture into the minigame and played optimally. But if you are still at the beginning stage, here's a x1.5 PF for you",
-            done() { return player.timePlayed > (60 * 60 * 10) },
-            unlocked() { return hasMilestone("a", 3) }
-        },
-        5: {
-            requirementDescription: "1 day of playtime",
-            effectDescription: "Remember to join my discord server! Reminder 2 to drink water :) and rest your eyes. (Fun fact, you could have watched Jurrasic Park 11.3 times...)",
-            done() { return player.timePlayed > (60 * 60 * 24) },
-            unlocked() { return hasMilestone("a", 4) }
-        },
-        6: {
-            requirementDescription: "3 days of playtime",
-            effectDescription: "Addicted. Assuming you take 5 seconds to drink 50ml of water, you would have drank 259.2 litres (68.47 gallons) of water if you continuously drank it",
-            done() { return player.timePlayed > (60 * 60 * 24 * 3) },
-            unlocked() { return hasMilestone("a", 5) }
-        },
-        7: {
-            requirementDescription: "1 week of playtime",
-            effectDescription: "Reminder 3 to drink water, rest your eyes, eat and sleep, take a walk. Fun fact 3: Assuming you read at an average pace of 0.5 pages/minute, you would have read about 5,040 pages by now if you did not sleep... That's probably more than you've ever read. Anyway, here's a x20 Rebirth Point boost if you are still there... and an x3 Prestige Point boost",
-            done() { return player.timePlayed > (60 * 60 * 24 * 7) },
-            unlocked() { return hasMilestone("a", 6) }
-        },
-        8: {
-            requirementDescription: "1 month of playtime",
-            effectDescription: "You could watch the ENTIRE Avengers Cinematic Universe 11.625 times... well... and also xe100 PF",
-            done() { return player.timePlayed > (60 * 60 * 24 * 30) },
-            unlocked() { return hasMilestone("a", 7) }
-        },
-        9: {
-            requirementDescription: "100 days of playtime",
-            effectDescription: "Screenshot proof of this achievement and send it in my discord for an exclusive role!",
-            done() { return player.timePlayed > (60 * 60 * 24 * 100) },
-            unlocked() { return hasMilestone("a", 8) }
-        },
-        10: {
-            requirementDescription: "200 days of playtime",
-            effectDescription: "You either are a cheater OR a absolute true godly no-life... Fun fact 4: If you have just left your computer on for 200 days, it will use 1200 kWh for a desktop and 360 kWh for a laptop (averages). Assuming you are in Los Angeles, you can drive a Tesla Model 3 to Beaumont, Texas for a laptop and to Montreal, Canada there, back and there again for a desktop... Oh also xe1,000,000 PF...",
-            done() { return player.timePlayed > (60 * 60 * 24 * 200) },
-            unlocked() { return hasMilestone("a", 9) }
-        },
-        11: {
-            requirementDescription: "1 year of playtime",
-            effectDescription: "I don't think anyone is daring enough to sit there and wait for a FULL YEAR for a single achievement... Well played. You 100%ed the game.",
-            done() { return player.timePlayed > (60 * 60 * 24 * 365) },
-            unlocked() { return hasMilestone("a", 10) }
         },
     },
 
@@ -1399,6 +1327,12 @@ addLayer("a", {
             name: "e9.11e19 MP",
             done() { return player.mega.points.gte(new Decimal("e9.11e19")) },
             tooltip: "Get e9.11e19 MP. Reward: x911 MaP, xe9.11e19 PF",
+            unlocked() { return hasAchievement("a", 264) },
+        },
+        276: {
+            name: "e252.31Sx PF [btw, first achievement with mixed scientific as default notation]",
+            done() { return player.points.gte(new Decimal("e2.5231e23")) },
+            tooltip: "Get e2.5231e23 PF. Reward: Supreme Buyable 5 is not THAT useless, Every 5 gains one Supreme Buyable 6.",
             unlocked() { return hasAchievement("a", 264) },
         },
     tabFormat: [

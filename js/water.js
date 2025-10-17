@@ -365,7 +365,7 @@ addLayer("w", {
             description: "Due to the amount of Water, the amount of cells naturally increases. log(Water) delays Cells softcap.",
             cost: new Decimal("e2.3205e15"),
             effect() {
-                return player.w.points.log10()
+                return player.w.points.add(1).log10()
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
@@ -540,6 +540,7 @@ addLayer("w", {
         if (hasUpgrade('w', 31)) weffpow = 3
         if (hasUpgrade('e', 65)) weffpow = 5
         if (hasUpgrade("era", 133)) weffpow = 17.5
+        if (hasUpgrade("m", 152)) weffpow = 21.25
         let eff = player.w.points.add(1).pow(weffpow)
         let cap = 0.3
         if (hasUpgrade("w", 92)) cap = 0.35

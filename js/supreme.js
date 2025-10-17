@@ -766,6 +766,7 @@ addLayer("s", {
             if (hasUpgrade("w", 82)) base2 = base2.pow(1.3)
             if (hasUpgrade("era", 75)) base2 = base2.pow(1.1)
             if (hasUpgrade("era", 454)) base2 = base2.pow(1.05)
+            if (hasUpgrade("era", 514)) base2 = base2.pow(1.188)
             expo = new Decimal(1.001)
             let eff = base1.pow(Decimal.pow(base2, expo))
             return eff
@@ -914,14 +915,24 @@ addLayer("s", {
         },
     },
     16: {
-        title: "Supreme Buyable 6: Weaker Sac Scaling (Cap -0.5)",
+        title: "Supreme Buyable 6: Weaker Sac Scaling (Cap -0.3, Softcap -0.175)",
         unlocked() { return (hasUpgrade('s', 55)) },
         cost(x) {
             let exp2 = 2
             return new Decimal("1e182341000").mul(Decimal.pow(1.75, x)).mul(Decimal.pow(x , Decimal.pow(exp2 , x))).floor()
         },
+        extra(){
+            let extra = new Decimal(0)
+            if (hasAchievement("a", 276)) extra = extra.plus(getBuyableAmount(this.layer, 15).div(5).floor())
+            return extra
+        },
         display() {
-            return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: -" + format(buyableEffect(this.layer, this.id)) + " to Sacrifice Scaling."
+            let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " supreme points." + "<br>Bought: " + getBuyableAmount(this.layer, this.id)
+            if (this.extra().gte(1)) {
+                dis = dis + " + " + notationChooser(this.extra())
+            }
+            dis = dis + "<br>Effect: -" + format(buyableEffect(this.layer, this.id)) + " to Sacrifice Scaling."
+            return dis
         },
         canAfford() {
             return player[this.layer].points.gte(this.cost())
@@ -931,7 +942,8 @@ addLayer("s", {
             player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
-        effect(x) {
+        effect() {
+            let x = getBuyableAmount(this.layer, this.id).add(this.extra())
             let base1 = new Decimal(1.0012)
             if(hasUpgrade("s", 105)) base1 = new Decimal(1.0015)
             if(hasUpgrade("era", 221)) base1 = new Decimal(1.0018)
@@ -941,7 +953,13 @@ addLayer("s", {
             let base2 = x
             let expo = new Decimal(1.006)
             let eff = base1.pow(Decimal.pow(base2, expo)).sub(1)
-            let hcap = new Decimal(0.5)
+            let scap = new Decimal(0.175)
+            let rem = new Decimal(0)
+            if (eff.gte(scap)) { 
+                rem = eff.sub(scap)
+                eff = scap.add(rem.div(3))
+            }
+            let hcap = new Decimal(0.3)
             if (eff.gte(hcap)) eff = hcap
             return eff
         },
@@ -1021,6 +1039,7 @@ addLayer("s", {
             if (hasUpgrade("era", 491)) hcap = hcap.add(0.005)
             if(hasMilestone("sac", 115)) hcap = hcap.add(0.0015)
             if (hasMilestone("sac", 122)) hcap = hcap.add(0.002896)
+            if (hasMilestone("sac", 126)) hcap = hcap.add(0.005677027)
             if (hasMilestone("era", 101)) hcap = hcap.add(buyableEffect('era', 19))
             if (hasMilestone("era", 105)) hcap = hcap.add(new Decimal(0.001).mul(player.era.infec))
             if (hasUpgrade("era", 503)) hcap = hcap.mul(1.02)

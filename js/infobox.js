@@ -51,6 +51,9 @@ addLayer("i", {
                 "blank",
                 "blank",
                 ["infobox", "catch"],
+                "blank",
+                "blank",
+                ["infobox", "effbuyables"],
             ],
         },
         "Pre-Sacrifice Layers [Early-game]": {
@@ -88,7 +91,7 @@ addLayer("i", {
                 ["infobox", "mastery"],
             ],
         },
-        "Era to Endgame [Late-game]": {
+        "Era to Endgame [Late and end-game]": {
             unlocked() { return player.era.points.gte(1)},
             content: [
                 ["infobox", "era"],
@@ -98,6 +101,9 @@ addLayer("i", {
                 "blank",
                 "blank",
                 ["infobox", "cells"],
+                "blank",
+                "blank",
+                ["infobox", "ef"],
             ],
         },
         "Recommended Completion of challenges": {
@@ -116,7 +122,7 @@ addLayer("i", {
     infoboxes: {
         main: {
             title: "Welcome to The Point Tree!",
-            body() { return "Explore many unique upgrades, and get the biggest numbers possible! In this game, you will go through many different layers, unlock new and unique features like upgrades, milestones and buyables. Please visit this layer often." },
+            body() { return "Explore many unique upgrades, and get the biggest numbers possible! In this game, you will go through many different layers, unlock new and unique features like upgrades, milestones and buyables. Please visit this layer often. Also, time to complete each section: Pre-Sac: 3-4hrs, Sac to Era: 4-6hrs, Era 1 and 2: 3-5hrs, Era 3: 4-7hrs" },
         },
         ach: {
             title: "Achievements [Ach]",
@@ -258,6 +264,16 @@ addLayer("i", {
             title: "The Cells Layer [NO SHORT FORM]",
             body() { return "Finally! A new layer! Mechanic: Replicate: Multiply cells by 2 at first, upgrades to increase that. At first, replicate time is 20 seconds, upgrades and buyables to decrease that as well. At 1,000 cells there is a softcap, the multiplier decreases as cells increase after 1,000. Strategy of whether to buy buyable/save up/buy upgrade is crucial for progression. Upgrades and buyables can delay the softcap, reduce the softcap strength, increase cell gain on replicate and reduce cell replication time" },
             unlocked() { return player.c.points.gte(new Decimal("1"))}
+        },
+        ef: {
+            title: "EF? How does changing the 'C' to the 'F' do anything?",
+            body() { return "EF is Era Fragments. Remember Point Fragments, well this has gotten so inflated that the formula is slog of the currencies (basically taking the amount of 'e's in the currency. With more EF, comes more difficulty to obtain EF, due to the nerf of /3 for x2 EF (nerf can be decreased). However, some sacred upgrades can bypass the EF nerf, but others have to endure it. Also, there are EF milestones. Also, EF Buyables, which are necessary to increase total EF, used for EF Milestones. Let's just say, EF is OP." },
+            unlocked() { return player.era.ef.gte(new Decimal("1"))}
+        },
+        effbuyables: {
+            title: "Effective Buyables",
+            body() { return "Well, why the new naming scheme? Simple. There can't really be much A/B/C Era Upgrades due to EFUp 10 and the buff of ErUp 1e1. (x20 EC/upg...) Some buyables, when purchased, may give free other buyables as 'effective' buyables (has the same effect as normal buyables, indicated by a '+' after the buys. Also, implemented after WG.)." },
+            unlocked() { return hasUpgrade("era", 513)}
         },
     },
 }, 

@@ -904,6 +904,7 @@ function getPointGen() {
 	if (hasMilestone('sac', 113)) gain = gain.times("e1e19")
 	if (hasMilestone('sac', 121)) gain = gain.times("e1.2558e20")
 	if (hasMilestone("sac", 124)) gain = gain.times("ee20")
+	if (hasMilestone("sac", 127)) gain = gain.times("ee20")
 
 
 	// achievement
@@ -1034,11 +1035,19 @@ function getPointGen() {
 	if (hasUpgrade("era", 501)) gain = gain.times("e2.5e19")
 	if (hasUpgrade("e", 203)) gain = gain.times("e5e19")
 	if (hasUpgrade("e", 214)) gain = gain.times("e9e19")
-
-	// playtime milestone
-	if (hasMilestone("a", 4)) gain = gain.times(1.5)
-	if (hasMilestone("a", 8)) gain = gain.times(1e100)
-	if (hasMilestone("a", 10)) gain = gain.times("ee6")
+	let mc153timecap = 150
+	if (hasUpgrade("basic", 121)) mc153timecap = 265
+	if (hasUpgrade("basic", 122)) mc153timecap = 510
+	if (hasUpgrade("basic", 123)) mc153timecap = 640
+	if (hasUpgrade("basic", 124)) mc153timecap = 967
+	if (hasMilestone("sac", 126)) mc153timecap = 1050
+	if (hasUpgrade("basic", 125)) mc153timecap = 1700
+	let alotpow = new Decimal(1)
+	if (hasUpgrade("m", 154)) alotpow = new Decimal(1.1)
+	if (hasUpgrade("m", 155)) alotpow = new Decimal(1.32)
+	if (hasUpgrade('m', 153)) {
+		if (player.timePlayed - player.m.ma153t > 1) gain = gain.times(new Decimal("e7e19").pow(Math.log2(Math.min(player.timePlayed - player.m.ma153t, mc153timecap))).pow(alotpow))
+	}
 
 
 	// power (^)
@@ -1200,6 +1209,7 @@ function getPointGen() {
 	if (hasUpgrade("era", 472)) gain = gain.pow(1.0034)
 	if (hasUpgrade("era", 501)) gain = gain.pow(1.007)
 	if (hasUpgrade("m", 144)) gain = gain.pow(1.0075)
+	if (hasUpgrade("basic", 125)) gain = gain.pow(1.01)
 	if (hasUpgrade("era", 1054)) gain = gain.pow(1.01)
 	if (hasMilestone("era", 104)) gain = gain.pow(new Decimal(player.era.milestones.length).div(1000).add(1))
 	if (player.points.gte("e100e9") && inChallenge("m", 12)) gain = gain.pow(0.1)
@@ -1283,7 +1293,11 @@ var displayThings = [
 		if (inChallenge("m", 13)) {
 			return display + "\n All points gain is raised to the rng power: ^" + format(player.m.rngpower) + "."
 		} else {
-			return display
+			if (player.era.diff * 1000 > 52) {
+				return display + "\n Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000)
+			} else {
+				return display + "\n Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000 / player.devSpeed) + " (capped at 50ms)"
+			}
 		}
 	},
 ]
@@ -1292,7 +1306,6 @@ var displayThings = [
 function isEndgame() {
 	return player.era.ec.gte(new Decimal("e2.96732323e21"))
 }
-
 
 
 // Less important things beyond this point!

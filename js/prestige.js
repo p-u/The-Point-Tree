@@ -478,7 +478,6 @@ addLayer("prestige", {
         if (hasUpgrade('e', 202)) mult = mult.times("e3e19")
         if (hasUpgrade('m', 142)) mult = mult.times("e3e19")
 
-        if (hasMilestone("a", 7)) mult = mult.times(3)
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },

@@ -531,7 +531,6 @@ addLayer("rebirth", {
         if (hasAchievement('sa', 21)) mult = mult.times(1.1)
         if (hasAchievement('sa', 22)) mult = mult.times(1.25)
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
-        if (hasMilestone("a", 7)) mult = mult.times(20)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

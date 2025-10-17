@@ -29,6 +29,7 @@ addLayer("c", {
         player.c.softcapStart = new Decimal(1000),
 
         // reset time
+
         player.c.preRT = player.c.preRT.div(buyableEffect('c', 11))
         if(hasUpgrade("c", 13)) player.c.preRT = player.c.preRT.div(1.25)
         if(hasMilestone("sac", 112)) player.c.preRT = player.c.preRT.div(1.5)
@@ -73,10 +74,10 @@ addLayer("c", {
         if(hasMilestone("sac", 113)) player.c.softcapStart = new Decimal(2500000)
         if (hasMilestone("c", 4)) player.c.softcapStart = new Decimal(80e6)
         if (buyableEffect('c', 13).gte(1)) player.c.softcapStart = player.c.softcapStart.mul(buyableEffect('c', 13))
-        if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul(player.sac.points.pow(0.5))
+        if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul((player.sac.points.add(1)).pow(0.5))
         if (hasAchievement("sa", 42)) player.c.softcapStart = player.c.softcapStart.mul(1.1)
         if (hasUpgrade("era", 502)) player.c.softcapStart = player.c.softcapStart.mul(1.8)
-        if (hasMilestone("c", 6)) player.c.softcapStart = player.c.softcapStart.mul(player.c.points.pow(0.05))
+        if (hasMilestone("c", 6)) player.c.softcapStart = player.c.softcapStart.mul((player.c.points.add(1e5)).pow(0.05))
         if (hasUpgrade("c", 63)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("c", 63))
         if (hasMilestone("era", 104)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.25).pow(player.era.milestones.length))
         if (hasUpgrade("era", 333)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.005).pow(new Date().getFullYear()))
@@ -357,14 +358,16 @@ addLayer("c", {
             description: "For every cell upgrade bought, ^e1.2e18 PF.",
             cost: new Decimal(5e57),
             effect() {
-                return new Decimal("e1.2e18").pow(player.c.upgrades.length)
+                base61 = new Decimal("e1.2e18")
+                if (hasUpgrade("era", 313)) base61 = new Decimal("e1e19")
+                return new Decimal(base61).pow(player.c.upgrades.length)
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 return "This upgrade multiplies Point Fragments by x" + notationChooser(upgEffect)+"."
             },
             tooltip() {
-                return "Formula: e1.2e18^CUps"
+                return "Formula: "+ base61+"^CUps"
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 54)) },
         },
@@ -373,14 +376,16 @@ addLayer("c", {
             description: "For every cell upgrade bought, x1.1 Cell Base multiplier.",
             cost: new Decimal(1e62),
             effect() {
-                return new Decimal(1.1).pow(player.c.upgrades.length)
+                base62 = new Decimal(1.1)
+                if (hasUpgrade("era", 313)) base62 = new Decimal(1.25)
+                return new Decimal(base62).pow(player.c.upgrades.length)
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 return "This upgrade multiplies Cell Base Mult by x" + notationChooser(upgEffect)+"."
             },
             tooltip() {
-                return "Formula: 1.1^CUps"
+                return "Formula: " + base62 + "^CUps"
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 61)) },
         },
@@ -389,14 +394,16 @@ addLayer("c", {
             description: "For every cell upgrade bought, x1.5 Cell Softcap delay (x2.25 nett due to ^2 boost).",
             cost: new Decimal(1.5e79),
             effect() {
-                return new Decimal(1.5).pow(player.c.upgrades.length)
+                csdb = new Decimal(1.5)
+                if (hasUpgrade("era", 313)) csdb = new Decimal(2)
+                return new Decimal(csdb).pow(player.c.upgrades.length)
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 return "This upgrade delays the start of the cell softcap by x" + notationChooser(upgEffect)+"."
             },
             tooltip() {
-                return "Formula: 1.5^CUps"
+                return "Formula: " + csdb + "^CUps"
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 62)) },
         },
@@ -405,14 +412,16 @@ addLayer("c", {
             description: "For every cell upgrade bought, +0.0002 EP.",
             cost: new Decimal(1e100),
             effect() {
-                return new Decimal(0.0002).mul(player.c.upgrades.length)
+                xtranett = 0
+                if (hasUpgrade("era", 313)) xtranett = 1
+                return new Decimal(0.0002).mul(player.c.upgrades.length + xtranett)
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
                 return "This upgrade increases EP by " + notationChooser(upgEffect)+"."
             },
             tooltip() {
-                return "Formula: 0.0002*CUps"
+                return "Formula: 0.0002*(CUps+" + xtranett + ")"
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 63)) },
         },

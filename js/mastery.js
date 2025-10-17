@@ -10,6 +10,7 @@ addLayer("m", {
             rngpower: new Decimal(0.01),
             totalUps: new Decimal(0),
             lastUps: new Decimal(0),
+            ma153t: 0,
         }
     },
     layerShown(){
@@ -178,6 +179,7 @@ addLayer("m", {
                 mmp6exp = 0.111
                 if (hasUpgrade('m', 72)) mmp6exp = 0.139
                 if (hasUpgrade('s', 122)) mmp6exp = 0.157
+                if (hasUpgrade("era", 313)) mmp6exp = 0.176
                 softcapDescriptionmast42 = ""
                 sdsc = ""
                 upgEffectmast42 = upgradeEffect(this.layer, this.id)
@@ -527,6 +529,30 @@ addLayer("m", {
             cost: new Decimal(2.5e133), 
             unlocked() { return (hasUpgrade("m", 145)) },
         },
+        152: {
+            title: "Hey, why am I still playing this game?",
+            description: "Era Buyable 6, and Water layer effect is stronger",
+            cost: new Decimal(1.37e137), 
+            unlocked() { return (hasUpgrade("m", 151)) },
+        },
+        153: {
+            title: "The first real trade-off since when? Well, just think about it.",
+            description: "-^0.03 BP but xALOT PF, also unlock Basic Upgrades Row 12. (The 'ALOT' boost increases since you bought this upgrade at a decreasing rate [log2], cap 150s for now)",
+            cost: new Decimal(5e155), 
+            unlocked() { return (hasUpgrade("m", 152)) },
+        },
+        154: {
+            title: "ALOT -> AWHOLELOT",
+            description: "The 'ALOT' boost is further powered by 1.1.",
+            cost: new Decimal(1e163), 
+            unlocked() { return (hasUpgrade("m", 153)) },
+        },
+        155: {
+            title: "AWOLELOT -> EXTREMITY",
+            description: "The 'ALOT' boost is further powered by 1.2...and also ^1.02 EC.",
+            cost: new Decimal(3.7e172), 
+            unlocked() { return (hasUpgrade("m", 154)) },
+        },
 
         1111: {
             title: "The Second Completion",
@@ -730,6 +756,7 @@ addLayer("m", {
         if (hasMilestone("basic", 12)) mult = mult.times(40)
         if (hasAchievement('a', 275)) mult = mult.times(911)
         if (hasMilestone('sac', 93)) mult = mult.times(1e10)
+        if (hasMilestone("sac", 125) && hasUpgrade('m', 152)) mult = mult.times(player.sac.points.pow(2))
         if (hasUpgrade('m', 103)) mult = mult.times(upgradeEffect('m', 103))
         let mpow = new Decimal(0.3)
         if (hasUpgrade("m", 113)) mpow = new Decimal(0.4)
@@ -770,6 +797,9 @@ addLayer("m", {
 
     update(diff) {
         diff = Math.min(diff, 0.5)
+        if (hasUpgrade("m", 153) && player.m.ma153t == 0) {
+            player.m.ma153t = player.timePlayed
+        }
         if (inChallenge("m", 13)) {
             let gain = 7500
             if (hasUpgrade("e", 202)) gain = 7300

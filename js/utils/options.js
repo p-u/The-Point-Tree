@@ -14,7 +14,7 @@ function getStartOptions() {
 		oldStyle: false,
 		tooltipForcing: true,
 		theme: "default",
-		notation: "default",
+		notation: "mixed scientific",
 		forceTooltips: true,
 		hideMilestonePopups: false,
 		actionmode: "off",

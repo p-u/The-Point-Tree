@@ -761,6 +761,7 @@ addLayer("mega", {
                 player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+
             effect(x) {
                 base1 = new Decimal(1e10)
                 base2 = x
@@ -933,6 +934,7 @@ addLayer("mega", {
             },
             effect(x) {
                 base1 = new Decimal(25)
+                if (hasUpgrade("era", 436)) base1 = new Decimal(75)
                 base2 = x
                 expo = new Decimal(1.043)
                 eff = base1.pow(Decimal.pow(base2, expo))
@@ -1062,6 +1064,7 @@ addLayer("mega", {
         if (hasUpgrade('era', 405)) exp = exp.add(0.022)
         if (hasUpgrade('era', 435)) exp = exp.add(0.014)
         if (hasMilestone('sac', 117)) exp = exp.add(0.017)
+        if (hasUpgrade("era", 512)) exp = exp.add(0.01)
         if (hasUpgrade('era', 391)) exp = exp.add(upgradeEffect('era', 391))
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade("e", 211)) exp = exp.add(0.04)
@@ -1080,6 +1083,7 @@ addLayer("mega", {
         if (hasUpgrade('mega', 81)) cap = 0.45
         if (hasUpgrade('mega', 83)) cap = 0.6125
         if (hasUpgrade('m', 91)) cap = 0.825
+        if (hasUpgrade("basic", 121)) cap = 0.9025
         softcappedEffect = softcap(eff, new Decimal("e30000"), new Decimal(cap))
         if (hasUpgrade('era', 264)) sprcap = 0.565
         softcappedEffect = softcap(softcappedEffect, new Decimal("e500e9"), new Decimal(sprcap))
@@ -1098,7 +1102,7 @@ addLayer("mega", {
             if (layerEffect.gte(new Decimal("e5e17")) ) {
                 softcapDescription = " (Hypercapped)"
             }
-            let desc = "which is boosting all previous reset layers by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
+            let desc = "which is boosting all previous currencies by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;
             return desc;
         },
     branches: ["prestige"], 
