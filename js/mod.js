@@ -1190,6 +1190,7 @@ function getPointGen() {
 	if (hasAchievement('a', 214)) gain = gain.pow(1.0077)
 	if (hasUpgrade("era", 285)) gain = gain.pow(1.0125)
 	if (hasMilestone("era", 3)) gain = gain.pow(1.025)
+	if (hasMilestone("era", 4)) gain = gain.pow(1.02)
 	if (hasUpgrade("w", 83)) gain = gain.pow(1.001)
 	if (hasUpgrade("era", 55)) gain = gain.pow(1.0075)
 	if (hasUpgrade("era", 35)) gain = gain.pow(1.01)

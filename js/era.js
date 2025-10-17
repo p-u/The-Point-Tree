@@ -274,7 +274,7 @@ addLayer("era", {
         },
         4: {
             requirementDescription: "Era Four: The expansion of your worldview",
-            effectDescription: "Keep all upgrades, milestones and buyables on era reset (excluding sacrifice milestones), ^1.025 PF, x33,333 EC, Less Sac Scaling, More EC Ups, and unlock a new row of Secret Achievements along with RNG (base 20 achievements, for each row of achievements, add a new milestone).",
+            effectDescription: "Automate MB5, SB7, EB6-9. ^1.02 PF. Unlock Sacrifice RE:Challenges [v4.1/2], more EF, Cells upgrades.",
             done() { return player["era"].points.gte(4) },
             unlocked() { return hasMilestone("era", 3) },
         },
