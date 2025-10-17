@@ -333,6 +333,7 @@ addLayer("e", {
                     scpow = 0.3
                     sppow = 0.3
                     hycpow = 0.2
+                    ipow = 0.15
                     upgEffecte24 = upgradeEffect(this.layer, this.id)
                     if (upgEffecte24.gte(new Decimal("e5000")) ) {
                         softcapDescriptione24 = " (Softcapped)"
@@ -346,12 +347,17 @@ addLayer("e", {
                         softcapDescriptione24 = " (Hypercapped)"
                         sdsc = sdsc + ", Hypercaps ^" + hycpow + " at e1e15"
                     }
+                    if (upgEffecte24.gte(new Decimal("e9e16")) ) {
+                        softcapDescriptione24 = " (Insanitycapped)"
+                        sdsc = sdsc + ", Insanitycaps ^" + ipow + " at e9e16"
+                    }
                 },
                 effect() {
                     let eff = player["mega"].points.add(1).pow(e8exp)
                     eff = softcap(eff, new Decimal("1e5000"), scpow)
                     eff = softcap(eff, new Decimal("e100e6"), sppow)
                     eff = softcap(eff, new Decimal("e1e15"), hycpow)
+                    eff = softcap(eff, new Decimal("e9e16"), ipow)
                     return eff
                 },
                 effectDisplay() {

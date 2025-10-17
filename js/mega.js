@@ -209,20 +209,26 @@ addLayer("mega", {
                 sdsc = ""
                 scpow = 0.5
                 sppow = 0.4
+                hypow = 0.3
                 upgEffectm31 = upgradeEffect(this.layer, this.id)
                 if (upgEffectm31.gte(new Decimal("e2.5e12")) ) {
                     softcapDescriptionm31 = " (Softcapped)"
                     sdsc = ". Softcaps ^" + scpow + " at e2.5e12"
                 }
-                if (upgEffectm31.gte(new Decimal("e1e15")) ) {
+                if (upgEffectm31.gte(new Decimal("e4e15")) ) {
                     softcapDescriptionm31 = " (Supercapped)"
-                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e1e15"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e4e15"
+                }
+                if (upgEffectm31.gte(new Decimal("e4e22")) ) {
+                    softcapDescriptionm31 = " (Hypercapped)"
+                    sdsc = sdsc + ", Hypercaps ^" + sppow + " at e4e22"
                 }
             },
             effect() {
                 let eff =  player["mega"].points.add(1).pow(mu9exp)
                 eff = softcap(eff, new Decimal("e2.5e12"), scpow)
                 eff = softcap(eff, new Decimal("e4e15"), sppow)
+                eff = softcap(eff, new Decimal("e4e22"), hypow)
                 return eff
             },
             effectDisplay() {
@@ -273,15 +279,21 @@ addLayer("mega", {
                 sdsc = ""
                 scpow = 0.4
                 if (hasUpgrade("mega", 45)) scpow = 0.68
+                superpow = 0.5
                 upgEffectm42 = upgradeEffect(this.layer, this.id)
                 if (upgEffectm42.gte(new Decimal("e8000")) ) {
                     softcapDescriptionm42 = " (Softcapped)"
                     sdsc = ". Softcaps ^" + scpow + " at e8000"
                 }
+                if (upgEffectm42.gte(new Decimal("e5.85e19")) ) {
+                    softcapDescriptionm42 = " (Supercapped)"
+                    sdsc = ". Supercaps ^" + superpow + " at e5.85e19"
+                }
             },
             effect() {
                 let eff = player["mega"].points.add(1).pow(mbiupgexp)
                 eff = softcap(eff, new Decimal("1e8000"), scpow)
+                eff = softcap(eff, new Decimal("e5.85e19"), superpow)
                 return eff
             },
             effectDisplay() {

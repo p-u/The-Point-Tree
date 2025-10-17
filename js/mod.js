@@ -1223,6 +1223,7 @@ function getPointGen() {
 		if (hasUpgrade("e", 203)) gain = gain.pow(1.01)
 	}
 	if (hasChallenge("m", 13)) gain = gain.pow(1.01)
+	if (player.points.gte("ee25")) gain = gain.pow(new Decimal(100).sub(Decimal.log10(Decimal.log10(player.points))).div(75))
 	return gain
 }
 

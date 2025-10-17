@@ -175,6 +175,7 @@ addLayer("basic", {
                 sdsc = ""
                 scpow = 0.5
                 sppow = 0.4
+                hcpow = 0.3
                 if (upgEffect21.gte(new Decimal("e5e6")) ) {
                     softcapDescription21 = " (Softcapped)"
                     sdsc = ". Softcaps ^" + scpow + " at e5M"
@@ -183,11 +184,16 @@ addLayer("basic", {
                     softcapDescription21 = " (Supercapped)"
                     sdsc = sdsc + ", Supercaps ^" + sppow + " at e1e12"
                 }
+                if (upgEffect21.gte(new Decimal("e2e22")) ) {
+                    softcapDescription21 = " (Hypercapped)"
+                    sdsc = sdsc + ", Hypercaps ^" + hcpow + " at e2e22"
+                }
             },
             effect() {
                 let eff = player.basic.points.add(1).pow(expu5)
                 eff = softcap(eff, new Decimal("1e5000000"), scpow)
                 eff = softcap(eff, new Decimal("e1e12"), sppow)
+                eff = softcap(eff, new Decimal("e2e22"), hcpow)
                 return eff
             },
             effectDisplay() {
@@ -274,6 +280,7 @@ addLayer("basic", {
                 scpow = 0.5
                 if (hasUpgrade('m', 95)) scpow = 0.522
                 sppow = 0.4
+                hcpow = 0.375
                 if (upgEffect32.gte(new Decimal("e100e6")) ) {
                     softcapDescription32 = " (Softcapped)"
                     sdsc = ". Softcaps ^" + scpow + " at e100M"
@@ -282,11 +289,16 @@ addLayer("basic", {
                     softcapDescription32 = " (Supercapped)"
                     sdsc = sdsc + ", Supercaps ^" + sppow + " at e2.5e9"
                 }
+                if (upgEffect32.gte(new Decimal("e3.3e22")) ) {
+                    softcapDescription32 = " (Hypercapped)"
+                    sdsc = sdsc + ", Hypercaps ^" + hcpow + " at e3.3e22"
+                }
             },
             effect() {
                 let eff = player.points.add(300000).pow(expu10)
                 eff = softcap(eff, new Decimal("1e100000000"), scpow)
-                eff = softcap(eff, new Decimal("1e2500000000"), 0.4)
+                eff = softcap(eff, new Decimal("1e2500000000"), sppow)
+                eff = softcap(eff, new Decimal("e3.3e22"), hcpow)
                 return eff
             },
             effectDisplay() {
