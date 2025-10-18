@@ -705,7 +705,7 @@ addLayer("m", {
             canComplete: function() {return player.points.gte("e4.5e21")},
             goalDescription: "Get e4.5e21 PF",
             rewardDescription: "Unlock more ups woohoo! ^2 Cell Softcap start, x2 EF after nerf, ^1.01 PF, Double RNG Points.",
-            unlocked() { return ((hasMilestone("era", 103) || inChallenge("m", 13)) && (!(hasChallenge('m', 13)))) },
+            unlocked() { return ((hasMilestone("era", 103) || inChallenge("m", 13)) || (hasChallenge('m', 13))) },
             onEnter() {
                 player.m.points = new Decimal(0)
             },
@@ -823,16 +823,16 @@ addLayer("m", {
             if (hasUpgrade("e", 214)) nnerf = new Decimal(1800)
             if (hasUpgrade("e", 222)) nnerf = new Decimal(1900)
             player.m.rngpower = player.m.rngpower.sub(player.m.rngpower.div(nnerf).mul(30).mul(diff).mul(Math.random()))
-            if (player.m.rngpower.gte(0.625)) {
+            if (player.m.rngpower.gte(400)) {
                 player.m.hyper = true
+            }
+            if (player.m.rngpower.gte(0.625)) {
                 player.m.rngpower = new Decimal(0.62)
             }
             if ((player.m.rngpower.gte(0.24) && (!(hasUpgrade("e", 223))))) {
-                player.m.hyper = true
                 player.m.rngpower = new Decimal(0.208)
             }
             if ((player.m.rngpower.gte(0.13) && (!(hasUpgrade("e", 212))))) {
-                player.m.hyper = true
                 player.m.rngpower = new Decimal(0.106)
             }
             player.m.totalUps = new Decimal((player.basic.upgrades + player.basic.milestones + player.rebirth.milestones + player.rebirth.upgrades + player.prestige.milestones + player.prestige.upgrades + player.mega.upgrades + player.mega.milestones + player.e.milestones + player.e.upgrades + player.w.milestones + player.w.upgrades + player.sac.milestones + player.era.upgrades + player.era.milestones + player.era.points + player.s.milestones + player.s.upgrades).length)
