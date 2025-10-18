@@ -274,7 +274,7 @@ addLayer("era", {
         },
         4: {
             requirementDescription: "Era Four: The expansion of your worldview",
-            effectDescription: "Automate MB5, SB7, EB6-9. ^1.02 PF. Unlock Sacrifice RE:Challenges [v4.1/2], more EF, Cells upgrades.",
+            effectDescription: "Automate MB5, SB7, EB6-9. ^1.02 PF. Unlock Sacrifice RE:Challenges [v4.2], more EF, Cells upgrades [v4.1]. (Era^2) tetrated to 2x delayed Cell softcap start",
             done() { return player["era"].points.gte(4) },
             unlocked() { return hasMilestone("era", 3) },
         },
