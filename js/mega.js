@@ -888,7 +888,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 65)) base2 = x.mul(new Decimal(1e10))
                 if (hasUpgrade("era", 452)) base2 = x.mul(new Decimal(2.5e12))
                 if (hasUpgrade("era", 483)) base2 = x.mul(new Decimal(9e12))
-                if (hasUpgrade("era", 383)) base2 = base2.mul(player.mega.points.slog().pow(player.mega.points.slog()))
+                if (hasUpgrade("era", 383)) base2 = base2.mul(player.mega.points.add(1).slog().pow(player.mega.points.add(1).slog()))
                 expo = new Decimal(1.015)
                 let eff = base1.pow(Decimal.pow(base2, expo))
                 return eff
