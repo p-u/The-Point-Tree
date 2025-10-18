@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "The Point Tree",
-	id: "ThepointTreeRD82BETATESTING",
+	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
 	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js"],
@@ -8,7 +8,7 @@ let modInfo = {
 	discordName: "SR46A",
 	discordLink: "",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
-	offlineLimit: 0,  // In hours
+	offlineLimit: 0.5,  // In hours
 	// remember to change to 0 in dev
 }
 
