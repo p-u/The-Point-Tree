@@ -837,6 +837,7 @@ addLayer("m", {
             }
             player.m.totalUps = new Decimal((player.basic.upgrades + player.basic.milestones + player.rebirth.milestones + player.rebirth.upgrades + player.prestige.milestones + player.prestige.upgrades + player.mega.upgrades + player.mega.milestones + player.e.milestones + player.e.upgrades + player.w.milestones + player.w.upgrades + player.sac.milestones + player.era.upgrades + player.era.milestones + player.era.points + player.s.milestones + player.s.upgrades).length)
             let differ = player.m.totalUps.sub(player.m.lastUps)
+            differ = Decimal.max(differ, new Decimal(0))
             if (hasUpgrade("e", 211)) {
                 player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.004).pow(differ)))
             } else {
