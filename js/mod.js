@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "4.0",
+	num: "4.0r",
 	name: "Controlled Chaos",
 }
 
