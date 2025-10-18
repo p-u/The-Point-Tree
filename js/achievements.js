@@ -1338,7 +1338,7 @@ addLayer("a", {
         281: {
             name: "Endless Reflection",
             done() { return (hasMilestone('era', 4)) },
-            tooltip: "Get Era 3. [Ultima Rarity]. Unlock new achievements.",
+            tooltip: "Get Era 4. [Ultima Rarity]. Unlock new achievements.",
             unlocked() { return hasAchievement("a", 264) },
             style() {
                 return {
