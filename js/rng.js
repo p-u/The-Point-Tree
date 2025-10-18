@@ -146,7 +146,7 @@ addLayer("rng", {
                 if (hasMilestone("rng", 2)) base = base.add(0.1)
                 if (hasMilestone("rng", 5)) base = base.add(0.1)
                 if (hasMilestone("rng", 10)) base = base.add(0.1)
-                if (hasMilestone("rng", 12)) base = base.mul(player.rng.rngpts.slog().div(10).add(0.9))
+                if (hasMilestone("rng", 12)) base = base.mul(player.rng.rngpts.add(1).slog().div(10).add(0.9))
                 if (hasMilestone("rng", 24)) base = base.mul(100)
                 if (hasMilestone("rng", 21)){
                     eff = base.pow(x).pow(buyableEffect("rng", 15))
@@ -192,7 +192,7 @@ addLayer("rng", {
                 base = new Decimal(3)
                 if (hasMilestone("rng", 5)) base = base.add(0.1)
                 if (hasMilestone("rng", 10)) base = base.add(0.3)
-                if (hasMilestone("rng", 12)) base = base.mul(player.rng.rngpts.slog().div(10).add(0.9))
+                if (hasMilestone("rng", 12)) base = base.mul(player.rng.rngpts.add(1).slog().div(10).add(0.9))
                 if (hasMilestone("rng", 21)){
                     eff = base.pow(x).pow(buyableEffect("rng", 15))
                 } else {
@@ -236,7 +236,7 @@ addLayer("rng", {
             },
             effect(x) {
                 base = new Decimal(50)
-                if (hasMilestone("rng", 12)) base = base.mul(player.rng.rngpts.slog().div(10).add(0.9))
+                if (hasMilestone("rng", 12)) base = base.mul(player.rng.rngpts.add(1).slog().div(10).add(0.9))
                 if (hasMilestone("rng", 21)){
                     eff = base.pow(x).pow(buyableEffect("rng", 15))
                 } else {
@@ -276,7 +276,7 @@ addLayer("rng", {
             },
             effect(x) {
                 base = new Decimal(10)
-                base = base.mul(player.rng.rngpts.slog().div(10).add(0.9))
+                base = base.mul(player.rng.rngpts.add(1).slog().div(10).add(0.9))
                 if (hasMilestone("rng", 21)){
                     eff = base.pow(x).pow(buyableEffect("rng", 15))
                 } else {

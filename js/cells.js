@@ -83,7 +83,7 @@ addLayer("c", {
         if (hasUpgrade("era", 333)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.005).pow(new Date().getFullYear()))
         if (hasUpgrade("w", 65)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("w", 65))
         if (hasMilestone("sac", 123)) player.c.softcapStart = player.c.softcapStart.mul(3134234)
-        if (hasMilestone("era", 4)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(Decimal.max(player.era.points.pow(2), new Decimal(1))).tetrate(2))
+        if (hasMilestone("era", 4)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal((Decimal.max(player.era.points, new Decimal(1)).pow(2))).tetrate(2))
         if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
 
         // init
@@ -340,9 +340,9 @@ addLayer("c", {
             effect() {
                 if (hasMilestone("c", 7)) return player.c.points.pow(0.05)
                 if (hasUpgrade("w", 93)) {
-                    return player.c.points.log(5)
+                    return player.c.points.add(1).log(5)
                 } else {
-                    return player.c.points.log(9)
+                    return player.c.points.add(1).log(9)
                 }
             },
             effectDisplay() {

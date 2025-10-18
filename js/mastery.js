@@ -11,6 +11,7 @@ addLayer("m", {
             totalUps: new Decimal(0),
             lastUps: new Decimal(0),
             ma153t: 0,
+            hyper: false,
         }
     },
     layerShown(){
@@ -704,7 +705,7 @@ addLayer("m", {
             canComplete: function() {return player.points.gte("e4.5e21")},
             goalDescription: "Get e4.5e21 PF",
             rewardDescription: "Unlock more ups woohoo! ^2 Cell Softcap start, x2 EF after nerf, ^1.01 PF, Double RNG Points.",
-            unlocked() { return ((hasMilestone("era", 103) || inChallenge("m", 13)) && (!(hasChallenge('m', 13)))) },
+            unlocked() { return ((hasMilestone("era", 103) || inChallenge("m", 13)) || (hasChallenge('m', 13))) },
             onEnter() {
                 player.m.points = new Decimal(0)
             },
@@ -773,6 +774,7 @@ addLayer("m", {
         if ((hasUpgrade("m", 114)) && (hasUpgrade("m", 124)) && (hasUpgrade("m", 134))) mult = mult.times(10)
         if ((hasUpgrade("m", 115)) && (hasUpgrade("m", 125)) && (hasUpgrade("m", 135))) mult = mult.times(10)
         if (hasAchievement('a', 245)) mult = mult.times(61)
+        
         if (inChallenge("m", 11)) mult = mult.pow(buyableEffect('era', 111))
         player.m.mpps = mult
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
@@ -821,8 +823,21 @@ addLayer("m", {
             if (hasUpgrade("e", 214)) nnerf = new Decimal(1800)
             if (hasUpgrade("e", 222)) nnerf = new Decimal(1900)
             player.m.rngpower = player.m.rngpower.sub(player.m.rngpower.div(nnerf).mul(30).mul(diff).mul(Math.random()))
+            if (player.m.rngpower.gte(400)) {
+                player.m.hyper = true
+            }
+            if (player.m.rngpower.gte(0.625)) {
+                player.m.rngpower = new Decimal(0.62)
+            }
+            if ((player.m.rngpower.gte(0.24) && (!(hasUpgrade("e", 223))))) {
+                player.m.rngpower = new Decimal(0.208)
+            }
+            if ((player.m.rngpower.gte(0.13) && (!(hasUpgrade("e", 212))))) {
+                player.m.rngpower = new Decimal(0.106)
+            }
             player.m.totalUps = new Decimal((player.basic.upgrades + player.basic.milestones + player.rebirth.milestones + player.rebirth.upgrades + player.prestige.milestones + player.prestige.upgrades + player.mega.upgrades + player.mega.milestones + player.e.milestones + player.e.upgrades + player.w.milestones + player.w.upgrades + player.sac.milestones + player.era.upgrades + player.era.milestones + player.era.points + player.s.milestones + player.s.upgrades).length)
             let differ = player.m.totalUps.sub(player.m.lastUps)
+            differ = Decimal.max(differ, new Decimal(0))
             if (hasUpgrade("e", 211)) {
                 player.m.rngpower = player.m.rngpower.mul(new Decimal(1).div(new Decimal(1.004).pow(differ)))
             } else {

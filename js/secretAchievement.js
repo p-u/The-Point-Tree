@@ -107,7 +107,7 @@ addLayer("sa", {
                             a = a + "x3.0 when below 10,000,000, (MU8), "
                         }
                         if (hasUpgrade("sa", 22)) {
-                            a = a + "x" + Math.max(player.points.slog(), 2) + " (MU7)"
+                            a = a + "x" + Math.max(player.points.add(1).slog(), 2) + " (MU7)"
                         }
                         return a
                     }
@@ -2051,7 +2051,7 @@ addLayer("sa", {
             title: "x(-1)",
             canClick() {return true},
             onClick() {
-                if (player.sa.minigameNum.slog().mag < 2.5) {
+                if (player.sa.minigameNum.add(1).slog().mag < 2.5) {
                     player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
                     player[this.layer].bp = player[this.layer].bp.add(1)
                 }
@@ -2400,7 +2400,7 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let multiplier = hasUpgrade(this.layer, 11) ? 1.5 : 1
                     if (hasUpgrade("sa", 12)) multiplier = multiplier * ((Math.log(player.timePlayed,3)/7)+1)
-                    if (hasUpgrade("sa", 13)) multiplier = multiplier * Math.max(player.sa.minigameNum.slog(), 1)
+                    if (hasUpgrade("sa", 13)) multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(20000).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     if (hasUpgrade("sa", 23)) {
@@ -2415,7 +2415,7 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let multiplier = hasUpgrade(this.layer, 11) ? 1.5 : 1
                     if (hasUpgrade("sa", 12)) multiplier = multiplier * ((Math.log(player.timePlayed,3)/7)+1)
-                    if (hasUpgrade("sa", 13)) multiplier = multiplier * Math.max(player.sa.minigameNum.slog(), 1)
+                    if (hasUpgrade("sa", 13)) multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(20000).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     if (hasUpgrade("sa", 23)) {
@@ -2462,7 +2462,7 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let multiplier = ((Math.log(player.timePlayed)/10)+1)
                     multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-4.5)*3, 1)
-                    if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.slog(), 2)
+                    if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(500000).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult))
@@ -2473,7 +2473,7 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let multiplier = ((Math.log(player.timePlayed)/10)+1)
                     multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-4.5)*3, 1)
-                    if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.slog(), 2)
+                    if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(500000).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult))
@@ -2487,8 +2487,8 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let multiplier = ((Math.log10(player.timePlayed)/10)+1)
                     multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.5, 0.5)
-                    multiplier = multiplier * Math.max(player.points.slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.slog(), 1)
+                    multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
+                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(10e6).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult))
@@ -2499,8 +2499,8 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let multiplier = ((Math.log10(player.timePlayed)/10)+1)
                     multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.5, 0.5)
-                    multiplier = multiplier * Math.max(player.points.slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.slog(), 1)
+                    multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
+                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(10e6).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult))
@@ -2512,8 +2512,8 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = Math.max(player.points.slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.slog()-1, 1)
+                    let multiplier = Math.max(player.points.add(1).slog(), 2)
+                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog()-1, 1)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(1e10).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult))
@@ -2522,8 +2522,8 @@ addLayer("sa", {
             unlocked() {return hasUpgrade("sa", 31)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = Math.max(player.points.slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.slog()-1, 1)
+                    let multiplier = Math.max(player.points.add(1).slog(), 2)
+                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog()-1, 1)
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(1e10).mul(multiplier)))
                     player[this.layer].bp = player[this.layer].bp.add(1)
                     player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult))
@@ -2540,11 +2540,11 @@ addLayer("sa", {
                     if (hasUpgrade("sa", 34)) {
                         cost = 10
                         mult = mult * 4
-                        mult = mult * (Math.max(player.sa.minigameNum.slog()-1, 1)/6)+1
+                        mult = mult * (Math.max(player.sa.minigameNum.add(1).slog()-1, 1)/6)+1
                     }
                     if (hasUpgrade("sa", 33)) {
                         mult = mult * 3
-                        mult = mult * (Math.max(player.points.slog(), 2)/20)+1
+                        mult = mult * (Math.max(player.points.add(1).slog(), 2)/20)+1
                         mult = mult * ((Math.log(player.timePlayed)/40)+1)
                     }
                     if (hasUpgrade("sa", 35)) {
@@ -2570,12 +2570,12 @@ addLayer("sa", {
                     if (hasUpgrade("sa", 34)) {
                         cost = 10
                         mult = mult * 4
-                        mult = mult * (Math.max(player.sa.minigameNum.slog()-1, 1)/6)+1
+                        mult = mult * (Math.max(player.sa.minigameNum.add(1).slog()-1, 1)/6)+1
                         holdmult = 1.5
                     }
                     if (hasUpgrade("sa", 33)) {
                         mult = mult * 3
-                        mult = mult * (Math.max(player.points.slog(), 2)/20)+1
+                        mult = mult * (Math.max(player.points.add(1).slog(), 2)/20)+1
                         mult = mult * ((Math.log(player.timePlayed)/40)+1)
                     }
                     if (hasUpgrade("sa", 35)) {
@@ -2599,8 +2599,8 @@ addLayer("sa", {
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let mult = 1
-                    mult = mult * (Math.max(player.sa.minigameNum.slog()-1, 1)/9)+1
-                    mult = mult * (Math.max(player.points.slog(), 2)/10)+1
+                    mult = mult * (Math.max(player.sa.minigameNum.add(1).slog()-1, 1)/9)+1
+                    mult = mult * (Math.max(player.points.add(1).slog(), 2)/10)+1
                     let cost = 5000
                     if (hasUpgrade("sa", 43)) {
                         cost = 1500
@@ -2618,7 +2618,7 @@ addLayer("sa", {
                     if (hasMilestone("sa", 2)) mult = mult * Math.log10(player.timePlayed)/10*1.2+1
                     if (hasMilestone("sa", 4)) mult = mult * Math.log10(player.sa.minigamePoints)/20+1
                     if (hasMilestone("sa", 4)) mult = mult * 2
-                    if (hasMilestone("sa", 3)) mult = mult * (Math.max(player.points.slog(), 2)/5)+1
+                    if (hasMilestone("sa", 3)) mult = mult * (Math.max(player.points.add(1).slog(), 2)/5)+1
                     if (hasMilestone("sa", 3)) mult = mult * 1.5
                     if (hasMilestone("sa", 5)) mult = mult * 3
                     if (hasMilestone("sa", 6)) mult = mult * 2
@@ -2637,8 +2637,8 @@ addLayer("sa", {
                     let mult = 1
                     let einc = 0
                     let holdmult = 1
-                    mult = mult * (Math.max(player.sa.minigameNum.slog()-1, 1)/9)+1
-                    mult = mult * (Math.max(player.points.slog(), 2)/10)+1
+                    mult = mult * (Math.max(player.sa.minigameNum.add(1).slog()-1, 1)/9)+1
+                    mult = mult * (Math.max(player.points.add(1).slog(), 2)/10)+1
                     let cost = 5000
                     if (hasUpgrade("sa", 43)) {
                         cost = 1500
@@ -2657,7 +2657,7 @@ addLayer("sa", {
                     if (hasMilestone("sa", 2)) mult = mult * Math.log10(player.timePlayed)/10*1.2+1
                     if (hasMilestone("sa", 4)) mult = mult * Math.log10(player.sa.minigamePoints)/20+1
                     if (hasMilestone("sa", 4)) mult = mult * 2
-                    if (hasMilestone("sa", 3)) mult = mult * (Math.max(player.points.slog(), 2)/5)+1
+                    if (hasMilestone("sa", 3)) mult = mult * (Math.max(player.points.add(1).slog(), 2)/5)+1
                     if (hasMilestone("sa", 3)) mult = mult * 1.5
                     if (hasMilestone("sa", 5)) mult = mult * 3
                     if (hasMilestone("sa", 6)) mult = mult * 2
@@ -2687,8 +2687,8 @@ addLayer("sa", {
                 if (player[this.layer].minigameNum.gte(0)) {
                     let mult = 1
                     if (hasMilestone("sa", 11)) {
-                        mult = mult * (Math.max(player.points.slog(), 2)/50)+1
-                        mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/15)+1
+                        mult = mult * (Math.max(player.points.add(1).slog(), 2)/50)+1
+                        mult = mult * (Math.max(player.sa.minigamePoints.add(1).slog(), 1)/15)+1
                         mult = mult * 1.8
                     }
                     if (hasMilestone("sa", 12)) mult = mult * 1.5
@@ -2705,8 +2705,8 @@ addLayer("sa", {
                     let mult = 1
                     let holdmult = 1.8
                     if (hasMilestone("sa", 11)) {
-                        mult = mult * (Math.max(player.points.slog(), 2)/50)+1
-                        mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/13)+1
+                        mult = mult * (Math.max(player.points.add(1).slog(), 2)/50)+1
+                        mult = mult * (Math.max(player.sa.minigamePoints.add(1).slog(), 1)/13)+1
                         mult = mult * 1.8
                         holdmult = 2
                     }
@@ -3021,7 +3021,7 @@ addLayer("sa", {
             }
         }
         if (hasUpgrade("sa", 22)) {
-            player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(Math.max(player.points.slog(), 2))
+            player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(Math.max(player.points.add(1).slog(), 2))
         }
         if (hasUpgrade("sa", 11)) {
             let expopow = new Decimal(120000)
@@ -3031,8 +3031,8 @@ addLayer("sa", {
             let butdiv = 1
             if (hasMilestone("sa", 12)) mult = 1
             if (hasMilestone("sa", 11)) {
-                mult = mult * (Math.max(player.points.slog(), 2)/50)+1
-                mult = mult * (Math.max(player.sa.minigamePoints.slog(), 1)/15)+1
+                mult = mult * (Math.max(player.points.add(1).slog(), 2)/50)+1
+                mult = mult * (Math.max(player.sa.minigamePoints.add(1).slog(), 1)/15)+1
                 mult = mult * 1.8
             }
             if (hasMilestone("sa", 12)) mult = mult * 1.5

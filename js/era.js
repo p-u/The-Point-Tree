@@ -1744,7 +1744,7 @@ addLayer("era", {
             unlocked() {return (hasUpgrade("era", 92) && hasUpgrade("era", 93) && (hasUpgrade("era", 94) && hasUpgrade("era", 95)))},
             effect() {
                 let logxec = 10
-                if (player.era.ec.gte(2)) return player.era.ec.log(logxec)
+                if (player.era.ec.gte(2)) return player.era.ec.add(1).log(logxec)
                     else return new Decimal(1)
             },
             effectDisplay() { return notationChooser(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
@@ -2139,7 +2139,7 @@ addLayer("era", {
             currencyLayer: "era",
             branches: ['381', '382'],
             effect() {
-                return player.era.ec.slog().div(10).sub(0.2)
+                return player.era.ec.add(1).slog().div(10).sub(0.2)
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
@@ -3015,7 +3015,7 @@ addLayer("era", {
             effect() {
                 let multi = new Decimal(1)
                 if (hasUpgrade("era", 436)) multi = multi.add(0.1)
-                return Decimal.max(player.m.points.slog().mul(multi).sub(1.5).div(40), 0).add(1)
+                return Decimal.max(player.m.points.add(1).slog().mul(multi).sub(1.5).div(40), 0).add(1)
             },
             effectDisplay() {
                 return "^" + notationChooser(upgradeEffect(this.layer, this.id))+" EC"
@@ -3660,14 +3660,14 @@ addLayer("era", {
 
             // era fragments
             // absolute base formula is slog(EC)^(slog(PF)-1), where slog(EC) and slog(PF)-1 returns at least 1.
-            player.era.baseef = new Decimal(Math.max(player.era.ec.slog(),1)).pow(new Decimal(Math.max(player.points.slog()-1,1)))
+            player.era.baseef = new Decimal(Math.max(player.era.ec.add(1).slog(),1)).pow(new Decimal(Math.max(player.points.slog()-1,1)))
 
             // stuff that boosts base EF
             if (hasUpgrade('era', 1011)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1011), 1))
             if (hasUpgrade('era', 1021)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1021), 1))
             if (hasUpgrade('era', 1024)) player.era.baseef = player.era.baseef.times(Decimal.max(buyableEffect('era', 18),1))
             if (hasUpgrade("w", 93)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect("w", 93), 1))
-            if (hasUpgrade("w", 94)) player.era.baseef = player.era.baseef.times(Math.max(player.era.ec.slog(),1))
+            if (hasUpgrade("w", 94)) player.era.baseef = player.era.baseef.times(Math.max(player.era.ec.add(1).slog(),1))
             if (hasUpgrade('era', 1053)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1053),1))
             if (hasUpgrade('era', 1062)) player.era.baseef = player.era.baseef.times(Decimal.max(upgradeEffect('era', 1062), 1))
             if (hasUpgrade('era', 1041)) player.era.baseef = player.era.baseef.times(2)

@@ -365,7 +365,7 @@ addLayer("w", {
             description: "Due to the amount of Water, the amount of cells naturally increases. log(Water) delays Cells softcap.",
             cost: new Decimal("e2.3205e15"),
             effect() {
-                return player.w.points.add(1).log10()
+                return player.w.points.add(2).log10()
             },
             effectDisplay() {
                 let upgEffect = upgradeEffect(this.layer, this.id)
