@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "The Point Tree",
-	id: "ThepointTreeRD82",
+	id: "ThepointTreeRD82BETATESTING",
 	author: "randim82",
 	pointsName: "Point Fragments",
 	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js"],
