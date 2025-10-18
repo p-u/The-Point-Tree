@@ -20,46 +20,46 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
 <h1>v4.0.0 (Controlled Chaos)</h1><br>
-Well, after 4 months without a major update, I present to you, **the Point Tree Version 4.0** - Controlled Chaos (With Mastery Challenge 3, Dimensional Shift 7, and Era 4)
+Well, after 4 months without a major update, I present to you, **the Point Tree Version 4.0** - Controlled Chaos (With Mastery Challenge 3, Dimensional Shift 7, and Era 4) <br>
 
-Content Updates
+Content Updates <br>
 
-Added Mastery Challenge 3, which gives an OP Boost to Cells, with 13 MC3-EX Upgrades
-Added the RNG Layer, with 25 RNG Milestones and 5 Luck Buyables, and 3750 Unique combinations of rarities
-Added 7 achievements
-Added 9 Sacrifice Milestones
-Added 7 other Milestones
-Added 6 Secret Achievements
-New feature: Free buyables/Extra effective buyables
-Added 50 Upgrades (63 total with 13 MC3-EX ones)
-Added 1 Buyable
-Added 2 Infoboxes and Savebanks
-Added the Fourth Era
-Added more softcaps
+Added Mastery Challenge 3, which gives an OP Boost to Cells, with 13 MC3-EX Upgrades <br>
+Added the RNG Layer, with 25 RNG Milestones and 5 Luck Buyables, and 3750 Unique combinations of rarities <br>
+Added 7 achievements <br>
+Added 9 Sacrifice Milestones <br>
+Added 7 other Milestones <br>
+Added 6 Secret Achievements <br>
+New feature: Free buyables/Extra effective buyables <br>
+Added 50 Upgrades (63 total with 13 MC3-EX ones) <br>
+Added 1 Buyable <br>
+Added 2 Infoboxes and Savebanks <br>
+Added the Fourth Era <br>
+Added more softcaps <br>
 
-Quality of Life Improvements
+Quality of Life Improvements <br>
 
-Added Unlocking for Secret Achievements
-Made all Savebanks not have any Endgame Secret Achievements
-Added new Notations: Scientific2 and Mixed Scientific
-Mixed Scientific notation is now the Default notation
-Pre-existing Default notation changed to Scientific Notation
-Added recent tick length display
+Added Unlocking for Secret Achievements <br>
+Made all Savebanks not have any Endgame Secret Achievements <br>
+Added new Notations: Scientific2 and Mixed Scientific <br>
+Mixed Scientific notation is now the Default notation <br>
+Pre-existing Default notation changed to Scientific Notation <br>
+Added recent tick length display <br>
 
-Bug Fixes
+Bug Fixes <br>
 
-Reduced Cell Unlock down to 689,000 Sacrifices
-Made it such that you CANNOT GAIN EF BEFORE UNLOCKING EF
-Fixed Unlock of Ach 265 - ‘A new era milestone’, and 266 - ‘-0.1 goes a long way’, and Cell Buyable 3 without Cell Milestone 1
+Reduced Cell Unlock down to 689,000 Sacrifices <br>
+Made it such that you CANNOT GAIN EF BEFORE UNLOCKING EF <br>
+Fixed Unlock of Ach 265 - ‘A new era milestone’, and 266 - ‘-0.1 goes a long way’, and Cell Buyable 3 without Cell Milestone 1 <br>
 
-Other Changes
+Other Changes <br>
 
-Removed playtime milestones FOR GOOD!
-Added 12 more Minigame titles
-Nerfed hc of SB6 and added a softcap
-Added more unlock conditions for some upgrades
-Decreased the length of previous DS bars by 50px
-Added 2 Settings, which adds Screenshake, Particle Effects and Sound Effects [toggleable]
+Removed playtime milestones FOR GOOD! <br>
+Added 12 more Minigame titles <br>
+Nerfed hc of SB6 and added a softcap <br>
+Added more unlock conditions for some upgrades <br>
+Decreased the length of previous DS bars by 50px <br>
+Added 2 Settings, which adds Screenshake, Particle Effects and Sound Effects [toggleable] <br>
 
 <h3>v3.6S </h2><br>
 Added a secret which allows you to view all points and more??? <br>
