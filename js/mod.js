@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "4.0r",
+	num: "4.0re",
 	name: "Controlled Chaos",
 }
 
@@ -1335,14 +1335,18 @@ var displayThings = [
 			display = display + "If you write 1 number per year, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(1.36945307e25)) + " times the current universe age. That's a lot of time!"
 		}
 		if (inChallenge("m", 13)) {
-			return display + "\n All points gain is raised to the rng power: ^" + format(player.m.rngpower) + "."
+			display = display + "<br> All points gain is raised to the rng power: ^" + format(player.m.rngpower) + "."
 		} else {
 			if (player.era.diff * 1000 > 52) {
-				return display + "\n Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000)
+				display = display + "<br> Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000)
 			} else {
-				return display + "\n Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000 / player.devSpeed) + " (capped at 50ms)"
+				display = display + "<br> Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000 / player.devSpeed) + " (capped at 50ms)"
 			}
 		}
+		if (player.m.hyper) {
+			display = display + "<br> Your save seems to have inflated around the MC3 part with exponent above the required. Steps have been taken to reduce the exponent. Your save will be deemed illegitimate. Please go to the savebank and import the PRE-MC3 save to fix this."
+		}
+		return display
 	},
 ]
 
