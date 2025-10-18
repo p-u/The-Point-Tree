@@ -907,8 +907,8 @@ addLayer("sac", {
         125: {
             requirementDescription: "Sacrifice 4,312,213",
             effectDescription: "Surprising how this is the second time that a MaP boost is placed. xSac^2 MaP. Also, ERA BUYABLE 6 BOOST IS NOT ENOUGH ARGH",
-            unlocked() {return player["sac"].points.gte(3e6)},
-            done() { return player["sac"].points.gte(3849800) }
+            unlocked() {return player["sac"].points.gte(4e6)},
+            done() { return player["sac"].points.gte(4312213) }
         },
         126: {
             requirementDescription: "Sacrifice 5,677,027",
