@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "4.0beta",
+	num: "4.0",
 	name: "Controlled Chaos",
 }
 
@@ -1306,7 +1306,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.era.ec.gte(new Decimal("e2.96732323e21"))
+	return player.points.gte(new Decimal("e617.5e21"))
 }
 
 

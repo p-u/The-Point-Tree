@@ -67,10 +67,13 @@ addLayer("s", {
 			if (layers.s.buyables[15].canAfford()) {
 				layers.s.buyables[15].buy();
 			};
-		};
-        if (hasMilestone('s', 9)) {
 			if (layers.s.buyables[16].canAfford()) {
 				layers.s.buyables[16].buy();
+			};
+        };
+        if (hasMilestone('era', 4)) {
+			if (layers.s.buyables[17].canAfford()) {
+				layers.s.buyables[17].buy();
 			};
 		};
 	},

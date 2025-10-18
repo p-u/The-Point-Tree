@@ -85,6 +85,11 @@ addLayer("mega", {
 				layers.mega.buyables[14].buy();
 			};
 		};
+        if (hasMilestone('era', 4)) {
+			if (layers.mega.buyables[15].canAfford()) {
+				layers.mega.buyables[15].buy();
+			};
+		};
 	},
      tabFormat: {
         "Main tab": {

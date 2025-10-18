@@ -6,7 +6,7 @@ function exponentialFormat(num, precision, mantissa = true) {
         m = decimalOne
         e = e.add(1)
     }
-    if (options.notation === 'mixed scientific') {
+    if (options.notation === 'mixed scientific' || options.notation === 'default') {
         e = (e.gte(1e9) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     } else {
         e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
@@ -164,7 +164,7 @@ function notationChooser(decimal, precision=3) {
         return format(decimal, precision)
     } else if (options.notation === 'scientific2'){
         return format(decimal, precision)
-    } else if (options.notation === 'mixed scientific'){
+    } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision)
     } else {
         return standardFormat(decimal, precision)
@@ -178,7 +178,7 @@ function notationChooserMinigame(decimal) {
         return format(decimal, precision=6)
     } else if (options.notation === 'scientific2'){
         return format(decimal, precision=6)
-    } else if (options.notation === 'mixed scientific'){
+    } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision=6)
     } else {
         return standardFormat(decimal, precision=6)
@@ -209,7 +209,7 @@ function format(decimal, precision = 3, small) {
     }
     if (decimal.sign < 0) return "-" + format(decimal.neg(), precision, small)
     if (decimal.mag == Number.POSITIVE_INFINITY) return "Infinity"
-    if (options.notation === 'mixed scientific'){
+    if (options.notation === 'mixed scientific' || options.notation === 'default'){
         if (decimal.lte("e100") && decimal.gte(1e9)) {
             return standardFormat(decimal, precision)
         }

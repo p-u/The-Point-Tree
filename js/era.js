@@ -253,6 +253,20 @@ addLayer("era", {
 				layers.era.buyables[15].buy();
 			};
 		};
+        if (hasMilestone("era", 4)) {
+			if (layers.era.buyables[16].canAfford()) {
+				layers.era.buyables[16].buy();
+			};
+			if (layers.era.buyables[17].canAfford()) {
+				layers.era.buyables[17].buy();
+			};
+			if (layers.era.buyables[18].canAfford()) {
+				layers.era.buyables[18].buy();
+			};
+			if (layers.era.buyables[19].canAfford()) {
+				layers.era.buyables[19].buy();
+			};
+        }
 	},
     milestones: {
         1: {
@@ -2596,7 +2610,7 @@ addLayer("era", {
                 return "x" + notationChooser(upgradeEffect(this.layer, this.id))+" EC."
             },
             tooltip() {
-                return "Formula: combination of all EP boosts"
+                return "Formula: 2^[Amount of EB8 bought + Amount of EB9 bought]"
             },
             unlocked() {return hasUpgrade("era", 502)},
         },

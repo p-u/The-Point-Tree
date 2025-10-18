@@ -450,7 +450,7 @@ addLayer("sa", {
         33: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e2.98e2200")) {
+                   if (player.points.gte("e617.5e21")) {
                        return true
                    }
                },
@@ -466,7 +466,7 @@ addLayer("sa", {
         34: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e3.02e2200")) {
+                   if (player.points.gte("e617.85e21")) {
                        return true
                    }
                },
@@ -482,7 +482,7 @@ addLayer("sa", {
         35: {
             name: "Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e3.05e2200")) {
+                   if (player.points.gte("e625e21")) {
                        return true
                    }
                },
@@ -498,7 +498,7 @@ addLayer("sa", {
         36: {
             name: "Insanity True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e3.075e2200")) {
+                   if (player.points.gte("e627.627e21")) {
                        return true
                    }
                },
