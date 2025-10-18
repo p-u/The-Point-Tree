@@ -826,14 +826,14 @@ addLayer("m", {
             if (player.m.rngpower.gte(400)) {
                 player.m.hyper = true
             }
-            if (player.m.rngpower.gte(0.625)) {
+            if (player.m.rngpower.gte(0.65)) {
                 player.m.rngpower = new Decimal(0.62)
             }
-            if ((player.m.rngpower.gte(0.24) && (!(hasUpgrade("e", 223))))) {
-                player.m.rngpower = new Decimal(0.208)
+            if ((player.m.rngpower.gte(0.3) && (!(hasUpgrade("e", 223))))) {
+                player.m.rngpower = new Decimal(0.22)
             }
-            if ((player.m.rngpower.gte(0.13) && (!(hasUpgrade("e", 212))))) {
-                player.m.rngpower = new Decimal(0.106)
+            if ((player.m.rngpower.gte(0.5) && (!(hasUpgrade("e", 212))))) {
+                player.m.rngpower = new Decimal(0.43)
             }
             player.m.totalUps = new Decimal((player.basic.upgrades + player.basic.milestones + player.rebirth.milestones + player.rebirth.upgrades + player.prestige.milestones + player.prestige.upgrades + player.mega.upgrades + player.mega.milestones + player.e.milestones + player.e.upgrades + player.w.milestones + player.w.upgrades + player.sac.milestones + player.era.upgrades + player.era.milestones + player.era.points + player.s.milestones + player.s.upgrades).length)
             let differ = player.m.totalUps.sub(player.m.lastUps)
