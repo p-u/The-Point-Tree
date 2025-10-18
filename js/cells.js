@@ -340,9 +340,9 @@ addLayer("c", {
             effect() {
                 if (hasMilestone("c", 7)) return player.c.points.pow(0.05)
                 if (hasUpgrade("w", 93)) {
-                    return player.c.points.log(5)
+                    return player.c.points.add(1).log(5)
                 } else {
-                    return player.c.points.log(9)
+                    return player.c.points.add(1).log(9)
                 }
             },
             effectDisplay() {
