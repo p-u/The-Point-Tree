@@ -3199,7 +3199,7 @@ addLayer("era", {
             effect() {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 base1 = new Decimal(4)
-                if (hasUpgrade("era", 1051)) base1 = player.m.points.slog().pow(player.m.points.slog()).pow(1.3)
+                if (hasUpgrade("era", 1051)) base1 = player.m.points.add(1).slog().pow(player.m.points.add(1).slog()).pow(1.3)
                 base2 = x
                 expo = new Decimal(1.047)
                 eff = base1.pow(Decimal.pow(base2, expo))
