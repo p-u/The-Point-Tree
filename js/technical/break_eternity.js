@@ -192,7 +192,7 @@
 
   var NUMBER_EXP_MIN = -324; //The smallest exponent that can appear in a Number, though not all mantissas are valid here.
 
-  var MAX_ES_IN_A_ROW = 5; //For default toString behaviour, when to swap from eee... to (e^n) syntax.
+  var MAX_ES_IN_A_ROW = 10; //For default toString behaviour, when to swap from eee... to (e^n) syntax.
 
   var DEFAULT_FROM_STRING_CACHE_SIZE = (1 << 10) - 1; // The default size of the LRU cache used to cache Decimal.fromString.
 
