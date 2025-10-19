@@ -823,7 +823,7 @@ addLayer("m", {
             if (hasUpgrade("e", 214)) nnerf = new Decimal(1800)
             if (hasUpgrade("e", 222)) nnerf = new Decimal(1900)
             player.m.rngpower = player.m.rngpower.sub(player.m.rngpower.div(nnerf).mul(30).mul(diff).mul(Math.random()))
-            if (player.m.rngpower.gte(400)) {
+            if (player.m.rngpower.gte(1)) {
                 player.m.hyper = true
             }
             if (player.m.rngpower.gte(0.65)) {
