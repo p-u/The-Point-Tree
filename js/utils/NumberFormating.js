@@ -6,23 +6,20 @@ function exponentialFormat(num, precision, mantissa = true) {
         m = decimalOne
         e = e.add(1)
     }
-    e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
-    if (mantissa)
-        return m.toStringWithDecimalPlaces(precision) + "e" + e
-    else return "e" + e
-}
-
-function exponentialFormat(num, precision, mantissa = true) {
-    let e = num.log10().floor()
-    let m = num.div(Decimal.pow(10, e))
-    if (m.toStringWithDecimalPlaces(precision) == 10) {
-        m = decimalOne
-        e = e.add(1)
+    if (options.notation === 'mixed scientific' || options.notation === 'default') {
+        e = (e.gte(1e9) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+    } else {
+        e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     }
-    e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
-    if (mantissa)
-        return m.toStringWithDecimalPlaces(precision) + "e" + e
-    else return "e" + e
+    if (options.notation === 'scientific2'){
+        if (mantissa)
+            return m.toStringWithDecimalPlaces(precision) + "x10^" + e
+        else return "10^" + e
+    } else {
+        if (mantissa)
+            return m.toStringWithDecimalPlaces(precision) + "e" +e
+        else return "e" + e
+    }
 }
 
 function standardFormat(num, precision = 3) {
@@ -32,6 +29,8 @@ function standardFormat(num, precision = 3) {
 
     const STANDARD_SUFFIXES = [
         "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No",
+        "De", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod",
+        "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg", "Novg"
     ];
 
     let e = num.log10().floor().toNumber();
@@ -114,9 +113,9 @@ function standardFormat(num, precision = 3) {
     if (tier < 1e27) {
         let m = num.div(Decimal.pow(10, tier * 3)).toStringWithDecimalPlaces(precision);
         return `${m}${generateSuffix(tier)}`
-    } else {
-        return format(num, precision)
     }
+    
+    return exponentialFormat(num, precision, true)
 }
 
 
@@ -161,7 +160,11 @@ function sumValues(x) {
 function notationChooser(decimal, precision=3) {
     if (options.notation === 'infinity') { 
         return infinityFormat(decimal) 
-    } else if (options.notation === 'default'){
+    } else if (options.notation === 'scientific'){
+        return format(decimal, precision)
+    } else if (options.notation === 'scientific2'){
+        return format(decimal, precision)
+    } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision)
     } else {
         return standardFormat(decimal, precision)
@@ -170,21 +173,25 @@ function notationChooser(decimal, precision=3) {
 
 function notationChooserMinigame(decimal) {
     if (options.notation === 'infinity') { 
-        return infinityFormat(decimal) 
-    } else if (options.notation === 'default'){
+        return infinityFormat(decimal, precision=6) 
+    } else if (options.notation === 'scientific'){
+        return format(decimal, precision=6)
+    } else if (options.notation === 'scientific2'){
+        return format(decimal, precision=6)
+    } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision=6)
     } else {
         return standardFormat(decimal, precision=6)
     }
 }
 
-function infinityFormat(decimal) {
+function infinityFormat(decimal, precision=3) {
     const pow1024 = new Decimal(2).pow(1024);
     if (decimal.lt(pow1024)) {
         return formatWhole(decimal);
     }
     if (decimal.lt(pow1024.pow(1e12))) {
-        return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor()) + "∞"
+        return formatWhole(decimal.div(pow1024.pow(decimal.log(pow1024).floor()))) + "*" + format(decimal.log(pow1024).floor(), precision) + "∞"
     }
     if (decimal.lt(pow1024.tetrate(4))) {
         return format(decimal.log(pow1024).floor()) + "∞" // added beacuse what's the point of showing 1* at the start
@@ -202,6 +209,11 @@ function format(decimal, precision = 3, small) {
     }
     if (decimal.sign < 0) return "-" + format(decimal.neg(), precision, small)
     if (decimal.mag == Number.POSITIVE_INFINITY) return "Infinity"
+    if (options.notation === 'mixed scientific' || options.notation === 'default'){
+        if (decimal.lte("e100") && decimal.gte(1e9)) {
+            return standardFormat(decimal, precision)
+        }
+    }
     if (decimal.gte("eeee1000")) {
         var slog = decimal.slog()
         if (slog.gte(1e6)) return "F" + format(slog.floor())
