@@ -173,15 +173,15 @@ function notationChooser(decimal, precision=3) {
 
 function notationChooserMinigame(decimal) {
     if (options.notation === 'infinity') { 
-        return infinityFormat(decimal, precision=9) 
+        return infinityFormat(decimal, precision=10) 
     } else if (options.notation === 'scientific'){
-        return format(decimal, precision=9)
+        return format(decimal, precision=10)
     } else if (options.notation === 'scientific2'){
-        return format(decimal, precision=9)
+        return format(decimal, precision=10)
     } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
-        return format(decimal, precision=9)
+        return format(decimal, precision=10)
     } else {
-        return standardFormat(decimal, precision=9)
+        return standardFormat(decimal, precision=10)
     }
 }
 
