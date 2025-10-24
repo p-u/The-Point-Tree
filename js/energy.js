@@ -50,6 +50,7 @@ addLayer("en", {
         gen11multi: new Decimal(1),
         gen12multi: new Decimal(1),
         bleh: 0,
+        foundationval: new Decimal(0),
         wheeamt: new Decimal(13),
     }},
     color: "#4BDC13",
@@ -1352,6 +1353,7 @@ addLayer("en", {
         if (hasUpgrade("en", 81)) mult = mult.times(13).div(4)
         if (hasMilestone("mo", 12)) mult = mult.times(1254)
         if (hasUpgrade("ma", 213)) mult = mult.times(33e13)
+        if (hasUpgrade("ma", 224)) mult = mult.times(1e49)
         if (player.cm.clickmastery.gte(1.2e11)) mult = mult.times(3)
         if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (hasUpgrade("en", 85)) mult = mult.times(8)
@@ -1375,6 +1377,7 @@ addLayer("en", {
         if (hasMilestone("ma", 5)) exp = exp.add(0.05)
         if (hasUpgrade("en", 63)) exp = exp.add(0.047)
         if (hasMilestone("cf", 5)) exp = exp.add(0.01)
+        if (hasUpgrade("ma", 225)) exp = exp.add(0.01)
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -1393,6 +1396,7 @@ addLayer("en", {
             player.en.gen7multi = buyableEffect("en", 41)
             player.en.gen8multi = buyableEffect("en", 42)
             player.en.gen9multi = buyableEffect("en", 61)
+            if (hasUpgrade("pa", 34)) player.en.gen9multi = player.en.gen9multi.mul(player.en.gen1amt.add("e1000").pow(0.01))
             player.en.wheeamt = new Decimal(13)
             if (hasUpgrade("mo", 23)) player.en.wheeamt = new Decimal(19)
             if (hasUpgrade("en", 91)) player.en.wheeamt = new Decimal(52)
@@ -1618,6 +1622,8 @@ addLayer("en", {
             if (player.cm.clickmastery.gte(4e9)) gain = gain.times(player.cm.clickmastery.mul(888).log(88888))
             if (hasMilestone("ma", 11)) gain = gain.times(2)
             if (hasMilestone("mo", 7)) gain = gain.times(77)
+            if (hasUpgrade("ma", 224)) gain = gain.times(1e19)
+            if (hasUpgrade("pa", 35)) gain = gain.times(1e100)
             
 
             if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
@@ -1632,6 +1638,7 @@ addLayer("en", {
             if (player.en.points.gte(10) && player.en.bleh == 0) {
                 player.en.bleh = player.timePlayed
             }
+            player.en.foundationval = player.points.mul(player.en.points).mul(player.en.power)
         }
 
 

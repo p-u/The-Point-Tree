@@ -11,6 +11,7 @@ addLayer("pa", {
             beta: new Decimal(0),
             gamma: new Decimal(0),
             delta: new Decimal(0), 
+            epsilon: new Decimal(0),
         },
         clickablenerf: {
             beta: new Decimal(1),
@@ -206,11 +207,41 @@ addLayer("pa", {
                 }
             }      
         },
+        32: {
+            title: "Epsilon Particle",
+            unlocked() { return hasMilestone("ma", 16) },
+            canClick() { return player.pa.points.gte(1) },
+            display() {
+                let eff = layers.pa.getEpsilonEff()
+                return "Epsilon Particles: " + notationChooser(player.pa.clickableamt.epsilon) +
+                    ".<br>Boosts Shrink Points gain by x" + notationChooser(eff) + "."
+            },
+            onClick() {
+                if (!player.pa.points.gte(1)) return
+                if (player.pa.buyMode === "1pct") {
+                    let amt = Decimal.max(player.pa.points.div(100).floor(), 1)
+                    player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(amt)
+                    player.pa.points = player.pa.points.sub(amt)
+                } else if (player.pa.buyMode === "10pct") {
+                    let amt = Decimal.max(player.pa.points.div(10).floor(), 1)
+                    player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(amt)
+                    player.pa.points = player.pa.points.sub(amt)
+                } else if (player.pa.buyMode === "50pct") {
+                    let amt = player.pa.points.div(2).floor()
+                    player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(amt)
+                    player.pa.points = player.pa.points.sub(amt)
+                }
+            }      
+        },
     },
     passiveGeneration() {
         if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
-        if (hasMilestone("w", 4)) return 0.0007
-        if (hasUpgrade("pa", 32)) return 0.0001
+        let base = 0.0001
+        if (hasMilestone("w", 4)) base = base * 7
+        if (hasMilestone("ma", 16)) base = base / 300
+        if (hasUpgrade("ma", 223)) base = base * buyableEffect("ma", 22).pow(Decimal.max(new Decimal(6).sub(getBuyableAmount("ma", 22).div(10)), new Decimal(3.5))).toNumber()
+        if (hasMilestone("w", 4)) return base
+        if (hasUpgrade("pa", 32)) return base
         if (hasMilestone("mo", 14)) return 0.01
         if (hasUpgrade("ma", 211)) return 0.00625
         if (hasMilestone("pa", 2)) return 0.0025
@@ -323,7 +354,7 @@ addLayer("pa", {
         },
         24: {
             title: "Nine [5e20]",
-            description: "There is no matter softcap. However, the effect of the Matter layer is weaker.",
+            description: "The matter softcap is delayed immensely to e5,000. However, the effect of the Matter layer is weaker.",
             cost: new Decimal(2e13),
             unlocked() { return (hasUpgrade("pa", 23) && player.pa.totalParticles.gte(5e11)) }, 
         },
@@ -346,10 +377,22 @@ addLayer("pa", {
             unlocked() { return (hasUpgrade("pa", 31) && player.pa.clickableamt.delta.gte(1e49)) }, 
         },
         33: {
-            title: "Thirteen [TBC]",
+            title: "Thirteen [e108 Epsilon Particles]",
             description: "Irrational Numbers are best, right? Increase Alpha Particle base by 3pi/10, Booster base by e/5 and Delta Particle base by Phi (golden ratio)/100",
             cost: new Decimal(2e75),
             unlocked() { return (hasUpgrade("pa", 32) && player.pa.clickableamt.beta.gte(1e75) && player.pa.clickableamt.alpha.gte(1e75)) }, 
+        },
+        34: {
+            title: "Fourteen [7M SP]",
+            description: "Completing the cycle -- Gen 1^0.01 boosts Gen 8 gain, with the min effect being e10x. S1's shrink base increase effect is overhauled.",
+            cost: new Decimal(2.1e108),
+            unlocked() { return (hasUpgrade("pa", 33) && player.pa.clickableamt.epsilon.gte(1e108))}, 
+        },
+        35: {
+            title: "Fifteen",
+            description: "xe100 Power and Atoms.",
+            cost: new Decimal(3e130),
+            unlocked() { return (hasUpgrade("pa", 34) && player.ma.shrinkpts.gte(7e6))}, 
         },
     },
     getAlphaEff() {
@@ -387,6 +430,13 @@ addLayer("pa", {
         }
         return new Decimal(1)
     },
+    getEpsilonEff() {
+        if (player.pa.clickableamt.delta.gte(1)) {
+            let base = 1.1
+            return Decimal.pow(base, Decimal.max(player.pa.clickableamt.epsilon.div("e60"), new Decimal(1)).log(100))
+        }
+        return new Decimal(1)
+    },
 
     gainMult() { // Prestige multiplier
         let mult = new Decimal(Math.min((player.timePlayed - player.en.bleh)/10, 1))
@@ -395,9 +445,11 @@ addLayer("pa", {
         if (hasAchievement("a", 72)) mult = mult.times(1.03)
         if (hasUpgrade("pa", 32)) mult = mult.times(250)
         if (hasMilestone("w", 4)) mult = mult.times(5)
+        if (hasUpgrade("ma", 224)) mult = mult.times(9)
         if (hasUpgrade("ma", 55)) mult = mult.times(upgradeEffect("ma", 55))
         if (hasUpgrade("pa", 25)) mult = mult.times(layers.pa.getDeltaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpoparticle))
+        if (player.cm.clickmastery.gte(1e12) && hasMilestone("w", 4)) mult = mult.times(1.4)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -433,6 +485,9 @@ addLayer("pa", {
             player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(player.pa.points.div(25000).times(diff))
             player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(player.pa.points.div(25000).times(diff))
             player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(25000).times(diff))
+        }
+        if (hasUpgrade("ma", 225)) {
+            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(100000).times(diff))
         }
     },
 })

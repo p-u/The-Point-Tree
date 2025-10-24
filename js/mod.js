@@ -204,6 +204,8 @@ function getPointGen() {
 	if (hasUpgrade("mo", 12)) gain = gain.times(3)
 	if (hasUpgrade("en", 75)) gain = gain.times(8)
 	if (hasUpgrade("mo", 15)) gain = gain.times(5)
+	if (hasUpgrade("ma", 224)) gain = gain.times(1e29)
+	if (hasMilestone("ma", 16)) gain = gain.times(1e50)
 	if (hasMilestone("mo", 11)) gain = gain.times(new Decimal(player.timePlayed).pow(0.8))
 	if (hasMilestone("w", 2)) gain = gain.times(new Decimal(3).pow(player.w.points))
 	if (hasMilestone("ma", 11)) gain = gain.times(3)
@@ -216,6 +218,7 @@ function getPointGen() {
 	if (hasMilestone("mo", 12)) gain = gain.times(1254)
 	if (hasUpgrade("en", 85)) gain = gain.times(88)
 	if (hasUpgrade("pa", 11)) gain = gain.times(5)
+    if (hasUpgrade("pa", 35)) gain = gain.times(1e100)
 	if (hasMilestone("mo", 13)) gain = gain.times(new Decimal(2).pow(player.a.achievements.length))
 
 	// playtime milestones (TBC)
@@ -256,6 +259,7 @@ function getPointGen() {
 	if (hasMilestone("pa", 1)) gain = gain.pow(1.01)
 	if (hasUpgrade("pa", 32)) gain = gain.pow(1.004)
 	if (hasUpgrade("ma", 221)) gain = gain.pow(1.0036)
+	if (hasUpgrade("ma", 225)) gain = gain.pow(1.01)
 	// nerf
 	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
 	if (player.points.gte(tmp.w.nextAt) && (!(player.w.points.gte(100)))) {

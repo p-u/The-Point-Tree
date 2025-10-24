@@ -137,6 +137,11 @@ addLayer("mo", {
 				layers.mo.buyables[22].buy();
 			};
 		};
+        if (hasUpgrade('ma', 224)) {
+			if (layers.mo.buyables[31].canAfford()) {
+				layers.mo.buyables[31].buy();
+			};
+		};
 	},
     milestones: {
         1: {
@@ -668,6 +673,7 @@ addLayer("mo", {
         if (hasAchievement("a", 61)) mult = mult.times(1.03)
         if (hasAchievement("a", 83)) mult = mult.times(1.1)
         if (hasUpgrade("ma", 41)) mult = mult.times(6)
+        if (hasUpgrade("ma", 224)) mult = mult.times(99)
         if (hasUpgrade("pa", 21)) mult = mult.times(upgradeEffect("pa", 21))
         if (hasMilestone("w", 3)) mult = mult.times(2)
         if (hasMilestone("w", 4)) mult = mult.times(100)

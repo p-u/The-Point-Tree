@@ -209,7 +209,6 @@ addLayer("cm", {
                     } 
                 }],
                 "blank",
-                "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(5e10) && hasMilestone("w", 3)){
                         return "[8e10 Clicks] x1.5 Matter Gain"
@@ -237,6 +236,22 @@ addLayer("cm", {
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(1.75e11) && hasMilestone("w", 3)){
                         return "[2.5e11 Clicks] +40% Clicks Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2.5e11) && hasMilestone("w", 4)){
+                        return "[5e11 Clicks] +17.5% SP Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(5e11) && hasMilestone("w", 4)){
+                        return "[1e12 Clicks] +40% Particles Gain"
                     } else {
                         return ""
                     } 
@@ -313,6 +328,7 @@ addLayer("cm", {
     csmalculation() {
         player.cm.csmmult = new Decimal(0.12)
         if (hasMilestone("cm", 11)) player.cm.csmmult = player.cm.csmmult.add(0.01)
+        if (hasMilestone("cm", 15)) player.cm.csmmult = player.cm.csmmult.add(0.01)
         player.cm.csmscale = new Decimal(0.6)
         if (hasMilestone("cm", 12)) player.cm.csmscale = player.cm.csmscale.mul(1.07)
         player[this.layer].csmgain = new Decimal(player.cm.csmscale).pow(player.cm.csm.sub(1)).mul(player.cm.csmmult)
@@ -353,7 +369,7 @@ addLayer("cm", {
         },
         12: {
             requirementDescription: "5e8 Clicks",
-            effectDescription: "CSM Up. 2 [Diminishing] - CSM decreases slower.",
+            effectDescription: "CSM Up. 2 [Diminishing] - CSM decreases slower. (1.10x)",
             done() { return player.cm.clickmastery.gte(5e8) },
         },
         13: {
@@ -363,8 +379,13 @@ addLayer("cm", {
         },
         14: {
             requirementDescription: "5e11 Clicks",
-            effectDescription: "CSM Up. 4 [Diminishing] - CSM decreases slower",
+            effectDescription: "CSM Up. 4 [Diminishing] - CSM decreases slower (1.17x)",
             done() { return player.cm.clickmastery.gte(5e11) },
+        },
+        15: {
+            requirementDescription: "1e13 Clicks",
+            effectDescription: "CSM Up. 5 [Multiplier] - Increase CSM Multiplier by a further 0.01.",
+            done() { return player.cm.clickmastery.gte(1e13) },
         },
     },
     update(diff) {

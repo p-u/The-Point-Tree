@@ -63,6 +63,12 @@ addLayer("cf", {
             done() { return player.points.gte("e4125") },
             unlocked() {return hasMilestone("cf", 5)}
         },
+        7: {
+            requirementDescription: "e9,900 Energy",
+            effectDescription: "Unlock the 'Sub-currencies' tab, and unlock the #$?# !*@#% layer...",
+            done() { return player.en.points.gte("e9900") },
+            unlocked() {return hasMilestone("cf", 6)}
+        },
     },
     tabFormat: {
         "Content Features": {
@@ -74,6 +80,18 @@ addLayer("cf", {
                 "blank",
                 "upgrades",
             ],
+        },
+        "Sub-currencies": {
+            content: [
+                ["display-text", function() { return "<h2> Sub-currency 1: Foundation Value </h2>"}],
+                "blank",
+                ["display-text", function() { return "<h3> Formula: The product of Atoms, Energy and Power </h3>"}],
+                "blank",
+                ["display-text", function() { return "Foundation Value: " + notationChooser(player.points) + " x " + notationChooser(player.en.points) + " x " + notationChooser(player.en.power) + ","}],
+                "blank",
+                ["display-text", function() { return "Foundation Value: <h3>" + notationChooser(player.en.foundationval) + "</h3>"}],
+            ],
+            unlocked() {return hasMilestone("cf", 7)}
         },
     },
 });
