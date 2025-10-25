@@ -3549,6 +3549,7 @@ addLayer("era", {
             if (hasUpgrade("era", 193)) gain = gain.times(1.3)
             if (hasUpgrade("era", 202)) gain = gain.times(1.6)
             if (hasUpgrade("era", 211)) gain = gain.times(2)
+            if (hasMilestone("sa", 16)) gain = gain.times(1.25)
             if (hasUpgrade("era", 213)) gain = gain.times(2)
             if (hasUpgrade("era", 281)) gain = gain.times(1000)
             if (hasUpgrade("era", 291)) gain = gain.times(100)

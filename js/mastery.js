@@ -750,6 +750,7 @@ addLayer("m", {
         if (hasUpgrade("w", 54)) {
             if (hasChallenge("m", 11)) mult = mult.times(100)
         }
+        if (hasMilestone("sa", 16)) mult = mult.times(1.25)
         if (hasChallenge("m", 12)) mult = mult.times(10000)
         if (hasUpgrade('m', 71)) mult = mult.times(78.2)
         if (hasAchievement('a', 183)) mult = mult.times(3.4)

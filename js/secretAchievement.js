@@ -2988,13 +2988,19 @@ addLayer("sa", {
             requirementDescription: "Minigame Milestone 14: F1e60, or e(1e60) Number",
             effectDescription: "Passive button has 1.25x the effect. The layer *= button is now 1.75 times stronger.",
             done() { return player.sa.minigameNum.layer >= 999999999999999999999999999999999999999999999999999999999999.99 },
-            unlocked() { return (hasMilestone("sa", 13) && hasMilestone("era", 2))},
+            unlocked() { return (hasMilestone("sa", 13) && hasMilestone("era", 3))},
         },
         15: {
             requirementDescription: "Minigame Milestone 15: F1e125, or e(1e125) Number",
             effectDescription: "The layer *= button is now 40% stronger. Hold mult is increased to 6!",
             done() { return player.sa.minigameNum.layer >= 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.99 },
-            unlocked() { return (hasMilestone("sa", 14) && hasMilestone("era", 2))},
+            unlocked() { return (hasMilestone("sa", 14) && hasMilestone("era", 3))},
+        },
+        16: {
+            requirementDescription: "Minigame Milestone 16: Fe308 Number [Completion of Minigame]",
+            effectDescription: "That's it. You have successfully clicked so much. Now, you cannot click anymore because you are at the edge of the BreakEternity Number cap. For these insane work: Get +25% EC and MaP.",
+            done() { return player.sa.minigameNum.layer >= 1e308 },
+            unlocked() { return (hasMilestone("sa", 15) && hasMilestone("era", 3))},
         },
     },
     update(diff) {
