@@ -372,7 +372,7 @@ addLayer("rng", {
         9: {
             requirementDescription: "The Ninth RNG Milestone (Requires Best RarityID: 225)",
             effectDescription: "^1.1 Luck.",
-            done() { return player.rng.maxidx >= 226 },
+            done() { return player.rng.maxidx >= 225 },
             unlocked() {return hasMilestone("rng", 8)}
         },
         10: {
