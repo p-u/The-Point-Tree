@@ -37,7 +37,7 @@ addLayer("s", {
             ],
             unlocked() {return (!(hasMilestone("st", 4)))}
         },
-        "Main tab": {
+        "Main tab.": {
             content: [
                 "main-display",
                 "blank",
