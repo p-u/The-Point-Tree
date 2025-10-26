@@ -14,19 +14,25 @@ function getStartOptions() {
 		oldStyle: false,
 		tooltipForcing: true,
 		theme: "default",
-		notation: "default",
+		notation: "mixed scientific",
 		forceTooltips: true,
 		hideMilestonePopups: false,
+		actionmode: "off",
+		soundeff: true,
 	}
 }
 
 function changeNotation() {
-	if (options.notation === 'default') { 
+	if (options.notation === 'mixed scientific') { 
 		options.notation = 'infinity'
 	} else if (options.notation === 'infinity'){ 
 		options.notation = 'standard'
+	} else if (options.notation === 'standard'){ 
+		options.notation = 'scientific'
+	} else if (options.notation === 'scientific'){
+		options.notation = 'scientific2'
 	} else {
-		options.notation = 'default'
+		options.notation = 'mixed scientific'
 	}
 }
 
@@ -34,6 +40,34 @@ function getNotationName() {
 	return options.notation
 }
 
+function getActionMode() {
+	return options.actionmode
+}
+function updateAction() {
+	if (options.actionmode == "off") {
+		options.actionmode = "on"
+	} else if (options.actionmode == "on") {
+		options.actionmode = "ultra"
+	} else if (options.actionmode == "earthquake") {
+		if ((options.notation == 'infinity') && (options.soundeff == false) && (options.theme == "verdant")) {
+			options.actionmode = "stop."
+		} else {
+			options.actionmode = "off"
+		}
+	} else if (options.actionmode == "ultra") {
+		if ((options.notation == 'default2') && (options.offlineProd == true)) {
+			options.actionmode = "earthquake"
+		} else {
+			options.actionmode = "off"
+		}
+	} else {
+		options.actionmode = "off"
+	}
+}
+
+function updateSoundEff() {
+	options.soundeff = !options.soundeff
+}
 
 function toggleOpt(name) {
 	if (name == "oldStyle" && styleCooldown > 0)

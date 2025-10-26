@@ -1,6 +1,13 @@
 addLayer("a", {
     startData() { return {
         unlocked: true,
+        lrstars: new Decimal(0),
+        timestars: 0,
+        timeSinceLastReset: 0,
+        csps: new Decimal(0),
+        tSLRG: 0,
+        timegal: 0,
+        cgps: new Decimal(0),
     }},
     color: "yellow",
     row: "side",
@@ -16,513 +23,44 @@ addLayer("a", {
                 "blank",
                 ],
         },
-        "Playtime Milestones": {
-            content: [
-                ["display-text", function() { return "There are a total of 11 playtime milestones only attained by the most dedicated of players... I wish you all the best if you are willing to try to complete all of them." }],
-                "blank",
-                "blank",
-                "milestones"
-            ],
-        },
-        "Savebank": {
-            content: [
-                ["clickables", [1, 2, 3, 4, 5, 6, 7, 8]],
-            ],
-        },
-    },
-    milestones: {
-        1: {
-            requirementDescription: "1 minute of playtime",
-            effectDescription: "Thanks for playing my game! I hope you enjoy it",
-            done() { return player.timePlayed > 60 }
-        },
-        2: {
-            requirementDescription: "30 minutes of playtime",
-            effectDescription: "So, how do you find the game so far? Oh, btw, don't lose track of real-life time",
-            done() { return player.timePlayed > 1800 },
-            unlocked() { return hasMilestone("a", 1) }
-        },
-        3: {
-            requirementDescription: "3 hours of playtime",
-            effectDescription: "Remember to drink water :) and rest your eyes",
-            done() { return player.timePlayed > (60 * 60 * 3) },
-            unlocked() { return hasMilestone("a", 2) }
-        },
-        4: {
-            requirementDescription: "10 hours of playtime",
-            effectDescription: "If you are still at the beginning stage, here's a x2 atom gain for you",
-            done() { return player.timePlayed > (60 * 60 * 10) },
-            unlocked() { return hasMilestone("a", 3) }
-        },
-        5: {
-            requirementDescription: "1 day of playtime",
-            effectDescription: "Remember to join my discord server! Reminder 2 to drink water :) and rest your eyes. (Fun fact, you could have watched Jurrasic Park 11.3 times...)",
-            done() { return player.timePlayed > (60 * 60 * 24) },
-            unlocked() { return hasMilestone("a", 4) }
-        },
-        6: {
-            requirementDescription: "3 days of playtime",
-            effectDescription: "Addicted. Assuming you take 5 seconds to drink 50ml of water, you would have drank 259.2 litres (68.47 gallons) of water if you continuously drank it",
-            done() { return player.timePlayed > (60 * 60 * 24 * 3) },
-            unlocked() { return hasMilestone("a", 5) }
-        },
-        7: {
-            requirementDescription: "1 week of playtime",
-            effectDescription: "Reminder 3 to drink water, rest your eyes, eat and sleep, take a walk. Fun fact 3: Assuming you read at an average pace of 0.5 pages/minute, you would have read about 5,040 pages by now if you did not sleep... That's probably more than you've ever read. ",
-            done() { return player.timePlayed > (60 * 60 * 24 * 7) },
-            unlocked() { return hasMilestone("a", 6) }
-        },
-        8: {
-            requirementDescription: "1 month of playtime",
-            effectDescription: "You could watch the ENTIRE Avengers Cinematic Universe 11.625 times...",
-            done() { return player.timePlayed > (60 * 60 * 24 * 30) },
-            unlocked() { return hasMilestone("a", 7) }
-        },
-        9: {
-            requirementDescription: "100 days of playtime",
-            effectDescription: "Screenshot proof of this achievement and send it in my discord for an exclusive role!",
-            done() { return player.timePlayed > (60 * 60 * 24 * 100) },
-            unlocked() { return hasMilestone("a", 8) }
-        },
-        10: {
-            requirementDescription: "200 days of playtime",
-            effectDescription: "You either are a cheater OR a absolute true godly no-life... Fun fact 4: If you have just left your computer on for 200 days, it will use 1200 kWh for a desktop and 360 kWh for a laptop (averages). Assuming you are in Los Angeles, you can drive a Tesla Model 3 to Beaumont, Texas for a laptop and to Montreal, Canada there, back and there again for a desktop...",
-            done() { return player.timePlayed > (60 * 60 * 24 * 200) },
-            unlocked() { return hasMilestone("a", 9) }
-        },
-        11: {
-            requirementDescription: "1 year of playtime",
-            effectDescription: "I don't think anyone is daring enough to sit there and wait for a FULL YEAR for a single achievement... Well played. You 100%ed the game.",
-            done() { return player.timePlayed > (60 * 60 * 24 * 365) },
-            unlocked() { return hasMilestone("a", 10) }
-        },
-    },
-    clickables: {
-        11: {
-            title: "Matter",
-            display: "1st Reset",
-            canClick: true,
-            onClick() {
-                if(!confirm("Your current progress will not be saved!")) return;
-                importSave("eyJ0YWIiOiJvcHRpb25zLXRhYiIsIm5hdlRhYiI6InRyZWUtdGFiIiwidGltZSI6MTczNDMyMjY4Mzg4OCwibm90aWZ5Ijp7fSwidmVyc2lvblR5cGUiOiJSRDgyOldHIiwidmVyc2lvbiI6ImF2MC4wOCIsInRpbWVQbGF5ZWQiOjM5ODUuODUxODg5NTQ1OTg5Nywia2VlcEdvaW5nIjpmYWxzZSwiaGFzTmFOIjpmYWxzZSwicG9pbnRzIjoiMTAiLCJzdWJ0YWJzIjp7ImNoYW5nZWxvZy10YWIiOnt9LCJlbiI6eyJtYWluVGFicyI6Ik1haW4gdGFiIn0sImEiOnsibWFpblRhYnMiOiJBY2hpZXZlbWVudHMifSwidyI6eyJtYWluVGFicyI6IldvcmxkIFRpZXJzIn19LCJsYXN0U2FmZVRhYiI6Im1hIiwiaW5mb2JveGVzIjp7ImVuIjp7Im1haW4iOmZhbHNlLCJnZW5zIjpmYWxzZX19LCJpbmZvLXRhYiI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjM5ODUuODUxODg5NTQ1OTg5NywiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6W10sImxhc3RNaWxlc3RvbmUiOm51bGwsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJvcHRpb25zLXRhYiI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjM5ODUuODUxODg5NTQ1OTg5NywiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6W10sImxhc3RNaWxlc3RvbmUiOm51bGwsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJjaGFuZ2Vsb2ctdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6Mzk4NS44NTE4ODk1NDU5ODk3LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImVuIjp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiIwIiwiZW5lcnBlcnMiOiIwIiwiZ2VuMWFtdCI6IjAiLCJnZW4yYW10IjoiMCIsImdlbjNhbXQiOiIwIiwiZ2VuNGFtdCI6IjAiLCJnZW41YW10IjoiMCIsImdlbjZhbXQiOiIwIiwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjI2Mi44MjEyNzE5OTk5OTg5NCwiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnsiMTEiOiIwIiwiMTIiOiIwIiwiMjEiOiIwIiwiMjIiOiIwIn0sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIiwicG93ZXIiOiIwIiwicG93Z2FpbiI6IjAiLCJ1bml2bXVsdGkiOiIxIiwiZ2VuMW11bHRpIjoiMSIsImdlbjJtdWx0aSI6IjEiLCJnZW4zbXVsdGkiOiIxIiwiZ2VuNG11bHRpIjoiMSIsImdlbjVtdWx0aSI6IjEiLCJnZW42bXVsdGkiOiIxIiwiZ2VuMWdhaW4iOiIwIiwiZ2VuMmdhaW4iOiIwIiwiZ2VuM2dhaW4iOiIwIiwiZ2VuNGdhaW4iOiIwIiwiZ2VuNWdhaW4iOiIwIiwiZ2VuNmdhaW4iOiIwIiwicG93ZXJleHBvZW5lciI6IjAuMjUiLCJwb3dlcmV4cG9hdG9tIjoiMC4xMiJ9LCJhIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6Mzk4NS44NTE4ODk1NDU5ODk3LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbIjEiLCIyIl0sImxhc3RNaWxlc3RvbmUiOiIyIiwiYWNoaWV2ZW1lbnRzIjpbIjEyIiwiMTMiLCIxMSIsIjE0IiwiMTUiLCIxNiIsIjIxIiwiMjMiXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImJsYW5rIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6Mzk4NS44NTE4ODk1NDU5ODk3LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sInRyZWUtdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6Mzk4NS44NTE4ODk1NDU5ODk3LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sInciOnsidW5sb2NrZWQiOnRydWUsInBvaW50cyI6IjEiLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMSIsInJlc2V0VGltZSI6Mzk4NS44NTE4ODk1NDU5ODk3LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sIm1hIjp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiIxIiwiTVJlc2V0VGltZSI6MzcyMy4wMzA2MTc1NDYwMzIsInRvdGFsIjoiMSIsImJlc3QiOiIxIiwicmVzZXRUaW1lIjoyNjIuODIxMjcxOTk5OTk4OTQsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwiZGV2U3BlZWQiOjF9")
-            },
-            style() {return{
-                'background-color': tmp.ma.color,
-            }},
-        },
-        12: {
-            title: "Molecules",
-            display: "1st Reset",
-            canClick: true,
-            onClick() {
-                if(!confirm("Your current progress will not be saved!")) return;
-                importSave("eyJ0YWIiOiJvcHRpb25zLXRhYiIsIm5hdlRhYiI6InRyZWUtdGFiIiwidGltZSI6MTc1MjY1MTMyNTkwMiwibm90aWZ5Ijp7fSwidmVyc2lvblR5cGUiOiJSRDgyOldHIiwidmVyc2lvbiI6ImF2Mi4wIiwidGltZVBsYXllZCI6MjAzMDEuMDE4OTczMTE1Mjc1LCJrZWVwR29pbmciOmZhbHNlLCJoYXNOYU4iOnRydWUsInBvaW50cyI6IjEwIiwic3VidGFicyI6eyJjaGFuZ2Vsb2ctdGFiIjp7fSwiZW4iOnsibWFpblRhYnMiOiJNYWluIHRhYiJ9LCJhIjp7Im1haW5UYWJzIjoiQWNoaWV2ZW1lbnRzIn0sInciOnsibWFpblRhYnMiOiJXb3JsZCBUaWVycyJ9LCJtYSI6eyJtYWluVGFicyI6Ik1haW4gdGFiIn0sImNtIjp7Im1haW5UYWJzIjoiQ2xpY2sgTWFzdGVyeSJ9LCJjZiI6eyJtYWluVGFicyI6IkNvbnRlbnQgRmVhdHVyZXMifSwibW8iOnsibWFpblRhYnMiOiJNYWluIHRhYiJ9fSwibGFzdFNhZmVUYWIiOiJtbyIsImluZm9ib3hlcyI6eyJlbiI6eyJtYWluIjp0cnVlLCJnZW5zIjpmYWxzZX0sIm1hIjp7Im1hdCI6ZmFsc2V9LCJjbSI6eyJjbSI6ZmFsc2V9LCJtbyI6eyJtYXQiOmZhbHNlLCJtb2wiOmZhbHNlfX0sImluZm8tdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MjAzMDAuOTQzOTczMTE1Mjc0LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sIm9wdGlvbnMtdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MjAzMDAuOTQzOTczMTE1Mjc0LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImNoYW5nZWxvZy10YWIiOnsidW5sb2NrZWQiOnRydWUsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjoyMDMwMC45NDM5NzMxMTUyNzQsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwiZW4iOnsidW5sb2NrZWQiOnRydWUsInBvaW50cyI6IjEuNDc4NDAxOTk5OTk5OTk2NyIsImVuZXJwZXJzIjoiMCIsImdlbjFhbXQiOiIwIiwiZ2VuMmFtdCI6IjAiLCJnZW4zYW10IjoiMCIsImdlbjRhbXQiOiIwIiwiZ2VuNWFtdCI6IjAiLCJnZW42YW10IjoiMCIsInRvdGFsIjoiMS40Nzg0MDE5OTk5OTk5OTY3IiwiYmVzdCI6IjEuNDc4NDAxOTk5OTk5OTk2NyIsInJlc2V0VGltZSI6Mi41NTA2Mzk5OTk5OTk5OTc0LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6eyIxMSI6IjAiLCIxMiI6IjAiLCIyMSI6IjAiLCIyMiI6IjAiLCIzMSI6IjAiLCIzMiI6IjAiLCI0MSI6IjAifSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJwb3dlciI6IjAiLCJwb3dnYWluIjoiMCIsInVuaXZtdWx0aSI6IjEiLCJnZW4xbXVsdGkiOiIxIiwiZ2VuMm11bHRpIjoiMSIsImdlbjNtdWx0aSI6IjEiLCJnZW40bXVsdGkiOiIxIiwiZ2VuNW11bHRpIjoiMSIsImdlbjZtdWx0aSI6IjEiLCJnZW4xZ2FpbiI6IjAiLCJnZW4yZ2FpbiI6IjAiLCJnZW4zZ2FpbiI6IjAiLCJnZW40Z2FpbiI6IjAiLCJnZW41Z2FpbiI6IjAiLCJnZW42Z2FpbiI6IjAiLCJwb3dlcmV4cG9lbmVyIjoiMC4yNSIsInBvd2VyZXhwb2F0b20iOiIwLjEyIiwiYWN0aXZlQ2hhbGxlbmdlIjpudWxsLCJnZW43YW10IjoiMCIsImdlbjhhbXQiOiIwIiwiZ2VuN2dhaW4iOiIwIiwiZ2VuOGdhaW4iOiIwIiwiZ2VuN211bHRpIjoiMSIsImdlbjhtdWx0aSI6IjEifSwidyI6eyJ1bmxvY2tlZCI6dHJ1ZSwicG9pbnRzIjoiMyIsInRvdGFsIjoiMiIsImJlc3QiOiIzIiwicmVzZXRUaW1lIjo1NTM3LjQ4NzIzNjAwMjYwMSwiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6WyIxIiwiMiJdLCJsYXN0TWlsZXN0b25lIjoiMiIsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJhIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MjAzMDAuOTQzOTczMTE1Mjc0LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnsiMTEiOiIifSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiXSwibGFzdE1pbGVzdG9uZSI6IjMiLCJhY2hpZXZlbWVudHMiOlsiMTIiLCIxMyIsIjExIiwiMTQiLCIxNSIsIjE2IiwiMjEiLCIyMyIsIjI0IiwiMjIiLCIyNSIsIjI2IiwiMzEiLCIzMiIsIjMzIiwiMzQiLCIzNSIsIjM2IiwiNDEiLCIxMDEiLCIxMDIiLCIxMDMiLCIxMDQiLCIxMDUiLCI0MiJdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwibWEiOnsidW5sb2NrZWQiOnRydWUsInBvaW50cyI6IjAiLCJNUmVzZXRUaW1lIjoyMDI2Ni41MjcwODMxMTcwNDYsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjoyLjU1MDYzOTk5OTk5OTk5NzQsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjoiMiIsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJjZiI6eyJ1bmxvY2tlZCI6dHJ1ZSwicG9pbnRzIjoiMCIsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjoyNjI1LjExNzg3OTk5OTcyOTcsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOlsiMSJdLCJsYXN0TWlsZXN0b25lIjoiMSIsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiIsIm5vdGhpbmciOiIwIn0sImNtIjp7InVubG9ja2VkIjp0cnVlLCJjbGlja21hc3RlcnkiOiIyODA0ODIiLCJjcGMiOiI0MS4yNjMzNjkyNTc0MzM5OSIsImNtbHZsIjoiOCIsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjo4MTMyLjc4NjAzMDAwNDUyMywiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7IjExIjoiIn0sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJjbG11bHQiOiIxLjEiLCJjbHNjYWxlIjoiMi45MDAwMDAwMDAwMDAwMDA0In0sIm1vIjp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiIxIiwibW9sZWN1bGUiOiIwLjIwODMxNTk5OTk5OTk5OTk3IiwiTVJlc2V0VGltZSI6IjE5NTM1LjI2MzY2MzExODcyNyIsInRvdGFsIjoiMSIsImJlc3QiOiIxIiwicmVzZXRUaW1lIjo3NjUuNzU1MzA5OTk5OTg1NSwiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6WyIxIl0sImxhc3RNaWxlc3RvbmUiOiIxIiwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImJsYW5rIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MjAzMDAuOTQzOTczMTE1Mjc0LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sInRyZWUtdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MjAzMDAuOTQzOTczMTE1Mjc0LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImRldlNwZWVkIjoxfQ==")
-            },
-            style() {return{
-                'background-color': tmp.mo.color,
-            }},
-        },
-        21: {
-            title: "Particles",
-            display: "Before 1st Reset",
-            canClick: true,
-            onClick() {
-                if(!confirm("Your current progress will not be saved!")) return;
-                importSave("eyJ0YWIiOiJvcHRpb25zLXRhYiIsIm5hdlRhYiI6InRyZWUtdGFiIiwidGltZSI6MTc1NDM2NDQ3NjMzNywibm90aWZ5Ijp7fSwidmVyc2lvblR5cGUiOiJSRDgyOldHIiwidmVyc2lvbiI6ImF2Mi4yMSIsInRpbWVQbGF5ZWQiOjM3MTcyLjczNDc1NTAwNzY3LCJrZWVwR29pbmciOnRydWUsImhhc05hTiI6dHJ1ZSwicG9pbnRzIjoiNy4wODQxODA3MTEzNDE4MTJlMTAwNCIsInN1YnRhYnMiOnsiY2hhbmdlbG9nLXRhYiI6e30sImVuIjp7Im1haW5UYWJzIjoiTWFpbiB0YWIifSwiYSI6eyJtYWluVGFicyI6IkFjaGlldmVtZW50cyJ9LCJ3Ijp7Im1haW5UYWJzIjoiUmVzZXQgVGltaW5ncyJ9LCJtYSI6eyJtYWluVGFicyI6Ik1haW4gdGFiIn0sImNtIjp7Im1haW5UYWJzIjoiQ2xpY2sgTWFzdGVyeSJ9LCJjZiI6eyJtYWluVGFicyI6IkNvbnRlbnQgRmVhdHVyZXMifSwibW8iOnsibWFpblRhYnMiOiJNYWluIHRhYiJ9fSwibGFzdFNhZmVUYWIiOiJwYSIsImluZm9ib3hlcyI6eyJlbiI6eyJtYWluIjpmYWxzZSwiZ2VucyI6ZmFsc2V9LCJtYSI6eyJtYXQiOmZhbHNlfSwiY20iOnsiY20iOmZhbHNlfSwibW8iOnsibWF0IjpmYWxzZSwibW9sIjpmYWxzZSwiYm9vc3QiOmZhbHNlfSwicGEiOnsibWF0IjpmYWxzZSwicGFyIjpmYWxzZX19LCJpbmZvLXRhYiI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjM3MTcyLjY1OTY4MjAwNzY2LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sIm9wdGlvbnMtdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MzcxNzIuNjU5NjgyMDA3NjYsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwiY2hhbmdlbG9nLXRhYiI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjM3MTcyLjY1OTY4MjAwNzY2LCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImJsYW5rIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MzcxNzIuNjU5NjgyMDA3NjYsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwidHJlZS10YWIiOnsidW5sb2NrZWQiOnRydWUsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjozNzE3Mi42NTk2ODIwMDc2NiwiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6W10sImxhc3RNaWxlc3RvbmUiOm51bGwsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJ3Ijp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiI0IiwidG90YWwiOiIzIiwiYmVzdCI6IjQiLCJyZXNldFRpbWUiOjM0NDguNDE1OTUwMDAxNTQ3NiwiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiXSwibGFzdE1pbGVzdG9uZSI6IjMiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJNYVJlc2V0VGltZSI6MzU3NjguNTYzNDQ3OTcwMiwiTW9SZXNldFRpbWUiOjM1NzY4LjU2MzQ0Nzk3MDJ9LCJhIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MzcxNzIuNjU5NjgyMDA3NjYsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6eyIxMSI6IiIsIjEyIjoiIn0sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOlsiMSIsIjIiLCIzIiwiNCJdLCJsYXN0TWlsZXN0b25lIjoiNCIsImFjaGlldmVtZW50cyI6WyIxMiIsIjEzIiwiMTEiLCIxNCIsIjE1IiwiMTYiLCIyMSIsIjIzIiwiMjQiLCIyMiIsIjI1IiwiMjYiLCIzMSIsIjMyIiwiMzMiLCIzNCIsIjM1IiwiMzYiLCI0MSIsIjEwMSIsIjEwMiIsIjEwMyIsIjEwNCIsIjEwNSIsIjQyIiwiNDMiLCI0NCIsIjQ1IiwiNDYiLCI1MSIsIjUyIiwiNTMiLCI1NCIsIjU1IiwiNTYiLCI2MSIsIjYyIiwiNjMiXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImVuIjp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiIyLjUwOTUwMTEzODQ1MzYwODNlMTAyMyIsImVuZXJwZXJzIjoiMCIsImdlbjFhbXQiOiIxLjAyMjY2MjUwNzA4NDExNDdlMjgxIiwiZ2VuMmFtdCI6IjUuMzE2NjcwMTI0MzczNDU2ZTE5MCIsImdlbjNhbXQiOiIyLjE2ODEzNjY1NDM1NjI4MWUxMjgiLCJnZW40YW10IjoiNC44MzgxMTQ4MzE4NTM1NzVlNzciLCJnZW41YW10IjoiOC4wNzY4MDQ0MTUxODUxNDhlMzQiLCJnZW42YW10IjoiMS43NTkwNjU5MDE2OTU2MjJlMTkiLCJ0b3RhbCI6IjIuNTA5NTAxMjM4NDU4MDM3ZTEwMjMiLCJiZXN0IjoiMi41MDk1MDExMzg0NTM2MDgzZTEwMjMiLCJyZXNldFRpbWUiOjI0MS42NDQ1NDc5OTk5NDIxLCJmb3JjZVRvb2x0aXAiOnRydWUsImJ1eWFibGVzIjp7IjExIjoiNTc5OSIsIjEyIjoiMjUwOSIsIjIxIjoiMTY0OCIsIjIyIjoiMTE1OSIsIjMxIjoiMTAxMiIsIjMyIjoiMzMzIiwiNDEiOiIxNDAiLCI0MiI6IjY5IiwiNTEiOiI1MiJ9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbMTEsMjEsMzEsNDEsNTEsNjEsNzEsMTIsMjIsMzIsNDIsNTIsNjIsNzIsMTMsMjMsMzMsNDMsNTMsNjMsNzMsMTQsMjQsMzQsNDQsNTQsNjQsNzQsMTUsMjUsMzUsNDUsNTUsNjUsNzUsODEsODIsODMsODQsODVdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIiwicG93ZXIiOiIxLjQ0NTM5MDIwMDg2MDMzNjNlNzE5IiwicG93Z2FpbiI6IjIuMDI5Mjc4NTcwMTg0NzU3OGU3MTgiLCJ1bml2bXVsdGkiOiIxIiwiZ2VuMW11bHRpIjoiOC4wOTAzMTg1NDA5OTUwMjVlMTg1IiwiZ2VuMm11bHRpIjoiMS4zMDg2MDE2MzM5Mjg4NDQyZTg5IiwiZ2VuM211bHRpIjoiMS41NjE3MDY0Njc0NDYxOTRlNjEiLCJnZW40bXVsdGkiOiIyLjc4NDE0NzA5MzAyODVlNDkiLCJnZW41bXVsdGkiOiIzLjAyMDg4NTk3MDU1NDY3ODJlNDEiLCJnZW42bXVsdGkiOiI5NTkwNjU0MTYyMTU5OS45NCIsImdlbjFnYWluIjoiNi45NTc0MDMyMTE4MTU3NzZlMjc5IiwiZ2VuMmdhaW4iOiIyLjgyMTY2MDg2Mjg0NjIyMTZlMTg5IiwiZ2VuM2dhaW4iOiI4Ljk4MDAxNTU2MzIyODk0NmUxMjYiLCJnZW40Z2FpbiI6IjEuNjI2NjA3MDA5NjQ5ODE5ZTc2IiwiZ2VuNWdhaW4iOiIxLjg1NTc2NTE5ODI3NzE5NjhlMzMiLCJnZW42Z2FpbiI6IjIuNjQ4ODQxMzQ2ODExMTcyN2UxNyIsInBvd2VyZXhwb2VuZXIiOiIwLjM0NSIsInBvd2VyZXhwb2F0b20iOiIwLjI0MiIsImFjdGl2ZUNoYWxsZW5nZSI6bnVsbCwiZ2VuN2FtdCI6IjQ4Nzg5MzkwMzkuNjQyNDI5IiwiZ2VuOGFtdCI6IjY5IiwiZ2VuN2dhaW4iOiIzNDk3OTc3MS42OTMzOTg5MiIsImdlbjhnYWluIjoiMCIsImdlbjdtdWx0aSI6IjEwODU4MjY3OC41NDA5MTg5NiIsImdlbjhtdWx0aSI6IjY3NDI0Ny43NzMyMjA1ODc5IiwicG93ZXJleHBvbWF0dGVyIjoiMC4wMDgifSwibWEiOnsidW5sb2NrZWQiOnRydWUsInBvaW50cyI6IjIuNjk3MzgyMjQ4OTg3OTM2N2UyNjMiLCJNUmVzZXRUaW1lIjozNTU3MC44OTk4Mjk5NTQxNywidG90YWwiOiIyLjY5NzM4MjI0ODk4NzkzNjdlMjYzIiwiYmVzdCI6IjIuNjk3MzgyMjQ4OTg3OTM2N2UyNjMiLCJyZXNldFRpbWUiOjI0MS42NDQ1NDc5OTk5NDIxLCJmb3JjZVRvb2x0aXAiOnRydWUsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6WzExLDIxLDMxLDEyLDIyLDMyLDEzLDIzLDMzLDE0LDI0LDM0LDE1LDI1LDM1LDQxLDQyLDQzLDQ0LDQ1XSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiLCI0IiwiNSIsIjYiLCI3IiwiOCIsIjkiLCIxMCIsIjExIiwiMTIiLCIxMyJdLCJsYXN0TWlsZXN0b25lIjoiMTMiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJhY3RpdmVDaGFsbGVuZ2UiOm51bGx9LCJjZiI6eyJ1bmxvY2tlZCI6dHJ1ZSwicG9pbnRzIjoiMCIsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjoxOTQ5Ni44MzM1ODg5OTEzODcsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOlsiMSIsIjIiLCIzIiwiNCJdLCJsYXN0TWlsZXN0b25lIjoiNCIsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiIsIm5vdGhpbmciOiIwIn0sImNtIjp7InVubG9ja2VkIjp0cnVlLCJjbGlja21hc3RlcnkiOiIxMDE3NTUzNDguOTcwOTQxMTciLCJjcGMiOiIxMDc1My42MjgzNjcwMTQ2MDYiLCJjbWx2bCI6IjEzIiwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjI1MDA0LjUwMTczODg3NzA0NywiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7IjExIjoiIn0sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJjbG11bHQiOiIxLjEiLCJjbHNjYWxlIjoiMi45MDAwMDAwMDAwMDAwMDA0In0sInBhIjp7InVubG9ja2VkIjpmYWxzZSwicG9pbnRzIjoiMCIsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjozLjcwMDQ2MSwiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6W10sImxhc3RNaWxlc3RvbmUiOm51bGwsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJtbyI6eyJ1bmxvY2tlZCI6dHJ1ZSwicG9pbnRzIjoiMS41MDI0MDEzNTkwMzExMDc2ZTI3IiwibW9sZWN1bGUiOiI2Ljk1MjcxNDIyNTk0Mjc1M2UyOCIsIk1SZXNldFRpbWUiOiIxOTUzNS4yNjM2NjMxMTg3MjciLCJ0b3RhbCI6IjIuMTc3NTIyOTkyMjE4ODIzM2UyNyIsImJlc3QiOiIyLjEyNzQ4MjY5OTk4NDc5NDJlMjciLCJyZXNldFRpbWUiOjI0MS42NDQ1NDc5OTk5NDIxLCJmb3JjZVRvb2x0aXAiOnRydWUsImJ1eWFibGVzIjp7IjExIjoiMzkiLCIxMiI6IjIzIiwiMjEiOiIxNSIsIjIyIjoiMTAiLCIzMSI6IjQifSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6WzExLDEyLDEzLDE0LDE1LDIxLDIyLDIzLDI0LDI1XSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiLCI0IiwiNSIsIjYiLCI3IiwiOCIsIjkiLCIxMCJdLCJsYXN0TWlsZXN0b25lIjoiMTAiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJib29zdGVyQmFzZSI6IjcifSwiZGV2U3BlZWQiOjF9")
-            },
-            style() {return{
-                'background-color': tmp.pa.color,
-            }},
-        },
-        22: {
-            title: "Particles 2 - Shrinkenator",
-            display: "Slightly before the unlocking of the Shrinkenator Feature (next: Get CFMS6 and then 'Scandium' up)",
-            canClick: true,
-            onClick() {
-                if(!confirm("Your current progress will not be saved!")) return;
-                importSave("eyJ0YWIiOiJvcHRpb25zLXRhYiIsIm5hdlRhYiI6InRyZWUtdGFiIiwidGltZSI6MTc1NTUxNjc1Nzg4MSwibm90aWZ5Ijp7fSwidmVyc2lvblR5cGUiOiJSRDgyOldHIiwidmVyc2lvbiI6IjEuMCIsInRpbWVQbGF5ZWQiOjUzMjA1LjEwNTIyMzc3OTk0LCJrZWVwR29pbmciOnRydWUsImhhc05hTiI6dHJ1ZSwicG9pbnRzIjoiMS4xODQ1NDkyNzc2ODMyMjcyZTQwNDQiLCJzdWJ0YWJzIjp7ImNoYW5nZWxvZy10YWIiOnt9LCJlbiI6eyJtYWluVGFicyI6Ik1haW4gdGFiIn0sImEiOnsibWFpblRhYnMiOiJBY2hpZXZlbWVudHMifSwidyI6eyJtYWluVGFicyI6IldvcmxkIFRpZXJzIn0sIm1hIjp7Im1haW5UYWJzIjoiTWFpbiB0YWIifSwiY20iOnsibWFpblRhYnMiOiJDbGljayBNYXN0ZXJ5In0sImNmIjp7Im1haW5UYWJzIjoiQ29udGVudCBGZWF0dXJlcyJ9LCJtbyI6eyJtYWluVGFicyI6Ik1haW4gdGFiIn0sInBhIjp7Im1haW5UYWJzIjoiUGFydGljbGVzIn19LCJsYXN0U2FmZVRhYiI6Im1vIiwiaW5mb2JveGVzIjp7ImVuIjp7Im1haW4iOmZhbHNlLCJnZW5zIjpmYWxzZSwiZ2VudDIiOmZhbHNlfSwibWEiOnsibWF0IjpmYWxzZX0sImNtIjp7ImNtIjpmYWxzZX0sIm1vIjp7Im1hdCI6ZmFsc2UsIm1vbCI6ZmFsc2UsImJvb3N0IjpmYWxzZX0sInBhIjp7Im1hdCI6ZmFsc2UsInBhciI6ZmFsc2V9fSwiaW5mby10YWIiOnsidW5sb2NrZWQiOnRydWUsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjo1MzIwNS4wMzAxNTA3Nzk5MywiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6W10sImxhc3RNaWxlc3RvbmUiOm51bGwsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJvcHRpb25zLXRhYiI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjUzMjA1LjAzMDE1MDc3OTkzLCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sImNoYW5nZWxvZy10YWIiOnsidW5sb2NrZWQiOnRydWUsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjo1MzIwNS4wMzAxNTA3Nzk5MywiZm9yY2VUb29sdGlwIjpmYWxzZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6W10sImxhc3RNaWxlc3RvbmUiOm51bGwsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiJ9LCJibGFuayI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjUzMjA1LjAzMDE1MDc3OTkzLCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnt9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOltdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIn0sInRyZWUtdGFiIjp7InVubG9ja2VkIjp0cnVlLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6NTMyMDUuMDMwMTUwNzc5OTMsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOltdLCJsYXN0TWlsZXN0b25lIjpudWxsLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwidyI6eyJ1bmxvY2tlZCI6dHJ1ZSwicG9pbnRzIjoiNCIsInRvdGFsIjoiMyIsImJlc3QiOiI0IiwicmVzZXRUaW1lIjoxOTQ4MC43ODY0MTc5MDc2NjQsImZvcmNlVG9vbHRpcCI6dHJ1ZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiXSwibGFzdE1pbGVzdG9uZSI6IjMiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJNYVJlc2V0VGltZSI6MzU3NjguNTYzNDQ3OTcwMiwiTW9SZXNldFRpbWUiOjM1NzY4LjU2MzQ0Nzk3MDIsIlBhUmVzZXRUaW1lIjozNzE3NS43Njg3NTUwMDc3NH0sImVuIjp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiIyLjY0NjYzNzEzNjA0ODI3MjNlMzMwMyIsImVuZXJwZXJzIjoiMCIsImdlbjFhbXQiOiI5LjM1MDU1ODYxNjQ2NDEwNGUxMTc4IiwiZ2VuMmFtdCI6IjYuMTEyMTEyODAwMTU1MDg5ZTc5MyIsImdlbjNhbXQiOiI2LjM1NzU1NDI3NTkyMDY4NWU1MjAiLCJnZW40YW10IjoiMS43MjM5NTc2MTU1MDQzOTFlMzE5IiwiZ2VuNWFtdCI6IjkuMzQ0Nzc4ODgxMzMzMDk5ZTE3MSIsImdlbjZhbXQiOiIzLjI4NjI0MTkzNTE0MjQ5OGU4OCIsInRvdGFsIjoiMi42NDY2MzcxMzYwNDgyNzIzZTMzMDMiLCJiZXN0IjoiMi42NDY2MzcxMzYwNDgyNzIzZTMzMDMiLCJyZXNldFRpbWUiOjUzLjc1MDk5OTk5OTk5OTM5NCwiZm9yY2VUb29sdGlwIjp0cnVlLCJidXlhYmxlcyI6eyIxMSI6IjE1NjkyIiwiMTIiOiI3Mjg4IiwiMjEiOiI0OTEwIiwiMjIiOiIzMjcyIiwiMzEiOiIyMDk5IiwiMzIiOiIxMDAxIiwiNDEiOiI0NjUiLCI0MiI6IjI1OSIsIjUxIjoiMjgxIiwiNjEiOiIzMSJ9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbMTEsMjEsMzEsNDEsNTEsNjEsNzEsODEsOTEsMTIsMjIsMzIsNDIsNTIsNjIsNzIsODIsOTIsMTMsMjMsMzMsNDMsNTMsNjMsNzMsODMsOTMsMTQsMjQsMzQsNDQsNTQsNjQsNzQsODQsOTQsMTUsMjUsMzUsNDUsNTUsNjUsNzUsODUsOTVdLCJtaWxlc3RvbmVzIjpbXSwibGFzdE1pbGVzdG9uZSI6bnVsbCwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIiwicG93ZXIiOiIyLjQ1NTkyNjk4ODk0ODYzMmUxOTgxIiwicG93Z2FpbiI6IjIuMDI2NTMxODI0MzU3NjYxZTE5ODEiLCJ1bml2bXVsdGkiOiIxIiwiZ2VuMW11bHRpIjoiOS41NjE1NzkzMjk5NzU2NTZlNzAzIiwiZ2VuMm11bHRpIjoiMS4zMzI0NjUyNzk0NDIwNTI4ZTM4NSIsImdlbjNtdWx0aSI6IjguMDk5MjA0OTI2NDQyNDI1ZTI3MiIsImdlbjRtdWx0aSI6IjMuMTY5NjE3OTY0OTAwNjExNWUyMDEiLCJnZW41bXVsdGkiOiIxLjE5NzQ0NDUxNzA3NjQ0MDdlMTQ3IiwiZ2VuNm11bHRpIjoiNy44MDExNTczNjcwMzQ5ODdlODIiLCJnZW4xZ2FpbiI6IjguMTQ0MTc4MDkwMjQxMDYzZTExNzgiLCJnZW4yZ2FpbiI6IjQuMjkwOTI3OTA5MzA1NDM4ZTc5MyIsImdlbjNnYWluIjoiMy42NDI4NTgwMTkyMjA5MTE1ZTUyMCIsImdlbjRnYWluIjoiNy40NTk5MDI4MjMxNjIxOTllMzE4IiwiZ2VuNWdhaW4iOiIyLjgyMDAxMzk1MzA0MTcwMDVlMTcxIiwiZ2VuNmdhaW4iOiI1LjgzNTIzMDE0NzQ5MTk2N2U4NyIsInBvd2VyZXhwb2VuZXIiOiIwLjMwNSIsInBvd2VyZXhwb2F0b20iOiIwLjI3IiwiYWN0aXZlQ2hhbGxlbmdlIjpudWxsLCJnZW43YW10IjoiMS43OTg4ODE0NjQyMTE4MDUyZTM1IiwiZ2VuOGFtdCI6IjEyNzA5Ljk5ODgyNTQ5MDIwMiIsImdlbjdnYWluIjoiOS43NTM2OTQwNTcwNTEwNDZlMzMiLCJnZW44Z2FpbiI6IjI5NC4zNDY2MjkxMTE3MTQyNiIsImdlbjdtdWx0aSI6IjYuNDg3NjIwNTE3MDYyNjA1ZTUyIiwiZ2VuOG11bHRpIjoiMS4wMjA2NDYyODU5NjY3MzE2ZTMwIiwicG93ZXJleHBvbWF0dGVyIjoiMC4wMTUiLCJibGVoIjo1MzE1MS40MDQyMjM3NzgzNiwiZ2VuOWFtdCI6IjMxIiwiZ2VuMTBhbXQiOiIwIiwiZ2VuMTFhbXQiOiIwIiwiZ2VuMTJhbXQiOiIwIiwiZ2VuOWdhaW4iOiIwIiwiZ2VuMTBnYWluIjoiMCIsImdlbjExZ2FpbiI6IjAiLCJnZW4xMmdhaW4iOiIwIiwiZ2VuOW11bHRpIjoiMjM3LjM3NjMxMzc5OTc2OTU4IiwiZ2VuMTBtdWx0aSI6IjEiLCJnZW4xMW11bHRpIjoiMSIsImdlbjEybXVsdGkiOiIxIiwicG93ZXJleHBvbW9sZWN1bGUiOiIwLjAwMyIsInBvd2VyZXhwb3BhcnRpY2xlIjoiMC4wMDEiLCJ3aGVlYW10IjoiNTIifSwiYSI6eyJ1bmxvY2tlZCI6dHJ1ZSwidG90YWwiOiIwIiwiYmVzdCI6IjAiLCJyZXNldFRpbWUiOjUzMjA1LjAzMDE1MDc3OTkzLCJmb3JjZVRvb2x0aXAiOmZhbHNlLCJidXlhYmxlcyI6e30sIm5vUmVzcGVjQ29uZmlybSI6ZmFsc2UsImNsaWNrYWJsZXMiOnsiMTEiOiIiLCIxMiI6IiIsIjEzIjoiIn0sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOlsiMSIsIjIiLCIzIiwiNCJdLCJsYXN0TWlsZXN0b25lIjoiNCIsImFjaGlldmVtZW50cyI6WyIxMiIsIjEzIiwiMTEiLCIxNCIsIjE1IiwiMTYiLCIyMSIsIjIzIiwiMjQiLCIyMiIsIjI1IiwiMjYiLCIzMSIsIjMyIiwiMzMiLCIzNCIsIjM1IiwiMzYiLCI0MSIsIjEwMSIsIjEwMiIsIjEwMyIsIjEwNCIsIjEwNSIsIjQyIiwiNDMiLCI0NCIsIjQ1IiwiNDYiLCI1MSIsIjUyIiwiNTMiLCI1NCIsIjU1IiwiNTYiLCI2MSIsIjYyIiwiNjMiLCI2NCIsIjY1IiwiNjYiLCI3MSIsIjcyIiwiNzMiLCI3NCIsIjc1IiwiNzYiLCI4MSJdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIifSwiY2YiOnsidW5sb2NrZWQiOnRydWUsInBvaW50cyI6IjAiLCJ0b3RhbCI6IjAiLCJiZXN0IjoiMCIsInJlc2V0VGltZSI6MzU1MjkuMjA0MDU2OTA2MDcsImZvcmNlVG9vbHRpcCI6dHJ1ZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbXSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiLCI0IiwiNSJdLCJsYXN0TWlsZXN0b25lIjoiNSIsImFjaGlldmVtZW50cyI6W10sImNoYWxsZW5nZXMiOnt9LCJncmlkIjp7fSwicHJldlRhYiI6IiIsIm5vdGhpbmciOiIwIn0sIm1hIjp7InVubG9ja2VkIjp0cnVlLCJwb2ludHMiOiI4LjYzMDIyNDQ1ODE3NjI1OGUxMTQxIiwiTVJlc2V0VGltZSI6MzU1NzAuODk5ODI5OTU0MTcsInRvdGFsIjoiOC42MzAyMjQ0NTgxNzYyNThlMTE0MSIsImJlc3QiOiI4LjYzMDIyNDQ1ODE3NjI1OGUxMTQxIiwicmVzZXRUaW1lIjo1My43NTA5OTk5OTk5OTkzOTQsImZvcmNlVG9vbHRpcCI6dHJ1ZSwiYnV5YWJsZXMiOnt9LCJub1Jlc3BlY0NvbmZpcm0iOmZhbHNlLCJjbGlja2FibGVzIjp7fSwic3BlbnRPbkJ1eWFibGVzIjoiMCIsInVwZ3JhZGVzIjpbMTEsMjEsMzEsNDEsMTIsMjIsMzIsNDIsMTMsMjMsMzMsNDMsMTQsMjQsMzQsNDQsMTUsMjUsMzUsNDVdLCJtaWxlc3RvbmVzIjpbIjEiLCIyIiwiMyIsIjQiLCI1IiwiNiIsIjciLCI4IiwiOSIsIjEwIiwiMTEiLCIxMiIsIjEzIiwiMTQiLCIxNSJdLCJsYXN0TWlsZXN0b25lIjoiMTUiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJhY3RpdmVDaGFsbGVuZ2UiOm51bGx9LCJjbSI6eyJ1bmxvY2tlZCI6dHJ1ZSwiY2xpY2ttYXN0ZXJ5IjoiMTAxODcwOTI5LjA5MTEzMTg0IiwiY3BjIjoiMTI0NzkuMzAwMDM0Njg5MDUzIiwiY21sdmwiOiIxMyIsInRvdGFsIjoiMCIsImJlc3QiOiIwIiwicmVzZXRUaW1lIjo0MTAzNi44NzIyMDcyMDg3MDQsImZvcmNlVG9vbHRpcCI6ZmFsc2UsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6eyIxMSI6IiIsIjEyIjoiIn0sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6W10sIm1pbGVzdG9uZXMiOlsiMTEiXSwibGFzdE1pbGVzdG9uZSI6IjExIiwiYWNoaWV2ZW1lbnRzIjpbXSwiY2hhbGxlbmdlcyI6e30sImdyaWQiOnt9LCJwcmV2VGFiIjoiIiwiY2xtdWx0IjoiMS4xIiwiY2xzY2FsZSI6IjIuOTAwMDAwMDAwMDAwMDAwNCIsImNzbSI6IjEiLCJjc21zY2FsZSI6IjAuNiIsImNzbW11bHQiOiIwLjEzIiwiY3NtZGVjIjoiNDUiLCJjc21nYWluIjoiMC4xMyJ9LCJwYSI6eyJ1bmxvY2tlZCI6dHJ1ZSwicG9pbnRzIjoiMS4zMzcwMTcyMTI2MTk4MjQ4ZTM3IiwidG90YWwiOiI3LjY2NjQ0Njk4NDUxMDA4NGUzNyIsImJlc3QiOiI1LjA5NTMwOTY5ODc2MTA5OGUzNyIsInJlc2V0VGltZSI6NTMuNzUwOTk5OTk5OTk5Mzk0LCJmb3JjZVRvb2x0aXAiOnRydWUsImJ1eWFibGVzIjp7fSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6eyIxMSI6IiIsIjEyIjoiIiwiMTMiOiIiLCIyMSI6IiIsIjIyIjoiIiwiMjMiOiIiLCIzMSI6IiJ9LCJzcGVudE9uQnV5YWJsZXMiOiIwIiwidXBncmFkZXMiOlsxMSwxMiwxMywxNCwxNSwyMSwyMiwyMywyNCwyNSwzMV0sIm1pbGVzdG9uZXMiOlsiMSIsIjIiXSwibGFzdE1pbGVzdG9uZSI6IjIiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJidXlNb2RlIjoiNTBwY3QiLCJjbGlja2FibGVhbXQiOnsiYWxwaGEiOiIyLjMwMDQ4NjczMjIxNzE2OTRlMzciLCJiZXRhIjoiMi4wNzQ4NzI4MzY2MTQzMTc0ZTM3IiwiZ2FtbWEiOiIxLjIwMzUxOTkxOTA0NjY1NjNlMzciLCJkZWx0YSI6IjcuNTM5OTM4NzU3ODc3MDM4ZTM2In0sImNsaWNrYWJsZWVmZiI6eyJhbHBoYSI6IjIwIiwiYmV0YSI6IjEiLCJnYW1tYSI6IjEifSwidG90YWxCb29zdHMiOiIzIiwidG90YWxQYXJ0aWNsZXMiOiI1LjU3ODg3OTQ4Nzg3ODEzZTM3IiwiY2xpY2thYmxlbmVyZiI6eyJiZXRhIjoiNi40NDE4NTE5NjQ0ODA4OTRlMTgiLCJnYW1tYSI6IjQuNjMyNDQ0NDc2OTAzMzllMTkiLCJkZWx0YSI6IjIxMjQyNDA2MTQ1LjM4ODIwMyJ9fSwibW8iOnsidW5sb2NrZWQiOnRydWUsInBvaW50cyI6IjEuNDY4NjU4Mzg3MzIzMzQxNGUxNDkiLCJtb2xlY3VsZSI6IjIuOTQzNDM2MjUzMDQxNzcwNGUxNDkiLCJNUmVzZXRUaW1lIjoiMTk1MzUuMjYzNjYzMTE4NzI3IiwidG90YWwiOiIzLjMzMDYyNzgzNDM4OTQ5ODZlMTQ5IiwiYmVzdCI6IjIuMDAyMTc0MDU5NTIzNTc3ZTE0OSIsInJlc2V0VGltZSI6MTUyNi4zNzU3NzYwMDAwMzE1LCJmb3JjZVRvb2x0aXAiOnRydWUsImJ1eWFibGVzIjp7IjExIjoiMjQzIiwiMTIiOiIxNTIiLCIyMSI6IjEwMyIsIjIyIjoiNzgiLCIzMSI6IjQ5IiwiMzIiOiIzMSIsIjQxIjoiMTciLCI0MiI6IjYifSwibm9SZXNwZWNDb25maXJtIjpmYWxzZSwiY2xpY2thYmxlcyI6e30sInNwZW50T25CdXlhYmxlcyI6IjAiLCJ1cGdyYWRlcyI6WzExLDEyLDEzLDE0LDE1LDIxLDIyLDIzLDI0LDI1LDMxLDMyLDMzLDM0LDM1LDQxLDQyLDQzLDQ0LDQ1XSwibWlsZXN0b25lcyI6WyIxIiwiMiIsIjMiLCI0IiwiNSIsIjYiLCI3IiwiOCIsIjkiLCIxMCIsIjExIiwiMTIiLCIxMyJdLCJsYXN0TWlsZXN0b25lIjoiMTMiLCJhY2hpZXZlbWVudHMiOltdLCJjaGFsbGVuZ2VzIjp7fSwiZ3JpZCI6e30sInByZXZUYWIiOiIiLCJib29zdGVyQmFzZSI6IjEwIn0sImRldlNwZWVkIjoxfQ==")
-            },
-            style() {return{
-                'background-color': tmp.pa.color,
-            }},
-        },
     },
     achievements: {
         rows: 40,
         cols: 6,
         11: {
             name: "The Start",
-            done() { return hasUpgrade("en", 11) },
+            done() { return hasUpgrade("s", 11) },
             tooltip: "Start generating atoms",
         },
         12: {
-            name: "Century of atoms",
-            done() { return player.points.gte(100) },
-            tooltip: "One hundred and growing! (+5% atom gain)",
+            name: "A Tier!",
+            done() { return hasMilestone("st", 1) },
+            tooltip: "Get Star Tier 1.",
         },
         13: {
-            name: "Symbiotic relationship",
-            done() { return hasUpgrade("en", 22) },
-            tooltip: "Energy and Atoms boost the other (+4% Energy gain)",
+            name: "4 Tiers! -> Passive Generation",
+            done() { return hasMilestone("st", 4) },
+            tooltip: "Get Star Tier 4.",
         },
         14: {
-            name: "Generation",
-            done() { return hasUpgrade("en", 25) },
-            tooltip: "Unlock Generators! (+7% Energy gain)",
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
+            name: "New reset layer!",
+            done() { return player.g.points.gte(1) },
+            tooltip: "Get 1 Galaxy.",
         },
         15: {
-            name: "Powering Up I",
-            done() { return player.en.power.gte(1000) },
-            tooltip: "Get 1,000 Power (+2% Power gain)",
-            unlocked() { return hasAchievement("a", 14) },
+            name: "A ray of light",
+            done() { return player.points.gte(1e33) },
+            tooltip: "Get 1De Sparks.",
         },
         16: {
-            name: "Atomic Avalanche",
-            done() { return player.points.gte(100000) },
-            tooltip: "Get 100,000 Atoms (+5% Atom gain)",
-            unlocked() { return hasAchievement("a", 14) },
+            name: "Galaxy Supercluster",
+            done() { return player.g.points.gte(1e15) },
+            tooltip: "Get 1Qa Galaxies.",
         },
         21: {
-            name: "Powering Up II",
-            done() { return player.en.power.gte(50e6) },
-            tooltip: "Get 50M Power (+3% Power gain)",
-            unlocked() { return hasAchievement("a", 14) },
-        },
-        22: {
-            name: "Generation++",
-            done() { return hasUpgrade("en", 44) },
-            tooltip: "Get the 19th upgrade (+1.9% Energy gain)",
-            unlocked() { return hasAchievement("a", 14) },
-        },
-        23: {
-            name: "Reset",
-            done() { return player.ma.points.gte(1) },
-            tooltip: "Do a Matter Reset (+8% Atoms gain)",
-            unlocked() { return hasAchievement("a", 14) },
-            style() {
-                return {
-                "border-color": "red",
-                "border-width": "3px"
-                }
-            }
-        },
-        24: {
-            name: "Passive Income",
-            done() { return hasMilestone("ma", 1) },
-            tooltip: "Generate energy per second (+5% Energy gain)",
-            unlocked() { return hasAchievement("a", 23) },
-        },
-        25: {
-            name: "Row 5",
-            done() { return hasUpgrade("en", 51) },
-            tooltip: "Start on Row 5 Energy Upgrades (+5% Energy gain)",
-            unlocked() { return hasAchievement("a", 23) },
-        },
-        26: {
-            name: "Giga Machine",
-            done() { return player.en.gen1amt.gte(1e9) },
-            tooltip: "Get 1,000,000,000 of the first generator. Reward: +1 x 10^0% Gen 1 generation",
-            unlocked() { return hasAchievement("a", 23) },
-        },
-        31: {
-            name: "Tiered",
-            done() { return player.w.points.gte(2) },
-            tooltip: "Get World Tier 2. Reward: +2% Atom gain",
-            unlocked() { return hasAchievement("a", 23) },
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
-        },
-        32: {
-            name: "Energy Burst",
-            done() { return player.en.points.gte(1e25) },
-            tooltip: "Get 10^25 Energy. Reward: +2.5% Atom gain",
-            unlocked() { return hasAchievement("a", 31) },
-        },
-        33: {
-            name: "Mini matterpocalypse",
-            done() { return player.ma.points.gte(200000) },
-            tooltip: "Get 200K Matter. Reward: +5% Matter gain",
-            unlocked() { return hasAchievement("a", 31) },
-        },
-        34: {
-            name: "Clicker",
-            done() { return hasMilestone("ma", 7) },
-            tooltip: "Unlock Click Mastery",
-            unlocked() { return hasAchievement("a", 31) },
-        },
-        35: {
-            name: "Atomic Insanity",
-            done() { return player.points.gte(1e50) },
-            tooltip: "Get 10^50 Atoms (+5% Atom gain)",
-            unlocked() { return hasAchievement("a", 31) },
-        },
-        36: {
-            name: "Tiered, again",
-            done() { return player.w.points.gte(3) },
-            tooltip: "Get World Tier 3. Reward: +3% Gen 3 generation",
-            unlocked() { return hasAchievement("a", 31) },
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
-        },
-        41: {
-            name: "Crazily Energetic",
-            done() { return player.en.points.gte(1e80) },
-            tooltip: "Get 10^80 Energy (+8% Energy gain)",
-            unlocked() { return hasAchievement("a", 36) },
-        },
-        42: {
-            name: "Isn't it supposed to be hard to get?",
-            done() { return getBuyableAmount("en", 41).gte(10) },
-            tooltip: "Get 10 Generator 7s",
-            unlocked() { return hasAchievement("a", 36) },
-        },
-        43: {
-            name: "Tier-2 Reset",
-            done() { return player.mo.points.gte(1) },
-            tooltip: "Do a Molecule Reset (x1.20 Power gain)",
-            unlocked() { return hasAchievement("a", 36) },
-            style() {
-                return {
-                "border-color": "red",
-                "border-width": "3px"
-                }
-            }
-        },
-        44: {
-            name: "100 moles",
-            done() { return player.mo.molecule.gte(100) },
-            tooltip: "Get 100 Molecules (+10% Atoms gain)",
-            unlocked() { return hasAchievement("a", 43) },
-        },
-        45: {
-            name: "200 Molecule Bonds",
-            done() { return player.mo.points.gte(200) },
-            tooltip: "Get 200 Molecule Bonds (+10% Atoms gain)",
-            unlocked() { return hasAchievement("a", 43) },
-        },
-        46: {
-            name: "Get a Booster",
-            done() { return getBuyableAmount("mo", 11).gte(1) },
-            tooltip: "Get 1 Booster 1 (+10% Power gain)",
-            unlocked() { return hasAchievement("a", 43) },
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
-        },
-        51: {
-            name: "Get 1 T2-Booster",
-            done() { return getBuyableAmount("mo", 12).gte(1) },
-            tooltip: "Get 1 Booster 2 (+2% Power gain)",
-            unlocked() { return hasAchievement("a", 46) },
-        },
-        52: {
-            name: "Get 2 T2-Boosters",
-            done() { return getBuyableAmount("mo", 12).gte(2) },
-            tooltip: "Get 2 Booster 2 (+4% Power gain)",
-            unlocked() { return hasAchievement("a", 46) },
-        },
-        53: {
-            name: "Get 1 T3-Booster",
-            done() { return getBuyableAmount("mo", 21).gte(1) },
-            tooltip: "Get 1 Booster 3 (+3% Power gain)",
-            unlocked() { return hasAchievement("a", 46) },
-        },
-        54: {
-            name: "Get 2 T3-Boosters",
-            done() { return getBuyableAmount("mo", 21).gte(2) },
-            tooltip: "Get 2 Booster 3 (+6% Power gain)",
-            unlocked() { return hasAchievement("a", 46) },
-        },
-        55: {
-            name: "Get 1 T4-Booster",
-            done() { return getBuyableAmount("mo", 22).gte(1) },
-            tooltip: "Get 1 Booster 4 (+4% Power gain)",
-            unlocked() { return hasAchievement("a", 46) },
-        },
-        56: {
-            name: "Get 2 T4-Boosters",
-            done() { return getBuyableAmount("mo", 22).gte(2) },
-            tooltip: "Get 2 Booster 4 (+8% Power gain)",
-            unlocked() { return hasAchievement("a", 46) },
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
-        },
-        61: {
-            name: "Of course it doesn't stop at 15",
-            done() { return hasMilestone("cf", 3) },
-            tooltip: "Get the third Content Feature Milestone (+3% Molecules gain)",
-            unlocked() { return hasAchievement("a", 56) },
-        },
-        62: {
-            name: "Additional",
-            done() { return hasMilestone("mo", 8) },
-            tooltip: "Get the eighth Molecule Milestone (+8% Molecules gain)",
-            unlocked() { return hasAchievement("a", 56) },
-        },
-        63: {
-            name: "Tiered up 3",
-            done() { return hasMilestone("w", 3) },
-            tooltip: "WORLD TIER 4! (+14% Gen 4 generation)",
-            unlocked() { return hasAchievement("a", 56) },
-        },
-        64: {
-            name: "The push to the next layer",
-            done() { return hasMilestone("cf", 4) },
-            tooltip: "Fourth Content Feature Milestone (+4% Molecules gain)",
-            unlocked() { return hasAchievement("a", 56) },
-        },
-        65: {
-            name: "Layer 4 Reset",
-            done() { return player.pa.points.gte(1) },
-            tooltip: "Do a Particle Reset (x1.25 Power gain)",
-            unlocked() { return hasAchievement("a", 56) },
-            style() {
-                return {
-                "border-color": "red",
-                "border-width": "3px"
-                }
-            }
-        },
-        66: {
-            name: "Particles I",
-            done() { return player.pa.totalParticles.gte(10) },
-            tooltip: "Reach 10 Particles Spent on Other Particles. (Reward: +1% Particles gain)",
-            unlocked() { return hasAchievement("a", 65) },
-        },
-        71: {
-            name: "Particles II",
-            done() { return player.pa.totalParticles.gte(100) },
-            tooltip: "Reach 100 Particles Spent on Other Particles. (Reward: +2% Particles gain)",
-            unlocked() { return hasAchievement("a", 65) },
-        },
-        72: {
-            name: "Particles III",
-            done() { return player.pa.totalParticles.gte(2500) },
-            tooltip: "Reach 2,500 Particles Spent on Other Particles. (Reward: +3% Particles gain)",
-            unlocked() { return hasAchievement("a", 65) },
-        },
-        73: {
-            name: "The Elusive 9th Generator",
-            done() { return player.en.gen9amt.gte(1) },
-            tooltip: "Get 1 Gen 9 (requires 100 Gen 8s). (Reward: +9% Gen 1 gain)",
-            unlocked() { return hasAchievement("a", 65) },
-        },
-        74: {
-            name: "Get 1 T7-Booster",
-            done() { return getBuyableAmount("mo", 41).gte(1) },
-            tooltip: "Get 1 Booster 7. (+7% Molecule Bonds gain)",
-            unlocked() { return hasAchievement("a", 65) },
-        },
-        75: {
-            name: "Permanently Keep 'Major Trade off'",
-            done() { return hasUpgrade("en", 92) },
-            tooltip: "Yes. [No additional boost]",
-            unlocked() { return hasAchievement("a", 65) },
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
-        },
-        76: {
-            name: "9x9 = 81",
-            done() { return player.en.gen9amt.gte(9) },
-            tooltip: "Get 9 Gen 9s (requires over e2,000 Atoms). (Reward: Autobuy Gen 8 [req EN92 as well], and Booster 1-3 costs nothing.)",
-            unlocked() { return hasAchievement("a", 75) },
-        },
-        81: {
-            name: "A Millinillion",
-            done() { return player.points.gte("1e3003") },
-            tooltip: "Get 1 Mi Atoms. (Reward: Gen 9s do not reset Gen 8s anymore)",
-            unlocked() { return hasAchievement("a", 75) },
-        },
-        82: {
-            name: "Universe Shrinker-ahh",
-            done() { return hasUpgrade("ma", 51) },
-            tooltip: "Unlock the Shrinkenator (Particle effect is  slightly stronger)",
-            unlocked() { return hasAchievement("a", 75) },
-            style() {
-                return {
-                "border-color": "blue",
-                "border-width": "3px"
-                }
-            }
-        },
-        83: {
-            name: "Get 10 T8 Boosters",
-            done() { return getBuyableAmount("mo", 42).gte(10) },
-            tooltip: "Get 10 Booster 8. (+10% Molecule Bonds gain)",
-            unlocked() { return hasAchievement("a", 82) },
-        },
-        84: {
-            name: "Tiered up 4",
-            done() { return hasMilestone("w", 4) },
-            tooltip: "WORLD TIER 5! (+5% Gen 5 generation)",
-            unlocked() { return hasAchievement("a", 82) },
-        },
-        85: {
-            name: "e7500 Atoms",
-            done() { return player.points.gte("e7500") },
-            tooltip: "Get e7500 Atoms. (Reward: The Price of s-6 is decreased to 400)",
-            unlocked() { return hasAchievement("a", 82) },
-        },
-        101: {
-            name: "Click Mastery Milestone 1 - Even a baby can click that much",
-            done() { return player.cm.clickmastery.gte(250) },
-            tooltip: "Get 250 clicks (+2.5% clicks)",
-            unlocked() { return (hasMilestone("ma", 7) || hasAchievement("a", 101)) },
-        },
-        102: {
-            name: "Click Mastery Milestone 2 - Amateur Clicker",
-            done() { return player.cm.clickmastery.gte(50000) },
-            tooltip: "Get 50,000 clicks (+5% clicks)",
-            unlocked() { return hasAchievement("a", 101) },
-        },
-        103: {
-            name: "Click Mastery Milestone 3 - Great Clicker",
-            done() { return player.cm.clickmastery.gte(1e6) },
-            tooltip: "Get 1,000,000 clicks (Click Level scaling is reduced)",
-            unlocked() { return hasAchievement("a", 102) },
-        },
-        104: {
-            name: "Click Mastery Milestone 4 - Hypertapper",
-            done() { return player.cm.clickmastery.gte(15e6) },
-            tooltip: "Get 15,000,000 clicks (Click Level scaling is reduced, again)",
-            unlocked() { return hasAchievement("a", 103) },
-        },
-        105: {
-            name: "Click Mastery Milestone 5 (Optional) - Maniac Tapper",
-            done() { return player.cm.clickmastery.gte(500e6) },
-            tooltip: "Get 500,000,000 clicks (+5% clicks)",
-            unlocked() { return hasAchievement("a", 104) },
-        },
-        106: {
-            name: "Click Mastery Milestone 6 (Optional) - Professional Clicker",
-            done() { return player.cm.clickmastery.gte(10e9) },
-            tooltip: "Get 10,000,000,000 clicks (Click level mult to clicks and atoms is increased)",
-            unlocked() { return hasAchievement("a", 105) },
+            name: "Decka-Tier",
+            done() { return player.st.points.gte(10) },
+            tooltip: "Get Star Tier 10!",
         },
         
     tabFormat: [

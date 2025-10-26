@@ -140,14 +140,19 @@ var systemComponents = {
 		<br>
 		Credits
 		<br>
-		Savebank from 'The Plant Tree' and features from my other game 'The Point Tree'
+		Savebank from 'The Plant Tree'
 		<br>
 		<br>
-		Inspiration from other TMT games, Roblox games and Web Incremental Games [Notably 'Universe Shrinker' and 'Antimatter Dimensions' for the Shrinkenator and Generators]
+		Minigame inspired from 'The Mario Maker 2 Tree'
 		<br>
 		<br>
 		Infinity Notation by unicodes
 		<br>
+		<br>
+		Pixabay for the Upgrade/MS/Buyable/Ach sound effects
+		<br>
+		<br>
+		Some beta testers
 		<br>
 		<br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
@@ -187,6 +192,10 @@ var systemComponents = {
 			<tr>
 				<td><button class="opt" onclick="changeNotation()">Notation: {{ getNotationName() }}</button></td>
                 <td><button class="opt" onclick="toggleOpt('hideMilestonePopups')">Show Milestone Popups: {{ formatOption(!options.hideMilestonePopups) }}</button></td>
+				</tr> 
+			<tr>
+				<td><button class="opt" onclick="updateSoundEff()">Sound Effect: {{ options.soundeff?"ON":"OFF" }}</button></td>
+                <td><button class="opt" onclick="updateAction()">Action Mode (Not recommended on mobile): {{ getActionMode() }}</button></td>
 				</tr> 
             </tr>
         </table>`
