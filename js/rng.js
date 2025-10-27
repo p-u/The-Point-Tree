@@ -496,7 +496,7 @@ addLayer("rng", {
         }
         if (hasMilestone("rng", 2)) player.rng.rollnextcd = new Decimal(2)
         if (hasMilestone("rng", 6)) {
-            player.rng.rngptmult = player.rng.rngptmult.mul(player.rng.rngpts.log(10))
+            player.rng.rngptmult = player.rng.rngptmult.mul(player.rng.rngpts.add(1).log(10))
         }
         if (hasMilestone("rng", 4)) {
             player.rng.rollnextcd = new Decimal(1)

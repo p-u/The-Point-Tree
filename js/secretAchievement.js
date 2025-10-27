@@ -2460,23 +2460,27 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = ((Math.log(player.timePlayed)/10)+1)
-                    multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-4.5)*3, 1)
-                    if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
-                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(500000).mul(multiplier)))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult))
+                        let multiplier = ((Math.log(player.timePlayed)/10)+1)
+                        multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-4.5)*3, 1)
+                        if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
+                        player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(500000).mul(multiplier)))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                    }
                 }
             },
             unlocked() {return hasUpgrade("sa", 21)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = ((Math.log(player.timePlayed)/10)+1)
-                    multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-4.5)*3, 1)
-                    if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
-                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(500000).mul(multiplier)))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.25).mul(player.sa.minigamePtsMult))
+                        let multiplier = ((Math.log(player.timePlayed)/10)+1)
+                        multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-4.5)*3, 1)
+                        if (hasUpgrade("sa", 22)) multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
+                        player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(500000).mul(multiplier)))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                    }
                 }
             }
         },
@@ -2485,25 +2489,29 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = ((Math.log10(player.timePlayed)/10)+1)
-                    multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.5, 0.5)
-                    multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
-                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(10e6).mul(multiplier)))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        let multiplier = ((Math.log10(player.timePlayed)/10)+1)
+                        multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.5, 0.5)
+                        multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
+                        multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
+                        player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(10e6).mul(multiplier)))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult))
+                    }
                 }
             },
             unlocked() {return hasUpgrade("sa", 24)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = ((Math.log10(player.timePlayed)/10)+1)
-                    multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.5, 0.5)
-                    multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
-                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(10e6).mul(multiplier)))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        let multiplier = ((Math.log10(player.timePlayed)/10)+1)
+                        multiplier = multiplier * Math.max((Math.log10(player.sa.minigamePoints)-3.5)*0.5, 0.5)
+                        multiplier = multiplier * Math.max(player.points.add(1).slog(), 2)
+                        multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog(), 1)
+                        player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(10e6).mul(multiplier)))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(0.5).mul(player.sa.minigamePtsMult))
+                    }
                 }
             }
         },
@@ -2512,21 +2520,25 @@ addLayer("sa", {
             canClick() {return true},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = Math.max(player.points.add(1).slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog()-1, 1)
-                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(1e10).mul(multiplier)))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        let multiplier = Math.max(player.points.add(1).slog(), 2)
+                        multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog()-1, 1)
+                        player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(1e10).mul(multiplier)))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult))
+                    }
                 }
             },
             unlocked() {return hasUpgrade("sa", 31)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
-                    let multiplier = Math.max(player.points.add(1).slog(), 2)
-                    multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog()-1, 1)
-                    player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(1e10).mul(multiplier)))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        let multiplier = Math.max(player.points.add(1).slog(), 2)
+                        multiplier = multiplier * Math.max(player.sa.minigameNum.add(1).slog()-1, 1)
+                        player[this.layer].minigameNum = player[this.layer].minigameNum.pow(new Decimal(10).pow(new Decimal(1e10).mul(multiplier)))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(15).mul(player.sa.minigamePtsMult))
+                    }
                 }
             }
         },
@@ -2556,9 +2568,11 @@ addLayer("sa", {
                         cost = 1
                         mult = mult * 8
                     }
-                    player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag + (0.00005 * mult)
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag + (0.00005 * mult)
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult))
+                    }
                 }
             },
             unlocked() {return hasUpgrade("sa", 32)},
@@ -2587,9 +2601,11 @@ addLayer("sa", {
                         cost = 1
                         mult = mult * 8
                     }
-                    player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag + (0.00005 * mult * holdmult)
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag + (0.00005 * mult)
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(mult).mul(player.sa.minigamePtsMult))
+                    }
                 }
             }
         },
@@ -2626,9 +2642,11 @@ addLayer("sa", {
                     if (hasMilestone("sa", 7)) mult = mult * 4
                     if (hasMilestone("sa", 8)) mult = mult * 5
                     if (hasMilestone("sa", 9)) mult = mult * 10
-                    player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag * (1 + (0.0001 * mult))
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag * (1 + (0.0001 * mult))
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult))
+                    }
                 }
             },
             unlocked() {return hasUpgrade("sa", 42)},
@@ -2667,10 +2685,12 @@ addLayer("sa", {
                     if (hasMilestone("sa", 9)) mult = mult * 10
                     if (hasMilestone("sa", 8)) einc = 1
                     if (hasMilestone("sa", 9)) einc = 2
-                    player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag * (1 + (0.0001 * mult * holdmult))
-                    player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + einc
-                    player[this.layer].bp = player[this.layer].bp.add(1)
-                    player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult))
+                    if (player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult)).gt(0)) {
+                        player[this.layer].minigameNum.mag = player[this.layer].minigameNum.mag * (1 + (0.0001 * mult * holdmult))
+                        player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + einc
+                        player[this.layer].bp = player[this.layer].bp.add(1)
+                        player[this.layer].minigamePoints = player[this.layer].minigamePoints.sub(new Decimal(cost).mul(player.sa.minigamePtsMult))
+                    }
                 }
             }
         },
