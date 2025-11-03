@@ -62,6 +62,21 @@ addLayer("a", {
             done() { return player.st.points.gte(10) },
             tooltip: "Get Star Tier 10!",
         },
+        22: {
+            name: "The next reset...",
+            done() { return player.n.points.gte(1) },
+            tooltip: "Star Tier 15's reset layer",
+        },
+        23: {
+            name: "Hypera-Tier",
+            done() { return player.st.points.gte(20) },
+            tooltip: "Get Star Tier 20!",
+        },
+        24: {
+            name: "aTt5earS2i",
+            done() { return player.st.points.gte(25) },
+            tooltip: "Oh no this is breaking faster than expected",
+        },
         
     tabFormat: [
         "blank", 

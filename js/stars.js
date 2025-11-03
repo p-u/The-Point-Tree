@@ -76,10 +76,16 @@ addLayer("s", {
 				layers.s.buyables[12].buy();
 			};
         }
+        if (hasMilestone('st', 16)) {
+            if (layers.s.buyables[13].canAfford()) {
+				layers.s.buyables[13].buy();
+			};
+        }
     },
     passiveGeneration() {
         if (hasMilestone("st", 5)) return 1
         if (hasMilestone("st", 4)) return 0.2
+        if (hasUpgrade("n", 11)) return 0.01
         return 0
     },
     upgrades: {
@@ -114,6 +120,7 @@ addLayer("s", {
             effect() {
                 sparksq = 0.14
                 if (hasUpgrade("s", 24) && player.points.gt(25e6)) sparksq = 0.16
+                if (hasUpgrade("n", 13)) sparksq = 0.175
                 softcapDescriptionSp15 = ""
                 sdsc = ""
                 upgEffectSp15 = upgradeEffect(this.layer, this.id)
@@ -175,6 +182,7 @@ addLayer("s", {
             cost: new Decimal(150e6),
             effect() {
                 starstar = 0.11
+                if (hasMilestone("st", 15)) starstar = 0.12
                 softcapDescriptionSp25 = ""
                 sdsc = ""
                 let eff = player.points.add(1).pow(starstar)
@@ -206,6 +214,49 @@ addLayer("s", {
             cost: new Decimal(5e84),
             unlocked() { return (hasMilestone("st",7) && hasUpgrade("s",32)) }, 
         },
+        34: {
+            title: " (whaaa?) [23/40]",
+            description: "Galaxy Up. 13 is stronger.",
+            cost: new Decimal("4e474"),
+            unlocked() { return (hasMilestone("st",12) && hasUpgrade("s",33)) }, 
+        },
+        35: {
+            title: " [sigh] i guess thats why this upgrade takes 1.46 days from [25/40]... [26/40]",
+            description: "The effect of Star Tier 16 is stronger. Increase the effect further at e670 Galaxies, and at 200Sx Nebulae unlock a new effect (Nebulae boost Sparks (direct multiplier)).",
+            cost: new Decimal("e3150"),
+            unlocked() { return (hasMilestone("st",17) && hasUpgrade("s",34)) }, 
+        },
+        41: {
+            title: "Back to the increasers! [28/40]",
+            description: "Unlock the fourth increaser, the 'Nebula Increaser'. The price scaling of the Galaxy Increaser is lower.",
+            cost: new Decimal("e27140"),
+            unlocked() { return (hasMilestone("st",19) && hasUpgrade("s",35)) }, 
+        },
+        42: {
+            title: "n-2.1632a",
+            description: "Nebulae gains a new effect! Decrease star tier scaling based on nebulae.",
+            cost: new Decimal("e45000"),
+            unlocked() { return (hasMilestone("st",19) && hasUpgrade("s",41)) }, 
+        },
+        43: {
+            title: "n-2.3481c",
+            description: "Nebulae gains a new effect! Nebulae boosts itself...",
+            cost: new Decimal("e476547"),
+            effect() {
+                nebulae2 = 0.02
+                softcapDescriptionSp43 = ""
+                sdsc = ""
+                let eff = player.n.points.add(1).pow(nebulae2)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionSp43
+            },
+            tooltip() {
+                return "Formula: (Nebulae+1)^"  + softcapDescriptionSp43 + sdsc
+            },
+            unlocked() { return (hasMilestone("st",19) && hasUpgrade("s",42)) }, 
+        },
     },
     buyables: {
         11: {
@@ -229,17 +280,23 @@ addLayer("s", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.s.points = player.s.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasUpgrade("n", 11)) player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (hasUpgrade("n", 11)) {
+                    setBuyableAmount(this.layer, this.id, player.s.points.div(100e12).log(5).add(1).floor())
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             extra(){
                 let extra = new Decimal(0)
+                if (getBuyableAmount(this.layer, 14).gte(0)) extra = extra.add(getBuyableAmount(this.layer, 14).mul(2))
                 return extra
             },
             effect() {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 let bas = new Decimal(2)
                 if (hasUpgrade("g", 12)) bas = new Decimal(2.2)
+                if (hasUpgrade("g", 21)) bas = new Decimal(2.25)
                 return bas.pow(x)
             },
             tooltip() {
@@ -271,11 +328,16 @@ addLayer("s", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.s.points = player.s.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasUpgrade("n", 11)) player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (hasUpgrade("n", 11)) {
+                    setBuyableAmount(this.layer, this.id, player.s.points.div(20e15).log(7).add(1).floor())
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             extra(){
                 let extra = new Decimal(0)
+                if (getBuyableAmount(this.layer, 14).gte(0)) extra = extra.add(getBuyableAmount(this.layer, 14).mul(2))
                 return extra
             },
             effect() {
@@ -295,7 +357,9 @@ addLayer("s", {
             title: "Buy Galaxy Increaser",
             unlocked() { return (hasMilestone('st', 9)) },
             cost(x) {
-                return new Decimal(1e155).mul(Decimal.pow(1e5, x)).floor()
+                let cinc = new Decimal(1e5)
+                if (hasUpgrade("s", 41)) cinc = new Decimal(2.5e4)
+                return new Decimal(1e155).mul(Decimal.pow(cinc, x)).floor()
             },
             display() {
                 let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Stars. <br>"
@@ -311,9 +375,15 @@ addLayer("s", {
                 return player.s.points.gte(this.cost())
             },
             buy() {
+                let cinc = new Decimal(1e5)
+                if (hasUpgrade("s", 41)) cinc = new Decimal(2.5e4)
                 let cost = new Decimal(1)
-                player.s.points = player.s.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasUpgrade("n", 11)) player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (hasUpgrade("n", 11)) {
+                    setBuyableAmount(this.layer, this.id, player.s.points.div(1e155).log(cinc).add(1).floor())
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             extra(){
                 let extra = new Decimal(0)
@@ -325,7 +395,54 @@ addLayer("s", {
                 return bas.pow(x)
             },
             tooltip() {
-                return "Cost Formula: e155 x e5^Amt"
+                let cinc = new Decimal(1e5)
+                if (hasUpgrade("s", 41)) cinc = new Decimal(2.5e4)
+                return "Cost Formula: e155 x "+cinc+"^Amt"
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+        },
+        14: {
+            title: "Buy Nebula Increaser",
+            unlocked() { return (hasUpgrade('s', 41)) },
+            cost(x) {
+                return new Decimal("e25000").mul(Decimal.pow(1e120, x)).floor()
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Stars. <br>"
+                if (this.extra().gte(1)) {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + notationChooser(this.extra()) + " Nebula Increasers."
+                } else {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Nebula Increasers."
+                }
+                dis = dis + " Nebula Increasers multiply Nebulae by " + notationChooser(buyableEffect(this.layer, this.id)) + " and add " + notationChooser(getBuyableAmount(this.layer, this.id).mul(2)) +" Spark and Star Increasers."
+                return dis
+            },
+            canAfford() {
+                return player.s.points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (hasUpgrade("n", 14)) {
+                    setBuyableAmount(this.layer, this.id, player.s.points.div("e25000").log(1e120).add(1).floor())
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
+            },
+            extra(){
+                let extra = new Decimal(0)
+                return extra
+            },
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
+                let bas = new Decimal(1.4)
+                return bas.pow(x)
+            },
+            tooltip() {
+                return "Cost Formula: e25K x e120^Amt"
             },
             style() {return {
                 'width': '250px',
@@ -375,6 +492,7 @@ addLayer("s", {
         if (hasUpgrade("s", 32)) gain = gain.times(2)
 	    if (hasMilestone("st", 8)) gain = gain.times(8)
 	    if (hasMilestone("st", 10)) gain = gain.times(10)
+	    if (hasMilestone("st", 13)) gain = gain.times(13333)
         if (hasUpgrade("s", 33)) gain = gain.times(5)
         if (hasUpgrade("s", 23)) gain = gain.times(upgradeEffect("s", 23))
         if (hasMilestone("st", 4)) {
@@ -389,7 +507,12 @@ addLayer("s", {
             if (player.s.points.gt(25e9)) gain = gain.mul(1.5)
             if (player.s.points.gt(25e15)) gain = gain.mul(1.5)
         }
+	    if (hasUpgrade("n", 11)) gain = gain.times(100)
+        let n = 1
+        if (player.n.points.gte(2.5e91)) n = 0.5
+        if (hasUpgrade("n", 13)) gain = gain.div(Decimal.min(player.s.points.add("e1500").div("e1500").pow(0.01).pow(n), new Decimal(1e120)))
         if (player.points.gte(1e59) && hasUpgrade("g", 13)) gain = gain.mul(3)
+        if (hasMilestone("st", 23)) gain = gain.mul("e1000")
         if (layers.g.effect().gte(1)) gain = gain.times(layers.g.effect())
 		gain = gain.times(buyableEffect("s", 12))
         if (hasMilestone("st", 6)) gain = gain.times(Decimal.max(Decimal.log2(player.st.points), new Decimal(1)))
@@ -397,6 +520,10 @@ addLayer("s", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
+        if (hasUpgrade("n", 13) && player.n.points.gte(5e97)) exp = exp.add(0.01)
+        if (player.n.points.gte(new Decimal(2).pow(1024))) exp = exp.add(0.01)
+        if (hasMilestone("st", 21)) exp = exp.mul(1.01)
+        if (hasMilestone("st", 25)) exp = exp.mul(new Decimal(0.98).pow(player.st.points.sub(24)))
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)

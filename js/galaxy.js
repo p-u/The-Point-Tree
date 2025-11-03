@@ -51,6 +51,7 @@ addLayer("g", {
     },
     passiveGeneration() {
         if (hasMilestone("st", 7)) return 0.01
+        if (hasUpgrade("n", 11)) return 0.01
         return 0
     },
     upgrades: {
@@ -59,7 +60,7 @@ addLayer("g", {
             description: "Come back stronger than ever! Multiply Sparks based on the amount of Stars, with higher Stars yielding lower multipliers. Min: x2.5",
             cost: new Decimal(1),
             effect() {
-                return Decimal.max(new Decimal(20).sub(player.s.points.log10()), new Decimal(2.5))
+                return Decimal.max(new Decimal(20).sub(player.s.points.add(1).log10()), new Decimal(2.5))
             },
             effectDisplay() {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionSp25
@@ -80,7 +81,10 @@ addLayer("g", {
             description: "Galaxies boost Sparks at a reduced rate, BUT reduce the gain of Stars. At 1 Ocd (e57) Sparks, x5 Sparks gain, and at 100 Ocd (e59) Sparks, x3 Stars. At 10 Nod (e61) Sparks, x2 Galaxies. At 1 Dvg (e69) Sparks, x1,000 Sparks!",
             cost: new Decimal(30e6),
             effect() {
-                return player.g.points.add(1).pow(0.5)
+                let eff = new Decimal(0.5)
+                if (hasUpgrade("s", 34)) eff = new Decimal(0.65)
+                if (hasUpgrade("g", 21)) eff = new Decimal(0.8)
+                return player.g.points.add(1).pow(eff)
             },
             effectDisplay() {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x"
@@ -95,6 +99,41 @@ addLayer("g", {
             description: "Galaxy's effect to Stars is stronger. At e136 Stars, increase that effect.",
             cost: new Decimal(2e21),
             unlocked() { return (hasUpgrade("g",13) && hasMilestone("st", 8)) }, 
+        },
+        15: {
+            title: "Galaxy Descendants [21/40]",
+            description: "Galaxies boost its gain...oh gosh thats op",
+            cost: new Decimal(1e60),
+            effect() {
+                let exp = new Decimal(0.0225)
+                if (hasMilestone("st", 12) && player.s.points.gt("1e425")) exp = new Decimal(0.035)
+                return player.g.points.add(1).pow(exp)
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x"
+            },
+            tooltip() {
+                return "Formula: Galaxies^0.0225"
+            },
+            unlocked() { return (hasUpgrade("g",14) && hasMilestone("st", 11)) }, 
+        },
+        21: {
+            title: "Trade-off B",
+            description: "Galaxy's effect to Stars is WEAKER, though increase Galaxy up. 15 effect and boost Spark Increaser's base.",
+            cost: new Decimal("e960"),
+            unlocked() { return (hasUpgrade("g",15)) }, 
+        },
+        22: {
+            title: "Mainly for the next tier, but OK!",
+            description: "xe1,000 Sparks.",
+            cost: new Decimal("e2550"),
+            unlocked() { return (hasUpgrade("g",21)) }, 
+        },
+        23: {
+            title: "holy thats long...",
+            description: "xe1,000 Galaxies.",
+            cost: new Decimal("e72250"),
+            unlocked() { return (hasUpgrade("g",22)) }, 
         },
     },
     infoboxes: {
@@ -129,12 +168,47 @@ addLayer("g", {
         if (hasMilestone("st", 6)) gain = gain.times(2)
         if (hasUpgrade("s", 32)) gain = gain.times(2)
 	    if (hasMilestone("st", 8)) gain = gain.times(8)
+	    if (hasMilestone("st", 14)) gain = gain.times(14)
+	    if (hasMilestone("st", 16)) gain = gain.times(166)
+	    if (hasMilestone("st", 17)) gain = gain.times(17)
+        let e = new Decimal(0.1)
+        if (hasUpgrade("s", 35)) {
+            e = new Decimal(0.225)
+            if (player.g.points.gte("e670")) e = new Decimal(0.25)
+        }
+	    if (hasMilestone("st", 16)) gain = gain.times(player.n.points.pow(e))
+        if (hasUpgrade("g", 15)) gain = gain.times(upgradeEffect("g", 15))
+        if (hasMilestone("st", 12)) {
+            if (player.points.gte(1e200)) gain = gain.times(5)
+            if (player.points.gte(1e250)) gain = gain.times(5)
+            if (player.points.gte(1e300)) gain = gain.times(5)
+            if (player.points.gte("1e400")) gain = gain.times(5)
+            if (player.points.gte("1e500")) gain = gain.times(5)
+            if (hasUpgrade("n", 11)) {
+                if (player.points.gte("1e700")) gain = gain.times(5)
+                if (player.points.gte("1e900")) gain = gain.times(5)
+                if (player.points.gte("e1000")) gain = gain.times(5)
+                if (player.points.gte("1e1200")) gain = gain.times(5)
+                if (player.points.gte("1e1500")) gain = gain.times(5)
+                if (player.points.gte("e1750")) gain = gain.times(5)
+            }
+        } else if (hasMilestone("st", 11)) {
+            if (player.points.gte(1e250)) gain = gain.times(3)
+            if (player.points.gte(1e300)) gain = gain.times(3)
+        }
+	    if (hasUpgrade("n", 11)) gain = gain.times(100)
+	    if (hasUpgrade("g", 23)) gain = gain.times("e1000")
+        let b = 1.5
+        if (player.points.gte("e27850")) b = b + 0.5
+        if (hasMilestone("st", 19)) gain = gain.times(new Decimal(b).pow(player.st.points))
 		gain = gain.times(buyableEffect("s", 13))
         if (player.points.gte(1e61) && hasUpgrade("g", 13)) gain = gain.mul(2)
         return gain
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
+        if (hasMilestone("st", 18)) exp = exp.mul(1.01)
+        if (player.n.points.gte(new Decimal(2).pow(1024))) exp = exp.add(0.01)
         return exp
     },
     effect(){
@@ -143,12 +217,19 @@ addLayer("g", {
             exp = 0.75
             if (player.s.points.gte(1e136)) exp = 0.8
         }
+        if (hasUpgrade("g", 21)) exp = 0.65
         let eff = player.g.points.add(1).pow(exp)
-        return eff
+        let softcapstart = new Decimal("e1250")
+        let sc = 0.5
+        softcappedEffect = softcap(eff, softcapstart, new Decimal(sc))
+        return softcappedEffect
     },
     effectDescription() {
         let softcapDescription = ""
         let layerEffect = tmp[this.layer].effect
+        if (layerEffect.gte("1e1250") ) {
+            softcapDescription = " (Softcapped at e1250x)"
+        }
         let des = "which is boosting Stars by x" + notationChooser(layerEffect) + softcapDescription
         return des;
     },

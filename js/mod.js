@@ -3,10 +3,10 @@ let modInfo = {
 	id: "RD82:SE",
 	author: "randim82",
 	pointsName: "Sparks",
-	modFiles: ['achievements.js', 'stars.js', 'tree.js', 'startier.js', 'galaxy.js'],
+	modFiles: ['achievements.js', 'stars.js', 'tree.js', 'startier.js', 'galaxy.js', 'nebulae.js'],
 
-	discordName: "SR46A",
-	discordLink: "",
+	discordName: "Stellar Evo Discord",
+	discordLink: "discord.gg/RRK9Dwzf6P",
 	initialStartPoints: new Decimal(1000), // Used for hard resets and new players
 	offlineLimit: 0,  // In hours
 	// remember to change to 0 in dev
@@ -40,10 +40,6 @@ function canGenPoints(){
 var displayThings = [
 	function() {
 		display = ""
-		if (player.points.gte(new Decimal(2).pow(1024))) {
-			let overloadPower = (new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
-			display = "<span style='color: red;'>Due to Overload after 2^1024 Atoms, Atoms are raised to the power of " + format(overloadPower, 5) + ". </span>"
-		}
 		return display
 	}
 ]
@@ -109,6 +105,15 @@ function getPointGen() {
 		if (player.points.gte(1e69)) gain = gain.mul(1000)
 	}
 	if (hasMilestone("st", 8)) gain = gain.times(8)
+	if (hasUpgrade("n", 11)) gain = gain.times(100)
+	let b = 5
+	if (player.points.gte("e2222")) b = b + 2
+	if (player.points.gte("e2500")) b = b + 1.5
+	if (hasMilestone("st", 17)) b = b * 2
+	if (hasMilestone("st", 20)) b = b * 2
+	if (hasUpgrade("n", 14)) b = player.st.points.pow(player.st.points).toNumber()
+	if (hasUpgrade("s", 35) && player.n.points.gte(200e21)) gain = gain.times(player.n.points)
+	if (hasUpgrade("n", 12)) gain = gain.times(new Decimal(b).pow(player.st.points))
 	if (hasMilestone("st", 9)) {
 		gain = gain.times(99)
 		if (player.points.gte(1e123)) gain = gain.mul(9)
@@ -119,8 +124,12 @@ function getPointGen() {
 		if (player.points.gte(1e273)) gain = gain.mul(9)
 		if (player.points.gte(1e303)) gain = gain.mul(9)
 	}
+	if (hasUpgrade("g", 23)) gain = gain.times("1e1000")
 	if (hasMilestone("st", 10)) gain = gain.times(1000)
     if (hasUpgrade("s", 32) && player.points.gte(15e18)) gain = gain.times(2)
+
+	if (hasUpgrade("n", 11)) gain = gain.pow(1.01)
+	if (player.points.gte("e74250")) gain = gain.pow(1.01)
 	return gain
 }
 
