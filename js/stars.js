@@ -279,8 +279,7 @@ addLayer("s", {
                 return player.s.points.gte(this.cost())
             },
             buy() {
-                let cost = new Decimal(1)
-                if (!hasUpgrade("n", 11)) player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (!hasUpgrade("n", 11) && player.s.points.sub(this.cost()).gte(1)) player.s.points = player.s.points.sub(this.cost())
                 if (hasUpgrade("n", 11)) {
                     setBuyableAmount(this.layer, this.id, player.s.points.div(100e12).log(5).add(1).floor())
                 } else {
@@ -327,8 +326,7 @@ addLayer("s", {
                 return player.s.points.gte(this.cost())
             },
             buy() {
-                let cost = new Decimal(1)
-                if (!hasUpgrade("n", 11)) player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (!hasUpgrade("n", 11) && player.s.points.sub(this.cost()).gte(1)) player.s.points = player.s.points.sub(this.cost())
                 if (hasUpgrade("n", 11)) {
                     setBuyableAmount(this.layer, this.id, player.s.points.div(20e15).log(7).add(1).floor())
                 } else {
@@ -377,8 +375,7 @@ addLayer("s", {
             buy() {
                 let cinc = new Decimal(1e5)
                 if (hasUpgrade("s", 41)) cinc = new Decimal(2.5e4)
-                let cost = new Decimal(1)
-                if (!hasUpgrade("n", 11)) player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (!hasUpgrade("n", 11) && player.s.points.sub(this.cost()).gte(1)) player.s.points = player.s.points.sub(this.cost())
                 if (hasUpgrade("n", 11)) {
                     setBuyableAmount(this.layer, this.id, player.s.points.div(1e155).log(cinc).add(1).floor())
                 } else {
@@ -424,8 +421,7 @@ addLayer("s", {
                 return player.s.points.gte(this.cost())
             },
             buy() {
-                let cost = new Decimal(1)
-                player.s.points = player.s.points.sub(this.cost().mul(cost))
+                if (player.s.points.sub(this.cost()).gte(1)) player.s.points = player.s.points.sub(this.cost())
                 if (hasUpgrade("n", 14)) {
                     setBuyableAmount(this.layer, this.id, player.s.points.div("e25000").log(1e120).add(1).floor())
                 } else {
