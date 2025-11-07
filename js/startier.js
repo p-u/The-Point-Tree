@@ -42,7 +42,7 @@ addLayer("st", {
     milestones: {
         1: {
             requirementDescription: "Star Tier 1",
-            effectDescription: "x2 Sparks, unlock 1 new upgrade.",
+            effectDescription: "x2 Sparks, unlock 1 new upgrade. Also, this milestone marks the beginning of offline time, starting at 1min. Every Star Tier multiplies the offline time by 1.1.",
             done() { return player["st"].points.gte(1) }
         },
         2: {

@@ -8,7 +8,13 @@ let modInfo = {
 	discordName: "Stellar Evo Discord",
 	discordLink: "discord.gg/RRK9Dwzf6P",
 	initialStartPoints: new Decimal(1000), // Used for hard resets and new players
-	offlineLimit: 0,  // In hours
+	offlineLimit() {
+		if (player.st.points.gte(1)) {
+			return new Decimal(1.1).pow(player.st.points.sub(1)).div(60).toNumber()
+		} else {
+			return 0
+		}
+	},  // In hours
 	// remember to change to 0 in dev
 }
 
