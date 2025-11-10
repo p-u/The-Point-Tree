@@ -5,8 +5,8 @@ let modInfo = {
 	pointsName: "Point Fragments",
 	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js"],
 
-	discordName: "SR46A",
-	discordLink: "",
+	discordName: "Point Tree Discord",
+	discordLink: "https://discord.com/invite/RRK9Dwzf6P",
 	initialStartPoints: new Decimal(0), // Used for hard resets and new players
 	offlineLimit: 0.5,  // In hours
 	// remember to change to 0 in dev
@@ -1336,12 +1336,6 @@ var displayThings = [
 		}
 		if (inChallenge("m", 13)) {
 			display = display + "<br> All points gain is raised to the rng power: ^" + format(player.m.rngpower) + "."
-		} else {
-			if (player.era.diff * 1000 > 52) {
-				display = display + "<br> Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000)
-			} else {
-				display = display + "<br> Recent Tick Length (ms):" + formatWhole(player.era.diff * 1000 / player.devSpeed) + " (capped at 50ms)"
-			}
 		}
 		if (player.m.hyper) {
 			display = display + "<br> Your save seems to have inflated around the MC3 part with exponent above the required. Steps have been taken to reduce the exponent. Your save will be deemed illegitimate. Please go to the savebank and import the PRE-MC3 save to fix this."
