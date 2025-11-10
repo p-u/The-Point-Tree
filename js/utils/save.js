@@ -289,6 +289,55 @@ function importSave(imported = undefined, forced = false) {
 		return;
 	}
 }
+// from mario maker 2 tree
+function exportSaveToFile() {
+    let str = btoa(JSON.stringify(player))
+    save();
+    let file = new Blob([str], {type: "text/plain"})
+    window.URL = window.URL || window.webkitURL;
+    let a = document.createElement("a")
+    a.href = window.URL.createObjectURL(file)
+    a.download = "Stellar Evo Save - "+new Date().toGMTString()+".txt"
+    a.click()
+}
+function importSaveFromFile() {
+	let a = document.createElement("input")
+    a.type = 'file'
+    a.accept = '.txt,text/plain'
+	a.style.display = 'none'
+
+		a.onchange = event => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            try {
+                const saveDataString = e.target.result; 
+                if (typeof saveDataString !== 'string' || saveDataString.trim() === '') {
+                    throw new Error("Unable to read the file or the file is empty");
+                }
+                importSave(saveDataString)
+            } catch (error) {
+                alert("Importing failed!");
+                console.error("Importing failed:", error);
+            }
+        };
+
+        reader.onerror = function() {
+            alert("An error occured while reading the file");
+            console.error("FileReader error:", reader.error);
+        };
+
+        reader.readAsText(file);
+    };
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+}
 function versionCheck() {
 	let setVersion = true;
 

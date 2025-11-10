@@ -6,7 +6,7 @@ let modInfo = {
 	modFiles: ['achievements.js', 'stars.js', 'tree.js', 'startier.js', 'galaxy.js', 'nebulae.js'],
 
 	discordName: "Stellar Evo Discord",
-	discordLink: "discord.gg/RRK9Dwzf6P",
+	discordLink: "https://discord.gg/RRK9Dwzf6P",
 	initialStartPoints: new Decimal(1000), // Used for hard resets and new players
 	offlineLimit() {
 		if (player.st.points.gte(1)) {

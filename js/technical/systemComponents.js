@@ -140,10 +140,7 @@ var systemComponents = {
 		<br>
 		Credits
 		<br>
-		Savebank from 'The Plant Tree'
-		<br>
-		<br>
-		Minigame inspired from 'The Mario Maker 2 Tree'
+		Import/Export save from file code from 'The Mario Maker 2 Tree'
 		<br>
 		<br>
 		Infinity Notation by unicodes
@@ -156,7 +153,7 @@ var systemComponents = {
 		<br>
 		<br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
-        <a class="link" href="https://discord.gg/RRK9Dwzf6P" target="_blank" v-bind:style="{'font-size': '16px'}">Main Point Tree server</a><br>
+        <a class="link" href="https://discord.gg/RRK9Dwzf6P" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Point Tree Discord</a><br>
 		<br><br>
         Time Played: {{ formatTime(player.timePlayed) }}<br><br>
         <h3>Hotkeys</h3><br>
@@ -171,11 +168,13 @@ var systemComponents = {
                 <td><button class="opt" onclick="save()">Save</button></td>
                 <td><button class="opt" onclick="toggleOpt('autosave')">Autosave: {{ options.autosave?"ON":"OFF" }}</button></td>
                 <td><button class="opt" onclick="hardReset()">HARD RESET</button></td>
+                <td><button class="opt" onclick="toggleOpt('offlineProd')">Offline Prod: {{ options.offlineProd?"ON":"OFF" }}</button></td>
             </tr>
             <tr>
                 <td><button class="opt" onclick="exportSave()">Export to clipboard</button></td>
-                <td><button class="opt" onclick="importSave()">Import</button></td>
-                <td><button class="opt" onclick="toggleOpt('offlineProd')">Offline Prod: {{ options.offlineProd?"ON":"OFF" }}</button></td>
+                <td><button class="opt" onclick="importSave()">Import save from clipboard</button></td>
+                <td><button class="opt" onclick="exportSaveToFile()">Export save to file</button></td>
+                <td><button class="opt" onclick="importSaveFromFile()">Import save from file</button></td>
             </tr>
             <tr>
                 <td><button class="opt" onclick="switchTheme()">Theme: {{ getThemeName() }}</button></td>
@@ -190,12 +189,9 @@ var systemComponents = {
 			<tr>
 				<td><button class="opt" onclick="changeNotation()">Notation: {{ getNotationName() }}</button></td>
                 <td><button class="opt" onclick="toggleOpt('hideMilestonePopups')">Show Milestone Popups: {{ formatOption(!options.hideMilestonePopups) }}</button></td>
-				</tr> 
-			<tr>
 				<td><button class="opt" onclick="updateSoundEff()">Sound Effect: {{ options.soundeff?"ON":"OFF" }}</button></td>
                 <td><button class="opt" onclick="updateAction()">Action Mode (Not recommended on mobile): {{ getActionMode() }}</button></td>
 				</tr> 
-            </tr>
         </table>`
     },
 
