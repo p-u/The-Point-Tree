@@ -297,7 +297,7 @@ function exportSaveToFile() {
     window.URL = window.URL || window.webkitURL;
     let a = document.createElement("a")
     a.href = window.URL.createObjectURL(file)
-    a.download = "Point Tree Save - "+new Date().toGMTString()+".txt"
+    a.download = "World Growth Save - "+new Date().toGMTString()+".txt"
     a.click()
 }
 function importSaveFromFile() {
