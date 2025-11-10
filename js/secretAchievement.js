@@ -22,6 +22,9 @@ addLayer("sa", {
             content: [
                 "blank", 
                 ["achievements", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
+                "blank",
+                "blank",
+                ["infobox", "sa"]
             ],
         },
         "Minigame": {
@@ -450,23 +453,23 @@ addLayer("sa", {
             }
         },
         33: {
-            name: "Endgame [Changes Every Update]",
+            name: "Low Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e617.5e21")) {
+                   if (player.points.gte("e617.4e21")) {
                        return true
                    }
                },
             tooltip() {
                 if (hasAchievement('sa', 33)) {
-                    return "Congrats! You have reached endgame at least once. (Reward: x1.2 Water and SP, x1.02 Era Crystals)"
+                    return "Congrats! You have reached low endgame at least once. (Reward: x1.02 Era Crystals)"
                 }
                 else {
-                    return "Reach Endgame. (Reward: x1.2 Water and SP, x1.02 Era Crystals)"
+                    return "Reach Low Endgame. (Reward: x1.02 Era Crystals)"
                 }
             },
         },
         34: {
-            name: "High Endgame [Changes Every Update]",
+            name: "Endgame [Changes Every Update]",
             done() {
                    if (player.points.gte("e617.85e21")) {
                        return true
@@ -474,15 +477,15 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 34)) {
-                    return "Congrats! You have reached high endgame at least once. (Reward: x1.04 Era Crystals, x1.03 Mastery Points)"
+                    return "Congrats! You have reached endgame at least once. (Reward: x1.04 Era Crystals, x1.02 Mastery Points)"
                 }
                 else {
-                    return "Reach High Endgame. (Reward: x1.04 Era Crystals, x1.03 Mastery Points)"
+                    return "Reach Endgame. (Reward: x1.04 Era Crystals, x1.02 Mastery Points)"
                 }
             },
         },
         35: {
-            name: "Absolute True Endgame [Changes Every Update]",
+            name: "High Endgame [Changes Every Update]",
             done() {
                    if (player.points.gte("e625e21")) {
                        return true
@@ -490,15 +493,15 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 35)) {
-                    return "Congrats! You have reached Absolute True endgame at least once. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
+                    return "Congrats! You have reached High Endgame at least once. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
                 }
                 else {
-                    return "Reach Absolute True Endgame. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
+                    return "Reach High Endgame. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
                 }
             },
         },
         36: {
-            name: "Insanity True Endgame [Changes Every Update]",
+            name: "True Endgame [Changes Every Update]",
             done() {
                    if (player.points.gte("e627.627e21")) {
                        return true
@@ -506,10 +509,10 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 36)) {
-                    return "Congrats! You have reached Insanity True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier)"
+                    return "Congrats! You have reached True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
                 else {
-                    return "Reach Insanity True Endgame. (Reward: x1.15 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
+                    return "Reach True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
             },
         },
@@ -566,10 +569,10 @@ addLayer("sa", {
             },
             tooltip() {
                 if (hasAchievement('sa', 43)) {
-                    return "Get e2.4e22 PF without any Eras (Reward: x1.03 Era Fragments AFTER NERF and unlock the ability to buy MAX Eras)"
+                    return "Get e2.4e22 PF without any Eras (Reward: x1.02 Era Fragments AFTER NERF and unlock the ability to buy MAX Eras)"
                 }
                 else {
-                    return "no, i dont believe in getting era... (Reward: x1.03 Era Fragments AFTER NERF and unlock the ability to buy MAX Eras)"
+                    return "no, i dont believe in getting era... (Reward: x1.02 Era Fragments AFTER NERF and unlock the ability to buy MAX Eras)"
                 }
             },
             unlocked() {
@@ -3154,6 +3157,10 @@ addLayer("sa", {
         if (player.sa.minigameNum.layer == "NaN") player.sa.minigameNum = new Decimal(1)
     },
     infoboxes: {
+        sa: {
+            title: "The secret achievement layer [achievements part] (just some hints)",
+            body() { return "Row 1: In the options. <br> Row 2 and the first 2 achievements of Row 3: Stalling before certain upgrade/milestone/reset layer. [IF YOU MISS THEM, YOU CAN GET THEM BY CURRENT ENDGAME]<br> The last four achievements in Row 3 is endgame achievements, which require quite alot of PF...<br> Row 4 Achievements are unlocked after Era 3, with the v4.0 update. There are 6 achievements in this row, with the last 3 relying on the RNG Minigame. Ach 43 [intended way] is to stall after a huge challenge but also can be gotten ANYTIME in Era 4/post MC3 (enter Mastery Challenge, exit, buy all ups (dont get era), get Ach). Also, Overload means 'staying in a mastery challenge longer than intended/going back to a mastery challenge long after you have already beaten it'" },
+        },
         main: {
             title: "Welcome to The Minigame Layer!",
             body() { return "This is a side layer. It is not needed to progress. The Minigame Layer in The Point Tree encompasses 8 rows of achievements, 30+ buttons, 6 parts, huge numbers, strategic manipulation, and MORE! Unlock new buttons from most achievements. The last achivement of rows 4-8 gives boosts. p.s. For Rows 1-3, order matters. You are not supposed to get all in order but when you can get them. Buttons from some achievements will be useful in other rows." },
@@ -3197,7 +3204,7 @@ addLayer("sa", {
         },
         r9: {
             title: "Row 9",
-            body() { return "There are only 4 new buttons here. Buttons now decrease your Minigame Point amount alot, you may have to keep your Minigame Points at a suitable level. The mag buttons will be the star of the show, pushing you from MU12 to MM8." },
+            body() { return "There are only 4 new buttons here. Buttons now decrease your Minigame Point amount alot, you may have to keep your Minigame Points at a suitable level. The mag buttons will be the star of the show, pushing you from MU12 to MM8. Also, the number after 'F' shows the amount of 'e's there are in the number. Thus, F2 = ee10, F3 = eee10, F10 = eeeeeeeeee10 (am i right??)" },
             unlocked() { return (hasAchievement('sa', 186))}
         },
     },

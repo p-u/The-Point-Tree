@@ -506,7 +506,6 @@ addLayer("w", {
         if (hasUpgrade('w', 35)) mult = mult.times("e2e14")
         if (hasUpgrade('s', 65)) mult = mult.times(upgradeEffect('s', 65))
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
-        if (hasAchievement('sa', 33)) mult = mult.times(1.2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses

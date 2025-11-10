@@ -1087,7 +1087,6 @@ addLayer("s", {
         // secret achievement
         if (hasAchievement('sa', 25)) mult = mult.times(1.05)
         if (hasAchievement('sa', 26)) mult = mult.times(1.05)
-        if (hasAchievement('sa', 33)) mult = mult.times(1.2)
         if (inChallenge("m", 13)) mult = mult.pow(player.m.rngpower)
         return mult
     },
