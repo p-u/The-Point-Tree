@@ -3,7 +3,7 @@ let modInfo = {
 	id: "RD82:WGBT",
 	author: "randim82",
 	pointsName: "Atoms",
-	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js", "content_features.js", "molecules.js", "particles.js"],
+	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js", "content_features.js", "molecules.js", "particles.js", "corelvl.js"],
 
 	discordName: "SR46A",
 	discordLink: "",
@@ -231,7 +231,7 @@ function getPointGen() {
 	if (hasAchievement("a", 35)) gain = gain.times(1.05)
 	if (hasAchievement("a", 44)) gain = gain.times(1.1)
 	if (hasAchievement("a", 46)) gain = gain.times(1.1)
-	if (hasMilestone("cf", 4)) gain = gain.times(Decimal.min(new Decimal(4).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(1e7)))
+	if (hasMilestone("cf", 4) && player.mo.points.gte(1e24)) gain = gain.times(Decimal.min(new Decimal(4).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(1e7)))
 		
 	
 	// click mastery
@@ -244,8 +244,12 @@ function getPointGen() {
 
 	// particles and gens boost
 	gain = gain.times(layers.pa.getAlphaEff())
-	gain = gain.div(layers.pa.getGammaEff().pow(1.5))
+	gain = gain.div(player.pa.clickablenerf.gamma)
 	gain = gain.times(buyableEffect("en", 61))
+
+
+	// CL
+	if (hasMilestone("cl", 1)) gain = gain.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
 
 
 
@@ -260,6 +264,9 @@ function getPointGen() {
 	if (hasUpgrade("pa", 32)) gain = gain.pow(1.004)
 	if (hasUpgrade("ma", 221)) gain = gain.pow(1.0036)
 	if (hasUpgrade("ma", 225)) gain = gain.pow(1.01)
+	if (hasMilestone("cl", 1)) gain = gain.pow(1.004)
+	if (hasMilestone("cl", 2)) gain = gain.pow(1.003)
+	if (hasMilestone("cl", 3)) gain = gain.pow(1.003)
 	// nerf
 	if (player.points.gte(new Decimal(2).pow(1024))) gain = gain.pow(new Decimal(0.99).sub(Decimal.log(player.points.slog().minus(new Decimal(2).pow(1024).slog()).add(1),2).div(4)))
 	if (player.points.gte(tmp.w.nextAt) && (!(player.w.points.gte(100)))) {

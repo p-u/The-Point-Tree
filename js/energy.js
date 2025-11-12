@@ -64,6 +64,7 @@ addLayer("en", {
         return 0.4
     }, // Prestige currency exponent
     passiveGeneration() {
+        if (hasMilestone("cl", 3)) return 1
         if (hasMilestone("mo", 3)) return 1
         if (hasUpgrade("ma", 22)) return 1
         if (hasUpgrade("ma", 14)) return 0.2
@@ -195,7 +196,7 @@ addLayer("en", {
         },
     },
     automate() {
-		if (hasUpgrade('ma', 21)) {
+		if (hasUpgrade('ma', 21) || hasMilestone("cl", 1)) {
 			if (layers.en.buyables[11].canAfford()) {
 				layers.en.buyables[11].buy();
 			};
@@ -206,7 +207,7 @@ addLayer("en", {
 				layers.en.buyables[21].buy();
 			};
 		};
-        if (hasUpgrade('ma', 24)) {
+        if (hasUpgrade('ma', 24) || hasMilestone("cl", 1)) {
             if (layers.en.buyables[22].canAfford()) {
 				layers.en.buyables[22].buy();
 			};
@@ -216,22 +217,22 @@ addLayer("en", {
 				layers.en.buyables[31].buy();
 			};
 		};
-        if (hasMilestone('ma', 11)) {
+        if (hasMilestone('ma', 11) || hasMilestone("cl", 3)) {
             if (layers.en.buyables[32].canAfford()) {
 				layers.en.buyables[32].buy();
 			};
-            if (hasMilestone('mo', 7)) {
+            if (hasMilestone('mo', 7) || hasMilestone("cl", 3)) {
                 if (layers.en.buyables[41].canAfford()) {
 				    layers.en.buyables[41].buy();
 			    };
 		    };
 		};
-        if ((hasUpgrade('en', 92)) && (hasAchievement('a', 76))) {
+        if ((hasUpgrade('en', 92)) && (hasAchievement('a', 76)) || hasMilestone("cl", 3)) {
             if (layers.en.buyables[42].canAfford()) {
 				layers.en.buyables[42].buy();
 			};
 		};
-        if (hasUpgrade('en', 94)) {
+        if (hasUpgrade('en', 94) || hasMilestone("cl", 3)) {
             if (layers.en.buyables[51].canAfford()) {
 				layers.en.buyables[51].buy();
 			};
@@ -1354,6 +1355,7 @@ addLayer("en", {
         if (hasMilestone("mo", 12)) mult = mult.times(1254)
         if (hasUpgrade("ma", 213)) mult = mult.times(33e13)
         if (hasUpgrade("ma", 224)) mult = mult.times(1e49)
+	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (player.cm.clickmastery.gte(1.2e11)) mult = mult.times(3)
         if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (hasUpgrade("en", 85)) mult = mult.times(8)
@@ -1624,6 +1626,7 @@ addLayer("en", {
             if (hasMilestone("mo", 7)) gain = gain.times(77)
             if (hasUpgrade("ma", 224)) gain = gain.times(1e19)
             if (hasUpgrade("pa", 35)) gain = gain.times(1e100)
+	        if (hasMilestone("cl", 1)) gain = gain.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
             
 
             if (hasMilestone("ma", 9)) gain = gain.pow(1.01)

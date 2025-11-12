@@ -55,7 +55,7 @@ addLayer("w", {
         },
         4: {
             requirementDescription: "World Tier 5",
-            effectDescription: "Double Click Mastery gain, x1.5 Shrink Speed, x5 Particles and x100 Molecule Bonds. <br> Gen 9 and Booster 4 is automated. <br> Also, x7 Particle Passive Gen and Shrink Points boost Atoms more. Unlock even more Click Mastery Milestones.",
+            effectDescription: "x1.5 Click Mastery gain and Shrink Speed, x5 Particles and x100 Molecule Bonds. <br> Gen 9 and Booster 4 is automated. <br> Also, x7 Particle Passive Gen and Shrink Points boost Atoms more. Unlock even more Click Mastery Milestones.",
             done() { return player.w.points.gte(5) },
         },
     },

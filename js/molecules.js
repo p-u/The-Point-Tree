@@ -91,6 +91,7 @@ addLayer("mo", {
     },
     passiveGeneration() {
         if (new Decimal(player.timePlayed - player.en.bleh).lt(1)) return 0
+        if (hasMilestone("cl", 3)) return 5
         if (hasMilestone("mo", 14)) return 1
         if (hasMilestone("pa", 2)) return 0.02
         if (hasUpgrade("mo", 42)) return 0.004
@@ -121,7 +122,7 @@ addLayer("mo", {
         },
     },
     automate() {
-		if (hasMilestone('ma', 14)) {
+		if (hasMilestone('ma', 14) || hasMilestone("cl", 1)) {
 			if (layers.mo.buyables[11].canAfford()) {
 				layers.mo.buyables[11].buy();
 			};
@@ -132,14 +133,27 @@ addLayer("mo", {
                 layers.mo.buyables[21].buy();
             }
 		};
-        if (hasMilestone('w', 4)) {
+        if (hasMilestone('w', 4) || hasMilestone("cl", 1)) {
 			if (layers.mo.buyables[22].canAfford()) {
 				layers.mo.buyables[22].buy();
 			};
 		};
-        if (hasUpgrade('ma', 224)) {
+        if (hasUpgrade('ma', 224) || hasMilestone("cl", 1)) {
 			if (layers.mo.buyables[31].canAfford()) {
 				layers.mo.buyables[31].buy();
+			};
+		};
+        if (hasMilestone("cl", 1)) {
+			if (layers.mo.buyables[32].canAfford()) {
+				layers.mo.buyables[32].buy();
+			};
+		};
+        if (hasMilestone("cl", 3)) {
+			if (layers.mo.buyables[41].canAfford()) {
+				layers.mo.buyables[41].buy();
+			};
+			if (layers.mo.buyables[42].canAfford()) {
+				layers.mo.buyables[42].buy();
 			};
 		};
 	},
@@ -280,7 +294,7 @@ addLayer("mo", {
             currencyDisplayName: "Molecules",
             currencyInternalName: "molecule",
             currencyLayer: "mo",
-            unlocked() { return hasMilestone("cf", 2) }, 
+            unlocked() { return (hasMilestone("cf", 2) && hasUpgrade("mo", 15)) }, 
         },
         22: {
             title: "U7: Synergisnerator",
@@ -674,12 +688,13 @@ addLayer("mo", {
         if (hasAchievement("a", 83)) mult = mult.times(1.1)
         if (hasUpgrade("ma", 41)) mult = mult.times(6)
         if (hasUpgrade("ma", 224)) mult = mult.times(99)
+	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (hasUpgrade("pa", 21)) mult = mult.times(upgradeEffect("pa", 21))
         if (hasMilestone("w", 3)) mult = mult.times(2)
         if (hasMilestone("w", 4)) mult = mult.times(100)
         mult = mult.times(layers.pa.getGammaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomolecule))
-        if (hasMilestone("cf", 4)) mult = mult.times(Decimal.min(new Decimal(1.1).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(10)))
+        if (hasMilestone("cf", 4) && player.mo.points.gte(1e24)) mult = mult.times(Decimal.min(new Decimal(1.1).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(10)))
         if (hasAchievement("a", 62)) mult = mult.times(1.08)
         if (hasAchievement("a", 64)) mult = mult.times(1.04)
         if (hasAchievement("a", 74)) mult = mult.times(1.07)
@@ -728,6 +743,7 @@ addLayer("mo", {
         if (hasUpgrade("mo", 25)) player.mo.boosterBase = new Decimal(7)
         if (hasUpgrade("pa", 13)) player.mo.boosterBase = new Decimal(8)
         if (hasUpgrade("mo", 43)) player.mo.boosterBase = new Decimal(10)
+        if (hasMilestone("cl", 3)) player.mo.boosterBase = new Decimal(11)
         if (hasUpgrade("pa", 33)) player.mo.boosterBase = player.mo.boosterBase.add(new Decimal(Math.E / 5))
     },
 })

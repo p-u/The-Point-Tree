@@ -31,7 +31,7 @@ addLayer("ma", {
         return 0
     },
     automate() {
-		if (hasUpgrade('ma', 224)) {
+		if (hasUpgrade('ma', 224) || hasMilestone("cl", 3)) {
 			if (layers.ma.buyables[11].canAfford()) {
 				layers.ma.buyables[11].buy();
 			};
@@ -228,12 +228,12 @@ addLayer("ma", {
             effect() {
                 if (hasUpgrade("en", 82)) {
                     if (hasUpgrade("pa", 14)) {
-                        return player.en.points.log(3)
+                        return player.en.points.add(1).log(3)
                     } else{
-                        return player.en.points.log(2).div(10)
+                        return player.en.points.add(1).log(2).div(10)
                     }
                 } else {
-                    return player.en.points.log10().div(10)
+                    return player.en.points.add(1).log10().div(10)
                 }
             },
             effectDisplay() {
@@ -291,7 +291,7 @@ addLayer("ma", {
             title: "16: Sulfur",
             description: "x6 Molecules gain (wow!)",
             cost: new Decimal(6e155),
-            unlocked() { return (hasMilestone("cf", 3) && hasMilestone("w", 2)) }, 
+            unlocked() { return (hasUpgrade("ma", 35) && hasMilestone("cf", 3)) }, 
         },
         42: {
             title: "17: Chlorine",
@@ -840,8 +840,9 @@ addLayer("ma", {
         if (hasUpgrade("ma", 51)) mult = mult.times(10)
         if (hasUpgrade("ma", 211)) mult = mult.times(100)
         if (hasUpgrade("ma", 213)) mult = mult.times(3e3)
+	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (hasUpgrade("ma", 224)) mult = mult.times(1e9)
-        if (hasMilestone("cf", 4)) mult = mult.times(Decimal.min(new Decimal(1.7).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(50)))
+        if (hasMilestone("cf", 4) && player.mo.points.gte(1e24)) mult = mult.times(Decimal.min(new Decimal(1.7).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(50)))
         mult = mult.times(layers.pa.getBetaEff())
         if (hasUpgrade("en", 91)) {
 		    mult = mult.times(new Decimal(1.05).pow(player.en.wheeamt))
@@ -910,6 +911,7 @@ addLayer("ma", {
             }
             if (hasUpgrade("ma", 222)) player.ma.shrinkmul = player.ma.shrinkmul.mul(2.5)
             if (hasUpgrade("ma", 224)) player.ma.shrinkmul = player.ma.shrinkmul.mul(1.499)
+	        if (hasMilestone("cl", 1)) player.ma.shrinkmul = player.ma.shrinkmul.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
             if (player.cm.clickmastery.gte(5e11) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(1.175)
             let shrinkeff = new Decimal(1)
             // adding
@@ -933,6 +935,9 @@ addLayer("ma", {
             if (hasMilestone("w", 4)) shrinkeff = shrinkeff.times(1.5)
             if (hasUpgrade("ma", 52)) shrinkeff = shrinkeff.times(upgradeEffect("ma", 52))
             if (hasUpgrade("ma", 222)) shrinkeff = shrinkeff.div(2.5)
+            if (hasMilestone("cl", 1)) shrinkeff = shrinkeff.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
+            if (hasMilestone("cl", 2)) shrinkeff = shrinkeff.times(player.cl.points)
+            if (hasMilestone("cl", 4)) shrinkeff = shrinkeff.pow(1.2)
             player.ma.shrinkbase = shrinkeff
             let oomsizedec = new Decimal(1.1)
             if (hasUpgrade('ma', 222)) oomsizedec = new Decimal(1.05)

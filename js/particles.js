@@ -240,6 +240,7 @@ addLayer("pa", {
         if (hasMilestone("w", 4)) base = base * 7
         if (hasMilestone("ma", 16)) base = base / 300
         if (hasUpgrade("ma", 223)) base = base * buyableEffect("ma", 22).pow(Decimal.max(new Decimal(6).sub(getBuyableAmount("ma", 22).div(10)), new Decimal(3.5))).toNumber()
+        if (hasMilestone("cl", 3)) base = base * 5
         if (hasMilestone("w", 4)) return base
         if (hasUpgrade("pa", 32)) return base
         if (hasMilestone("mo", 14)) return 0.01
@@ -446,6 +447,8 @@ addLayer("pa", {
         if (hasUpgrade("pa", 32)) mult = mult.times(250)
         if (hasMilestone("w", 4)) mult = mult.times(5)
         if (hasUpgrade("ma", 224)) mult = mult.times(9)
+        if (hasMilestone("cl", 2)) mult = mult.times(player.cl.points)
+	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (hasUpgrade("ma", 55)) mult = mult.times(upgradeEffect("ma", 55))
         if (hasUpgrade("pa", 25)) mult = mult.times(layers.pa.getDeltaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpoparticle))
@@ -475,19 +478,21 @@ addLayer("pa", {
     ],
     update(diff) {
         if (hasUpgrade("pa", 23)) player.pa.clickablenerf.beta = layers.pa.getBetaEff().pow(0.5)
-        if (hasUpgrade("mo", 35)) player.pa.clickablenerf.gamma = layers.pa.getGammaEff().pow(1.5)
+        let expgamma = new Decimal(1.5)
+        if (hasMilestone("cl", 3)) expgamma = new Decimal(1.4)
+        if (hasUpgrade("mo", 35)) player.pa.clickablenerf.gamma = layers.pa.getGammaEff().pow(expgamma)
         if (hasUpgrade("pa", 25)) player.pa.clickablenerf.delta = layers.pa.getDeltaEff().pow(4)
         
 
         // passive assigning of Particles
-        if (hasUpgrade("ma", 55)) {
-            player.pa.clickableamt.alpha = player.pa.clickableamt.alpha.add(player.pa.points.div(25000).times(diff))
-            player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(player.pa.points.div(25000).times(diff))
-            player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(player.pa.points.div(25000).times(diff))
-            player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(25000).times(diff))
+        if (hasUpgrade("ma", 55) || hasMilestone("cl", 1)) {
+            player.pa.clickableamt.alpha = player.pa.clickableamt.alpha.add(player.pa.points.div(50000).times(diff))
+            player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(player.pa.points.div(50000).times(diff))
+            player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(player.pa.points.div(50000).times(diff))
+            player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(50000).times(diff))
         }
-        if (hasUpgrade("ma", 225)) {
-            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(100000).times(diff))
+        if (hasUpgrade("ma", 225) || hasMilestone("cl", 1)) {
+            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(200000).times(diff))
         }
     },
 })
