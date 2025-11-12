@@ -8,20 +8,14 @@ let modInfo = {
 	discordName: "Stellar Evo Discord",
 	discordLink: "https://discord.gg/RRK9Dwzf6P",
 	initialStartPoints: new Decimal(1000), // Used for hard resets and new players
-	offlineLimit() {
-		if (player.st.points.gte(1)) {
-			return new Decimal(1.1).pow(player.st.points.sub(1)).div(60).toNumber()
-		} else {
-			return 0
-		}
-	},  // In hours
+	offlineLimit: 0,// In hours
 	// remember to change to 0 in dev
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0",
-	name: "full game release",
+	num: "0.75",
+	name: "30/40 Progression Upgrades",
 }
 
 let changelog = `<h1>Changelog:</h1><br>`
@@ -147,7 +141,7 @@ function addedPlayerData() { return {
 
 // Determines when the game "ends"
 function isEndgame() {
-	return false
+	return player.st.points.gte(25)
 }
 
 
