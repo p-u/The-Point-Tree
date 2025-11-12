@@ -24,6 +24,7 @@ addLayer("w", {
         let expo = new Decimal(7.13)
         if (hasUpgrade("en", 82)) expo = expo.sub(0.01)
         if (player.w.points.gte(4)) expo = expo.add(0.019)
+        if (player.w.points.gte(5)) expo = expo.add(1.2)
         return expo
     },
     gainMult() {

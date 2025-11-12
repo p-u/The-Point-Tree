@@ -22,11 +22,12 @@ addLayer("cl", {
     baseAmount() { return player.en.foundationval; },
     type: "static",
     exponent() {
-        let expo = new Decimal(12.8)
-        if (hasMilestone("cl", 3)) expo = new Decimal(9)
-        if (hasMilestone("cl", 4)) expo = new Decimal(7.5)
+        let expo = new Decimal(10.3)
+        if (player.cl.points.gte(3)) expo = new Decimal(7.91)
+        if (player.cl.points.gte(4)) expo = new Decimal(7)
         return expo
     },
+    base: 10,
     gainMult() {
         let mult = new Decimal(1);
         return mult;
