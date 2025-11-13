@@ -16,14 +16,14 @@ addLayer("g", {
     baseAmount() {return player.s.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     tabFormat: {
-        "Main tab": {
+        "Main tab (click to have the reset button)": {
             content: [
                 "main-display",
                 "blank",
                 "prestige-button",
                 "blank",
                 ["display-text", function() {
-                    return "Stars per sec: "+ notationChooser(getResetGain("g").div(Math.max(player.a.tSLRG, 0))) +"."
+                    return "Galaxies per sec: "+ notationChooser(getResetGain("g").div(Math.max(player.a.tSLRG, 0))) +"."
                 }], 
                 "blank",
                 "milestones",
@@ -35,7 +35,7 @@ addLayer("g", {
             ],
             unlocked() {return (!hasMilestone("st", 7))}
         },
-        "Main tab.": {
+        "Main tab (click to have no reset button)": {
             content: [
                 "main-display",
                 "blank",
