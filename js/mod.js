@@ -124,7 +124,7 @@ function getPointGen() {
 		if (player.points.gte(1e273)) gain = gain.mul(9)
 		if (player.points.gte(1e303)) gain = gain.mul(9)
 	}
-	if (hasUpgrade("g", 23)) gain = gain.times("1e1000")
+	if (hasUpgrade("g", 22)) gain = gain.times("1e1000")
 	if (hasMilestone("st", 10)) gain = gain.times(1000)
     if (hasUpgrade("s", 32) && player.points.gte(15e18)) gain = gain.times(2)
 
