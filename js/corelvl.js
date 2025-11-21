@@ -8,6 +8,7 @@ addLayer("cl", {
             points: new Decimal(0),
             energy: new Decimal(0),
             engen: new Decimal(0),
+            showbought: true,
         };
     },
     layerShown(){
@@ -24,10 +25,14 @@ addLayer("cl", {
     exponent() {
         let expo = new Decimal(10.3)
         if (player.cl.points.gte(3)) expo = new Decimal(7.91)
-        if (player.cl.points.gte(4)) expo = new Decimal(7)
+        if (player.cl.points.gte(4)) expo = new Decimal(2.6)
         return expo
     },
-    base: 10,
+    base() {
+        let bas = new Decimal(10)
+        if (player.cl.points.gte(4)) bas = new Decimal("1e1000")
+        return bas
+    },
     gainMult() {
         let mult = new Decimal(1);
         return mult;
@@ -48,13 +53,18 @@ addLayer("cl", {
         },
         2: {
             requirementDescription: "Core Level 2",
-            effectDescription: "xCL Shrink Speed, xCL and an additional x2.5 multiplier to CE, xCL^2 Particles. ^1.003 Atoms",
+            effectDescription: "xCL Shrink Speed, xCL and an additional x2.5 multiplier to CE, xCL^2 Particles. ^1.003 Atoms. Automate Booster 6.",
             done() { return player.cl.points.gte(2) }
         },
         3: {
             requirementDescription: "Core Level 3",
             effectDescription: "Automate even more things, x5 Molecule n Particle Passive Gen. Increase booster base to 11. Add a new Particle Milestone. Nerf Gamma Particle's nerf.",
             done() { return player.cl.points.gte(3) }
+        },
+        4: {
+            requirementDescription: "Core Level 4",
+            effectDescription: "Foundation Value increases CE gain (Formula: 2.3 tetrated to the slog of FV)x. Also, keep Molecule Milestones on reset, Molecule/Matter row 1 n 2 ups",
+            done() { return player.cl.points.gte(4) }
         },
     },
     tabFormat: {
@@ -164,23 +174,191 @@ addLayer("cl", {
                         a = a + `You have 
                         <h2><span style="color: #00FFAA; text-shadow: 0px 0px 10px #8fc0cfff; font-family: Lucida Console, Courier New, monospace">
                             ${notationChooser(player.cl.energy)}</span></h2> Core Energy`
-                        a = a + " (+" + player.cl.engen + " CE/s)"
+                        a = a + " (+" + notationChooser(player.cl.engen) + " CE/s)"
                         return a
                     }
                 ],
                 "blank",
                 "blank",
+                "clickables",
+                "blank",
+                "blank",
+                "blank",
                 "upgrades",
+                "blank",
+                "blank",
+                "buyables",
             ],
+        },
+    },
+    upgrades: {
+        11: {
+            title: "Q-1: Automate Shrinkenator 3",
+            cost: new Decimal(5000),
+            unlocked() { return ((hasMilestone("cl", 4) && !(hasUpgrade("cl", 11))) || (hasUpgrade("cl", 11) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        12: {
+            title: "Q-2: Max-buy Boosters 1-3",
+            cost: new Decimal(34433),
+            unlocked() { return ((hasUpgrade("cl", 11) && !(hasUpgrade("cl", 12))) || (hasUpgrade("cl", 12) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        13: {
+            title: "Q-3: Passively assign Epsilon Particles",
+            cost: new Decimal(100e3),
+            unlocked() { return ((hasUpgrade("cl", 12) && !(hasUpgrade("cl", 13))) || (hasUpgrade("cl", 13) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        14: {
+            title: "Q-4: Boosters 6-8 cost nothing",
+            cost: new Decimal(280e3),
+            unlocked() { return ((hasUpgrade("cl", 13) && !(hasUpgrade("cl", 14))) || (hasUpgrade("cl", 14) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        15: {
+            title: "Q-5: x10 Particle Passive Gen",
+            cost: new Decimal(1.6e6),
+            unlocked() { return ((hasUpgrade("cl", 14) && !(hasUpgrade("cl", 15))) || (hasUpgrade("cl", 15) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        16: {
+            title: "Q-6: Autobuy Booster 8 and buy-max Booster 4.",
+            cost: new Decimal(4e6),
+            unlocked() { return ((hasUpgrade("cl", 15) && !(hasUpgrade("cl", 16))) || (hasUpgrade("cl", 16) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        17: {
+            title: "B-1: Decent Boostage",
+            cost: new Decimal(45000),
+            description: "x2 CE and SP",
+            unlocked() { return ((hasMilestone("cl", 4) && !(hasUpgrade("cl", 17))) || (hasUpgrade("cl", 17) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        18: {
+            title: "B-2: Further CEx",
+            cost: new Decimal(105000),
+            description: "CE gets boosted based on itself",
+            unlocked() { return ((hasUpgrade("cl", 17) && !(hasUpgrade("cl", 18))) || (hasUpgrade("cl", 18) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            effect() {
+                cebi = 0.15
+                softcapDescriptionce18 = ""
+                sdsc = ""
+                let eff = player.cl.energy.add(1).pow(cebi)
+                return eff
+            },
+            effectDisplay() {
+                return notationChooser(upgradeEffect(this.layer, this.id))+"x" + softcapDescriptionce18
+            },
+            tooltip() {
+                return "Formula: (CE+1)^"  + cebi + sdsc
+            },
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
+        },
+        19: {
+            title: "B-3: Mult-upg 1",
+            cost: new Decimal(500000),
+            description: "When bought, gain +7% CE for every CE Upgrade bought. If you have 1M CE on hand, boost MoB and SP based on CE, extend Molecule and Shrinkenator ups.",
+            unlocked() { return ((hasUpgrade("cl", 18) && !(hasUpgrade("cl", 19))) || (hasUpgrade("cl", 19) && player.cl.showbought)) }, 
+            style() {return {
+                'width': '250px',
+                'height': '100px',
+            }},
+            effect() {
+                ceupcomp = new Decimal(1.07)
+                let eff = ceupcomp.pow(player.cl.upgrades.length)
+                return eff
+            },
+            effectDisplay() {
+                desc = notationChooser(upgradeEffect(this.layer, this.id))+"x"
+                if (hasUpgrade("cl", 19) && player.cl.energy.gte(1e6)) desc = desc + ", x"+ notationChooser(player.cl.energy.pow(0.5)) + " CE, x" + notationChooser(player.cl.energy.pow(0.04)) + " SP."
+                return desc
+            },
+            tooltip() {
+                return "Formula: "  + ceupcomp + "^CEUps, Molecule: CE^0.5, SP: CE^0.04"
+            },
+            currencyDisplayName: "Core Energy",
+            currencyInternalName: "energy",
+            currencyLayer: "cl",
         },
     },
     update(diff) {
         if (hasMilestone("cl", 1)) {
             player.cl.engen = new Decimal(1)
             if (hasMilestone("cl", 2)) player.cl.engen = player.cl.engen.mul(2.5)
+            if (hasUpgrade("cl", 17)) player.cl.engen = player.cl.engen.mul(2)
+            if (hasUpgrade("cl", 18)) player.cl.engen = player.cl.engen.mul(upgradeEffect("cl", 18))
+            if (hasUpgrade("cl", 19)) player.cl.engen = player.cl.engen.mul(upgradeEffect("cl", 19))
             if (hasMilestone("cl", 2)) player.cl.engen = player.cl.engen.mul(player.cl.points)
+            if (hasMilestone("cl", 4)) player.cl.engen = player.cl.engen.mul(new Decimal(2.3).tetrate(Decimal.max(player.points, 10).slog()))
             player.cl.energy = player.cl.energy.add(player.cl.engen.mul(diff))
         }
+    },
+    clickables: {
+        11: {
+            title() {
+                if (player.cl.showbought) {
+                    return "Hide bought Core Level Ups."
+                } else {
+                    return "Show bought Core Level Ups."
+                }
+            },
+            canClick() { return true },
+            onClick() {
+                player.cl.showbought = !player.cl.showbought
+            },
+            style() {return {
+                'width': '500px',
+            }},
+        },
     },
     bars: {
         next: {
@@ -196,7 +374,7 @@ addLayer("cl", {
             },
             display() {
                 return "Progress towards Core Level " + player.cl.points.add(1) + ": " + notationChooser(player.en.foundationval) + "/" + notationChooser(getNextAt("cl")) + " Foundation Value. (" + Decimal.min(player.en.foundationval.add(1).log10().div(getNextAt("cl").log10()).mul(100), new Decimal(100)) + "% to next tier!)"
-            }
+            },
         },
     },
 });

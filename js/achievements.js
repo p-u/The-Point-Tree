@@ -461,7 +461,7 @@ addLayer("a", {
         82: {
             name: "Universe Shrinker-ahh",
             done() { return hasUpgrade("ma", 51) },
-            tooltip: "Unlock the Shrinkenator (Particle effect is  slightly stronger)",
+            tooltip: "Unlock the Shrinkenator (Particle effect is slightly stronger)",
             unlocked() { return hasAchievement("a", 75) },
             style() {
                 return {
@@ -485,8 +485,44 @@ addLayer("a", {
         85: {
             name: "e7500 Atoms",
             done() { return player.points.gte("e7500") },
-            tooltip: "Get e7500 Atoms. (Reward: The Price of s-6 is decreased to 400)",
+            tooltip: "Get e7500 Atoms. (Reward: The Price of s-6 is decreased to 200)",
             unlocked() { return hasAchievement("a", 82) },
+        },
+        86: {
+            name: "Oh so close...but abit more waiting to prove worthiness",
+            done() { return hasMilestone("cf", 7) },
+            tooltip: "Get the seventh content feature milestone. Reward: +2.7% Click gain.",
+            unlocked() { return hasAchievement("a", 82) },
+        },
+        91: {
+            name: "Yes! (New phase unlocked)",
+            done() { return hasMilestone("cl", 1) },
+            tooltip: "Get ?????? 1.",
+            unlocked() { return hasAchievement("a", 82) },
+            style() {
+                return {
+                "border-color": "red",
+                "border-width": "6px"
+                }
+            }
+        },
+        92: {
+            name: "Again",
+            done() { return hasMilestone("cl", 2) },
+            tooltip: "Get Core Level 2.",
+            unlocked() { return hasAchievement("a", 91) },
+        },
+        93: {
+            name: "and again",
+            done() { return hasMilestone("cl", 3) },
+            tooltip: "Get Core Level 3. (Keep first 4 rows of Energy ups on reset)",
+            unlocked() { return hasAchievement("a", 91) },
+        },
+        94: {
+            name: "yet again",
+            done() { return hasMilestone("cl", 4) },
+            tooltip: "Get Core Level 4.",
+            unlocked() { return hasAchievement("a", 91) },
         },
         101: {
             name: "Click Mastery Milestone 1 - Even a baby can click that much",
@@ -513,13 +549,13 @@ addLayer("a", {
             unlocked() { return hasAchievement("a", 103) },
         },
         105: {
-            name: "Click Mastery Milestone 5 (Optional) - Maniac Tapper",
+            name: "Click Mastery Milestone 5 - Maniac Tapper",
             done() { return player.cm.clickmastery.gte(500e6) },
             tooltip: "Get 500,000,000 clicks (+5% clicks)",
             unlocked() { return hasAchievement("a", 104) },
         },
         106: {
-            name: "Click Mastery Milestone 6 (Optional) - Professional Clicker",
+            name: "Click Mastery Milestone 6 - Professional Clicker",
             done() { return player.cm.clickmastery.gte(10e9) },
             tooltip: "Get 10,000,000,000 clicks (Click level mult to clicks and atoms is increased)",
             unlocked() { return hasAchievement("a", 105) },

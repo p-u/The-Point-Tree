@@ -85,7 +85,7 @@ addLayer("en", {
             if (hasUpgrade("pa", 12)) cutoff = 9
             if (hasMilestone("pa", 2)) cutoff = 10
             for(v=1;v<5;v++){ //columns
-              if ((hasMilestone('ma', 8)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              if ((hasMilestone('ma', 8) || hasMilestone("cl", 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
             for(v=1;v<cutoff;v++){ //columns
               if ((hasMilestone('mo', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
@@ -101,7 +101,11 @@ addLayer("en", {
     
         // Stage 5: Add back the specific subfeatures saved earlier
         player[this.layer].upgrades.push(...keptUpgrades);
-    },    
+    },  
+    resetsNothing() {
+        if (hasUpgrade("cl", 15)) return true
+        return false
+    },
     tabFormat: {
         "Main tab": {
             content: [

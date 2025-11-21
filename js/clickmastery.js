@@ -317,6 +317,7 @@ addLayer("cm", {
         if (hasMilestone("w", 4)) player[this.layer].cpc = player[this.layer].cpc.times(1.5)
         if (hasMilestone("cf", 5)) player[this.layer].cpc = player[this.layer].cpc.times(1.16)
         if (hasMilestone("cl", 1)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
+        if (hasAchievement("a", 86)) player[this.layer].cpc = player[this.layer].cpc.times(1.027)
 
         player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)

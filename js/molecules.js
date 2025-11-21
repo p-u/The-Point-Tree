@@ -143,7 +143,7 @@ addLayer("mo", {
 				layers.mo.buyables[31].buy();
 			};
 		};
-        if (hasMilestone("cl", 1)) {
+        if (hasMilestone("cl", 2)) {
 			if (layers.mo.buyables[32].canAfford()) {
 				layers.mo.buyables[32].buy();
 			};
@@ -152,6 +152,8 @@ addLayer("mo", {
 			if (layers.mo.buyables[41].canAfford()) {
 				layers.mo.buyables[41].buy();
 			};
+        };
+        if (hasUpgrade("cl", 16)) {
 			if (layers.mo.buyables[42].canAfford()) {
 				layers.mo.buyables[42].buy();
 			};
@@ -451,7 +453,11 @@ addLayer("mo", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasAchievement("a", 76))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("cl", 12)) {
+                    setBuyableAmount(this.layer, this.id, player.mo.points.div(2500).log(4).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
@@ -481,7 +487,11 @@ addLayer("mo", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasAchievement("a", 76))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("cl", 12)) {
+                    setBuyableAmount(this.layer, this.id, player.mo.points.div(25000).log(9).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
@@ -511,7 +521,11 @@ addLayer("mo", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasAchievement("a", 76))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("cl", 12)) {
+                    setBuyableAmount(this.layer, this.id, player.mo.points.div(2.25e6).log(25).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
@@ -541,7 +555,11 @@ addLayer("mo", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasMilestone("ma", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("cl", 16)) {
+                    setBuyableAmount(this.layer, this.id, player.mo.points.div(1e10).log(64).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
             effect(x) {
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0)).pow(Math.min(1, getBuyableAmount("mo", 22)/4))
@@ -600,7 +618,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("cl", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -630,7 +648,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("cl", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -661,7 +679,7 @@ addLayer("mo", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.mo.points = player.mo.points.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("cl", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -702,6 +720,7 @@ addLayer("mo", {
 		    mult = mult.times(new Decimal(1.01).pow(player.en.wheeamt))
         }
         if (hasUpgrade("pa", 15)) mult = mult.times(upgradeEffect("pa", 15))
+        if (hasUpgrade("cl", 19) && player.cl.energy.gte(1e6)) mult = mult.times(player.cl.energy.pow(0.5))
         if (hasMilestone("mo", 11)) mult = mult.times(new Decimal(player.timePlayed - player.en.bleh).log(3).pow(2).div(3))
         return mult
     },
@@ -729,6 +748,32 @@ addLayer("mo", {
         {key: "o", description: "O: Reset to gain Molecules", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 
+    doReset(mo) {
+        // Stage 1: Prevent resetting if the layer is too high
+        if (layers[mo].row <= this.row) return;
+    
+        // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
+        let keptUpgrades = [];
+        for(i=1;i<6;i++){ //rows
+            let cutoff = 3
+            for(v=1;v<cutoff;v++){ //columns
+              if ((hasMilestone('cl', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+        }
+        let keep = [];
+        if ((hasUpgrade('cl', 4))) keep.push("milestones");
+
+    
+        // Stage 4: Perform the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5: Add back the specific subfeatures saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    },  
+    resetsNothing() {
+        if (hasUpgrade("cl", 15)) return true
+        return false
+    },
     update(diff) {
         if (!player.mo) return
         if (!player.mo.points) player.mo.points = new Decimal(0)

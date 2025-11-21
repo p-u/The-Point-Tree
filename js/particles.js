@@ -241,6 +241,7 @@ addLayer("pa", {
         if (hasMilestone("ma", 16)) base = base / 300
         if (hasUpgrade("ma", 223)) base = base * buyableEffect("ma", 22).pow(Decimal.max(new Decimal(6).sub(getBuyableAmount("ma", 22).div(10)), new Decimal(3.5))).toNumber()
         if (hasMilestone("cl", 3)) base = base * 5
+        if (hasUpgrade("cl", 15)) base = base * 10
         if (hasMilestone("w", 4)) return base
         if (hasUpgrade("pa", 32)) return base
         if (hasMilestone("mo", 14)) return 0.01
@@ -486,13 +487,15 @@ addLayer("pa", {
 
         // passive assigning of Particles
         if (hasUpgrade("ma", 55) || hasMilestone("cl", 1)) {
-            player.pa.clickableamt.alpha = player.pa.clickableamt.alpha.add(player.pa.points.div(50000).times(diff))
-            player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(player.pa.points.div(50000).times(diff))
-            player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(player.pa.points.div(50000).times(diff))
-            player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(50000).times(diff))
+            player.pa.clickableamt.alpha = player.pa.clickableamt.alpha.add(player.pa.points.div(100e3).times(diff))
+            player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(player.pa.points.div(100e3).times(diff))
         }
         if (hasUpgrade("ma", 225) || hasMilestone("cl", 1)) {
-            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(200000).times(diff))
+            player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(player.pa.points.div(200e3).times(diff))
+            player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(200e3).times(diff))
+        }
+        if (hasUpgrade("cl", 13)) {
+            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(1e6).times(diff))
         }
     },
 })

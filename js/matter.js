@@ -39,6 +39,11 @@ addLayer("ma", {
 				layers.ma.buyables[12].buy();
 			};
 		};
+		if (hasUpgrade('cl', 11)) {
+			if (layers.ma.buyables[21].canAfford()) {
+				layers.ma.buyables[21].buy();
+			};
+		};
 	},
     doReset(ma) {
         // Stage 1: Prevent resetting if the layer is too high
@@ -51,7 +56,7 @@ addLayer("ma", {
             if (hasUpgrade("pa", 12)) cutoff = 5
             let scutoff = 22
             for(v=1;v<3;v++){ //columns
-              if ((hasMilestone('mo', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              if ((hasMilestone('mo', 4) || hasMilestone("cl",4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
             for(v=3;v<cutoff;v++){ //columns
               if ((hasMilestone('mo', 6)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
@@ -395,7 +400,7 @@ addLayer("ma", {
         },
         55: {
             title: "25: Manganese",
-            description: "Matter boosts Particles by ^0.001 (base). Passively assign particles Alpha-Delta (negligible amount but does NOT take away current particles)",
+            description: "Matter boosts Particles by ^0.001 (base). Passively assign particles Alpha and Beta (negligible amount but does NOT take away current particles)",
             cost: new Decimal("2.5e2025"),
             effect() {
                 matterpart = 0.001
@@ -431,7 +436,7 @@ addLayer("ma", {
         213: {
             title: "s-3: Getting way bigger",
             description: "Shrinks 30% faster. Unlock a new object. x3e3 Matter and x33e13 Energy.",
-            cost: new Decimal(60), 
+            cost: new Decimal(40), 
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
             currencyLayer: "ma",
@@ -440,7 +445,7 @@ addLayer("ma", {
         214: {
             title: "s-4: Where's the 's' in this? [Next: req e240 MoB]",
             description: "xe50 Atoms [MoB -> Molecule Bonds, A -> Atoms, E -> Energy, M -> Matter, P -> Particles, SP -> Shrink Points]",
-            cost: new Decimal(150), 
+            cost: new Decimal(110), 
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
             currencyLayer: "ma",
@@ -449,7 +454,7 @@ addLayer("ma", {
         215: {
             title: "s-5: Thats big. [Next: req 8e82 Held P]",
             description: "Shrinks 50% faster. Unlocks a new object. ^1.02 Power.",
-            cost: new Decimal(335), 
+            cost: new Decimal(250), 
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
             currencyLayer: "ma",
@@ -459,8 +464,8 @@ addLayer("ma", {
             title: "s-6: CAUTION, this upgrade is NOT kept on Particle resets! [Next: req e90 Alpha P]",
             description: "Shrinkenator 3 boost is DOUBLED, unlock a new object and ^1.0036 Atoms.",
             cost() {
-                if (hasAchievement("a", 85)) return new Decimal(400)
-                return new Decimal(600)
+                if (hasAchievement("a", 85)) return new Decimal(200)
+                return new Decimal(500)
             },
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
@@ -471,7 +476,7 @@ addLayer("ma", {
             title: "s-7: An insane rework...",
             description: "BUFFS: The decrease of speed for every OOM of size is decreased from 10% to 5%. x2.5 Shrink Points. <br> NERFS: Now, you need 1 planck length to shrink the object completely instead of 1cm. /2.5 Shrink Speed.",
             cost() {
-                return new Decimal(7500)
+                return new Decimal(5000)
             },
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
@@ -482,7 +487,7 @@ addLayer("ma", {
             title: "s-8: more of the bigger (Next: Req e8.4K Atoms)",
             description: "Unlock Shrinkenator 4, and Object 6. Shrink Points give way more boosts to Atom gain, and WT3 Matter boost is stronger. Also, a uni^n = 9.460730472581e29x the size of a uni^(n-1)...",
             cost() {
-                return new Decimal(33333)
+                return new Decimal(20000)
             },
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
@@ -493,7 +498,7 @@ addLayer("ma", {
             title: "s-9: crazy upticc (Next: Req 600 Booster 1s)",
             description: "Boosts to ALL CURRENCIES. +49.9% SP, x9 P, x99 MoB, xe9 M, xe19 Power, xe29 A, xe49 E. Automate: Shrinkenator I, II, Booster 5",
             cost() {
-                return new Decimal(222222)
+                return new Decimal(110000)
             },
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
@@ -502,9 +507,9 @@ addLayer("ma", {
         },
         225: {
             title: "s-10: a sparkle in your eyes",
-            description: "ok what are these terrible upg names... unlock a new object, ^1.01 Atoms and +^0.01 Energy. Also auto assign Epsilon Particles at a reduced rate. (intended 80b clicks by this point)",
+            description: "ok what are these terrible upg names... unlock a new object, ^1.01 Atoms and +^0.01 Energy. Also auto assign Delta and Gamma Particles at a reduced rate. (intended 80b clicks by this point)",
             cost() {
-                return new Decimal(2.5e6)
+                return new Decimal(1e6)
             },
             currencyDisplayName: "Shrink Points",
             currencyInternalName: "shrinkpts",
@@ -902,6 +907,10 @@ addLayer("ma", {
     hotkeys: [
         {key: "m", description: "M: Reset to gain Matter", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
+    resetsNothing() {
+        if (hasUpgrade("cl", 15)) return true
+        return false
+    },
     update(diff) {
         if (hasUpgrade("ma", 51)) {
             if (hasMilestone("ma", 16)) { 
@@ -910,7 +919,9 @@ addLayer("ma", {
                 player.ma.shrinkmul = decimalOne
             }
             if (hasUpgrade("ma", 222)) player.ma.shrinkmul = player.ma.shrinkmul.mul(2.5)
+            if (hasUpgrade("cl", 17)) player.ma.shrinkmul = player.ma.shrinkmul.mul(2)
             if (hasUpgrade("ma", 224)) player.ma.shrinkmul = player.ma.shrinkmul.mul(1.499)
+            if (hasUpgrade("cl", 19) && player.cl.energy.gte(1e6)) player.ma.shrinkmul = player.ma.shrinkmul.mul(player.cl.energy.pow(0.04))
 	        if (hasMilestone("cl", 1)) player.ma.shrinkmul = player.ma.shrinkmul.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
             if (player.cm.clickmastery.gte(5e11) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(1.175)
             let shrinkeff = new Decimal(1)
@@ -943,8 +954,8 @@ addLayer("ma", {
             if (hasUpgrade('ma', 222)) oomsizedec = new Decimal(1.05)
             let newshrinkeff = shrinkeff.sub(1).div(oomsizedec.pow(player.ma.univsize.log(10))).add(1)
             player.ma.shrinkdiv = newshrinkeff
-            newshrinkeff = newshrinkeff.sub(1).mul(diff).add(1)
-            player.ma.univsize = player.ma.univsize.div(newshrinkeff)
+            newshrinkeff = newshrinkeff.sub(1).pow(diff).add(1)
+            if (player.devSpeed > 0.001) player.ma.univsize = player.ma.univsize.div(newshrinkeff)
             let min = new Decimal(1)
             if (hasUpgrade("ma", 222)) min = new Decimal(1.616e-33)
             if (player.ma.univsize.lt(min)){
