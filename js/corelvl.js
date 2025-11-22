@@ -17,20 +17,21 @@ addLayer("cl", {
        return visible
     },
     color: "#B967FF",
-    requires: new Decimal("e28700"),
+    requires: new Decimal("e28650"),
     resource: "Core Level",
     baseResource: "Foundation Value",
     baseAmount() { return player.en.foundationval; },
     type: "static",
     exponent() {
-        let expo = new Decimal(10.3)
-        if (player.cl.points.gte(3)) expo = new Decimal(7.91)
-        if (player.cl.points.gte(4)) expo = new Decimal(2.6)
+        let expo = new Decimal(2.6)
+        if (player.cl.points.eq(2)) expo = new Decimal(1.75)
+        if (player.cl.points.eq(3)) expo = new Decimal(1.66)
+        if (player.cl.points.gte(4)) expo = new Decimal(2.3)
         return expo
     },
     base() {
-        let bas = new Decimal(10)
-        if (player.cl.points.gte(4)) bas = new Decimal("1e1000")
+        let bas = new Decimal("1e1000")
+        if (player.cl.points.lt(2)) bas = new Decimal("e1850")
         return bas
     },
     gainMult() {
@@ -279,7 +280,7 @@ addLayer("cl", {
         },
         18: {
             title: "B-2: Further CEx",
-            cost: new Decimal(105000),
+            cost: new Decimal(112500),
             description: "CE gets boosted based on itself",
             unlocked() { return ((hasUpgrade("cl", 17) && !(hasUpgrade("cl", 18))) || (hasUpgrade("cl", 18) && player.cl.showbought)) }, 
             style() {return {
@@ -305,7 +306,7 @@ addLayer("cl", {
         },
         19: {
             title: "B-3: Mult-upg 1",
-            cost: new Decimal(500000),
+            cost: new Decimal(650000),
             description: "When bought, gain +7% CE for every CE Upgrade bought. If you have 1M CE on hand, boost MoB and SP based on CE, extend Molecule and Shrinkenator ups.",
             unlocked() { return ((hasUpgrade("cl", 18) && !(hasUpgrade("cl", 19))) || (hasUpgrade("cl", 19) && player.cl.showbought)) }, 
             style() {return {
@@ -373,7 +374,7 @@ addLayer("cl", {
                 return prog
             },
             display() {
-                return "Progress towards Core Level " + player.cl.points.add(1) + ": " + notationChooser(player.en.foundationval) + "/" + notationChooser(getNextAt("cl")) + " Foundation Value. (" + Decimal.min(player.en.foundationval.add(1).log10().div(getNextAt("cl").log10()).mul(100), new Decimal(100)) + "% to next tier!)"
+                return "Progress towards Core Level " + notationChooser(player.cl.points.add(1)) + ": " + notationChooser(player.en.foundationval) + "/" + notationChooser(getNextAt("cl")) + " Foundation Value. (" + notationChooser(Decimal.min(player.en.foundationval.add(1).log10().div(getNextAt("cl").log10()).mul(100), new Decimal(100))) + "% to next tier!)"
             },
         },
     },
