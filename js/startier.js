@@ -42,18 +42,31 @@ addLayer("st", {
     milestones: {
         1: {
             requirementDescription: "Star Tier 1",
-            effectDescription: "x2 Sparks, unlock 1 new upgrade. Also, this milestone marks the beginning of offline time, starting at 1min. Every Star Tier multiplies the offline time by 1.1.",
+            effectDescription: "x2 Sparks, unlock 1 new upgrade.",
             done() { return player["st"].points.gte(1) }
         },
         2: {
             requirementDescription: "Star Tier 2",
-            effectDescription: "Unlock yet another new upgrade. +25% Stars per star tier.",
+            effectDescription() {
+                let des = "Unlock yet another new upgrade. +25% Stars per star tier."
+                des = des + " (Currently: x" + notationChooser(player.st.points.div(4).add(1)) + ")"
+                return des
+            },
             done() { return player["st"].points.gte(2) },
             unlocked() { return player["st"].points.gte(1)}
         },
         3: {
             requirementDescription: "Star Tier 3 [08/40]",
-            effectDescription: "xStar Tier Sparks. Stars boost Sparks gain after 300 Stars. Unlock two new upgrades.",
+            effectDescription(){
+                let des = "xStar Tier Sparks. Stars boost Sparks gain after 300 Stars. Unlock two new upgrades."
+                des = des + " (Currently: x" + notationChooser(player.st.points) + ", x"
+                if (player.s.points.gte(300)) {
+                    des = des + notationChooser(player.s.points.pow(0.125)) + ")"
+                } else {
+                    des = des + "1)"
+                }
+                return des
+            },
             done() { return player["st"].points.gte(3) },
             unlocked() { return player["st"].points.gte(2)}
         },
@@ -71,7 +84,11 @@ addLayer("st", {
         },
         6: {
             requirementDescription: "Star Tier 6",
-            effectDescription: "Unlock 1 more Star upgrade. xStar Tier/2 Galaxies, xlog2Star Tier Sparks and Stars.",
+            effectDescription(){
+                let des = "Unlock 1 more Star upgrade. xStar Tier/2 Galaxies, xlog2Star Tier Sparks and Stars."
+                des = des + " (Currently: x" + notationChooser(player.st.points.div(2)) + ", x" + notationChooser(Decimal.max(Decimal.log2(player.st.points), new Decimal(1))) + ")"
+                return des
+            },
             done() { return player["st"].points.gte(6) },
             unlocked() { return player["st"].points.gte(5)}
         },
@@ -89,13 +106,13 @@ addLayer("st", {
         },
         9: {
             requirementDescription: "Star Tier 9",
-            effectDescription: "x99 Sparks. Automate the Star Increaser. Every 30 OOMs starting from e123 and ending at e303 Sparks, x9 Sparks gain. Unlock the Galaxy Increaser. At e175 Sparks, Star Upgrade 23 is stronger.",
+            effectDescription: "x99 Sparks. Every 30 OOMs starting from e123 and ending at e303 Sparks, x9 Sparks gain. Unlock the Galaxy Increaser. At e175 Sparks, Star Upgrade 23 is stronger.",
             done() { return player["st"].points.gte(9) },
             unlocked() { return player["st"].points.gte(8)}
         },
         10: {
             requirementDescription: "Star Tier 10 [20/40]",
-            effectDescription: "x1,000 Sparks, x10 Stars.",
+            effectDescription: "x1,000 Sparks, x10 Stars. Automate the Star Increaser",
             done() { return player["st"].points.gte(10) },
             unlocked() { return player["st"].points.gte(9)}
         },
@@ -131,7 +148,16 @@ addLayer("st", {
         },
         16: {
             requirementDescription: "Star Tier 16",
-            effectDescription: "x166 Galaxies. Nebulae boost Galaxies, automate the Galaxy Increaser.",
+            effectDescription() {
+                let des = "x166 Galaxies. Nebulae boost Galaxies, automate the Galaxy Increaser."
+                let e = new Decimal(0.1)
+                if (hasUpgrade("s", 35)) {
+                    e = new Decimal(0.225)
+                    if (player.g.points.gte("e670")) e = new Decimal(0.25)
+                }
+                des = des + " (Currently: x" + notationChooser(player.n.points.pow(e)) + ")"
+                return des
+            },
             done() { return player["st"].points.gte(16) },
             unlocked() { return player["st"].points.gte(15)}
         },
@@ -149,13 +175,19 @@ addLayer("st", {
         },
         19: {
             requirementDescription: "Star Tier 19",
-            effectDescription: "For every Star Tier, x1.5 Galaxies. At e27,850 Sparks, increase the base of this upgrade by 0.5. Unlock a star upgrade.",
+            effectDescription() {
+                let des = "For every Star Tier, x1.5 Galaxies. At e27,850 Sparks, increase the base of this upgrade by 0.5. Unlock a star upgrade."
+                let b = 1.5
+                if (player.points.gte("e27850")) b = b + 0.5
+                des = des + " (Currently: x" + notationChooser(new Decimal(b).pow(player.st.points)) + ")"
+                return des
+            },
             done() { return player["st"].points.gte(19) },
             unlocked() { return player["st"].points.gte(18)}
         },
         20: {
             requirementDescription: "Star Tier 20",
-            effectDescription: "Double the second Nebula Upgrade's base. At 2^1024 Nebulae, +^0.01 to Stars, Galaxies and Nebulae.",
+            effectDescription: "Double the base of Nebula Upgrade 2 again. At 2^1024 Nebulae, +^0.01 to Stars, Galaxies and Nebulae.",
             done() { return player["st"].points.gte(20) },
             unlocked() { return player["st"].points.gte(19)}
         },
@@ -179,13 +211,17 @@ addLayer("st", {
         },
         24: {
             requirementDescription: "Star Tier 24",
-            effectDescription: "well, its 24...what more boosts do you want?",
+            effectDescription: "well, its 24...achieve the great boost of x(2.4/2.4)^240000000 everything....",
             done() { return player["st"].points.gte(24) },
             unlocked() { return player["st"].points.gte(23)}
         },
         25: {
             requirementDescription: "Star Tier 25",
-            effectDescription: "The Start of the Reality-Breaking...As you progress through star tiers (and realities), some stars get lost along the way. For every ST past 24, ^0.98 Stars. Unlock new upgrades",
+            effectDescription() {
+                let des = "The Start of the Reality-Breaking...As you progress through star tiers (and realities), some stars get lost along the way. For every ST past 24, ^0.98 Stars. Unlock new upgrades"
+                des = des + " (Currently: ^" + notationChooser(new Decimal(0.98).pow(player.st.points.sub(24)))
+                return des
+            },
             done() { return player["st"].points.gte(25) },
             unlocked() { return player["st"].points.gte(24)}
         },

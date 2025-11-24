@@ -71,7 +71,7 @@ addLayer("s", {
 				layers.s.buyables[11].buy();
 			};
         }
-        if (hasMilestone('st', 9)) {
+        if (hasMilestone('st', 10)) {
             if (layers.s.buyables[12].canAfford()) {
 				layers.s.buyables[12].buy();
 			};
@@ -172,7 +172,7 @@ addLayer("s", {
         },
         24: {
             title: "Why are upgrades getting so long? [10/40]",
-            description: "x2.5 Stars, x2 Sparks. 'Delayed Boostage' is stronger after 25M Sparks.",
+            description: "x2.5 Stars, x2 Sparks. 'Delayed Boostage' is stronger after 25M Sparks (Sparks^0.14 -> Sparks^0.16).",
             cost: new Decimal(500000),
             unlocked() { return (hasMilestone("st",3) && hasUpgrade("s",23)) }, 
         },
@@ -198,7 +198,7 @@ addLayer("s", {
         },
         31: {
             title: "increases the time to get the next... [12/40]",
-            description: "x5 Stars. At 250B Stars, Sparks boost stars gain more. At 1T Stars, x5 Spark gain.",
+            description: "x5 Stars. At 250B Stars, Sparks boost stars gain more (Sparks^0.094 -> Sparks^0.11). At 1T Stars, x5 Spark gain.",
             cost: new Decimal(30e9),
             unlocked() { return (hasMilestone("st",4) && hasUpgrade("s",25)) }, 
         },
@@ -222,13 +222,13 @@ addLayer("s", {
         },
         35: {
             title: " [sigh] i guess thats why this upgrade takes 1.46 days from [25/40]... [26/40]",
-            description: "The effect of Star Tier 16 is stronger. Increase the effect further at e670 Galaxies, and at 200Sx Nebulae unlock a new effect (Nebulae boost Sparks (direct multiplier)).",
+            description: "The effect of Star Tier 16 is stronger. Increase the effect further at e670 Galaxies (Nebulae^0.1 -> Nebulae^0.225 -> Nebulae^0.25), and at 200Sx Nebulae unlock a new effect (Nebulae boost Sparks (direct multiplier)).",
             cost: new Decimal("e3150"),
             unlocked() { return (hasMilestone("st",17) && hasUpgrade("s",34)) }, 
         },
         41: {
             title: "Back to the increasers! [28/40]",
-            description: "Unlock the fourth increaser, the 'Nebula Increaser'. The price scaling of the Galaxy Increaser is lower.",
+            description: "Unlock the fourth increaser, the 'Nebula Increaser'. The price scaling of the Galaxy Increaser is lower (x10,000 -> x2,500 cost/buy).",
             cost: new Decimal("e27140"),
             unlocked() { return (hasMilestone("st",19) && hasUpgrade("s",35)) }, 
         },

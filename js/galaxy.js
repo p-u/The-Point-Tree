@@ -72,7 +72,7 @@ addLayer("g", {
         },
         12: {
             title: "Again and again. [15/40]",
-            description: "Spark Increaser is stronger, and unlock the Star Increaser. x1.5 Stars gain at 500M, 25B, 25Qa stars.",
+            description: "Spark Increaser is stronger (x2 -> x2.2/buy), and unlock the Star Increaser. x1.5 Stars gain at 500M, 25B, 25Qa stars.",
             cost: new Decimal(5),
             unlocked() { return hasUpgrade("g",11) }, 
         },
@@ -81,7 +81,7 @@ addLayer("g", {
             description: "Galaxies boost Sparks at a reduced rate, BUT reduce the gain of Stars. At 1 Ocd (e57) Sparks, x5 Sparks gain, and at 100 Ocd (e59) Sparks, x3 Stars. At 10 Nod (e61) Sparks, x2 Galaxies. At 1 Dvg (e69) Sparks, x1,000 Sparks!",
             cost: new Decimal(30e6),
             effect() {
-                let eff = new Decimal(0.5)
+                eff = new Decimal(0.5)
                 if (hasUpgrade("s", 34)) eff = new Decimal(0.65)
                 if (hasUpgrade("g", 21)) eff = new Decimal(0.8)
                 return player.g.points.add(1).pow(eff)
@@ -90,13 +90,13 @@ addLayer("g", {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x"
             },
             tooltip() {
-                return "Formula: Galaxies^0.5"
+                return "Formula: Galaxies^" + eff
             },
             unlocked() { return (hasUpgrade("g",12) && hasMilestone("st", 7)) }, 
         },
         14: {
             title: "A cosmos [19/40]",
-            description: "Galaxy's effect to Stars is stronger. At e136 Stars, increase that effect.",
+            description: "Galaxy's effect to Stars is stronger. At e136 Stars, increase that effect. (Galaxies^0.7 -> Galaxies^0.75 -> Galaxies^0.8)",
             cost: new Decimal(2e21),
             unlocked() { return (hasUpgrade("g",13) && hasMilestone("st", 8)) }, 
         },
@@ -105,7 +105,7 @@ addLayer("g", {
             description: "Galaxies boost its gain...oh gosh thats op",
             cost: new Decimal(1e60),
             effect() {
-                let exp = new Decimal(0.0225)
+                exp = new Decimal(0.0225)
                 if (hasMilestone("st", 12) && player.s.points.gt("1e425")) exp = new Decimal(0.035)
                 return player.g.points.add(1).pow(exp)
             },
@@ -113,13 +113,13 @@ addLayer("g", {
                 return notationChooser(upgradeEffect(this.layer, this.id))+"x"
             },
             tooltip() {
-                return "Formula: Galaxies^0.0225"
+                return "Formula: Galaxies^" + exp
             },
             unlocked() { return (hasUpgrade("g",14) && hasMilestone("st", 11)) }, 
         },
         21: {
             title: "Trade-off B",
-            description: "Galaxy's effect to Stars is WEAKER, though increase Galaxy up. 15 effect and boost Spark Increaser's base.",
+            description: "Galaxy's effect to Stars is WEAKER (Galaxies^0.8 -> Galaxies^0.65), though increase the 3rd Galaxy up's effect (Galaxies^0.65 -> Galaxies^0.8) and boost Spark Increaser's base (x2.2 -> x2.25/buy).",
             cost: new Decimal("e960"),
             unlocked() { return (hasUpgrade("g",15)) }, 
         },
