@@ -9,6 +9,7 @@ addLayer("w", {
             MaResetTime: 0,
             MoResetTime: 0,
             PaResetTime: 0,
+            ClResetTime: 0,
         };
     },
     canBuyMax(){
@@ -42,22 +43,25 @@ addLayer("w", {
         1: {
             requirementDescription: "World Tier 2",
             effectDescription: "x5 Atoms, x1.5 Matter",
-            done() { return player.w.points.gte(2) }
+            done() { return player.w.points.gte(2) },
         },
         2: {
             requirementDescription: "World Tier 3",
             effectDescription: "Gen 5 and 6 does not cost anything, unlock Gen 7. <br> 3^World Tierx Atoms, 2^World Tierx Energy, 1.1^World Tierx Matter.",
             done() { return player.w.points.gte(3) },
+            unlocked() {return player.w.points.gte(2)}
         },
         3: {
             requirementDescription: "World Tier 4",
             effectDescription: "Double Molecule Bonds gain, ^1.01 Atom gain. <br> Unlock new Click Mastery Milestones and unlock a new CM Feature with a new tab and upgrades. +20% CM gain. <br> Also, unlock a new layer.",
             done() { return player.w.points.gte(4) },
+            unlocked() {return player.w.points.gte(3)}
         },
         4: {
             requirementDescription: "World Tier 5",
             effectDescription: "x1.5 Click Mastery gain and Shrink Speed, x5 Particles and x100 Molecule Bonds. <br> Gen 9 and Booster 4 is automated. <br> Also, x7 Particle Passive Gen and Shrink Points boost Atoms more. Unlock even more Click Mastery Milestones.",
             done() { return player.w.points.gte(5) },
+            unlocked() {return player.w.points.gte(4)}
         },
     },
     tabFormat: {
@@ -118,6 +122,22 @@ addLayer("w", {
                         }
                     }
                 }],
+                "blank",
+                ["display-text", function() {
+                   if (player.ma.shrinkpts.gte(10000)){
+                        if (hasAchievement("a", 91)) {
+                            return "Your first Core Level Reset is " + formatTime(player.w.ClResetTime) + " after you started the game."
+                        } else {
+                            return "You probably need 10-100M SP to unlock this reset layer"
+                        }
+                    } else {
+                        if (hasAchievement("a", 82)) {
+                            return "Reach 10K SP to unlock this thing"
+                        } else {
+                            return ""
+                        }
+                    }
+                }],
             ],
         },
     },
@@ -130,6 +150,9 @@ addLayer("w", {
         }
         if ((hasAchievement("a", 65)) && (player.w.PaResetTime == 0)) {
             player.w.PaResetTime = player.timePlayed
+        }
+        if ((hasAchievement("a", 91)) && (player.w.ClResetTime == 0)) {
+            player.w.ClResetTime = player.timePlayed
         }
         player.pa.totalParticles = player.pa.clickableamt.alpha.add(player.pa.clickableamt.beta).add(player.pa.clickableamt.gamma).add(player.pa.clickableamt.delta)
     },

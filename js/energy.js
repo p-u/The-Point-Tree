@@ -11,6 +11,7 @@ addLayer("en", {
         powerexpomatter: new Decimal(0),
         powerexpomolecule: new Decimal(0),
         powerexpoparticle: new Decimal(0),
+        powerexpoce: new Decimal(0),
         powgain: new Decimal(0),
         gen1amt: new Decimal(0),
         gen2amt: new Decimal(0),
@@ -84,11 +85,12 @@ addLayer("en", {
             if (hasMilestone("mo", 7)) cutoff = 8
             if (hasUpgrade("pa", 12)) cutoff = 9
             if (hasMilestone("pa", 2)) cutoff = 10
+            if (hasMilestone("cl", 5)) cutoff = 10
             for(v=1;v<5;v++){ //columns
               if ((hasMilestone('ma', 8) || hasMilestone("cl", 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
             for(v=1;v<cutoff;v++){ //columns
-              if ((hasMilestone('mo', 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              if ((hasMilestone('mo', 5) || hasMilestone("cl", 5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
         }
         let keep = [];
@@ -154,6 +156,10 @@ addLayer("en", {
                         if (hasUpgrade("pa", 22)) { a = a + ` and particles by
                         <h2><span style="color: #2E6F40; font-family: Lucida Console, Courier New, monospace">
                             ${notationChooser(player.en.power.add(1).pow(player.en.powerexpoparticle))}</span></h2>` }
+                        if (hasUpgrade("pa", 22)) { a = a + ` and CE by
+                        <h2><span style="color: #00FFAA; font-family: Lucida Console, Courier New, monospace">
+                            ${notationChooser(player.en.power.add(1).log10().pow(player.en.powerexpoce))}</span></h2>` }
+                        a = a + "."
                         return a
                     }
                 ],
@@ -416,6 +422,7 @@ addLayer("en", {
             effect() {
                 atomatom = 0.11
                 if (hasAchievement("a", 75)) atomatom = 0.128
+                if (hasUpgrade("ma", 232)) atomatom = 0.134
                 softcapDescriptionen41 = ""
                 sdsc = ""
                 upgEffecten41 = upgradeEffect(this.layer, this.id)
@@ -1196,7 +1203,12 @@ addLayer("en", {
                 return new Decimal(tspd).mul(Decimal.pow(1e10, x)).floor()
             },
             display() {
-                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Tickspeed."
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Energy. <br>"
+                if (this.extra().gte(1)) {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " + " + notationChooser(this.extra()) + " Tickspeed."
+                } else {
+                    dis = dis + "You have " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Tickspeed."
+                }
                 dis = dis + " Tickspeed multiplies Gen 1-8 generation by " + notationChooser(buyableEffect(this.layer, this.id)) + "."
                 return dis
             },
@@ -1212,7 +1224,8 @@ addLayer("en", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 tspdboost = new Decimal(1.1)
                 if (hasUpgrade("pa", 13)) tspdboost = new Decimal(1.11)
                 if (hasUpgrade("en", 94)) tspdboost = new Decimal(1.125)
@@ -1222,7 +1235,11 @@ addLayer("en", {
             tooltip() {
                 return "Cost Formula: 1e500 x 1e10^Amt. Does not generate anything."
             },
-            
+            extra(){
+                let extra = new Decimal(0)
+                if (hasUpgrade("mo", 51)) extra = extra.plus(getBuyableAmount(this.layer, 51).times(0.085).floor())
+                return extra
+            },
             style() {
                 if (canBuyBuyable(this.layer, this.id)) {
                     return {
@@ -1272,7 +1289,7 @@ addLayer("en", {
                 let cost = new Decimal(1)
                 player.en.points = player.en.points.sub(this.cost().mul(cost))
                 player.en.points = player.en.points.div(this.cost().pow(1/20))
-                player.points = player.points.div(this.cost().pow(1/20))
+                if (!(hasUpgrade("cl", 34))) player.points = player.points.div(this.cost().pow(1/20))
                 if (!(hasAchievement("a", 81))) setBuyableAmount(this.layer, 42, new Decimal(0))
                 if (0 != 0) {
                     if (getBuyableAmount(this.layer, this.id).gte(999)) {
@@ -1354,6 +1371,7 @@ addLayer("en", {
         if (hasUpgrade("mo", 12)) mult = mult.times(3)
         if (hasUpgrade("mo", 14)) mult = mult.times(7)
         if (hasUpgrade("mo", 15)) mult = mult.times(4)
+        if (hasUpgrade("mo", 51)) mult = mult.div(1e50)
         if (hasMilestone("ma", 11)) mult = mult.times(3)
         if (hasUpgrade("en", 81)) mult = mult.times(13).div(4)
         if (hasMilestone("mo", 12)) mult = mult.times(1254)
@@ -1361,6 +1379,7 @@ addLayer("en", {
         if (hasUpgrade("ma", 224)) mult = mult.times(1e49)
 	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (player.cm.clickmastery.gte(1.2e11)) mult = mult.times(3)
+        if (player.cm.clickmastery.gte(1.3e15)) mult = mult.times(25)
         if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (hasUpgrade("en", 85)) mult = mult.times(8)
         if (hasUpgrade("mo", 23)) {
@@ -1455,6 +1474,16 @@ addLayer("en", {
             if (hasUpgrade("en", 85)) player.en.gen6multi = player.en.gen6multi.times(8)
             if (hasUpgrade("en", 85)) player.en.gen7multi = player.en.gen7multi.times(8)
             if (hasUpgrade("en", 85)) player.en.gen8multi = player.en.gen8multi.times(8)
+            
+            if (hasUpgrade("mo", 54)) player.en.gen1multi = player.en.gen1multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen2multi = player.en.gen2multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen3multi = player.en.gen3multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen4multi = player.en.gen4multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen5multi = player.en.gen5multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen6multi = player.en.gen6multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen7multi = player.en.gen7multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen8multi = player.en.gen8multi.times(1e10)
+            if (hasUpgrade("mo", 54)) player.en.gen9multi = player.en.gen9multi.times(1e10)
 
             if (hasAchievement("a", 63)) player.en.gen4multi = player.en.gen4multi.times(1.14)
             if (hasAchievement("a", 84)) player.en.gen5multi = player.en.gen5multi.times(1.05)
@@ -1486,6 +1515,12 @@ addLayer("en", {
             if (hasUpgrade("mo", 44)) player.en.powerexpomatter = new Decimal(0.015)
             if (hasUpgrade("mo", 45)) player.en.powerexpoatom = new Decimal(0.27)
             if (hasUpgrade("mo", 45)) player.en.powerexpoener = new Decimal(0.305)
+            if (hasUpgrade("mo", 52)) player.en.powerexpomatter = new Decimal(0.0175)
+            if (hasUpgrade("mo", 52)) player.en.powerexpomolecule = new Decimal(0.004)
+            if (hasUpgrade("mo", 52)) player.en.powerexpoparticle = new Decimal(0.0013)
+            if (hasUpgrade("mo", 52)) player.en.powerexpoce = new Decimal(0.07)
+            if (hasUpgrade("cl", 26)) player.en.powerexpoatom = new Decimal(0.292)
+            if (hasUpgrade("cl", 26)) player.en.powerexpoener = new Decimal(0.28)
 
 
 
@@ -1617,8 +1652,10 @@ addLayer("en", {
             if (hasUpgrade("pa", 25)) gain = gain.div(player.pa.clickablenerf.delta)
             if (hasAchievement("a", 41)) gain = gain.times(1.08)
             if (hasUpgrade("mo", 13)) gain = gain.times(4)
+            if (hasUpgrade("mo", 51)) gain = gain.div(1e50)
             if (hasAchievement("a", 43)) gain = gain.times(1.2)
             if (hasAchievement("a", 65)) gain = gain.times(1.25)
+            if (hasAchievement("a", 92)) gain = gain.times(1.2)
             if (hasUpgrade("mo", 15)) gain = gain.times(3)
             if (hasAchievement("a", 46)) gain = gain.times(1.1)
             if (hasUpgrade("mo", 21)) gain = gain.times(1000)
@@ -1626,8 +1663,11 @@ addLayer("en", {
             if (player.cm.clickmastery.gte(200000)) gain = gain.times(player.cm.clickmastery.div(33).log(333))
             if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(288888).log(28))
             if (player.cm.clickmastery.gte(4e9)) gain = gain.times(player.cm.clickmastery.mul(888).log(88888))
+            if (player.cm.clickmastery.gte(7e12)) gain = gain.times(4)
+            if (player.cm.clickmastery.gte(2.5e16)) gain = gain.times(15)
             if (hasMilestone("ma", 11)) gain = gain.times(2)
             if (hasMilestone("mo", 7)) gain = gain.times(77)
+            if (hasUpgrade("cl", 33) && player.cl.energy.gte(4e8)) gain = gain.times(100)
             if (hasUpgrade("ma", 224)) gain = gain.times(1e19)
             if (hasUpgrade("pa", 35)) gain = gain.times(1e100)
 	        if (hasMilestone("cl", 1)) gain = gain.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
@@ -1636,6 +1676,7 @@ addLayer("en", {
             if (hasMilestone("ma", 9)) gain = gain.pow(1.01)
             if (hasUpgrade("mo", 13)) gain = gain.pow(1.04)
             if (hasUpgrade("en", 93)) gain = gain.pow(1.015)
+            if (hasUpgrade("mo", 54)) gain = gain.pow(1.01)
             if (hasUpgrade("ma", 215)) gain = gain.pow(1.02)
             
             gain = softcap(gain, new Decimal("e720"), new Decimal(0.6))

@@ -83,7 +83,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(200000)){
-                        return "[500,000 Clicks] Clicks boosts itself again. Currently:" + notationChooser(Decimal.min(player.cm.clickmastery.div(4000).log(10), 5)) + "x. [log10(CM/4000)], MAX 5x]"
+                        return "[500,000 Clicks] Clicks boosts itself again. Currently:" + notationChooser(Decimal.min(player.cm.clickmastery.div(4000).log(10), 20)) + "x. [log10(CM/4000)], MAX 20x]"
                     } else {
                         return ""
                     } 
@@ -257,6 +257,133 @@ addLayer("cm", {
                     } 
                 }],
                 "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1e12) && hasMilestone("w", 4)){
+                        return "[2.5e12 Clicks] Clicks boosts its gain. Currently:" + notationChooser(player.cm.clickmastery.div(5000000).log(750)) + "x. [log750(CM/5M)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2.5e12) && hasMilestone("w", 4)){
+                        return "[4e12 Clicks] Clicks boosts Molecules gain. Currently:" + notationChooser(player.cm.clickmastery.div(5000000).log(750)) + "x. [log750(CM/5M)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(4e12) && hasMilestone("w", 4)){
+                        return "[7e12 Clicks] x4 Power Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(7e12) && hasMilestone("w", 4)){
+                        return "[1e13 Clicks] Clicks boosts its gain. Currently:" + notationChooser(player.cm.clickmastery.div(88).log(8888888)) + "x. [log8.8M(CM/88)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1e13) && hasMilestone("w", 4)){
+                        return "[1.5e13 Clicks] Clicks boosts Particles gain. Currently:" + notationChooser(player.cm.clickmastery.div(1e10).log(1000)) + "x. [log1K(CM/10B)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1.5e13) && hasMilestone("w", 4)){
+                        return "[2.5e13 Clicks] Clicks boosts Shrink Speed. Currently:" + notationChooser(player.cm.clickmastery.log(1e10)) + "x. [log10B(CM)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2.5e13) && hasMilestone("w", 4)){
+                        return "[5e13 Clicks] +5% CE Gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(5e13) && hasMilestone("w", 4)){
+                        return "[9e13 Clicks] Click Level boosts clicks gain. Currently:" + notationChooser(player.cm.cmlvl.div(10)) + "x. (CL/10)x"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(9e13) && hasMilestone("w", 4)){
+                        return "[2e14 Clicks] x2.4 Matter gain"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2e14) && hasMilestone("w", 4)){
+                        return "[6e14 Clicks] Click Level boosts SP gain. Currently:" + notationChooser(player.cm.clickmastery.log(1e12)) + "x. [log1T(CM)]"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(6e14) && hasMilestone("w", 4)){
+                        return "[1.6e15 Clicks] x1.4 Particles, +6% CE."
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1.6e15) && hasMilestone("w", 4)){
+                        return "[2.8e15 Clicks] Click Level scaling is weaker and multiplier is stronger"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2.8e15) && hasMilestone("w", 4)){
+                        return "[5e15 Clicks] +20% Shrink Speed"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(5e15) && hasMilestone("w", 4)){
+                        return "[8e15 Clicks] x25 Atoms"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(8e15) && hasMilestone("w", 4)){
+                        return "[1.3e16 Clicks] x25 Energy"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(1.3e16) && hasMilestone("w", 4)){
+                        return "[2.5e16 Clicks] x15 Power"
+                    } else {
+                        return ""
+                    } 
+                }],
                 ["clickable", 11],
                 "blank",
                 ["infobox", "cm"],
@@ -295,7 +422,7 @@ addLayer("cm", {
         player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clmult.pow(player.cm.cmlvl))
         if (player.cm.clickmastery.gte(2000)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(40).log(8))
         if (player.cm.cmlvl.gte(6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.cmlvl.div(2))
-        if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(Decimal.min(player.cm.clickmastery.div(4000).log(10), 5))
+        if (player.cm.clickmastery.gte(500000)) player[this.layer].cpc = player[this.layer].cpc.times(Decimal.min(player.cm.clickmastery.div(4000).log(10), 20))
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
         if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.25))
@@ -303,6 +430,11 @@ addLayer("cm", {
             if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
             if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(1.75)
             if (player.cm.clickmastery.gte(2.5e11)) player[this.layer].cpc = player[this.layer].cpc.times(1.4)
+            if (hasMilestone("w", 4)) {
+                if (player.cm.clickmastery.gte(2.5e12)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(5000000).log(750))
+                if (player.cm.clickmastery.gte(1e13)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(88).log(8888888))
+                if (player.cm.clickmastery.gte(1e13)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.cmlvl.div(10))
+            }
             if (player.cm.clickmastery.gte(5e10)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.7))
         }
 
@@ -318,19 +450,26 @@ addLayer("cm", {
         if (hasMilestone("cf", 5)) player[this.layer].cpc = player[this.layer].cpc.times(1.16)
         if (hasMilestone("cl", 1)) player[this.layer].cpc = player[this.layer].cpc.times(1.25)
         if (hasAchievement("a", 86)) player[this.layer].cpc = player[this.layer].cpc.times(1.027)
+        if (hasAchievement("a", 95)) player[this.layer].cpc = player[this.layer].cpc.times(1.04)
 
         player.cm.clscale = new Decimal(3)
         if (hasAchievement("a", 101)) player[this.layer].cpc = player[this.layer].cpc.times(1.025)
         if (hasAchievement("a", 102)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
+        if (hasAchievement("a", 112)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
         if (hasAchievement("a", 103)) player.cm.clscale = player.cm.clscale.sub(0.05)
         if (hasAchievement("a", 104)) player.cm.clscale = player.cm.clscale.sub(0.05)
         if (hasAchievement("a", 105)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
         if (hasAchievement("a", 106)) player.cm.clmult = player.cm.clmult.add(0.015)
+        if (player.cm.clickmastery.gte(2.8e15)) {
+            player.cm.clscale = player.cm.clscale.sub(0.1)
+            player.cm.clmult = player.cm.clmult.add(0.03)
+        }
     },
     csmalculation() {
         player.cm.csmmult = new Decimal(0.12)
         if (hasMilestone("cm", 11)) player.cm.csmmult = player.cm.csmmult.add(0.01)
         if (hasMilestone("cm", 15)) player.cm.csmmult = player.cm.csmmult.add(0.01)
+        if (hasAchievement("a", 111)) player.cm.csmmult = player.cm.csmmult.add(0.01)
         player.cm.csmscale = new Decimal(0.6)
         if (hasMilestone("cm", 12)) player.cm.csmscale = player.cm.csmscale.mul(1.07)
         if (hasMilestone("cm", 16)) player.cm.csmscale = player.cm.csmscale.mul(1.025)

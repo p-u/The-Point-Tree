@@ -35,9 +35,28 @@ addLayer("pa", {
     infoboxes: {
         par: {
             title: "Particles",
-            body() { return "Particles DO NOT RESET the Molecule layer! Particles boost Energy, or it can also be used for Particle Clickables. The particle subtab in the Particle layer offers different particles that boost different stats (At the start you only have 2, but you will get more over time) Recommended to get an Alpha Particle on first reset. Particles increase in gain until 10 seconds after ANY reset that resets the first layer. Particle Upgrades will have the naming convention [Number] [Amount of total Particles spent on other Particles to get to unlock]. DO NOT FORGET ABOUT OTHER PARTICLES OR MOLECULES" },
+            body() { return "Particles DO NOT RESET the Molecule layer! Particles can be used for Particle Clickables. The particle subtab in the Particle layer offers different particles that boost different stats (At the start you only have 2, but you will get more over time) Recommended to get an Alpha Particle on first reset. Particles increase in gain until 10 seconds after ANY reset that resets the first layer. Particle Upgrades will have the naming convention [Number] [Amount of total Particles spent on other Particles to get to unlock]. DO NOT FORGET ABOUT OTHER PARTICLES OR MOLECULES" },
         },
     },
+    doReset(pa) {
+        // Stage 1: Prevent resetting if the layer is too high
+        if (layers[pa].row <= this.row) return;
+    
+        // Stage 2: Track which specific subfeatures to keep (e.g., upgrades)
+        let keptUpgrades = [];
+        for(i=1;i<6;i++){ //rows
+            for(v=1;v<3;v++){ //columns
+              if (hasMilestone("cl", 5) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+        }
+        let keep = [];
+    
+        // Stage 4: Perform the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5: Add back the specific subfeatures saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+    }, 
     tabFormat: {
         "Upgrades/Milestones": {
             content: [
@@ -97,6 +116,20 @@ addLayer("pa", {
             onClick() {
                 player.pa.buyMode = "50pct"
             },
+        },
+        14: {
+            title: "Assign equally (Will spend all of your particles)",
+            canClick() { return true },
+            onClick() {
+                let amt = Decimal.max(player.pa.points.div(5).floor(), 1)
+                player.pa.clickableamt.alpha = player.pa.clickableamt.alpha.add(amt)
+                player.pa.clickableamt.beta = player.pa.clickableamt.beta.add(amt)
+                player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(amt)
+                player.pa.clickableamt.delta = player.pa.clickableamt.delta.add(amt)
+                player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(amt)
+                player.pa.points = new Decimal(0)
+            },
+            unlocked() {return hasUpgrade("cl", 35)}
         },
         21: {
             title: "Alpha Particle",
@@ -261,6 +294,12 @@ addLayer("pa", {
             done() { return (player.pa.totalParticles.gte(1e33) && player.pa.points.gte(2e33)) },
             unlocked() { return hasUpgrade("pa", 25)}
         },
+        3: {
+            requirementDescription: "e216 Particles on hand",
+            effectDescription: "Shrink Speed ^1.1, x216 Particles but reduce the gain of Matter",
+            done() { return player.pa.points.gte(1e216) },
+            unlocked() { return hasMilestone("cl", 4)}
+        },
     },
     upgrades: {
         11: {
@@ -356,7 +395,7 @@ addLayer("pa", {
         },
         24: {
             title: "Nine [5e20]",
-            description: "The matter softcap is delayed immensely to e5,000. However, the effect of the Matter layer is weaker.",
+            description: "The matter softcap is delayed immensely to e10,000. However, the effect of the Matter layer is weaker.",
             cost: new Decimal(2e13),
             unlocked() { return (hasUpgrade("pa", 23) && player.pa.totalParticles.gte(5e11)) }, 
         },
@@ -403,7 +442,9 @@ addLayer("pa", {
             if (hasUpgrade("mo", 35)) base = 7
             if (hasUpgrade("pa", 23)) base = 9
             if (hasUpgrade("pa", 33)) base = base + (Math.PI * 3 / 10)
-            return Decimal.max(Decimal.pow(base, player.pa.clickableamt.alpha.add(1).log(2)).mul(4), 1)
+            let eff = Decimal.max(Decimal.pow(base, player.pa.clickableamt.alpha.add(1).log(2)).mul(4), 1)
+            if (hasUpgrade("mo", 53)) eff = eff.pow(Decimal.max(player.cl.energy.slog().div(2).add(0.15), 1))
+            return eff
         }
         return new Decimal(1)
     },
@@ -445,32 +486,24 @@ addLayer("pa", {
         if (hasAchievement("a", 66)) mult = mult.times(1.01)
         if (hasAchievement("a", 71)) mult = mult.times(1.02)
         if (hasAchievement("a", 72)) mult = mult.times(1.03)
+        if (hasAchievement("a", 94)) mult = mult.times(1.04)
         if (hasUpgrade("pa", 32)) mult = mult.times(250)
         if (hasMilestone("w", 4)) mult = mult.times(5)
         if (hasUpgrade("ma", 224)) mult = mult.times(9)
         if (hasMilestone("cl", 2)) mult = mult.times(player.cl.points)
+        if (hasMilestone("pa", 3)) mult = mult.times(216)
+        if (player.cm.clickmastery.gte(1.5e13) && hasMilestone("w", 4)) player.cm.clickmastery.div(1e10).log(1000)
 	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (hasUpgrade("ma", 55)) mult = mult.times(upgradeEffect("ma", 55))
         if (hasUpgrade("pa", 25)) mult = mult.times(layers.pa.getDeltaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpoparticle))
         if (player.cm.clickmastery.gte(1e12) && hasMilestone("w", 4)) mult = mult.times(1.4)
+        if (player.cm.clickmastery.gte(1.6e15) && hasMilestone("w", 4)) mult = mult.times(1.4)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
         return exp
-    },
-    effect(){
-        let effectBoost = 1.4
-        if (hasAchievement("a", 82)) effectBoost = effectBoost + 0.0123
-        let eff = player.pa.points.add(1).pow(effectBoost)
-        return eff
-    },
-    effectDescription() {
-        let softcapDescription = ""
-        let layerEffect = tmp[this.layer].effect
-        let des = "which is boosting Energy by x" + notationChooser(layerEffect) + softcapDescription
-        return des;
     },
     branches: ["ma", "mo"], // Layers that this layer depends on
     row: 2, // Row the layer is in on the tree (0 is the first row)
@@ -495,7 +528,9 @@ addLayer("pa", {
             player.pa.clickableamt.gamma = player.pa.clickableamt.gamma.add(player.pa.points.div(200e3).times(diff))
         }
         if (hasUpgrade("cl", 13)) {
-            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(1e6).times(diff))
+            let epsidiv = new Decimal(1e6)
+            if (hasUpgrade("cl", 36)) epsidiv = new Decimal(200e3)
+            player.pa.clickableamt.epsilon = player.pa.clickableamt.epsilon.add(player.pa.points.div(epsidiv).times(diff))
         }
     },
 })

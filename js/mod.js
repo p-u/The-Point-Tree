@@ -14,11 +14,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.1",
+	num: "1.2",
 	name: "The ??? + World Tier 5",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>v1.2</h2><br>
+	- Main Content: Added a new layer with 21 upgrades and 5 milestones <br>
+	- Click Mastery: Added 14 new milestones and 2 CSM Milestones <br>
+	- Content Features: Added a subtab and a new milestone <br>
+	- Matter Layer: Added 6 Shrinking Upgrades, 1 Shrinkenator, 3 Objects, new uni^x size, 1 Milestone. Added descriptions for fictional objects <br>
+	- Particle Layer: Added 2 Upgrades, 1 Particle, 1 Milestone <br>
+	- Molecule Layer: Added 4 Upgrades, 1 Booster, 1 Milestone <br>
+	- Added import/export save to file <br>
+	- Some changes here and there (BIG nerf to shrinking speed, nerfed the prices of s-1 to s-6 to compensate) <br>
+	- Achievements: Added 6 main-game achievements and 2 CSM Achievements <br>
+	- Endgame: ~e26,260 Atoms + B-9 Upgrade <br>
 <h2>v1.1</h2><br>
 	- Added a new feature in the Matter Layer with its own set of upgrades! <br>
 	- Added 3 ???s <br>
@@ -203,6 +214,7 @@ function getPointGen() {
 	if (hasUpgrade("mo", 11)) gain = gain.times(2)
 	if (hasUpgrade("mo", 12)) gain = gain.times(3)
 	if (hasUpgrade("en", 75)) gain = gain.times(8)
+	if (hasUpgrade("cl", 22) && player.cl.energy.gte(100e6)) gain = gain.times("e500")
 	if (hasUpgrade("mo", 15)) gain = gain.times(5)
 	if (hasUpgrade("ma", 224)) gain = gain.times(1e29)
 	if (hasMilestone("ma", 16)) gain = gain.times(1e50)
@@ -218,6 +230,8 @@ function getPointGen() {
 	if (hasMilestone("mo", 12)) gain = gain.times(1254)
 	if (hasUpgrade("en", 85)) gain = gain.times(88)
 	if (hasUpgrade("pa", 11)) gain = gain.times(5)
+	if (hasUpgrade("mo", 51)) gain = gain.times(1e100)
+	if (hasUpgrade("cl", 21)) gain = gain.times(1e60)
     if (hasUpgrade("pa", 35)) gain = gain.times(1e100)
 	if (hasMilestone("mo", 13)) gain = gain.times(new Decimal(2).pow(player.a.achievements.length))
 
@@ -231,6 +245,7 @@ function getPointGen() {
 	if (hasAchievement("a", 35)) gain = gain.times(1.05)
 	if (hasAchievement("a", 44)) gain = gain.times(1.1)
 	if (hasAchievement("a", 46)) gain = gain.times(1.1)
+	if (hasAchievement("a", 91)) gain = gain.times(2)
 	if (hasMilestone("cf", 4) && player.mo.points.gte(1e24)) gain = gain.times(Decimal.min(new Decimal(4).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(1e7)))
 		
 	
@@ -241,6 +256,7 @@ function getPointGen() {
 	if (player.cm.clickmastery.gte(3e9)) gain = gain.times(player.cm.clickmastery.mul(225).log(22500))
 	if (player.cm.clickmastery.gte(250e6)) gain = gain.times(player.cm.clmult.pow(player.cm.cmlvl))
 	if (player.cm.clickmastery.gte(3e10)) gain = gain.times(3)
+	if (player.cm.clickmastery.gte(8e15)) gain = gain.times(25)
 
 	// particles and gens boost
 	gain = gain.times(layers.pa.getAlphaEff())
@@ -295,7 +311,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return (player.points.gte("e7500") && hasUpgrade("ma", 221))
+	return (player.cl.points.gte(5) && hasUpgrade("cl", 26))
 }
 
 

@@ -18,6 +18,7 @@ addLayer("ma", {
         shrinkbase: new Decimal(1),
         objnum: new Decimal(1),
         spatomlg: new Decimal(5),
+        objname: "Adult",
     }},
     layerShown(){
         let visible = false
@@ -42,6 +43,11 @@ addLayer("ma", {
 		if (hasUpgrade('cl', 11)) {
 			if (layers.ma.buyables[21].canAfford()) {
 				layers.ma.buyables[21].buy();
+			};
+		};
+		if (hasUpgrade('cl', 33)) {
+			if (layers.ma.buyables[22].canAfford()) {
+				layers.ma.buyables[22].buy();
 			};
 		};
 	},
@@ -165,7 +171,11 @@ addLayer("ma", {
     baseResource: "Atoms", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.2, // Prestige currency exponent
+    exponent() {
+        let exp = new Decimal(0.2)
+        if (hasMilestone("pa", 3)) exp = new Decimal(0.18)
+        return exp
+    }, // Prestige currency exponent
     upgrades: {
         11: {
             title: "01: Hydrogen",
@@ -516,6 +526,28 @@ addLayer("ma", {
             currencyLayer: "ma",
             unlocked() { return (hasUpgrade("ma", 224) && getBuyableAmount("mo", 11).gte(600)) }, 
         },
+        231: {
+            title: "s-11: get ready",
+            description: "Square the shrink speed multi of Shrinkenators II-IV. Unlock a new object, and SP is boosted based on Shrink Base.",
+            cost() {
+                return new Decimal(800e9)
+            },
+            currencyDisplayName: "Shrink Points",
+            currencyInternalName: "shrinkpts",
+            currencyLayer: "ma",
+            unlocked() { return (hasUpgrade("ma", 225) && hasUpgrade("cl",19)) }, 
+        },
+        232: {
+            title: "s-12: growww the world",
+            description: "'Atomic Duplication' is stronger.",
+            cost() {
+                return new Decimal(1.5e15)
+            },
+            currencyDisplayName: "Shrink Points",
+            currencyInternalName: "shrinkpts",
+            currencyLayer: "ma",
+            unlocked() { return (hasUpgrade("ma", 231) && hasUpgrade("cl",19)) }, 
+        },
     },
     milestones: {
         1: {
@@ -702,6 +734,7 @@ addLayer("ma", {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 let base = new Decimal(0.025)
                 eff = new Decimal(base.mul(x)).add(1)
+                if (hasUpgrade("ma", 231)) eff = eff.pow(2)
                 return eff
             },
             tooltip() {
@@ -750,6 +783,7 @@ addLayer("ma", {
                 let base = new Decimal(0.025)
                 if (hasUpgrade("ma", 221)) base = new Decimal(0.05)
                 eff = new Decimal(base.mul(x)).add(1)
+                if (hasUpgrade("ma", 231)) eff = eff.pow(2)
                 return eff
             },
             tooltip() {
@@ -798,6 +832,7 @@ addLayer("ma", {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 let base = new Decimal(0.064)
                 eff = new Decimal(base.mul(x)).add(1)
+                if (hasUpgrade("ma", 231)) eff = eff.pow(2)
                 return eff
             },
             tooltip() {
@@ -829,6 +864,7 @@ addLayer("ma", {
         if (hasUpgrade("mo", 12)) mult = mult.times(3)
         if (hasUpgrade("mo", 15)) mult = mult.times(2)
         if (hasUpgrade("ma", 35)) mult = mult.times(5)
+        if (hasUpgrade("cl", 23)) mult = mult.times(3.16227766017e22)
         if (hasAchievement("a", 33)) mult = mult.times(1.05)
         if (hasUpgrade("en", 65)) mult = mult.times(1.1)
         if (hasUpgrade("ma", 31)) mult = mult.times(upgradeEffect("ma", 31))
@@ -859,6 +895,7 @@ addLayer("ma", {
         if (player.cm.clickmastery.gte(2e9)) mult = mult.times(player.cm.clickmastery.mul(70).log(700000))
         if (player.cm.clickmastery.gte(2e10)) mult = mult.times(player.cm.clickmastery.times(500).log(5000000))
         if (player.cm.clickmastery.gte(8e10)) mult = mult.times(1.5)
+        if (player.cm.clickmastery.gte(2e14)) mult = mult.times(2.4)
         if (hasUpgrade("en", 85)) mult = mult.times(1.8)
         return mult
     },
@@ -866,6 +903,7 @@ addLayer("ma", {
         let exp = new Decimal(1)
         if (hasUpgrade("mo", 42)) exp = exp.add(0.02)
         if (hasUpgrade("ma", 52)) exp = exp.add(0.005)
+        if (player.pa.clickableamt.epsilon.gte("3.14e314") && hasUpgrade("cl", 34) && player.cl.energy.gte(1.5e9)) exp = exp.add(0.0025)
         return exp
     },
     effect(){
@@ -882,7 +920,7 @@ addLayer("ma", {
             softcapstart = new Decimal(1e166)
         }
         if (hasMilestone("ma", 13)) softcapstart = new Decimal(1e175)
-        if (hasUpgrade("pa", 24)) softcapstart = new Decimal("1eeeeeeeeeeeeee100")
+        if (hasUpgrade("pa", 24)) softcapstart = new Decimal("1e10000")
         softcappedEffect = softcap(eff, new Decimal(softcapstart), new Decimal(sc))
         return softcappedEffect
     },
@@ -894,7 +932,7 @@ addLayer("ma", {
             softcapstart = new Decimal(1e166)
         }
         if (hasMilestone("ma", 13)) softcapstart = new Decimal(1e175)
-        if (hasUpgrade("pa", 24)) softcapstart = new Decimal("1e5000")
+        if (hasUpgrade("pa", 24)) softcapstart = new Decimal("1e10000")
 
         if (layerEffect.gte(softcapstart) ) {
             softcapDescription = " (Softcapped at "+ notationChooser(softcapstart) +"x)"
@@ -919,11 +957,15 @@ addLayer("ma", {
                 player.ma.shrinkmul = decimalOne
             }
             if (hasUpgrade("ma", 222)) player.ma.shrinkmul = player.ma.shrinkmul.mul(2.5)
+            if (hasUpgrade("ma", 231)) player.ma.shrinkmul = player.ma.shrinkmul.mul(player.ma.shrinkbase.pow(0.05))
             if (hasUpgrade("cl", 17)) player.ma.shrinkmul = player.ma.shrinkmul.mul(2)
+            if (hasUpgrade("cl", 25)) player.ma.shrinkmul = player.ma.shrinkmul.mul(5)
             if (hasUpgrade("ma", 224)) player.ma.shrinkmul = player.ma.shrinkmul.mul(1.499)
             if (hasUpgrade("cl", 19) && player.cl.energy.gte(1e6)) player.ma.shrinkmul = player.ma.shrinkmul.mul(player.cl.energy.pow(0.04))
 	        if (hasMilestone("cl", 1)) player.ma.shrinkmul = player.ma.shrinkmul.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
             if (player.cm.clickmastery.gte(5e11) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(1.175)
+            if (player.cm.clickmastery.gte(6e14) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(player.cm.clickmastery.log(1e12))
+            if (hasUpgrade("cl", 24)) player.ma.shrinkmul = player.ma.shrinkmul.pow(1.1)
             let shrinkeff = new Decimal(1)
             // adding
             if (hasUpgrade("pa", 34)) {
@@ -939,26 +981,34 @@ addLayer("ma", {
             player.ma.spatomlg = new Decimal(5)
             if (hasMilestone("w", 4)) player.ma.spatomlg = new Decimal(4.5)
             if (hasUpgrade("ma", 223)) player.ma.spatomlg = new Decimal(2)
+            if (hasUpgrade("cl", 24)) player.ma.spatomlg = new Decimal(1.5)
             if (hasUpgrade("ma", 211)) shrinkeff = shrinkeff.times(1.1)
             if (hasUpgrade("ma", 212)) shrinkeff = shrinkeff.times(1.2)
             if (hasUpgrade("ma", 213)) shrinkeff = shrinkeff.times(1.3)
             if (hasUpgrade("ma", 215)) shrinkeff = shrinkeff.times(1.5)
+            if (player.cm.clickmastery.gte(2.5e13) && hasMilestone("w", 4)) shrinkeff = shrinkeff.times(player.cm.clickmastery.log(1e10))
+            if (player.cm.clickmastery.gte(5e15) && hasMilestone("w", 4)) shrinkeff = shrinkeff.times(1.2)
             if (hasMilestone("w", 4)) shrinkeff = shrinkeff.times(1.5)
             if (hasUpgrade("ma", 52)) shrinkeff = shrinkeff.times(upgradeEffect("ma", 52))
             if (hasUpgrade("ma", 222)) shrinkeff = shrinkeff.div(2.5)
             if (hasMilestone("cl", 1)) shrinkeff = shrinkeff.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
             if (hasMilestone("cl", 2)) shrinkeff = shrinkeff.times(player.cl.points)
             if (hasMilestone("cl", 4)) shrinkeff = shrinkeff.pow(1.2)
+            if (hasMilestone("cl", 5)) shrinkeff = shrinkeff.pow(1.2)
+            if (hasMilestone("pa", 3)) shrinkeff = shrinkeff.pow(1.1)
+            if (hasUpgrade("cl", 24)) shrinkeff = shrinkeff.pow(1.1)
             player.ma.shrinkbase = shrinkeff
             let oomsizedec = new Decimal(1.1)
             if (hasUpgrade('ma', 222)) oomsizedec = new Decimal(1.05)
             let newshrinkeff = shrinkeff.sub(1).div(oomsizedec.pow(player.ma.univsize.log(10))).add(1)
             player.ma.shrinkdiv = newshrinkeff
-            newshrinkeff = newshrinkeff.sub(1).pow(diff).add(1)
+            newshrinkeff = newshrinkeff.pow(diff)
             if (player.devSpeed > 0.001) player.ma.univsize = player.ma.univsize.div(newshrinkeff)
             let min = new Decimal(1)
             if (hasUpgrade("ma", 222)) min = new Decimal(1.616e-33)
             if (player.ma.univsize.lt(min)){
+                player.ma.shrinkpts = player.ma.shrinkpts.add(player.ma.shrinkgain.mul(player.ma.shrinkmul))
+                player.ma.shrinkobjs = player.ma.shrinkobjs.add(1)
                 player.ma.objname = "Adult"
                 player.ma.objnum = new Decimal(1)
                 player.ma.shrinkgain = new Decimal(1)
@@ -971,15 +1021,18 @@ addLayer("ma", {
                 if (hasUpgrade("ma", 215)) player.ma.objname = "Our Universe (estimated size)"
                 if (hasUpgrade("ma", 215)) player.ma.objnum = new Decimal(4)
                 if (hasUpgrade("ma", 215)) player.ma.shrinkgain = new Decimal(50)
-                if (hasUpgrade("ma", 221)) player.ma.objname = "[Hypothetical] Universe Cluster"
+                if (hasUpgrade("ma", 221)) player.ma.objname = "[Hypothetical] Universe Cluster - Has about 5,000 Universes"
                 if (hasUpgrade("ma", 221)) player.ma.objnum = new Decimal(5)
                 if (hasUpgrade("ma", 221)) player.ma.shrinkgain = new Decimal(200)
-                if (hasUpgrade("ma", 223)) player.ma.objname = "[Hypothetical] Supraverse"
+                if (hasUpgrade("ma", 223)) player.ma.objname = "[Hypothetical] Supraverse: A universe variant that has about 500,000 Universe Clusters."
                 if (hasUpgrade("ma", 223)) player.ma.objnum = new Decimal(6)
                 if (hasUpgrade("ma", 223)) player.ma.shrinkgain = new Decimal(1500)
-                if (hasUpgrade("ma", 223)) player.ma.objname = "Deep Space"
+                if (hasUpgrade("ma", 223)) player.ma.objname = "Deep Space - Suddenly, most is empty space with some Supraverses."
                 if (hasUpgrade("ma", 223)) player.ma.objnum = new Decimal(7)
                 if (hasUpgrade("ma", 223)) player.ma.shrinkgain = new Decimal(12000)
+                if (hasUpgrade("ma", 231)) player.ma.objname = "The Box: A seemingly random box filled with decillions of Supraverses"
+                if (hasUpgrade("ma", 231)) player.ma.objnum = new Decimal(8)
+                if (hasUpgrade("ma", 231)) player.ma.shrinkgain = new Decimal(90000)
                 if (player.ma.objnum.eq(1)) {
                     player.ma.univsize = new Decimal(1000)
                 } else if (player.ma.objnum.eq(2)) {
@@ -994,9 +1047,9 @@ addLayer("ma", {
                     player.ma.univsize = new Decimal(1e75)
                 } else if (player.ma.objnum.eq(7)) {
                     player.ma.univsize = new Decimal(1e150)
+                } else if (player.ma.objnum.eq(8)) {
+                    player.ma.univsize = new Decimal(2).pow(1400)
                 }
-                player.ma.shrinkpts = player.ma.shrinkpts.add(player.ma.shrinkgain.mul(player.ma.shrinkmul))
-                player.ma.shrinkobjs = player.ma.shrinkobjs.add(1)
             }
         }
     }

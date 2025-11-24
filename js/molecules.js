@@ -8,6 +8,7 @@ addLayer("mo", {
         molecule: new Decimal(0),
         MResetTime: new Decimal(0),
         boosterBase: new Decimal(5),
+        ttlbooster: new Decimal(0),
     }},
     layerShown(){
         let visible = false
@@ -79,6 +80,14 @@ addLayer("mo", {
                 "blank",
                 "blank",
                 "prestige-button",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        if (new Decimal(getBuyableAmount("mo",42)).gte(1)) a = a + "You have a total of " + notationChooser(player.mo.ttlbooster) + " Boosters 1-8"
+                        return a
+                    }
+                ],
                 "blank",
                 "blank",
                 "buyables",
@@ -242,6 +251,12 @@ addLayer("mo", {
             effectDescription: "Gain 100% of Molecules a second and 1% of Particles a second. Autobuy Booster 1 to 3, and Booster 4 and 5 resets nothing.",
             unlocked() { return hasMilestone("mo", 13)},
             done() { return player.mo.points.gte(1.5e175) }
+        },
+        15: {
+            requirementDescription: "47 Omega Boosters",
+            effectDescription: "Each Achievement doubles Molecules gain. Unlock new Q- CE upgrades, x1.47 CE.",
+            unlocked() { return hasUpgrade("cl", 22)},
+            done() { return getBuyableAmount("mo", 51).gte(47) }
         },
     },
     upgrades: {
@@ -435,6 +450,46 @@ addLayer("mo", {
             },
             unlocked() { return (hasUpgrade("mo", 44)) }, 
         },
+        51: {
+            title: "U21: Free Speed",
+            description: "Tickspeed gives free Tickspeed. Also /e50 Energy and Power but xe100 Atoms.",
+            cost: new Decimal("1e631"),
+            unlocked() { return (hasUpgrade("cl", 19) && player.cl.energy.gte(1e6) && hasUpgrade("mo", 45)) }, 
+        },
+        52: {
+            title: "U22: How powerful can Power get?",
+            description: "Increase the boost of Power to Matter, Molecules, Particles. Power now boosts CE.",
+            cost: new Decimal("2e683"),
+            unlocked() { return (hasUpgrade("mo", 51)) }, 
+        },
+        53: {
+            title: "U23: When CE gets another use",
+            description: "The effect of the Alpha Particle is expontiated by CE.",
+            cost: new Decimal("1e761"),
+            unlocked() { return (hasUpgrade("mo", 52)) }, 
+        },
+        54: {
+            title: "U24: The Great Booster/Generator Reset",
+            description: "Reset Tickspeed, Gen 9 and Boosters, including the Omega-Booster. <br> Reward 1: xe10 all Generators' Generation. Reward 2: ^1.01 Power.",
+            cost: new Decimal("e9000"),
+            currencyDisplayName: "Power",
+            currencyInternalName: "power",
+            currencyLayer: "en",
+            onPurchase() {
+                setBuyableAmount(this.layer, 11, new Decimal(0))
+                setBuyableAmount(this.layer, 12, new Decimal(0))
+                setBuyableAmount(this.layer, 21, new Decimal(0))
+                setBuyableAmount(this.layer, 22, new Decimal(0))
+                setBuyableAmount(this.layer, 31, new Decimal(0))
+                setBuyableAmount(this.layer, 32, new Decimal(0))
+                setBuyableAmount(this.layer, 41, new Decimal(0))
+                setBuyableAmount(this.layer, 42, new Decimal(0))
+                setBuyableAmount(this.layer, 51, new Decimal(0))
+                setBuyableAmount("en", 51, new Decimal(0))
+                setBuyableAmount("en", 61, new Decimal(0))
+            },
+            unlocked() { return hasUpgrade("mo", 53) }, 
+        },
     },
     buyables: {
         11: {
@@ -459,7 +514,9 @@ addLayer("mo", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 11)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -493,7 +550,9 @@ addLayer("mo", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 12)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -527,7 +586,9 @@ addLayer("mo", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 21)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -561,7 +622,9 @@ addLayer("mo", {
                     setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 }
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 22)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0)).pow(Math.min(1, getBuyableAmount("mo", 22)/4))
                 return eff
             },
@@ -589,9 +652,15 @@ addLayer("mo", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasMilestone("ma", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("cl", 31)) {
+                    setBuyableAmount(this.layer, this.id, player.mo.points.div(1e18).log(500).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 31)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -619,9 +688,15 @@ addLayer("mo", {
             buy() {
                 let cost = new Decimal(1)
                 if (!(hasUpgrade("cl", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (hasUpgrade("cl", 32)) {
+                    setBuyableAmount(this.layer, this.id, player.mo.points.div(1e32).log(7777).floor().add(1))
+                } else {
+                    setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                }
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 32)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -651,7 +726,9 @@ addLayer("mo", {
                 if (!(hasUpgrade("cl", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 41)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -682,7 +759,9 @@ addLayer("mo", {
                 if (!(hasUpgrade("cl", 14))) player.mo.points = player.mo.points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
-            effect(x) {
+            effect() {
+                x = getBuyableAmount(this.layer, 42)
+                if (getBuyableAmount(this.layer, 51).gte(1)) x = x.add(getBuyableAmount(this.layer, 51))
                 eff = new Decimal(player.mo.boosterBase).pow(Decimal.max(x, 0))
                 return eff
             },
@@ -693,6 +772,53 @@ addLayer("mo", {
                 'width': '250px',
                 'height': '115px',
             }},
+        },
+        51: {
+            title: "Buy the Omega-Booster",
+            unlocked() { return hasUpgrade("cl", 22) },
+            cost(x) {
+                return (new Decimal(100)).mul(x.add(1))
+            },
+            display() {
+                let dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Total Generators 1-8." + "<br>You have bought " + notationChooser(getBuyableAmount(this.layer, this.id)) + " Omega Boosters, giving " + notationChooser(buyableEffect(this.layer, this.id)) + " extra Boosters 1-8."
+                return dis
+            },
+            canAfford() {
+                return player.mo.ttlbooster.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal(1)
+                setBuyableAmount(this.layer, 11, new Decimal(0))
+                setBuyableAmount(this.layer, 12, new Decimal(0))
+                setBuyableAmount(this.layer, 21, new Decimal(0))
+                setBuyableAmount(this.layer, 22, new Decimal(0))
+                setBuyableAmount(this.layer, 31, new Decimal(0))
+                setBuyableAmount(this.layer, 32, new Decimal(0))
+                setBuyableAmount(this.layer, 41, new Decimal(0))
+                setBuyableAmount(this.layer, 42, new Decimal(0))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                eff = new Decimal(x)
+                return eff
+            },
+            tooltip() {
+                return "Cost Formula: 100*Amt. +1 Boosters 1-8 per buy."
+            },
+            style() {
+                if (canBuyBuyable(this.layer, this.id)) {
+                    return {
+                        'width': '500px',
+                        'height': '115px',
+                        'background-color': '#ff9100ff',
+                    }
+                } else {
+                    return {
+                        'width': '500px',
+                        'height': '115px',
+                    }
+                }
+            }
         },
     },
     gainMult() { // Prestige multiplier
@@ -709,8 +835,10 @@ addLayer("mo", {
 	    if (hasMilestone("cl", 1)) mult = mult.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
         if (hasUpgrade("pa", 21)) mult = mult.times(upgradeEffect("pa", 21))
         if (hasMilestone("w", 3)) mult = mult.times(2)
+        if (player.cm.clickmastery.gte(4e12)) mult = mult.times(player.cm.clickmastery.div(5000000).log(750))
         if (hasMilestone("w", 4)) mult = mult.times(100)
         mult = mult.times(layers.pa.getGammaEff())
+        if (hasMilestone("mo", 15)) mult = mult.times(new Decimal(2).pow(player.a.achievements.length))
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpomolecule))
         if (hasMilestone("cf", 4) && player.mo.points.gte(1e24)) mult = mult.times(Decimal.min(new Decimal(1.1).pow(Decimal.max(player.mo.points.div(1e24).log(2), 1)), new Decimal(10)))
         if (hasAchievement("a", 62)) mult = mult.times(1.08)
@@ -783,7 +911,7 @@ addLayer("mo", {
             let gain = player.mo.points.div(10).times(diff)
             player.mo.molecule = player.mo.molecule.add(gain)
         }
-
+        player.mo.ttlbooster = getBuyableAmount("mo",11).add(getBuyableAmount("mo",12)).add(getBuyableAmount("mo",21)).add(getBuyableAmount("mo",22)).add(getBuyableAmount("mo",31)).add(getBuyableAmount("mo",32)).add(getBuyableAmount("mo",41)).add(getBuyableAmount("mo",42))
         if (hasMilestone("mo", 6)) player.mo.boosterBase = new Decimal(6)
         if (hasUpgrade("mo", 25)) player.mo.boosterBase = new Decimal(7)
         if (hasUpgrade("pa", 13)) player.mo.boosterBase = new Decimal(8)
