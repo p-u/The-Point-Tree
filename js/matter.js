@@ -1003,7 +1003,7 @@ addLayer("ma", {
             let newshrinkeff = shrinkeff.sub(1).div(oomsizedec.pow(player.ma.univsize.log(10))).add(1)
             player.ma.shrinkdiv = newshrinkeff
             newshrinkeff = newshrinkeff.pow(diff)
-            if (player.devSpeed > 0.001) player.ma.univsize = player.ma.univsize.div(newshrinkeff)
+            player.ma.univsize = player.ma.univsize.div(newshrinkeff)
             let min = new Decimal(1)
             if (hasUpgrade("ma", 222)) min = new Decimal(1.616e-33)
             if (player.ma.univsize.lt(min)){
