@@ -1027,9 +1027,9 @@ addLayer("ma", {
                 if (hasUpgrade("ma", 223)) player.ma.objname = "[Hypothetical] Supraverse: A universe variant that has about 500,000 Universe Clusters."
                 if (hasUpgrade("ma", 223)) player.ma.objnum = new Decimal(6)
                 if (hasUpgrade("ma", 223)) player.ma.shrinkgain = new Decimal(1500)
-                if (hasUpgrade("ma", 223)) player.ma.objname = "Deep Space - Suddenly, most is empty space with some Supraverses."
-                if (hasUpgrade("ma", 223)) player.ma.objnum = new Decimal(7)
-                if (hasUpgrade("ma", 223)) player.ma.shrinkgain = new Decimal(12000)
+                if (hasUpgrade("ma", 225)) player.ma.objname = "Deep Space - Suddenly, most is empty space with some Supraverses."
+                if (hasUpgrade("ma", 225)) player.ma.objnum = new Decimal(7)
+                if (hasUpgrade("ma", 225)) player.ma.shrinkgain = new Decimal(12000)
                 if (hasUpgrade("ma", 231)) player.ma.objname = "The Box: A seemingly random box filled with decillions of Supraverses"
                 if (hasUpgrade("ma", 231)) player.ma.objnum = new Decimal(8)
                 if (hasUpgrade("ma", 231)) player.ma.shrinkgain = new Decimal(90000)
