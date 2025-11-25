@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "World Growth",
-	id: "RD82:WGBT",
+	id: "RD82:WG",
 	author: "randim82",
 	pointsName: "Atoms",
 	modFiles: ["energy.js", "achievements.js", "tree.js", "world.js", "matter.js", "clickmastery.js", "content_features.js", "molecules.js", "particles.js", "corelvl.js"],
