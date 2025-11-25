@@ -424,7 +424,7 @@ addLayer("pa", {
             unlocked() { return (hasUpgrade("pa", 32) && player.pa.clickableamt.beta.gte(1e75) && player.pa.clickableamt.alpha.gte(1e75)) }, 
         },
         34: {
-            title: "Fourteen [7M SP]",
+            title: "Fourteen [5M SP]",
             description: "Completing the cycle -- Gen 1^0.01 boosts Gen 8 gain, with the min effect being e10x. S1's shrink base increase effect is overhauled.",
             cost: new Decimal(2.1e108),
             unlocked() { return (hasUpgrade("pa", 33) && player.pa.clickableamt.epsilon.gte(1e108))}, 
@@ -433,7 +433,7 @@ addLayer("pa", {
             title: "Fifteen",
             description: "xe100 Power and Atoms.",
             cost: new Decimal(3e130),
-            unlocked() { return (hasUpgrade("pa", 34) && player.ma.shrinkpts.gte(7e6))}, 
+            unlocked() { return (hasUpgrade("pa", 34) && player.ma.shrinkpts.gte(5e6))}, 
         },
     },
     getAlphaEff() {
