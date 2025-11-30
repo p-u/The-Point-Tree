@@ -206,7 +206,7 @@ addLayer("cl", {
     upgrades: {
         11: {
             title: "Q-1: Automate Shrinkenator 3",
-            cost: new Decimal(12500),
+            cost: new Decimal(10000),
             unlocked() { return ((hasMilestone("cl", 4) && !(hasUpgrade("cl", 11))) || (hasUpgrade("cl", 11) && player.cl.showbought)) }, 
             style() {return {
                 'width': '250px',
@@ -219,7 +219,7 @@ addLayer("cl", {
         },
         12: {
             title: "Q-2: Max-buy Boosters 1-3",
-            cost: new Decimal(37500),
+            cost: new Decimal(32500),
             unlocked() { return ((hasUpgrade("cl", 11) && !(hasUpgrade("cl", 12))) || (hasUpgrade("cl", 12) && player.cl.showbought)) }, 
             style() {return {
                 'width': '250px',
@@ -232,7 +232,7 @@ addLayer("cl", {
         },
         13: {
             title: "Q-3: Passively assign Epsilon Particles",
-            cost: new Decimal(120e3),
+            cost: new Decimal(111e3),
             unlocked() { return ((hasUpgrade("cl", 12) && !(hasUpgrade("cl", 13))) || (hasUpgrade("cl", 13) && player.cl.showbought)) }, 
             style() {return {
                 'width': '250px',
@@ -258,7 +258,7 @@ addLayer("cl", {
         },
         15: {
             title: "Q-5: x10 Particle Passive Gen",
-            cost: new Decimal(1.4e6),
+            cost: new Decimal(1.5e6),
             unlocked() { return ((hasUpgrade("cl", 14) && !(hasUpgrade("cl", 15))) || (hasUpgrade("cl", 15) && player.cl.showbought)) }, 
             style() {return {
                 'width': '250px',
@@ -284,7 +284,7 @@ addLayer("cl", {
         },
         17: {
             title: "B-1: Decent Boostage",
-            cost: new Decimal(45000),
+            cost: new Decimal(40000),
             description: "x2 CE and SP",
             unlocked() { return ((hasMilestone("cl", 4) && !(hasUpgrade("cl", 17))) || (hasUpgrade("cl", 17) && player.cl.showbought)) }, 
             style() {return {
@@ -297,7 +297,7 @@ addLayer("cl", {
         },
         18: {
             title: "B-2: Further CEx",
-            cost: new Decimal(112500),
+            cost: new Decimal(111111),
             description: "CE gets boosted based on itself",
             unlocked() { return ((hasUpgrade("cl", 17) && !(hasUpgrade("cl", 18))) || (hasUpgrade("cl", 18) && player.cl.showbought)) }, 
             style() {return {
@@ -350,7 +350,7 @@ addLayer("cl", {
         },
         21: {
             title: "B-4: More Boostage",
-            cost: new Decimal(9e6),
+            cost: new Decimal(8e6),
             description: "x6 CE and xe60 Atoms",
             unlocked() { return ((hasUpgrade("cl", 19) && !(hasUpgrade("cl", 21))) || (hasUpgrade("cl", 21) && player.cl.showbought)) }, 
             style() {return {
@@ -363,7 +363,7 @@ addLayer("cl", {
         },
         22: {
             title: "B-5: Overarching Dominance",
-            cost: new Decimal(9e7),
+            cost: new Decimal(8e7),
             description: "Unlock the Omega-Booster. When you have 100M CE, xe500 Atoms, x1.1 CE. Unlock a new Molecule Milestone",
             unlocked() { return ((hasUpgrade("cl", 21) && !(hasUpgrade("cl", 22))) || (hasUpgrade("cl", 22) && player.cl.showbought)) }, 
             style() {return {
@@ -389,7 +389,7 @@ addLayer("cl", {
         },
         24: {
             title: "B-7: Sponsorship",
-            cost: new Decimal(1.5e9),
+            cost: new Decimal(1.4e9),
             description: "The Shrinking team gets a sponsorship! It now shrinks faster and gains more SP per shrink. Also gain more atom boost from SP.",
             unlocked() { return ((hasUpgrade("cl", 23) && !(hasUpgrade("cl", 24))) || (hasUpgrade("cl", 24) && player.cl.showbought)) }, 
             style() {return {
@@ -402,7 +402,7 @@ addLayer("cl", {
         },
         25: {
             title: "B-8: Cash Prize",
-            cost: new Decimal(15e9),
+            cost: new Decimal(12e9),
             description: "The Shrinking Team won Gold! x5 Shrink Points, x1.25 CE [would recommend you get CL5 before these upgrades]",
             unlocked() { return ((hasUpgrade("cl", 24) && !(hasUpgrade("cl", 25))) || (hasUpgrade("cl", 25) && player.cl.showbought)) }, 
             style() {return {
@@ -415,7 +415,7 @@ addLayer("cl", {
         },
         26: {
             title: "B-9: First CE-tradeoff",
-            cost: new Decimal(90e9),
+            cost: new Decimal(80e9),
             description: "Power boosts Atoms more but Energy less",
             unlocked() { return ((hasUpgrade("cl", 25) && !(hasUpgrade("cl", 26))) || (hasUpgrade("cl", 26) && player.cl.showbought)) }, 
             style() {return {
@@ -428,7 +428,7 @@ addLayer("cl", {
         },
         31: {
             title: "Q-7: Buy-max Booster 5",
-            cost: new Decimal(1.5e7),
+            cost: new Decimal(1.4e7),
             unlocked() { return ((hasUpgrade("cl", 16) && !(hasUpgrade("cl", 31))) || (hasUpgrade("cl", 31) && player.cl.showbought)) }, 
             style() {return {
                 'width': '250px',
@@ -454,7 +454,7 @@ addLayer("cl", {
         },
         33: {
             title: "Q-9: Automate Shrinkenator IV",
-            cost: new Decimal(2e8),
+            cost: new Decimal(1.8e8),
             unlocked() { return ((hasUpgrade("cl", 32) && !(hasUpgrade("cl", 33))) || (hasUpgrade("cl", 33) && player.cl.showbought)) }, 
             style() {return {
                 'width': '250px',

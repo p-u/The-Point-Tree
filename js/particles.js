@@ -306,25 +306,24 @@ addLayer("pa", {
             title: "One [3]",
             description: "x5 Atoms, x2 Matter. Gen 6-8 and Tickspeed buys MAX now and costs nothing.",
             cost: new Decimal(3),
-            unlocked() { return player.pa.totalParticles.gte(3) }, 
         },
         12: {
-            title: "Two [7]",
+            title: "Two [6]",
             description: "Keep Energy Row 8 and Matter Row 4 Upgrades on reset. x5 Energy, x2 Power.",
             cost: new Decimal(5),
-            unlocked() { return hasUpgrade("pa", 11) }, 
+            unlocked() { return (hasUpgrade("pa", 11) && player.pa.totalParticles.gte(3)) }, 
         },
         13: {
-            title: "Three [11]",
+            title: "Three [9]",
             description: "Booster Base is increased to 8, Tickspeed base is increased to 1.11, and gain 2 Gen 1s for every Tickspeed bought.",
-            cost: new Decimal(8),
-            unlocked() { return (hasUpgrade("pa", 12) && player.pa.totalParticles.gte(7)) }, 
+            cost: new Decimal(7),
+            unlocked() { return (hasUpgrade("pa", 12) && player.pa.totalParticles.gte(6)) }, 
         },
         14: {
             title: "Four [25]",
             description: "Boost the 'Sodium' Upgrade and the effects of Gen 5-8",
-            cost: new Decimal(14),
-            unlocked() { return (hasUpgrade("pa", 13) && player.pa.totalParticles.gte(11)) }, 
+            cost: new Decimal(12),
+            unlocked() { return (hasUpgrade("pa", 13) && player.pa.totalParticles.gte(9)) }, 
         },
         15: {
             title: "Five [7000]",
@@ -349,7 +348,7 @@ addLayer("pa", {
         21: {
             title: "Six [50000]", // next upg cost 100K
             description: "Particle Upgrades add to 'Chlorine' and 'Argon'. For every Matter/Particle upgrade, x1.1 Molecule Bonds gain.",
-            cost: new Decimal(4000),
+            cost: new Decimal(3750),
             effect() {
                 matterups = player.ma.upgrades.length
                 if (hasUpgrade("pa", 21)) matterups = matterups + player.pa.upgrades.length
@@ -367,9 +366,9 @@ addLayer("pa", {
             unlocked() { return (hasUpgrade("pa", 15) && player.pa.totalParticles.gte(7000)) }, 
         },
         22: {
-            title: "Seven [1.2e8]",
+            title: "Seven [60M]",
             description: "Boost Power based on itself. Power also boosts Particles and Molecules.",
-            cost: new Decimal(140000),
+            cost: new Decimal(112500),
             effect() {
                 powsq = 0.03
                 if (hasUpgrade("pa", 31)) powsq = 0.04
@@ -391,49 +390,49 @@ addLayer("pa", {
             title: "Eight [5e11]",
             description: "All particles are stronger... but: Beta Particles divide Power gain",
             cost: new Decimal(160e6),
-            unlocked() { return (hasUpgrade("pa", 22) && player.pa.totalParticles.gte(120e6)) }, 
+            unlocked() { return (hasUpgrade("pa", 22) && player.pa.totalParticles.gte(60e6)) }, 
         },
         24: {
             title: "Nine [5e20]",
             description: "The matter softcap is delayed immensely to e10,000. However, the effect of the Matter layer is weaker.",
-            cost: new Decimal(2e13),
+            cost: new Decimal(1.8e13),
             unlocked() { return (hasUpgrade("pa", 23) && player.pa.totalParticles.gte(5e11)) }, 
         },
         25: {
             title: "Ten [1e34]",
             description: "Unlock the Delta Particle and the Second Particle Milestone.",
-            cost: new Decimal(1.8e21),
+            cost: new Decimal(1.5e21),
             unlocked() { return (hasUpgrade("pa", 24) && player.pa.totalParticles.gte(5e20)) }, 
         },
         31: {
-            title: "Eleven [1e49 Delta Particles]",
+            title: "Eleven [1e47 Delta Particles]",
             description: "'Seven' and Matter layer boost is stronger",
-            cost: new Decimal(2e35),
+            cost: new Decimal(1.6e35),
             unlocked() { return (hasUpgrade("pa", 25) && player.pa.totalParticles.gte(1e34)) }, 
         },
         32: {
             title: "Twelve [1e75 Alpha AND Beta Particles]",
             description: "Keep upgrades s-1 to s-5, Shrinkenators and Scandium on Particle/Molecule reset. x250 Particles but /100 nett Particle Passive Generation. ^1.004 Atoms.",
-            cost: new Decimal(2e49),
-            unlocked() { return (hasUpgrade("pa", 31) && player.pa.clickableamt.delta.gte(1e49)) }, 
+            cost: new Decimal(1.7e49),
+            unlocked() { return (hasUpgrade("pa", 31) && player.pa.clickableamt.delta.gte(1e47)) }, 
         },
         33: {
-            title: "Thirteen [e108 Epsilon Particles]",
+            title: "Thirteen [7e107 Epsilon Particles]",
             description: "Irrational Numbers are best, right? Increase Alpha Particle base by 3pi/10, Booster base by e/5 and Delta Particle base by Phi (golden ratio)/100",
-            cost: new Decimal(2e75),
+            cost: new Decimal(1.7e75),
             unlocked() { return (hasUpgrade("pa", 32) && player.pa.clickableamt.beta.gte(1e75) && player.pa.clickableamt.alpha.gte(1e75)) }, 
         },
         34: {
-            title: "Fourteen [5M SP]",
+            title: "Fourteen [4M SP]",
             description: "Completing the cycle -- Gen 1^0.01 boosts Gen 8 gain, with the min effect being e10x. S1's shrink base increase effect is overhauled.",
-            cost: new Decimal(2.1e108),
-            unlocked() { return (hasUpgrade("pa", 33) && player.pa.clickableamt.epsilon.gte(1e108))}, 
+            cost: new Decimal(1.8e108),
+            unlocked() { return (hasUpgrade("pa", 33) && player.pa.clickableamt.epsilon.gte(7e107))}, 
         },
         35: {
             title: "Fifteen",
             description: "xe100 Power and Atoms.",
-            cost: new Decimal(3e130),
-            unlocked() { return (hasUpgrade("pa", 34) && player.ma.shrinkpts.gte(5e6))}, 
+            cost: new Decimal(2.5e130),
+            unlocked() { return (hasUpgrade("pa", 34) && player.ma.shrinkpts.gte(4e6))}, 
         },
     },
     getAlphaEff() {

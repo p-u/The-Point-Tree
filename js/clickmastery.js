@@ -33,6 +33,10 @@ addLayer("cm", {
                     return "You gain "+ notationChooser(player.cm.cpc.times(player.cm.csm)) +" clicks per click."
                 }],
                 "blank",
+                "blank",
+                ["clickable", 11],
+                "blank",
+                "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(0)){
                         return "[100 Clicks] Clicks boosts atom gain. Currently:" + notationChooser(player.cm.clickmastery.mul(25).log(25)) + "x. [log25(CM*25)]"
@@ -384,7 +388,6 @@ addLayer("cm", {
                         return ""
                     } 
                 }],
-                ["clickable", 11],
                 "blank",
                 ["infobox", "cm"],
             ],

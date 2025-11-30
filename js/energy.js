@@ -156,7 +156,7 @@ addLayer("en", {
                         if (hasUpgrade("pa", 22)) { a = a + ` and particles by
                         <h2><span style="color: #2E6F40; font-family: Lucida Console, Courier New, monospace">
                             ${notationChooser(player.en.power.add(1).pow(player.en.powerexpoparticle))}</span></h2>` }
-                        if (hasUpgrade("pa", 22)) { a = a + ` and CE by
+                        if (hasUpgrade("mo", 52)) { a = a + ` and CE by
                         <h2><span style="color: #00FFAA; font-family: Lucida Console, Courier New, monospace">
                             ${notationChooser(player.en.power.add(1).log10().pow(player.en.powerexpoce))}</span></h2>` }
                         a = a + "."
