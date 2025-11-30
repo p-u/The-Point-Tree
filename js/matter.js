@@ -964,7 +964,7 @@ addLayer("ma", {
             if (hasUpgrade("cl", 19) && player.cl.energy.gte(1e6)) player.ma.shrinkmul = player.ma.shrinkmul.mul(player.cl.energy.pow(0.04))
 	        if (hasMilestone("cl", 1)) player.ma.shrinkmul = player.ma.shrinkmul.times(new Decimal(10).pow(player.cl.energy.add(1).slog()))
             if (player.cm.clickmastery.gte(5e11) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(1.175)
-            if (player.cm.clickmastery.gte(6e14) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(player.cm.clickmastery.log(1e12))
+            if (player.cm.clickmastery.gte(5e14) && hasMilestone("w", 4)) player.ma.shrinkmul = player.ma.shrinkmul.times(player.cm.clickmastery.log(1e12))
             if (hasUpgrade("cl", 24)) player.ma.shrinkmul = player.ma.shrinkmul.pow(1.1)
             let shrinkeff = new Decimal(1)
             // adding

@@ -517,7 +517,7 @@ addLayer("cl", {
             if (hasUpgrade("cl", 23)) player.cl.engen = player.cl.engen.mul(2.25)
             if (hasUpgrade("cl", 25)) player.cl.engen = player.cl.engen.mul(1.25)
             if (player.cm.clickmastery.gte(5e13) && hasMilestone("w", 4)) player.cl.engen = player.cl.engen.mul(1.05)
-            if (player.cm.clickmastery.gte(1.6e15) && hasMilestone("w", 4)) player.cl.engen = player.cl.engen.mul(1.06)
+            if (player.cm.clickmastery.gte(1.4e15) && hasMilestone("w", 4)) player.cl.engen = player.cl.engen.mul(1.06)
             if (hasUpgrade("cl", 21)) player.cl.engen = player.cl.engen.mul(6)
             if (hasUpgrade("mo", 52)) player.cl.engen = player.cl.engen.mul(player.en.power.add(1).log10().pow(player.en.powerexpoce))
             if (hasUpgrade("cl", 18)) player.cl.engen = player.cl.engen.mul(upgradeEffect("cl", 18))

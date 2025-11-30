@@ -335,15 +335,15 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(2e14) && hasMilestone("w", 4)){
-                        return "[6e14 Clicks] Click Level boosts SP gain. Currently:" + notationChooser(player.cm.clickmastery.log(1e12)) + "x. [log1T(CM)]"
+                        return "[5e14 Clicks] Click Level boosts SP gain. Currently:" + notationChooser(player.cm.clickmastery.log(1e12)) + "x. [log1T(CM)]"
                     } else {
                         return ""
                     } 
                 }],
                 "blank",
                 ["display-text", function() {
-                    if (player.cm.clickmastery.gte(6e14) && hasMilestone("w", 4)){
-                        return "[1.6e15 Clicks] x1.4 Particles, +6% CE."
+                    if (player.cm.clickmastery.gte(5e14) && hasMilestone("w", 4)){
+                        return "[1.4e15 Clicks] x1.4 Particles, +6% CE."
                     } else {
                         return ""
                     } 
@@ -351,7 +351,7 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(1.6e15) && hasMilestone("w", 4)){
-                        return "[2.8e15 Clicks] Click Level scaling is weaker and multiplier is stronger"
+                        return "[2.5e15 Clicks] Click Level scaling is weaker and multiplier is stronger"
                     } else {
                         return ""
                     } 
@@ -383,7 +383,15 @@ addLayer("cm", {
                 "blank",
                 ["display-text", function() {
                     if (player.cm.clickmastery.gte(1.3e16) && hasMilestone("w", 4)){
-                        return "[2.5e16 Clicks] x15 Power"
+                        return "[2.2e16 Clicks] x15 Power"
+                    } else {
+                        return ""
+                    } 
+                }],
+                "blank",
+                ["display-text", function() {
+                    if (player.cm.clickmastery.gte(2.2e16) && hasMilestone("w", 4)){
+                        return "[3e16 Clicks] Clicks boosts its gain. Currently:" + notationChooser(player.cm.clickmastery.slog().mul(1.1)) + "x. [slog(CM)*1.1]"
                     } else {
                         return ""
                     } 
@@ -429,6 +437,7 @@ addLayer("cm", {
         if (player.cm.clickmastery.gte(2.5e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(7).log(777))
         if (player.cm.clickmastery.gte(25e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(53535).log(53))
         if (player.cm.clickmastery.gte(125e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().div(1.25))
+        if (player.cm.clickmastery.gte(3e16)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.slog().mul(1.1))
         if (hasMilestone("w", 3)) {
             if (player.cm.clickmastery.gte(750e6)) player[this.layer].cpc = player[this.layer].cpc.times(player.cm.clickmastery.div(1212).log(1212))
             if (player.cm.clickmastery.gte(1e10)) player[this.layer].cpc = player[this.layer].cpc.times(1.75)
@@ -463,7 +472,7 @@ addLayer("cm", {
         if (hasAchievement("a", 104)) player.cm.clscale = player.cm.clscale.sub(0.05)
         if (hasAchievement("a", 105)) player[this.layer].cpc = player[this.layer].cpc.times(1.05)
         if (hasAchievement("a", 106)) player.cm.clmult = player.cm.clmult.add(0.015)
-        if (player.cm.clickmastery.gte(2.8e15)) {
+        if (player.cm.clickmastery.gte(2.5e15)) {
             player.cm.clscale = player.cm.clscale.sub(0.1)
             player.cm.clmult = player.cm.clmult.add(0.03)
         }
@@ -471,11 +480,11 @@ addLayer("cm", {
     csmalculation() {
         player.cm.csmmult = new Decimal(0.12)
         if (hasMilestone("cm", 11)) player.cm.csmmult = player.cm.csmmult.add(0.01)
-        if (hasMilestone("cm", 15)) player.cm.csmmult = player.cm.csmmult.add(0.01)
+        if (hasMilestone("cm", 15)) player.cm.csmmult = player.cm.csmmult.add(player.cm.clickmastery.log10().sub(11).div(200))
         if (hasAchievement("a", 111)) player.cm.csmmult = player.cm.csmmult.add(0.01)
         player.cm.csmscale = new Decimal(0.6)
         if (hasMilestone("cm", 12)) player.cm.csmscale = player.cm.csmscale.mul(1.07)
-        if (hasMilestone("cm", 16)) player.cm.csmscale = player.cm.csmscale.mul(1.025)
+        if (hasMilestone("cm", 16)) player.cm.csmscale = player.cm.csmscale.mul(1.05)
         player[this.layer].csmgain = new Decimal(player.cm.csmscale).pow(player.cm.csm.sub(1)).mul(player.cm.csmmult)
     },
     clickables: {
@@ -514,7 +523,7 @@ addLayer("cm", {
         },
         12: {
             requirementDescription: "5e8 Clicks",
-            effectDescription: "CSM MS 2 [Diminishing] - CSM decreases slower. (1.10x)",
+            effectDescription: "CSM MS 2 [Diminishing] - CSM decreases slower. (1.11x)",
             done() { return player.cm.clickmastery.gte(5e8) },
         },
         13: {
@@ -524,12 +533,12 @@ addLayer("cm", {
         },
         14: {
             requirementDescription: "5e11 Clicks",
-            effectDescription: "CSM MS 4 [Diminishing] - CSM decreases slower (1.17x)",
+            effectDescription: "CSM MS 4 [Diminishing] - CSM decreases slower (1.22x)",
             done() { return player.cm.clickmastery.gte(5e11) },
         },
         15: {
             requirementDescription: "1e13 Clicks",
-            effectDescription: "CSM MS 5 [Multiplier] - Increase CSM Multiplier by a further 0.01.",
+            effectDescription: "CSM MS 5 [Multiplier] - Increase CSM Multiplier by your Click amount.",
             done() { return player.cm.clickmastery.gte(1e13) },
         },
         16: {
@@ -540,9 +549,9 @@ addLayer("cm", {
     },
     update(diff) {
         player.cm.csmdec = new Decimal(45)
-        if (hasMilestone("cm", 12)) player.cm.csmdec = player.cm.csmdec.mul(1.1)
+        if (hasMilestone("cm", 12)) player.cm.csmdec = player.cm.csmdec.mul(1.11)
         if (hasMilestone("cm", 16)) player.cm.csmdec = player.cm.csmdec.mul(1.1)
-        if (hasMilestone("cm", 14)) player.cm.csmdec = player.cm.csmdec.mul(1.17)
+        if (hasMilestone("cm", 14)) player.cm.csmdec = player.cm.csmdec.mul(1.22)
         if (player.cm.csm.gt(1)) {
             player.cm.csm = player.cm.csm.sub(player.cm.csm.div(player.cm.csmdec).times(diff))
         }

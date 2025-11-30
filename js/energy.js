@@ -1664,7 +1664,7 @@ addLayer("en", {
             if (player.cm.clickmastery.gte(50e6)) gain = gain.times(player.cm.clickmastery.div(288888).log(28))
             if (player.cm.clickmastery.gte(4e9)) gain = gain.times(player.cm.clickmastery.mul(888).log(88888))
             if (player.cm.clickmastery.gte(7e12)) gain = gain.times(4)
-            if (player.cm.clickmastery.gte(2.5e16)) gain = gain.times(15)
+            if (player.cm.clickmastery.gte(2.2e16)) gain = gain.times(15)
             if (hasMilestone("ma", 11)) gain = gain.times(2)
             if (hasMilestone("mo", 7)) gain = gain.times(77)
             if (hasUpgrade("cl", 33) && player.cl.energy.gte(4e8)) gain = gain.times(100)

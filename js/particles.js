@@ -497,7 +497,7 @@ addLayer("pa", {
         if (hasUpgrade("pa", 25)) mult = mult.times(layers.pa.getDeltaEff())
         if (hasUpgrade("pa", 22)) mult = mult.times(player.en.power.add(1).pow(player.en.powerexpoparticle))
         if (player.cm.clickmastery.gte(1e12) && hasMilestone("w", 4)) mult = mult.times(1.4)
-        if (player.cm.clickmastery.gte(1.6e15) && hasMilestone("w", 4)) mult = mult.times(1.4)
+        if (player.cm.clickmastery.gte(1.4e15) && hasMilestone("w", 4)) mult = mult.times(1.4)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
