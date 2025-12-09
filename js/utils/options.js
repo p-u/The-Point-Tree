@@ -26,6 +26,8 @@ function changeNotation() {
 	if (options.notation === 'mixed scientific') { 
 		options.notation = 'infinity'
 	} else if (options.notation === 'infinity'){ 
+		options.notation = 'blind'
+	} else if (options.notation === 'blind'){ 
 		options.notation = 'standard'
 	} else if (options.notation === 'standard'){ 
 		options.notation = 'scientific'
@@ -49,13 +51,13 @@ function updateAction() {
 	} else if (options.actionmode == "on") {
 		options.actionmode = "ultra"
 	} else if (options.actionmode == "earthquake") {
-		if ((options.notation == 'infinity') && (options.soundeff == false) && (options.theme == "verdant")) {
+		if ((options.notation == 'standard') && (options.soundeff == false) && (options.theme == "verdant")) {
 			options.actionmode = "stop."
 		} else {
 			options.actionmode = "off"
 		}
 	} else if (options.actionmode == "ultra") {
-		if ((options.notation == 'default2') && (options.offlineProd == true)) {
+		if ((options.notation == 'scientific2') && (options.offlineProd == true)) {
 			options.actionmode = "earthquake"
 		} else {
 			options.actionmode = "off"

@@ -129,17 +129,6 @@ function commaFormat(num, precision) {
     return portions[0] + "." + portions[1]
 }
 
-
-function minigameFormat(num, precision) {
-    if (precision > 100) precision = 100
-	if (precision < 0) precision = 0
-    if (num === null || num === undefined) return "NaN"
-    if (num.mag < 0.0001) return (0).toFixed(precision)
-    if (num.mag < 0.1 && precision !==0) precision = Math.max(precision, 4)
-    if (num.mag > 0.0001) precision = (options.dp + 4)
-    return num.toStringWithDecimalPlaces(precision)
-}
-
 function regularFormat(num, precision) {
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.0001) return (0).toFixed(precision)
@@ -149,6 +138,34 @@ function regularFormat(num, precision) {
 
 function fixValue(x, y = 0) {
     return x || new Decimal(y)
+}
+
+function formatBAN(decimal, precision) {
+    decimal = new Decimal(decimal);
+    // Small Numbers - Show it manually.
+    if (decimal.layer === 0 && decimal.mag < 1e9) {
+        return format(decimal, precision=0);
+    }
+
+    // 2. Two index -> {10, X}
+    if (decimal.layer === 0 || (decimal.layer === 1 && decimal.mag < 1e9)) {
+    // Calculate the total log10 to get the 'X' in 10^X
+        let exponent = decimal.log10(); 
+        return `{10, ${format(exponent, precision)}}`;
+    }
+
+    // 3. Tetration -> {10, height, 2}
+    let slog = decimal.slog();
+
+    // 3a: Small (<1e12) layer
+    if (slog.lt(1e12)) {
+        return `{10, ${format(slog, precision)}, 2}`;
+    } 
+    
+    // 3b: If the tower height itself is huge (e.g., F1e100), we need to format the height using BAN too.
+    else {
+        return `{10, ${formatBAN(slog, precision)}, 2}`;
+    }
 }
 
 function sumValues(x) {
@@ -164,6 +181,10 @@ function notationChooser(decimal, precision=3) {
         return format(decimal, precision)
     } else if (options.notation === 'scientific2'){
         return format(decimal, precision)
+    } else if (options.notation === 'birds'){
+        return formatBAN(decimal, precision=4)
+    } else if (options.notation === 'blind'){
+        return ""
     } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision)
     } else {
@@ -178,6 +199,10 @@ function notationChooserMinigame(decimal) {
         return format(decimal, precision=10)
     } else if (options.notation === 'scientific2'){
         return format(decimal, precision=10)
+    } else if (options.notation === 'blind'){
+        return ""
+    } else if (options.notation === 'birds'){
+        return formatBAN(decimal, precision=10)
     } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision=10)
     } else {
