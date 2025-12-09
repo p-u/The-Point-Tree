@@ -1,101 +1,110 @@
 // ************ Options ************
 
+
 let options = {}
 
+
 function getStartOptions() {
-	return {
-		autosave: true,
-		msDisplay: "always",
-		hqTree: false,
-		offlineProd: true,
-		hideChallenges: false,
-		showStory: true,
-		forceOneTab: false,
-		oldStyle: false,
-		tooltipForcing: true,
-		theme: "default",
-		notation: "mixed scientific",
-		forceTooltips: true,
-		hideMilestonePopups: false,
-		actionmode: "off",
-		soundeff: true,
-	}
+   return {
+       autosave: true,
+       msDisplay: "always",
+       hqTree: false,
+       offlineProd: true,
+       hideChallenges: false,
+       showStory: true,
+       forceOneTab: false,
+       oldStyle: false,
+       tooltipForcing: true,
+       theme: "default",
+       notation: "mixed scientific",
+       forceTooltips: true,
+       hideMilestonePopups: false,
+       actionmode: "off",
+       soundeff: true,
+   }
 }
 
 function changeNotation() {
-	if (options.notation === 'mixed scientific') { 
-		options.notation = 'infinity'
-	} else if (options.notation === 'infinity'){ 
-		options.notation = 'standard'
-	} else if (options.notation === 'standard'){ 
-		options.notation = 'scientific'
-	} else if (options.notation === 'scientific'){
-		options.notation = 'scientific2'
-	} else {
-		options.notation = 'mixed scientific'
-	}
+   if (options.notation === 'mixed scientific') {
+       options.notation = 'infinity'
+   } else if (options.notation === 'infinity'){
+       options.notation = 'blind'
+   } else if (options.notation === 'blind'){
+       options.notation = 'standard'
+   } else if (options.notation === 'standard'){
+       options.notation = 'birds array'
+   } else if (options.notation === 'birds array'){
+       options.notation = 'scientific'
+   } else if (options.notation === 'scientific'){
+       options.notation = 'scientific2'
+   } else {
+       options.notation = 'mixed scientific'
+   }
 }
+
 
 function getNotationName() {
-	return options.notation
+   return options.notation
 }
 
+
 function getActionMode() {
-	return options.actionmode
+   return options.actionmode
 }
 function updateAction() {
-	if (options.actionmode == "off") {
-		options.actionmode = "on"
-	} else if (options.actionmode == "on") {
-		options.actionmode = "ultra"
-	} else if (options.actionmode == "earthquake") {
-		if ((options.notation == 'infinity') && (options.soundeff == false) && (options.theme == "verdant")) {
-			options.actionmode = "stop."
-		} else {
-			options.actionmode = "off"
-		}
-	} else if (options.actionmode == "ultra") {
-		if ((options.notation == 'default2') && (options.offlineProd == true)) {
-			options.actionmode = "earthquake"
-		} else {
-			options.actionmode = "off"
-		}
-	} else {
-		options.actionmode = "off"
-	}
+   if (options.actionmode == "off") {
+       options.actionmode = "on"
+   } else if (options.actionmode == "on") {
+       options.actionmode = "ultra"
+   } else if (options.actionmode == "earthquake") {
+       if ((options.notation == 'standard') && (options.soundeff == false) && (options.theme == "verdant")) {
+           options.actionmode = "stop."
+       } else {
+           options.actionmode = "off"
+       }
+   } else if (options.actionmode == "ultra") {
+       if ((options.notation == 'scientific2') && (options.offlineProd == true)) {
+           options.actionmode = "earthquake"
+       } else {
+           options.actionmode = "off"
+       }
+   } else {
+       options.actionmode = "off"
+   }
 }
 
 function updateSoundEff() {
-	options.soundeff = !options.soundeff
+   options.soundeff = !options.soundeff
 }
 
 function toggleOpt(name) {
-	if (name == "oldStyle" && styleCooldown > 0)
-		return;
+   if (name == "oldStyle" && styleCooldown > 0)
+       return;
 
-	options[name] = !options[name];
-	if (name == "hqTree")
-		changeTreeQuality();
-	if (name == "oldStyle")
-		updateStyle();
+
+   options[name] = !options[name];
+   if (name == "hqTree")
+       changeTreeQuality();
+   if (name == "oldStyle")
+       updateStyle();
 }
 var styleCooldown = 0;
 function updateStyle() {
-	styleCooldown = 1;
-	let css = document.getElementById("styleStuff");
-	css.href = options.oldStyle ? "oldStyle.css" : "style.css";
-	needCanvasUpdate = true;
+   styleCooldown = 1;
+   let css = document.getElementById("styleStuff");
+   css.href = options.oldStyle ? "oldStyle.css" : "style.css";
+   needCanvasUpdate = true;
 }
 function changeTreeQuality() {
-	var on = options.hqTree;
-	document.body.style.setProperty('--hqProperty1', on ? "2px solid" : "4px solid");
-	document.body.style.setProperty('--hqProperty2a', on ? "-4px -4px 4px rgba(0, 0, 0, 0.25) inset" : "-4px -4px 4px rgba(0, 0, 0, 0) inset");
-	document.body.style.setProperty('--hqProperty2b', on ? "0px 0px 20px var(--background)" : "");
-	document.body.style.setProperty('--hqProperty3', on ? "2px 2px 4px rgba(0, 0, 0, 0.25)" : "none");
+   var on = options.hqTree;
+   document.body.style.setProperty('--hqProperty1', on ? "2px solid" : "4px solid");
+   document.body.style.setProperty('--hqProperty2a', on ? "-4px -4px 4px rgba(0, 0, 0, 0.25) inset" : "-4px -4px 4px rgba(0, 0, 0, 0) inset");
+   document.body.style.setProperty('--hqProperty2b', on ? "0px 0px 20px var(--background)" : "");
+   document.body.style.setProperty('--hqProperty3', on ? "2px 2px 4px rgba(0, 0, 0, 0.25)" : "none");
 }
 function toggleAuto(toggle) {
-	Vue.set(player[toggle[0]], [toggle[1]], !player[toggle[0]][toggle[1]]);
-	needCanvasUpdate=true
+   Vue.set(player[toggle[0]], [toggle[1]], !player[toggle[0]][toggle[1]]);
+   needCanvasUpdate=true
 }
 
 const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", "INCOMPLETE", "NONE"];
@@ -103,30 +112,31 @@ const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", 
 const MS_SETTINGS = ["always", "last", "automation", "incomplete", "never"];
 
 function adjustMSDisp() {
-	options.msDisplay = MS_SETTINGS[(MS_SETTINGS.indexOf(options.msDisplay) + 1) % 5];
+   options.msDisplay = MS_SETTINGS[(MS_SETTINGS.indexOf(options.msDisplay) + 1) % 5];
 }
 function milestoneShown(layer, id) {
-	complete = player[layer].milestones.includes(id);
-	auto = layers[layer].milestones[id].toggles;
+   complete = player[layer].milestones.includes(id);
+   auto = layers[layer].milestones[id].toggles;
 
-	switch (options.msDisplay) {
-		case "always":
-			return true;
-			break;
-		case "last":
-			return (auto) || !complete || player[layer].lastMilestone === id;
-			break;
-		case "automation":
-			return (auto) || !complete;
-			break;
-		case "incomplete":
-			return !complete;
-			break;
-		case "never":
-			return false;
-			break;
-	}
-	return false;
+
+   switch (options.msDisplay) {
+       case "always":
+           return true;
+           break;
+       case "last":
+           return (auto) || !complete || player[layer].lastMilestone === id;
+           break;
+       case "automation":
+           return (auto) || !complete;
+           break;
+       case "incomplete":
+           return !complete;
+           break;
+       case "never":
+           return false;
+           break;
+   }
+   return false;
 }
 
 let formatOption = (opt) => opt ? 'ON' : 'OFF'
