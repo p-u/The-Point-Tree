@@ -548,5 +548,23 @@ addLayer("rng", {
         if (hasChallenge("m", 13)) {
             player.rng.rngptmult = player.rng.rngptmult.mul(2)
         }
-    }
+    },
+    shouldNotify() {
+        for(i=11;i<16;i++){ 
+            if (canBuyBuyable("rng", i)) {
+                return true
+            }
+        }
+    },
+    glowColor() {
+        for(i=11;i<16;i++){ 
+            if (canBuyBuyable("rng", i)) {
+                return "blue"
+            }
+        }
+    },
+    tooltip() {
+        let tt = "You have " + notationChooser(player.rng.rngpts) + " RNG Points. [" + player.rng.milestones.length + "/25 Milestones gotten]"
+        return tt
+    },
 })

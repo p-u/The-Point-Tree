@@ -3749,5 +3749,28 @@ addLayer("era", {
         let buyMaxEra = false
         if (hasAchievement('sa', 43)) buyMaxEra = true
        return buyMaxEra
-     },
+    },
+    tooltip() {
+        let tt = "You have " + notationChooser(player.era.points) + " Eras, " + notationChooser(player.era.ec) + " Era Crystals "
+        if (hasUpgrade("era", 501)) tt = tt + "and " + notationChooser(player.era.ef) + " Era Fragments."
+        return tt
+    },
+    shouldNotify() {
+        for(i=11;i<20;i++){ 
+            if (canBuyBuyable("era", i)) {
+                return true
+            }
+        }
+    },
+    prestigeButtonText() {
+        let base = "Reset all upgrades for an Era, giving a huge boost and a load of new content. <br><br> (" + notationChooser(player.sac.points) + "/" + notationChooser(getNextAt("era")) + " Sacs, " + notationChooser(player.sac.points.div(getNextAt("era")).mul(100),4) + "% to next)"
+        return base
+    },
+    glowColor() {
+        for(i=11;i<20;i++){ 
+            if (canBuyBuyable("era", i)) {
+                return "blue"
+            }
+        }
+    }
 })

@@ -555,8 +555,26 @@ addLayer("c", {
                 return prog
             },
             display() {
-                return "Duration to next replicate:" + formatTime(player.c.nextReplicateSecs) + "/" + formatTime(player.c.replicateTime)
+                return formatTime(player.c.nextReplicateSecs) + " to next replicate"
             }
         },
+    },
+    shouldNotify() {
+        for(i=11;i<14;i++){ 
+            if (canBuyBuyable("c", i)) {
+                return true
+            }
+        }
+    },
+    tooltip() {
+        let tt = "You have " + notationChooser(player.c.points) + " Cells. (" + formatTime(player.c.nextReplicateSecs) + " to next replicate)"
+        return tt
+    },
+    glowColor() {
+        for(i=11;i<14;i++){ 
+            if (canBuyBuyable("c", i)) {
+                return "blue"
+            }
+        }
     }
 })

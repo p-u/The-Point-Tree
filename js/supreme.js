@@ -1110,4 +1110,18 @@ addLayer("s", {
         {key: "u", description: "U: Supreme (because s,p,r is taken)!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     branches: ["mega", "sac", "e"],
+    shouldNotify() {
+        for(i=11;i<18;i++){ 
+            if (canBuyBuyable("s", i)) {
+                return true
+            }
+        }
+    },
+    glowColor() {
+        for(i=11;i<18;i++){ 
+            if (canBuyBuyable("s", i)) {
+                return "blue"
+            }
+        }
+    }
 })

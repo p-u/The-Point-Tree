@@ -1127,4 +1127,18 @@ addLayer("mega", {
     hotkeys: [
         {key: "m", description: "M: Reset for MEGA points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
+    shouldNotify() {
+        for(i=11;i<16;i++){ 
+            if (canBuyBuyable("mega", i)) {
+                return true
+            }
+        }
+    },
+    glowColor() {
+        for(i=11;i<16;i++){ 
+            if (canBuyBuyable("mega", i)) {
+                return "blue"
+            }
+        }
+    }
 })

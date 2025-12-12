@@ -13,8 +13,8 @@ addLayer("a", {
     color: "yellow",
     row: "side",
     layerShown() {return true}, 
-    tooltip() { // Optional, tooltip displays when the layer is locked
-        return ("Achievements")
+    tooltip() {
+        return "You have " + player.a.achievements.length+"/"+(Object.keys(tmp.a.achievements).length-4) + " Achievements"
     },
     tabFormat: {
         "Achievements": {

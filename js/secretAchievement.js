@@ -3208,4 +3208,18 @@ addLayer("sa", {
             unlocked() { return (hasAchievement('sa', 186))}
         },
     },
+    tooltip() {
+        let relev = 0
+        for (const achievementId of player.sa.achievements) {
+            const achievementNum = parseInt(achievementId);
+            if (achievementNum > 100) {
+                relev = relev + 1;
+            }
+        }
+        if (relev > 42) relev = 42
+        relev = relev + player.sa.upgrades.length
+        relev = relev + player.sa.milestones.length
+        let tt = "Your Number is " + notationChooser(player.sa.minigameNum) + ". [" + relev + "/78 Relevant Milestones]"
+        return tt
+    },
 })
