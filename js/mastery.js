@@ -852,7 +852,7 @@ addLayer("m", {
         if (hasChallenge("m", 11)) n = 1
         if (hasChallenge("m", 12)) n = 2
         if (hasChallenge("m", 13)) n = 3
-        let tt = "You have " + notationChooser(player.m.points) + " Mastery Points. [" + n + "/3 Challenges Completed]"
+        let tt = notationChooser(player.m.points) + " Mastery Points. [" + n + "/3 Challenges Completed]"
         return tt
     },
 })

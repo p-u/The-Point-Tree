@@ -567,7 +567,7 @@ addLayer("c", {
         }
     },
     tooltip() {
-        let tt = "You have " + notationChooser(player.c.points) + " Cells. (" + formatTime(player.c.nextReplicateSecs) + " to next replicate)"
+        let tt = notationChooser(player.c.points) + " Cells (" + formatTime(player.c.nextReplicateSecs) + " to next replicate)"
         return tt
     },
     glowColor() {

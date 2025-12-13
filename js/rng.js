@@ -564,7 +564,7 @@ addLayer("rng", {
         }
     },
     tooltip() {
-        let tt = "You have " + notationChooser(player.rng.rngpts) + " RNG Points. [" + player.rng.milestones.length + "/25 Milestones gotten]"
+        let tt = notationChooser(player.rng.rngpts) + " RNG Points. [" + player.rng.milestones.length + "/25 Milestones gotten]"
         return tt
     },
 })
