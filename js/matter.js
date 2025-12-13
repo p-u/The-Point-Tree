@@ -1052,5 +1052,28 @@ addLayer("ma", {
                 }
             }
         }
+    },
+    tooltip() {
+        let tt = notationChooser(player.ma.points) + " Matter"
+        if (hasUpgrade("ma", 51)) tt = tt + ", " + notationChooser(player.ma.shrinkpts) + " Shrink Points"
+        return tt
+    },
+    shouldNotify() {
+        for(i=1;i<3;i++){ 
+            for (c=1;c<3;c++){ 
+                if (canBuyBuyable("ma", i*10+c)) {
+                    return true
+                }
+            }
+        }
+    },
+    glowColor() {
+        for(i=1;i<3;i++){ 
+            for (c=1;c<3;c++){ 
+                if (canBuyBuyable("ma", i*10+c)) {
+                    return "blue"
+                }
+            }
+        }
     }
 })

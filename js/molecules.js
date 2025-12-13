@@ -919,4 +919,32 @@ addLayer("mo", {
         if (hasMilestone("cl", 3)) player.mo.boosterBase = new Decimal(11)
         if (hasUpgrade("pa", 33)) player.mo.boosterBase = player.mo.boosterBase.add(new Decimal(Math.E / 5))
     },
+    tooltip() {
+        let tt = notationChooser(player.mo.points) + " Molecule Bonds, " + notationChooser(player.mo.molecule) + " Molecules"
+        return tt
+    },
+    shouldNotify() {
+        for(i=1;i<5;i++){ 
+            for (c=1;c<3;c++){ 
+                if (canBuyBuyable("mo", i*10+c)) {
+                    return true
+                }
+            }
+        }
+        if (canBuyBuyable("mo", 51)) {
+            return true
+        }
+    },
+    glowColor() {
+        for(i=1;i<5;i++){ 
+            for (c=1;c<3;c++){ 
+                if (canBuyBuyable("mo", i*10+c)) {
+                    return "blue"
+                }
+            }
+        }
+        if (canBuyBuyable("mo", 51)) {
+            return "blue"
+        }
+    }
 })

@@ -565,4 +565,8 @@ addLayer("cm", {
             body() { return "Optional, but boosts progression. Clicks in 'Click Mastery' unlocks milestones which boost something based on clicks. Click (or hold, or hold the enter button) on the button, and it will give you clicks equivalent to your cpc (clicks per click). cpc can be increased by Click Level and later milestones. Some main-game upgrades can also boost cpc." },
         },
     },
+    tooltip() {
+        let tt = notationChooser(player.cm.clickmastery) + " Clicks"
+        return tt
+    },
 })

@@ -94,4 +94,9 @@ addLayer("cf", {
             unlocked() {return hasMilestone("cf", 7)}
         },
     },
+    tooltip() {
+        let tt = ""
+        if (hasMilestone("cf", 7)) tt = "Foundation Value: "+ notationChooser(player.en.foundationval)
+        return tt
+    },
 });

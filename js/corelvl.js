@@ -572,4 +572,8 @@ addLayer("cl", {
             body() { return "In the beginning, there is nothing here. Core Level 4 unlocks the upgrades. There are 2 types of upgrades, B- (boosts to the main game) and Q- (QoL improvements). It is mainly recommended to prioritise the B- upgrades, but some Q- upgrades may have hidden boosts that can affect the maingame." },
         },
     },
+    tooltip() {
+        let tt = "Your Core Level is " + notationChooser(player.cl.points) + " [" + notationChooser(Decimal.min(player.en.foundationval.add(1).log10().div(getNextAt("cl").log10()).mul(100), new Decimal(100))) +"% to next]. You have " + notationChooser(player.cl.energy) + " Core Energy"
+        return tt
+    },
 });

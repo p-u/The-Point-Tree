@@ -1727,5 +1727,40 @@ addLayer("en", {
                 player.cf.ngu = notationChooser(new Decimal(player.timePlayed / (11.75 - Math.log10(player.timePlayed) - Math.log10(player.timePlayed / 60000))).pow(new Decimal(player.timePlayed / (0.05 / Math.max(Math.log10(player.timePlayed / 4000)+1, 1))).pow(new Decimal(player.timePlayed / (50 / Math.max(Math.log10(player.timePlayed / 125000)+1, 0.8)))).pow(new Decimal(player.timePlayed / (50 / Math.max(2*(Math.log10(player.timePlayed / 10000)+1)-1, 1)))).pow(new Decimal(player.timePlayed / 5000)).pow(new Decimal(player.timePlayed / 1000)).pow(new Decimal(player.timePlayed / 1000)).pow(new Decimal(player.timePlayed / 5000)).pow(new Decimal(player.timePlayed / 50000)).pow(new Decimal(player.timePlayed / 1)).pow(new Decimal(player.timePlayed / 20)).pow(new Decimal(player.timePlayed / 4e6)).pow(new Decimal(player.timePlayed / 6e6)).pow(new Decimal(player.timePlayed / 1e7)).pow(new Decimal(player.timePlayed / 1.6e7)).pow(new Decimal(player.timePlayed / 2.5e7)).pow(new Decimal(player.timePlayed / 3.6e7))))
             }
     },
-    layerShown(){return true}
+    layerShown(){return true},
+    tooltip() {
+        let tt = notationChooser(player.en.points) + " Energy"
+        if (hasUpgrade("en", 25)) tt = tt + ", " + notationChooser(player.en.power) + " Power"
+        return tt
+    },
+    shouldNotify() {
+        for(i=1;i<5;i++){ 
+            for (c=1;c<3;c++){ 
+                if (canBuyBuyable("en", i*10+c)) {
+                    return true
+                }
+            }
+        }
+        if (canBuyBuyable("en", 51)) {
+            return true
+        }
+        if (canBuyBuyable("en", 61)) {
+            return true
+        }
+    },
+    glowColor() {
+        for(i=1;i<5;i++){ 
+            for (c=1;c<3;c++){ 
+                if (canBuyBuyable("en", i*10+c)) {
+                    return "blue"
+                }
+            }
+        }
+        if (canBuyBuyable("en", 51)) {
+            return "blue"
+        }
+        if (canBuyBuyable("en", 61)) {
+            return "blue"
+        }
+    }
 })
