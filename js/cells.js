@@ -559,13 +559,6 @@ addLayer("c", {
             }
         },
     },
-    shouldNotify() {
-        for(i=11;i<14;i++){ 
-            if (canBuyBuyable("c", i)) {
-                return true
-            }
-        }
-    },
     tooltip() {
         let tt = notationChooser(player.c.points) + " Cells (" + formatTime(player.c.nextReplicateSecs) + " to next replicate)"
         return tt
@@ -576,5 +569,6 @@ addLayer("c", {
                 return "blue"
             }
         }
+        return "red"
     }
 })

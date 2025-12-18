@@ -125,6 +125,14 @@ function shouldNotify(layer){
 			}
 		}
 	}
+	for (let id in tmp[layer].buyables) {
+		if (isPlainObject(layers[layer].buyables[id])) {
+			if (canBuyBuyable(layer, id) && tmp[layer].buyables[id].unlocked) {
+				return true
+			}
+		}
+	}
+	
 	if (player[layer].activeChallenge && canCompleteChallenge(layer, player[layer].activeChallenge)) {
 		return true
 	}

@@ -549,19 +549,13 @@ addLayer("rng", {
             player.rng.rngptmult = player.rng.rngptmult.mul(2)
         }
     },
-    shouldNotify() {
-        for(i=11;i<16;i++){ 
-            if (canBuyBuyable("rng", i)) {
-                return true
-            }
-        }
-    },
     glowColor() {
         for(i=11;i<16;i++){ 
             if (canBuyBuyable("rng", i)) {
                 return "blue"
             }
         }
+        return "red"
     },
     tooltip() {
         let tt = notationChooser(player.rng.rngpts) + " RNG Points. [" + player.rng.milestones.length + "/25 Milestones gotten]"
