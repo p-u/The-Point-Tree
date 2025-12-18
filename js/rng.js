@@ -555,7 +555,6 @@ addLayer("rng", {
                 return "blue"
             }
         }
-        return "red"
     },
     tooltip() {
         let tt = notationChooser(player.rng.rngpts) + " RNG Points. [" + player.rng.milestones.length + "/25 Milestones gotten]"

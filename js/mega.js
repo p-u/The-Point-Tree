@@ -1128,11 +1128,18 @@ addLayer("mega", {
         {key: "m", description: "M: Reset for MEGA points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     glowColor() {
+        let layer = 'mega'
+        for (id in tmp[layer].upgrades){
+            if (isPlainObject(layers[layer].upgrades[id])){
+                if (canAffordUpgrade(layer, id) && !hasUpgrade(layer, id) && tmp[layer].upgrades[id].unlocked){
+                    return "red"
+                }
+            }
+        }
         for(i=11;i<16;i++){ 
             if (canBuyBuyable("mega", i)) {
                 return "blue"
             }
         }
-        return "red"
     }
 })

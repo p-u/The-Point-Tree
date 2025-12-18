@@ -564,11 +564,18 @@ addLayer("c", {
         return tt
     },
     glowColor() {
+        let layer = 'c'
+        for (id in tmp[layer].upgrades){
+            if (isPlainObject(layers[layer].upgrades[id])){
+                if (canAffordUpgrade(layer, id) && !hasUpgrade(layer, id) && tmp[layer].upgrades[id].unlocked){
+                    return "red"
+                }
+            }
+        }
         for(i=11;i<14;i++){ 
             if (canBuyBuyable("c", i)) {
                 return "blue"
             }
         }
-        return "red"
     }
 })

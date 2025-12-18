@@ -1111,11 +1111,18 @@ addLayer("s", {
     ],
     branches: ["mega", "sac", "e"],
     glowColor() {
+        let layer = 's'
+        for (id in tmp[layer].upgrades){
+            if (isPlainObject(layers[layer].upgrades[id])){
+                if (canAffordUpgrade(layer, id) && !hasUpgrade(layer, id) && tmp[layer].upgrades[id].unlocked){
+                    return "red"
+                }
+            }
+        }
         for(i=11;i<18;i++){ 
             if (canBuyBuyable("s", i)) {
                 return "blue"
             }
         }
-        return "red"
     }
 })

@@ -3760,11 +3760,18 @@ addLayer("era", {
         return base
     },
     glowColor() {
+        let layer = 'era'
+        for (id in tmp[layer].upgrades){
+            if (isPlainObject(layers[layer].upgrades[id])){
+                if (canAffordUpgrade(layer, id) && !hasUpgrade(layer, id) && tmp[layer].upgrades[id].unlocked){
+                    return "red"
+                }
+            }
+        }
         for(i=11;i<20;i++){ 
             if (canBuyBuyable("era", i)) {
                 return "blue"
             }
         }
-        return "red"
     }
 })
