@@ -21,7 +21,7 @@ addLayer("rng", {
         return ("RNG Minigame")
     },
     automate() {
-        if (hasMilestone("rng", 8)) {
+        if (hasMilestone("rng", 9)) {
             if (layers.rng.buyables[11].canAfford()) {
                 layers.rng.buyables[11].buy();
             };
@@ -36,7 +36,7 @@ addLayer("rng", {
                 layers.rng.buyables[13].buy();
             };
         }
-        if (hasMilestone("rng", 18)) {
+        if (hasMilestone("rng", 20)) {
             if (layers.rng.buyables[14].canAfford()) {
                 layers.rng.buyables[14].buy();
             };
@@ -138,7 +138,7 @@ addLayer("rng", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
+                if (!(hasMilestone("rng", 7))) player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -185,7 +185,7 @@ addLayer("rng", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
+                if (!(hasMilestone("rng", 11))) player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -231,7 +231,7 @@ addLayer("rng", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
+                if (!(hasMilestone("rng", 14))) player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -271,7 +271,7 @@ addLayer("rng", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
+                if (!(hasMilestone("rng", 18))) player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -306,7 +306,7 @@ addLayer("rng", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
+                if (!(hasMilestone("rng", 25))) player[this.layer].rngpts = player[this.layer].rngpts.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -359,19 +359,19 @@ addLayer("rng", {
         },
         7: {
             requirementDescription: "The Seventh RNG Milestone (Requires Best RarityID: 51)",
-            effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!]",
+            effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!] Luck Buyable 1 costs nothing.",
             done() { return player.rng.maxidx >= 51 },
             unlocked() {return hasMilestone("rng",6)}
         },
         8: {
             requirementDescription: "The Eighth RNG Milestone (Requires Best RarityID: 177, what?)",
-            effectDescription: "Rarity scaling is decreased (from x2.9 per rarity to x2.8 per rarity). Autobuy Luck Buyable 1 and x0.75 roll cooldown.",
+            effectDescription: "Rarity scaling is decreased (from x2.9 per rarity to x2.8 per rarity). Also, x0.75 roll cooldown.",
             done() { return player.rng.maxidx >= 177 },
             unlocked() {return hasMilestone("rng",7)}
         },
         9: {
             requirementDescription: "The Ninth RNG Milestone (Requires Best RarityID: 225)",
-            effectDescription: "^1.1 Luck.",
+            effectDescription: "^1.1 Luck, and Autobuy Luck Buyable 1",
             done() { return player.rng.maxidx >= 225 },
             unlocked() {return hasMilestone("rng", 8)}
         },
@@ -383,7 +383,7 @@ addLayer("rng", {
         },
         11: {
             requirementDescription: "The 11th RNG Milestone (Requires Best RarityID: 475)",
-            effectDescription: "The cost formula of ALL LUCK BUYABLES are nerfed.",
+            effectDescription: "The cost formula of ALL LUCK BUYABLES are nerfed. Luck Buyable 2 costs nothing.",
             done() { return player.rng.maxidx >= 475 },
             unlocked() {return hasMilestone("rng", 10)}
         },
@@ -401,7 +401,7 @@ addLayer("rng", {
         },
         14: {
             requirementDescription: "The 14th RNG Milestone (Requires Best RarityID: 1484)",
-            effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!]. ps all buyables' effect is softcapped at 1,000 buys and hardcapped at 2,000 buys.",
+            effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!]. ps all buyables' effect is softcapped at 1,000 buys and hardcapped at 2,000 buys. Luck Buyable 3 costs nothing.",
             done() { return player.rng.maxidx >= 1484 },
             unlocked() {return hasMilestone("rng",13)}
         },
@@ -419,13 +419,13 @@ addLayer("rng", {
         },
         17: {
             requirementDescription: "The 17th RNG Milestone (Requires Best RarityID: 6974)",
-            effectDescription: "Rarity scaling is decreased dramatically (from x2.75 per rarity to x2.5 per rarity)",
+            effectDescription: "Rarity scaling is decreased dramatically. ",
             done() { return player.rng.maxidx >= 6974 },
             unlocked() {return hasMilestone("rng",16)}
         },
         18: {
             requirementDescription: "The 18th RNG Milestone (Requires Best RarityID: 10,610)",
-            effectDescription: "RNG Points is boosted by luck. Autobuy Luck Buyable 4.",
+            effectDescription: "RNG Points is boosted by luck. Luck Buyable 4 costs nothing.",
             done() { return player.rng.maxidx >= 10610 },
             unlocked() {return hasMilestone("rng",17)}
         },
@@ -437,7 +437,7 @@ addLayer("rng", {
         },
         20: {
             requirementDescription: "The 20th RNG Milestone (Requires Best RarityID: 22,961)",
-            effectDescription: "The 13th RNG Milestone but to an insane level. Roll cooldown is 0.01s.",
+            effectDescription: "The 13th RNG Milestone but to an insane level. Roll cooldown is 0.01s. Autobuy Luck Buyable 4.",
             done() { return player.rng.maxidx >= 22961 },
             unlocked() {return hasMilestone("rng",19)}
         },
@@ -467,7 +467,7 @@ addLayer("rng", {
         },
         25: {
             requirementDescription: "The FINAL RNG Milestone (Requires Best RarityID: 238,360)",
-            effectDescription: "Luck Buyable 5 scales slower and is stronger. (ENDGAMES: 411,333 [NORMAL], 411,422 [ABSOLUTE TRUE]",
+            effectDescription: "Luck Buyable 5 scales slower and is stronger. It also takes away no RNG Points. (ENDGAMES: 411,333 [NORMAL], 411,422 [ABSOLUTE TRUE]",
             done() { return (player.rng.maxidx >= 238360 && hasAchievement("a", 281)) },
             unlocked() {return (hasMilestone("rng",24) && hasAchievement("a", 281))}
         },

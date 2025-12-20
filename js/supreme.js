@@ -48,12 +48,12 @@ addLayer("s", {
 				layers.s.buyables[11].buy();
 			};
 		};
-        if (hasMilestone('sac', 48)) {
+        if (hasMilestone('sac', 50)) {
 			if (layers.s.buyables[12].canAfford()) {
 				layers.s.buyables[12].buy();
 			};
 		};
-        if (hasMilestone('sac', 51)) {
+        if (hasMilestone('sac', 55)) {
 			if (layers.s.buyables[13].canAfford()) {
 				layers.s.buyables[13].buy();
 			};
@@ -555,7 +555,7 @@ addLayer("s", {
         },
         101: {
             title: "More!",
-            description: "xe100M PF, Autobuy Supreme Buyable 4",
+            description: "xe100M PF, Autobuy Supreme Buyable 4, it also costs no SP",
             cost: new Decimal("5e1229"),
             unlocked() { return hasUpgrade("s", 94) && hasMilestone("sac", 53) },
         },
@@ -749,7 +749,7 @@ addLayer("s", {
         },
         buy() {
             let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            if (!(hasMilestone("sac", 45))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(x) {
@@ -793,7 +793,7 @@ addLayer("s", {
         },
         buy() {
             let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            if (!(hasMilestone("sac", 48))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(x) {
@@ -828,7 +828,7 @@ addLayer("s", {
         },
         buy() {
             let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            if (!(hasMilestone("sac", 52))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(x) {
@@ -870,7 +870,7 @@ addLayer("s", {
         },
         buy() {
             let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            if (!(hasUpgrade("s", 101))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(x) {
@@ -912,8 +912,6 @@ addLayer("s", {
             return player[this.layer].points.gte(this.cost())
         },
         buy() {
-            let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
     },
@@ -941,8 +939,6 @@ addLayer("s", {
             return player[this.layer].points.gte(this.cost())
         },
         buy() {
-            let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect() {
@@ -982,7 +978,7 @@ addLayer("s", {
         },
         buy() {
             let cost = new Decimal (1)
-            player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+            if (!(hasMilestone("era", 4))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(x) {

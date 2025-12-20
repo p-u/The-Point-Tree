@@ -131,7 +131,7 @@ addLayer("sac", {
                         let a = ""
                         if (player.sac.sacstr.gte(5)) {
                             a = a + `Your Point Fragments are getting powered by 
-                            <h2> ${minigameFormat(player.sac.se3)}</span></h2>.`
+                            <h2> ${notationChooser(player.sac.se3)}</span></h2>.`
                         }
                         return a
                     }
@@ -194,7 +194,7 @@ addLayer("sac", {
         },
         7: {
             requirementDescription: "Sacrifice 7",
-            effectDescription: "1 new row of basic upgrades. X10 Mega Passive Gen. x8e888 PF. Keep Mega Upgs Rows 1 and 2",
+            effectDescription: "1 new row of basic upgrades. X10 Mega Passive Gen. x8e888 PF. Keep Mega Upgs Rows 1 and 2, Mega Buyable 1 costs no MP.",
             unlocked() {return player["sac"].points.gte(6)},
             done() { return player["sac"].points.gte(7) }
         },
@@ -218,7 +218,7 @@ addLayer("sac", {
         },
         11: {
             requirementDescription: "Sacrifice 11",
-            effectDescription: "x5 Energy, ^1.005 PF, 2 new mega upgrades, x10 Mega Points. Keep Row 7 Basic Upgs.",
+            effectDescription: "x5 Energy, ^1.005 PF, 2 new mega upgrades, x10 Mega Points. Keep Row 7 Basic Upgs. Mega Buyable 2 costs no MP.",
             unlocked() {return player["sac"].points.gte(10)},
             done() { return player["sac"].points.gte(11) }
         },
@@ -428,7 +428,7 @@ addLayer("sac", {
         },
         46: {
             requirementDescription: "Sacrifice 86",
-            effectDescription: "Autobuy Supreme Buyable 1",
+            effectDescription: "Autobuy Supreme Buyable 1, it also costs no SP.",
             unlocked() {return player["sac"].points.gte(82)},
             done() { return player["sac"].points.gte(86) }
         },
@@ -440,7 +440,7 @@ addLayer("sac", {
         },
         48: {
             requirementDescription: "Sacrifice 96",
-            effectDescription: "Autobuy Supreme Buyable 2",
+            effectDescription: "Supreme Buyable 2 costs nothing",
             unlocked() {return player["sac"].points.gte(92)},
             done() { return player["sac"].points.gte(96) }
         },
@@ -452,19 +452,19 @@ addLayer("sac", {
         },
         50: {
             requirementDescription: "Sacrifice 106",
-            effectDescription: "xe106 SP",
+            effectDescription: "xe106 SP, Automate Supreme Buyable 2",
             unlocked() {return player["sac"].points.gte(102)},
             done() { return player["sac"].points.gte(106) }
         },
         51: {
             requirementDescription: "Sacrifice 109",
-            effectDescription: "Autobuy Supreme Buyable 3, extend Prestige Upgrades, ^1.0109 PF",
+            effectDescription: "Extend Prestige Upgrades, ^1.0109 PF",
             unlocked() {return player["sac"].points.gte(105)},
             done() { return player["sac"].points.gte(109) }
         },
         52: {
             requirementDescription: "Sacrifice 113",
-            effectDescription: "Keep DS4 upgs",
+            effectDescription: "Keep DS4 upgs, Supreme Buyable 3 costs nothing",
             unlocked() {return player["sac"].points.gte(111)},
             done() { return player["sac"].points.gte(113) }
         },
@@ -482,7 +482,7 @@ addLayer("sac", {
         },
         55: {
             requirementDescription: "Sacrifice 124",
-            effectDescription: "Keep Prestige Row 6 Upgrades on sac",
+            effectDescription: "Keep Prestige Row 6 Upgrades on sac, Autobuy Supreme Buyable 3",
             unlocked() {return player["sac"].points.gte(120)},
             done() { return player["sac"].points.gte(124) }
         },
@@ -690,7 +690,7 @@ addLayer("sac", {
         },
         89: {
             requirementDescription: "Sacrifice 5,000",
-            effectDescription: "Autobuy Era Buyable 1",
+            effectDescription: "Autobuy Era Buyable 1, it also costs no EC.",
             unlocked() {return player["sac"].points.gte(4700)},
             done() { return player["sac"].points.gte(5000) }
         },
@@ -702,7 +702,7 @@ addLayer("sac", {
         },
         91: {
             requirementDescription: "Sacrifice 9,000",
-            effectDescription: "xe90T PF",
+            effectDescription: "xe90T PF. Era Buyable 2 costs no EC.",
             unlocked() {return player["sac"].points.gte(8000)},
             done() { return player["sac"].points.gte(9000) }
         },
@@ -786,7 +786,7 @@ addLayer("sac", {
         },
         105: {
             requirementDescription: "Sacrifice 250,000",
-            effectDescription: "Autobuy Era Buyable 3.",
+            effectDescription: "Autobuy Era Buyable 3, it also costs nothing.",
             unlocked() {return player["sac"].points.gte(200000)},
             done() { return player["sac"].points.gte(250000) }
         },
@@ -816,7 +816,7 @@ addLayer("sac", {
         },
         110: {
             requirementDescription: "Sacrifice 689,000",
-            effectDescription: "Unlock a NEW LAYER!",
+            effectDescription: "Unlock a NEW LAYER! Era Buyable 4 costs nothing.",
             unlocked() {return player["sac"].points.gte(670000)},
             done() { return player["sac"].points.gte(689000) }
         },

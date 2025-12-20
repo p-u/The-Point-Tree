@@ -288,13 +288,13 @@ addLayer("era", {
         },
         4: {
             requirementDescription: "Era Four: The expansion of your worldview",
-            effectDescription: "Automate MB5, SB7, EB6-9. ^1.02 PF. Unlock Sacrifice RE:Challenges [v4.2], more EF, Cells upgrades [v4.1]. (Era^2) tetrated to 2x delayed Cell softcap start",
+            effectDescription: "Automate MB5, SB7, EB6-9. MB5, SB7, CB1-2 costs nothing. ^1.02 PF. Unlock Sacrifice RE:Challenges [v4.2], more EF, Cells upgrades [v4.1]. [(Era^2) tetrated to 2]x delayed Cell softcap start",
             done() { return player["era"].points.gte(4) },
             unlocked() { return hasMilestone("era", 3) },
         },
         101: {
             requirementDescription: "EF Milestone 1 - Req 1,750 total EF",
-            effectDescription: "Unlock 1 new Era Buyable. Automate Era Buyable 5. Also, unlock more EF upgrades.",
+            effectDescription: "Unlock 1 new Era Buyable. Automate Era Buyable 5, it also costs no EC. Also, unlock more EF upgrades.",
             done() { return player.era.eftotal.gte(1750) },
             unlocked() { return hasUpgrade("era", 501) },
         },
@@ -2717,7 +2717,7 @@ addLayer("era", {
         },
         512: {
             title: "Advanced ErUp 44",
-            description: "Era Buyable 8 and 9 does not spend any EF. Era Buyable 8 is stronger, and +^0.01 MP.",
+            description: "Era Buyables 6 to 9 does not spend any EC/EF. Era Buyable 8 is stronger, and +^0.01 MP.",
             cost: new Decimal("3.5e1340"),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
@@ -3113,7 +3113,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("sac", 89)))player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -3147,7 +3147,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("sac", 91)))player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
@@ -3188,7 +3188,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("sac", 105)))player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             extra(){
@@ -3236,7 +3236,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("sac", 110)))player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect() {
@@ -3278,7 +3278,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("era", 101))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect() {
@@ -3321,7 +3321,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("era", 512))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect() {
@@ -3354,7 +3354,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasUpgrade("era", 512))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
