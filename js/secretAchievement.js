@@ -185,7 +185,7 @@ addLayer("sa", {
     },
     achievements: {
         rows: 11,
-        cols: 6,
+        cols: 7,
         11: {
             name: "Aquarium-like",
             done() {
@@ -509,12 +509,31 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 36)) {
-                    return "Congrats! You have reached True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
+                    return "Congrats! You have reached True endgame at least once. This was the best endgame tier (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
                 else {
                     return "Reach True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
             },
+        },
+        37: {
+            name: "[Wait, how is this possible?] Absolute True Endgame [Changes Every Update]",
+            done() {
+                   if (player.points.gte("e636.7e21")) {
+                       return true
+                   }
+               },
+            tooltip() {
+                if (hasAchievement('sa', 36)) {
+                    return "Congrats! You have reached Absolute True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Fragments before nerf, and this achievement)"
+                }
+                else {
+                    return "Reach Absolute True Endgame. (Reward: x1.1 Era Fragments before nerf, and this achievement)"
+                }
+            },
+            unlocked() {
+                return hasAchievement("sa", 36)
+            }
         },
         41: {
             name: "Overload I",

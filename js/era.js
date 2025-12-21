@@ -3676,6 +3676,7 @@ addLayer("era", {
             if (hasUpgrade("era", 13)) player.era.baseef = player.era.baseef.times(1.25)
             if (hasUpgrade("era", 306)) player.era.baseef = player.era.baseef.times(1.25)
             if (hasUpgrade('era', 1064)) player.era.baseef = player.era.baseef.times(5)
+            if (hasAchievement("sa", 36)) player.era.baseef = player.era.baseef.times(1.1)
             if (hasUpgrade("era", 1061)) player.era.baseef = player.era.baseef.times(new Decimal(1.5).pow(player.era.points))
             if (hasMilestone("era", 104)) player.era.baseef = player.era.baseef.times(new Decimal(1.15).pow(player.era.milestones.length))
             
