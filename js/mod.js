@@ -1,3 +1,10 @@
+window.addEventListener("message", e => {
+  if (e.origin === "https://galaxy.click") {
+    console.log("Galaxy:", e.data);
+  }
+});
+
+
 let modInfo = {
 	name: "Stellar Evolution TMT",
 	id: "RD82:SE",
