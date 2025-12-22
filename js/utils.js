@@ -127,19 +127,17 @@ function buyUpg(layer, id) {
 	if (!(options.actionmode == "off")) {
 		makeParticles(myParticle, 33);
 	}
-	if (!isMobileDevice()) {
-		if (options.actionmode == "on") {
-			screenShake(60, 500);
-		}
-		if (options.actionmode == "ultra") {
-			screenShake(300, 600);
-		}
-		if (options.actionmode == "earthquake") {
-			screenShake(1200, 1200);
-		}
-		if (options.actionmode == "stop.") {
-			screenShake(6000, 3000);
-		}
+	if (options.actionmode == "on") {
+		screenShake(60, 500);
+	}
+	if (options.actionmode == "ultra") {
+		screenShake(300, 1500);
+	}
+	if (options.actionmode == "earthquake") {
+		screenShake(1200, 5000);
+	}
+	if (options.actionmode == "stop.") {
+		screenShake(6000, 30000);
 	}
 	player[layer].upgrades.push(id);
 	if (upg.onPurchase != undefined)
@@ -169,19 +167,17 @@ function buyBuyable(layer, id) {
 	if (!(options.actionmode == "off")) {
 		makeParticles(myParticle, 20);
 	}
-	if (!isMobileDevice()) {
-		if (options.actionmode == "on") {
-			screenShake(30, 100);
-		}
-		if (options.actionmode == "ultra") {
-			screenShake(150, 250);
-		}
-		if (options.actionmode == "earthquake") {
-			screenShake(600, 400);
-		}
-		if (options.actionmode == "stop.") {
-			screenShake(3000, 1000);
-		}
+	if (options.actionmode == "on") {
+		screenShake(30, 100);
+	}
+	if (options.actionmode == "ultra") {
+		screenShake(150, 300);
+	}
+	if (options.actionmode == "earthquake") {
+		screenShake(600, 1200);
+	}
+	if (options.actionmode == "stop.") {
+		screenShake(3000, 6000);
 	}
 	updateBuyableTemp(layer)
 }
@@ -346,16 +342,16 @@ function updateMilestones(layer) {
 			}
 			if (!isMobileDevice()) {
 				if (options.actionmode == "on") {
-					screenShake(25, 250);
+					screenShake(25, 750);
 				}
 				if (options.actionmode == "ultra") {
-					screenShake(125, 400);
+					screenShake(125, 1250);
 				}
 				if (options.actionmode == "earthquake") {
-					screenShake(500, 600);
+					screenShake(500, 2000);
 				}
 				if (options.actionmode == "stop.") {
-					screenShake(3000, 1500);
+					screenShake(3000, 8000);
 				}
 			}
 			if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 2, tmp[layer].color);
@@ -377,16 +373,16 @@ function updateAchievements(layer) {
 			}
 			if (!isMobileDevice()) {
 				if (options.actionmode == "on") {
-					screenShake(40, 400);
+					screenShake(40, 700);
 				}
 				if (options.actionmode == "ultra") {
-					screenShake(200, 600);
+					screenShake(200, 1200);
 				}
 				if (options.actionmode == "earthquake") {
-					screenShake(800, 1100);
+					screenShake(800, 3000);
 				}
 				if (options.actionmode == "stop.") {
-					screenShake(4000, 2750);
+					screenShake(4000, 12000);
 				}
 			}
 			if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()

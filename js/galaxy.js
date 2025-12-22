@@ -107,6 +107,7 @@ addLayer("g", {
             effect() {
                 exp = new Decimal(0.0225)
                 if (hasMilestone("st", 12) && player.s.points.gt("1e425")) exp = new Decimal(0.035)
+                if (hasUpgrade("st", 23)) exp = new Decimal(0.045)
                 return player.g.points.add(1).pow(exp)
             },
             effectDisplay() {
@@ -134,6 +135,12 @@ addLayer("g", {
             description: "xe1,000 Galaxies.",
             cost: new Decimal("e72250"),
             unlocked() { return (hasUpgrade("g",22)) }, 
+        },
+        24: {
+            title: "holy thats long...",
+            description: "Square the Notation effect on Research. Scientific2 notation gives +4.5 base mult. Also, +^0.02 Galaxies.",
+            cost: new Decimal("e154845"),
+            unlocked() { return (hasUpgrade("st",43)) }, 
         },
     },
     infoboxes: {
@@ -176,6 +183,7 @@ addLayer("g", {
             e = new Decimal(0.225)
             if (player.g.points.gte("e670")) e = new Decimal(0.25)
         }
+        if (player.n.points.gte("e14150") && hasUpgrade("n", 15)) e = new Decimal(0.33)
 	    if (hasMilestone("st", 16)) gain = gain.times(player.n.points.pow(e))
         if (hasUpgrade("g", 15)) gain = gain.times(upgradeEffect("g", 15))
         if (hasMilestone("st", 12)) {
@@ -196,8 +204,11 @@ addLayer("g", {
             if (player.points.gte(1e250)) gain = gain.times(3)
             if (player.points.gte(1e300)) gain = gain.times(3)
         }
+        if (hasUpgrade("st", 13)) gain = gain.times(upgradeEffect("st", 13))
 	    if (hasUpgrade("n", 11)) gain = gain.times(100)
 	    if (hasUpgrade("g", 23)) gain = gain.times("e1000")
+	    if (hasMilestone("st", 27)) gain = gain.times("e2700")
+        gain = gain.times(player.s.cmult)
         let b = 1.5
         if (player.points.gte("e27850")) b = b + 0.5
         if (hasMilestone("st", 19)) gain = gain.times(new Decimal(b).pow(player.st.points))
@@ -207,8 +218,10 @@ addLayer("g", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         let exp = new Decimal(1)
+        if (hasUpgrade("st", 43) && player.st.research.gte(1e68) && player.st.research.lte(4.2e75)) exp = new Decimal(0.8)
         if (hasMilestone("st", 18)) exp = exp.mul(1.01)
         if (player.n.points.gte(new Decimal(2).pow(1024))) exp = exp.add(0.01)
+        if (hasUpgrade("g", 24)) exp = exp.add(0.02)
         return exp
     },
     effect(){
@@ -245,6 +258,6 @@ addLayer("g", {
     },
     update(diff) {
         player.a.tSLRG = player.timePlayed - player.a.timegal
-        player.a.cgps = getResetGain("g").div(Math.max(player.a.tSLRG, 0))
+        player.a.cgps = getResetGain("g").div(Math.max(player.a.tSLRG, 0.01))
     }
 })

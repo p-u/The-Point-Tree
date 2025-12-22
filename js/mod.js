@@ -8,17 +8,17 @@ let modInfo = {
 	discordName: "Stellar Evo Discord",
 	discordLink: "https://discord.gg/RRK9Dwzf6P",
 	initialStartPoints: new Decimal(1000), // Used for hard resets and new players
-	offlineLimit: 0.5,// In hours
+	offlineLimit: 1,// In hours
 	// remember to change to 0 in dev
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.75",
-	name: "30/40 Progression Upgrades",
+	num: "0.85",
+	name: "New Feature, Clicks, 34/40 Progression Upgrades",
 }
 
-let changelog = `<h1>Changelog:</h1><br>`
+let changelog = `<h1>Changelog:</h1><br>v0.75: 30 Progression Upgrades<br> v0.85: Research, Clicks, 34 Progression Upgrades`
 
 let winText = `Congratulations! You have reached the end and beaten this game! You can join my discord server for future sneak peeks and pings for updates, if you enjoyed. You can also leave a review in the discord, or report bugs! That's all for now. ~RD82`
 
@@ -124,11 +124,19 @@ function getPointGen() {
 		if (player.points.gte(1e273)) gain = gain.mul(9)
 		if (player.points.gte(1e303)) gain = gain.mul(9)
 	}
+    gain = gain.times(player.s.cmult)
 	if (hasUpgrade("g", 22)) gain = gain.times("1e1000")
+	if (hasMilestone("st", 27)) gain = gain.times("e2700")
 	if (hasMilestone("st", 10)) gain = gain.times(1000)
+	if (player.st.research.gte(new Decimal(10).pow(248.448)) && hasUpgrade("st", 54)) gain = gain.mul("e15000")
     if (hasUpgrade("s", 32) && player.points.gte(15e18)) gain = gain.times(2)
-
+	if (hasUpgrade("st", 31)) gain = gain.times(upgradeEffect("st", 31))
+	if (getBuyableAmount("st", 12).gte(5)) {
+		if (hasUpgrade("st", 34)) gain = gain.mul(getBuyableAmount("st", 12).sub(4))
+		gain = gain.pow(player.st.research.max(10).slog().sub(1.5).div(100).max(0).add(1))
+	}
 	if (hasUpgrade("n", 11)) gain = gain.pow(1.01)
+	if (getBuyableAmount("st", 11).gte(188)) gain = gain.pow(1.01)
 	if (player.points.gte("e74250")) gain = gain.pow(1.01)
 	return gain
 }
@@ -141,7 +149,7 @@ function addedPlayerData() { return {
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.st.points.gte(25)
+	return hasAchievement("a", 53)
 }
 
 

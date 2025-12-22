@@ -58,7 +58,7 @@ addLayer("n", {
         },
         12: {
             title: "Star Tier xXx Sparks [25/40]",
-            description: "x5^ST Sparks. At e2222 Sparks, increase the base by 2. Add a further 1.5 to the base at e2500 Sparks.",
+            description: "x5^ST Sparks. At e2222 Sparks, increase the base by 2. Add a further 1.5 to the base at e2500 Sparks. Unlock the Presses Mechanic in the Star layer, where you can hold to gain boosts on ALL stats (past, present and future)",
             cost: new Decimal(200e9),
         },
         13: {
@@ -73,6 +73,27 @@ addLayer("n", {
             cost: new Decimal("2.782e2782"),
             unlocked() {return (hasMilestone("st", 23) && hasUpgrade("n", 13))}
         },
+        15: {
+            title: "oh youre still here?",
+            description: "ok you finally got this upgrade, this actually took less time to get than the previous upgrade (1d19h vs 2d12h). Bad thing is, you will have to live with screenshake. Unlock the Screenshake option in 'Research Special Mults'. Hints for the secret Screenshake: Earthquake - need Ultra action mode, Scientific2 Notation and ????? ON. stop.: ()Theme, ()Notation and ????? OFF with Earthquake Action mode.<br> At 10^14,150 Nebulae, Nebulae boosts Galaxies more, and x14.15 Research.",
+            cost: new Decimal("e14116"),
+            unlocked() {return (hasMilestone("st", 26) && hasUpgrade("n", 14))},
+            style() {return {
+                'width': '175px',
+            }},
+        },
+        21: {
+            title: "you like this game. well...",
+            description: "increase the 'Factory' buyable base by 2 for every Nebula Upgrade. Increase that by 0.1 for every 100 OOMs of Nebulae, until e30,250 Nebulae.",
+            cost: new Decimal("e29433"),
+            unlocked() {return (hasMilestone("st", 26) && hasUpgrade("n", 15))},
+            style() {return {
+                'width': '175px',
+            }},
+            effectDisplay() {
+                return "+" + new Decimal(2).add(player.n.points.max("e29436").log10().sub(29436).min(814).div(1000)) + " to the base"
+            }
+        },
     },
     infoboxes: {
         main: {
@@ -83,6 +104,10 @@ addLayer("n", {
     gainMult() { // Energy
         let gain = new Decimal(1)
 	    if (hasMilestone("st", 17)) gain = gain.times(17)
+        gain = gain.times(player.s.cmult)
+	    if (hasUpgrade("st", 35)) gain = gain.times("e2500")
+	    if (hasUpgrade("st", 43)) gain = gain.times("e800")
+        gain = gain.times(buyableEffect("s", 14))
         if (hasUpgrade("s", 43)) gain = gain.times(upgradeEffect("s", 43))
         if (hasMilestone("st", 19)) gain = gain.times(new Decimal(1.2).pow(player.st.points))
         return gain

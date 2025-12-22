@@ -30,6 +30,8 @@ function changeNotation() {
 	} else if (options.notation === 'blind'){ 
 		options.notation = 'standard'
 	} else if (options.notation === 'standard'){ 
+		options.notation = 'birds array'
+	} else if (options.notation === 'birds array'){ 
 		options.notation = 'scientific'
 	} else if (options.notation === 'scientific'){
 		options.notation = 'scientific2'

@@ -5,6 +5,10 @@ addLayer("s", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
+        clicks: new Decimal(0),
+        cmult: new Decimal(1),
+        cpc: new Decimal(1),
+        nebbyauto: false,
     }},
     exponent() {
         let exp = 0.55
@@ -48,15 +52,29 @@ addLayer("s", {
                 "blank",
                 ["infobox", "main"],
             ],
-            unlocked() {return (hasMilestone("st", 4))}
+            unlocked() {return (hasMilestone("st", 4) && (!hasMilestone("st", 25)))}
+        },
+        "Main tab (click to have nett Stars display)": {
+            content: [
+                "main-display",
+                "blank",
+                ["display-text", function() {
+                    return "nett Stars (before Star Tier 25+'s Reality Breaking): "+ notationChooser(player.s.points.pow(player.st.points.div(20).add(1.25).pow(player.st.points.max(24).sub(24)))) +"."
+                }], 
+                "blank",
+                "milestones",
+                "blank",
+                "upgrades",
+                "blank",
+                "blank",
+                ["infobox", "main"],
+            ],
+            unlocked() {return (hasMilestone("st", 25))}
         },
         "Increasers": {
             content: [
                 "main-display",
                 "blank",
-                ["display-text", function() {
-                    return "Stars per sec: "+ notationChooser(getResetGain("s").div(5)) +"."
-                }], 
                 "blank",
                 "buyables",
                 "blank",
@@ -64,6 +82,50 @@ addLayer("s", {
             ],
             unlocked() {return (hasMilestone("st", 4))}
         },
+        "Clicks": {
+            content: [
+                ["display-text", function() {
+                    return "<h2> You have "+ notationChooser(player.s.clicks) +" Presses. </h2>"
+                }], 
+                "blank",
+                ["display-text", function() {
+                    return "<h3> These Presses give boosts to all stats. x"+ notationChooser(player.s.cmult) +" Pre-Research Stats, and x"+ notationChooser(player.s.cmult.pow(0.5)) +" Research+ Stats </h3>. Presses can only be gotten via holding the button, not clicking it."
+                }], 
+                "blank",
+                ["display-text", function() {
+                    return "You gain x2 Presses at Progression Upgrades 30, 34, 37 and 39, x1.5 Presses at 150K Clicks, x2 at 2M, 200M, 2B and 10B and x3 at 30M. The mechanic is also not required for progression but will help."
+                }], 
+                "blank",
+                "blank",
+                ["clickable", 11],
+            ],
+            unlocked() {return (hasUpgrade("n", 12))}
+        },
+    },
+    clickCalc() {
+        let cpc = new Decimal(1)
+        if (player.s.clicks.gte(1.5e5)) cpc = cpc.mul(1.5)
+        if (player.s.clicks.gte(2e6)) cpc = cpc.mul(2)
+        if (player.s.clicks.gte(3e7)) cpc = cpc.mul(3)
+        if (player.s.clicks.gte(2e8)) cpc = cpc.mul(2)
+        if (player.s.clicks.gte(2e9)) cpc = cpc.mul(2)
+        if (player.s.clicks.gte(1e10)) cpc = cpc.mul(2)
+        if (hasAchievement("a", 53)) cpc = cpc.mul(2)
+        if (hasMilestone("st", 25)) cpc = cpc.mul(2)
+        player.s.cpc = cpc
+    },
+    multCalc() {
+        if (player.s.clicks.lt(5)) {
+            player.s.cmult = new Decimal(1)
+            return
+        }
+        let x = player.s.clicks.log10().sub(2)
+        let ccalc = new Decimal(1).add(x.pow(2).mul(0.01)).add(x.pow(3).mul(0.0008)).add(0.01)
+        if (ccalc.lt(1)) {
+            player.s.cmult = new Decimal(1)
+        } else {
+            player.s.cmult = ccalc
+        }
     },
     automate() {
 		if (hasMilestone('st', 8)) {
@@ -71,16 +133,35 @@ addLayer("s", {
 				layers.s.buyables[11].buy();
 			};
         }
-        if (hasMilestone('st', 10)) {
+        if (hasMilestone('st', 12)) {
             if (layers.s.buyables[12].canAfford()) {
 				layers.s.buyables[12].buy();
 			};
         }
-        if (hasMilestone('st', 16)) {
+        if (hasMilestone('st', 18)) {
             if (layers.s.buyables[13].canAfford()) {
 				layers.s.buyables[13].buy();
 			};
         }
+        if (player.s.nebbyauto) {
+            if (layers.s.buyables[14].canAfford()) {
+				layers.s.buyables[14].buy();
+			};
+        }
+    },
+    clickables: {
+        11: {
+            title(){
+                title = "Hold to gain presses!"
+                return title
+            },
+            style() {return {
+                'width': '250px',
+                'height': '115px',
+            }},
+            canClick() {return true},
+            onHold() {return player[this.layer].clicks =  player[this.layer].clicks.add(player[this.layer].cpc)}
+        },
     },
     passiveGeneration() {
         if (hasMilestone("st", 5)) return 1
@@ -244,6 +325,7 @@ addLayer("s", {
             cost: new Decimal("e476547"),
             effect() {
                 nebulae2 = 0.02
+                if (hasUpgrade("st", 45) && player.st.research.gte(7.3e93)) nebulae2 = 0.03
                 softcapDescriptionSp43 = ""
                 sdsc = ""
                 let eff = player.n.points.add(1).pow(nebulae2)
@@ -256,6 +338,12 @@ addLayer("s", {
                 return "Formula: (Nebulae+1)^"  + softcapDescriptionSp43 + sdsc
             },
             unlocked() { return (hasMilestone("st",19) && hasUpgrade("s",42)) }, 
+        },
+        44: {
+            title: "r-2.708d",
+            description: "x27.08 Research and xe2708 Stars. At 2.09e2,090,209 Stars, Nebula Increasers boost Nebulae by 1.209x per buy.",
+            cost: new Decimal("e1826500"),
+            unlocked() { return (hasMilestone("st",26) && hasUpgrade("s",43)) }, 
         },
     },
     buyables: {
@@ -293,13 +381,13 @@ addLayer("s", {
             },
             effect() {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
-                let bas = new Decimal(2)
+                bas = new Decimal(2)
                 if (hasUpgrade("g", 12)) bas = new Decimal(2.2)
                 if (hasUpgrade("g", 21)) bas = new Decimal(2.25)
                 return bas.pow(x)
             },
             tooltip() {
-                return "Cost Formula: 100T x 5^Amt"
+                return "Cost Formula: 100T x 5^Amt (x" + bas + " Stars/buy)"
             },
             style() {return {
                 'width': '250px',
@@ -340,11 +428,11 @@ addLayer("s", {
             },
             effect() {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
-                let bas = new Decimal(1.7)
+                bas = new Decimal(1.7)
                 return bas.pow(x)
             },
             tooltip() {
-                return "Cost Formula: 20Qa x 7^Amt"
+                return "Cost Formula: 20Qa x 7^Amt (x" + bas + " Stars/buy)"
             },
             style() {return {
                 'width': '250px',
@@ -384,17 +472,18 @@ addLayer("s", {
             },
             extra(){
                 let extra = new Decimal(0)
+                if (getBuyableAmount("st", 11).gte(78)) extra = extra = extra.add(getBuyableAmount("st", 11).mul(5))
                 return extra
             },
             effect() {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
-                let bas = new Decimal(1.4)
+                bas = new Decimal(1.4)
                 return bas.pow(x)
             },
             tooltip() {
                 let cinc = new Decimal(1e5)
                 if (hasUpgrade("s", 41)) cinc = new Decimal(2.5e4)
-                return "Cost Formula: e155 x "+cinc+"^Amt"
+                return "Cost Formula: e155 x "+cinc+"^Amt (x" + bas + " Stars/buy)"
             },
             style() {return {
                 'width': '250px',
@@ -430,15 +519,17 @@ addLayer("s", {
             },
             extra(){
                 let extra = new Decimal(0)
+                if (getBuyableAmount("st", 11).gte(78)) extra = extra = extra.add(getBuyableAmount("st", 11).mul(5))
                 return extra
             },
             effect() {
                 let x = getBuyableAmount(this.layer, this.id).add(this.extra())
-                let bas = new Decimal(1.4)
+                bas = new Decimal(1.000025)
+                if (hasUpgrade("s", 44) && player.s.points.gte("2.09e2090209")) bas = new Decimal(1.209)
                 return bas.pow(x)
             },
             tooltip() {
-                return "Cost Formula: e25K x e120^Amt"
+                return "Cost Formula: e25K x e120^Amt (x" + bas + " Stars/buy)"
             },
             style() {return {
                 'width': '250px',
@@ -487,7 +578,10 @@ addLayer("s", {
         if (hasUpgrade("s", 31)) gain = gain.times(5)
         if (hasUpgrade("s", 32)) gain = gain.times(2)
 	    if (hasMilestone("st", 8)) gain = gain.times(8)
+        gain = gain.times(player.s.cmult)
 	    if (hasMilestone("st", 10)) gain = gain.times(10)
+	    if (hasUpgrade("st", 21)) gain = gain.times("1e2000")
+	    if (hasUpgrade("s", 44)) gain = gain.times("e2708")
 	    if (hasMilestone("st", 13)) gain = gain.times(13333)
         if (hasUpgrade("s", 33)) gain = gain.times(5)
         if (hasUpgrade("s", 23)) gain = gain.times(upgradeEffect("s", 23))
@@ -518,8 +612,13 @@ addLayer("s", {
         let exp = new Decimal(1)
         if (hasUpgrade("n", 13) && player.n.points.gte(5e97)) exp = exp.add(0.01)
         if (player.n.points.gte(new Decimal(2).pow(1024))) exp = exp.add(0.01)
+        if (hasUpgrade("st", 54)) {
+            if (options.theme === 'sky') exp = exp.add(0.005)
+        }
         if (hasMilestone("st", 21)) exp = exp.mul(1.01)
-        if (hasMilestone("st", 25)) exp = exp.mul(new Decimal(0.98).pow(player.st.points.sub(24)))
+        let st25n = 0.98
+        if (hasUpgrade("st", 44)) st25n = 0.984
+        if (hasMilestone("st", 25)) exp = exp.mul(new Decimal(st25n).pow(player.st.points.sub(24)))
         return exp
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -529,6 +628,21 @@ addLayer("s", {
     layerShown(){return true},
     update(diff) {
         player.a.timeSinceLastReset = player.timePlayed - player.a.timestars
-        player.a.csps = getResetGain("s").div(Math.max(player.a.timeSinceLastReset, 0))
+        player.a.csps = getResetGain("s").div(Math.max(player.a.timeSinceLastReset, 0.01))
+    },
+    glowColor() {
+        let layer = 's'
+        for (id in tmp[layer].upgrades){
+            if (isPlainObject(layers[layer].upgrades[id])){
+                if (canAffordUpgrade(layer, id) && !hasUpgrade(layer, id) && tmp[layer].upgrades[id].unlocked){
+                    return "red"
+                }
+            }
+        }
+        for(i=11;i<15;i++){ 
+            if (canBuyBuyable(layer, i)) {
+                return "blue"
+            }
+        }
     }
 })

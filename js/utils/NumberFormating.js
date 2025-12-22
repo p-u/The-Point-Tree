@@ -7,7 +7,7 @@ function exponentialFormat(num, precision, mantissa = true) {
         e = e.add(1)
     }
     if (options.notation === 'mixed scientific' || options.notation === 'default') {
-        e = (e.gte(1e9) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+        e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     } else {
         e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
     }
@@ -154,6 +154,11 @@ function formatBAN(decimal, precision) {
         return `{10, ${format(exponent, precision)}}`;
     }
 
+    // 2b. Stacked Two-indexes.
+    if (decimal.layer < 10) {
+        return `{10, ${formatBAN(decimal.log10(), precision)}}`;
+    }
+
     // 3. Tetration -> {10, height, 2}
     let slog = decimal.slog();
 
@@ -181,7 +186,7 @@ function notationChooser(decimal, precision=3) {
         return format(decimal, precision)
     } else if (options.notation === 'scientific2'){
         return format(decimal, precision)
-    } else if (options.notation === 'birds'){
+    } else if (options.notation === 'birds array'){
         return formatBAN(decimal, precision=4)
     } else if (options.notation === 'blind'){
         return ""
@@ -201,7 +206,7 @@ function notationChooserMinigame(decimal) {
         return format(decimal, precision=10)
     } else if (options.notation === 'blind'){
         return ""
-    } else if (options.notation === 'birds'){
+    } else if (options.notation === 'birds array'){
         return formatBAN(decimal, precision=10)
     } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
         return format(decimal, precision=10)
@@ -244,8 +249,8 @@ function format(decimal, precision = 3, small) {
         if (slog.gte(1e6)) return "F" + format(slog.floor())
         else return Decimal.pow(10, slog.sub(slog.floor())).toStringWithDecimalPlaces(3) + "F" + commaFormat(slog.floor(), 0)
     }
-    else if (decimal.gte("1e1000000")) return exponentialFormat(decimal, 0, false)
-    else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
+    else if (decimal.gte("1e1e9")) return exponentialFormat(decimal, 0, false)
+    else if (decimal.gte("1e10000")) return exponentialFormat(decimal, precision-1)
     else if (decimal.gte(1e9)) return exponentialFormat(decimal, precision)
     else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
     else if (decimal.gte(1)) {
