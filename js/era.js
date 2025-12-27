@@ -2717,7 +2717,7 @@ addLayer("era", {
         },
         512: {
             title: "Advanced ErUp 44",
-            description: "Era Buyables 6 to 9 does not spend any EC/EF. Era Buyable 8 is stronger, and +^0.01 MP.",
+            description: "Era Buyables 8 and 9 does not spend any EC/EF. Era Buyable 8 is stronger, and +^0.01 MP.",
             cost: new Decimal("3.5e1340"),
             currencyDisplayName: "Era Crystals",
             currencyInternalName: "ec",
@@ -3321,7 +3321,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                if (!(hasUpgrade("era", 512))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("sac", 128))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect() {
@@ -3354,7 +3354,7 @@ addLayer("era", {
             },
             buy() {
                 let cost = new Decimal(1)
-                if (!(hasUpgrade("era", 512))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
+                if (!(hasMilestone("sac", 128))) player.era.ec = player.era.ec.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {

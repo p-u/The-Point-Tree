@@ -922,6 +922,22 @@ addLayer("sac", {
             unlocked() {return player["sac"].points.gte(6e6)},
             done() { return player["sac"].points.gte(6.5e6) }
         },
+        128: {
+            requirementDescription: "Sacrifice 3.41!!",
+            effectDescription() {
+                let desc = "x3.41 Mega Points"
+                if (player["sac"].points.gte(5e6)) {
+                    desc = desc + " (RD82: It means 3.41 double factorial -> 6,959,880 Sacrifice). This milestone also make Era Buyable 6 and 7 cost nothing"
+                } else if (player["sac"].points.gte(1000)) {
+                    desc = desc + " (I swear this milestone is not achieveable...) - yes it is ~RD82"
+                } else if (player["sac"].points.gte(3.41)) {
+                    desc = desc + " (WHAT? Is this milestone bugged??) - no, it's not ~RD82"
+                }
+                return desc
+            },
+            unlocked() {return player["sac"].points.gte(3)},
+            done() { return player["sac"].points.gte(6.95988e6) }
+        },
     },
     sacms58eff() {
         var sm58e=player.sac.best;
