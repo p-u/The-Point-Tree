@@ -927,7 +927,7 @@ addLayer("sac", {
             effectDescription() {
                 let desc = "x3.41 Mega Points"
                 if (player["sac"].points.gte(5e6)) {
-                    desc = desc + " (RD82: It means 3.41 double factorial -> 6,959,880 Sacrifice). This milestone also make Era Buyable 6 and 7 cost nothing"
+                    desc = desc + " (RD82: It means 3.41 double factorial -> 6,959,880 Sacrifice). This milestone only makes Era Buyable 6 and 7 cost nothing, screw the multiplier"
                 } else if (player["sac"].points.gte(1000)) {
                     desc = desc + " (I swear this milestone is not achieveable...) - yes it is ~RD82"
                 } else if (player["sac"].points.gte(3.41)) {
