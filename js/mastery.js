@@ -155,21 +155,21 @@ addLayer("m", {
         },
         41: {
             title: "MMP 6",
-            description: "Pentuple Mastery Point Gain",
+            description: "Pentuple Mastery Point Gain. You might want to get the 'Break Infinity' Water Upgrade first...",
             cost: new Decimal(700000),
-            unlocked() { return (hasUpgrade("w", 54) && hasChallenge("m", 11)) },
+            unlocked() { return (hasChallenge("m", 11)) },
         },
         51: {
             title: "MM (Many Mult) 1",
             description: "xe100K MP",
             cost: new Decimal(3000000),
-            unlocked() { return (hasUpgrade("w", 54) && hasChallenge("m", 11)) },
+            unlocked() { return (hasChallenge("m", 11)) },
         },
         61: {
             title: "UB 6",
             description: "SU64 is boosted.",
             cost: new Decimal(2750000),
-            unlocked() { return (hasUpgrade("w", 54) && hasChallenge("m", 11)) },
+            unlocked() { return (hasChallenge("m", 11)) },
         },
         42: {
             title: "MMP 7",
@@ -669,7 +669,7 @@ addLayer("m", {
             completionLimit: 2,
             rewardDescription() {
                 let rd = "First Completion: Unlock new Mastery Upgrades, a BIG exponent to PF gain."
-                if (challengeCompletions("m", 11) == 1) rd = rd + " Second Completion: Unlock more Mastery Upgrades [AFTER GETTING WU54], ^1.0333 PF, x1e9 Mastery Points."
+                if (challengeCompletions("m", 11) >= 1) rd = rd + " Second Completion: Unlock more Mastery Upgrades, ^1.0333 PF, x1e9 Mastery Points."
                 return rd
             },
             onEnter() {
