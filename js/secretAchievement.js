@@ -317,9 +317,6 @@ addLayer("sa", {
                     return "=XReb (Reward: x1.25 RP)"
                 }
             },
-            unlocked() {
-                return hasMilestone("sac", 1)
-            }
         },
         23: {
             name: "e78,000 PF but... (find the catch)",
@@ -361,6 +358,9 @@ addLayer("sa", {
                     return "soCmething3. (Reward: x1.1 Energy)"
                 }
             },
+            unlocked() {
+                return hasMilestone("sac", 1)
+            }
         },
         25: {
             name: ".--- ..- ... - / ... - .- .-.. .-.. / ... ..- .--. .-. . -- .",
