@@ -1,11 +1,8 @@
 // =========================================================
 // Pre-compute upgrade costs and effects for UpgNum 1..1000
 //   effect(N)  = N + 1   (multiply Power gen by this)
-//   cost(N)    = N * (2 * 3 * ... * N)   = N * N!
-//              = N * product of effects of upgrades 1..(N-1)
-//              because after buying upgrades 1..(N-1),
-//              Power/sec = 2*3*...*N = N!
-//              and the upgrade takes N seconds, so cost = N * N!
+//   cost(N)    = N * N!
+//              = N (timewall duration) * product of effects of upgrades 1..(N-1)
 // =========================================================
 const UPG_COUNT = 1000;
 
@@ -23,24 +20,33 @@ const upgCosts = new Array(UPG_COUNT + 1);
     }
 }
 
-// Build the upgrades object for TMT
-// ID formula: (N // 5) * 10 + (N % 5)
+// Returns the TMT upgrade ID for UpgNum n
+function upgId(n) {
+    return (Math.floor((n - 1) / 5) * 10 + ((n - 1) % 5 + 1)) + 10;
+}
+
 function buildUpgrades() {
     let upgs = {};
     for (let n = 1; n <= UPG_COUNT; n++) {
-        let id = (Math.floor((n - 1) / 5) * 10 + ((n - 1) % 5 + 1))+10;
-        let effect = n + 1; // multiplier this upgrade provides
+        let id = upgId(n);
         let cost = upgCosts[n];
+        // The last upgrade of the previous row unlocks this row
+        let row = Math.floor((n - 1) / 5);
+        let prevRowLastId = row > 0 ? upgId(row * 5) : null;
         upgs[id] = {
             title: "Upgrade " + n,
             description: function() {
                 return "Multiplies Power by " + (n + 1) + "x.";
             },
             cost: cost,
-            currencyInternalName: "points",  // use global player.points (Power), not player.p.points
+            currencyInternalName: "points",
             currencyDisplayName: "Power",
             effect() { return n + 1; },
-            effectDisplay() { return "×" + (n + 1); },
+            effectDisplay() { return "\u00d7" + (n + 1); },
+            unlocked() {
+                if (row === 0) return true;
+                return hasUpgrade("p", prevRowLastId);
+            },
         };
     }
     return upgs;
@@ -63,8 +69,11 @@ addLayer("p", {
 
     tabFormat: [
         ["display-text", function() {
-            return "You have <h2 style='color:#FFAA00;display:inline;'>" + format(player.points) + "</h2> Power"
-                 + "<br>Power/sec: " + format(tmp.pointGen);
+            return "You have <h2 style='color:#FFAA00;display:inline;'>" + notationChooser
+            
+            
+            (player.points) + "</h2> Power"
+                 + "<br>Power/sec: " + notationChooser(tmp.pointGen);
         }],
         "blank",
         "upgrades",
