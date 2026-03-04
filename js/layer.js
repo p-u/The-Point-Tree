@@ -4,7 +4,7 @@
 //   cost(N)    = N * N!
 //              = N (timewall duration) * product of effects of upgrades 1..(N-1)
 // =========================================================
-const UPG_COUNT = 1000;
+const UPG_COUNT = 1736;
 
 // Build a flat array of precomputed Decimal costs indexed by UpgNum (1-based)
 // costs[N] = cost of upgradeN  (costs[0] unused)
@@ -14,7 +14,7 @@ const upgCosts = new Array(UPG_COUNT + 1);
     for (let n = 1; n <= UPG_COUNT; n++) {
         // cost = n * (current power gen before buying this upg)
         // currentPowerGen before buying upg n = runningFact
-        upgCosts[n] = new Decimal(n).mul(runningFact);
+        upgCosts[n] = (new Decimal(1.01).pow(n - 1)).mul(runningFact);
         // after buying upg n, power gen gets multiplied by (n+1)
         runningFact = runningFact.mul(n + 1);
     }
@@ -36,7 +36,7 @@ function buildUpgrades() {
         upgs[id] = {
             title: "Upgrade " + n,
             description: function() {
-                return "Multiplies Power by " + (n + 1) + "x.";
+                return "Multiplies Power by " + (n + 1) + "x.<br>Timewall: " + formatTime(new Decimal(1.01).pow(n-1));
             },
             cost: cost,
             currencyInternalName: "points",

@@ -1,6 +1,6 @@
 let modInfo = {
-	name: "1 Layer, 1,000 Upgrades",
-	id: "1L1KUpgRD",
+	name: "1 Layer, 1,736 Upgrades",
+	id: "1L1736UpgRD",
 	author: "randim82",
 	pointsName: "Power",
 	modFiles: ["tree.js", "layer.js"],
@@ -14,7 +14,7 @@ let modInfo = {
 // Set your version in num and name
 let VERSION = {
 	num: "1",
-	name: "1KUpg",
+	name: "1736Upg",
 }
 
 let changelog = `<h1>Changelog:</h1><br> N/A`
