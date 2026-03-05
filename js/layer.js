@@ -75,7 +75,6 @@ addLayer("p", {
     symbol: "⚡",
     color: "#FFAA00",
     row: 0,
-    autoUpgrade: true,
 
     startData() {
         return {
