@@ -35,7 +35,7 @@ function canGenPoints(){
 
 // Calculate points/sec!
 // Base gain is 1 Power/sec, multiplied by each purchased upgrade's effect.
-// Upgrade N (UpgNum 1..1000) multiplies Power by (N+1).
+// upgEffects[n] = prevBoost^exp where exp starts at 1.1 and *1.02 each upgrade.
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
@@ -44,9 +44,9 @@ function getPointGen() {
 
 	if (player.p && player.p.unlocked) {
 		for (let n = 1; n <= UPG_COUNT; n++) {
-			let id = (Math.floor((n - 1) / 5) * 10 + ((n - 1) % 5 + 1)) + 10;
+			let id = upgId(n);
 			if (hasUpgrade("p", id)) {
-				gain = gain.mul(n + 1);
+				gain = gain.mul(upgEffects[n]);
 			}
 		}
 	}

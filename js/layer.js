@@ -1,22 +1,40 @@
 // =========================================================
-// Pre-compute upgrade costs and effects for UpgNum 1..1000
-//   effect(N)  = N + 1   (multiply Power gen by this)
-//   cost(N)    = N * N!
-//              = N (timewall duration) * product of effects of upgrades 1..(N-1)
+// Pre-compute upgrade costs and effects for UpgNum 1..2000
+//   effect(N)  = prevBoost ^ 1.1, with boost[1] = 2
+//   cost(N)    = N * (power gen before buying upg N)
+//              = N (timewall seconds) * product of effects 1..(N-1)
 // =========================================================
-const UPG_COUNT = 1000;
+const UPG_COUNT = 2000;
+
+// Pre-compute each upgrade's boost multiplier: upgEffects[n] = Decimal
+// upgEffects[1] = 2
+// upgEffects[n] = upgEffects[n-1] * (1.5 + 0.05*n + 0.0025*n^2)
+const upgEffects = new Array(UPG_COUNT + 1);
+{
+    upgEffects[1] = new Decimal(2);
+    for (let n = 2; n <= UPG_COUNT; n++) {
+        let factor = 1.5 + 0.05 * n + 0.0025 * n * n;
+        upgEffects[n] = upgEffects[n - 1].mul(factor);
+    }
+}
+
+const timewallDuration = new Array(UPG_COUNT + 1);
+{
+    for (let n = 1; n <= UPG_COUNT; n++) {
+        timewallDuration[n] = n / (1.1 ** Math.floor(n / 50));
+    }
+}
 
 // Build a flat array of precomputed Decimal costs indexed by UpgNum (1-based)
 // costs[N] = cost of upgradeN  (costs[0] unused)
 const upgCosts = new Array(UPG_COUNT + 1);
 {
-    let runningFact = new Decimal(1); // starts as 1 (empty product, power gen before any upg)
+    let runningPowerGen = new Decimal(1); // power gen before any upgrade
     for (let n = 1; n <= UPG_COUNT; n++) {
         // cost = n * (current power gen before buying this upg)
-        // currentPowerGen before buying upg n = runningFact
-        upgCosts[n] = new Decimal(n).mul(runningFact);
-        // after buying upg n, power gen gets multiplied by (n+1)
-        runningFact = runningFact.mul(n + 1);
+        upgCosts[n] = new Decimal(timewallDuration[n]).mul(runningPowerGen);
+        // after buying upg n, power gen gets multiplied by upgEffects[n]
+        runningPowerGen = runningPowerGen.mul(upgEffects[n]);
     }
 }
 
@@ -36,13 +54,13 @@ function buildUpgrades() {
         upgs[id] = {
             title: "Upgrade " + n,
             description: function() {
-                return "Multiplies Power by " + (n + 1) + "x.";
+                return "Multiplies Power by " + notationChooser(upgEffects[n], 3) + "x.<br>Timewall Duration: " + formatTime(timewallDuration[n], 3);
             },
             cost: cost,
             currencyInternalName: "points",
             currencyDisplayName: "Power",
-            effect() { return n + 1; },
-            effectDisplay() { return "\u00d7" + (n + 1); },
+            effect() { return upgEffects[n]; },
+            effectDisplay() { return "\u00d7" + notationChooser(upgEffects[n], 3); },
             unlocked() {
                 if (row === 0) return true;
                 return hasUpgrade("p", prevRowLastId);
@@ -57,6 +75,7 @@ addLayer("p", {
     symbol: "⚡",
     color: "#FFAA00",
     row: 0,
+    autoUpgrade: true,
 
     startData() {
         return {
