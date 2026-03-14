@@ -551,7 +551,7 @@ addLayer("s", {
               if ((hasMilestone('st', 7)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
         }
-        let keep = [];
+        let keep = ["clicks"];
     
         // Stage 4: Perform the actual data reset
         layerDataReset(this.layer, keep);

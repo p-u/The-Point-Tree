@@ -898,7 +898,7 @@ addLayer("st", {
         },
         54: {
             title: "Research Up. 24: birb",
-            description: "On buy: you are now a bird (wait, what?) Gain wings. The sky theme now gives x150 Research and +^0.005 Stars. At (2.5e246 Research + 281 Researcher Buyables), Birds Array notation now gives x25 Research, whilst Blind Notation gives -x20 Research. At {10, 248.448} Research, gain thrusters on your wings. x50 Research and xe15,000 Sparks.",
+            description: "On buy: you are now a bird (wait, what?) Gain wings. The sky theme now gives x150 Research and +^0.005 Stars. At (2.5e246 Research + 281 Researcher Buyables), Birds Array notation now gives x25 Research, whilst Blind Notation gives -x1 Research. At {10, 248.448} Research, gain thrusters on your wings. x50 Research and xe15,000 Sparks.",
             cost: new Decimal(1e237),
             unlocked() { return hasUpgrade("st",53) }, 
             currencyDisplayName: "Research",
@@ -1091,9 +1091,7 @@ addLayer("st", {
             if (hasUpgrade("st", 34)) gain = gain.mul(upgradeEffect("st", 34))
             if (hasUpgrade("st", 52)) gain = gain.mul(upgradeEffect("st", 52))
             if ((hasUpgrade("st", 54) && player.st.research.gte(2.5e246) && getBuyableAmount("st", 11).gte(281)) || hasUpgrade("st", 55)) {
-                if (options.notation === 'blind') {
-                    gain = gain.mul(-1)
-                } else {
+                if (options.notation !== 'blind') {
                     gain = gain.mul(notationMult)
                     if (player.st.research.lt(0)) player.st.research = new Decimal(1000)
                 }
@@ -1109,6 +1107,7 @@ addLayer("st", {
 
             // exponent
             if (getBuyableAmount("st", 12).gte(33) && gain.gte(1)) gain = gain.pow(1.02)
+            if (((hasUpgrade("st", 54) && player.st.research.gte(2.5e246) && getBuyableAmount("st", 11).gte(281)) || hasUpgrade("st", 55)) && options.notation === 'blind') gain = gain.mul(-1)
             player.st.resps = gain
             player.st.research = player.st.research.add(gain.mul(diff))
         }
