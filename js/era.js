@@ -3575,7 +3575,7 @@ addLayer("era", {
         let exp = new Decimal(1)
         return exp
     },
-    row: 7, // Row the layer is in on the tree (0 is the first row)
+    row: 8, // Row the layer is in on the tree (0 is the first row)
     displayRow: 6,
     hotkeys: [
         {key: "e", description: "E: ERA!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
@@ -3863,6 +3863,9 @@ addLayer("era", {
     prestigeButtonText() {
         let base = "Reset all upgrades for an Era, giving a huge boost and a load of new content. <br><br> (" + notationChooser(player.sac.points) + "/" + notationChooser(getNextAt("era")) + " Sacs, " + notationChooser(player.sac.points.div(getNextAt("era")).mul(100),4) + "% to next)"
         return base
+    },
+    onPrestige() {
+        gtag('event', 'tier_up');
     },
     glowColor() {
         let layer = 'era'
