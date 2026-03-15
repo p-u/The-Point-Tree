@@ -522,7 +522,7 @@ addLayer("prestige", {
         if (hasUpgrade('era', 494)) exp = exp.add(0.01)
         if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
-        if (player.sac.sacstr.gte(2)) exp = exp.add(player.sac.se2)
+        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(2)) exp = exp.add(player.sac.se2)
         return exp
     },
     effect(){
@@ -555,6 +555,7 @@ addLayer("prestige", {
         softcappedEffect = softcap(softcappedEffect, new Decimal("ee12"), new Decimal(hcapeff))
         let inscapeff = 0.2
         if (hasUpgrade("m", 143)) inscapeff = 0.25
+        if (hasMilestone("sac", 129)) inscapeff = 0.28
         softcappedEffect = softcap(softcappedEffect, new Decimal("e4e18"), new Decimal(inscapeff))
         return softcappedEffect
        },

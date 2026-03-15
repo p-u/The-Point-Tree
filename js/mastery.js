@@ -796,7 +796,7 @@ addLayer("m", {
         return exp
     },
     branches: ["s", "sac", "w"],
-    row: 7, // Row the layer is in on the tree (0 is the first row)
+    row: 9, // Row the layer is in on the tree (0 is the first row)
 
     update(diff) {
         diff = Math.min(diff, 0.5)

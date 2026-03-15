@@ -9,7 +9,8 @@ addLayer("sac", {
         nextsstr: new Decimal(0),
         se1: new Decimal(0),
         se2: new Decimal(0),
-        se3: new Decimal(0)
+        se3: new Decimal(0),
+        additionalsacstrength: new Decimal(0),
     }},
     layerShown(){
         let visible = false
@@ -80,10 +81,10 @@ addLayer("sac", {
                 ["display-text",
                     function(){
                         let a = "Next Boost: 2 Sac Strength"
-                        if (player.sac.sacstr.gte(2)) {
+                        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(2)) {
                             a = "Next Boost: 5 Sac Strength"
                         }
-                        if (player.sac.sacstr.gte(5)) {
+                        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(5)) {
                             a = "You have unlocked all current boosts!"
                         }
                         return a
@@ -108,7 +109,7 @@ addLayer("sac", {
                 ["display-text",
                     function(){
                         let a = ""
-                        if (player.sac.sacstr.gte(2)) {
+                        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(2)) {
                             a = a + `Your Prestige Points has an increase of ^ 
                             <h2> ${format(player.sac.se2)}</span></h2>.`
                         }
@@ -118,7 +119,7 @@ addLayer("sac", {
                 ["display-text",
                     function(){
                         let a = ""
-                        if (player.sac.sacstr.gte(2)) {
+                        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(2)) {
                             a = a + "Formula: log1.275(SS-1)/33, with cap at +^0.5"
                         }
                         return a
@@ -129,7 +130,7 @@ addLayer("sac", {
                 ["display-text",
                     function(){
                         let a = ""
-                        if (player.sac.sacstr.gte(5)) {
+                        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(5)) {
                             a = a + `Your Point Fragments are getting powered by 
                             <h2> ${notationChooser(player.sac.se3)}</span></h2>.`
                         }
@@ -139,7 +140,7 @@ addLayer("sac", {
                 ["display-text",
                     function(){
                         let a = ""
-                        if (player.sac.sacstr.gte(5)) {
+                        if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(5)) {
                             a = a + "Formula: (log1.38(SS-3.4))/180, with cap at ^1.4"
                         }
                         return a
@@ -925,7 +926,7 @@ addLayer("sac", {
         128: {
             requirementDescription: "Sacrifice 3.41!!",
             effectDescription() {
-                let desc = "x3.41 Mega Points"
+                let desc = "x3.41 Mega Points" 
                 if (player["sac"].points.gte(5e6)) {
                     desc = desc + " (RD82: It means 3.41 double factorial -> 6,959,880 Sacrifice). This milestone only makes Era Buyable 6 and 7 cost nothing, screw the multiplier"
                 } else if (player["sac"].points.gte(1000)) {
@@ -937,6 +938,24 @@ addLayer("sac", {
             },
             unlocked() {return player["sac"].points.gte(3)},
             done() { return player["sac"].points.gte(6.95988e6) }
+        },
+        129: {
+            requirementDescription: "Sacrifice 7,565,250",
+            effectDescription: "Prestige Insanitycap nerf is weakened. Furthermore, Sacrifice directly multiplies EC gain and also x1.1 EF gain after nerf.",
+            unlocked() {return player["sac"].points.gte(7e6)},
+            done() { return player["sac"].points.gte(7565250) }
+        },
+        130: {
+            requirementDescription: "Sacrifice 8,470,740",
+            effectDescription: "Small boost of x8 Cell Base Mult, but more importantly, power PF based on Cells (Max effect when Cells >= 1e1,000)",
+            unlocked() {return (player["sac"].points.gte(8e6) && hasUpgrade("bacteria", 43))},
+            done() { return (player["sac"].points.gte(8470740) && hasUpgrade("bacteria", 43)) }
+        },
+        150: {
+            requirementDescription: "Sacrifice 50,000,000",
+            effectDescription: "Unlock another layer.",
+            unlocked() {return player["era"].points.gte(4)},
+            done() { return player["sac"].points.gte(1e100) }
         },
     },
     sacms58eff() {
@@ -1016,20 +1035,22 @@ addLayer("sac", {
             player.sac.nextsstr = new Decimal(70).pow(player.sac.sacstr).mul(50000)
         }
 
+        let effSacStr = player.sac.sacstr.add(player.sac.additionalsacstrength)
+
         if (player.sac.points.gte(50000)) { 
-            player.sac.se1 = player.sac.sacstr.add(0.5).log(1.234).div(30).min(0.5)
+            player.sac.se1 = effSacStr.add(0.5).log(1.234).div(30).min(0.5)
         } else {
             player.sac.se1 = new Decimal(1)
         }
 
-        if (player.sac.sacstr.gte(2)) { 
-            player.sac.se2 = player.sac.sacstr.sub(0.75).log(1.275).div(33).min(0.5)
+        if (effSacStr.gte(2)) { 
+            player.sac.se2 = effSacStr.sub(0.75).log(1.275).div(33).min(0.5)
         } else {
             player.sac.se2 = new Decimal(0)
         }
 
-        if (player.sac.sacstr.gte(5)) { 
-            player.sac.se3 = player.sac.sacstr.sub(3.4).log(1.38).div(180).add(1).min(1.4)
+        if (effSacStr.gte(5)) { 
+            player.sac.se3 = effSacStr.sub(3.4).log(1.38).div(180).add(1).min(1.4)
         } else {
             player.sac.se3 = new Decimal(1)
         }
@@ -1212,7 +1233,11 @@ addLayer("sac", {
                 return prog
             },
             display() {
-                return "You have " + notationChooser(player.sac.sacstr) + " Sac Strength. (" + notationChooser(player.sac.points) + "/" + notationChooser(player.sac.nextsstr) + ")"
+                if (player.sac.additionalsacstrength) {
+                    return "You have " + notationChooser(player.sac.sacstr) + "+" + notationChooser(player.sac.additionalsacstrength) + " Sac Strength. (" + notationChooser(player.sac.points) + "/" + notationChooser(player.sac.nextsstr) + ")"
+                } else {
+                    return "You have " + notationChooser(player.sac.sacstr) + " Sac Strength. (" + notationChooser(player.sac.points) + "/" + notationChooser(player.sac.nextsstr) + ")"
+                }
             },
             unlocked() { return hasMilestone("sac", 100) }
         },
@@ -1266,6 +1291,7 @@ addLayer("sac", {
         if (hasUpgrade("c", 54)) exp = exp.sub(0.0072)
         if (hasUpgrade('s', 55)) exp = exp.sub(buyableEffect('s', 16))
         if (hasUpgrade("w", 92)) exp = exp.sub(0.01)
+        if (hasUpgrade("c", 25)) exp = exp.sub(0.01)
         if (hasUpgrade("e", 205)) exp = exp.sub(0.02)
         if (hasUpgrade("era", 414)) exp = exp.sub(0.01)
         if (hasMilestone("sac", 124)) exp = exp.sub(0.00775)
@@ -1289,4 +1315,10 @@ addLayer("sac", {
         {key: "s", description: "S: Sacrifice!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     branches: ["mega"],
+    update(diff) {
+        player.sac.additionalsacstrength = new Decimal(0)
+        if (hasUpgrade("bacteria", 42)) {
+            player.sac.additionalsacstrength = player.sac.additionalsacstrength.add(1)
+        }
+    }
 })

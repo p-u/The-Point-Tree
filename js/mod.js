@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js", "bacteria.js"],
 
 	discordName: "Point Tree Discord",
 	discordLink: "https://discord.com/invite/RRK9Dwzf6P",
@@ -14,11 +14,27 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "4.0.5",
-	name: "Controlled Chaos",
+	num: "4.1",
+	name: "New Reset, Skill Tree and more!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>v4.1: New Reset, Skill Tree and more! </h2><br>
+Content <br>
+Added a new layer, which is an extension of Cells. Added Skill Points, and 13 [New Layer] Upgrades. It also has the ability to replicate. <br>
+Added a Cell Massivecap, a 4th Cell Buyable and a 10th Era Buyable, 7 new Cell Upgrades and 8 new Cell Milestones <br>
+Added 2 new EC and 1 new EF Upgrade, and 3 new Sacrifice milestones. <br>
+Era now resets Cells. <br>
+Added 5 achievements <br>
+Other stuff <br>
+Added a savebank <br>
+EF now increases more smoothly when gain>current EF <br>
+When doing a major reset, when sound effects is on, it doesn't explode your eardrums <br>
+Added the Rebirth Omegacap and Water Supercap <br>
+Changed prior last savebank to 'Pre-Era 4' <br>
+Amount of particles released on upgrade now is dependent on which variant of action mode you choose <br>
+Low Endgame: 10 Total SP, Endgame: 11 Total SP, High Endgame: 11 Total SP + 50M (New Layer currency), True Endgame: 12 Total SP + 200M (New Layer currency), Absolute True Endgame: 13 Total SP. These also requires fastest bacteria reset to be below a certain time. <br>
+
 <h1>v4.0.0 (Controlled Chaos)</h1><br>
 Well, after 4 months without a major update, I present to you, **the Point Tree Version 4.0** - Controlled Chaos (With Mastery Challenge 3, Dimensional Shift 7, and Era 4) <br>
 
@@ -1091,6 +1107,9 @@ function getPointGen() {
 		if (player.timePlayed - player.m.ma153t > 1) gain = gain.times(new Decimal("e7e19").pow(Math.log2(Math.min(player.timePlayed - player.m.ma153t, mc153timecap))).pow(alotpow))
 	}
 
+	// cells, bacteria
+	if (hasUpgrade('bacteria', 44)) gain = gain.times("e1e20")
+
 
 	// power (^)
 	if (hasUpgrade('basic', 43)) gain = gain.pow(1.05)
@@ -1254,10 +1273,11 @@ function getPointGen() {
 	if (hasUpgrade("m", 144)) gain = gain.pow(1.0075)
 	if (hasUpgrade("basic", 125)) gain = gain.pow(1.01)
 	if (hasUpgrade("era", 1054)) gain = gain.pow(1.01)
+	if (hasMilestone("sac", 130)) gain = gain.pow(Decimal.min(player.c.points, new Decimal("1e1000")).log10().div(100000).add(1))
 	if (hasMilestone("era", 104)) gain = gain.pow(new Decimal(player.era.milestones.length).div(1000).add(1))
 	if (player.points.gte("e100e9") && inChallenge("m", 12)) gain = gain.pow(0.1)
 	if (hasUpgrade('era', 1014)) gain = gain.pow(upgradeEffect('era', 1014))
-	if (player.sac.sacstr.gte(5)) gain = gain.pow(player.sac.se3)
+	if (player.sac.sacstr.add(player.sac.additionalsacstrength).gte(5)) gain = gain.pow(player.sac.se3)
 	if (hasMilestone("sac", 58)) gain = gain.pow(tmp.sac.sacms58eff);
 	if (hasMilestone("sac", 86)) gain = gain.pow(tmp.sac.sacms86eff);
 	if (inChallenge("m", 13)) {
@@ -1346,7 +1366,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e617.85e21"))
+	return player.bacteria.maxsp.gte(11)
 }
 
 

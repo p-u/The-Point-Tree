@@ -455,7 +455,7 @@ addLayer("sa", {
         33: {
             name: "Low Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e617.4e21")) {
+                   if (player.bacteria.maxsp.gte(10) && (player.bacteria.fastestreset < 20)) {
                        return true
                    }
                },
@@ -464,14 +464,14 @@ addLayer("sa", {
                     return "Congrats! You have reached low endgame at least once. (Reward: x1.02 Era Crystals)"
                 }
                 else {
-                    return "Reach Low Endgame. (Reward: x1.02 Era Crystals)"
+                    return "Reach Low Endgame (Requires maxSP to be above/equal to 10 and fastest bacteria reset to be below a certain time). (Reward: x1.02 Era Crystals)"
                 }
             },
         },
         34: {
             name: "Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e617.85e21")) {
+                   if (player.bacteria.maxsp.gte(11) && (player.bacteria.fastestreset < 7)) {
                        return true
                    }
                },
@@ -480,14 +480,14 @@ addLayer("sa", {
                     return "Congrats! You have reached endgame at least once. (Reward: x1.04 Era Crystals, x1.02 Mastery Points)"
                 }
                 else {
-                    return "Reach Endgame. (Reward: x1.04 Era Crystals, x1.02 Mastery Points)"
+                    return "Reach Endgame (Requires maxSP to be above/equal to 11 and fastest bacteria reset to be below a certain time). (Reward: x1.04 Era Crystals, x1.02 Mastery Points)"
                 }
             },
         },
         35: {
             name: "High Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e625e21")) {
+                   if (player.bacteria.maxsp.gte(11) && (player.bacteria.fastestreset < 5) && (player.bacteria.points.gte(5e7))) {
                        return true
                    }
                },
@@ -496,14 +496,14 @@ addLayer("sa", {
                     return "Congrats! You have reached High Endgame at least once. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
                 }
                 else {
-                    return "Reach High Endgame. (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
+                    return "Reach High Endgame (Requires maxSP to be above/equal to 11 with a certain amount of bacteria and fastest bacteria reset to be below a certain time). (Reward: x1.07 Era Crystals, x1.06 Mastery Points, x1.01 Cell Base Multiplier)"
                 }
             },
         },
         36: {
             name: "True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e627.627e21")) {
+                   if (player.bacteria.maxsp.gte(12) && (player.bacteria.fastestreset < 3) && (player.bacteria.points.gte(2e8))) {
                        return true
                    }
                },
@@ -512,14 +512,14 @@ addLayer("sa", {
                     return "Congrats! You have reached True endgame at least once. This was the best endgame tier (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
                 else {
-                    return "Reach True Endgame. (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
+                    return "Reach True Endgame (Requires maxSP to be above/equal to 12 with a certain amount of bacteria and fastest bacteria reset to be below a certain time). (Reward: x1.1 Era Crystals, x1.07 Mastery Points, x1.04 Cell Base Multiplier, x1.02 Era Fragments [AFTER NERF])"
                 }
             },
         },
         37: {
             name: "[Wait, how is this possible?] Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.points.gte("e636.7e21")) {
+                   if (player.bacteria.maxsp.gte(13) && (player.bacteria.fastestreset < 1.7)) {
                        return true
                    }
                },
@@ -528,7 +528,7 @@ addLayer("sa", {
                     return "Congrats! You have reached Absolute True endgame at least once. This will be the best endgame tier! (Reward: x1.1 Era Fragments before nerf, and this achievement)"
                 }
                 else {
-                    return "Reach Absolute True Endgame. (Reward: x1.1 Era Fragments before nerf, and this achievement)"
+                    return "Reach Absolute True Endgame (Requires maxSP to be above/equal to 13 and fastest bacteria reset to be below a certain time). (Reward: x1.1 Era Fragments before nerf, and this achievement)"
                 }
             },
             unlocked() {

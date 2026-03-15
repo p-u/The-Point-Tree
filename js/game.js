@@ -222,16 +222,17 @@ function generatePoints(layer, diff) {
 }
 
 function doReset(layer, force=false) {
-	if (tmp[layer].type == "none") return
+	isResetting = true
+	if (tmp[layer].type == "none") { isResetting = false; return }
 	let row = tmp[layer].row
 	if (!force) {
 		
-		if (tmp[layer].canReset === false) return;
+		if (tmp[layer].canReset === false) { isResetting = false; return };
 		
-		if (tmp[layer].baseAmount.lt(tmp[layer].requires)) return;
+		if (tmp[layer].baseAmount.lt(tmp[layer].requires)) { isResetting = false; return };
 		let gain = tmp[layer].resetGain
 		if (tmp[layer].type=="static") {
-			if (tmp[layer].baseAmount.lt(tmp[layer].nextAt)) return;
+			if (tmp[layer].baseAmount.lt(tmp[layer].nextAt)) { isResetting = false; return };
 			gain =(tmp[layer].canBuyMax ? gain : 1)
 		}
 
@@ -257,7 +258,7 @@ function doReset(layer, force=false) {
 	
 	}
 
-	if (run(layers[layer].resetsNothing, layers[layer])) return
+	if (run(layers[layer].resetsNothing, layers[layer])) { isResetting = false; return }
 	tmp[layer].baseAmount = decimalZero // quick fix
 
 
@@ -276,6 +277,7 @@ function doReset(layer, force=false) {
 
 	updateTemp()
 	updateTemp()
+	isResetting = false
 }
 
 function resetRow(row) {

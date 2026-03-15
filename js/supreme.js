@@ -1033,6 +1033,7 @@ addLayer("s", {
             if (hasAchievement("a", 246)) hcap = hcap.add(0.01)
             if(hasUpgrade("era", 332)) hcap = hcap.add(0.01)
             if(hasUpgrade("era", 382)) hcap = hcap.add(0.01)
+            if (hasUpgrade("bacteria", 11)) hcap = hcap.add(0.01)
             if(hasMilestone("sac", 109)) hcap = hcap.add(0.0064)
             if (hasUpgrade("era", 455)) hcap = hcap.add(0.0086)
             if (hasUpgrade("era", 491)) hcap = hcap.add(0.005)

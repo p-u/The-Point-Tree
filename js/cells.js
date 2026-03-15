@@ -13,6 +13,7 @@ addLayer("c", {
         multiplier: new Decimal(2),
         scscale: new Decimal(1.4),
         softcapStart: new Decimal(1000),
+        massiveCapStart: new Decimal(2).pow(1024)
     }},
     layerShown(){
         let visible = false
@@ -37,6 +38,13 @@ addLayer("c", {
         if(hasUpgrade("c", 24)) player.c.preRT = player.c.preRT.div(1.2)
         if(hasUpgrade("c", 32)) player.c.preRT = player.c.preRT.div(1.1)
         if(hasUpgrade("c", 34)) player.c.preRT = player.c.preRT.div(1.2)
+        if (hasUpgrade("c", 71)) player.c.preRT = player.c.preRT.div(1.2)
+        if (hasUpgrade("bacteria", 11))player.c.preRT = player.c.preRT.div(10)
+        if (hasUpgrade("bacteria", 44))player.c.preRT = player.c.preRT.div(2)
+        let scale = 2.5
+        let xtrac14 = new Decimal(0)
+        if (hasAchievement("a", 284)) xtrac14 = xtrac14.add(1)
+        if (hasUpgrade("c", 72)) player.c.preRT = player.c.preRT.mul(new Decimal(scale).pow(getBuyableAmount("c", 14).add(xtrac14)))
 
         // base mult
         if (hasAchievement('sa', 35)) player.c.preBM = player.c.preBM.mul(1.01)
@@ -52,9 +60,28 @@ addLayer("c", {
         if (hasAchievement("a", 263)) player.c.preBM = player.c.preBM.mul(1.5)
         if(hasUpgrade("c", 43)) player.c.preBM = player.c.preBM.mul(1.5)
         if(hasUpgrade("c", 52)) player.c.preBM = player.c.preBM.mul(2)
+        if (hasUpgrade("bacteria", 11))player.c.preBM = player.c.preBM.mul(10)
+        if (hasUpgrade("bacteria", 44))player.c.preBM = player.c.preBM.mul(25)
         if (hasUpgrade("w", 93)) player.c.preBM = player.c.preBM.mul(4)
+        if (hasUpgrade("c", 71)) player.c.preBM = player.c.preBM.mul(10)
+        if (hasMilestone("sac", 130))  player.c.preBM = player.c.preBM.mul(8)
+        if (hasUpgrade("c", 74) && player.c.points.gte(2.63e263)) player.c.preBM = player.c.preBM.mul(player.era.ec.slog().tetrate(2))
         if (hasUpgrade("c", 62)) player.c.preBM = player.c.preBM.mul(upgradeEffect("c", 62))
+        if (hasMilestone("c", 8)) player.c.preBM = player.c.preBM.mul(Decimal.max(player.points.add(1).slog(), 1))
+        if (hasUpgrade("bacteria", 21)) {
+            if ((player.timePlayed-player.bacteria.lastresettime) > 75) {
+                player.c.preBM = player.c.preBM.mul(Math.min(player.timePlayed-player.bacteria.lastresettime-74, 250))
+                player.c.preBM = player.c.preBM.mul(Math.min(player.timePlayed-player.bacteria.lastresettime-74, 250))
+            }
+        }
+        if (hasMilestone("c", 9)) player.c.preBM = player.c.preBM.mul(Decimal.pow(1.5, player.era.milestones.length))
+        // power for Basemult
+        if (hasUpgrade("c", 72)) {
+            player.c.preBM = player.c.preBM.mul(buyableEffect("era", 22))
+            player.c.preBM = player.c.preBM.pow(buyableEffect("c", 14))
+        }
         if (inChallenge("m", 13)) player.c.preBM = player.c.preBM.pow(player.m.rngpower)
+        
 
         // softcap decrease
         if(hasUpgrade("c", 12)) player.c.scscale = new Decimal(1.3)
@@ -64,6 +91,11 @@ addLayer("c", {
         if(hasUpgrade("c", 34)) player.c.scscale = new Decimal(1.17)
         if (hasMilestone("c", 2)) player.c.scscale = new Decimal(1.15)
         if (hasMilestone("c", 3)) player.c.scscale = new Decimal(1.14)
+        if (hasUpgrade("c", 71) && player.c.points.gte(2.17e217)) player.c.scscale = new Decimal(1.135)
+        if (hasUpgrade("c", 74) && player.c.points.gte(3e271)) player.c.scscale = new Decimal(1.127)
+        if (hasUpgrade("bacteria", 11))player.c.scscale = new Decimal(1.125)
+        if (hasUpgrade("bacteria", 21) || hasUpgrade("bacteria", 22)) player.c.scscale = player.c.scscale.sub(0.015)
+        if (hasUpgrade("c", 15)) player.c.scscale = player.c.scscale.sub(0.01)
         
         // delayed softcap start
         if (hasUpgrade("c", 31)) player.c.softcapStart = new Decimal(5000)
@@ -77,14 +109,24 @@ addLayer("c", {
         if (hasMilestone("c", 5)) player.c.softcapStart = player.c.softcapStart.mul((player.sac.points.add(1)).pow(0.5))
         if (hasAchievement("sa", 42)) player.c.softcapStart = player.c.softcapStart.mul(1.1)
         if (hasUpgrade("era", 502)) player.c.softcapStart = player.c.softcapStart.mul(1.8)
-        if (hasMilestone("c", 6)) player.c.softcapStart = player.c.softcapStart.mul((player.c.points.add(1e5)).pow(0.05))
+        let expo = 0.05
+        if (hasUpgrade("c", 74)) expo = 0.085
+        if (hasMilestone("c", 6)) player.c.softcapStart = player.c.softcapStart.mul((player.c.points.add(1e5)).pow(expo))
         if (hasUpgrade("c", 63)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("c", 63))
         if (hasMilestone("era", 104)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.25).pow(player.era.milestones.length))
         if (hasUpgrade("era", 333)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal(1.005).pow(new Date().getFullYear()))
         if (hasUpgrade("w", 65)) player.c.softcapStart = player.c.softcapStart.mul(upgradeEffect("w", 65))
         if (hasMilestone("sac", 123)) player.c.softcapStart = player.c.softcapStart.mul(3134234)
+        if (hasUpgrade("c", 71) && player.c.points.gte(2.17e217)) player.c.softcapStart = player.c.softcapStart.mul(10)
+        if (hasUpgrade("c", 35)) player.c.softcapStart = player.c.softcapStart.mul(1e10)
         if (hasMilestone("era", 4)) player.c.softcapStart = player.c.softcapStart.mul(new Decimal((Decimal.max(player.era.points, new Decimal(1)).pow(2))).tetrate(2))
         if (hasChallenge("m", 13)) player.c.softcapStart = player.c.softcapStart.pow(2)
+        if (player.c.points.gte(player.c.massiveCapStart)) {
+            let sce = 1e50
+            if (hasUpgrade("bacteria", 22)) sce = 1
+            player.c.softcapStart = player.c.softcapStart.div(sce)
+        }
+        
 
         // init
         player.c.replicateTime = player.c.preRT
@@ -106,6 +148,9 @@ addLayer("c", {
                     player.c.multiplier = (player.c.baseMultiplier.div(player.c.scscale.pow((player.c.points.div(player.c.softcapStart)).log2()).mul(10))).add(1)
                 } else {
                     player.c.multiplier = player.c.baseMultiplier
+                }
+                if (player.c.points.gte(player.c.massiveCapStart)) {
+                    player.c.multiplier = player.c.multiplier.pow(0.1)
                 }
                 player.c.points = player.c.points.mul(player.c.multiplier)
             }
@@ -131,9 +176,15 @@ addLayer("c", {
                 ["display-text",
                     function(){
                         let a = ""
+                        let multi = new Decimal(1)
+                        if (player.c.points.gte(player.c.massiveCapStart)) {
+                            multi = (player.c.baseMultiplier.div(player.c.scscale.pow((player.c.points.div(player.c.softcapStart)).log2()).mul(10))).add(1).pow(0.1)
+                        } else {
+                            multi = (player.c.baseMultiplier.div(player.c.scscale.pow((player.c.points.div(player.c.softcapStart)).log2()).mul(10))).add(1)
+                        }
                         if (player.c.points.gte(1000)) { 
                                 a = a + `Multiplier after softcap: 
-                                ${notationChooser((player.c.baseMultiplier.div(player.c.scscale.pow((player.c.points.div(player.c.softcapStart)).log2()).mul(10))).add(1))}</span></h2>`
+                                ${notationChooser(multi)}</span></h2>`
                         }
                         return a
                     }
@@ -141,8 +192,14 @@ addLayer("c", {
                 ["display-text",
                     function(){
                         let a = ""
+                        let scs = "1e50"
+                        if (hasUpgrade("bacteria", 22)) scs = "1"
                         a = a + `Softcap starts at 
                             ${notationChooser(player.c.softcapStart)} cells</span></h2>`
+                        if (player.c.points.gte(player.c.massiveCapStart.div(1e6))) {
+                            a = a + `<br>Massivecap (Tenth-rooted Cell gain; Softcap starts ${scs}x earlier) starts at 
+                            ${notationChooser(player.c.massiveCapStart)} cells</span></h2>`
+                        }
                         return a
                     }
                 ],
@@ -159,9 +216,21 @@ addLayer("c", {
                 "blank",
                 "blank",
                 "blank",
-                "milestones",
+               ["milestones", [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]],
             ],
             unlocked() {return hasAchievement("a", 262)},
+        },
+        "Pre-nextLayer milestones": {
+            content: [
+                "main-display",
+                "blank",
+                ["bar", "replicate"],
+                "blank",
+                "blank",
+                "blank",
+                ["milestones", [1001,1002,1003,1004,1005,1006,1007,1008,1009,1010]],
+            ],
+            unlocked() {return hasUpgrade("c", 74)},
         },
         "Cell Buyables": {
             content: [
@@ -216,6 +285,54 @@ addLayer("c", {
             effectDescription: "'Metabolic Hyper-Surge' is stronger.",
             unlocked() { return hasMilestone("c", 6)},
             done() { return player.c.points.gte(new Decimal(1e135)) },
+        },
+        8: {
+            requirementDescription: "Cell Milestone 8 (1.73e237 Cells: Tier 2.3)",
+            effectDescription: "Multiply Era Crystals by 1e50 and Era Fragments by 1.8 after nerf. Points boost Cell Base Mult.",
+            unlocked() { return hasMilestone("c", 7)},
+            done() { return player.c.points.gte(new Decimal(1.73e237)) },
+        },
+        9: {
+            requirementDescription: "Cell Milestone 9 (1e330 Cells: Tier 2.5)",
+            effectDescription: "Boost Cell Base Mult by 1.5^(amount of Era Milestones gotten).",
+            unlocked() { return hasMilestone("c", 8)},
+            done() { return player.c.points.gte(new Decimal("1e330")) },
+        },
+        10: {
+            requirementDescription: "Cell Milestone 10 (4.67e467 Cells: Tier 2.7)",
+            effectDescription: "Cell Buyable 1 scaling is weaker.",
+            unlocked() { return hasMilestone("c", 9)},
+            done() { return player.c.points.gte(new Decimal("4.67e467")) },
+        },
+        1001: {
+            requirementDescription: "First Cell Boost before the next layer (When you unlock this milestones section)",
+            effectDescription: "Cell Milestone 6 is stronger.",
+            unlocked() { return true},
+            done() { return hasUpgrade("c", 74) },
+        },
+        1002: {
+            requirementDescription: "Second Cell Boost before the next layer (2.63e263 Cells)",
+            effectDescription: "Cell Base Multiplier is multiplied based off of Era Crystals",
+            unlocked() { return hasMilestone("c", 1001)},
+            done() { return player.c.points.gte(new Decimal(2.63e263)) },
+        },
+        1003: {
+            requirementDescription: "Third Cell Boost before the next layer (3e271 Cells)",
+            effectDescription: "Cell Softcap Scaling is weaker.",
+            unlocked() { return hasMilestone("c", 1002)},
+            done() { return player.c.points.gte(new Decimal(3e271)) },
+        },
+        1004: {
+            requirementDescription: "Fourth Cell Boost before the next layer (31 Cell Buyable 2 bought)",
+            effectDescription: "Cell Buyable 2 is much stronger, and reduce the price of Cell Buyable 3 by e10 Cells.",
+            unlocked() { return hasMilestone("c", 1003)},
+            done() { return getBuyableAmount("c", "12").gte(31) },
+        },
+        1005: {
+            requirementDescription: "Final Cell Boost before the next layer (50 Cell Buyable 3 bought)",
+            effectDescription: "Cell Buyable 3 is much stronger.",
+            unlocked() { return hasMilestone("c", 1004)},
+            done() { return getBuyableAmount("c", "13").gte(50) },
         },
     },
     upgrades: {
@@ -379,6 +496,7 @@ addLayer("c", {
             effect() {
                 base62 = new Decimal(1.1)
                 if (hasUpgrade("era", 313)) base62 = new Decimal(1.25)
+                if (hasUpgrade("c", 25)) base62 = base62.pow(2)
                 return new Decimal(base62).pow(player.c.upgrades.length)
             },
             effectDisplay() {
@@ -426,16 +544,76 @@ addLayer("c", {
             },
             unlocked() { return (hasChallenge("m", 13) && hasUpgrade("c", 63)) },
         },
+        71: {
+            title: "Stage II",
+            description: "Boosts all cell-related stuff: Reset Time (/1.2), Base Mult (x10). At 2.17e217 Cells, boosts Softcap Delay (x10), Softcap Scale start (-0.005)",
+            cost: new Decimal(5e210),
+            unlocked() { return (hasUpgrade("c", 64)) },
+        },
+        72: {
+            title: "New repeated stuff!",
+            description: "Unlock the tenth Era Buyable and the fourth Cell Buyable.",
+            cost: new Decimal(1e221),
+            unlocked() { return (hasUpgrade("c", 71)) },
+        },
+        73: {
+            title: "Cellular Fragmentation",
+            description: "Boosts Era Fragments by Cells (before nerf). At 100,000,000 EF, x2 EF gain (after nerf). This also applies to at 250,000,000 EF.",
+            cost: new Decimal(5e233),
+            effect() {
+                return new Decimal(Math.max(player.c.points.add(1).slog(),1)).pow(1.7)
+            },
+            effectDisplay() {
+                let upgEffect = upgradeEffect(this.layer, this.id)
+                return "This upgrade boosts Era Fragments by " + notationChooser(upgEffect)+"x."
+            },
+            tooltip() {
+                return "Formula: xslog(Cells)^1.7"
+            },
+            unlocked() { return (hasUpgrade("c", 72)) },
+        },
+        74: {
+            title: "New layer?",
+            description: "Unlock a temporary Pre-nextLayer milestones tab, which provides a slew of new boosts to unlock the next layer. Also reveals the next layer.",
+            cost: new Decimal(4e242),
+            unlocked() { return (hasUpgrade("c", 73)) },
+        },
+        // Extension
+        15: {
+            title: "Descale",
+            description: "Cell softcap scaling is weaker.",
+            cost: new Decimal("2e421"),
+            unlocked() { return ((hasUpgrade("c", 14)&&hasUpgrade("bacteria",43))) },
+        },
+        25: {
+            title: "One from every field",
+            description: "'Cellular Cell' effect is squared, Sacrifice scaling is decreased, +^0.01 Basic Points",
+            cost: new Decimal("1e480"),
+            unlocked() { return ((hasUpgrade("c", 15))) },
+        },
+        35: {
+            title: "some placeholder",
+            description: "+(Placeholder Value) Everything Points, x1.(46% loaded) Era Fragments before nerf, Cell softcap starts [???] later. [THIS IS NOT AN ERROR, NAMING IS FINAL]",
+            cost: new Decimal("5.55e555"),
+            unlocked() { return ((hasUpgrade("c", 25))) },
+        }
     },
     buyables: {
         11: {
             title: "Cell Buyable 1: Replicate! [Max replicate speed is 1/20 seconds]",
             cost(x) {
                 exp2 = 1.14
-                return new Decimal(50).mul(Decimal.pow(1.14, (x+1))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
+                if (hasMilestone("c", 10)) exp2 = 1.113
+                return new Decimal(50).mul(Decimal.pow(exp2, (x+1))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: " + format(buyableEffect(this.layer, this.id)) + "x replication speed."
+                dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." 
+                dis = dis + "<br>Bought: " + getBuyableAmount(this.layer, this.id) 
+                if (this.extra().gte(1)) {
+                    dis = dis + " + " + notationChooser(this.extra())
+                }
+                dis = dis + "<br>Effect: " + format(buyableEffect(this.layer, this.id)) + "x replication speed."
+                return dis
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -445,13 +623,18 @@ addLayer("c", {
                 if (!(hasMilestone("era", 4))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
-            effect(x) {
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 base1 = new Decimal(1.125)
                 if (hasUpgrade("c", 32)) base1 = new Decimal(1.175)
                 base2 = x
                 expo = new Decimal(1)
                 let eff = (base1.pow(Decimal.pow(base2, expo)))
                 return eff
+            },
+            extra(){
+                let extra = new Decimal(0)
+                return extra
             },
             tooltip() {
                 return "Cost Formula: 50 x 1.14^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + base1 + "^(" + notationChooser(base2) + "^" + expo + ")."
@@ -466,7 +649,13 @@ addLayer("c", {
                 return new Decimal(4000).mul(Decimal.pow(1.15, x)).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
             },
             display() {
-                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: " + notationChooser(buyableEffect(this.layer, this.id)) + "x multiplier."
+                dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." 
+                dis = dis + "<br>Bought: " + getBuyableAmount(this.layer, this.id) 
+                if (this.extra().gte(1)) {
+                    dis = dis + " + " + notationChooser(this.extra())
+                }
+                dis = dis + "<br>Effect: " + notationChooser(buyableEffect(this.layer, this.id)) + "x Cell Base Multiplier."
+                return dis
             },
             canAfford() {
                 return player[this.layer].points.gte(this.cost())
@@ -476,11 +665,18 @@ addLayer("c", {
                 if (!(hasMilestone("era", 4))) player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
-            effect(x) {
+            extra(){
+                let extra = new Decimal(0)
+                if (hasAchievement("a", 284)) extra = extra.plus(5)
+                return extra
+            },
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
                 base1 = new Decimal(1.1)
                 if (hasUpgrade("c", 23)) base1 = new Decimal(1.15)
                 if (hasAchievement("a", 263)) base1 = new Decimal(1.16)
                 if (hasUpgrade("c", 53)) base1 = new Decimal(1.2)
+                if (hasMilestone("c", 1004)) base1 = base1.times(1.12)
                 base2 = x
                 expo = new Decimal(1)
                 let eff = (base1.pow(Decimal.pow(base2, expo)))
@@ -495,7 +691,9 @@ addLayer("c", {
             cost(x) {
                 exp2 = 1.11
                 if (hasUpgrade("c", 23)) exp2 = 1.1
-                return new Decimal(1e11).mul(Decimal.pow(1.12, (x))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
+                let bc = 1e11
+                if (hasMilestone("c", 1004)) bc = 10
+                return new Decimal(bc).mul(Decimal.pow(1.12, (x))).mul(Decimal.pow((x+1) , Decimal.pow(exp2 , x))).floor()
             },
             unlocked() {
                 return hasMilestone("c", 1)
@@ -515,6 +713,7 @@ addLayer("c", {
                 base1 = new Decimal(1.1)
                 if (hasAchievement("a", 263)) base1 = new Decimal(1.15)
                 if (hasUpgrade("c", 51)) base1 = new Decimal(1.3)
+                if (hasMilestone("c", 1005)) base1 = base1.mul(1.29)
                 base2 = x
                 expo = new Decimal(1.01)
                 let eff = (base1.pow(Decimal.pow(base2, expo)))
@@ -522,6 +721,51 @@ addLayer("c", {
             },
             tooltip() {
                 return "Cost Formula: 1e11 x 1.12^Amt x Amt^(" + exp2 + "^Amt). Effect formula: " + base1 + "^(" + notationChooser(base2) + "^" + expo + ")."
+            }
+        },
+        14: {
+            title: "Cell Buyable 4: Trade-off (Make replication slower but replicate more)",
+            cost(x) {
+                y = x.add(22)
+                exp2 = 1.21
+                if (getBuyableAmount("c", 14) == 2){
+                    return new Decimal(1e303)
+                } else {
+                    return new Decimal(1e91).mul(Decimal.pow(1.12, y)).mul(Decimal.pow((1+y) , Decimal.pow(exp2 , y))).floor()
+                }
+            },
+            unlocked() {
+                return hasUpgrade("c", 72)
+            },
+            display() {
+                let scale = 2.5
+                dis = "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Cells." 
+                dis = dis + "<br>Bought: " + getBuyableAmount(this.layer, this.id) 
+                if (this.extra().gte(1)) {
+                    dis = dis + " + " + notationChooser(this.extra())
+                }
+                dis = dis + "<br>Effect: ^" + notationChooser(buyableEffect(this.layer, this.id)) + " Cell Base Multiplier, but x" + notationChooser(new Decimal(scale).pow(getBuyableAmount("c", 14).add(this.extra()))) + " Replication Speed."
+                return dis
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            extra(){
+                let extra = new Decimal(0)
+                if (hasAchievement("a", 284)) extra = extra.plus(1)
+                return extra
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect() {
+                let x = getBuyableAmount(this.layer, this.id).add(this.extra())
+                return (1 + x*0.05)
+            },
+            tooltip() {
+                return `Cost Formula: 2e92 x 1.12^(Amt+${y}) x (Amt+${y})^(${exp2}^(Amt+${y})). Effect formula: ^(1+0.05*Amt) Cell Base Mult, x2.5 Replication Speed/buy.`
             }
         },
     },
@@ -572,10 +816,44 @@ addLayer("c", {
                 }
             }
         }
-        for(i=11;i<14;i++){ 
+        for(i=11;i<15;i++){ 
             if (canBuyBuyable("c", i)) {
                 return "blue"
             }
         }
-    }
+    },
+    doReset(c) {
+        // Stage 1, almost always needed, makes resetting this layer not delete your progress
+        if (layers[c].row <= this.row) return;
+    
+        // Stage 2, track which specific subfeatures you want to keep, e.g. Upgrade 21, Milestones
+        let keptUpgrades = [];
+        for(i=1;i<5;i++){ //rows
+            for(v=1;v<4;v++){ //columns
+              if ((hasMilestone('bacteria', 1)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=4;v<6;v++){ //columns
+                if ((hasMilestone('bacteria', 2)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+            for(v=6;v<8;v++){ //columns
+                if ((hasMilestone('bacteria', 4)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+              }
+          }
+
+        let keptBuyables = {};
+        if (hasMilestone('bacteria', 3)) keptBuyables[11] = getBuyableAmount(this.layer, 11);
+        if (hasMilestone('bacteria', 5)) keptBuyables[13] = getBuyableAmount(this.layer, 13);
+    
+        // Stage 3, track which main features you want to keep - milestones
+        let keep = [];
+    
+        // Stage 4, do the actual data reset
+        layerDataReset(this.layer, keep);
+    
+        // Stage 5, add back in the specific subfeatures you saved earlier
+        player[this.layer].upgrades.push(...keptUpgrades);
+        for (let id in keptBuyables) {
+            setBuyableAmount(this.layer, id, keptBuyables[id]);
+        }
+    },  
 })

@@ -104,6 +104,9 @@ addLayer("i", {
                 "blank",
                 "blank",
                 ["infobox", "ef"],
+                "blank",
+                "blank",
+                ["infobox", "bacteria"],
             ],
         },
         "Recommended Completion of challenges": {
@@ -264,6 +267,11 @@ addLayer("i", {
             title: "The Cells Layer [NO SHORT FORM]",
             body() { return "Finally! A new layer! Mechanic: Replicate: Multiply cells by 2 at first, upgrades to increase that. At first, replicate time is 20 seconds, upgrades and buyables to decrease that as well. At 1,000 cells there is a softcap, the multiplier decreases as cells increase after 1,000. Strategy of whether to buy buyable/save up/buy upgrade is crucial for progression. Upgrades and buyables can delay the softcap, reduce the softcap strength, increase cell gain on replicate and reduce cell replication time" },
             unlocked() { return player.c.points.gte(new Decimal("1"))}
+        },
+        bacteria: {
+            title: "The Bacteria Layer",
+            body() { return "An extension to Cells. You may have noticed that an Extremecap has been in place at 2^1024 (1.798e308) Cells, which nerfs your gain significantly. Well, the Bacteria layer is here to provide you with extreme boosts to overcome this cap and beyond! On reset, it resets the Cells layer and any prior layers, wipes out your EC and halves your EF. Replication base is now 5mins and power is x1.5 (no softcap yay! but there is a hardcap at x5 best bacteria gained on reset) Instead of traditional upgrades, it works as a Skill Tree system, where one can buy upgrades using Skill Points (SP) (gained by spending Bacteria/PF) and can respec the upgrades to get all your SP back. This mechanic is why it makes this layer the most strategic layer by far." },
+            unlocked() { return player.bacteria.unlocked}
         },
         ef: {
             title: "EF? How does changing the 'C' to the 'F' do anything?",

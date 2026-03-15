@@ -48,17 +48,23 @@ addLayer("e", {
                 if ((hasMilestone('sac', 69)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
           }
-          for(v=1;v<9;v++){ //columns
-            if ((hasMilestone('e', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
-          }
-          for(v=9;v<10;v++){ //columns
-                if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
+            for(v=1;v<9;v++){ //columns
+                if ((hasMilestone('e', 19)) && hasUpgrade(this.layer, 5+v*10)) keptUpgrades.push(5+v*10)
             }
-            for(v=10;v<11;v++){ //columns
-                if ((hasMilestone('sac', 69)) && hasUpgrade(this.layer, 105)) keptUpgrades.push(105)
+            for(v=9;v<10;v++){ //columns
+                    if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, 95)) keptUpgrades.push(95)
             }
-    
-    
+                for(v=10;v<11;v++){ //columns
+                    if ((hasMilestone('sac', 69)) && hasUpgrade(this.layer, 105)) keptUpgrades.push(105)
+            }
+            for(i=1;i<6;i++) {
+                for(v=1;v<11;v++){ //columns
+                    if ((hasAchievement('a', 283)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+                }
+                for(v=15;v<16;v++){ //columns
+                    if ((hasAchievement('a', 283)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+                }
+            }
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
         if (hasMilestone('sac', 20)) keep.push("milestones");

@@ -1,4 +1,5 @@
 // ************ Big Feature related ************
+var isResetting = false
 const myParticle = {
     image: 'resources/genericParticle.png',
     width: 26,
@@ -124,21 +125,22 @@ function buyUpg(layer, id) {
 	if (options.soundeff) {
 		playUpgradeSound('upg');
 	}
-	if (!(options.actionmode == "off")) {
-		makeParticles(myParticle, 33);
-	}
 	if (!isMobileDevice()) {
 		if (options.actionmode == "on") {
-			screenShake(60, 500);
+			screenShake(120, 500);
+			makeParticles(myParticle, 18);
 		}
 		if (options.actionmode == "ultra") {
 			screenShake(300, 600);
+			makeParticles(myParticle, 28);
 		}
 		if (options.actionmode == "earthquake") {
 			screenShake(1200, 1200);
+			makeParticles(myParticle, 40);
 		}
 		if (options.actionmode == "stop.") {
 			screenShake(6000, 3000);
+			makeParticles(myParticle, 58);
 		}
 	}
 	player[layer].upgrades.push(id);
@@ -166,21 +168,22 @@ function buyBuyable(layer, id) {
 	if (options.soundeff) {
 		playUpgradeSound('buyable');
 	}
-	if (!(options.actionmode == "off")) {
-		makeParticles(myParticle, 20);
-	}
 	if (!isMobileDevice()) {
 		if (options.actionmode == "on") {
-			screenShake(30, 100);
+			screenShake(60, 100);
+			makeParticles(myParticle, 8);
 		}
 		if (options.actionmode == "ultra") {
 			screenShake(150, 250);
+			makeParticles(myParticle, 14);
 		}
 		if (options.actionmode == "earthquake") {
 			screenShake(600, 400);
+			makeParticles(myParticle, 22);
 		}
 		if (options.actionmode == "stop.") {
 			screenShake(3000, 1000);
+			makeParticles(myParticle, 30);
 		}
 	}
 	updateBuyableTemp(layer)
@@ -338,27 +341,29 @@ function updateMilestones(layer) {
 		if (!(hasMilestone(layer, id)) && layers[layer].milestones[id].done()) {
 			player[layer].milestones.push(id)
 			if (layers[layer].milestones[id].onComplete) layers[layer].milestones[id].onComplete()
-			if (options.soundeff) {
-				playUpgradeSound('ms');
+			if (!isResetting) {
+				if (options.soundeff) {
+					playUpgradeSound('ms');
+				}
+				if (!(options.actionmode == "off")) {
+					makeShinies(myParticleShort, 55);
+				}
+				if (!isMobileDevice()) {
+					if (options.actionmode == "on") {
+						screenShake(25, 250);
+					}
+					if (options.actionmode == "ultra") {
+						screenShake(125, 400);
+					}
+					if (options.actionmode == "earthquake") {
+						screenShake(500, 600);
+					}
+					if (options.actionmode == "stop.") {
+						screenShake(3000, 1500);
+					}
+				}
+				if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 2, tmp[layer].color);
 			}
-			if (!(options.actionmode == "off")) {
-				makeShinies(myParticleShort, 55);
-			}
-			if (!isMobileDevice()) {
-				if (options.actionmode == "on") {
-					screenShake(25, 250);
-				}
-				if (options.actionmode == "ultra") {
-					screenShake(125, 400);
-				}
-				if (options.actionmode == "earthquake") {
-					screenShake(500, 600);
-				}
-				if (options.actionmode == "stop.") {
-					screenShake(3000, 1500);
-				}
-			}
-			if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 2, tmp[layer].color);
 			player[layer].lastMilestone = id
 		}
 	}
@@ -369,28 +374,32 @@ function updateAchievements(layer) {
 	for (id in layers[layer].achievements) {
 		if (isPlainObject(layers[layer].achievements[id]) && !(hasAchievement(layer, id)) && layers[layer].achievements[id].done()) {
 			player[layer].achievements.push(id)
-			if (options.soundeff) {
-				playUpgradeSound('ach');
+			if (!isResetting) {
+				if (options.soundeff) {
+					playUpgradeSound('ach');
+				}
+				if (!(options.actionmode == "off")) {
+					makeShinies(myParticle, 70);
+				}
+				if (!isMobileDevice()) {
+					if (options.actionmode == "on") {
+						screenShake(40, 400);
+					}
+					if (options.actionmode == "ultra") {
+						screenShake(200, 600);
+					}
+					if (options.actionmode == "earthquake") {
+						screenShake(800, 1100);
+					}
+					if (options.actionmode == "stop.") {
+						screenShake(4000, 2750);
+					}
+				}
+				if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
+				if (tmp[layer].achievementPopups || tmp[layer].achievementPopups === undefined) doPopup("achievement", tmp[layer].achievements[id].name, "Achievement Gotten!", 2, tmp[layer].color);
+			} else {
+				if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
 			}
-			if (!(options.actionmode == "off")) {
-				makeShinies(myParticle, 70);
-			}
-			if (!isMobileDevice()) {
-				if (options.actionmode == "on") {
-					screenShake(40, 400);
-				}
-				if (options.actionmode == "ultra") {
-					screenShake(200, 600);
-				}
-				if (options.actionmode == "earthquake") {
-					screenShake(800, 1100);
-				}
-				if (options.actionmode == "stop.") {
-					screenShake(4000, 2750);
-				}
-			}
-			if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
-			if (tmp[layer].achievementPopups || tmp[layer].achievementPopups === undefined) doPopup("achievement", tmp[layer].achievements[id].name, "Achievement Gotten!", 2, tmp[layer].color);
 		}
 	}
 }

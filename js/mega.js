@@ -7,6 +7,7 @@ addLayer("mega", {
 		points: new Decimal(0),
     }},
     passiveGeneration() {
+        if (hasMilestone("era", 1) && hasMilestone("bacteria", 6)) return 1
         if (hasMilestone('sac', 7)) return 4.782528
         if (hasMilestone('sac', 5)) return 0.4782528
         if (hasMilestone('sac', 4)) return 0.251712
@@ -846,6 +847,7 @@ addLayer("mega", {
                 if (hasUpgrade("era", 452)) base2 = x.mul(new Decimal(2.5e14))
                 if (hasUpgrade("c", 53)) base2 = x.mul(new Decimal(2.5e15))
                 if (hasUpgrade("era", 483)) base2 = x.mul(new Decimal(4e15))
+                if (hasUpgrade("era", 465)) base2 = x.mul(new Decimal(1e17))
                 expo = new Decimal(1.015)
                 if (hasUpgrade('mega', 51)) expo = 1.0175
                 let eff = base1.pow(Decimal.pow(base2, expo))
