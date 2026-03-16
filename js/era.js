@@ -3865,7 +3865,7 @@ addLayer("era", {
         return base
     },
     onPrestige() {
-        gtag('event', 'tier_up');
+        gtag('event', 'era');
     },
     glowColor() {
         let layer = 'era'
