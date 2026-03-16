@@ -3826,7 +3826,7 @@ addLayer("era", {
             gainef = gainef.times(diff)
             if (inChallenge("m", 13)) gainef = gainef.mul(player.m.rngpower.mul(player.m.rngpower))
             if (hasUpgrade("era", 501)) {
-                if (player.era.ef.div(gainef).gte(5)) {
+                if (player.era.ef.div(gainef).gte(5) || player.era.ef.lte(5)) {
                     player.era.ef = player.era.ef.add(gainef)
                     player.era.eftotal = player.era.eftotal.add(gainef)
                 } else {
