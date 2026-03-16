@@ -147,6 +147,7 @@ function buyUpg(layer, id) {
 	if (upg.onPurchase != undefined)
 		run(upg.onPurchase, upg)
 	needCanvasUpdate = true
+    gtag('event', 'buyupgpt');
 }
 
 function buyMaxBuyable(layer, id) {
