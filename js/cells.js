@@ -588,7 +588,7 @@ addLayer("c", {
         25: {
             title: "One from every field",
             description: "'Cellular Cell' effect is squared, Sacrifice scaling is decreased, +^0.01 Basic Points",
-            cost: new Decimal("1e480"),
+            cost: new Decimal("1e482"),
             unlocked() { return ((hasUpgrade("c", 15))) },
         },
         35: {

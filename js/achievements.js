@@ -1384,8 +1384,8 @@ addLayer("a", {
         },
         284: {
             name: "Closing in to the next milestone",
-            done() { return (player.points.gte(new Decimal("e9.35e23"))) }, // e935 Sx
-            tooltip: "Get e935 Sx PF. Reward: Gain 1 effective Cell Buyable 4 and 5 effective Cell Buyable 2s. Also, x4 Bacteria.",
+            done() { return (player.points.gte(new Decimal("e9.70197e23"))) }, // e970.1970 Sx
+            tooltip: "Get e970.1970 Sx PF. Reward: Gain 1 effective Cell Buyable 4 and 5 effective Cell Buyable 2s. Also, x4 Bacteria.",
             unlocked() { return hasAchievement("a", 281) },
         },
         285: {

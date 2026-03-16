@@ -545,7 +545,7 @@ addLayer("w", {
         if (hasUpgrade("w", 92)) cap = 0.35
         softcappedEffect = softcap(eff, new Decimal("e5e13"), new Decimal(cap))
         let sprcap = 0.25
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e15e15"), new Decimal(sprcap))
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e1e17"), new Decimal(sprcap))
         return softcappedEffect
            },
             effectDescription() {
@@ -554,7 +554,7 @@ addLayer("w", {
                 if (layerEffect.gte(new Decimal("e5e13")) ) {
                     softcapDescription = " (Softcapped)"
                 }
-                if (layerEffect.gte(new Decimal("e15e15")) ) {
+                if (layerEffect.gte(new Decimal("e1e17")) ) {
                     softcapDescription = " (Supercapped)"
                 }
                 let desc = "which is boosting Energy by x" + notationChooser(tmp[this.layer].effect) + softcapDescription;

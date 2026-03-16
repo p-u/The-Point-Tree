@@ -946,10 +946,10 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(7565250) }
         },
         130: {
-            requirementDescription: "Sacrifice 8,470,740",
+            requirementDescription: "Sacrifice 8,541,750",
             effectDescription: "Small boost of x8 Cell Base Mult, but more importantly, power PF based on Cells (Max effect when Cells >= 1e1,000)",
             unlocked() {return (player["sac"].points.gte(8e6) && hasUpgrade("bacteria", 43))},
-            done() { return (player["sac"].points.gte(8470740) && hasUpgrade("bacteria", 43)) }
+            done() { return (player["sac"].points.gte(8541750) && hasUpgrade("bacteria", 43)) }
         },
         150: {
             requirementDescription: "Sacrifice 50,000,000",

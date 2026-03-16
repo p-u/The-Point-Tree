@@ -610,7 +610,7 @@ addLayer("rebirth", {
         if (hasUpgrade("era", 404)) inscap = 0.23
         softcappedEffect = softcap(softcappedEffect, new Decimal("e5e15"), new Decimal(inscap))
         let omegacap = 0.25
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e1.5e23"), new Decimal(omegacap))
+        softcappedEffect = softcap(softcappedEffect, new Decimal("e1.5e22"), new Decimal(omegacap))
         return softcappedEffect
        },
         effectDescription() {
@@ -628,7 +628,7 @@ addLayer("rebirth", {
             if (layerEffect.gte(new Decimal("e5e15")) ) {
                 softcapDescription = " (Insanitycapped)"
             }
-            if (layerEffect.gte(new Decimal("e1.5e23")) ) {
+            if (layerEffect.gte(new Decimal("e1.5e22")) ) {
                 softcapDescription = " (Omegacapped)"
             }
             let des = "which is boosting point fragments by x" + notationChooser(layerEffect) + softcapDescription
