@@ -3881,5 +3881,10 @@ addLayer("era", {
                 return "blue"
             }
         }
+        for(i=22;i<23;i++){ 
+            if (canBuyBuyable("era", i)) {
+                return "blue"
+            }
+        }
     }
 })
