@@ -3886,5 +3886,12 @@ addLayer("era", {
                 return "blue"
             }
         }
+        for(i=111;i<112;i++){ 
+            if ((hasAchievement('a', 243)) && inChallenge("m", 11)) {
+                if (canBuyBuyable("era", i)) {
+                    return "blue"
+                }
+            }
+        }
     }
 })
