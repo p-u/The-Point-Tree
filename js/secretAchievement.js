@@ -35,8 +35,16 @@ addLayer("sa", {
                 ["achievements", [11, 12, 13, 14, 15, 16, 17, 18, 19]],
             ],
         },
-        "Minigame Infoboxes": {
+        "Minigame Savebanks and Infoboxes": {
             content: [
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "NOTE: ONLY CLICK THIS IF YOU EITHER HAD YOUR SAVE WIPED OR YOU WANT TO REDO THE MINIGAME SECTION OF PT. For (1), only click this button AFTER you've clicked the savebank."
+                        return a
+                    }
+                ],
+                ["clickables", [100]],
                 ["infobox", "main"],
                 "blank",
                 "blank",
@@ -1768,6 +1776,195 @@ addLayer("sa", {
         },
     },
     clickables: {
+        // Minigame Savebanks
+        1001: {
+            title: "Reset Minigame Progress",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116']
+
+                player.sa.minigamePoints = new Decimal(0)
+                player.sa.minigameNum = new Decimal(1)
+                player.sa.upgrades = []
+                player.sa.milestones = []
+                
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+            },
+            canClick: true,
+        },
+        1002: {
+            title: "First 3 rows of achievements complete",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset to first 3 rows of Achievements being completed! Do this if you want to restore your minigame progress after save wipe OR want to experience Minigame again.")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136']
+
+                player.sa.minigamePoints = new Decimal(0)
+                player.sa.minigameNum = new Decimal(1)
+                player.sa.upgrades = []
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+            },
+            canClick: true,
+        },
+        1003: {
+            title: "First 5 rows of achievements complete",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset to first 5 rows of Achievements being completed! Do this if you want to restore your minigame progress after save wipe OR want to experience Minigame again.")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156']
+
+                player.sa.minigamePoints = new Decimal(0)
+                player.sa.minigameNum = new Decimal(1)
+                player.sa.upgrades = []
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+            },
+            canClick: true,
+        },
+        1004: {
+            title: "First 7 rows of achievements complete (NOTE: ZERO MINIGAME POINTS)",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset to first 7 rows of Achievements being completed! Do this if you want to restore your minigame progress after save wipe OR want to experience Minigame again.")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176']
+
+                player.sa.minigamePoints = new Decimal(0)
+                player.sa.minigameNum = new Decimal(1)
+                player.sa.upgrades = []
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+            },
+            canClick: true,
+        },
+        1005: {
+            title: "First 7 rows of achievements complete WITH 10 MINIGAME UPGRADES (NOTE: Only 100,000 MINIGAME POINTS)",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset to first 7 rows of Achievements being completed with 10 Minigame Upgrades! Do this if you want to restore your minigame progress after save wipe OR want to experience Minigame again.")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176']
+
+                player.sa.minigamePoints = new Decimal(100000)
+                player.sa.minigameNum = new Decimal(1)
+                player.sa.upgrades = [11,12,13,14,15,21,22,23,24,25]
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+            },
+            canClick: true,
+        },
+        1006: {
+            title: "First 8 rows of achievements complete WITH ALL MINIGAME UPGRADES (NOTE: Only 100,000 MINIGAME POINTS)",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset/advanced to first 8 rows of Achievements being completed with all Minigame upgrades! Do this if you want to restore your minigame progress after save wipe OR want to experience Minigame again.")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186']
+
+                player.sa.minigamePoints = new Decimal(100000)
+                player.sa.minigameNum = new Decimal(1)
+                player.sa.upgrades = [11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45]
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+            },
+            canClick: true,
+        },
+        1007: {
+            title: "ALL rows of achievements complete WITH ALL MINIGAME UPGRADES, 5 MINIGAME MILESTONES (NOTE: Only 100,000 MINIGAME POINTS)",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset/advanced to ALL rows of Achievements being completed with all Minigame upgrades and 5 Minigame Milestones! Do this if you want to restore your minigame progress after save wipe OR want to experience Minigame again.")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let mX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+                let gX = ['1', '2', '3', '4', '5']
+
+                player.sa.minigamePoints = new Decimal(100000)
+                player.sa.minigameNum = new Decimal(10)
+                player.sa.minigameNum.layer = 30000
+                player.sa.upgrades = [11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45]
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+
+                // Then add gX
+                player.sa.milestones.push(...gX)
+            },
+            canClick: true,
+        },
+        1008: {
+            title: "ALL rows of achievements complete WITH ALL MINIGAME UPGRADES, 11 MINIGAME MILESTONES (NOTE: Only 100,000 MINIGAME POINTS)",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset/advanced to ALL rows of Achievements being completed with all Minigame upgrades and 11 Minigame Milestones! Do this if you want to restore your minigame progress after save wipe")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let mX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+                let gX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+
+                player.sa.minigamePoints = new Decimal(100000)
+                player.sa.minigameNum = new Decimal(10)
+                player.sa.minigameNum.layer = 2e8
+                player.sa.upgrades = [11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45]
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+
+                // Then add gX
+                player.sa.milestones.push(...gX)
+            },
+            canClick: true,
+        },
+        1009: {
+            title: "MINIGAME TRUE COMPLETION",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset/advanced to ALL rows of Achievements being completed with all Minigame upgrades and 16 Minigame Milestones! Do this if you want to restore your minigame progress after save wipe")) return;
+                let tX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let pX = ['111', '112', '113', '114', '115', '116', '121', '122', '123', '124', '125', '126', '131', '132', '133', '134', '135', '136', '141', '142', '143', '144', '145', '146', '151', '152', '153', '154', '155', '156', '161', '162', '163', '164', '165', '166', '171', '172', '173', '174', '175', '176', '181', '182', '183', '184', '185', '186', '191', '192', '193', '194', '195', '196']
+                let mX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+                let gX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+
+                player.sa.minigamePoints = new Decimal(100000)
+                player.sa.minigameNum = new Decimal(10)
+                player.sa.minigameNum.layer = 1e308
+                player.sa.upgrades = [11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45]
+                player.sa.milestones = []
+                // Remove all tX values from the array
+                player.sa.achievements = player.sa.achievements.filter(x => !tX.includes(x))
+
+                // Then add pX
+                player.sa.achievements.push(...pX)
+
+                // Then add gX
+                player.sa.milestones.push(...gX)
+            },
+            canClick: true,
+        },
         11: {
             title(){
                 title = notationChooserMinigame(player[this.layer].minigameNum)

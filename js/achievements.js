@@ -34,6 +34,13 @@ addLayer("a", {
         },
         "Savebank": {
             content: [
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "For those who lost their saves. If you have progress on the minigame, go to the SA layer and choose from one of the 9 savebanks AFTER YOU HAVE IMPORTED YOUR PROGRESSION SAVE. Savebanks below assume you do not have any Minigame progress."
+                        return a
+                    }
+                ],
                 ["clickables", [1, 2, 3, 4, 5]],
             ],
         },
