@@ -2270,7 +2270,7 @@ addLayer("sa", {
         },
         34: {
             title: "x(-1)",
-            canClick() {return (!(hasMilestone("sa", 16)))},
+            canClick() {return (!(hasMilestone("sa", 16))) && (player.sa.minigameNum.add(1).slog().mag < 2.5)},
             onClick() {
                 if (player.sa.minigameNum.add(1).slog().mag < 2.5) {
                     player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
