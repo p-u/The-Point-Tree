@@ -397,7 +397,7 @@ addLayer("st", {
             unlocked() { return player["st"].points.gte(23)}
         },
         25: {
-            requirementDescription: "Star Tier 25",
+            requirementDescription: "Star Tier 25 [30/40]",
             effectDescription() {
                 let st25e = new Decimal(0.98)
                 if (hasUpgrade("st", 44)) st25e = new Decimal(0.984)
