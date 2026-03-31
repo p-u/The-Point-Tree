@@ -896,9 +896,9 @@ addLayer("sa", {
             }
         },
         131: {
-            name: "Reach 0.6328125",
+            name: "Reach 207480.25 (829921/4)",
             done() {
-                   if ((player.sa.minigameNum.gte(0.632812)) && (player.sa.minigameNum.lte(0.632813))) {
+                   if ((player.sa.minigameNum.gte(207480.249)) && (player.sa.minigameNum.lte(207480.251))) {
                        return true
                    }
                },
@@ -912,9 +912,9 @@ addLayer("sa", {
             },
         },
         132: {
-            name: "Reach 0.134765625",
+            name: "Reach 512.4375 (8199/16)",
             done() {
-                   if ((player.sa.minigameNum.gte(0.13476562)) && (player.sa.minigameNum.lte(0.13476563))) {
+                   if ((player.sa.minigameNum.gte(512.4374)) && (player.sa.minigameNum.lte(512.4376))) {
                     if (hasAchievement("sa", 131)) {
                         return true
                     }
@@ -933,9 +933,9 @@ addLayer("sa", {
             }
         },
         133: {
-            name: "Reach 446.34375",
+            name: "Reach 209960100",
             done() {
-                   if ((player.sa.minigameNum.gte(446.3437)) && (player.sa.minigameNum.lte(446.3438))) {
+                   if ((player.sa.minigameNum.gte(209960099)) && (player.sa.minigameNum.lte(209960101))) {
                     if (hasAchievement("sa", 132)) {
                         return true
                     }
@@ -1397,9 +1397,9 @@ addLayer("sa", {
             }
         },
         171: {
-            name: "Less Button Press 1 (LBP1): Get 8436.57 in less than 5 button presses",
+            name: "Less Button Press 1 (LBP1): Get 207480.25 (829921/4) in less than 4 button presses",
             done() {
-                   if ((player.sa.minigameNum.gt(8436.57)) && (player.sa.minigameNum.lt(8436.58)) && (player.sa.bp.lt(5))) {
+                   if ((player.sa.minigameNum.gt(207480.249)) && (player.sa.minigameNum.lt(207480.251)) && (player.sa.bp.lt(4))) {
                     if (hasAchievement("sa", 166)) {
                         return true
                     }
@@ -1418,9 +1418,9 @@ addLayer("sa", {
             }
         },
         172: {
-            name: "LBP2: Get 277585344 in less than 7 button presses",
+            name: "LBP2: Get 512.4375 (8199/16) in less than 6 button presses",
             done() {
-                   if ((player.sa.minigameNum.gt(277585343.999)) && (player.sa.minigameNum.lt(277585344.001)) && (player.sa.bp.lt(7))) {
+                   if ((player.sa.minigameNum.gt(512.4374)) && (player.sa.minigameNum.lt(512.4376)) && (player.sa.bp.lt(6))) {
                     if (hasAchievement("sa", 171)) {
                         return true
                     }
@@ -1439,9 +1439,9 @@ addLayer("sa", {
             }
         },
         173: {
-            name: "LBP3: Get 5075.57 (+-0.002) in less than 7 button presses",
+            name: "LBP3: Get 209960100 in less than 6 button presses",
             done() {
-                   if ((player.sa.minigameNum.gt(5075.57)) && (player.sa.minigameNum.lt(5075.572)) && (player.sa.bp.lt(7))) {
+                   if ((player.sa.minigameNum.gt(209960099)) && (player.sa.minigameNum.lt(209960101)) && (player.sa.bp.lt(6))) {
                     if (hasAchievement("sa", 172)) {
                         return true
                     }
@@ -2270,8 +2270,12 @@ addLayer("sa", {
         },
         34: {
             title: "x(-1)",
-            canClick() {return (!(hasMilestone("sa", 17))) && (player.sa.minigameNum.add(1).slog().mag < 3)},
+            canClick() {
+                if (player.sa.minigameNum.add(1).lte(0)) return false
+                return (!(hasMilestone("sa", 17))) && (player.sa.minigameNum.add(1).slog().mag < 3)
+            },
             onClick() {
+                if (player.sa.minigameNum.add(1).lte(0)) return
                 if (player.sa.minigameNum.add(1).slog().mag < 3) {
                     player[this.layer].minigameNum = player[this.layer].minigameNum.times(-1)
                     player[this.layer].bp = player[this.layer].bp.add(1)
@@ -3254,132 +3258,142 @@ addLayer("sa", {
         },
     },
     update(diff) {
-        player.sa.minigamePtsMult = new Decimal(1)
-        if (hasUpgrade("sa", 15)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(2.25)
-        if (hasUpgrade("sa", 24)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(2.9)
-        if (hasUpgrade("sa", 25)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(5)
-        if (hasUpgrade("sa", 34)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(14)
-        if (hasUpgrade("sa", 35)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(5)
-        if (hasMilestone("sa", 5)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(10)
-        if (hasMilestone("sa", 6)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(100)
-        if (hasMilestone("sa", 7)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(1000)
-        if (hasUpgrade("sa", 21)) {
-            if (player.sa.minigamePoints.lt(99999)) {
-                player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(5)
-            }
-            if (player.sa.minigamePoints.lt(999999)) {
-                player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(3)
-            }
-            if (hasUpgrade("sa", 23)) {
-                if (player.sa.minigamePoints.lt(9999999)) {
+        if (player.sa.minigameNum.gt(-1)) {
+            player.sa.minigamePtsMult = new Decimal(1)
+            if (hasUpgrade("sa", 15)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(2.25)
+            if (hasUpgrade("sa", 24)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(2.9)
+            if (hasUpgrade("sa", 25)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(5)
+            if (hasUpgrade("sa", 34)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(14)
+            if (hasUpgrade("sa", 35)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(5)
+            if (hasMilestone("sa", 5)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(10)
+            if (hasMilestone("sa", 6)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(100)
+            if (hasMilestone("sa", 7)) player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(1000)
+            if (hasUpgrade("sa", 21)) {
+                if (player.sa.minigamePoints.lt(99999)) {
+                    player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(5)
+                }
+                if (player.sa.minigamePoints.lt(999999)) {
                     player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(3)
                 }
-            }
-        }
-        if (hasUpgrade("sa", 22)) {
-            player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(Math.max(player.points.add(1).slog(), 2))
-        }
-        if (hasUpgrade("sa", 11) && (!(hasMilestone("sa", 17)))) {
-            let expopow = new Decimal(200000)
-            let minigameinc = new Decimal(0)
-            let egain = 0
-            let mult = 0
-            let butdiv = 1
-            if (hasMilestone("sa", 12)) mult = 1
-            if (hasMilestone("sa", 11)) {
-                mult = mult * (Math.max(player.points.add(1).slog(), 2)/50)+1
-                mult = mult * (Math.max(player.sa.minigamePoints.add(1).slog(), 1)/15)+1
-                mult = mult * 1.8
-            }
-            if (hasMilestone("sa", 12)) mult = mult * 1.5
-            if (hasMilestone("sa", 13)) mult = mult * 2
-            if (hasMilestone("sa", 14)) mult = mult * 1.75
-            if (hasMilestone("sa", 15)) mult = mult * 1.2
-            if (hasUpgrade("sa", 24)) minigameinc = new Decimal(3)
-            if (hasUpgrade("sa", 25)) minigameinc = new Decimal(15) 
-            if (hasUpgrade("sa", 34)) minigameinc = new Decimal(25) 
-            if (hasUpgrade("sa", 35)) minigameinc = new Decimal(35) 
-            if (hasUpgrade("sa", 41)) minigameinc = new Decimal(50) 
-            if (hasUpgrade("sa", 13)) {
-                player.sa.baseUpdateFreq = new Decimal(0.90)
-                expopow = new Decimal(1800000)
-            }
-            if (hasUpgrade("sa", 21)) {
-                player.sa.baseUpdateFreq = new Decimal(0.75)
-                expopow = new Decimal(10000000)
-            }
-            if (hasUpgrade("sa", 22)) {
-                player.sa.baseUpdateFreq = new Decimal(0.6)
-                expopow = new Decimal(40000000)
-            }
-            if (hasUpgrade("sa", 24)) {
-                player.sa.baseUpdateFreq = new Decimal(0.5)
-                expopow = new Decimal(500e6)
-            }
-            if (hasUpgrade("sa", 33)) {
-                player.sa.baseUpdateFreq = new Decimal(0.25)
-                expopow = new Decimal(1e19)
-            }
-            if (hasUpgrade("sa", 34)) {
-                player.sa.baseUpdateFreq = new Decimal(0.2)
-                expopow = new Decimal(1e29)
-            }
-            if (hasUpgrade("sa", 35)) {
-                player.sa.baseUpdateFreq = new Decimal(0.1)
-                expopow = new Decimal(1e49)
-            }
-            if (hasUpgrade("sa", 41)) {
-                player.sa.baseUpdateFreq = new Decimal(0.05)
-                expopow = new Decimal(1e111)
-            }
-            if (hasUpgrade("sa", 42)) {
-                expopow = new Decimal("1e500")
-            }
-            if (hasUpgrade("sa", 43)) {
-                expopow = new Decimal("1e11111")
-            }
-            if (hasUpgrade("sa", 44)) {
-                expopow = new Decimal("e2e9")
-            }
-            if (hasMilestone("sa", 6)) {
-                player.sa.baseUpdateFreq = new Decimal(0.05)
-                egain = 1/200
-            }
-            if (hasMilestone("sa", 7)) {
-                egain = 1/20
-            }
-            if (hasMilestone("sa", 8)) {
-                egain = 1/4
-            }
-            if (hasMilestone("sa", 9)) {
-                egain = 2
-            }
-            if (hasMilestone("sa", 10)) {
-                egain = 200
-            }
-            if (hasMilestone("sa", 11)) {
-                egain = 60000
-            }
-            if (hasMilestone("sa", 13)) {
-                butdiv = 4
-            }
-            if (hasMilestone("sa", 14)) {
-                butdiv = 5
-            }
-            player.sa.updateFreq = player.sa.updateFreq.sub(diff)
-            if (player.sa.updateFreq.lt(0)) {
-                player.sa.minigameNum = player.sa.minigameNum.pow(new Decimal(10).pow(expopow))
-                player.sa.minigamePoints = player.sa.minigamePoints.add(minigameinc.mul(player.sa.minigamePtsMult))
-                player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer + egain
-                if (hasMilestone("sa", 12)) {
-                    if (player.sa.minigameNum.layer < 1e308) {
-                        player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer * (1 + (0.000005 * mult / (20 / butdiv)))
+                if (hasUpgrade("sa", 23)) {
+                    if (player.sa.minigamePoints.lt(9999999)) {
+                        player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(3)
                     }
                 }
-                player.sa.updateFreq = player.sa.baseUpdateFreq
+            }
+            if (hasUpgrade("sa", 22)) {
+                player.sa.minigamePtsMult = player.sa.minigamePtsMult.mul(Math.max(player.points.add(1).slog(), 2))
+            }
+            if (hasUpgrade("sa", 11) && (!(hasMilestone("sa", 17)))) {
+                let expopow = new Decimal(200000)
+                let minigameinc = new Decimal(0)
+                let egain = 0
+                let mult = 0
+                let butdiv = 1
+                if (hasMilestone("sa", 12)) mult = 1
+                if (hasMilestone("sa", 11)) {
+                    mult = mult * (Math.max(player.points.add(1).slog(), 2)/50)+1
+                    mult = mult * (Math.max(player.sa.minigamePoints.add(1).slog(), 1)/15)+1
+                    mult = mult * 1.8
+                }
+                if (hasMilestone("sa", 12)) mult = mult * 1.5
+                if (hasMilestone("sa", 13)) mult = mult * 2
+                if (hasMilestone("sa", 14)) mult = mult * 1.75
+                if (hasMilestone("sa", 15)) mult = mult * 1.2
+                if (hasUpgrade("sa", 24)) minigameinc = new Decimal(3)
+                if (hasUpgrade("sa", 25)) minigameinc = new Decimal(15) 
+                if (hasUpgrade("sa", 34)) minigameinc = new Decimal(25) 
+                if (hasUpgrade("sa", 35)) minigameinc = new Decimal(35) 
+                if (hasUpgrade("sa", 41)) minigameinc = new Decimal(50) 
+                if (player.sa.minigameNum.add(1).gt(0)) {
+                    minigameinc = new Decimal(2).pow(player.sa.minigameNum.add(1).slog().pow(player.sa.minigameNum.add(1).slog().div(15).add(1))).div(4e15)
+                }
+                if (hasUpgrade("sa", 13)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.90)
+                    expopow = new Decimal(1800000)
+                }
+                if (hasUpgrade("sa", 21)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.75)
+                    expopow = new Decimal(10000000)
+                }
+                if (hasUpgrade("sa", 22)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.6)
+                    expopow = new Decimal(40000000)
+                }
+                if (hasUpgrade("sa", 24)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.5)
+                    expopow = new Decimal(500e6)
+                }
+                if (hasUpgrade("sa", 33)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.25)
+                    expopow = new Decimal(1e19)
+                }
+                if (hasUpgrade("sa", 34)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.2)
+                    expopow = new Decimal(1e29)
+                }
+                if (hasUpgrade("sa", 35)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.1)
+                    expopow = new Decimal(1e49)
+                }
+                if (hasUpgrade("sa", 41)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.05)
+                    expopow = new Decimal(1e111)
+                }
+                if (hasUpgrade("sa", 42)) {
+                    expopow = new Decimal("1e500")
+                }
+                if (hasUpgrade("sa", 43)) {
+                    expopow = new Decimal("1e11111")
+                }
+                if (hasUpgrade("sa", 44)) {
+                    expopow = new Decimal("e2e9")
+                }
+                if (player.sa.minigameNum.add(1).gt(0)) {
+                    player.sa.baseUpdateFreq = new Decimal(1).div(new Decimal(1).add(player.sa.minigameNum.add(1).slog().mag / 5))
+                }
+                if (hasMilestone("sa", 6)) {
+                    player.sa.baseUpdateFreq = new Decimal(0.05)
+                    egain = 1/200
+                }
+                if (hasMilestone("sa", 7)) {
+                    egain = 1/20
+                }
+                if (hasMilestone("sa", 8)) {
+                    egain = 1/4
+                }
+                if (hasMilestone("sa", 9)) {
+                    egain = 2
+                }
+                if (hasMilestone("sa", 10)) {
+                    egain = 200
+                }
+                if (hasMilestone("sa", 11)) {
+                    egain = 60000
+                }
+                if (hasMilestone("sa", 13)) {
+                    butdiv = 4
+                }
+                if (hasMilestone("sa", 14)) {
+                    butdiv = 5
+                }
+                player.sa.updateFreq = player.sa.updateFreq.sub(diff)
+                if (player.sa.updateFreq.lt(0)) {
+                    if (player.sa.minigameNum.gte(0)) player.sa.minigameNum = player.sa.minigameNum.pow(new Decimal(10).pow(expopow))
+                    player.sa.minigamePoints = player.sa.minigamePoints.add(minigameinc.mul(player.sa.minigamePtsMult))
+                    player.sa.minigameNum = Decimal.fromComponents(player.sa.minigameNum.sign, player.sa.minigameNum.layer + egain, player.sa.minigameNum.mag)
+                    if (hasMilestone("sa", 12)) {
+                        if (player.sa.minigameNum.layer < 1e308) {
+                            player.sa.minigameNum = Decimal.fromComponents(player.sa.minigameNum.sign, player.sa.minigameNum.layer * (1 + (0.000005 * mult / (20 / butdiv))), player.sa.minigameNum.mag)
+                        }
+                    }
+                    player.sa.updateFreq = player.sa.baseUpdateFreq
+                }
             }
         }
+        if (isNaN(player.sa.minigameNum.mag) || isNaN(player.sa.minigameNum.layer)) player.sa.minigameNum = new Decimal(1)
         if (player.sa.minigameNum.layer == "NaN") player.sa.minigameNum = new Decimal(1)
+        if (player.sa.minigamePoints.layer == "NaN") player.sa.minigamePoints = new Decimal(1)
     },
     infoboxes: {
         sa: {
