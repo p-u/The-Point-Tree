@@ -340,9 +340,9 @@ addLayer("rng", {
             unlocked() {return hasMilestone("rng",2)}
         },
         4: {
-            requirementDescription: "The Fourth RNG Milestone (Requires Best RarityID: 19)",
+            requirementDescription: "The Fourth RNG Milestone (Requires Best RarityID: 18)",
             effectDescription: "Rolling cooldown is halfed, and RNG Points is doubled.",
-            done() { return player.rng.maxidx >= 19 },
+            done() { return player.rng.maxidx >= 18 },
             unlocked() {return hasMilestone("rng",3)}
         },
         5: {
@@ -358,33 +358,33 @@ addLayer("rng", {
             unlocked() {return hasMilestone("rng",5)}
         },
         7: {
-            requirementDescription: "The Seventh RNG Milestone (Requires Best RarityID: 51)",
+            requirementDescription: "The Seventh RNG Milestone (Requires Best RarityID: 50)",
             effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!] Luck Buyable 1 costs nothing.",
-            done() { return player.rng.maxidx >= 51 },
+            done() { return player.rng.maxidx >= 50 },
             unlocked() {return hasMilestone("rng",6)}
         },
         8: {
-            requirementDescription: "The Eighth RNG Milestone (Requires Best RarityID: 177, what?)",
+            requirementDescription: "The Eighth RNG Milestone (Requires Best RarityID: 176, what?)",
             effectDescription: "Rarity scaling is decreased (from x2.9 per rarity to x2.8 per rarity). Also, x0.75 roll cooldown.",
-            done() { return player.rng.maxidx >= 177 },
+            done() { return player.rng.maxidx >= 176 },
             unlocked() {return hasMilestone("rng",7)}
         },
         9: {
-            requirementDescription: "The Ninth RNG Milestone (Requires Best RarityID: 225)",
+            requirementDescription: "The Ninth RNG Milestone (Requires Best RarityID: 223)",
             effectDescription: "^1.1 Luck, and Autobuy Luck Buyable 1",
-            done() { return player.rng.maxidx >= 225 },
+            done() { return player.rng.maxidx >= 223 },
             unlocked() {return hasMilestone("rng", 8)}
         },
         10: {
-            requirementDescription: "The Tenth RNG Milestone (Requires Best RarityID: 376)",
+            requirementDescription: "The Tenth RNG Milestone (Requires Best RarityID: 375)",
             effectDescription: "Luck Buyable 1 and 2's effect is boosted.",
-            done() { return player.rng.maxidx >= 376 },
+            done() { return player.rng.maxidx >= 375 },
             unlocked() {return hasMilestone("rng", 9)}
         },
         11: {
-            requirementDescription: "The 11th RNG Milestone (Requires Best RarityID: 475)",
+            requirementDescription: "The 11th RNG Milestone (Requires Best RarityID: 474)",
             effectDescription: "The cost formula of ALL LUCK BUYABLES are nerfed. Luck Buyable 2 costs nothing.",
-            done() { return player.rng.maxidx >= 475 },
+            done() { return player.rng.maxidx >= 474 },
             unlocked() {return hasMilestone("rng", 10)}
         },
         12: {
@@ -394,81 +394,81 @@ addLayer("rng", {
             unlocked() {return hasMilestone("rng", 11)}
         },
         13: {
-            requirementDescription: "The 13th RNG Milestone (Requires Best RarityID: 1054)",
+            requirementDescription: "The 13th RNG Milestone (Requires Best RarityID: 1052)",
             effectDescription: "RNG Points/rarity scaling is increased. Rarity scaling is also decreased",
-            done() { return player.rng.maxidx >= 1054 },
+            done() { return player.rng.maxidx >= 1052 },
             unlocked() {return hasMilestone("rng", 12)}
         },
         14: {
-            requirementDescription: "The 14th RNG Milestone (Requires Best RarityID: 1484)",
+            requirementDescription: "The 14th RNG Milestone (Requires Best RarityID: 1482)",
             effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!]. ps all buyables' effect is softcapped at 1,000 buys and hardcapped at 2,000 buys. Luck Buyable 3 costs nothing.",
-            done() { return player.rng.maxidx >= 1484 },
+            done() { return player.rng.maxidx >= 1482 },
             unlocked() {return hasMilestone("rng",13)}
         },
         15: {
-            requirementDescription: "The 15th RNG Milestone (Requires Best RarityID: 3369)",
+            requirementDescription: "The 15th RNG Milestone (Requires Best RarityID: 3367)",
             effectDescription: "^1.05 Luck and x10B RNG Points. Autobuy Luck Buyable 3.",
-            done() { return player.rng.maxidx >= 3369 },
+            done() { return player.rng.maxidx >= 3367 },
             unlocked() {return hasMilestone("rng",14)}
         },
         16: {
-            requirementDescription: "The 16th RNG Milestone (Requires Best RarityID: 5070)",
+            requirementDescription: "The 16th RNG Milestone (Requires Best RarityID: 5069)",
             effectDescription: "Luck is boosted by RNG Points.",
-            done() { return player.rng.maxidx >= 5070 },
+            done() { return player.rng.maxidx >= 5069 },
             unlocked() {return hasMilestone("rng",15)}
         },
         17: {
-            requirementDescription: "The 17th RNG Milestone (Requires Best RarityID: 6974)",
+            requirementDescription: "The 17th RNG Milestone (Requires Best RarityID: 6970)",
             effectDescription: "Rarity scaling is decreased dramatically. ",
-            done() { return player.rng.maxidx >= 6974 },
+            done() { return player.rng.maxidx >= 6970 },
             unlocked() {return hasMilestone("rng",16)}
         },
         18: {
-            requirementDescription: "The 18th RNG Milestone (Requires Best RarityID: 10,610)",
+            requirementDescription: "The 18th RNG Milestone (Requires Best RarityID: 10,608)",
             effectDescription: "RNG Points is boosted by luck. Luck Buyable 4 costs nothing.",
-            done() { return player.rng.maxidx >= 10610 },
+            done() { return player.rng.maxidx >= 10608 },
             unlocked() {return hasMilestone("rng",17)}
         },
         19: {
-            requirementDescription: "The 19th RNG Milestone (Requires Best RarityID: 14,975)",
+            requirementDescription: "The 19th RNG Milestone (Requires Best RarityID: 14,970)",
             effectDescription: "Luck is boosted by RNG. Also ^1.1 Luck.",
-            done() { return player.rng.maxidx >= 14975 },
+            done() { return player.rng.maxidx >= 14970 },
             unlocked() {return hasMilestone("rng",18)}
         },
         20: {
-            requirementDescription: "The 20th RNG Milestone (Requires Best RarityID: 22,961)",
+            requirementDescription: "The 20th RNG Milestone (Requires Best RarityID: 22,957)",
             effectDescription: "The 13th RNG Milestone but to an insane level. Roll cooldown is 0.01s. Autobuy Luck Buyable 4.",
-            done() { return player.rng.maxidx >= 22961 },
+            done() { return player.rng.maxidx >= 22957 },
             unlocked() {return hasMilestone("rng",19)}
         },
         21: {
-            requirementDescription: "The 21st RNG Milestone (Requires Best RarityID: 45,676)",
+            requirementDescription: "The 21st RNG Milestone (Requires Best RarityID: 45,665)",
             effectDescription: "The cap of Luck Buyables 1-3 is no longer 2,000! ^1.2 Luck.",
-            done() { return (player.rng.maxidx >= 45676 && hasAchievement("a", 241)) },
+            done() { return (player.rng.maxidx >= 45665 && hasAchievement("a", 241)) },
             unlocked() {return (hasMilestone("rng",20) && hasAchievement("a", 241))}
         },
         22: {
-            requirementDescription: "The 22nd RNG Milestone (Requires Best RarityID: 60,211)",
+            requirementDescription: "The 22nd RNG Milestone (Requires Best RarityID: 60,205)",
             effectDescription: "Unlock Luck Buyable 5",
-            done() { return (player.rng.maxidx >= 60211 && hasAchievement("a", 251)) },
+            done() { return (player.rng.maxidx >= 60205 && hasAchievement("a", 251)) },
             unlocked() {return (hasMilestone("rng",21) && hasAchievement("a", 251))}
         },
         23: {
-            requirementDescription: "The 23rd RNG Milestone (Requires Best RarityID: 93,000)",
+            requirementDescription: "The 23rd RNG Milestone (Requires Best RarityID: 92,992)",
             effectDescription: "Luck Buyable 5 scales slower",
-            done() { return (player.rng.maxidx >= 93000 && hasAchievement("a", 261)) },
+            done() { return (player.rng.maxidx >= 92992 && hasAchievement("a", 261)) },
             unlocked() {return (hasMilestone("rng",22) && hasAchievement("a", 261))}
         },
         24: {
-            requirementDescription: "The 24th RNG Milestone (Requires Best RarityID: 128,650)",
+            requirementDescription: "The 24th RNG Milestone (Requires Best RarityID: 128,642)",
             effectDescription: "Luck Buyable 1 is WAY STRONGER!",
-            done() { return (player.rng.maxidx >= 128650 && hasAchievement("a", 271)) },
+            done() { return (player.rng.maxidx >= 128642 && hasAchievement("a", 271)) },
             unlocked() {return (hasMilestone("rng",23) && hasAchievement("a", 271))}
         },
         25: {
-            requirementDescription: "The FINAL RNG Milestone (Requires Best RarityID: 238,360)",
-            effectDescription: "Luck Buyable 5 scales slower and is stronger. It also takes away no RNG Points. (ENDGAMES: 411,333 [NORMAL], 411,422 [ABSOLUTE TRUE]",
-            done() { return (player.rng.maxidx >= 238360 && hasAchievement("a", 281)) },
+            requirementDescription: "The FINAL RNG Milestone (Requires Best RarityID: 238,350)",
+            effectDescription: "Luck Buyable 5 scales slower and is stronger. It also takes away no RNG Points. (ENDGAMES: 411,333 [NORMAL], 411,411 [ABSOLUTE TRUE]",
+            done() { return (player.rng.maxidx >= 238350 && hasAchievement("a", 281)) },
             unlocked() {return (hasMilestone("rng",24) && hasAchievement("a", 281))}
         },
     },

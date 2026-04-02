@@ -954,9 +954,9 @@ addLayer("sa", {
             }
         },
         134: {
-            name: "Reach 3.74897119 [some buffer] {When all previous achievements are done, Unlock The LAST HARD ACHIEVEMENT.}",
+            name: "Reach 82.630 [6sf] (6693/81) {When all previous achievements are done, Unlock The LAST HARD ACHIEVEMENT.}",
             done() {
-                if ((player.sa.minigameNum.gte(3.74897)) && (player.sa.minigameNum.lte(3.748972))) {
+                if ((player.sa.minigameNum.gte(82.629)) && (player.sa.minigameNum.lte(82.631))) {
                     if (hasAchievement("sa", 133)) {
                         return true
                     }
@@ -1427,7 +1427,7 @@ addLayer("sa", {
                    }
                },
             tooltip() {
-                if (hasAchievement('sa', 172)) {
+                if (!hasAchievement('sa', 172)) {
                     return "Reward: Add 2 buttons"
                 }
                 else {
@@ -1460,16 +1460,16 @@ addLayer("sa", {
             }
         },
         174: {
-            name: "LBP4: Get 1718664748210526 (+-1) in less than 8 button presses",
+            name: "LBP4: Get 82.630 [5sf] (6693/81) in less than 7 button presses",
             done() {
-                   if ((player.sa.minigameNum.gt(1718664748210526)) && (player.sa.minigameNum.lt(1718664748210527)) && (player.sa.bp.lt(8))) {
+                   if ((player.sa.minigameNum.gt(82.629)) && (player.sa.minigameNum.lt(82.631)) && (player.sa.bp.lt(7))) {
                     if (hasAchievement("sa", 173)) {
                         return true
                     }
                    }
                },
             tooltip() {
-                if (hasAchievement('sa', 174)) {
+                if (!hasAchievement('sa', 174)) {
                     return "Add 2 more buttons :)"
                 }
                 else {
@@ -1481,9 +1481,9 @@ addLayer("sa", {
             }
         },
         175: {
-            name: "LBP5: Get 1.621683e16 in less than 9 button presses",
+            name: "LBP5: Get 1.658207 Oc [e27] in less than 7 button presses",
             done() {
-                   if ((player.sa.minigameNum.gt(1.621683e16)) && (player.sa.minigameNum.lt(1.621684e16)) && (player.sa.bp.lt(9))) {
+                   if ((player.sa.minigameNum.gt(1.658206e27)) && (player.sa.minigameNum.lt(1.658208e27)) && (player.sa.bp.lt(7))) {
                     if (hasAchievement("sa", 174)) {
                         return true
                     }
@@ -1502,9 +1502,9 @@ addLayer("sa", {
             }
         },
         176: {
-            name: "LBP6: Get 2.423357e58 in less than 10 button presses",
+            name: "LBP6: Get 3.5643742e23 in less than 8 button presses",
             done() {
-                   if ((player.sa.minigameNum.gt(2.423356e58)) && (player.sa.minigameNum.lt(2.423358e58)) && (player.sa.bp.lt(10))) {
+                   if ((player.sa.minigameNum.gt(3.56437415e23)) && (player.sa.minigameNum.lt(3.56437425e23)) && (player.sa.bp.lt(8))) {
                     if (hasAchievement("sa", 175)) {
                         return true
                     }
@@ -2575,9 +2575,9 @@ addLayer("sa", {
                 player[this.layer].bp = player[this.layer].bp.add(1)
                 if (hasAchievement("sa", 176)) { player[this.layer].minigamePoints = player[this.layer].minigamePoints.add(new Decimal(2).mul(player.sa.minigamePtsMult)) }
             },
-            unlocked() {return hasAchievement("sa", 172)},
+            unlocked() {return hasAchievement("sa", 174)},
             onHold() {
-                player[this.layer].minigameNum = player[this.layer].minigameNum.div(3)
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(99)
                 player[this.layer].bp = player[this.layer].bp.add(1)
                 if (hasAchievement("sa", 176)) { player[this.layer].minigamePoints = player[this.layer].minigamePoints.add(new Decimal(2).mul(player.sa.minigamePtsMult)) }
             }
@@ -2609,7 +2609,7 @@ addLayer("sa", {
                     if (hasUpgrade("sa", 35)) player[this.layer].minigamePoints = player[this.layer].minigamePoints.add(new Decimal(100).mul(player.sa.minigamePtsMult))
                 }
             },
-            unlocked() {return hasAchievement("sa", 174)},
+            unlocked() {return hasAchievement("sa", 172)},
             onHold() {
                 if (player[this.layer].minigameNum.gte(0)) {
                     player[this.layer].minigameNum = player[this.layer].minigameNum.pow(0.5)
