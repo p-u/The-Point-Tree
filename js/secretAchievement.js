@@ -3304,10 +3304,7 @@ addLayer("sa", {
                 if (hasUpgrade("sa", 25)) minigameinc = new Decimal(15) 
                 if (hasUpgrade("sa", 34)) minigameinc = new Decimal(25) 
                 if (hasUpgrade("sa", 35)) minigameinc = new Decimal(35) 
-                if (hasUpgrade("sa", 41)) minigameinc = new Decimal(50) 
-                if (player.sa.minigameNum.add(1).gt(0)) {
-                    minigameinc = new Decimal(2).pow(player.sa.minigameNum.add(1).slog().pow(player.sa.minigameNum.add(1).slog().div(15).add(1))).div(4e15)
-                }
+                if (hasUpgrade("sa", 41)) minigameinc = new Decimal(50)
                 if (hasUpgrade("sa", 13)) {
                     player.sa.baseUpdateFreq = new Decimal(0.90)
                     expopow = new Decimal(1800000)
