@@ -954,7 +954,7 @@ addLayer("sac", {
         150: {
             requirementDescription: "Sacrifice 50,000,000",
             effectDescription: "Unlock another layer.",
-            unlocked() {return player["era"].points.gte(10e6)},
+            unlocked() {return player["era"].points.gte(4)},
             done() { return player["sac"].points.gte(1e100) }
         },
     },
