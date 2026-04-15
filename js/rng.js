@@ -1,3 +1,33 @@
+function roll() {
+    const rarityList = ["Worst", "Trash", "Horrendous", "Bad", "Un-unique", "Common", "Dull", "Fundemental", "Typical", "Basic", "Average", "Natural", "Uncommon", "Distinct", "Unusual", "Ordinary", "Rare", "Great", "Very Rare", "Advanced", "Epic", "Remarkable", "Amazing", "Exceptional", "Near-perfect", "Pristine", "Perfection", "Legendary", "Jackpot", "Mythical", "Fabled", "Radiant", "Royal", "Godly", "Heroic", "Superhero", "Deity", "Exotic", "Glorious", "Super", "Mega", "Ultra", "Supreme", "Divine", "Ultima", "Extreme", "Celestial", "Ascended", "Transcended", "Ruler", "King", "Emperor", "Champion", "Master", "Lord", "Monarch", "Overseer", "Heavenly", "Demonic", "Monstrous", "Draconic", "Phoenix", "Ghost", "Hidden", "Invisible", "Gas", "Plasma", "Ancient", "Futuristic", "Coal", "Iron", "Silver", "Nickel", "Copper", "Aluminium", "Tin", "Gold", "Cobalt", "Diamond", "Platinum", "Emerald", "Ruby", "Sapphire", "Quartz", "Titanium", "Opal", "Pyrite", "Iridium", "Cinnabar", "Antimony", "Uranium", "Plutonium", "Americium", "Galaxium", "Stardust", "Cosmic", "Astral", "Solar", "Lunar", "Eclipse", "Nebula", "Star", "Galactic", "Supernova", "Pulsar", "Quasar", "Galaxy Cluster", "Galaxy Supercluster", "Universe", "Multiverse", "Omniverse", "Sacred", "Blessed", "Ethereal", "Miracle", "Abyssal", "Quantum", "Eternal", "Forsaken", "Superior", "Life-changing", "Infinite", "Absolute", "Cataclysmic", "Oblivion", "Apocalyptic", "Hell", "Traumatic", "Unstable", "Wraith", "Catastrophic", "Immortal", "Mirage", "Unreal", "Unmatched", "Godforsaken", "Omniscient","Theoretical","Immeasurable","Alpha", "Beta", "Omega", "Ascendent", "Genesis", "Monolith", "Apex", "Pinnacle", "Reality", "Timeless", "Beyond"]
+    const preNames = ["", "True", "Powerful", "Absolute", "Absurd", "Prime", "Hyper", "Final", "Gilded", "Proto", "Meta", "Meteoric", "Liminal", "Indescribable", "Unfathomable", "Undefined", "Chromatic", "Arch", "Unbound", "Zenith", "Origin", "Void", "Omnipotent", "Godlike", "Exalted"] // 25 pre-Names
+    player.rng.rng = new Decimal(1).div(Math.random())
+    if (!(hasMilestone("rng", 19))) {
+        player.rng.rng = player.rng.rng.mul(player.rng.luck)
+    } else {
+        let rngadd = Math.random()
+        let minigameMulti = 1
+        if (hasMilestone("sa", 14)) minigameMulti = 1.1
+        if (hasMilestone("sa", 15)) minigameMulti = 1.3
+        if (hasMilestone("sa", 16)) minigameMulti = 1.6
+        if (hasMilestone("sa", 17)) minigameMulti = 2
+        if (hasMilestone("rng", 26)) minigameMulti = minigameMulti * 2
+        let rngaddmult = 1 - ((1 - rngadd) / minigameMulti)
+        player.rng.rng = player.rng.rng.mul(player.rng.luck.pow(1 + (rngaddmult / 5)))
+    }
+    let log3 = Decimal.log(player.rng.rng, player.rng.rarityscale)
+    player.rng.rngidx = log3.floor().toNumber()
+    player.rng.preName = preNames[Math.floor(player.rng.rngidx / 150) % 25]
+    player.rng.rarityName = player.rng.preName + " " + rarityList[player.rng.rngidx % (rarityList.length)];
+    player.rng.cd = player.rng.rollnextcd
+    if (player.rng.rngidx > player.rng.maxidx) player.rng.maxidx = player.rng.rngidx
+    if (hasMilestone("rng", 18)) {
+        player.rng.rngpts = player.rng.rngpts.add(player.rng.rngptmult.mul(new Decimal(player.rng.rngscale).pow(new Decimal(player.rng.rngidx))).mul(player.rng.luck.pow(0.1)))
+    } else {
+        player.rng.rngpts = player.rng.rngpts.add(player.rng.rngptmult.mul(new Decimal(player.rng.rngscale).pow(new Decimal(player.rng.rngidx))))
+    }
+}
+
 addLayer("rng", {
     startData() { return {
         unlocked: true,
@@ -13,6 +43,9 @@ addLayer("rng", {
         rollnextcd: new Decimal(5),
         rarityscale: 3,
         rngscale: 2,
+        baseautorollcd: new Decimal(60),
+        autorollcd: new Decimal(60),
+        autorollon: false,
     }},
     color: "pink",
     row: "side",
@@ -66,9 +99,21 @@ addLayer("rng", {
         },
         "MILESTONES": {
             content: [
-                "milestones",
+                ["milestones",[26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]],
             ],
             unlocked() {return true}
+        },
+        "SAVEBANK": {
+            content: [
+                ["display-text",
+                    function(){
+                        let a = ""
+                        a = a + "NOTE: ONLY CLICK THIS IF YOU EITHER HAD YOUR SAVE WIPED OR YOU WANT TO REDO THE MINIGAME SECTION OF PT. For (1), only click this button AFTER you've clicked the savebank. Note that later milestones may require "
+                        return a
+                    }
+                ],
+                ["clickables", [100, 101]],
+            ],
         },
     },
     clickables: {
@@ -76,29 +121,11 @@ addLayer("rng", {
             title: "ROLL",
             canClick() {return player.rng.cd.lte(0)},
             onClick() {
-                const rarityList = ["Worst", "Trash", "Horrendous", "Bad", "Un-unique", "Common", "Dull", "Fundemental", "Typical", "Basic", "Average", "Natural", "Uncommon", "Distinct", "Unusual", "Ordinary", "Rare", "Great", "Very Rare", "Advanced", "Epic", "Remarkable", "Amazing", "Exceptional", "Near-perfect", "Pristine", "Perfection", "Legendary", "Jackpot", "Mythical", "Fabled", "Radiant", "Royal", "Godly", "Heroic", "Superhero", "Deity", "Exotic", "Glorious", "Super", "Mega", "Ultra", "Supreme", "Divine", "Ultima", "Extreme", "Celestial", "Ascended", "Transcended", "Ruler", "King", "Emperor", "Champion", "Master", "Lord", "Monarch", "Overseer", "Heavenly", "Demonic", "Monstrous", "Draconic", "Phoenix", "Ghost", "Hidden", "Invisible", "Gas", "Plasma", "Ancient", "Futuristic", "Coal", "Iron", "Silver", "Nickel", "Copper", "Aluminium", "Tin", "Gold", "Cobalt", "Diamond", "Platinum", "Emerald", "Ruby", "Sapphire", "Quartz", "Titanium", "Opal", "Pyrite", "Iridium", "Cinnabar", "Antimony", "Uranium", "Plutonium", "Americium", "Galaxium", "Stardust", "Cosmic", "Astral", "Solar", "Lunar", "Eclipse", "Nebula", "Star", "Galactic", "Supernova", "Pulsar", "Quasar", "Galaxy Cluster", "Galaxy Supercluster", "Universe", "Multiverse", "Omniverse", "Sacred", "Blessed", "Ethereal", "Miracle", "Abyssal", "Quantum", "Eternal", "Forsaken", "Superior", "Life-changing", "Infinite", "Absolute", "Cataclysmic", "Oblivion", "Apocalyptic", "Hell", "Traumatic", "Unstable", "Wraith", "Catastrophic", "Immortal", "Mirage", "Unreal", "Unmatched", "Godforsaken", "Omniscient","Theoretical","Immeasurable","Alpha", "Beta", "Omega", "Ascendent", "Genesis", "Monolith", "Apex", "Pinnacle", "Reality", "Timeless", "Beyond"]
-                const preNames = ["", "True", "Powerful", "Absolute", "Absurd", "Prime", "Hyper", "Final", "Gilded", "Proto", "Meta", "Meteoric", "Liminal", "Indescribable", "Unfathomable", "Undefined", "Chromatic", "Arch", "Unbound", "Zenith", "Origin", "Void", "Omnipotent", "Godlike", "Exalted"] // 25 pre-Names
-                player.rng.rng = new Decimal(1).div(Math.random())
-                if (!(hasMilestone("rng", 19))) {
-                    player.rng.rng = player.rng.rng.mul(player.rng.luck)
-                } else {
-                    player.rng.rng = player.rng.rng.mul(player.rng.luck.pow(1 + (Math.random() / 5)))
-                }
-                let log3 = Decimal.log(player.rng.rng, player.rng.rarityscale)
-                player.rng.rngidx = log3.floor().toNumber()
-                player.rng.preName = preNames[Math.floor(player.rng.rngidx / 150) % 25]
-                player.rng.rarityName = player.rng.preName + " " + rarityList[player.rng.rngidx % (rarityList.length)];
-                player.rng.cd = player.rng.rollnextcd
-                if (player.rng.rngidx > player.rng.maxidx) player.rng.maxidx = player.rng.rngidx
-                if (hasMilestone("rng", 18)) {
-                    player.rng.rngpts = player.rng.rngpts.add(player.rng.rngptmult.mul(new Decimal(player.rng.rngscale).pow(new Decimal(player.rng.rngidx))).mul(player.rng.luck.pow(0.1)))
-                } else {
-                    player.rng.rngpts = player.rng.rngpts.add(player.rng.rngptmult.mul(new Decimal(player.rng.rngscale).pow(new Decimal(player.rng.rngidx))))
-                }
+                roll()
             },
             display() {
                 if (player.rng.rngidx < 3750){
-                    return "You got a " + player.rng.rarityName + " rarity (ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ", Nett RNG (irregardless of luck): " + notationChooser(new Decimal(player.rng.rng).div(player.rng.luck)) + ")"
+                    return "You got a " + player.rng.rarityName + " rarity (ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ")"
                 } else if (player.rng.rngidx < 1e6){
                     return "You got a " + player.rng.rarityName + " " + formatWhole(new Decimal(Math.floor(player.rng.rngidx / 3750))) + " rarity (ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", RNG: 1/" + notationChooser(new Decimal(player.rng.rng)) + ")"
                 } else {
@@ -106,9 +133,311 @@ addLayer("rng", {
                 }
             },
             style() {return {
-                'width': '600px',
+                'width': '450px',
             }},
             
+        },
+        12: {
+            title(){
+                if (player.rng.autorollon){
+                    return "Auto Roll: ON"
+                } else {
+                    return "Auto Roll: OFF"
+                }
+            },
+            canClick() {return true},
+            onClick() {
+                player.rng.autorollon = !player.rng.autorollon
+            },
+            display() {
+                return "You got ID: " + formatWhole(new Decimal(player.rng.rngidx)) + ", Auto roll cooldown: " + formatTime(player.rng.autorollcd)
+            },
+            style() {return {
+                'width': '150px',
+            }},
+            unlocked() {return hasMilestone("rng", 15)}
+            
+        },
+        // Savebanks
+        1001: {
+            title: "Max RarityID 10",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 10
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1002: {
+            title: "Max RarityID 40",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 40
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1003: {
+            title: "Max RarityID 150",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 150
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1004: {
+            title: "Max RarityID 500",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 500
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1005: {
+            title: "Max RarityID 2,222",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 2222
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1006: {
+            title: "Max RarityID 8,000",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 8000
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1007: {
+            title: "Max RarityID 30,000",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 30000
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1008: {
+            title: "Max RarityID 125,000",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 125000
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1009: {
+            title: "Max RarityID 238,350",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 238350
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
+        },
+        1010: {
+            title: "Max RarityID 411,377",
+            onClick() {
+                if(!confirm("Your current minigame progress will be reset! Do this ONLY IF you want to experience Minigame again.")) return;
+                if(!confirm("Are you sure? This cannot be undone! This is your final reminder! Your progress will be reset!")) return;
+                player.rng.rngpts = new Decimal(0)
+                player.rng.rng = new Decimal(1)
+                player.rng.rngidx = 0
+                player.rng.rarityName = "Common"
+                player.rng.cd = new Decimal(5)
+                player.rng.maxidx = 411377
+                player.rng.preName = ""
+                player.rng.rngptmult = new Decimal(1)
+                player.rng.rollnextcd = new Decimal(5)
+                player.rng.rarityscale = 3
+                player.rng.rngscale = 2
+                player.rng.autorollcd = new Decimal(60)
+                player.rng.autorollon = false
+                player.rng.milestones = []
+                player.rng.luck = new Decimal(1)
+                player.rng.buyables[11] = new Decimal(0)
+                player.rng.buyables[12] = new Decimal(0)
+                player.rng.buyables[13] = new Decimal(0)
+                player.rng.buyables[14] = new Decimal(0)
+                player.rng.buyables[15] = new Decimal(0)
+            },
+            canClick: true,
         },
     },
     buyables: {
@@ -379,97 +708,154 @@ addLayer("rng", {
             requirementDescription: "The Tenth RNG Milestone (Requires Best RarityID: 375)",
             effectDescription: "Luck Buyable 1 and 2's effect is boosted.",
             done() { return player.rng.maxidx >= 375 },
-            unlocked() {return hasMilestone("rng", 9)}
+            unlocked() {return hasMilestone("rng", 9)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         11: {
             requirementDescription: "The 11th RNG Milestone (Requires Best RarityID: 474)",
             effectDescription: "The cost formula of ALL LUCK BUYABLES are nerfed. Luck Buyable 2 costs nothing.",
             done() { return player.rng.maxidx >= 474 },
-            unlocked() {return hasMilestone("rng", 10)}
+            unlocked() {return hasMilestone("rng", 10)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         12: {
             requirementDescription: "The 12th RNG Milestone (Requires Best RarityID: 666)",
             effectDescription: "The base effect of ALL LUCK BUYABLES is muliplied by the slog() of RNG Points. Autobuy Luck Buyable 2, and 0.25s roll cooldown.",
             done() { return player.rng.maxidx >= 666 },
-            unlocked() {return hasMilestone("rng", 11)}
+            unlocked() {return hasMilestone("rng", 11)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         13: {
             requirementDescription: "The 13th RNG Milestone (Requires Best RarityID: 1052)",
             effectDescription: "RNG Points/rarity scaling is increased. Rarity scaling is also decreased",
             done() { return player.rng.maxidx >= 1052 },
-            unlocked() {return hasMilestone("rng", 12)}
+            unlocked() {return hasMilestone("rng", 12)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         14: {
             requirementDescription: "The 14th RNG Milestone (Requires Best RarityID: 1482)",
             effectDescription: "Unlock a new Luck Buyable. [INFLATION!!!]. ps all buyables' effect is softcapped at 1,000 buys and hardcapped at 2,000 buys. Luck Buyable 3 costs nothing.",
             done() { return player.rng.maxidx >= 1482 },
-            unlocked() {return hasMilestone("rng",13)}
+            unlocked() {return hasMilestone("rng",13)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         15: {
             requirementDescription: "The 15th RNG Milestone (Requires Best RarityID: 3367)",
-            effectDescription: "^1.05 Luck and x10B RNG Points. Autobuy Luck Buyable 3.",
+            effectDescription: "^1.05 Luck and x10B RNG Points. Autobuy Luck Buyable 3. Unlock Autoroll (60s CD)",
             done() { return player.rng.maxidx >= 3367 },
-            unlocked() {return hasMilestone("rng",14)}
+            unlocked() {return hasMilestone("rng",14)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         16: {
-            requirementDescription: "The 16th RNG Milestone (Requires Best RarityID: 5069)",
+            requirementDescription: "The 16th RNG Milestone (Requires Best RarityID: 5069) Autoroll CD (60s -> 45s)",
             effectDescription: "Luck is boosted by RNG Points.",
             done() { return player.rng.maxidx >= 5069 },
-            unlocked() {return hasMilestone("rng",15)}
+            unlocked() {return hasMilestone("rng",15)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         17: {
             requirementDescription: "The 17th RNG Milestone (Requires Best RarityID: 6970)",
-            effectDescription: "Rarity scaling is decreased dramatically. ",
+            effectDescription: "Rarity scaling is decreased dramatically. Autoroll CD (45s -> 20s)",
             done() { return player.rng.maxidx >= 6970 },
-            unlocked() {return hasMilestone("rng",16)}
+            unlocked() {return hasMilestone("rng",16)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         18: {
             requirementDescription: "The 18th RNG Milestone (Requires Best RarityID: 10,608)",
             effectDescription: "RNG Points is boosted by luck. Luck Buyable 4 costs nothing.",
             done() { return player.rng.maxidx >= 10608 },
-            unlocked() {return hasMilestone("rng",17)}
+            unlocked() {return hasMilestone("rng",17)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         19: {
             requirementDescription: "The 19th RNG Milestone (Requires Best RarityID: 14,970)",
-            effectDescription: "Luck is boosted by RNG. Also ^1.1 Luck.",
+            effectDescription: "Luck is boosted by RNG. Also ^1.1 Luck. Autoroll CD (20s -> 15s)",
             done() { return player.rng.maxidx >= 14970 },
-            unlocked() {return hasMilestone("rng",18)}
+            unlocked() {return hasMilestone("rng",18)},
+            style() {return {
+                'height': '90px',
+            }},
         },
         20: {
             requirementDescription: "The 20th RNG Milestone (Requires Best RarityID: 22,957)",
-            effectDescription: "The 13th RNG Milestone but to an insane level. Roll cooldown is 0.01s. Autobuy Luck Buyable 4.",
+            effectDescription: "The 13th RNG Milestone but to an insane level. Roll cooldown is 0.01s. Autobuy Luck Buyable 4.<br>Next Milestone requires Achievement 241: Get Tree 1 last row last upgrade",
             done() { return player.rng.maxidx >= 22957 },
-            unlocked() {return hasMilestone("rng",19)}
+            unlocked() {return hasMilestone("rng",19)},
+            style() {return {
+                'height': '100px',
+            }},
         },
         21: {
             requirementDescription: "The 21st RNG Milestone (Requires Best RarityID: 45,665)",
-            effectDescription: "The cap of Luck Buyables 1-3 is no longer 2,000! ^1.2 Luck.",
+            effectDescription: "The cap of Luck Buyables 1-3 is no longer 2,000! ^1.2 Luck. Autoroll CD (15s -> 10s)<br>Next Milestone requires Achievement 251: Get Era Buyable 5 and 6",
             done() { return (player.rng.maxidx >= 45665 && hasAchievement("a", 241)) },
-            unlocked() {return (hasMilestone("rng",20) && hasAchievement("a", 241))}
+            unlocked() {return (hasMilestone("rng",20) && hasAchievement("a", 241))},
+            style() {return {
+                'height': '90px',
+            }},
         },
         22: {
             requirementDescription: "The 22nd RNG Milestone (Requires Best RarityID: 60,205)",
-            effectDescription: "Unlock Luck Buyable 5",
+            effectDescription: "Unlock Luck Buyable 5.<br>Next Milestone requires Achievement 261: Get Era Buyable 5 and 6",
             done() { return (player.rng.maxidx >= 60205 && hasAchievement("a", 251)) },
-            unlocked() {return (hasMilestone("rng",21) && hasAchievement("a", 251))}
+            unlocked() {return (hasMilestone("rng",21) && hasAchievement("a", 251))},
+            style() {return {
+                'height': '90px',
+            }},
         },
         23: {
             requirementDescription: "The 23rd RNG Milestone (Requires Best RarityID: 92,992)",
-            effectDescription: "Luck Buyable 5 scales slower",
+            effectDescription: "Luck Buyable 5 scales slower, Autoroll CD (10s -> 5s)<br>Next Milestone requires Achievement 271: Halfway done to MC3 completion",
             done() { return (player.rng.maxidx >= 92992 && hasAchievement("a", 261)) },
-            unlocked() {return (hasMilestone("rng",22) && hasAchievement("a", 261))}
+            unlocked() {return (hasMilestone("rng",22) && hasAchievement("a", 261))},
+            style() {return {
+                'height': '90px',
+            }},
         },
         24: {
             requirementDescription: "The 24th RNG Milestone (Requires Best RarityID: 128,642)",
-            effectDescription: "Luck Buyable 1 is WAY STRONGER!",
+            effectDescription: "Luck Buyable 1 is WAY STRONGER! <br>Next Milestone requires Achievement 281: Get Era 4",
             done() { return (player.rng.maxidx >= 128642 && hasAchievement("a", 271)) },
-            unlocked() {return (hasMilestone("rng",23) && hasAchievement("a", 271))}
+            unlocked() {return (hasMilestone("rng",23) && hasAchievement("a", 271))},
+            style() {return {
+                'height': '90px',
+            }},
         },
         25: {
             requirementDescription: "The FINAL RNG Milestone (Requires Best RarityID: 238,350)",
-            effectDescription: "Luck Buyable 5 scales slower and is stronger. It also takes away no RNG Points. (ENDGAMES: 411,333 [NORMAL], 411,411 [ABSOLUTE TRUE]",
+            effectDescription: "Luck Buyable 5 scales slower and is stronger. It also takes away no RNG Points. (ENDGAMES: 411,333 [NORMAL], 411,411 [ABSOLUTE TRUE] Autoroll CD (5s -> 2s) <br>Next Milestone requires Achievement 286: 11 Skill Pts",
             done() { return (player.rng.maxidx >= 238350 && hasAchievement("a", 281)) },
-            unlocked() {return (hasMilestone("rng",24) && hasAchievement("a", 281))}
+            unlocked() {return (hasMilestone("rng",24) && hasAchievement("a", 281))},
+            style() {return {
+                'height': '100px',
+            }},
+        },
+        26: {
+            requirementDescription: "The GRAND FINAL RNG Milestone (Requires Best RarityID: 411,385)",
+            effectDescription: "Absolute True Endgame: 411,411 maxRarity. <br>Boost RNG Milestone 19's luck by 2x, and autoroll is now 0.5s.",
+            done() { return (player.rng.maxidx >= 411385 && hasAchievement("a", 286)) },
+            unlocked() {return (hasMilestone("rng",25) && hasAchievement("a", 286))},
+            style() {return {
+                'height': '90px',
+            }},
         },
     },
     infoboxes: {
@@ -484,6 +870,17 @@ addLayer("rng", {
         player.rng.rngptmult = new Decimal(1)
         player.rng.rollnextcd = new Decimal(5)
         player.rng.rarityscale = 3
+        let minigameRNGPointMult = new Decimal(1)
+        if (hasMilestone("sa", 8)) minigameRNGPointMult = new Decimal(1.5)
+        if (hasMilestone("sa", 9)) minigameRNGPointMult = new Decimal(2)
+        if (hasMilestone("sa", 10)) minigameRNGPointMult = new Decimal(2.5)
+        if (hasMilestone("sa", 11)) minigameRNGPointMult = new Decimal(3)
+        if (hasMilestone("sa", 12)) minigameRNGPointMult = new Decimal(3.5)
+        if (hasMilestone("sa", 13)) minigameRNGPointMult = new Decimal(4)
+        if (hasMilestone("sa", 14)) minigameRNGPointMult = new Decimal(5)
+        if (hasMilestone("sa", 15)) minigameRNGPointMult = new Decimal(6)
+        if (hasMilestone("sa", 16)) minigameRNGPointMult = new Decimal(10)
+        if (hasMilestone("sa", 17)) minigameRNGPointMult = new Decimal(15)
         if (hasMilestone("rng", 7)) {
             player.rng.luck = player.rng.luck.mul(buyableEffect("rng", 13))
         }
@@ -496,7 +893,7 @@ addLayer("rng", {
         }
         if (hasMilestone("rng", 2)) player.rng.rollnextcd = new Decimal(2)
         if (hasMilestone("rng", 6)) {
-            player.rng.rngptmult = player.rng.rngptmult.mul(player.rng.rngpts.add(1).log(10))
+            player.rng.rngptmult = player.rng.rngptmult.mul(player.rng.rngpts.add(1).log(10).max(1))
         }
         if (hasMilestone("rng", 4)) {
             player.rng.rollnextcd = new Decimal(1)
@@ -525,7 +922,7 @@ addLayer("rng", {
             player.rng.rarityscale = 2.5
         }
         if (hasMilestone("rng", 16)) {
-            player.rng.luck = player.rng.luck.mul(player.rng.rngpts.pow(0.1))
+            player.rng.luck = player.rng.luck.mul(player.rng.rngpts.add(1).pow(0.1))
         }
         if (hasMilestone("rng", 9)) {
             player.rng.luck = player.rng.luck.pow(1.1)
@@ -548,6 +945,39 @@ addLayer("rng", {
         if (hasChallenge("m", 13)) {
             player.rng.rngptmult = player.rng.rngptmult.mul(2)
         }
+        player.rng.rngptmult = player.rng.rngptmult.mul(minigameRNGPointMult)
+
+        // autoroll
+        player.rng.baseautorollcd = new Decimal(60)
+        if (hasMilestone("rng", 16)) {
+            player.rng.baseautorollcd = new Decimal(45)
+        }
+        if (hasMilestone("rng", 17)) {
+            player.rng.baseautorollcd = new Decimal(20)
+        }
+        if (hasMilestone("rng", 19)) {
+            player.rng.baseautorollcd = new Decimal(15)
+        }
+        if (hasMilestone("rng", 21)) {
+            player.rng.baseautorollcd = new Decimal(10)
+        }
+        if (hasMilestone("rng", 23)) {
+            player.rng.baseautorollcd = new Decimal(5)
+        }
+        if (hasMilestone("rng", 25)) {
+            player.rng.baseautorollcd = new Decimal(2)
+        }
+        if (hasMilestone("rng", 26)) {
+            player.rng.baseautorollcd = new Decimal(0.5)
+        }
+        if (player.rng.autorollcd.gte(player.rng.baseautorollcd)) player.rng.autorollcd = player.rng.baseautorollcd
+        if (player.rng.autorollon) {
+            player.rng.autorollcd = player.rng.autorollcd.sub(diff)
+            if (player.rng.autorollcd.lte(0)) {
+                player.rng.autorollcd = player.rng.baseautorollcd
+                roll()
+            }
+        }
     },
     glowColor() {
         for(i=11;i<16;i++){ 
@@ -557,7 +987,7 @@ addLayer("rng", {
         }
     },
     tooltip() {
-        let tt = notationChooser(player.rng.rngpts) + " RNG Points. [" + player.rng.milestones.length + "/25 Milestones gotten]"
+        let tt = "Best RarityID: " + notationChooser(player.rng.maxidx) + ". " + player.rng.milestones.length + "/26 Milestones gotten"
         return tt
     },
 })

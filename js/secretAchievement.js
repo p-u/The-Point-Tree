@@ -10,6 +10,7 @@ addLayer("sa", {
         minigamePtsMult: new Decimal(1),
         fNumber: new Decimal(1),
         baseNum: new Decimal("1e308"),
+        superMinigameUnlocked: false
     }},
     color: "grey",
     row: "side",
@@ -190,6 +191,31 @@ addLayer("sa", {
             ],
             unlocked() {return hasAchievement("sa", 176)}
         },
+        "Super Minigame": {
+            content: [
+                ["display-text",
+                    function(){
+                        let a = "You have grinded this minigame for so long.<br>Passing features like Strategic Manipulation where you had to use your knowledge and manipulate different operations to get this number, Least Button Presses, where you had to do that, but with the added restriction of being only to make X button presses. Funny numbers as well like 69, 69420 or 1e69, you still crushed them. <br><br> And who could forget the long hours grinding Number for the Acheievements, Upgrades and Milestones, as well as MiP? Well, you did it. Just ONE more requirement to go before you unlock the SUPER minigame...<br><br><br><br>"
+                        a = a + "Requirements for unlock: <p style='color: green;'>Get Fe308 Number</p>"
+                        if (player.rng.maxidx>=1000) {
+                            a = a + "<p style='color: green;'>Get 1000 Max Rarity ID in RNG Minigame</p>"
+                        } else {
+                            a = a + "<p style='color: red;'>Get 1000 Max Rarity ID in RNG Minigame</p>"
+                        }
+                        if (!player.sa.superMinigameUnlocked){
+                            return a
+                        } else {
+                            return "SUPER MINIGAME BUTTONS:"
+                        }
+                    }
+                ],
+                "blank",
+                "blank",
+                "blank",
+                ["clickables", [20,25]],
+            ],
+            unlocked() {return hasMilestone("sa", 17)}
+        }
     },
     achievements: {
         rows: 11,
@@ -2970,6 +2996,76 @@ addLayer("sa", {
                 }
             }
         },
+
+        // superminigame
+        201: {
+            title: "Unlock the SUPERMINIGAME.",
+            canClick() {return (player.rng.maxidx>=1000 && !player.superMinigameUnlocked)},
+            onClick() {
+                player.sa.superMinigameUnlocked = true
+            },
+            unlocked() {return (!player.sa.superMinigameUnlocked)},
+            style() {
+                if (player.rng.maxidx>=1000 && !player.superMinigameUnlocked) {
+                    return {
+                        'color': '#EFBF04',
+                        'font-size': '35px',
+                        'height': '400px',
+                        'width': '700px',
+                    }
+                } else {
+                    return {
+                        'color': 'black',
+                        'font-size': '30px',
+                    }
+                }
+            },
+        },
+        202: {
+            title(){
+                title = "F".repeat(player.sa.fNumber.toNumber()) + notationChooserMinigame(player.sa.baseNum)
+                return title
+            },
+            display() { dis = "Aether"
+                predis = ""
+                if (player.sa.fNumber.eq(1)) {
+                    if (player.sa.baseNum.gte("e350")) predis = "Great"
+                    if (player.sa.baseNum.gte("e400")) predis = "Greater"
+                    if (player.sa.baseNum.gte("e500")) predis = "Insane"
+                    if (player.sa.baseNum.gte("e650")) predis = "Godlike"
+                    if (player.sa.baseNum.gte("e800")) predis = "Transcendent"
+                    if (player.sa.baseNum.gte("e1000")) predis = "Greater Transcendent"
+                    if (player.sa.baseNum.gte("e1250")) predis = "Beyond"
+                    if (player.sa.baseNum.gte("e1500")) predis = "Great Beyond"
+                    if (player.sa.baseNum.gte("e2000")) predis = "Greater Beyond"
+                    if (player.sa.baseNum.gte("e2500")) predis = "Ascended"
+                    if (player.sa.baseNum.gte("e3200")) predis = "Insane Ascended"
+                    if (player.sa.baseNum.gte("e4000")) predis = "Beyond Ascended"
+                    if (player.sa.baseNum.gte("e5000")) predis = "Greater Beyond Ascended"
+                    if (player.sa.baseNum.gte("e7000")) predis = "True"
+                }
+                return predis + dis
+            },
+            style() {return {
+                'width': '267px',
+            }},
+            unlocked() {return player.sa.superMinigameUnlocked},
+            canClick() {return false},
+        },
+        251: {
+            title: "F amount * 1.002",
+            canClick() {return true},
+            onClick() {
+                player.sa.baseNum = player.sa.baseNum.mul(1.002)
+            },
+            unlocked() {return player.sa.superMinigameUnlocked},
+            onHold() {
+                player[this.layer].minigameNum = player[this.layer].minigameNum.div(2)
+                player[this.layer].pdx = player[this.layer].pdx.add(3)
+                player[this.layer].bp = player[this.layer].bp.add(1)
+                if (hasAchievement("sa", 176)) { player[this.layer].minigamePoints = player[this.layer].minigamePoints.add(new Decimal(2).mul(player.sa.minigamePtsMult)) }
+            }
+        },
     },
     upgrades: {
         11: {
@@ -3198,61 +3294,61 @@ addLayer("sa", {
         },
         8: {
             requirementDescription: "Minigame Milestone 8: e(450,000) 10 Number",
-            effectDescription: "Make the *= button 5 times stronger… Passive generation is 5 times stronger... The *= button adds 1 'e' on click.",
+            effectDescription: "Make the *= button 5 times stronger… Passive generation is 5 times stronger... The *= button adds 1 'e' on click. Also, gain a x1.5 multiplier on RNG Points.",
             done() { return player.sa.minigameNum.layer > 449999.9 },
             unlocked() { return (hasMilestone("sa", 7) && hasMilestone("era", 1))},
         },
         9: {
             requirementDescription: "Minigame Milestone 9: e(1,600,000) 10 Number [FOR THE LAST 6 MILESTONES, REQUIRES ERA 2]",
-            effectDescription: "Make the mag part of the *= button 10 times stronger… Passive generation is now 8 times stronger. The *= button adds 1 more 'e' on click.",
+            effectDescription: "Make the mag part of the *= button 10 times stronger… Passive generation is now 8 times stronger. The *= button adds 1 more 'e' on click. Also, total multiplier on RNG Points is now 2x.",
             done() { return player.sa.minigameNum.layer > 1599999.9 },
             unlocked() { return (hasMilestone("sa", 8) && hasMilestone("era", 1))},
         },
         10: {
             requirementDescription: "Minigame Milestone 10: e(5,000,000) 10 Number",
-            effectDescription: "Unlock a new button. Passive generation is now 100 times stronger. (Reward: x1.05 EC) Hold Mult is 1.8.",
+            effectDescription: "Unlock a new button. Passive generation is now 100 times stronger. (Reward: x1.05 EC) Hold Mult is 1.8. Also, total multiplier on RNG Points is now 2.5x.",
             done() { return player.sa.minigameNum.layer > 4999999.9 },
             unlocked() { return (hasMilestone("sa", 9) && hasMilestone("era", 2))},
         },
         11: {
             requirementDescription: "Minigame Milestone 11: F5e7, or e(50M) Number",
-            effectDescription: "Passive generation is now 300 times stronger. Layer *= button is now 1.8 times stronger, and based on PF and Minigame Points. Hold mult is increased to 2.",
+            effectDescription: "Passive generation is now 300 times stronger. Layer *= button is now 1.8 times stronger, and based on PF and Minigame Points. Hold mult is increased to 2. Also, total multiplier on RNG Points is now 3x.",
             done() { return player.sa.minigameNum.layer >= 49999999.99 },
             unlocked() { return (hasMilestone("sa", 10) && hasMilestone("era", 2))},
         },
         12: {
             requirementDescription: "Minigame Milestone 12: F1e12, or e(1e12) Number",
-            effectDescription: "The layer *= button is now 1.5 times stronger. Every 0.05 seconds, passively generates the Layer *= button (click, not hold part) [doesn't work if layer>e308], with 1/20 of the effect. Hold mult is increased to 2.5.",
+            effectDescription: "The layer *= button is now 1.5 times stronger. Every 0.05 seconds, passively generates the Layer *= button (click, not hold part) [doesn't work if layer>e308], with 1/20 of the effect. Hold mult is increased to 2.5. Also, total multiplier on RNG Points is now 3.5x.",
             done() { return player.sa.minigameNum.layer >= 999999999999.99 },
             unlocked() { return (hasMilestone("sa", 11) && hasMilestone("era", 2))},
         },
         13: {
             requirementDescription: "Minigame Milestone 13: F1e20, or e(1e20) Number",
-            effectDescription: "The layer *= button is now 2 times stronger. Passive button has 4x the effect. Hold mult is increased to 3.",
+            effectDescription: "The layer *= button is now 2 times stronger. Passive button has 4x the effect. Hold mult is increased to 3. Also, total multiplier on RNG Points is now 4x.",
             done() { return player.sa.minigameNum.layer >= 99999999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 12) && hasMilestone("era", 2))},
         },
         14: {
             requirementDescription: "Minigame Milestone 14: F1e40, or e(1e40) Number",
-            effectDescription: "Passive button has 1.25x the effect. The layer *= button is now 1.75 times stronger. Hold mult is increased to 5.",
+            effectDescription: "Passive button has 1.25x the effect. The layer *= button is now 1.75 times stronger. Hold mult is increased to 5. Also, total multiplier on RNG Points is now 5x. RNG Minigame Luck (Milestone 19) is also multiplied by 1.1.",
             done() { return player.sa.minigameNum.layer >= 9999999999999999999999999999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 13) && hasMilestone("era", 3))},
         },
         15: {
             requirementDescription: "Minigame Milestone 15: F1e75, or e(1e75) Number",
-            effectDescription: "The layer *= button is now 40% stronger. Hold mult is increased to 6!",
+            effectDescription: "The layer *= button is now 40% stronger. Hold mult is increased to 6! Also, total multiplier on RNG Points is now 6x RNG Minigame Luck (Milestone 19) is also multiplied by 1.3.",
             done() { return player.sa.minigameNum.layer >= 999999999999999999999999999999999999999999999999999999999999999999999999.99 },
             unlocked() { return (hasMilestone("sa", 14) && hasMilestone("era", 3))},
         },
         16: {
             requirementDescription: "Minigame Milestone 16: Fe150, or e(1e150) Number",
-            effectDescription: "THE LAST PUSH. The Layer *= button is now SIX TIMES STRONGER. HOLD MULT IS NOW 10.",
+            effectDescription: "THE LAST PUSH. The Layer *= button is now SIX TIMES STRONGER. HOLD MULT IS NOW 10. Also, total multiplier on RNG Points is now 10x. RNG Minigame Luck (Milestone 19) is also multiplied by 1.6.",
             done() { return player.sa.minigameNum.layer >= 1e150 },
             unlocked() { return (hasMilestone("sa", 15) && hasMilestone("era", 3))},
         },
         17: {
             requirementDescription: "Minigame Milestone 17: Fe308, or e(1e308) Number [Completion of Minigame 1]",
-            effectDescription: "wait theres more?? Unlock a new Minigame 2 tab. Lock all previous Minigame1 buttons. [v4.1-4.3]",
+            effectDescription: "wait theres more?? Unlock a new Super Minigame tab. Lock all previous Minigame1 buttons. Also, total multiplier on RNG Points is now 15x. RNG Minigame Luck (Milestone 19) is also multiplied by 2.",
             done() { return player.sa.minigameNum.layer >= 1e308 },
             unlocked() { return (hasMilestone("sa", 16) && hasMilestone("era", 3))},
         },
@@ -3455,7 +3551,8 @@ addLayer("sa", {
         if (relev > 42) relev = 42
         relev = relev + player.sa.upgrades.length
         relev = relev + player.sa.milestones.length
-        let tt = "Your Number is " + notationChooser(player.sa.minigameNum) + ". [" + relev + "/78 Relevant Milestones]"
+        relev = relev + player.sa.superMinigameUnlocked
+        let tt = "Your Number is " + notationChooser(player.sa.minigameNum) + ". [" + relev + "/80 Relevant Milestones]"
         return tt
     },
 })
