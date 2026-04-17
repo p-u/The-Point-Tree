@@ -3017,6 +3017,8 @@ addLayer("sa", {
                     return {
                         'color': 'black',
                         'font-size': '30px',
+                        'height': '400px',
+                        'width': '700px',
                     }
                 }
             },

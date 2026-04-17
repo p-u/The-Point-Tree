@@ -194,6 +194,7 @@ ul {
 .treeOverlay {
 	pointer-events:none;
 	overflow:hidden;
+	z-index: 100000;
 }
 
 .front {
