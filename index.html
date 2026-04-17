@@ -74,7 +74,8 @@
 		<div v-if="!(tmp.gameEnded && !player.keepGoing) && (player.tab === 'none' || tmp.other.splitScreen)"
 			id="treeTab" onscroll="resizeCanvas()"
 			v-bind:class="{ fullWidth: (player.tab == 'none' || player.navTab == 'none'), col: (player.tab !== 'none' && player.navTab !== 'none'), left: (player.tab !== 'none' && player.navTab !== 'none')}">
-			<br><br><br><br>
+			<a class="link" href="http://patreon.com/randim82/" target="_blank" v-bind:style="{'font-size': '16px', 'position': 'relative'}">Support
+				Point Tree development (Patreon Link)!</a><br>
 			<overlay-head id="fakeHead" style="visibility: hidden;">
 			</overlay-head>
 			<layer-tab :layer="player.navTab == 'none' ? player.tab : player.navTab" :key="'left'"></layer-tab>
@@ -140,8 +141,6 @@
 							v-bind:style="{'font-size': '16px'}">Main Prestige Tree server</a></li>
 				</ul>
 			</div>
-			<a class="link overlayThing" href="http://patreon.com/randim82/" target="_blank" v-bind:style="{'font-size': '16px'}">Support
-				Point Tree development (Patreon Link)!</a><br>
 			<overlay-head v-if="!(tmp.gameEnded && !player.keepGoing)"></overlay-head>
 			<div class="sideLayers">
 				<div v-for="(node, index) in OTHER_LAYERS['side']">
