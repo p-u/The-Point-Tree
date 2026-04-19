@@ -3554,7 +3554,7 @@ addLayer("sa", {
         relev = relev + player.sa.upgrades.length
         relev = relev + player.sa.milestones.length
         relev = relev + player.sa.superMinigameUnlocked
-        let tt = "Your Number is " + notationChooser(player.sa.minigameNum) + ". [" + relev + "/80 Relevant Milestones]"
+        let tt = "Your Number is " + notationChooser(new Decimal(player.sa.minigameNum)) + ". [" + relev + "/80 Relevant Milestones]"
         return tt
     },
 })
