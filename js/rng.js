@@ -987,7 +987,7 @@ addLayer("rng", {
         }
     },
     tooltip() {
-        let tt = "Best RarityID: " + notationChooser(player.rng.maxidx) + ". " + player.rng.milestones.length + "/26 Milestones gotten"
+        let tt = "Best RarityID: " + notationChooser(new Decimal(player.rng.maxidx)) + ". " + player.rng.milestones.length + "/26 Milestones gotten"
         return tt
     },
 })
