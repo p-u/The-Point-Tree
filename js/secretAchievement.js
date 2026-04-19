@@ -3549,7 +3549,7 @@ addLayer("sa", {
             if (achievementNum > 100) {
                 relev = relev + 1;
             }
-        }
+        } 
         if (relev > 42) relev = 42
         relev = relev + player.sa.upgrades.length
         relev = relev + player.sa.milestones.length
