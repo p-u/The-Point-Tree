@@ -553,7 +553,7 @@ addLayer("sa", {
         37: {
             name: "[Wait, how is this possible?] Absolute True Endgame [Changes Every Update]",
             done() {
-                   if (player.bacteria.maxsp.gte(13) && (player.bacteria.fastestreset < 1.7)) {
+                   if (player.bacteria.maxsp.gte(13) && (player.bacteria.fastestreset < 2)) {
                        return true
                    }
                },

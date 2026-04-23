@@ -278,7 +278,7 @@ addLayer("bacteria", {
             canAfford() { return player.bacteria.sp.gte(1) && (hasUpgrade("bacteria",21) && hasUpgrade("bacteria",22)) },
             pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1) },
             effect() {
-                if (player.bacteria.sp.gt(0)) return (Math.pow(1.2, Math.log2(120 / player.bacteria.fastestreset)))*1.2;
+                if (player.bacteria.sp.gt(0)) return (Math.pow(1.2, Math.log2(120 / Math.max(player.bacteria.fastestreset, 0.5))))*1.2;
                 else return 1.2;
             },
             effectDisplay() { return notationChooser(tmp[this.layer].upgrades[this.id].effect) + "x Bacteria" },
@@ -337,7 +337,6 @@ addLayer("bacteria", {
             onClick() {
                 player[this.layer].upgrades = []
                 player[this.layer].spentsp = new Decimal(0)
-                player.bacteria.lastresettime = player.timePlayed
                 if (!(hasMilestone("bacteria", 5))) doReset(this.layer, true)
             },
             style() { return {
