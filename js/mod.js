@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "1 Layer, 1,000 Upgrades",
-	id: "1L1KUpgRD",
+	id: "1L1KUpgv3RD",
 	author: "randim82",
 	pointsName: "Power",
 	modFiles: ["tree.js", "layer.js"],
