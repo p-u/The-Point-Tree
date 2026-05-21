@@ -12,8 +12,8 @@ addLayer("e", {
        return visible
     },
     passiveGeneration() {
-        if (hasUpgrade('e', 33)) return 100
-        if (hasMilestone('sac', 10)) return 20
+        if (hasUpgrade('e', 33)) return 240
+        if (hasMilestone('sac', 10)) return 120
         return 0
     },
     doReset(e) {
@@ -81,7 +81,7 @@ addLayer("e", {
         "Upgrades": {
             content: [
                 ["infobox", "info"],
-                "main-display",
+                "main-displayX",
                 "blank",
                 "blank",
                 "prestige-button",
@@ -105,7 +105,7 @@ addLayer("e", {
     infoboxes: {
         info: {
             title: "NOTE",
-            body() { return "Click energy button to be able to buy upgrades. [Won't reset sacs]" },
+            body() { return "Click energy button to be able to buy upgrades. It doesn't reset anything! Spam click to get more energy when energy is low, but this loses efficacy over time." },
         },
     },   
     color: "yellow",
@@ -115,6 +115,7 @@ addLayer("e", {
     baseAmount() {return player.sac.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 10,  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
+    resetsNothing: true,
     gainMult() { // Prestige multiplier
         let mult = new Decimal(1)
         if (layers.w.effect().gte(1)) mult = mult.times(layers.w.effect())
@@ -126,6 +127,7 @@ addLayer("e", {
         if (hasUpgrade('e', 21)) mult = mult.times(4)
         if (hasUpgrade('e', 22)) mult = mult.times(1.5)
         if (hasUpgrade('e', 23)) mult = mult.times(4)
+        if (hasUpgrade('e', 33)) mult = mult.times(3)
         if (hasUpgrade('e', 24)) mult = mult.times(upgradeEffect('e', 24))
         if (hasMilestone('sac', 11)) mult = mult.times(5)
         if (hasUpgrade('mega', 51)) mult = mult.times(8)
@@ -217,6 +219,10 @@ addLayer("e", {
             mult = mult.pow(player.m.rngpower)
             if (hasUpgrade("e", 201)) mult.pow(1.03)
         }
+        if (mult.gte(2)) mult = mult.div(2)
+        if (mult.gte(2)) mult = mult.div(2)
+        if (mult.gte(2)) mult = mult.div(2)
+        if (mult.gte(1.6)) mult = mult.div(1.6)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -377,19 +383,19 @@ addLayer("e", {
             31: {
                 title: "Mega CostDown",
                 description: "Mega Buyable 1 cost is less.",
-                cost: new Decimal(1e15),
+                cost: new Decimal(8e14),
                 unlocked() { return hasUpgrade("e", 24) },
             },
             32: {
                 title: "PFx",
                 description: "xe7500 More PF",
-                cost: new Decimal(1.25e15),
+                cost: new Decimal(1e15),
                 unlocked() { return hasUpgrade("e", 31) },
             },
             33: {
                 title: "No need to click to be better",
-                description: "Energy Passive Generation is now 100x, and Energy Upgrade 4 is stronger.",
-                cost: new Decimal(2.25e17),
+                description: "Energy Passive Generation is now doubled and x3 Energy, and Energy Upgrade 4 is stronger.",
+                cost: new Decimal(1.6e17),
                 unlocked() { return hasUpgrade("e", 32) },
             },
             34: {
@@ -401,7 +407,7 @@ addLayer("e", {
             41: {
                 title: "PFx 2",
                 description: "x1e10K PF",
-                cost: new Decimal(4e35),
+                cost: new Decimal(2e35),
                 unlocked() { return hasUpgrade("e", 34) },
             },
             42: {
@@ -889,15 +895,15 @@ addLayer("e", {
             done() { return player["e"].points.gte(250e6) }
         },
         3: {
-            requirementDescription: "20B Watts, or 20 GW of energy.",
+            requirementDescription: "12B Watts, or 12 GW of energy.",
             effectDescription: "Energy effect is stronger.",
-            done() { return player["e"].points.gte(20e9) }
+            done() { return player["e"].points.gte(12e9) }
         },
         4: {
-            requirementDescription: "110 TW of Energy - 1.10e14",
+            requirementDescription: "67.8 TW of Energy - 67.8e12",
             effectDescription: "1e7,500 PF, x9 Energy",
             unlocked() { return hasMilestone("e", 1)},
-            done() { return player["e"].points.gte(1.1e14) }
+            done() { return player["e"].points.gte(67.8e12) }
         },
         5: {
             requirementDescription: "1E19 Energy [10 Qt Energy]",

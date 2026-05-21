@@ -37,7 +37,7 @@ addLayer("prestige", {
         14: {
             title: "Is it a lot? (2)",
             description: "x10 RP, x1K PF",
-            cost: new Decimal(16),
+            cost: new Decimal(14),
             unlocked() { return hasUpgrade("prestige", 13) },
         },
         21: {
@@ -118,8 +118,8 @@ addLayer("prestige", {
         },
         41: {
             title: "ERA III",
-            description: "For reaching e19,315 PP, you get x1e1,000 PP",
-            cost: new Decimal("1e19315"),
+            description: "For reaching e19,315 (wait thats the prior version) PP, you get x1e1,000 PP",
+            cost: new Decimal("1e19311"),
             unlocked() { return hasMilestone("sac", 13) && hasUpgrade("prestige", 34) },
         },
         42: {

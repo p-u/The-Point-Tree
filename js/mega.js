@@ -66,12 +66,12 @@ addLayer("mega", {
        return visible
      },
      automate() {
-		if (hasMilestone('sac', 8)) {
+		if (hasMilestone('sac', 10)) {
 			if (layers.mega.buyables[11].canAfford()) {
 				layers.mega.buyables[11].buy();
 			};
 		};
-        if (hasMilestone('sac', 12)) {
+        if (hasMilestone('sac', 14)) {
 			if (layers.mega.buyables[12].canAfford()) {
 				layers.mega.buyables[12].buy();
 			};
@@ -311,32 +311,32 @@ addLayer("mega", {
         },
         43: {
             title: "Buyable Boost Boost",
-            description: "Buyables are significantly stronger",
+            description: "Mega Buyable 1 is significantly stronger (Cost scale weakened and effect boosted)",
             cost: new Decimal(1e247),
             unlocked() { return hasMilestone("sac", 6) && hasUpgrade("mega", 42) },
         },
         44: {
             title: "A trade-off?",
             description: "Mega Buyable 1 is 2x as strong!! but less mega point (only slightly)",
-            cost: new Decimal("5.49e549"),
+            cost: new Decimal("1.4e694"),
             unlocked() { return hasMilestone("sac", 8) && hasUpgrade("mega", 43) },
         },
         51: {
             title: "BuyableX",
             description: "8x Energy, Mega Buyables 1 and 2 are stronger.",
-            cost: new Decimal("2e1424"),
+            cost: new Decimal("1e1430"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 44) },
         },
         52: {
             title: "Increasing",
             description: "Mega Upgrade 14 is stronger.",
-            cost: new Decimal("5e1634"),
+            cost: new Decimal("6e1651"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 51) },
         },
         53: {
             title: "Energy Energy",
             description: "x50 Energy.",
-            cost: new Decimal("1e2032"),
+            cost: new Decimal("1e2034"),
             unlocked() { return hasMilestone("sac", 11) && hasUpgrade("mega", 52) },
         },
         54: {
@@ -640,10 +640,10 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(4e44) }
         },
         11: {
-            requirementDescription: "4e65 MP",
-            effectDescription: "X2.9 Mega Points",
+            requirementDescription: "1e66 MP",
+            effectDescription: "X2.2 Mega Points",
             unlocked() { return hasMilestone("mega", 10)},
-            done() { return player["mega"].points.gte(4e65) }
+            done() { return player["mega"].points.gte(1e66) }
         },
         12: {
             requirementDescription: "1e110 MP",
@@ -984,7 +984,7 @@ addLayer("mega", {
         if (hasUpgrade('rebirth', 34)) mult = mult.times(10)
         if (hasUpgrade('rebirth', 41)) mult = mult.times(1e10)
         if (hasUpgrade('prestige', 34)) mult = mult.times(6e6)
-        if (hasMilestone('mega', 11)) mult = mult.times(2.9)
+        if (hasMilestone('mega', 11)) mult = mult.times(2.2)
         if (hasMilestone('sac', 1)) mult = mult.times(10)
         if (hasMilestone('sac', 11)) mult = mult.times(10)
         if (hasMilestone('sac', 4)) mult = mult.times(2.5e6)

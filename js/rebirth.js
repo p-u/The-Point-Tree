@@ -35,8 +35,8 @@ addLayer("rebirth", {
     },
     upgrades: {
         11: {
-            title: "Welcome to rebirth. Here's a x4 point fragments for you.",
-            description: "x4 Point fragments..",
+            title: "Welcome to rebirth. Here's a x6 point fragments for you.",
+            description: "x6 Point fragments..",
             cost: new Decimal(1),
         },
         12: {
@@ -308,18 +308,18 @@ addLayer("rebirth", {
     },
     milestones: {
         1: {
-            requirementDescription: "3 RP",
+            requirementDescription: "2 RP",
             effectDescription: "4 New Basic Point Upgrades",
-            done() { return player["rebirth"].points.gte(3) }
+            done() { return player["rebirth"].points.gte(2) }
         },
         2: {
-            requirementDescription: "20 RP",
+            requirementDescription: "18 RP",
             effectDescription: "Keep Row 1-3 Basic Point Upgrades",
-            done() { return player["rebirth"].points.gte(20) }
+            done() { return player["rebirth"].points.gte(18) }
         },
         3: {
             requirementDescription: "60 RP",
-            effectDescription: "Generate 100% of Basic Points a sec",
+            effectDescription: "Generate 100% of Basic Points a sec [OP!]",
             done() { return player["rebirth"].points.gte(60) }
         },
         4: {

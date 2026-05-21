@@ -443,7 +443,7 @@ addLayer("a", {
         },
         45: {
             name: "Seemingly random",
-            done() { return player.points.gte(new Decimal("e10218")) },
+            done() { return player.points.gte(new Decimal("e10228")) },
             tooltip: "A mystery... But it is over e10,000 points and below e10,250. Reward: x1e68 PF.",
             unlocked() { return hasAchievement("a", 26) },
         },
@@ -455,8 +455,8 @@ addLayer("a", {
         },
         52: {
             name: "So many Megas!",
-            done() { return  player.mega.points.gte(1.8e18) },
-            tooltip: "Have 1.8e18 Mega Points. Reward: x1e18 Prestige Points.",
+            done() { return  player.mega.points.gte(5e18) },
+            tooltip: "Have 5e18 Mega Points. Reward: x1e18 Prestige Points.",
             unlocked() { return hasAchievement("a", 26) },
         },
         53: {

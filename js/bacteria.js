@@ -213,7 +213,7 @@ addLayer("bacteria", {
                 /10 Replication Speed, x10 Cell Base Multiplier, Softcap Scale is weakened. Also, +100% Era Fragments after nerf, and +^0.01 to SB5 Hardcap.<br><br>Cost: 1 SP`
             },
             canAfford() { return player.bacteria.sp.gte(1) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1); player.bacteria.sp = player.bacteria.sp.sub(1) },
         },
         21: {
             fullDisplay() {
@@ -222,7 +222,7 @@ addLayer("bacteria", {
             },
             branches: ['11', '22'],
             canAfford() { return player.bacteria.sp.gte(1) && hasUpgrade("bacteria",11) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1); player.bacteria.sp = player.bacteria.sp.sub(1) },
         },
         22: {
             fullDisplay() {
@@ -231,7 +231,7 @@ addLayer("bacteria", {
             },
             branches: ['11', '21'],
             canAfford() { return player.bacteria.sp.gte(2) && hasUpgrade("bacteria",11) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2); player.bacteria.sp = player.bacteria.sp.sub(2) },
         },
         31: {
             fullDisplay() {
@@ -240,7 +240,7 @@ addLayer("bacteria", {
             },
             branches: ['21'],
             canAfford() { return player.bacteria.sp.gte(1) && hasUpgrade("bacteria",21) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1); player.bacteria.sp = player.bacteria.sp.sub(1) },
         },
         41: {
             fullDisplay() {
@@ -249,7 +249,7 @@ addLayer("bacteria", {
             },
             branches: ['31'],
             canAfford() { return player.bacteria.sp.gte(2) && hasUpgrade("bacteria",31) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2); player.bacteria.sp = player.bacteria.sp.sub(2) },
         },
         32: {
             fullDisplay() {
@@ -258,7 +258,7 @@ addLayer("bacteria", {
             },
             branches: ['21'],
             canAfford() { return player.bacteria.sp.gte(1) && hasUpgrade("bacteria",21) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1); player.bacteria.sp = player.bacteria.sp.sub(1) },
         },
         42: {
             fullDisplay() {
@@ -267,7 +267,7 @@ addLayer("bacteria", {
             },
             branches: ['32'],
             canAfford() { return player.bacteria.sp.gte(2) && hasUpgrade("bacteria",32) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2); player.bacteria.sp = player.bacteria.sp.sub(2) },
         },
         33: {
             fullDisplay() {
@@ -276,7 +276,7 @@ addLayer("bacteria", {
             },
             branches: ['21', '22'],
             canAfford() { return player.bacteria.sp.gte(1) && (hasUpgrade("bacteria",21) && hasUpgrade("bacteria",22)) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(1); player.bacteria.sp = player.bacteria.sp.sub(1) },
             effect() {
                 if (player.bacteria.sp.gt(0)) return (Math.pow(1.2, Math.log2(120 / Math.max(player.bacteria.fastestreset, 0.5))))*1.2;
                 else return 1.2;
@@ -290,7 +290,7 @@ addLayer("bacteria", {
             },
             branches: ['33'],
             canAfford() { return player.bacteria.sp.gte(2) && hasUpgrade("bacteria",33) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2); player.bacteria.sp = player.bacteria.sp.sub(2) },
         },
         51: {
             fullDisplay() {
@@ -299,7 +299,7 @@ addLayer("bacteria", {
             },
             branches: ['41'],
             canAfford() { return player.bacteria.sp.gte(2) && hasUpgrade("bacteria",41) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(2); player.bacteria.sp = player.bacteria.sp.sub(2) },
         },
         44: {
             fullDisplay() {
@@ -308,7 +308,7 @@ addLayer("bacteria", {
             },
             branches: ['43', '33'],
             canAfford() { return player.bacteria.sp.gte(3) && hasUpgrade("bacteria",43) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(3) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(3); player.bacteria.sp = player.bacteria.sp.sub(3) },
         },
         52: {
             fullDisplay() {
@@ -317,7 +317,7 @@ addLayer("bacteria", {
             },
             branches: ['51'],
             canAfford() { return player.bacteria.sp.gte(3) && hasUpgrade("bacteria",51) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(3) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(3); player.bacteria.sp = player.bacteria.sp.sub(3) },
         },
         12: {
             fullDisplay() {
@@ -326,7 +326,7 @@ addLayer("bacteria", {
             },
             branches: ['11'],
             canAfford() { return player.bacteria.sp.gte(10) && hasUpgrade("bacteria",11) },
-            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(10) },
+            pay() { player.bacteria.spentsp = player.bacteria.spentsp.add(10); player.bacteria.sp = player.bacteria.sp.sub(10) },
         },
     },
     clickables: {
@@ -337,6 +337,7 @@ addLayer("bacteria", {
             onClick() {
                 player[this.layer].upgrades = []
                 player[this.layer].spentsp = new Decimal(0)
+                player[this.layer].sp = player[this.layer].maxsp
                 if (!(hasMilestone("bacteria", 5))) doReset(this.layer, true)
             },
             style() { return {

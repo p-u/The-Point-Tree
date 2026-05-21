@@ -2194,7 +2194,7 @@ addLayer("sa", {
         },
         14: {
             title: "Minigame Points is now 50,000, but Minigame Number's layer (amount of 'e') is decreased by 1...",
-            canClick() {return (!(hasMilestone("sa", 17)))},
+            canClick() {return (!(hasUpgrade("sa", 45)))},
             onClick() {
                 player[this.layer].minigameNum.layer = player[this.layer].minigameNum.layer - 1
                 player[this.layer].minigamePoints = new Decimal(50000)
@@ -3028,7 +3028,7 @@ addLayer("sa", {
                 title = "F".repeat(player.sa.fNumber.toNumber()) + notationChooserMinigame(player.sa.baseNum)
                 return title
             },
-            display() { dis = "Aether"
+            display() { dis = " Aether"
                 predis = ""
                 if (player.sa.fNumber.eq(1)) {
                     if (player.sa.baseNum.gte("e350")) predis = "Great"
@@ -3067,6 +3067,20 @@ addLayer("sa", {
                 player[this.layer].bp = player[this.layer].bp.add(1)
                 if (hasAchievement("sa", 176)) { player[this.layer].minigamePoints = player[this.layer].minigamePoints.add(new Decimal(2).mul(player.sa.minigamePtsMult)) }
             }
+        },
+        301: {
+            title(){
+                title = "Dice Rolling Simulator"
+                return title
+            },
+            display() { dis = "TBA"
+                return "Roll: " + dis
+            },
+            style() {return {
+                'width': '267px',
+            }},
+            unlocked() {return player.sa.superMinigameUnlocked},
+            canClick() {return false},
         },
     },
     upgrades: {

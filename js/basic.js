@@ -121,7 +121,7 @@ addLayer("basic", {
         13: {
             title: "Boosting II",
             description: "Point Fragments boost basic points.",
-            cost: new Decimal(10),
+            cost: new Decimal(7),
             main() {
                 expu3 = 0.16
                 if (hasMilestone("rebirth", 13)) expu3 = 0.161616
@@ -155,7 +155,7 @@ addLayer("basic", {
         },
         14: {
             title: "Double Boost",
-            description: "Boost basic points and point fragments by 1.35x.",
+            description: "Boost basic points and point fragments by 1.45x.",
             cost: new Decimal(20),
             unlocked() { return hasUpgrade("basic", 13) },
         },
@@ -207,19 +207,19 @@ addLayer("basic", {
         22: {
             title: "Doubling",
             description: "Point Fragments are doubled again!",
-            cost: new Decimal(250),
+            cost: new Decimal(200),
             unlocked() { return hasUpgrade("basic", 21) },
         },
         23: {
             title: "A boost",
             description: "Basic Points are multiplied by 1.39",
-            cost: new Decimal(600),
+            cost: new Decimal(500),
             unlocked() { return hasUpgrade("basic", 22) },
         },
         24: {
             title: "Compounding II",
             description: "Point Fragments boosts itself",
-            cost: new Decimal(1000),
+            cost: new Decimal(750),
             main() {
                 expu8 = 0.1625
                 if (hasUpgrade("basic", 122)) expu8 = 0.1725
@@ -261,13 +261,13 @@ addLayer("basic", {
         31: {
             title: "Tripling!!",
             description: "Point fragments are TRIPLED!!",
-            cost: new Decimal(2500),
+            cost: new Decimal(2222),
             unlocked() { return hasUpgrade("basic", 24) },
         },
         32: {
             title: "Compounding III",
             description: "Point fragments boost itself, again, but less",
-            cost: new Decimal(10000),
+            cost: new Decimal(7000),
             main() {
                 expu10 = 0.055
                 if (hasUpgrade('rebirth', 31)) expu10 = 0.075
@@ -295,7 +295,7 @@ addLayer("basic", {
                 }
             },
             effect() {
-                let eff = player.points.add(300000).pow(expu10)
+                let eff = player.points.add(300000).pow(expu10).add(0.5)
                 eff = softcap(eff, new Decimal("1e100000000"), scpow)
                 eff = softcap(eff, new Decimal("1e2500000000"), sppow)
                 eff = softcap(eff, new Decimal("e3.3e22"), hcpow)
@@ -312,7 +312,7 @@ addLayer("basic", {
         33: {
             title: "Another boost",
             description: "Point fragments are multiplied by 2.5",
-            cost: new Decimal(28000),
+            cost: new Decimal(20000),
             unlocked() { return hasUpgrade("basic", 32) },
         },
         34: {
@@ -348,7 +348,7 @@ addLayer("basic", {
         51: {
             title: "Big Boost",
             description: "Point Fragments x100",
-            cost: new Decimal(5e70),
+            cost: new Decimal(1e71),
             unlocked() { return hasMilestone("rebirth", 6) && hasUpgrade("basic", 44)},
         },
         52: {
@@ -366,7 +366,7 @@ addLayer("basic", {
         54: {
             title: "MEGA INSANE UPGRADE",
             description: "PF X1K, PF^1.04, BP X100, BP+^0.02, RP X5, RP+^0.005",
-            cost: new Decimal(1e105),
+            cost: new Decimal(2.5e106),
             unlocked() { return hasUpgrade("basic", 53) },
         },
         61: {
@@ -408,7 +408,7 @@ addLayer("basic", {
         73: {
             title: "That's a bit too OP.",
             description: "Mega Upgrade 14 is stronger. xe500 Points.",
-            cost: new Decimal("e260000"),
+            cost: new Decimal("e271444"),
             unlocked() { return hasMilestone("sac", 7) && hasUpgrade("basic", 72) },
         },
         74: {
@@ -859,10 +859,10 @@ addLayer("basic", {
         if (hasUpgrade('basic', 13)) mult = mult.times(upgradeEffect('basic', 13))
         if (hasUpgrade('basic', 21)) mult = mult.times(upgradeEffect('basic', 21))
         if (hasAchievement('sa', 196)) mult = mult.times(100)
-        if (hasUpgrade('basic', 14)) mult = mult.times(1.35)
+        if (hasUpgrade('basic', 14)) mult = mult.times(1.45)
         if (hasUpgrade('basic', 23)) mult = mult.times(1.39)
         if (hasUpgrade('basic', 41)) mult = mult.times(1.91)
-        if (hasUpgrade('basic', 44)) mult = mult.times(4)
+        if (hasUpgrade('basic', 44)) mult = mult.times(6)
         if (hasUpgrade('basic', 52)) mult = mult.times(10)
         if (hasUpgrade('basic', 54)) mult = mult.times(100)
         if (hasUpgrade('rebirth', 12)) mult = mult.times(5)

@@ -201,7 +201,7 @@ addLayer("sac", {
         },
         8: {
             requirementDescription: "Sacrifice 8",
-            effectDescription: "1 new mega upgrade, Autobuy Mega Buyable 1, x1e400 PF, x1e400 BP, Rebirth and Pres softcap exp +0.01",
+            effectDescription: "1 new mega upgrade, x1e400 PF, x1e400 BP, Rebirth and Pres softcap exp +0.01",
             unlocked() {return player["sac"].points.gte(7)},
             done() { return player["sac"].points.gte(8) }
         },
@@ -213,7 +213,7 @@ addLayer("sac", {
         },
         10: {
             requirementDescription: "Sacrifice 10",
-            effectDescription: "Keep Mega Row 3 Upgs. ^1.006 PF. Unlock Energy. Energy is boosted by sacrifice. Clicking for energy gives 1 energy, but passively generating energy gives 20 times the energy. If in Mastery Challenge, ^1.05 PF.",
+            effectDescription: "Keep Mega Row 3 Upgs, Autobuy Mega Buyable 1. ^1.006 PF. Unlock Energy. Energy is boosted by sacrifice. Clicking for energy gives 1 (well, supposed to be 0.5) energy, but passively generating energy gives 40 times the energy. If in Mastery Challenge, ^1.05 PF.",
             unlocked() {return player["sac"].points.gte(9)},
             done() { return player["sac"].points.gte(10) }
         },
@@ -225,7 +225,7 @@ addLayer("sac", {
         },
         12: {
             requirementDescription: "Sacrifice 12",
-            effectDescription: "x10 Energy, energy boost is stronger and Autobuy Mega Buyable 2. More Mega Upgrades. ^1.0015 PF.",
+            effectDescription: "x10 Energy, energy boost is stronger. More Mega Upgrades. ^1.0015 PF.",
             unlocked() {return player["sac"].points.gte(11)},
             done() { return player["sac"].points.gte(12) }
         },
@@ -237,7 +237,7 @@ addLayer("sac", {
         },
         14: {
             requirementDescription: "Sacrifice 14",
-            effectDescription: "^1.005 PF, x1,000 Energy, x1e10K PF, extend rebirth upgrades. Keep Row 4 Mega Upgs and Keep RU41 and 42",
+            effectDescription: "^1.005 PF, x1,000 Energy, x1e10K PF and Autobuy Mega Buyable 2, extend rebirth upgrades. Keep Row 4 Mega Upgs and Keep RU41 and 42",
             unlocked() {return player["sac"].points.gte(13)},
             done() { return player["sac"].points.gte(14) }
         },
@@ -1255,6 +1255,8 @@ addLayer("sac", {
     },
     exponent() {
         let exp = new Decimal(3.6)
+        if (player.sac.points.eq(8)) exp = exp.add(0.014)
+        if (player.sac.points.eq(11)) exp = exp.sub(0.0002)
         if (inChallenge('m', 12)) {
             exp = new Decimal(7)
             if (hasMilestone('mega', 21)) exp = new Decimal(6.5)

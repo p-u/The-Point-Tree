@@ -785,7 +785,7 @@ function getPointGen() {
 	if (hasUpgrade('basic', 31)) gain = gain.times(3)
 	if (hasUpgrade('basic', 33)) gain = gain.times(2.5)
 	if (hasUpgrade('basic', 34)) gain = gain.times(5)
-	if (hasUpgrade('basic', 14)) gain = gain.times(1.35)
+	if (hasUpgrade('basic', 14)) gain = gain.times(1.45)
 	if (hasUpgrade('basic', 41)) gain = gain.times(9.11)
 	if (hasUpgrade('basic', 42)) gain = gain.times(7.77)
 	if (hasUpgrade('basic', 44)) gain = gain.times(10)

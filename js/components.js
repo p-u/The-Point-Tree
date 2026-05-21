@@ -240,6 +240,14 @@ function loadVue() {
 		`
 	})
 
+	// Displays the main resource for the layer
+	Vue.component('main-displayX', {
+		props: ['layer', 'data'],
+		template: `
+		<div><span v-if="player[layer].points.lt('1e1000')">You have </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? notationChooser(player[layer].points, data) : notationChooser(player[layer].points)}}</h2> {{tmp[layer].resource}}<span v-if="layers[layer].effectDescription">, <span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span> (+ {{notationChooser(tmp[layer].resetGain.times(tmp[layer].passiveGeneration))}}/sec)<br><br></div>
+		`
+	})
+
 	// Displays the base resource for the layer, as well as the best and total values for the layer's currency, if tracked
 	Vue.component('resource-display', {
 		props: ['layer'],
