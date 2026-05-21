@@ -221,8 +221,7 @@ addLayer("e", {
         }
         if (mult.gte(2)) mult = mult.div(2)
         if (mult.gte(2)) mult = mult.div(2)
-        if (mult.gte(2)) mult = mult.div(2)
-        if (mult.gte(1.6)) mult = mult.div(1.6)
+        if (mult.gte(1.7)) mult = mult.div(1.7)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
