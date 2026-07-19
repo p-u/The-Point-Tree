@@ -37,7 +37,11 @@ function canGenPoints(){
 function getPointMult() {
 	let mult = new Decimal(1);
 	if (player.p && player.p.unlocked && player.p.buyables) {
-		for (let id = 11; id <= 30; id++) {
+		// IDs: row 1 = 11-19 (n=1-9), row 2 = 21-29 (n=10-18), row 3 = 31-32 (n=19-20)
+		for (let n = 1; n <= 20; n++) {
+			let row = Math.floor((n - 1) / 9);
+			let col = ((n - 1) % 9) + 1;
+			let id = (row + 1) * 10 + col;
 			let amt = getBuyableAmount("p", id);
 			if (amt && amt.gt(0)) {
 				mult = mult.mul(Decimal.pow(1.5, amt));

@@ -1,32 +1,45 @@
+// Maps buyable number n (1-20) to a TMT-safe id, skipping multiples of 10.
+// Row 1: n=1..9  → ids 11..19
+// Row 2: n=10..18 → ids 21..29
+// Row 3: n=19..20 → ids 31..32
+function buyableIdForN(n) {
+    let row = Math.floor((n - 1) / 9); // 0, 1, or 2
+    let col = ((n - 1) % 9) + 1;      // 1..9
+    return (row + 1) * 10 + col;       // 11..19, 21..29, 31..32
+}
+
 function buildBuyables() {
     let buyables = {};
-    const BUYABLE_NAMES = {
-        11: "Simple Boost",
-        12: "Small Boost",
-        13: "Little Boost",
-        14: "Meaningful Boost",
-        15: "Great Boost",
-        16: "Solid Boost",
-        17: "Decent Boost",
-        18: "Strong Boost",
-        19: "Mighty Boost",
-        20: "Grand Boost",
-        21: "Super Boost",
-        22: "Ultra Boost",
-        23: "Hyper Boost",
-        24: "Mega Boost",
-        25: "Omega Boost",
-        26: "Epsilon Boost",
-        27: "Eta Boost",
-        28: "Absolute Boost",
-        29: "Infinite Boost",
-        30: "Eternal Boost"
-    };
+    const BUYABLE_NAMES = [
+        null, // index 0 unused
+        "Simple Boost",
+        "Small Boost",
+        "Little Boost",
+        "Meaningful Boost",
+        "Great Boost",
+        "Solid Boost",
+        "Decent Boost",
+        "Strong Boost",
+        "Mighty Boost",
+        "Grand Boost",
+        "Super Boost",
+        "Ultra Boost",
+        "Hyper Boost",
+        "Mega Boost",
+        "Omega Boost",
+        "Epsilon Boost",
+        "Eta Boost",
+        "Absolute Boost",
+        "Infinite Boost",
+        "Eternal Boost"
+    ];
 
-    for (let id = 11; id <= 30; id++) {
-        let n = id - 10; // Buyable number: 1 to 20
+    for (let n = 1; n <= 20; n++) {
+        let id = buyableIdForN(n);
+        let prevId = n > 1 ? buyableIdForN(n - 1) : null;
+
         buyables[id] = {
-            title: BUYABLE_NAMES[id],
+            title: BUYABLE_NAMES[n],
             cost(x) {
                 let basePower = Math.pow(2, n - 1) - 1;
                 let B = Decimal.pow(1.5, basePower);
@@ -34,7 +47,6 @@ function buildBuyables() {
                 return B.mul(Decimal.pow(S, x));
             },
             effect(x) {
-                // Each buyable level boosts Scraps by 1.5x
                 return Decimal.pow(1.5, x);
             },
             display() {
@@ -47,7 +59,7 @@ function buildBuyables() {
             },
             unlocked() {
                 if (n === 1) return true;
-                return getBuyableAmount(this.layer, this.id - 1).gte(1);
+                return getBuyableAmount(this.layer, prevId).gte(1);
             },
             canAfford() {
                 return player.points.gte(this.cost());
@@ -63,14 +75,12 @@ function buildBuyables() {
                 let B = Decimal.pow(1.5, basePower);
                 let S = Decimal.pow(1.5, Math.pow(2, n));
                 let P = player.points;
-                if (P.lt(B.mul(Decimal.pow(S, amt)))) return; // Cannot afford even one
-                
-                // Solve B * S^amt * (S^k - 1) / (S - 1) <= P
-                // S^k <= P * (S - 1) / (B * S^amt) + 1
+                if (P.lt(B.mul(Decimal.pow(S, amt)))) return;
+
                 let num = P.mul(S.sub(1)).div(B.mul(Decimal.pow(S, amt))).add(1);
                 let k = num.log(S).floor();
                 if (k.lte(0)) return;
-                
+
                 let cost = B.mul(Decimal.pow(S, amt)).mul(Decimal.pow(S, k).sub(1)).div(S.sub(1));
                 player.points = player.points.sub(cost);
                 addBuyables(this.layer, this.id, k);
@@ -114,9 +124,10 @@ addLayer("p", {
     tooltip() {
         let count = 0;
         if (player[this.layer] && player[this.layer].buyables) {
-            for (let id = 11; id <= 30; id++) {
-                let n = id - 10;
-                if (n === 1 || getBuyableAmount(this.layer, id - 1).gte(1)) {
+            for (let n = 1; n <= 20; n++) {
+                let id = buyableIdForN(n);
+                let prevId = n > 1 ? buyableIdForN(n - 1) : null;
+                if (n === 1 || getBuyableAmount(this.layer, prevId).gte(1)) {
                     count++;
                 }
             }
