@@ -1,8 +1,8 @@
 let modInfo = {
-	name: "1 Layer, 1,000 Upgrades",
-	id: "1L1KUpgRD",
+	name: "Simple Game",
+	id: "SG2000",
 	author: "randim82",
-	pointsName: "Power",
+	pointsName: "Scraps",
 	modFiles: ["tree.js", "layer.js"],
 
 	discordName: "Discord",
@@ -14,7 +14,7 @@ let modInfo = {
 // Set your version in num and name
 let VERSION = {
 	num: "1",
-	name: "1KUpg",
+	name: "1b",
 }
 
 let changelog = `<h1>Changelog:</h1><br> N/A`
@@ -33,23 +33,28 @@ function canGenPoints(){
 	return true
 }
 
+// Calculate the point multiplier from all buyables
+function getPointMult() {
+	let mult = new Decimal(1);
+	if (player.p && player.p.unlocked && player.p.buyables) {
+		for (let id = 11; id <= 30; id++) {
+			let amt = getBuyableAmount("p", id);
+			if (amt && amt.gt(0)) {
+				mult = mult.mul(Decimal.pow(1.5, amt));
+			}
+		}
+	}
+	return mult;
+}
+
 // Calculate points/sec!
-// Base gain is 1 Power/sec, multiplied by each purchased upgrade's effect.
-// Upgrade N (UpgNum 1..1000) multiplies Power by (N+1).
+// Base gain is 1 Scrap/sec, multiplied by buyables' multiplier.
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
-
-	if (player.p && player.p.unlocked) {
-		for (let n = 1; n <= UPG_COUNT; n++) {
-			let id = (Math.floor((n - 1) / 5) * 10 + ((n - 1) % 5 + 1)) + 10;
-			if (hasUpgrade("p", id)) {
-				gain = gain.mul(n + 1);
-			}
-		}
-	}
+	gain = gain.mul(getPointMult())
 
 	return gain
 }
