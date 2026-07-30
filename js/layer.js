@@ -495,19 +495,19 @@ addLayer("p", {
 
 const FIXED_AURAS = [
     { name: "Nothing", rarity: 1, multi: 1.00 },
-    { name: "Miniscule", rarity: 3, multi: 1.01 },
-    { name: "Airy", rarity: 10, multi: 1.02 },
-    { name: "Particles", rarity: 40, multi: 1.04 },
-    { name: "Bad", rarity: 100, multi: 1.07 },
-    { name: "Meh", rarity: 200, multi: 1.12 },
-    { name: "Subpar", rarity: 500, multi: 1.17 },
-    { name: "Fine", rarity: 1000, multi: 1.24 },
-    { name: "Average", rarity: 2400, multi: 1.35 },
-    { name: "Decent", rarity: 6000, multi: 1.49 },
-    { name: "Good", rarity: 15000, multi: 1.66 },
-    { name: "Great", rarity: 35000, multi: 1.80 },
-    { name: "Awesome", rarity: 55000, multi: 1.90 },
-    { name: "Radiating", rarity: 85000, multi: 2.00 },
+    { name: "Miniscule", rarity: 3, multi: 1.1 },
+    { name: "Airy", rarity: 10, multi: 1.2 },
+    { name: "Particles", rarity: 40, multi: 1.34 },
+    { name: "Bad", rarity: 100, multi: 1.47 },
+    { name: "Meh", rarity: 200, multi: 1.63 },
+    { name: "Subpar", rarity: 500, multi: 1.83 },
+    { name: "Fine", rarity: 1000, multi: 2.05 },
+    { name: "Average", rarity: 2400, multi: 2.42 },
+    { name: "Decent", rarity: 6000, multi: 2.88 },
+    { name: "Good", rarity: 15000, multi: 3.37 },
+    { name: "Great", rarity: 35000, multi: 4.06 },
+    { name: "Awesome", rarity: 55000, multi: 4.58 },
+    { name: "Radiating", rarity: 85000, multi: 5.02 },
 ];
 
 const AURA_BASES = ["Volcanic", "Earthquake", "Mastered", "Superior", "Insane", "Beast", "Serpent", "Overlord"];
@@ -520,7 +520,7 @@ function getAuraData(index) {
     }
     let step = index - FIXED_AURAS.length;
     let rarity = new Decimal(100000).mul(new Decimal(2).pow(step));
-    let multiVal = 1.8 * Math.pow(1.07, step + 1);
+    let multiVal = 5.57 * Math.pow(1.15, step + 1);
     let multi = new Decimal((Math.round(multiVal * 100) / 100).toFixed(2));
     
     let base = AURA_BASES[step % AURA_BASES.length];
