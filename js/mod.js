@@ -3,7 +3,7 @@ let modInfo = {
 	id: "1L1KUpgv3RD2",
 	author: "randim82",
 	pointsName: "Power",
-	modFiles: ["tree.js", "layer.js", "prestige.js"],
+	modFiles: ["tree.js", "layer.js"],
 
 	discordName: "Discord",
 	discordLink: "https://discord.com/invite/RRK9Dwzf6P",
@@ -46,8 +46,8 @@ function getPointGen() {
 	if (player.p && player.p.unlocked) {
 		gain = gain.mul(totalUpgEffects[totalUpgUnlocked]);
 	}
-	if (totalUpgUnlocked < (50*(getBuyableAmount("pr",13).toNumber()))) {
-		gain = gain.mul(buyableEffect("pr",13))
+	if (totalUpgUnlocked < (50*(getBuyableAmount("p",13).toNumber()))) {
+		gain = gain.mul(buyableEffect("p",13))
 	}
 
 	if (tmp.aura && tmp.aura.powerMult) {

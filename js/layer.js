@@ -1,4 +1,6 @@
 const UPG_COUNT = 4000;
+const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 3]
+const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000]
 
 // Pre-compute each upgrade's boost multiplier: upgEffects[n] = Decimal
 // upgEffects[1] = 2
@@ -58,6 +60,17 @@ function getMaxUnlockedRow() {
     return maxRow;
 }
 
+const upgDescriptions = new Array(UPG_COUNT + 1);
+
+for (let n = 1; n <= UPG_COUNT; n++) {
+    let added = "";
+    if (n % 50 == 0)
+        added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]";
+
+    upgDescriptions[n] =
+        "Multiplies Power by " + format(upgEffects[n], 2) + "x." + added;
+}
+
 function buildUpgrades() {
     let upgs = {};
     for (let n = 1; n <= UPG_COUNT; n++) {
@@ -70,15 +83,16 @@ function buildUpgrades() {
         if (n%50 == 0) added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]"
         upgs[id] = {
             title: "Upgrade " + n,
-            description: function() {
-                return "Multiplies Power by " + notationChooser(upgEffects[n], 3) + "x." + added;
+            description() {
+                return upgDescriptions[n];
             },
             cost: cost,
             currencyInternalName: "points",
             currencyDisplayName: "Power",
             unlocked() {
-                if (row >= Math.floor((player.p.upsunlocked || 500) / 5)) return false;
-                if (row > 0 && !hasUpgrade("p", prevRowLastId)) return false;
+                if (row >= Math.floor((player.p.upsunlocked) / 5)) return false;
+                if (row >= Math.floor((UPG_COUNT) / 5)) return false;
+                if (row > Math.floor((player.p.nextUpgToAuto - 1) / 5)) return false;
 
                 if (player.p.compactView) {
                     let maxRow = getMaxUnlockedRow();
@@ -106,21 +120,45 @@ addLayer("p", {
             autoMult: new Decimal(1e6),
             nextUpgToAuto: 1,
             compactView: true,
+            totalPresMulti: new Decimal(1)
         };
     },
 
     layerShown() { return true; },
 
-    tabFormat: [
-        ["display-text", function() {
-            return "You have <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points) + "</h2> Power"
-                 + "<br>Power/sec: " + notationChooser(tmp.pointGen);
-        }],
-        "blank",
-        ["clickables", [1]],
-        "blank",
-        "upgrades",
-    ],
+    tabFormat: {
+        "Upgrades": {
+            content: [
+                ["display-text", function() {
+                    return "You have <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points) + "</h2> Power"
+                        + "<br>Power/sec: " + notationChooser(tmp.pointGen);
+                }],
+                "blank",
+                ["clickables", [1]],
+                "blank",
+                "upgrades",
+            ],
+        },
+        "PRESTIGE!": {
+            content: [
+                "main-display",
+                "blank",
+                "prestige-button",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = "Total Buyable Prestige Multiplier x"
+                        a = a + player.p.totalPresMulti
+                        return a + "   [NOTE THAT EACH PRESTIGE BUYABLE IS ADDITIVE!!]"
+                    }
+                ],
+                "blank",
+                "blank",
+                "blank",
+                "buyables",
+            ],
+        },
+    },
     clickables: {
         11: {
             title() {
@@ -143,27 +181,10 @@ addLayer("p", {
     automate() {
         // to only auto upgrade if and only if power>upgcost*(Value)
         let startN = player.p.nextUpgToAuto || 1;
-        
-        while (startN <= player.p.upsunlocked && hasUpgrade("p", upgId(startN))) {
-            startN++;
-        }
-        player.p.nextUpgToAuto = startN
-        
-        for (let n = startN; n <= UPG_COUNT; n++) {
-            let id = upgId(n);
-            if (hasUpgrade("p", id)) continue
-            
-            let row = Math.floor((n - 1) / 5)
-            if (row >= Math.floor(player.p.upsunlocked / 5)) break
-            if (row > 0 && !hasUpgrade("p", upgId(row * 5))) break
-            
-            let cost = upgCosts[n]
-            if (player.points.gt(cost.mul(player.p.autoMult))) {
-                buyUpgrade("p", id)
-                player.p.nextUpgToAuto = n + 1
-            } else {
-                break
-            }
+        while (startN <= UPG_COUNT && startN <= player.p.upsunlocked && player.points.gte(upgCosts[startN].mul(player.p.autoMult))) {
+            buyUpgrade("p", upgId(startN))
+            startN++
+            player.p.nextUpgToAuto = startN
         }
     },
     tooltip() {
@@ -180,8 +201,274 @@ addLayer("p", {
         if (player.points.lte("1e15000000")) return "A true master!"
         if (player.points.gte("1e15000000")) return "An absolute true master!"
     },
-
     upgrades: buildUpgrades(),
+    requires: new Decimal("e200"), // Can be a function that takes requirement increases into account
+    resource: "Prestiges", // Name of currency
+    baseResource: "Power", // Name of resource prestige is based on
+    baseAmount() {return player.points}, // Get the current amount of baseResource
+    type: "custom", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 1, 
+    gainMult() { // Prestige multiplier
+        let mult = player.p.totalPresMulti
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        let exp = new Decimal(1)
+        return exp
+    },
+    canReset() {
+        return tmp.p.baseAmount.gte(tmp.p.requires)
+    },
+    getResetGain() {
+        if (player.points.lte(0)) return new Decimal(0)
+        return (player.points.max(1).log(10).div(200)).mul(player.p.totalPresMulti).floor()
+    },
+    getNextAt() {
+        let target = tmp.p.getResetGain.add(1)
+        return Decimal.pow(10, target.mul(200).div(player.p.totalPresMulti))
+    },
+    onPrestige() {
+        player.p.upgrades = []
+        player.p.nextUpgToAuto = 1
+    },
+    buyables: {
+        11: {
+            title: "Multiply Aura Luck Significantly!",
+            cost(x) {
+                return new Decimal(1).mul(Decimal.pow(2, x)).floor()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: Multiply Aura luck by x" + notationChooser(buyableEffect(this.layer, this.id))
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(4)
+                base2 = x
+                expo = new Decimal(1)
+                let eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+            tooltip() {
+                return "x4 Aura Luck which translates to about an x1.15 multiplier."
+            }
+        },
+        12: {
+            title: "Better Auto",
+            cost(x) {
+                if (x <= 7) {
+                    return new Decimal(automationBuyablePrice[x])
+                } else {
+                    return new Decimal("e1e6")
+                }
+            },
+            display() {
+                let x = getBuyableAmount(this.layer, this.id)
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Bought: " + getBuyableAmount(this.layer, this.id) + "<br>Effect: To automate an upgrade, you need " + automationReqs[x.toNumber()] + "x >> " + automationReqs[x.toNumber()+1] + "x upgrade cost to autobuy."
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                base1 = new Decimal(4)
+                base2 = x
+                expo = new Decimal(1)
+                let eff = base1.pow(Decimal.pow(base2, expo))
+                return eff
+            },
+            tooltip() {
+                return "Cost+Effect: 1Mx (free) -> 100x (1) -> 25x (2) -> 15x (4) -> 10x (10) -> 6x (50) -> 4x (500) -> 3x (5,000)."
+            }
+        },
+        13: {
+            title: "Surge Multiplier",
+            cost(x) {
+                return new Decimal(3).mul(Decimal.pow(1.9, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>When you have not bought Upgrade " + (getBuyableAmount(this.layer, this.id)*50) + ", x" + notationChooser(buyableEffect(this.layer, this.id)) + " Power Multiplier"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                let eff = new Decimal(1)
+                if (x.gt(0)) {
+                    eff = new Decimal(x).add(2)
+                } else {
+                    eff = new Decimal(1)
+                }
+                return eff
+            },
+            tooltip() {
+                return "Every buy increase upgrade max by 50 and multi by 1 (starts at 3 for first buy)"
+            }
+        },
+        14: {
+            title: "MORE!!",
+            cost(x) {
+                return new Decimal(1).mul(Decimal.pow(1.8, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Maximum Upgrade that can be unlocked: " + buyableEffect("p",14).add(100)
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return x.mul(100)
+            },
+            tooltip() {
+                return "Every buy increase upgrade max by 100"
+            }
+        },
+        15: {
+            title: "Greater Prestige",
+            cost(x) {
+                return new Decimal(4).mul(Decimal.pow(3, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Effect: +" + buyableEffect("p",15) + "% Prestiges"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return x.mul(30)
+            },
+            tooltip() {
+                return "+30% Prestiges/level."
+            }
+        },
+        16: {
+            title: "Enhanced Prestige",
+            cost(x) {
+                return new Decimal(25).mul(Decimal.pow(5, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Effect: +" + buyableEffect("p",16) + "% Prestiges"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return x.mul(60)
+            },
+            tooltip() {
+                return "+60% Prestiges/level."
+            },
+            unlocked() {return getBuyableAmount("p", 15).gte(1)}
+        },
+        17: {
+            title: "Super Prestige",
+            cost(x) {
+                return new Decimal(250).mul(Decimal.pow(9, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Effect: +" + buyableEffect("p",17) + "% Prestiges"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return x.mul(110)
+            },
+            tooltip() {
+                return "+110% Prestiges/level."
+            },
+            unlocked() {return getBuyableAmount("p", 16).gte(1)}
+        },
+        18: {
+            title: "Insane Prestige",
+            cost(x) {
+                return new Decimal(5000).mul(Decimal.pow(12,x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Effect: +" + buyableEffect("p",18) + "% Prestiges"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return x.mul(160)
+            },
+            tooltip() {
+                return "+160% Prestiges/level."
+            },
+            unlocked() {return getBuyableAmount("p", 17).gte(1)}
+        },
+        19: {
+            title: "Omega Prestige",
+            cost(x) {
+                return new Decimal(400000).mul(Decimal.pow(20, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Effect: +" + buyableEffect("p",19) + "% Prestiges"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return x.mul(280)
+            },
+            tooltip() {
+                return "+280% Prestiges/level."
+            },
+            unlocked() {return getBuyableAmount("p", 18).gte(1)}
+        },
+    },
+    prestigeButtonText() {
+        if (tmp.p.canReset) {
+            return "Prestige for " + formatWhole(tmp.p.resetGain) + " " + tmp.p.resource + "!<br>(Next at " + formatWhole(getNextAt("p")) + ")"
+        }
+        return "Reach " + formatWhole(tmp.p.requires) + " " + tmp.p.baseResource + " to prestige<br>(Next at " + formatWhole(getNextAt("p")) + ")"
+    },
 });
 
 
@@ -340,12 +627,12 @@ addLayer("aura", {
     update(diff) {
         player.aura.luck = new Decimal(1)
         player.aura.luck = player.aura.luck.mul((1+(player.aura.totalRolls/1000)))
-        player.aura.luck = player.aura.luck.mul(buyableEffect("pr",11))
+        player.aura.luck = player.aura.luck.mul(buyableEffect("p",11))
         if (player.aura.cd && player.aura.cd.gt(0)) {
             player.aura.cd = player.aura.cd.sub(diff).max(0);
         }
-        player.p.upsunlocked = (buyableEffect("pr",14).add(100)).toNumber()
-        player.p.autoMult = new Decimal(automationReqs[getBuyableAmount("pr",12).toNumber()])
-        player.pr.totalPresMulti = (buyableEffect("pr",15).add(buyableEffect("pr",16)).add(buyableEffect("pr",17)).add(buyableEffect("pr",18)).add(buyableEffect("pr",19))).div(100).add(1)
+        player.p.upsunlocked = (buyableEffect("p",14).add(100)).toNumber()
+        player.p.autoMult = new Decimal(automationReqs[getBuyableAmount("p",12).toNumber()])
+        player.p.totalPresMulti = (buyableEffect("p",15).add(buyableEffect("p",16)).add(buyableEffect("p",17)).add(buyableEffect("p",18)).add(buyableEffect("p",19))).div(100).add(1)
     },
 });
