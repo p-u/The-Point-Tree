@@ -83,21 +83,19 @@ function buildUpgrades() {
         if (n%50 == 0) added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]"
         upgs[id] = {
             title: "Upgrade " + n,
-            description() {
-                return upgDescriptions[n];
-            },
+            description: upgDescriptions[n],
             cost: cost,
             currencyInternalName: "points",
             currencyDisplayName: "Power",
             unlocked() {
                 if (row >= Math.floor((player.p.upsunlocked) / 5)) return false;
                 if (row >= Math.floor((UPG_COUNT) / 5)) return false;
-                if (row > Math.floor((player.p.nextUpgToAuto - 1) / 5)) return false;
+                let visibleRows = Math.ceil(player.p.nextUpgToAuto / 5);
+
+                if (row > (visibleRows-1)) return false;
 
                 if (player.p.compactView) {
-                    let maxRow = getMaxUnlockedRow();
-                    let minRow = Math.max(0, maxRow - 4);
-                    if (row < minRow) return false;
+                    return row >= Math.max(0, player.p.maxUnlockedRow - 4);
                 }
                 return true;
             },
@@ -120,7 +118,8 @@ addLayer("p", {
             autoMult: new Decimal(1e6),
             nextUpgToAuto: 1,
             compactView: true,
-            totalPresMulti: new Decimal(1)
+            totalPresMulti: new Decimal(1),
+            maxUnlockedRow: 0,
         };
     },
 
@@ -181,10 +180,32 @@ addLayer("p", {
     automate() {
         // to only auto upgrade if and only if power>upgcost*(Value)
         let startN = player.p.nextUpgToAuto || 1;
-        while (startN <= UPG_COUNT && startN <= player.p.upsunlocked && player.points.gte(upgCosts[startN].mul(player.p.autoMult))) {
-            buyUpgrade("p", upgId(startN))
-            startN++
-            player.p.nextUpgToAuto = startN
+        
+        while (startN <= player.p.upsunlocked && hasUpgrade("p", upgId(startN))) {
+            startN++;
+        }
+        player.p.nextUpgToAuto = startN
+        
+        for (let n = startN; n <= UPG_COUNT; n++) {
+            let id = upgId(n);
+            if (hasUpgrade("p", id)) continue
+            
+            let row = Math.floor((n - 1) / 5)
+            if (row >= Math.floor(player.p.upsunlocked / 5)) break
+            if (row > 0 && !hasUpgrade("p", upgId(row * 5))) break
+            
+            let cost = upgCosts[n]
+            if (player.points.gt(cost.mul(player.p.autoMult))) {
+                buyUpgrade("p", id)
+
+                if (hasUpgrade("p", id)) {
+                    player.p.nextUpgToAuto = n + 1
+                } else {
+                    break
+                }
+            } else {
+                break
+            }
         }
     },
     tooltip() {
@@ -625,6 +646,7 @@ addLayer("aura", {
         },
     },
     update(diff) {
+        player.p.maxUnlockedRow = getMaxUnlockedRow();
         player.aura.luck = new Decimal(1)
         player.aura.luck = player.aura.luck.mul((1+(player.aura.totalRolls/1000)))
         player.aura.luck = player.aura.luck.mul(buyableEffect("p",11))
