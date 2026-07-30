@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "1 Layer, 2,000 Upgrades",
+	name: "1 Layer, Many Upgrades",
 	id: "1L1KUpgv3RD",
 	author: "randim82",
 	pointsName: "Power",
-	modFiles: ["tree.js", "layer.js"],
+	modFiles: ["tree.js", "layer.js", "prestige.js"],
 
 	discordName: "Discord",
 	discordLink: "https://discord.com/invite/RRK9Dwzf6P",
@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1",
-	name: "1KUpg",
+	num: "2",
+	name: "Prestige!",
 }
 
 let changelog = `<h1>Changelog:</h1><br> N/A`
@@ -41,14 +41,17 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	let totalUpgUnlocked = player.p.upgrades.length
 
 	if (player.p && player.p.unlocked) {
-		for (let n = 1; n <= UPG_COUNT; n++) {
-			let id = upgId(n);
-			if (hasUpgrade("p", id)) {
-				gain = gain.mul(upgEffects[n]);
-			}
-		}
+		gain = gain.mul(totalUpgEffects[totalUpgUnlocked]);
+	}
+	if (totalUpgUnlocked < (50*(getBuyableAmount("pr",13).toNumber()))) {
+		gain = gain.mul(buyableEffect("pr",13))
+	}
+
+	if (tmp.aura && tmp.aura.powerMult) {
+		gain = gain.mul(tmp.aura.powerMult);
 	}
 
 	return gain
