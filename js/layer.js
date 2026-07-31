@@ -1,4 +1,4 @@
-const UPG_COUNT = 7500;
+const UPG_COUNT = 4000;
 const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 3]
 const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000]
 
@@ -24,7 +24,7 @@ const totalUpgEffects = new Array(UPG_COUNT + 1);
 const timewallDuration = new Array(UPG_COUNT + 1);
 {
     for (let n = 1; n <= UPG_COUNT; n++) {
-        timewallDuration[n] = n / (1.1 ** Math.floor(n / 50));
+        timewallDuration[n] = n / (1.1 ** Math.min(Math.floor(n / 50),Math.min(Math.log2(n)+10,21.5)));
     }
 }
 
@@ -64,8 +64,7 @@ const upgDescriptions = new Array(UPG_COUNT + 1);
 
 for (let n = 1; n <= UPG_COUNT; n++) {
     let added = "";
-    if (n % 50 == 0)
-        added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]";
+    if ((n % 50 == 0) && n < 1000) added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]";
 
     upgDescriptions[n] =
         "Multiplies Power by " + format(upgEffects[n], 2) + "x." + added;
@@ -80,7 +79,7 @@ function buildUpgrades() {
         let row = Math.floor((n - 1) / 5);
         let prevRowLastId = row > 0 ? upgId(row * 5) : null;
         let added = ""
-        if (n%50 == 0) added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]"
+        if ((n % 50 == 0) && n < 1000) added = " [BONUS BOOST - FURTHER UPGRADES TAKE 10% SHORTER!]"
         upgs[id] = {
             title: "Upgrade " + n,
             description: upgDescriptions[n],
