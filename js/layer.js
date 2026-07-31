@@ -1,4 +1,4 @@
-const UPG_COUNT = 4000;
+const UPG_COUNT = 7500;
 const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 3]
 const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000]
 
@@ -146,11 +146,22 @@ addLayer("p", {
                 "blank",
                 ["display-text",
                     function(){
+                        let a = "You have "
+                        a = a + notationChooser(player.p.total)
+                        return a + " total Prestiges."
+                    }
+                ],
+                "blank",
+                ["display-text",
+                    function(){
                         let a = "Total Buyable Prestige Multiplier x"
-                        a = a + player.p.totalPresMulti
+                        a = a + formatWhole(player.p.totalPresMulti,2)
                         return a + "   [NOTE THAT EACH PRESTIGE BUYABLE IS ADDITIVE!!]"
                     }
                 ],
+                "blank",
+                "blank",
+                "milestones",
                 "blank",
                 "blank",
                 "blank",
@@ -223,7 +234,7 @@ addLayer("p", {
         if (player.points.gte("1e15000000")) return "An absolute true master!"
     },
     upgrades: buildUpgrades(),
-    requires: new Decimal("e200"), // Can be a function that takes requirement increases into account
+    requires: new Decimal("e150"), // Can be a function that takes requirement increases into account
     resource: "Prestiges", // Name of currency
     baseResource: "Power", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
@@ -251,6 +262,43 @@ addLayer("p", {
     onPrestige() {
         player.p.upgrades = []
         player.p.nextUpgToAuto = 1
+    },
+    milestones: {
+        1: {
+            requirementDescription: "10 total Prestiges",
+            effectDescription: "Unlock Prestige Buyables. Also increase Prestiges gain by 10%.",
+            done() { return player.p.total.gte(10) }
+        },
+        2: {
+            requirementDescription: "100 total Prestiges",
+            effectDescription: "Reduce Aura roll cooldown by 1 second!",
+            done() { return player.p.total.gte(100) },
+            unlocked() {return player.p.total.gte(10)}
+        },
+        3: {
+            requirementDescription: "1,000 total Prestiges",
+            effectDescription: "Double Prestige gain if you have rolled 1,000 auras. Double it again if you rolled 10,000 of them!",
+            done() { return player.p.total.gte(1000) },
+            unlocked() {return player.p.total.gte(100)}
+        },
+        4: {
+            requirementDescription: "10,000 total Prestiges",
+            effectDescription: "Small boost - Reduce aura roll cooldown by 0.5s, and multiply Aura luck by 1.4",
+            done() { return player.p.total.gte(10000) },
+            unlocked() {return player.p.total.gte(1000)}
+        },
+        5: {
+            requirementDescription: "100,000 total Prestiges",
+            effectDescription: "Double Power gain!",
+            done() { return player.p.total.gte(1e5) },
+            unlocked() {return player.p.total.gte(1e4)}
+        },
+        6: {
+            requirementDescription: "1M total Prestiges - The Last Milestone...",
+            effectDescription: "Triple Prestiges gain! Also reduce aura roll cooldown by another 0.7s.",
+            done() { return player.p.total.gte(1e5) },
+            unlocked() {return player.p.total.gte(1e4)}
+        },
     },
     buyables: {
         11: {
@@ -385,6 +433,9 @@ addLayer("p", {
             },
             tooltip() {
                 return "+30% Prestiges/level."
+            },
+            unlocked() {
+                return hasMilestone("p",1)
             }
         },
         16: {
@@ -520,7 +571,7 @@ function getAuraData(index) {
     }
     let step = index - FIXED_AURAS.length;
     let rarity = new Decimal(100000).mul(new Decimal(2).pow(step));
-    let multiVal = 5.57 * Math.pow(1.15, step + 1);
+    let multiVal = 5.57 * Math.pow(1.11, step + 1);
     let multi = new Decimal((Math.round(multiVal * 100) / 100).toFixed(2));
     
     let base = AURA_BASES[step % AURA_BASES.length];
@@ -562,7 +613,7 @@ function rollAura() {
         player.aura.bestRarity = aura.rarity;
     }
     
-    player.aura.cd = new Decimal(2.5);
+    player.aura.cd = player.aura.basecd;
 }
 
 addLayer("aura", {
@@ -573,6 +624,7 @@ addLayer("aura", {
             unlocked: true,
             luck: new Decimal(1),
             cd: new Decimal(0),
+            basecd: new Decimal(2.5),
             bestIndex: 0,
             bestName: "Nothing",
             bestRarity: new Decimal(1),
@@ -656,5 +708,14 @@ addLayer("aura", {
         player.p.upsunlocked = (buyableEffect("p",14).add(100)).toNumber()
         player.p.autoMult = new Decimal(automationReqs[getBuyableAmount("p",12).toNumber()])
         player.p.totalPresMulti = (buyableEffect("p",15).add(buyableEffect("p",16)).add(buyableEffect("p",17)).add(buyableEffect("p",18)).add(buyableEffect("p",19))).div(100).add(1)
+        if (hasMilestone("p",1)) player.p.totalPresMulti = player.p.totalPresMulti.mul(1.1)
+        if (hasMilestone("p",3)) {
+            if (player.aura.totalRolls>1000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
+            if (player.aura.totalRolls>10000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
+        }
+        if (hasMilestone("p",4)) player.aura.luck = player.aura.luck.mul(1.4)
+        if (hasMilestone("p",2)) player.aura.basecd = new Decimal(1.5)
+        if (hasMilestone("p",4)) player.aura.basecd = new Decimal(1)
+        if (hasMilestone("p",6)) player.aura.basecd = new Decimal(0.3)
     },
 });

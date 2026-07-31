@@ -49,6 +49,7 @@ function getPointGen() {
 	if (totalUpgUnlocked < (50*(getBuyableAmount("p",13).toNumber()))) {
 		gain = gain.mul(buyableEffect("p",13))
 	}
+    if (hasMilestone("p",5)) gain = gain.mul(2)
 
 	if (tmp.aura && tmp.aura.powerMult) {
 		gain = gain.mul(tmp.aura.powerMult);
