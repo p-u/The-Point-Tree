@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2",
-	name: "Prestige!",
+	num: "3",
+	name: "Energy!",
 }
 
 let changelog = `<h1>Changelog:</h1><br> N/A`
@@ -40,7 +40,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(2)
 	let totalUpgUnlocked = player.p.upgrades.length
 
 	if (player.p && player.p.unlocked) {
@@ -50,6 +50,7 @@ function getPointGen() {
 		gain = gain.mul(buyableEffect("p",13))
 	}
     if (hasMilestone("p",5)) gain = gain.mul(2)
+    if (hasMilestone("p",7)) gain = gain.mul(1.25)
 
 	if (tmp.aura && tmp.aura.powerMult) {
 		gain = gain.mul(tmp.aura.powerMult);

@@ -1,6 +1,6 @@
-const UPG_COUNT = 4000;
-const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 3]
-const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000]
+const UPG_COUNT = 3500;
+const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 2.5, 2, 2]
+const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000, 100000, 2e6]
 
 // Pre-compute each upgrade's boost multiplier: upgEffects[n] = Decimal
 // upgEffects[1] = 2
@@ -24,7 +24,7 @@ const totalUpgEffects = new Array(UPG_COUNT + 1);
 const timewallDuration = new Array(UPG_COUNT + 1);
 {
     for (let n = 1; n <= UPG_COUNT; n++) {
-        timewallDuration[n] = n / (1.1 ** Math.min(Math.floor(n / 50),Math.min(Math.log2(n)+10,21.5)));
+        timewallDuration[n] = n / (1.05 ** Math.floor(n / 50));
     }
 }
 
@@ -116,9 +116,12 @@ addLayer("p", {
             upsunlocked: 100,
             autoMult: new Decimal(1e6),
             nextUpgToAuto: 1,
+            timesincelast: new Decimal(0),
             compactView: true,
             totalPresMulti: new Decimal(1),
             maxUnlockedRow: 0,
+            energy: new Decimal(0),
+            holdCombo: 0,
         };
     },
 
@@ -133,6 +136,13 @@ addLayer("p", {
                 }],
                 "blank",
                 ["clickables", [1]],
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = "Unlock a new Mechanic at e50,000 Power!"
+                        if (player.points.lt("e50000")) return a
+                    }
+                ],
                 "blank",
                 "upgrades",
             ],
@@ -160,12 +170,54 @@ addLayer("p", {
                 ],
                 "blank",
                 "blank",
-                "milestones",
+                ["milestones", [1,2,3,4,5,6]],
                 "blank",
                 "blank",
                 "blank",
-                "buyables",
+                ["buyables", [1]],
             ],
+        },
+        "Energy": {
+            content: [
+                "main-display",
+                "blank",
+                ["display-text", function() {
+                    return "You have <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points) + "</h2> Power"
+                        + "<br>Power/sec: " + notationChooser(tmp.pointGen);
+                }],
+                "blank",
+                ["display-text", function() {
+                    mult = new Decimal(1)
+                    if (hasMilestone("p",8)) mult = mult.mul(1.25)
+                    if (hasMilestone("p",10)) mult = mult.mul(2)
+                    if (hasMilestone("p",19)) mult = mult.mul(1.75)
+                    if (hasMilestone("p",22)) mult = mult.mul(100)
+                    if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
+                    if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
+                    if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                    if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
+                    return "Base Energy gain: <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(mult).floor()) + "</h2> (affected by current Power and Prestiges)"
+                        + "<br>Formula: log1.1(log10(Power))*log1.1(Prestiges)";
+                }],
+                "blank",
+                ["display-text", function() {
+                    let a = "Energy: <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.p.energy) + "</h2>. This boosts Prestiges by " +notationChooser(new Decimal(1.2).pow(player.p.energy.div(1e5).add(1).log10()));
+                    if (hasMilestone("p",17)) a = a + " and Aura Luck by " + notationChooser(new Decimal(1.07).pow(player.p.energy.div(1e9).add(1).log10())) + "."
+                    return a
+                }],
+                "blank",
+                ["display-text", function() {
+                    return "Hold Combo: <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.p.holdCombo) + "</h2> (directly boosts Energy gain)";
+                }],
+                "blank",
+                "blank",
+                ["clickables", [2]],
+                "blank",
+                "blank",
+                "blank",
+                ["milestones", [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]],
+            ],
+            unlocked() {return player.points.gte("e50000")}
         },
     },
     clickables: {
@@ -182,6 +234,34 @@ addLayer("p", {
                     'min-width': '220px',
                     'padding': '6px 12px',
                     'font-size': '13px',
+                    'font-weight': 'bold',
+                };
+            },
+        },
+        21: {
+            title() {
+                mult = new Decimal(1)
+                if (hasMilestone("p",8)) mult = mult.mul(1.25)
+                if (hasMilestone("p",10)) mult = mult.mul(2)
+                if (hasMilestone("p",19)) mult = mult.mul(1.75)
+                if (hasMilestone("p",22)) mult = mult.mul(100)
+                if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
+                return "Gain "+ notationChooser(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(player.p.holdCombo+1).mul(mult)) +" Energy! (HOLD THE BUTTON, NOT CLICK IT!)";
+            },
+            canClick() { return true; },
+            canHold() { return true; },
+            onHold() {
+                player.p.energy = player.p.energy.add(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(player.p.holdCombo+1).mul(mult))
+                player.p.holdCombo = player.p.holdCombo + 1
+                player.p.timesincelast = new Decimal(0)
+            },
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '14px',
                     'font-weight': 'bold',
                 };
             },
@@ -252,11 +332,11 @@ addLayer("p", {
     },
     getResetGain() {
         if (player.points.lte(0)) return new Decimal(0)
-        return (player.points.max(1).log(10).div(200)).mul(player.p.totalPresMulti).floor()
+        return (player.points.max(1).log(10).div(150)).mul(player.p.totalPresMulti).floor()
     },
     getNextAt() {
         let target = tmp.p.getResetGain.add(1)
-        return Decimal.pow(10, target.mul(200).div(player.p.totalPresMulti))
+        return Decimal.pow(10, target.mul(150).div(player.p.totalPresMulti))
     },
     onPrestige() {
         player.p.upgrades = []
@@ -298,6 +378,211 @@ addLayer("p", {
             done() { return player.p.total.gte(1e5) },
             unlocked() {return player.p.total.gte(1e4)}
         },
+        7: {
+            requirementDescription: "e100K Power",
+            effectDescription: "+25% Power gain",
+            done() { return player.points.gte("e100e3") },
+            unlocked() {return player.points.gte("e50e3")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        8: {
+            requirementDescription: "e250K Power",
+            effectDescription: "+25% Energy gain",
+            done() { return player.points.gte("e250e3") },
+            unlocked() {return player.points.gte("e100e3")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        9: {
+            requirementDescription: "e500K Power",
+            effectDescription: "Half the price of the ‘Better Auto’ buyable.",
+            done() { return player.points.gte("e500e3") },
+            unlocked() {return player.points.gte("e250e3")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        10: {
+            requirementDescription: "e1M Power",
+            effectDescription: "+100% Prestiges, Energy",
+            done() { return player.points.gte("e1000e3") },
+            unlocked() {return player.points.gte("e500e3")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        11: {
+            requirementDescription: "e2M Power",
+            effectDescription: "Increase the effect of the ‘Enhanced Prestige’ buyable to +80%.",
+            done() { return player.points.gte("e2e6") },
+            unlocked() {return player.points.gte("e1e6")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        12: {
+            requirementDescription: "e4M Power",
+            effectDescription: "Increase the effect of the ‘Insane Prestige’ buyable to +230%",
+            done() { return player.points.gte("e4e6") },
+            unlocked() {return player.points.gte("e2e6")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        13: {
+            requirementDescription: "e8M Power",
+            effectDescription: "Reduce the price of the ‘MORE!!’ buyable by tenfold",
+            done() { return player.points.gte("e8e6") },
+            unlocked() {return player.points.gte("e4e6")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        14: {
+            requirementDescription: "e14M Power",
+            effectDescription: "Reduce the price of the ‘Surge Multiplier’ buyable by tenfold",
+            done() { return player.points.gte("e14e6") },
+            unlocked() {return player.points.gte("e8e6")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        15: {
+            requirementDescription: "1B Energy",
+            effectDescription: "When 4,000 Auras is rolled, multiply Energy by 1.5.",
+            done() { return player.p.energy.gte("1e9") },
+            unlocked() {return player.p.energy.gte("1")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        16: {
+            requirementDescription: "5B Energy",
+            effectDescription: "The ‘Greater Prestige’ buyable is increased to +40%",
+            done() { return player.p.energy.gte("5e9") },
+            unlocked() {return player.p.energy.gte("1e9")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        17: {
+            requirementDescription: "50B Energy",
+            effectDescription: "Unlock a boost to Aura Luck!",
+            done() { return player.p.energy.gte("50e9") },
+            unlocked() {return player.p.energy.gte("5e9")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        18: {
+            requirementDescription: "400B Energy",
+            effectDescription: "Time that it takes Hold Combo to reset is increased from 150ms to 10s",
+            done() { return player.p.energy.gte("400e9") },
+            unlocked() {return player.p.energy.gte("50e9")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        19: {
+            requirementDescription: "5T Energy",
+            effectDescription() {
+                mult = new Decimal(1)
+                if (hasMilestone("p",8)) mult = mult.mul(1.25)
+                if (hasMilestone("p",10)) mult = mult.mul(2)
+                if (hasMilestone("p",19)) mult = mult.mul(1.75)
+                if (hasMilestone("p",22)) mult = mult.mul(100)
+                if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
+                let des = "Passive Energy gain, though it is very weak. Also +75% Energy. Currently: +"
+                des = des + " (Currently: +" + notationChooser(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(mult).floor()) + " Energy/sec)"
+                return des
+            },
+            done() { return player.p.energy.gte("5e12") },
+            unlocked() {return player.p.energy.gte("400e9")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        20: {
+            requirementDescription: "20T Energy",
+            effectDescription: "Hold combo is never reset.",
+            done() { return player.p.energy.gte("20e12") },
+            unlocked() {return player.p.energy.gte("5e12")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        21: {
+            requirementDescription: "150T Energy",
+            effectDescription: "When 20,000 and 75,000 Auras is rolled, double Energy gain. Double Energy gain again if Power >e15M",
+            done() { return player.p.energy.gte("150e12") },
+            unlocked() {return player.p.energy.gte("20e12")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        22: {
+            requirementDescription: "5Qd Energy",
+            effectDescription: "x100 Energy gain!!",
+            done() { return player.p.energy.gte("5e15") },
+            unlocked() {return player.p.energy.gte("150e12")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
     },
     buyables: {
         11: {
@@ -330,8 +615,10 @@ addLayer("p", {
         12: {
             title: "Better Auto",
             cost(x) {
-                if (x <= 7) {
-                    return new Decimal(automationBuyablePrice[x])
+                let n = 1
+                if (hasMilestone("p", 9)) n = 0.5
+                if (x <= 8) {
+                    return new Decimal(automationBuyablePrice[x]*n)
                 } else {
                     return new Decimal("e1e6")
                 }
@@ -356,13 +643,15 @@ addLayer("p", {
                 return eff
             },
             tooltip() {
-                return "Cost+Effect: 1Mx (free) -> 100x (1) -> 25x (2) -> 15x (4) -> 10x (10) -> 6x (50) -> 4x (500) -> 3x (5,000)."
+                return "Cost+Effect: 1Mx (free) -> 100x (1) -> 25x (2) -> 15x (4) -> 10x (10) -> 6x (50) -> 4x (500) -> 3x (5,000) -> 2.5x (100K) -> 2x (2M)."
             }
         },
         13: {
             title: "Surge Multiplier",
             cost(x) {
-                return new Decimal(3).mul(Decimal.pow(1.9, x)).round()
+                let costdiv = new Decimal(1)
+                if (hasMilestone("p",14)) costdiv = new Decimal(10)
+                return new Decimal(3).mul(Decimal.pow(1.9, x)).div(costdiv).round()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>When you have not bought Upgrade " + (getBuyableAmount(this.layer, this.id)*50) + ", x" + notationChooser(buyableEffect(this.layer, this.id)) + " Power Multiplier"
@@ -391,7 +680,9 @@ addLayer("p", {
         14: {
             title: "MORE!!",
             cost(x) {
-                return new Decimal(1).mul(Decimal.pow(1.8, x)).round()
+                let costdiv = new Decimal(1)
+                if (hasMilestone("p",13)) costdiv = new Decimal(10)
+                return new Decimal(1).mul(Decimal.pow(1.8, x)).div(costdiv).round()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Maximum Upgrade that can be unlocked: " + buyableEffect("p",14).add(100)
@@ -428,10 +719,12 @@ addLayer("p", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
-                return x.mul(30)
+                b = 30
+                if (hasMilestone("p",16)) b = 40
+                return x.mul(b)
             },
             tooltip() {
-                return "+30% Prestiges/level."
+                return "+"+b+"% Prestiges/level."
             },
             unlocked() {
                 return hasMilestone("p",1)
@@ -454,10 +747,12 @@ addLayer("p", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
-                return x.mul(60)
+                b = 60
+                if (hasMilestone("p",11)) b = 80
+                return x.mul(b)
             },
             tooltip() {
-                return "+60% Prestiges/level."
+                return "+"+b+"% Prestiges/level."
             },
             unlocked() {return getBuyableAmount("p", 15).gte(1)}
         },
@@ -502,10 +797,12 @@ addLayer("p", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             effect(x) {
-                return x.mul(160)
+                b = 160
+                if (hasMilestone("p",12)) b = 230
+                return x.mul(b)
             },
             tooltip() {
-                return "+160% Prestiges/level."
+                return "+"+b+"% Prestiges/level."
             },
             unlocked() {return getBuyableAmount("p", 17).gte(1)}
         },
@@ -697,8 +994,23 @@ addLayer("aura", {
         },
     },
     update(diff) {
+                mult = new Decimal(1)
+                if (hasMilestone("p",8)) mult = mult.mul(1.25)
+                if (hasMilestone("p",10)) mult = mult.mul(2)
+                if (hasMilestone("p",19)) mult = mult.mul(1.75)
+                if (hasMilestone("p",22)) mult = mult.mul(100)
+                if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
         player.p.maxUnlockedRow = getMaxUnlockedRow();
         player.aura.luck = new Decimal(1)
+        if (hasMilestone("p",19)) player.p.energy = player.p.energy.add(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).floor().mul(mult).mul(diff))
+        player.p.timesincelast = player.p.timesincelast.add(diff)
+        let letsecs = new Decimal(0.15)
+        if (hasMilestone("p",18)) letsecs = new Decimal(10)
+        if (hasMilestone("p",20)) letsecs = new Decimal(1e100)
+        if (player.p.timesincelast.gt(letsecs)) player.p.holdCombo = 0
         player.aura.luck = player.aura.luck.mul((1+(player.aura.totalRolls/1000)))
         player.aura.luck = player.aura.luck.mul(buyableEffect("p",11))
         if (player.aura.cd && player.aura.cd.gt(0)) {
@@ -708,11 +1020,14 @@ addLayer("aura", {
         player.p.autoMult = new Decimal(automationReqs[getBuyableAmount("p",12).toNumber()])
         player.p.totalPresMulti = (buyableEffect("p",15).add(buyableEffect("p",16)).add(buyableEffect("p",17)).add(buyableEffect("p",18)).add(buyableEffect("p",19))).div(100).add(1)
         if (hasMilestone("p",1)) player.p.totalPresMulti = player.p.totalPresMulti.mul(1.1)
+        if (hasMilestone("p",10)) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
+        player.p.totalPresMulti = player.p.totalPresMulti.mul(new Decimal(1.2).pow(player.p.energy.div(1e5).add(1).log10()))
         if (hasMilestone("p",3)) {
             if (player.aura.totalRolls>1000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
             if (player.aura.totalRolls>10000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
         }
         if (hasMilestone("p",4)) player.aura.luck = player.aura.luck.mul(1.4)
+        if (hasMilestone("p",17)) player.aura.luck = player.aura.luck.mul(new Decimal(1.07).pow(player.p.energy.div(1e9).add(1).log10()))
         if (hasMilestone("p",2)) player.aura.basecd = new Decimal(1.5)
         if (hasMilestone("p",4)) player.aura.basecd = new Decimal(1)
         if (hasMilestone("p",6)) player.aura.basecd = new Decimal(0.3)
