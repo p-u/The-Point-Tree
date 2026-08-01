@@ -196,7 +196,7 @@ addLayer("p", {
                     if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
                     if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
                     if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
-                    return "Base Energy gain: <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(mult).floor()) + "</h2> (affected by current Power and Prestiges)"
+                    return "Base Energy gain: <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(mult).floor()) + "</h2> (affected by current Power and Prestiges)"
                         + "<br>Formula: log1.1(log10(Power))*log1.1(Prestiges)";
                 }],
                 "blank",
@@ -249,12 +249,12 @@ addLayer("p", {
                 if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
-                return "Gain "+ notationChooser(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(player.p.holdCombo+1).mul(mult)) +" Energy! (HOLD THE BUTTON, NOT CLICK IT!)";
+                return "Gain "+ notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(player.p.holdCombo+1).mul(mult)) +" Energy! (HOLD THE BUTTON, NOT CLICK IT!)";
             },
             canClick() { return true; },
             canHold() { return true; },
             onHold() {
-                player.p.energy = player.p.energy.add(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(player.p.holdCombo+1).mul(mult))
+                player.p.energy = player.p.energy.add(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(player.p.holdCombo+1).mul(mult))
                 player.p.holdCombo = player.p.holdCombo + 1
                 player.p.timesincelast = new Decimal(0)
             },
@@ -535,7 +535,7 @@ addLayer("p", {
                 if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
                 let des = "Passive Energy gain, though it is very weak. Also +75% Energy. Currently: +"
-                des = des + " (Currently: +" + notationChooser(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).mul(mult).floor()) + " Energy/sec)"
+                des = des + " (Currently: +" + notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(mult).floor()) + " Energy/sec)"
                 return des
             },
             done() { return player.p.energy.gte("5e12") },
@@ -1005,7 +1005,7 @@ addLayer("aura", {
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
         player.p.maxUnlockedRow = getMaxUnlockedRow();
         player.aura.luck = new Decimal(1)
-        if (hasMilestone("p",19)) player.p.energy = player.p.energy.add(player.points.log10().log(1.1).mul(player.p.points.log(1.1)).floor().mul(mult).mul(diff))
+        if (hasMilestone("p",19)) player.p.energy = player.p.energy.add(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).floor().mul(mult).mul(diff))
         player.p.timesincelast = player.p.timesincelast.add(diff)
         let letsecs = new Decimal(0.15)
         if (hasMilestone("p",18)) letsecs = new Decimal(10)
