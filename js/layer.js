@@ -375,8 +375,8 @@ addLayer("p", {
         6: {
             requirementDescription: "1M total Prestiges - The Last Milestone...",
             effectDescription: "Triple Prestiges gain! Also reduce aura roll cooldown by another 0.7s.",
-            done() { return player.p.total.gte(1e5) },
-            unlocked() {return player.p.total.gte(1e4)}
+            done() { return player.p.total.gte(1e6) },
+            unlocked() {return player.p.total.gte(1e5)}
         },
         7: {
             requirementDescription: "e100K Power",
