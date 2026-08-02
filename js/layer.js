@@ -1,4 +1,4 @@
-const UPG_COUNT = 3500;
+const UPG_COUNT = 4000;
 const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 2.5, 2, 2]
 const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000, 100000, 2e6]
 
@@ -163,7 +163,7 @@ addLayer("p", {
                 "blank",
                 ["display-text",
                     function(){
-                        let a = "Total Buyable Prestige Multiplier x"
+                        let a = "Total Prestige Multiplier x"
                         a = a + formatWhole(player.p.totalPresMulti,2)
                         return a + "   [NOTE THAT EACH PRESTIGE BUYABLE IS ADDITIVE!!]"
                     }
