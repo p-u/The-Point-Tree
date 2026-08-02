@@ -534,7 +534,7 @@ addLayer("p", {
                 if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
-                let des = "Passive Energy gain, though it is very weak. Also +75% Energy. Currently: +"
+                let des = "Passive Energy gain, though it is very weak. Also +75% Energy."
                 des = des + " (Currently: +" + notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(mult).floor()) + " Energy/sec)"
                 return des
             },
