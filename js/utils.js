@@ -145,6 +145,7 @@ function buyUpg(layer, id) {
 	if (upg.onPurchase != undefined)
 		run(upg.onPurchase, upg)
 	needCanvasUpdate = true
+    gtag('event', 'buyupg1lmu');
 }
 
 function buyMaxBuyable(layer, id) {
