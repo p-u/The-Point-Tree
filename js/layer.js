@@ -947,8 +947,8 @@ addLayer("aura", {
             let nextAura = getAuraData((player.aura.bestIndex || 0) + 1);
             
             let text = "<h2>Aura Multiplier: " + activeMulti.toFixed(2) + "x</h2><br>";
-            text += "Luck Multiplier: <b>x" + notationChooser(luckMulti) + "</b><br><br>";
-            text += "Because you rolled <b>" + player.aura.totalRolls + "</b> auras, you will gain a x"+ (1+(player.aura.totalRolls/1000)) +" Luck Multiplier.<br><br>";
+            text += "Luck Multiplier: <b>x" + notationChooser(luckMulti, 2) + "</b><br><br>";
+            text += "Because you rolled <b>" + player.aura.totalRolls + "</b> auras, you will gain a x"+ notationChooser((1+(player.aura.totalRolls/1000)),3) +" Luck Multiplier.<br><br>";
             text += "Best Aura: <b>" + player.aura.bestName + "</b> (1/" + notationChooser(new Decimal(player.aura.bestRarity)) + ")<br>";
             if (player.aura.lastAura) {
                 text += "Last Rolled: <b>" + player.aura.lastAura.name + "</b> (1/" + notationChooser(new Decimal(player.aura.lastAura.rarity)) + ") - x" + new Decimal(player.aura.lastAura.multi).toFixed(2) + "<br>";
@@ -1021,6 +1021,7 @@ addLayer("aura", {
         player.p.totalPresMulti = (buyableEffect("p",15).add(buyableEffect("p",16)).add(buyableEffect("p",17)).add(buyableEffect("p",18)).add(buyableEffect("p",19))).div(100).add(1)
         if (hasMilestone("p",1)) player.p.totalPresMulti = player.p.totalPresMulti.mul(1.1)
         if (hasMilestone("p",10)) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
+        if (hasMilestone("p",6)) player.p.totalPresMulti = player.p.totalPresMulti.mul(3)
         player.p.totalPresMulti = player.p.totalPresMulti.mul(new Decimal(1.2).pow(player.p.energy.div(1e5).add(1).log10()))
         if (hasMilestone("p",3)) {
             if (player.aura.totalRolls>1000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
