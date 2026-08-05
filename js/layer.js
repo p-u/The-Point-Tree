@@ -1,5 +1,5 @@
-const UPG_COUNT = 5500;
-const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 2.5, 2, 2, 1.5, 1.2]
+const UPG_COUNT = 5000;
+const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 2.5, 2, 1.5, 1.2, 1.2]
 const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000, 100000, 2e6, 75e6, 1e9]
 
 // Pre-compute each upgrade's boost multiplier: upgEffects[n] = Decimal
@@ -606,7 +606,7 @@ addLayer("p", {
         },
         24: {
             requirementDescription: "80Qd Energy",
-            effectDescription: "Reduce the price of the ‘MORE!!’ buyable by fivefold AND x2 Power",
+            effectDescription: "Reduce the price of the ‘MORE!!’ buyable by tenfold AND x2 Power",
             done() { return player.p.energy.gte("80e15") },
             unlocked() {return player.p.energy.gte("5e14")},
             style() {
@@ -715,7 +715,7 @@ addLayer("p", {
             cost(x) {
                 let costdiv = new Decimal(1)
                 if (hasMilestone("p",13)) costdiv = new Decimal(10)
-                if (hasMilestone("p",24)) costdiv = costdiv.mul(5)
+                if (hasMilestone("p",24)) costdiv = costdiv.mul(10)
                 return new Decimal(1).mul(Decimal.pow(1.8, x)).div(costdiv).round()
             },
             display() {
