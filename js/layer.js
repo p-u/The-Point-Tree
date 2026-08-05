@@ -1,4 +1,4 @@
-const UPG_COUNT = 5000;
+const UPG_COUNT = 5500;
 const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 2.5, 2, 2, 1.5, 1.2]
 const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000, 100000, 2e6, 75e6, 1e9]
 
