@@ -51,6 +51,7 @@ function getPointGen() {
 	}
     if (hasMilestone("p",5)) gain = gain.mul(2)
     if (hasMilestone("p",7)) gain = gain.mul(1.25)
+	if (hasMilestone("p",24)) gain = gain.mul(2)
 
 	if (tmp.aura && tmp.aura.powerMult) {
 		gain = gain.mul(tmp.aura.powerMult);

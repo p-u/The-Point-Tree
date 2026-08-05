@@ -192,9 +192,10 @@ addLayer("p", {
                     if (hasMilestone("p",10)) mult = mult.mul(2)
                     if (hasMilestone("p",19)) mult = mult.mul(1.75)
                     if (hasMilestone("p",22)) mult = mult.mul(100)
-                    if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
-                    if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
-                    if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                    if (hasMilestone("p",23)) mult = mult.mul(3)
+                    if (hasMilestone("p",15) && (player.aura.totalRolls>2000)) mult = mult.mul(1.5)
+                    if (hasMilestone("p",21) && (player.aura.totalRolls>5000)) mult = mult.mul(2)
+                    if (hasMilestone("p",21) && (player.aura.totalRolls>15000)) mult = mult.mul(2)
                     if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
                     return "Base Energy gain: <h2 style='color:#FFAA00;display:inline;'>" + notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(mult).floor()) + "</h2> (affected by current Power and Prestiges)"
                         + "<br>Formula: log1.1(log10(Power))*log1.1(Prestiges)";
@@ -215,7 +216,7 @@ addLayer("p", {
                 "blank",
                 "blank",
                 "blank",
-                ["milestones", [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]],
+                ["milestones", [7,8,9,10,11,12,13,14,23,15,16,17,18,19,20,21,22,24]],
             ],
             unlocked() {return player.points.gte("e50000")}
         },
@@ -245,9 +246,10 @@ addLayer("p", {
                 if (hasMilestone("p",10)) mult = mult.mul(2)
                 if (hasMilestone("p",19)) mult = mult.mul(1.75)
                 if (hasMilestone("p",22)) mult = mult.mul(100)
-                if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
-                if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
-                if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                if (hasMilestone("p",23)) mult = mult.mul(3)
+                if (hasMilestone("p",15) && (player.aura.totalRolls>2000)) mult = mult.mul(1.5)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>5000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>15000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
                 return "Gain "+ notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(player.p.holdCombo+1).mul(mult)) +" Energy! (Clicking gives 20% of the Energy as Holding)";
             },
@@ -315,7 +317,8 @@ addLayer("p", {
         if (player.points.lte("1e3000000")) return "Prestige, then rinse and repeat!"
         if (player.points.lte("1e7500000")) return "Dedication."
         if (player.points.lte("1e15000000")) return "A true master!"
-        if (player.points.gte("1e15000000")) return "An absolute true master!"
+        if (player.points.lte("1e30000000")) return "An absolute true master!"
+        if (player.points.gte("1e30000000")) return "A god..."
     },
     upgrades: buildUpgrades(),
     requires: new Decimal("e150"), // Can be a function that takes requirement increases into account
@@ -481,7 +484,7 @@ addLayer("p", {
         },
         15: {
             requirementDescription: "450M Energy",
-            effectDescription: "When 4,000 Auras is rolled, multiply Energy by 1.5.",
+            effectDescription: "When 2,000 Auras is rolled, multiply Energy by 1.5.",
             done() { return player.p.energy.gte("450e6") },
             unlocked() {return player.p.energy.gte("1")},
             style() {
@@ -535,9 +538,10 @@ addLayer("p", {
                 if (hasMilestone("p",10)) mult = mult.mul(2)
                 if (hasMilestone("p",19)) mult = mult.mul(1.75)
                 if (hasMilestone("p",22)) mult = mult.mul(100)
-                if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
-                if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
-                if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                if (hasMilestone("p",23)) mult = mult.mul(3)
+                if (hasMilestone("p",15) && (player.aura.totalRolls>2000)) mult = mult.mul(1.5)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>5000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>15000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
                 let des = "Passive Energy gain, though it is very weak. Also +75% Energy."
                 des = des + " (Currently: +" + notationChooser(player.points.add(1).log10().add(1).log(1.1).mul(player.p.points.add(1).log(1.1)).mul(mult).floor()) + " Energy/sec)"
@@ -566,7 +570,7 @@ addLayer("p", {
         },
         21: {
             requirementDescription: "50T Energy",
-            effectDescription: "When 20,000 and 75,000 Auras is rolled, double Energy gain. Double Energy gain again if Power >e15M",
+            effectDescription: "When 5,000 and 15,000 Auras is rolled, double Energy gain. Double Energy gain again if Power >e15M",
             done() { return player.p.energy.gte("50e12") },
             unlocked() {return player.p.energy.gte("9e12")},
             style() {
@@ -581,6 +585,30 @@ addLayer("p", {
             effectDescription: "x100 Energy gain!!",
             done() { return player.p.energy.gte("5e14") },
             unlocked() {return player.p.energy.gte("5e13")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        23: {
+            requirementDescription: "e25M Power",
+            effectDescription: "Multiply Energy by 3",
+            done() { return player.points.gte("e25e6") },
+            unlocked() {return player.points.gte("e14e6")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        24: {
+            requirementDescription: "80Qd Energy",
+            effectDescription: "Reduce the price of the ‘MORE!!’ buyable by fivefold AND x2 Power",
+            done() { return player.p.energy.gte("80e15") },
+            unlocked() {return player.p.energy.gte("5e14")},
             style() {
                 return {
                     'width': '700px',
@@ -687,6 +715,7 @@ addLayer("p", {
             cost(x) {
                 let costdiv = new Decimal(1)
                 if (hasMilestone("p",13)) costdiv = new Decimal(10)
+                if (hasMilestone("p",24)) costdiv = costdiv.mul(5)
                 return new Decimal(1).mul(Decimal.pow(1.8, x)).div(costdiv).round()
             },
             display() {
@@ -1004,9 +1033,10 @@ addLayer("aura", {
                 if (hasMilestone("p",10)) mult = mult.mul(2)
                 if (hasMilestone("p",19)) mult = mult.mul(1.75)
                 if (hasMilestone("p",22)) mult = mult.mul(100)
-                if (hasMilestone("p",15) && (player.aura.totalRolls>4000)) mult = mult.mul(1.5)
-                if (hasMilestone("p",21) && (player.aura.totalRolls>20000)) mult = mult.mul(2)
-                if (hasMilestone("p",21) && (player.aura.totalRolls>75000)) mult = mult.mul(2)
+                if (hasMilestone("p",23)) mult = mult.mul(3)
+                if (hasMilestone("p",15) && (player.aura.totalRolls>2000)) mult = mult.mul(1.5)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>5000)) mult = mult.mul(2)
+                if (hasMilestone("p",21) && (player.aura.totalRolls>15000)) mult = mult.mul(2)
                 if (hasMilestone("p",21) && (player.points.gte("e15e6"))) mult = mult.mul(2)
         player.p.maxUnlockedRow = getMaxUnlockedRow();
         player.aura.luck = new Decimal(1)
