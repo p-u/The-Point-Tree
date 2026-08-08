@@ -1,4 +1,4 @@
-const UPG_COUNT = 5000;
+const UPG_COUNT = 10000;
 const automationReqs = [1e6, 100, 25, 15, 10, 6, 4, 3, 2.5, 2, 1.5, 1.2, 1.2]
 const automationBuyablePrice = [1, 2, 4, 10, 50, 500, 5000, 100000, 2e6, 75e6, 1e9]
 
@@ -24,7 +24,11 @@ const totalUpgEffects = new Array(UPG_COUNT + 1);
 const timewallDuration = new Array(UPG_COUNT + 1);
 {
     for (let n = 1; n <= UPG_COUNT; n++) {
-        timewallDuration[n] = n / (1.05 ** Math.floor(n / 50));
+        if (n < 4000) {
+            timewallDuration[n] = n / (1.05 ** Math.floor(n / 50));
+        } else {
+            timewallDuration[n] = ((n**(n/1000))/ 6.4e10) / (1.05 ** Math.floor(n / 50));
+        }
     }
 }
 
@@ -135,6 +139,12 @@ addLayer("p", {
                         + "<br>Power/sec: " + notationChooser(tmp.pointGen);
                 }],
                 "blank",
+                ["display-text", function() {
+                    let a = ""
+                    if (player.p.upgrades.length > 4000) a = "[Post-Upgrade 4,000]<br>1. Upgrade costs are buffed, scaled immensely after 4,000.<br>2. Every 100 Upgrades from Upgrade 4,000 x1.1 Prestige Points. [Total: x" + notationChooser(new Decimal(1.1).pow(new Decimal(player.p.upgrades.length - 4000).div(100).floor().add(1))) + " Prestige Points.]"
+                    return a
+                }],
+                "blank",
                 ["clickables", [1]],
                 "blank",
                 ["display-text",
@@ -170,11 +180,11 @@ addLayer("p", {
                 ],
                 "blank",
                 "blank",
-                ["milestones", [1,2,3,4,5,6]],
+                ["milestones", [1,2,3,4,5,6,25,26,27,28]],
                 "blank",
                 "blank",
                 "blank",
-                ["buyables", [1]],
+                ["buyables", [1,2]],
             ],
         },
         "Energy": {
@@ -216,7 +226,7 @@ addLayer("p", {
                 "blank",
                 "blank",
                 "blank",
-                ["milestones", [7,8,9,10,11,12,13,14,23,15,16,17,18,19,20,21,22,24]],
+                ["milestones", [7,8,9,10,11,12,13,14,23,29,15,16,17,18,19,20,21,22,24]],
             ],
             unlocked() {return player.points.gte("e50000")}
         },
@@ -381,8 +391,8 @@ addLayer("p", {
             unlocked() {return player.p.total.gte(1e4)}
         },
         6: {
-            requirementDescription: "1M total Prestiges - The Last Milestone...",
-            effectDescription: "Triple Prestiges gain! Also reduce aura roll cooldown by another 0.7s.",
+            requirementDescription: "1M total Prestiges - Automation, FINALLY!",
+            effectDescription: "Automate Aura Rolls at one-third efficacy (3x manual cooldown)! Also reduce aura roll cooldown by another 0.3s.",
             done() { return player.p.total.gte(1e6) },
             unlocked() {return player.p.total.gte(1e5)}
         },
@@ -616,6 +626,42 @@ addLayer("p", {
                 };
             },
         },
+        25: {
+            requirementDescription: "10M total Prestiges - Bulky",
+            effectDescription: "Increase Bulk (like Aura Luck, but multiplies Aura roll amount as well) by 1 every OoM of Aura Power Multiplier, starting from 5. [caps at +9]",
+            done() { return player.p.total.gte(1e7) },
+            unlocked() {return player.p.total.gte(1e6)}
+        },
+        26: {
+            requirementDescription: "100M total Prestiges - A huge boost!",
+            effectDescription: "Triple Prestiges gain! Also reduce aura roll cooldown by another 0.4s.",
+            done() { return player.p.total.gte(1e8) },
+            unlocked() {return player.p.total.gte(1e7)}
+        },
+        27: {
+            requirementDescription: "1B total Prestiges - A great increase!",
+            effectDescription: "x2 Aura Bulk and Aura Luck. Multiply Prestiges by 2.5 when you rolled 25,000 and 125,000 Auras.",
+            done() { return player.p.total.gte(1e9) },
+            unlocked() {return player.p.total.gte(1e8)}
+        },
+        28: {
+            requirementDescription: "10B total Prestiges - A new buyable?!",
+            effectDescription: "x1.5 ?! Points (next update), unlock a new Prestige Buyable",
+            done() { return player.p.total.gte(1e10) },
+            unlocked() {return player.p.total.gte(1e9)}
+        },
+        29: {
+            requirementDescription: "e36M Power",
+            effectDescription: "Reduce the 'MORE' Prestige Buyable scaling.",
+            done() { return player.points.gte("e36e6") },
+            unlocked() {return player.points.gte("e25e6")},
+            style() {
+                return {
+                    'width': '700px',
+                    'font-size': '16px',
+                };
+            },
+        },
     },
     buyables: {
         11: {
@@ -716,7 +762,9 @@ addLayer("p", {
                 let costdiv = new Decimal(1)
                 if (hasMilestone("p",13)) costdiv = new Decimal(10)
                 if (hasMilestone("p",24)) costdiv = costdiv.mul(10)
-                return new Decimal(1).mul(Decimal.pow(1.8, x)).div(costdiv).round()
+                let csc = 1.8
+                if (hasMilestone("p",29)) csc = 1.75
+                return new Decimal(1).mul(Decimal.pow(csc, x)).div(costdiv).round()
             },
             display() {
                 return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Maximum Upgrade that can be unlocked: " + buyableEffect("p",14).add(100)
@@ -864,6 +912,30 @@ addLayer("p", {
             },
             unlocked() {return getBuyableAmount("p", 18).gte(1)}
         },
+        21: {
+            title: "Prestiged Prestige",
+            cost(x) {
+                return new Decimal(5e9).mul(Decimal.pow(10, x)).round()
+            },
+            display() {
+                return "Cost: " + notationChooser(tmp[this.layer].buyables[this.id].cost) + " Prestiges." + "<br>Effect: x" + buyableEffect("p",21) + " Prestiges"
+            },
+            canAfford() {
+                return player[this.layer].points.gte(this.cost())
+            },
+            buy() {
+                let cost = new Decimal (1)
+                player[this.layer].points = player[this.layer].points.sub(this.cost().mul(cost))
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            effect(x) {
+                return new Decimal(2).pow(x)
+            },
+            tooltip() {
+                return "x2 Prestiges/level."
+            },
+            unlocked() {return hasMilestone("p", 28)}
+        },
     },
     prestigeButtonText() {
         if (tmp.p.canReset) {
@@ -912,11 +984,11 @@ function getAuraData(index) {
     return { name, rarity, multi };
 }
 
-function rollAura() {
+function rollAura(automated = false) {
     let r = Math.random();
     if (r <= 0) r = 1e-15;
     let luck = (tmp.aura && tmp.aura.luck) ? tmp.aura.luck : (player.aura.luck ? new Decimal(player.aura.luck) : new Decimal(1));
-    let rollVal = new Decimal(1).div(r).mul(luck);
+    let rollVal = new Decimal(1).div(r).mul(luck).mul(player.aura.bulk);
     
     let earnedIndex = 0;
     if (rollVal.gte(100000)) {
@@ -934,7 +1006,7 @@ function rollAura() {
     
     let aura = getAuraData(earnedIndex);
     player.aura.lastAura = aura;
-    player.aura.totalRolls = (player.aura.totalRolls || 0) + 1;
+    player.aura.totalRolls = (player.aura.totalRolls || 0) + player.aura.bulk.toNumber();
     
     if (earnedIndex > (player.aura.bestIndex || 0)) {
         player.aura.bestIndex = earnedIndex;
@@ -944,6 +1016,7 @@ function rollAura() {
     }
     
     player.aura.cd = player.aura.basecd;
+    if (automated) player.aura.autoCd = player.aura.basecd.mul(3);
 }
 
 addLayer("aura", {
@@ -954,11 +1027,14 @@ addLayer("aura", {
             unlocked: true,
             luck: new Decimal(1),
             cd: new Decimal(0),
+            autoCd: null,
+            autoEnabled: false,
             basecd: new Decimal(2.5),
             bestIndex: 0,
             bestName: "Nothing",
             bestRarity: new Decimal(1),
             bestMulti: new Decimal(1),
+            bulk: new Decimal(1),
             lastAura: null,
             totalRolls: 0,
         };
@@ -979,10 +1055,10 @@ addLayer("aura", {
             let activeMulti = tmp.aura.powerMult ? tmp.aura.powerMult : new Decimal(1);
             let luckMulti = tmp.aura.luck ? tmp.aura.luck : new Decimal(1);
             let nextAura = getAuraData((player.aura.bestIndex || 0) + 1);
-            
-            let text = "<h2>Aura Multiplier: " + activeMulti.toFixed(2) + "x</h2><br>";
-            text += "Luck Multiplier: <b>x" + notationChooser(luckMulti, 2) + "</b><br><br>";
-            text += "Because you rolled <b>" + player.aura.totalRolls + "</b> auras, you will gain a x"+ notationChooser(new Decimal((1+(player.aura.totalRolls/1000))),3) +" Luck Multiplier.<br><br>";
+            let text = "<h2>Aura Multiplier: " + notationChooser(activeMulti) + "x</h2><br>";
+            text += "Luck Multiplier: <b>x" + notationChooser(luckMulti, 2) + "</b><br>";
+            text += "Aura Bulk: <b>" + notationChooser(player.aura.bulk) + "</b><br><br>";
+            text += "Because you rolled <b>" + notationChooser(player.aura.totalRolls) + "</b> auras, you will gain a x"+ notationChooser(new Decimal((1+(player.aura.totalRolls/1000))),3) +" Luck Multiplier.<br><br>";
             text += "Best Aura: <b>" + player.aura.bestName + "</b> (1/" + notationChooser(new Decimal(player.aura.bestRarity)) + ")<br>";
             if (player.aura.lastAura) {
                 text += "Last Rolled: <b>" + player.aura.lastAura.name + "</b> (1/" + notationChooser(new Decimal(player.aura.lastAura.rarity)) + ") - x" + new Decimal(player.aura.lastAura.multi).toFixed(2) + "<br>";
@@ -993,7 +1069,7 @@ addLayer("aura", {
             return text;
         }],
         "blank",
-        ["clickables", [1]],
+        ["clickables", [1, 2]],
         "blank",
         "blank",
         ["infobox", "main"],
@@ -1016,6 +1092,34 @@ addLayer("aura", {
                 return {
                     'width': '600px',
                     'height': '200px',
+                    'font-size': '16px',
+                };
+            },
+        },
+        21: {
+            title() {
+                return "Aura Automation: " + (player.aura.autoEnabled ? "ON" : "OFF");
+            },
+            display() {
+                let cooldown = new Decimal(player.aura.autoCd || player.aura.basecd.mul(3));
+                let text = "Automatically roll an Aura every " + player.aura.basecd.mul(3).toFixed(1) + "s.";
+                if (player.aura.autoEnabled) text += "<br>Next automated roll in " + cooldown.toFixed(1) + "s.";
+                return text;
+            },
+            unlocked() {
+                return hasMilestone("p",6);
+            },
+            canClick() {
+                return hasMilestone("p",6);
+            },
+            onClick() {
+                player.aura.autoEnabled = !player.aura.autoEnabled;
+                if (player.aura.autoEnabled) player.aura.autoCd = player.aura.basecd.mul(3);
+            },
+            style() {
+                return {
+                    'width': '600px',
+                    'height': '100px',
                     'font-size': '16px',
                 };
             },
@@ -1048,24 +1152,43 @@ addLayer("aura", {
         if (player.p.timesincelast.gt(letsecs)) player.p.holdCombo = 0
         player.aura.luck = player.aura.luck.mul(new Decimal((1+(player.aura.totalRolls/1000))))
         player.aura.luck = player.aura.luck.mul(buyableEffect("p",11))
+        if (hasMilestone("p",2)) player.aura.basecd = new Decimal(1.5)
+        if (hasMilestone("p",4)) player.aura.basecd = new Decimal(1)
+        if (hasMilestone("p",6)) player.aura.basecd = new Decimal(0.7)
+        if (hasMilestone("p",26)) player.aura.basecd = new Decimal(0.3)
         if (player.aura.cd && player.aura.cd.gt(0)) {
             player.aura.cd = player.aura.cd.sub(diff).max(0);
+        }
+        if (hasMilestone("p",6) && player.aura.autoEnabled) {
+            if (!player.aura.autoCd) {
+                player.aura.autoCd = player.aura.basecd.mul(3);
+            } else if (new Decimal(player.aura.autoCd).gt(0)) {
+                player.aura.autoCd = new Decimal(player.aura.autoCd).sub(diff).max(0);
+            } else {
+                rollAura(true);
+            }
         }
         player.p.upsunlocked = (buyableEffect("p",14).add(100)).toNumber()
         player.p.autoMult = new Decimal(automationReqs[getBuyableAmount("p",12).toNumber()])
         player.p.totalPresMulti = (buyableEffect("p",15).add(buyableEffect("p",16)).add(buyableEffect("p",17)).add(buyableEffect("p",18)).add(buyableEffect("p",19))).div(100).add(1)
         if (hasMilestone("p",1)) player.p.totalPresMulti = player.p.totalPresMulti.mul(1.1)
         if (hasMilestone("p",10)) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
-        if (hasMilestone("p",6)) player.p.totalPresMulti = player.p.totalPresMulti.mul(3)
+        if (hasMilestone("p",26)) player.p.totalPresMulti = player.p.totalPresMulti.mul(3)
         player.p.totalPresMulti = player.p.totalPresMulti.mul(new Decimal(1.2).pow(player.p.energy.div(1e5).add(1).log10()))
+        player.p.totalPresMulti = player.p.totalPresMulti.mul(buyableEffect("p",21))
         if (hasMilestone("p",3)) {
             if (player.aura.totalRolls>1000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
             if (player.aura.totalRolls>10000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
         }
+        if (hasMilestone("p",27)) {
+            if (player.aura.totalRolls>25000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2.5)
+            if (player.aura.totalRolls>125000) player.p.totalPresMulti = player.p.totalPresMulti.mul(2.5)
+        }
         if (hasMilestone("p",4)) player.aura.luck = player.aura.luck.mul(1.4)
         if (hasMilestone("p",17)) player.aura.luck = player.aura.luck.mul(new Decimal(1.07).pow(player.p.energy.div(1e9).add(1).log10()))
-        if (hasMilestone("p",2)) player.aura.basecd = new Decimal(1.5)
-        if (hasMilestone("p",4)) player.aura.basecd = new Decimal(1)
-        if (hasMilestone("p",6)) player.aura.basecd = new Decimal(0.3)
+        player.aura.bulk = new Decimal(1)
+        if (hasMilestone("p",25)) player.aura.bulk = player.aura.bulk.add(player.aura.bestMulti.div(5).add(1).log10().floor().min(9))
+        if (hasMilestone("p",27)) player.aura.bulk = player.aura.bulk.mul(2)
+        if (hasMilestone("p",27)) player.aura.luck = player.aura.luck.mul(2)
     },
 });

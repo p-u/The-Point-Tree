@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "3",
-	name: "Energy!",
+	num: "3.3",
+	name: "Energy (Hotfix 3)!",
 }
 
 let changelog = `<h1>Changelog:</h1><br> N/A`
@@ -74,7 +74,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return false
+	return hasUpgrade("p", 10011)
 }
 
 
