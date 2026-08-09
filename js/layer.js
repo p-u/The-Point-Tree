@@ -1174,6 +1174,7 @@ addLayer("aura", {
         if (hasMilestone("p",1)) player.p.totalPresMulti = player.p.totalPresMulti.mul(1.1)
         if (hasMilestone("p",10)) player.p.totalPresMulti = player.p.totalPresMulti.mul(2)
         if (hasMilestone("p",26)) player.p.totalPresMulti = player.p.totalPresMulti.mul(3)
+        player.p.totalPresMulti = player.p.totalPresMulti.mul(new Decimal(1.1).pow(new Decimal(player.p.upgrades.length - 4000).div(100).floor().add(1)).max(1))
         player.p.totalPresMulti = player.p.totalPresMulti.mul(new Decimal(1.2).pow(player.p.energy.div(1e5).add(1).log10()))
         player.p.totalPresMulti = player.p.totalPresMulti.mul(buyableEffect("p",21))
         if (hasMilestone("p",3)) {
