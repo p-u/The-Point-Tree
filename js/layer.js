@@ -1081,7 +1081,7 @@ addLayer("aura", {
                     return "Wait " + player.aura.cd.toFixed(1) + "s";
                 }
                 return "Roll Aura";
-            },
+            }, 
             canClick() {
                 return !player.aura.cd || player.aura.cd.lte(0);
             },
