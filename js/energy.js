@@ -38,8 +38,11 @@ addLayer("e", {
             for(v=6;v<7;v++){ //columns
                 if ((hasMilestone('sac', 31)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
-            for(v=7;v<9;v++){ //columns
-                if ((hasMilestone('s', 2)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            for(v=7;v<8;v++){ //columns
+                if ((player["s"].total.gte(5)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
+            }
+            for(v=8;v<9;v++){ //columns
+                if ((player["s"].total.gte(20)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
             }
             for(v=9;v<10;v++){ //columns
                 if ((hasMilestone('s', 3)) && hasUpgrade(this.layer, i+v*10)) keptUpgrades.push(i+v*10)
@@ -200,11 +203,6 @@ addLayer("e", {
         if (hasUpgrade('w', 23)) mult = mult.times(1e25)
         if (hasUpgrade('s', 54)) mult = mult.times(1e20)
         if (hasUpgrade('basic', 91)) mult = mult.times("1e99.99")
-        if (inChallenge("m", 11)) {
-            if (hasMilestone('e', 15)) mult = mult.times(700)
-            if (hasMilestone('basic', 5)) mult = mult.times(1000)
-            if (hasMilestone('e', 16)) mult = mult.times(40)
-        }
         if (hasUpgrade('e', 101)) mult = mult.times("e42000")
         if (hasUpgrade('mega', 104)) mult = mult.times("e1e11")
         if (hasUpgrade('era', 145)) mult = mult.times("e5e11")
@@ -221,7 +219,7 @@ addLayer("e", {
         }
         if (mult.gte(2)) mult = mult.div(2)
         if (mult.gte(2)) mult = mult.div(2)
-        if (mult.gte(1.9)) mult = mult.div(1.9)
+        if (mult.gte(1.65)) mult = mult.div(1.65)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -232,9 +230,9 @@ addLayer("e", {
             if (hasUpgrade('e', 144)) exp = exp.mul(1.1)
         }
         if (hasMilestone('e', 13)) exp = exp.add(0.01)
-        if (hasMilestone('e', 14)) exp = exp.add(0.025)
         if (hasUpgrade('e', 35)) exp = exp.add(buyableEffect('mega', 14))
         if (hasMilestone('e', 21)) exp = exp.add(0.05)
+        if (hasMilestone('e', 14)) exp = exp.add(0.025)
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('era', 364)) exp = exp.add(0.025)
         if (hasUpgrade("era", 433)) exp = exp.add(0.03)
@@ -242,10 +240,9 @@ addLayer("e", {
         if (hasUpgrade("era", 492)) exp = exp.add(0.038)
         if (hasUpgrade("w", 91)) exp = exp.add(0.05)
         if (hasUpgrade('era', 1042)) exp = exp.add(0.025)
+        if (hasMilestone('e', 15)) exp = exp.add(0.125)
         if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
-        let expinmc1 = new Decimal(0.4)
-        if (hasUpgrade("m", 1132)) expinmc1 = new Decimal(0.75)
-        if (inChallenge('m', 11)) exp = exp.mul(expinmc1)
+        if (inChallenge('m', 11)) exp = exp.pow(0.3)
         if (hasUpgrade("e", 212)) exp = exp.add(0.05)
         return exp
     },
@@ -405,7 +402,7 @@ addLayer("e", {
             },
             41: {
                 title: "PFx 2",
-                description: "x1e10K PF",
+                description: "x1e10e3 PF",
                 cost: new Decimal(2e35),
                 unlocked() { return hasUpgrade("e", 34) },
             },
@@ -417,7 +414,7 @@ addLayer("e", {
             },
             43: {
                 title: "PFx 3",
-                description: "xe25K PF",
+                description: "xe25e3 PF",
                 cost: new Decimal(6e51),
                 unlocked() { return hasUpgrade("e", 42) },
             },
@@ -435,7 +432,7 @@ addLayer("e", {
             },
             52: {
                 title: "A nerf?",
-                description: "/e50 MP, BUT xe20K PF",
+                description: "/e50 MP, BUT xe20e3 PF",
                 cost: new Decimal(3.8e118),
                 unlocked() { return hasUpgrade("e", 51) },
             },
@@ -453,19 +450,19 @@ addLayer("e", {
             },
             61: {
                 title: "Fragments Duplicate Wildly",
-                description: "xe126.5K PF",
+                description: "xe126.5e3 PF",
                 cost: new Decimal(3e171),
                 unlocked() { return hasUpgrade("e", 54) },
             },
             62: {
                 title: "Fragments Insane Boost",
-                description: "xe100K PF",
+                description: "xe100e3 PF",
                 cost: new Decimal(5.1e173),
                 unlocked() { return hasUpgrade("e", 61) },
             },
             63: {
                 title: "Fragments Insane Boost II",
-                description: "xe100K PF",
+                description: "xe100e3 PF",
                 cost: new Decimal(1.6e174),
                 unlocked() { return hasUpgrade("e", 62) },
             },
@@ -526,7 +523,7 @@ addLayer("e", {
             81: {
                 title: "Prestige Bots",
                 description: "xe5,500 PP, x1,000 Energy",
-                cost: new Decimal(2.53e253),
+                cost: new Decimal(5.23e253),
                 unlocked() { return hasUpgrade("e", 74) },
             },
             82: {
@@ -555,20 +552,20 @@ addLayer("e", {
             },
             92: {
                 title: "Reaching e130 Million PF",
-                description: "xe350K PF",
-                cost: new Decimal("1e660"),
+                description: "xe350e3 PF",
+                cost: new Decimal("5e659"),
                 unlocked() { return hasUpgrade("e", 91) },
             },
             93: {
                 title: "It's done.",
-                description: "xe500K PF",
+                description: "xe500e3 PF",
                 cost: new Decimal("1e683"),
                 unlocked() { return hasUpgrade("e", 92) },
             },
             94: {
                 title: "What more is there?",
                 description: "xe657,281 PF (Seemingly Random Amount)",
-                cost: new Decimal("1.5e694"),
+                cost: new Decimal("1.5e695"),
                 unlocked() { return hasUpgrade("e", 93) },
             },
             95: {
@@ -585,25 +582,25 @@ addLayer("e", {
             },
             102: {
                 title: "Not funny",
-                description: "xe694.2M PF",
+                description: "xe694.2e6 PF",
                 cost: new Decimal("e815800"),
                 unlocked() { return hasUpgrade("e", 101) && hasMilestone('e', 21) },
             },
             103: {
                 title: "Still not funny",
                 description: "^1.006969 PF",
-                cost: new Decimal("e845774"),
+                cost: new Decimal("e845772"),
                 unlocked() { return hasUpgrade("e", 102) && hasMilestone('e', 21) },
             },
             104: {
                 title: "not  funni",
-                description: "xe69.69M PP",
+                description: "xe69.69e6 PP",
                 cost: new Decimal("e883688"),
                 unlocked() { return hasUpgrade("e", 103) && hasMilestone('e', 21) },
             },
             105: {
                 title: "HAHAHA SO FUNNY LOLOL",
-                description: "xe1337.69420M PF",
+                description: "xe1337.69420e6 PF",
                 cost: new Decimal("e921842"),
                 unlocked() { return hasUpgrade("e", 104) && hasMilestone('e', 21) },
             },
@@ -611,41 +608,41 @@ addLayer("e", {
             // extension beyond csu nums
             151: {
                 title: "R",
-                description: "xe30B Energy",
-                cost: new Decimal("e335776190372"),
+                description: "xe30e9 Energy",
+                cost: new Decimal("e346056477410"),
                 unlocked() { return hasUpgrade("e", 105) && hasUpgrade('era', 275) },
             },
             152: {
                 title: "O",
                 description: "xe0.1e15 PP",
-                cost: new Decimal("e374899393494"),
+                cost: new Decimal("e385441849693"),
                 unlocked() { return hasUpgrade("e", 151) && hasUpgrade('era', 275) },
             },
             153: {
                 title: "W",
                 description: "Less Sac Scaling",
-                cost: new Decimal("e408627212190"),
+                cost: new Decimal("e419741094160"),
                 unlocked() { return hasUpgrade("e", 152) && hasUpgrade('era', 275) },
             },
             154: {
                 title: "1",
                 description: "Less Sac Scaling",
-                cost: new Decimal("e409506609384"),
+                cost: new Decimal("e420640639164"),
                 unlocked() { return hasUpgrade("e", 153) && hasUpgrade('era', 275) },
             },
             155: {
                 title: "5!",
-                description: "x250 EC, xe3.1Qd PF",
-                cost: new Decimal("e438491221792"),
+                description: "x250 EC, xe3.1e15 PF",
+                cost: new Decimal("e451437738690"),
                 unlocked() { return hasUpgrade("e", 154) && hasUpgrade('era', 275) },
             },
 
             // challenge specific upgs
             111: {
                 title: "Challenge 1-Specific Upgrades (Only can be get in Challenge 1, only boosts Challenge 1)",
-                description: "xe5K BP",
+                description: "xe5e3 BP",
                 cost: new Decimal(1.75e57),
-                unlocked() { return inChallenge("sac", 11) || hasUpgrade("e", 141) },
+                unlocked() { return inChallenge("sac", 11) },
             },
             112: {
                 title: "Energy Bar Increase",
@@ -655,7 +652,7 @@ addLayer("e", {
             },
             113: {
                 title: "Basically",
-                description: "xe4K BP",
+                description: "xe4e3 BP",
                 cost: new Decimal(6e61),
                 unlocked() { return hasUpgrade("e", 112) },
             },
@@ -673,7 +670,7 @@ addLayer("e", {
             },
             123: {
                 title: "Prestiging Mastery",
-                description: "xe1.5K PP",
+                description: "xe1.5e3 PP",
                 cost: new Decimal(7e95),
                 unlocked() { return inChallenge("sac", 12) && hasUpgrade("e", 122) },
             },
@@ -686,61 +683,61 @@ addLayer("e", {
             131: {
                 title: "Challenge 3-Specific Upgrades (Only can be get in Challenge 3, only boosts Challenge 3)",
                 description: "x7777 Energy, x7.77e77 MP",
-                cost: new Decimal(4e106),
+                cost: new Decimal(1e107),
                 unlocked() { return inChallenge("sac", 13) },
             },
             132: {
                 title: "Drilling for extra energy",
                 description: "You multiplied your energy production by 250M!!",
-                cost: new Decimal(5e111),
+                cost: new Decimal(2e118),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 131) },
             },
             133: {
                 title: "PF Power UP!",
                 description: "^1.05 PF",
-                cost: new Decimal(3e128),
+                cost: new Decimal(1e129),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 132) },
             },
             134: {
                 title: "Mega boosts energy GREATLY!",
                 description: "Energy Upgrade 8 is MUCH stronger",
-                cost: new Decimal(4e128),
+                cost: new Decimal(2e129),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 133) },
             },
             135: {
                 title: "Energy Reserves",
                 description: "Take some energy from the energy reserves. This leads to a x800K Energy.",
-                cost: new Decimal(3e146),
+                cost: new Decimal(1e147),
                 unlocked() { return inChallenge("sac", 13) && hasUpgrade("e", 134) },
             },
             141: {
                 title: "Energy Small Boost",
-                description: "x11,111 Energy, AND Unlock Sac Challenge 1 upgrades.",
-                cost: new Decimal(2.5e53),
+                description: "x11,111 Energy",
+                cost: new Decimal(4e71),
                 unlocked() { return inChallenge("sac", 14) },
             },
             142: {
                 title: "Mega MEGA BOOST",
                 description: "xe1,600 MP",
-                cost: new Decimal(6.5e55),
+                cost: new Decimal(5e73),
                 unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 141) },
             },
             143: {
                 title: "Rocket Fuel",
-                description: "x10 Qd Energy, xe125K PF",
-                cost: new Decimal(3.6e56),
+                description: "x10 Qd Energy, xe125e3 PF",
+                cost: new Decimal(4.8e74),
                 unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 142) },
             },
             144: {
                 title: "Here we go.",
                 description: "^1.1 PF, ^1.1 Energy",
-                cost: new Decimal(2.25e67),
+                cost: new Decimal(5e83),
                 unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 143) },
             },
             145: {
                 title: "Point Plus",
-                description: "xe300K PF, x100K Energy",
-                cost: new Decimal(3e74),
+                description: "xe300e3 PF, x100K Energy",
+                cost: new Decimal(1e98),
                 unlocked() { return inChallenge("sac", 14) && hasUpgrade("e", 143) },
             },
 
@@ -756,24 +753,24 @@ addLayer("e", {
             25: {
                 title: "Energy-PF ties",
                 description: "Energy Effect is stronger.",
-                cost: new Decimal("e73468"),
+                cost: new Decimal("e73467"),
                 unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 24) && hasUpgrade("e", 15) },
             },
             35: {
                 title: "More Energy!",
-                description: "xe250M PF, Unlock 1 new mega buyable",
+                description: "xe250e6 PF, Unlock 1 new mega buyable",
                 cost: new Decimal("e75165"),
                 unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 34) && hasUpgrade("e", 25) },
             },
             45: {
                 title: "Mega Buyable 4",
                 description: "Weaker cost scaling. ",
-                cost: new Decimal("e85877"),
+                cost: new Decimal("4e85876"),
                 unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 44) && hasUpgrade("e", 35) },
             },
             55: {
                 title: "Normal things",
-                description: "xe250m pf. ",
+                description: "xe250e6 PF.",
                 cost: new Decimal("e87994"),
                 unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 54) && hasUpgrade("e", 45) },
             },
@@ -791,7 +788,7 @@ addLayer("e", {
             },
             85: {
                 title: "Crazy amount of PF",
-                description: "xe700M PF",
+                description: "xe700e6 PF",
                 cost: new Decimal("e118317"),
                 unlocked() { return hasMilestone("sac", 59) && hasUpgrade("e", 84) && hasUpgrade("e", 75) },
             },
@@ -829,7 +826,7 @@ addLayer("e", {
             },
             211: {
                 title: "Mastery Challenge 3-EX Upgrades 육",
-                description: "Well, it's time. Every upgrade now reduces the power by 0.5% only instead of 1.5%. Furthermore, +^0.04 MP. [Req 0.218 RNG Power for next Up.]",
+                description: "Well, it's time. Every upgrade now reduces the power by 0.3% only instead of 1.2%. Furthermore, +^0.04 MP. [Req 0.216 RNG Power for next Up.]",
                 cost: new Decimal("e5e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 205) },
             },
@@ -840,7 +837,7 @@ addLayer("e", {
                 currencyDisplayName: "MC3 Exponent",
                 currencyInternalName: "rngpower",
                 currencyLayer: "m",
-                unlocked() {return inChallenge("m", 13) && hasUpgrade("e", 211) && player.m.rngpower.gte(0.218)},
+                unlocked() {return inChallenge("m", 13) && ((hasUpgrade("e", 211) && player.m.rngpower.gte(0.216)) || hasUpgrade("e", 212))},
             },
             213: {
                 title: "Mastery Challenge 3-EX Upgrades ocho",
@@ -850,7 +847,7 @@ addLayer("e", {
             },
             214: {
                 title: "Mastery Challenge 3-EX Upgrades nove",
-                description: "xe9e19 PF. Reduce of power in MC3 is weaker.",
+                description: "xe9e19 PF. Reduction of power in MC3 is weaker.",
                 cost: new Decimal("e7.25e14"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 213) },
             },
@@ -868,7 +865,7 @@ addLayer("e", {
             },
             222: {
                 title: "Mastery Challenge 3-EX Upgrades C",
-                description: "'Compounding 7' is three times stronger, and the reduction of power is weaker. (Next upg, to unlock, req 0.421 MC3 Exponent)",
+                description: "'Compounding 7' is three times stronger, and the reduction of power is weaker. (Next upg, to unlock, req 0.42 MC3 Exponent)",
                 cost: new Decimal("e1.7e15"),
                 unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 221) },
             },
@@ -879,7 +876,7 @@ addLayer("e", {
                 currencyDisplayName: "MC3 Exponent",
                 currencyInternalName: "rngpower",
                 currencyLayer: "m",
-                unlocked() { return inChallenge("m", 13) && hasUpgrade("e", 222) && player.m.rngpower.gte(0.421) },
+                unlocked() { return inChallenge("m", 13) && ((hasUpgrade("e", 222) && player.m.rngpower.gte(0.42)) || hasUpgrade("e", 223)) },
             },
     },
     milestones: {
@@ -899,19 +896,19 @@ addLayer("e", {
             done() { return player["e"].points.gte(12e9) }
         },
         4: {
-            requirementDescription: "67.8 TW of Energy - 67.8e12",
+            requirementDescription: "67.8 TW of Energy - 6.78e13",
             effectDescription: "1e7,500 PF, x9 Energy",
             unlocked() { return hasMilestone("e", 1)},
             done() { return player["e"].points.gte(67.8e12) }
         },
         5: {
-            requirementDescription: "1E19 Energy [10 Qt Energy]",
+            requirementDescription: "1E19 Energy",
             effectDescription: "x1e10,000 PF, Energy Upgrade 8 is stronger",
             unlocked() { return hasMilestone("e", 4)},
             done() { return player["e"].points.gte(1e19) }
         },
         6: {
-            requirementDescription: "1E34 Energy [10 Decillion Energy]",
+            requirementDescription: "1E34 Energy",
             effectDescription: "Energy boost is stronger, Energy Upgrade 8 is stronger",
             unlocked() { return hasMilestone("e", 5)},
             done() { return player["e"].points.gte(1e34) }
@@ -924,7 +921,7 @@ addLayer("e", {
         },
         8: {
             requirementDescription: "5e128 Energy: BIG TRADE-OFF",
-            effectDescription: "Energy boost is ^0.4, BUT xe100K PF and x1T Energy",
+            effectDescription: "Energy boost is ^0.4, BUT xe100e3 PF and x1T Energy",
             unlocked() { return player.e.points.gte(1e100)},
             done() { return player["e"].points.gte(5e128) }
         },
@@ -942,7 +939,7 @@ addLayer("e", {
         },
         11: {
             requirementDescription: "1.2e456 Energy",
-            effectDescription: "Energy xe10, PP xe10K",
+            effectDescription: "xe10 Energy, xe10e3 PP",
             unlocked() { return hasMilestone("e", 10)},
             done() { return player["e"].points.gte("1.2e456") }
         },
@@ -965,68 +962,32 @@ addLayer("e", {
             unlocked() {return player["sac"].points.gte(64) || hasMilestone("e", 22)},
         },
         15: {
-            requirementDescription: "MCS-Milestone (Energy I) - 200K Energy",
-            effectDescription: "x700 Energy, +^0.15 RP",
+            requirementDescription: "That's not a lot of Energy (10 Nonillion Energy - need to be in MC1)",
+            effectDescription: "+80% Mastery Points, +^0.125 Energy and reduce Water unlock requirement to (150 No)",
+            done() { return (player["e"].points.gte("10e30") && inChallenge("m", 11)) },
             unlocked() {return inChallenge("m", 11)},
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (player["e"].points.gte(200000)) {
-                        return true
-                    }
-                }
-            },
         },
         16: {
-            requirementDescription: "MCS-Milestone (Energy II) - 50M Energy",
-            effectDescription: "x40 Energy",
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (player["e"].points.gte(50e6)) {
-                        return true
-                    }
-                }
-            },
-            unlocked() {return inChallenge("m", 11) && hasMilestone("e", 15)},
-        },
-        17: {
-            requirementDescription: "MCS-Milestone (Energy III) - 500M Energy",
-            effectDescription: "^1.2 PF",
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (player["e"].points.gte(500e6)) {
-                        return true
-                    }
-                }
-            },
-            unlocked() {return inChallenge("m", 11) && hasMilestone("e", 16)},
-        },
-        18: {
-            requirementDescription: "MCS-Milestone (Energy IV) - 5B Energy",
-            effectDescription: "^1.3 PF",
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (player["e"].points.gte(5e9)) {
-                        return true
-                    }
-                }
-            },
-            unlocked() {return inChallenge("m", 11) && hasMilestone("e", 17)},
+            requirementDescription: "That's a slight jump of Energy (4e176 Energy - need to be in MC1)",
+            effectDescription: "Increase MaP based off OoMs of Energy",
+            done() { return (player["e"].points.gte("4e176") && inChallenge("m", 11)) },
+            unlocked() {return inChallenge("m", 11)},
         },
         19: {
-            requirementDescription: "The Absolute True Energy Milestone (1e150K Energy)",
-            effectDescription: "Keep Row 5 Energy Ups on Reset, xe500M PF",
+            requirementDescription: "The Absolute True Energy Milestone (1e150e3 Energy)",
+            effectDescription: "Keep Row 5 Energy Ups on Reset, xe500e6 PF",
             done() { return player["e"].points.gte("e150000") },
             unlocked() {return player["sac"].points.gte(170)},
         },
         20: {
-            requirementDescription: "The Absolute Very True Energy Milestone (e484,425 Energy)",
-            effectDescription: "xe500M PF, +^0.05 MP",
-            done() { return player["e"].points.gte("e484425") },
+            requirementDescription: "The Absolute Very True Energy Milestone (e484,424 Energy)",
+            effectDescription: "xe500e6 PF, +^0.05 MP",
+            done() { return player["e"].points.gte("e484424") },
             unlocked() {return player["sac"].points.gte(225)},
         },
         21: {
             requirementDescription: "Galactic Energy (e556,395 energy)",
-            effectDescription: "Unlock Row 10 of Energy Upgrades, +^0.05 Energy, xe400M PF",
+            effectDescription: "Unlock Row 10 of Energy Upgrades, +^0.05 Energy, xe400e6 PF",
             done() { return player["e"].points.gte("e556395") },
             unlocked() {return player["sac"].points.gte(240)},
         },
@@ -1043,11 +1004,11 @@ addLayer("e", {
             unlocked() {return inChallenge("m", 12)},
         },
         23: {
-            requirementDescription: "MC2S (Energy 2) - 5e18,979 Energy",
+            requirementDescription: "MC2S (Energy 2) - 9e18,978 Energy",
             effectDescription: "^1.1 PF",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["e"].points.gte("5e18979")) {
+                    if (player["e"].points.gte("9e18978")) {
                         return true
                     }
                 }
@@ -1068,7 +1029,7 @@ addLayer("e", {
         },
     },
     branches: ["sac", "mega"],
-    effect(){
+    effectSoftcapInfo() {
     let enpow = 50
     if (hasMilestone('e', 2)) enpow = 90
     if (hasMilestone('e', 3)) enpow = 200
@@ -1083,13 +1044,22 @@ addLayer("e", {
     if (hasMilestone('e', 24)) enpow = 13500
     if (hasUpgrade('basic', 113)) enpow = 8888
     if (hasUpgrade('e', 154)) enpow = 11111
-    let eff = player.e.points.add(1).pow(enpow)
     let cap = 0.4
     if (hasUpgrade("w", 91)) cap = 0.45
-    softcappedEffect = softcap(eff, new Decimal("e7.5e17"), new Decimal(cap))
     let spc = 0.6
-    softcappedEffect = softcap(softcappedEffect, new Decimal("e5e20"), new Decimal(spc))
-    return softcappedEffect
+    return {
+        formula: `(Energy + 1)^${enpow}`,
+        exponent: enpow,
+        target: "Point Fragments",
+        stages: [
+            { label: "Softcap", start: "e7.5e17", power: cap },
+            { label: "Supercap", start: "e5e20", power: spc },
+        ],
+    }
+    },
+    effect(){
+        const info = this.effectSoftcapInfo()
+        return applyEffectSoftcaps(player.e.points.add(1).pow(info.exponent), info.stages)
        },
         effectDescription() {
             let softcapDescription = ""

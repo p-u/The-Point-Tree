@@ -1,4 +1,9 @@
 var systemComponents = {
+	'patreon-button': {
+		props: ['fontSize'],
+		template: `<a class="link" href="http://patreon.com/randim82/" target="_blank" rel="noopener noreferrer" v-bind:style="{'font-size': fontSize || '16px'}">Support Point Tree development (Patreon)!</a>`
+	},
+
 	'tab-buttons': {
 		props: ['layer', 'data', 'name'],
 		template: `
@@ -158,6 +163,7 @@ var systemComponents = {
 		<br>
 		<br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
+        <patreon-button font-size="16px"></patreon-button><br>
         <a class="link" href="https://discord.gg/RRK9Dwzf6P" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Point Tree Discord</a><br>
 		<br><br>
         Time Played: {{ formatTime(player.timePlayed) }}<br><br>
@@ -197,6 +203,9 @@ var systemComponents = {
 				<td><button class="opt" onclick="updateSoundEff()">Sound Effect: {{ options.soundeff?"ON":"OFF" }}</button></td>
                 <td><button class="opt" onclick="updateAction()">Action Mode (Not recommended on mobile): {{ getActionMode() }}</button></td>
 				</tr> 
+			<tr>
+				<td><a class="opt" href="http://patreon.com/randim82/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; text-align: center; text-decoration: none;">Support Point Tree development (Patreon)</a></td>
+			</tr>
         </table>`
     },
 
@@ -209,7 +218,7 @@ var systemComponents = {
 
 	'tooltip' : {
 		props: ['text'],
-		template: `<div class="tooltip" v-html="text"></div>
+		template: `<div class="tooltip" v-html="notationChooserText(text)"></div>
 		`
 	},
 

@@ -13,7 +13,40 @@ addLayer("w", {
     },
     passiveGeneration() {
         if (hasMilestone('s', 5)) return 5
+        if (inChallenge("m", 11) && hasUpgrade("w", 31)) return 0.4
         return 0
+    },
+    tabFormat: {
+        "Upgrades": {
+            content: [
+                ["infobox", "info"],
+                "main-displayX",
+                "blank",
+                "prestige-button",
+                "blank",
+                "blank",
+                ["display-text",
+                    function(){
+                        let a = ""
+                        if (inChallenge("m", 11)) {
+                            a = a + "This layer will truly be unlocked when the Energy Milestone is unlocked. Immediately aim for Upgrade 11 (costing 60B Water) to gain an x4 multiplier of MaP."
+                        }
+                        return a 
+                    }
+                ],
+                "blank",
+                "upgrades"
+            ],
+        },
+        "Milestones": {
+            content: [
+                "main-display",
+                "blank",
+                "blank",
+                "blank",
+                "milestones"
+            ],
+        },
     },
     doReset(w) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
@@ -41,7 +74,11 @@ addLayer("w", {
         },
     },   
     color: "blue",
-    requires: new Decimal("1e1000"), // Can be a function that takes requirement increases into account
+    requires() {
+        let req = new Decimal("1e1000")
+        if (hasMilestone('e', 15)) req = new Decimal("150e30")
+        return req
+    }, // Can be a function that takes requirement increases into account
     resource: "Water", // Name of currency
     baseResource: "Energy", // Name of resource prestige is based on
     baseAmount() {return player.e.points}, // Get the current amount of baseResource
@@ -50,12 +87,12 @@ addLayer("w", {
     upgrades: {
         11: {
             title: "How is this any different from energy?",
-            description: "x2 Water, and x1e250K PF",
+            description: "x2 Water, and x1e2.5e5 PF",
             cost: new Decimal(200),
         },
         12: {
             title: "Another x2?",
-            description: "x2 Water, and x1e2K PP",
+            description: "x2 Water, and x1e2e3 PP",
             cost: new Decimal(400),
             unlocked() { return hasUpgrade("w", 11) },
         },
@@ -117,7 +154,7 @@ addLayer("w", {
         23: {
             title: "Water Too OP?",
             description: "Water boosts energy LESS, xe25 Energy, x4 Water",
-            cost: new Decimal(400000),
+            cost: new Decimal(325000),
             unlocked() { return hasUpgrade("w", 22) },
         },
         24: {
@@ -128,7 +165,11 @@ addLayer("w", {
         },
         31: {
             title: "Water Crazy",
-            description: "Water boosts energy more, WU13 is stronger",
+            description() {
+                let desc = "Water boosts energy more, WU13 is stronger"
+                if (inChallenge("m", 11)) desc += `<br><p style="color: gold;">[MC1-Specific] Add very slight passive generation of water (QoL) - holding is still much better though, and intended!`
+                return desc
+            },
             cost: new Decimal(4e9),
             unlocked() { return hasUpgrade("w", 24) },
         },
@@ -140,8 +181,12 @@ addLayer("w", {
         },
         33: {
             title: "Water Prestige",
-            description: "x3 Water, xe70K PP",
-            cost: new Decimal(7e10),
+            description() {
+                let desc = "x3 Water, xe70e3 PP"
+                if (inChallenge("m", 11)) desc += `<br><p style="color: gold;">[MC1-Specific] Multiply Mastery Points by 4.1!`
+                return desc
+            },
+            cost: new Decimal(6e10),
             unlocked() { return hasUpgrade("w", 32) },
         },
         34: {
@@ -152,14 +197,14 @@ addLayer("w", {
         },
         41: {
             title: "40,000 Bo'o'waters",
-            description: "x40.000 Water, xe1M BP",
-            cost: new Decimal(3.011e28),
+            description: "x40.000 Water, xe1e6 BP",
+            cost: new Decimal(2.4e28),
             unlocked() { return hasUpgrade("w", 34) && hasUpgrade("s", 52) },
         },
         42: {
             title: "Water Gun",
-            description: "x5 Water, xe200K RP, xe1.5M PF",
-            cost: new Decimal(2.6e30),
+            description: "x5 Water, xe200e3 RP, xe1.5e6 PF",
+            cost: new Decimal(2e30),
             unlocked() { return hasUpgrade("w", 41) },
         },
         43: {
@@ -170,44 +215,44 @@ addLayer("w", {
         },
         44: {
             title: "Water Mastery Boost",
-            description: "The most insane boost. xe5M PF. Yes. E5M. You heard that right.",
+            description: "The most insane boost. xe5e6 PF. Yes. E5e6. You heard that right.",
             cost: new Decimal(1.1e32),
             unlocked() { return hasUpgrade("w", 43) },
         },
         51: {
             title: "Water, Woo!",
-            description: "x10T Water, x10M SP",
-            cost: new Decimal(6e257),
+            description: "x10e12 Water, x10e6 SP",
+            cost: new Decimal(5e257),
             unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 44) },
         },
         52: {
             title: "More itself",
             description: "WU13 is stronger",
-            cost: new Decimal(3e274),
+            cost: new Decimal(2.4e274),
             unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 51) },
         },
         53: {
             title: "Strong Water",
-            description: "x1 Qi Water, xe28M PF",
-            cost: new Decimal(1e280),
+            description: "x1 Qi Water, xe28e6 PF",
+            cost: new Decimal(8e279),
             unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 52) },
         },
         54: {
             title: "Break Infinity",
             description: "^1.011 PF, x100 Mastery Points if have Mastery Challenge 1",
-            cost: new Decimal(5e307),
+            cost: new Decimal(7e307),
             unlocked() { return hasMilestone("sac", 45) && hasUpgrade("w", 53) },
         },
         61: {
             title: "All again, another.",
-            description: "xe150M PF",
-            cost: new Decimal("1.7e1152"),
+            description: "xe150e6 PF",
+            cost: new Decimal("1.5e1152"),
             unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 54) },
         },
         62: {
             title: "Quattuorquinquagintillioning",
             description: "xe167 Water",
-            cost: new Decimal("1.5e1164"),
+            cost: new Decimal("1e1164"),
             unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 61)  }, 
         },
         63: {
@@ -219,73 +264,73 @@ addLayer("w", {
         64: {
             title: "Buyaboost",
             description: "Supreme Buyable 1,3,5 is stronger",
-            cost: new Decimal("3e1419"),
+            cost: new Decimal("2.4e1419"),
             unlocked() { return hasMilestone("sac", 58) && hasUpgrade("w", 63)  }, 
         },
         71: {
             title: "A big jump in price",
-            description: "xe2M Water",
-            cost: new Decimal("4e10401459"),
+            description: "xe2e6 Water",
+            cost: new Decimal("2e10401459"),
             unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 64)  }, 
         },
         72: {
             title: "Water Power",
             description: "+^0.1 Water, ^1.0072 PF",
-            cost: new Decimal("1.6e11887902"),
+            cost: new Decimal("0.6e11887902"),
             unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 71)  }, 
         },
         73: {
             title: "Water Power",
             description: "Raise SU52's water effect to the 500TH POWER!",
-            cost: new Decimal("1e12730927"),
+            cost: new Decimal("0.3e12730927"),
             unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 72)  }, 
         },
         74: {
             title: "Completion",
-            description: "xe20T PF and reduce sacrifice scaling by a teeny weeny bit",
-            cost: new Decimal("8e14525523"),
+            description: "xe20e12 PF and reduce sacrifice scaling by a teeny weeny bit",
+            cost: new Decimal("7e14545523"),
             unlocked() { return hasUpgrade("era", 161) && hasUpgrade("w", 73)  }, 
         },
         81: {
             title: "Is it just repeating??",
-            description: "xe10B Water",
-            cost: new Decimal("2e45164322793"),
+            description: "xe10e9 Water",
+            cost: new Decimal("1e45164322793"),
             unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 74)  }, 
         },
         82: {
             title: "no",
             description: "Supreme Buyables are stronger [POWER EFFECT???]",
-            cost: new Decimal("5e56555043545"),
+            cost: new Decimal("3e56555043545"),
             unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 81)  }, 
         },
         83: {
             title: "Water Power Mk. 2",
-            description: "xe2B Water, +^0.1 Water, ^1.001 PF",
-            cost: new Decimal("2e67540292272"),
+            description: "xe2e9 Water, +^0.1 Water, ^1.001 PF",
+            cost: new Decimal("1.3e67540292272"),
             unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 82)  }, 
         },
         84: {
             title: "To 50K Sacs.",
             description: "xe10 Qd PF",
-            cost: new Decimal("3e87842343930"),
+            cost: new Decimal("1.8e87842343930"),
             unlocked() { return hasMilestone("sac", 99) && hasUpgrade("w", 83)  }, 
         },
         91: {
             title: "Energy is everything.",
             description: "xe1.5e15 Energy, +^0.05 Energy, Energy softcap is weaker",
-            cost: new Decimal("e4.078910111213e14"),
+            cost: new Decimal("e4.275e14"),
             unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 84)  }, 
         },
         92: {
             title: "Limitedless",
             description: "Water softcap is weaker, and sacrifice scaling is reduced",
-            cost: new Decimal("e4.50505050505e14"),
+            cost: new Decimal("e4.7825e14"),
             unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 91)  }, 
         },
         93: {
             title: "Cellular Power",
             description: "x4 Cells Base Mult, Cell boosts EC at an increased rate, cells now boost EF (before nerf).",
-            cost: new Decimal("e4.61414141414e14"),
+            cost: new Decimal("e4.8778e14"),
             unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 92)  }, 
             effect() {
                 return Decimal.max(player.c.points.log10()/20, 1)
@@ -297,18 +342,17 @@ addLayer("w", {
             tooltip() {
                 return "Formula: log10(Cells)/20"
             },
-            unlocked() { return (hasUpgrade("c", 53)) },
         },
         94: {
             title: "Omega Insane Upgrade!! (Timewally, but all worth the wait)",
             description: "Base EF is multiplied by slog(EC) again. Extend EF upgrades. xee20 PF, ^1.04 EC",
-            cost: new Decimal("e4.63e14"),
+            cost: new Decimal("e4.8929e14"),
             unlocked() { return hasMilestone("era", 102) && hasUpgrade("w", 93)  }, 
         },
         15: {
             title: "Bond Strengthening",
             description: "Supreme Upgrade 65 is 30% stronger.",
-            cost: new Decimal("e1.0216e15"),
+            cost: new Decimal("e1.02088e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 14)  }, 
             style() {return {
                 'width': '150px',
@@ -327,7 +371,7 @@ addLayer("w", {
             tooltip() {
                 return "Formula: e4e12^BuyableBuys"
             },
-            cost: new Decimal("e1.1145e15"),
+            cost: new Decimal("e1.11375e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 15)  }, 
             style() {return {
                 'width': '150px',
@@ -336,7 +380,7 @@ addLayer("w", {
         35: {
             title: "TSUNAMI!!!! RUN!!!",
             description: "xe2e14 Water",
-            cost: new Decimal("e1.3296e15"),
+            cost: new Decimal("e1.32923e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 25)  }, 
             style() {return {
                 'width': '150px',
@@ -345,7 +389,7 @@ addLayer("w", {
         45: {
             title: "Quick! Everybody, up!",
             description: "As the immense amount of Water increases, many civillians are killed. People struggle to go on high ground. However, the water continues spreading. +^0.05 Water.",
-            cost: new Decimal("e2.19e15"),
+            cost: new Decimal("e2.1895e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 35)  }, 
             style() {return {
                 'width': '150px',
@@ -354,7 +398,7 @@ addLayer("w", {
         55: {
             title: "Further Amplification",
             description: "In an instant, rain poured down the land, and further exacerbated the seriousness of the situation. The amount of water increases based on itself.",
-            cost: new Decimal("e2.2772e15"),
+            cost: new Decimal("e2.2767e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 45)  }, 
             style() {return {
                 'width': '150px',
@@ -363,7 +407,7 @@ addLayer("w", {
         65: {
             title: "Further Amplification",
             description: "Due to the amount of Water, the amount of cells naturally increases. log(Water) delays Cells softcap.",
-            cost: new Decimal("e2.3205e15"),
+            cost: new Decimal("e2.32e15"),
             effect() {
                 return player.w.points.add(2).log10()
             },
@@ -382,7 +426,7 @@ addLayer("w", {
         75: {
             title: "The Master that you, yourself are",
             description: "As you look down below, you see the many citizens that need help, as they are injured. Well, you have to research some new technology. 'More EC = More Mastery' is stronger.",
-            cost: new Decimal("e2.357e15"),
+            cost: new Decimal("e2.356e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 65)  }, 
             style() {return {
                 'width': '150px',
@@ -391,7 +435,7 @@ addLayer("w", {
         85: {
             title: "Re-building people's fundementals",
             description: "The water rises at an impressive pace. You, as the leader of the pack, realise that you have to educate others to survive through the disaster. The fundementals would have to be re-learnt. xe2.1e21 BP.",
-            cost: new Decimal("e2.6072e15"),
+            cost: new Decimal("e2.6312e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 75)  }, 
             style() {return {
                 'width': '150px',
@@ -400,7 +444,7 @@ addLayer("w", {
         95: {
             title: "Saving the city, for good!",
             description: "Due to your efforts, the city is saved with minimal casualties in this horrifying disaster. The water eventually subsides after 3 days. The Prime Minister honours you, thus he gives you the Nobel Prize. (Nobel Prize Benefits: xee19 MP)",
-            cost: new Decimal("e3.5188e15"),
+            cost: new Decimal("e3.529e15"),
             unlocked() { return hasMilestone("sac", 121) && hasUpgrade("w", 85)  }, 
             style() {return {
                 'width': '150px',
@@ -421,11 +465,11 @@ addLayer("w", {
             unlocked() {return player["sac"].points.gte(132)},
         },
         3: {
-            requirementDescription: "OP Mastery Challenge 2 Specific Milestone (7.99e299 Water)",
+            requirementDescription: "OP Mastery Challenge 2 Specific Milestone (6.99e299 Water)",
             effectDescription: "^1.05 PF, Water Milestone 1 is visible in Mastery Challenge 2, PP +^0.1, MP +^0.055",
             done() {
                 if (inChallenge("m", 12)) {
-                    if (player["w"].points.gte("7.99e299")) {
+                    if (player["w"].points.gte("6.99e299")) {
                         return true
                     }
                 }
@@ -445,15 +489,15 @@ addLayer("w", {
             unlocked() {return (inChallenge("m", 12) && hasMilestone('w', 3))},
         },
         5: {
-            requirementDescription: "A new water milestone (1e1T Water)",
+            requirementDescription: "A new water milestone (1e1e12 Water)",
             effectDescription: "+^0.1 Water",
             done() { return player["w"].points.gte("1e1e12") },
             unlocked() {return player["sac"].points.gte(132)},
         },
         6: {
-            requirementDescription: "Water Madness (10^7.165x10^14 Water)",
+            requirementDescription: "Water Madness (e7.16e14 Water)",
             effectDescription: "Increase the efficacy of Supreme Buyables 4,6 and 7",
-            done() { return player["w"].points.gte("e7.165e14") },
+            done() { return player["w"].points.gte("e7.16e14") },
             unlocked() {return hasMilestone("w", 5)},
         },
     },
@@ -476,6 +520,8 @@ addLayer("w", {
         if (hasUpgrade('w', 32)) mult = mult.times(5)
         if (hasUpgrade('w', 33)) mult = mult.times(3)
         if (hasUpgrade('w', 34)) mult = mult.times(50)
+        if (hasMilestone('e', 14)) mult = mult.times(1e6)
+        if (hasMilestone('e', 15)) mult = mult.times(1e6)
         if (hasUpgrade('mega', 84)) mult = mult.times(200)
         if (hasUpgrade('s', 52)) mult = mult.times(upgradeEffect('s', 52))
         if (hasUpgrade('w', 41)) mult = mult.times(40)
@@ -488,11 +534,11 @@ addLayer("w", {
         if (hasMilestone('e', 13)) mult = mult.times(10)
         if (hasAchievement('a', 126)) mult = mult.times(45.1)
         if (hasAchievement('a', 136)) mult = mult.times(1000)
-        if (hasMilestone('e', 14)) mult = mult.times(1e6)
         if (hasUpgrade('w', 51)) mult = mult.times(1e13)
         if (hasUpgrade('w', 53)) mult = mult.times(1e18)
         if (hasUpgrade('rebirth', 75)) mult = mult.times(3.77)
         if (hasUpgrade('w', 62)) mult = mult.times(1e167)
+        if (hasUpgrade("m", 1004) && inChallenge("m", 11)) mult = mult.times(75)
         if (hasUpgrade('w', 71)) mult = mult.times("e2000000")
         if (hasUpgrade('era', 233)) mult = mult.times("e50e6")
         if (hasUpgrade('mega', 105)) mult = mult.times("e10e9")
@@ -524,15 +570,15 @@ addLayer("w", {
         if (hasMilestone('w', 5)) exp = exp.add(0.1)
         if (hasUpgrade('era', 165)) exp = exp.add(0.05)
         if (hasUpgrade("era", 432)) exp = exp.add(0.08)
-        if ((inChallenge("m", 11)) && (hasUpgrade("m", 1113))) exp = exp.add(0.15)
         if (hasUpgrade("era", 1034)) exp = exp.add(upgradeEffect("era", 1034))
         if (hasMilestone('era', 102)) exp = exp.add(buyableEffect('s', 17))
         if (hasUpgrade("w", 45)) exp = exp.add(0.05)
-        if (inChallenge('m', 11)) exp = exp.mul(0.4)
+        let expinmc1 = new Decimal(0.5)
+        if (inChallenge("m", 11)) exp = exp.mul(expinmc1)
         return exp
     },
     branches: ["s", "e"],
-    effect(){
+    effectSoftcapInfo() {
         let weffpow = 3
         if (hasUpgrade('w', 22)) weffpow = 4
         if (hasUpgrade('w', 23)) weffpow = 2
@@ -540,13 +586,22 @@ addLayer("w", {
         if (hasUpgrade('e', 65)) weffpow = 5
         if (hasUpgrade("era", 133)) weffpow = 17.5
         if (hasUpgrade("m", 152)) weffpow = 21.25
-        let eff = player.w.points.add(1).pow(weffpow)
         let cap = 0.3
         if (hasUpgrade("w", 92)) cap = 0.35
-        softcappedEffect = softcap(eff, new Decimal("e5e13"), new Decimal(cap))
         let sprcap = 0.25
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e1e17"), new Decimal(sprcap))
-        return softcappedEffect
+        return {
+            formula: `(Water + 1)^${weffpow}`,
+            exponent: weffpow,
+            target: "Energy",
+            stages: [
+                { label: "Softcap", start: "e5e13", power: cap },
+                { label: "Supercap", start: "e1e17", power: sprcap },
+            ],
+        }
+    },
+    effect(){
+        const info = this.effectSoftcapInfo()
+        return applyEffectSoftcaps(player.w.points.add(1).pow(info.exponent), info.stages)
            },
             effectDescription() {
                 let softcapDescription = ""

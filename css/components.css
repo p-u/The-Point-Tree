@@ -1,7 +1,7 @@
 .upg {
 	min-height: 120px;
-	width: 120px;
-	border-radius: 25%;
+	width: 128px;
+	border-radius: 19%;
 	border: 2px solid;
 	border-color: rgba(0, 0, 0, 0.125);
 	font-size: 10px;
@@ -9,9 +9,9 @@
 }
 
 .achievement {
-	height: 90px;
-	width: 90px;
-	border-radius: 25%;
+	height: 100px;
+	width: 100px;
+	border-radius: 19%;
 	border: 2px solid;
 	border-color: rgba(0, 0, 0, 0.125);
 	font-size: 10px;
@@ -25,8 +25,8 @@
 
 .buyable {
 	height: 200px;
-	width: 200px;
-	border-radius: 25%;
+	width: 225px;
+	border-radius: 19%;
 	border: 2px solid;
 	border-color: rgba(0, 0, 0, 0.125);
 	font-size: 10px;
@@ -66,10 +66,10 @@
 	border: 4px solid;
 	border-color: rgba(0, 0, 0, 0.125);
 	color: rgba(0, 0, 0, 0.5);
-	width: 300px;
+	width: 400px;
 	height: 300px;
 	font-size: 15px;
-	border-radius: 33.33%;
+	border-radius: 17%;
 }
 
 .challenge.done {

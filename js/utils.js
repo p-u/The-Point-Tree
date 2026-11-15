@@ -325,6 +325,21 @@ function layerunlocked(layer) {
 	return LAYERS.includes(layer) && (player[layer].unlocked || (tmp[layer].canReset && tmp[layer].layerShown))
 }
 
+// Shared softcap helpers keep layer effects and the Info page in sync.
+function applyEffectSoftcaps(value, stages) {
+	for (const stage of stages) value = softcap(value, new Decimal(stage.start), stage.power)
+	return value
+}
+
+function layerSoftcapInfobox(layerId, info) {
+	let lines = [`Base Effect: ${info.formula} ${info.target}`]
+	if (info.current !== undefined) lines.push(`Current Effect: ${notationChooser(info.current)} ${info.target}`)
+	for (const stage of info.stages) {
+		lines.push(`${stage.label || "Softcap"}: Starts at ${notationChooser(new Decimal(stage.start))}, ^${notationChooser(new Decimal(stage.power))} ${info.target}`)
+	}
+	return lines.join("<br>")
+}
+
 function keepGoing() {
 	player.keepGoing = true;
 	needCanvasUpdate = true;
@@ -363,7 +378,7 @@ function updateMilestones(layer) {
 						screenShake(3000, 1500);
 					}
 				}
-				if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 2, tmp[layer].color);
+				if ((tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined) && !options.hideMilestonePopups) doPopup("milestone", notationChooserText(tmp[layer].milestones[id].requirementDescription), "Milestone Gotten!", 2, tmp[layer].color);
 			}
 			player[layer].lastMilestone = id
 		}

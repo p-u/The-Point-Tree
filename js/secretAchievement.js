@@ -143,13 +143,13 @@ addLayer("sa", {
                             a = a + "+1.00 MiP for ^e10 button, "
                             a = a + "+3.00 MiP for ^e250 button, "
                             if (hasUpgrade("sa", 23)) {
-                                a = a + "+5.00 MiP for ^e5K button, "
-                                a = a + "+3.00 MiP for ^e50K button, "
-                                a = a + "+1.00 MiP for ^e500K button, "
+                                a = a + "+5.00 MiP for ^e5e3 button, "
+                                a = a + "+3.00 MiP for ^e50e3 button, "
+                                a = a + "+1.00 MiP for ^e500e3 button, "
                             } else {
-                                a = a + "+3.00 MiP for ^e5K button, "
-                                a = a + "+1.00 MiP for ^e50K button, "
-                                a = a + "-1.00 MiP for ^e500K button, "
+                                a = a + "+3.00 MiP for ^e5e3 button, "
+                                a = a + "+1.00 MiP for ^e50e3 button, "
+                                a = a + "-1.00 MiP for ^e500e3 button, "
                             }
                             if (hasUpgrade("sa", 25)) {
                                 a = a + "+30 MiP for ^0.99 button, "
@@ -363,7 +363,7 @@ addLayer("sa", {
                 },
             tooltip() {
                 if (hasAchievement('sa', 23)) {
-                    return "Req: e78K PF, with less than 2 Sacrifice. (Reward: x1.2 MP)"
+                    return "Req: e78e3 PF, with less than 2 Sacrifice. (Reward: x1.2 MP)"
                 }
                 else {
                     return "e78000 point fragments. (Reward: x1.2 MP)"
@@ -428,7 +428,7 @@ addLayer("sa", {
             },
             tooltip() {
                 if (hasAchievement('sa', 26)) {
-                    return "Req: Before Getting Pres Upg 55, get e388.1M PF. (Reward: x1.05 SP)"
+                    return "Req: Before Getting Pres Upg 55, get e388.1e6 PF. (Reward: x1.05 SP)"
                 }
                 else {
                     return " (Reward: x1.05 SP)"
@@ -439,10 +439,10 @@ addLayer("sa", {
             }
         },
         31: {
-            name: "I'm scared of this imminent thing. Let's not.",
+            name: "How many? So fast?!",
             done() {
                 if(!(hasChallenge('m', 11))) {
-                    if (player.m.points.gte(100000)) {
+                    if (player.m.points.gte(5e27)) {
                         return true
                     }
                 }
@@ -452,14 +452,14 @@ addLayer("sa", {
             },
             tooltip() {
                 if (hasAchievement('sa', 31)) {
-                    return "Get 100K Mastery Points without completing the Mastery Challenge [OR GET ERA 1] (Reward: x1.05 Mastery Points)"
+                    return "Get 5Oc Mastery Points without completing the Mastery Challenge [OR GET ERA 1] (Reward: x1.05 Mastery Points)"
                 }
                 else {
-                    return "(Reward: x1.05 Mastery Points)"
+                    return "Hint: Get a ton of MaP before you complete MC1...(Reward: x1.05 Mastery Points)"
                 }
             },
             unlocked() {
-                return hasMilestone("sac", 40)
+                return (hasMilestone("sac", 40) || inChallenge("m", 11))
             }
         },
         32: {
@@ -1043,7 +1043,7 @@ addLayer("sa", {
             }
         },
         141: {
-            name: "Even higher (e1M/ee6)",
+            name: "Even higher (e1e6/ee6)",
             done() {
                    if (player.sa.minigameNum.gte("ee6")) {
                     if (hasAchievement("sa", 135)) {
@@ -1064,7 +1064,7 @@ addLayer("sa", {
             }
         },
         142: {
-            name: "Even higher (e100B/ee11)",
+            name: "Even higher (e100e9/ee11)",
             done() {
                    if (player.sa.minigameNum.gte("ee11")) {
                     if (hasAchievement("sa", 141)) {
@@ -1255,7 +1255,7 @@ addLayer("sa", {
             }
         },
         155: {
-            name: "Astronomical (ee15k)",
+            name: "Astronomical (ee15e)",
             done() {
                    if (player.sa.minigameNum.gte("ee15000")) {
                     if (hasAchievement("sa", 154)) {
@@ -1276,7 +1276,7 @@ addLayer("sa", {
             }
         },
         156: {
-            name: "UTTER INSANITY (ee250K)",
+            name: "UTTER INSANITY (ee250e3)",
             done() {
                    if (player.sa.minigameNum.gte("ee250e3")) {
                     if (hasAchievement("sa", 155)) {
@@ -1381,7 +1381,7 @@ addLayer("sa", {
             }
         },
         165: {
-            name: "Now PUSH. [Get 1ee15M]",
+            name: "Now PUSH. [Get 1ee15e6]",
             done() {
                    if ((player.sa.minigameNum.gte("ee1.5e7"))) {
                     if (hasAchievement("sa", 164)) {
@@ -1538,7 +1538,7 @@ addLayer("sa", {
                },
             tooltip() {
                 if (hasAchievement('sa', 176)) {
-                    return "CONGRATS! You finished Minigame Part 5! Unlock Minigame Points (replaces pdx) and the next row of achievements... Also a ^e50K button and x2 SP"
+                    return "CONGRATS! You finished Minigame Part 5! Unlock Minigame Points (replaces pdx) and the next row of achievements... Also a ^e50e3 button and x2 SP"
                 }
                 else {
                     return "Very Hard Difficulty"
@@ -2736,7 +2736,7 @@ addLayer("sa", {
             }
         },
         94: {
-            title: "^1e10M",
+            title: "^1e10e6",
             canClick() {return (!(hasMilestone("sa", 17)))},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
@@ -2767,7 +2767,7 @@ addLayer("sa", {
             }
         },
         101: {
-            title: "^e10B",
+            title: "^e10e9",
             canClick() {return (!(hasMilestone("sa", 17)))},
             onClick() {
                 if (player[this.layer].minigameNum.gte(0)) {
@@ -3086,7 +3086,7 @@ addLayer("sa", {
     upgrades: {
         11: {
             title: "MiUp 1: Passive Numbers?",
-            description: "Multiply the exponent of the ^e50K button by 1.5, and add passive generation. Passive Generation: Every 1.0 seconds, ^e200K the Number.",
+            description: "Multiply the exponent of the ^e50e3 button by 1.5, and add passive generation. Passive Generation: Every 1.0 seconds, ^e200e3 the Number.",
             cost: new Decimal("ee1.2e9"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
@@ -3095,7 +3095,7 @@ addLayer("sa", {
         },
         12: {
             title: "MiUp 2: I want you to play more.",
-            description: "Multiply the exponent of the ^e50K button based on your playtime.",
+            description: "Multiply the exponent of the ^e50e3 button based on your playtime.",
             cost: new Decimal("ee3e9"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
@@ -3104,7 +3104,7 @@ addLayer("sa", {
         },
         13: {
             title: "MiUp 3: Numbered Number",
-            description: "Multiply the exponent of the ^e50K button based on your Number. Also, passive generation increases to Every 0.90 seconds, ^e1.8M Number.",
+            description: "Multiply the exponent of the ^e50e3 button based on your Number. Also, passive generation increases to Every 0.90 seconds, ^e1.8e6 Number.",
             cost: new Decimal("ee1e10"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
@@ -3113,7 +3113,7 @@ addLayer("sa", {
         },
         14: {
             title: "MiUp 4: Finally, a new button!",
-            description: "Unlock a new ^e500K button. MU2 affects it at a decreasing rate while MU3 does not affect it.",
+            description: "Unlock a new ^e500e3 button. MU2 affects it at a decreasing rate while MU3 does not affect it.",
             cost: new Decimal("ee3.5e10"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
@@ -3131,7 +3131,7 @@ addLayer("sa", {
         },
         21: {
             title: "MiUp 6: Minigame Number",
-            description: "x5 Minigame Points when below 100,000. x3 Minigame Points when below 1,000,000. Unlock a new ^e1.5M button. MU2 affects it at a reduced rate and Minigame Points affect it. Passive generation increases to Every 0.75 seconds, ^e10M Number. [-0.25 MiP per press!]",
+            description: "x5 Minigame Points when below 100,000. x3 Minigame Points when below 1,000,000. Unlock a new ^e1.5e6 button. MU2 affects it at a reduced rate and Minigame Points affect it. Passive generation increases to Every 0.75 seconds, ^e10e6 Number. [-0.25 MiP per press!]",
             cost: new Decimal("267000"),
             currencyDisplayName: "Minigame Points",
             currencyInternalName: "minigamePoints",
@@ -3140,7 +3140,7 @@ addLayer("sa", {
         },
         22: {
             title: "MiUp 7: Point Fragment-Number",
-            description: "Point Fragments affect the ^e1.5M button and Minigame Points at a low rate. [NEXT UP REQUIRES eee12 Minigame Number to Unlock]",
+            description: "Point Fragments affect the ^e1.5e6 button and Minigame Points at a low rate. [NEXT UP REQUIRES eee12 Minigame Number to Unlock]",
             cost: new Decimal("ee3.5e11"),
             currencyDisplayName: "Number",
             currencyInternalName: "minigameNum",
@@ -3149,7 +3149,7 @@ addLayer("sa", {
         },
         23: {
             title: "MiUp 8: Minigame Points Insanity",
-            description: "x3 MiP when below 10M. ^e5000 to ^e500K buttons +2 MiP per. Passive Gen increases to Every 0.60 seconds, ^e40M Number. [Cost ee1e12 Number and 1M Minigame Points]",
+            description: "x3 MiP when below 10M. ^e5000 to ^e500e3 buttons +2 MiP per. Passive Gen increases to Every 0.60 seconds, ^e40e6 Number. [Cost ee1e12 Number and 1M Minigame Points]",
             cost: new Decimal(1e6),
             currencyDisplayName: "Minigame Points",
             currencyInternalName: "minigamePoints",
@@ -3158,7 +3158,7 @@ addLayer("sa", {
         },
         24: {
             title: "MiUp 9: Well, that's a big jump.",
-            description: "x2.9 MiP. Also, passively generate 3 MiP every 0.50 seconds. Unlock a new ^e10M Button! MU2, Minigame Points, Point Fragments and Number affect it. [-0.50 MiP per press!] Passive gen increases to Every 0.50 seconds, ^e500M Number.",
+            description: "x2.9 MiP. Also, passively generate 3 MiP every 0.50 seconds. Unlock a new ^e10e6 Button! MU2, Minigame Points, Point Fragments and Number affect it. [-0.50 MiP per press!] Passive gen increases to Every 0.50 seconds, ^e500e6 Number.",
             cost: new Decimal(5e6),
             currencyDisplayName: "Minigame Points",
             currencyInternalName: "minigamePoints",

@@ -121,8 +121,62 @@ addLayer("i", {
                 ["infobox", "mastrecenterpera"],
             ],
         },
+        "Softcaps": {
+            content: [
+                ["infobox", "softcap_rebirth"], "blank", "blank",
+                ["infobox", "softcap_prestige"], "blank", "blank",
+                ["infobox", "softcap_mega"], "blank", "blank",
+                ["infobox", "softcap_energy"], "blank", "blank",
+                ["infobox", "softcap_water"],
+            ],
+        },
     },
     infoboxes: {
+        softcap_rebirth: {
+            title: "Rebirth Layer Softcaps",
+            body() {
+                const info = layers.rebirth.effectSoftcapInfo()
+                info.current = tmp.rebirth.effect
+                return layerSoftcapInfobox("rebirth", info)
+            },
+            unlocked() { return player.rebirth.unlocked },
+        },
+        softcap_prestige: {
+            title: "Prestige Layer Softcaps",
+            body() {
+                const info = layers.prestige.effectSoftcapInfo()
+                info.current = tmp.prestige.effect
+                return layerSoftcapInfobox("prestige", info)
+            },
+            unlocked() { return player.prestige.unlocked },
+        },
+        softcap_mega: {
+            title: "Mega Layer Softcaps",
+            body() {
+                const info = layers.mega.effectSoftcapInfo()
+                info.current = tmp.mega.effect
+                return layerSoftcapInfobox("mega", info)
+            },
+            unlocked() { return player.mega.unlocked },
+        },
+        softcap_energy: {
+            title: "Energy Layer Softcaps",
+            body() {
+                const info = layers.e.effectSoftcapInfo()
+                info.current = tmp.e.effect
+                return layerSoftcapInfobox("e", info)
+            },
+            unlocked() { return player.e.unlocked },
+        },
+        softcap_water: {
+            title: "Water Layer Softcaps",
+            body() {
+                const info = layers.w.effectSoftcapInfo()
+                info.current = tmp.w.effect
+                return layerSoftcapInfobox("w", info)
+            },
+            unlocked() { return player.w.unlocked },
+        },
         main: {
             title: "Welcome to The Point Tree!",
             body() { return "Explore many unique upgrades, and get the biggest numbers possible! In this game, you will go through many different layers, unlock new and unique features like upgrades, milestones and buyables. Please visit this layer often. Also, time to complete each section: Pre-Sac: 3-4hrs, Sac to Era: 4-6hrs, Era 1 and 2: 3-5hrs, Era 3: 4-7hrs" },
@@ -150,7 +204,7 @@ addLayer("i", {
         },
         reb: {
             title: "The rebirth Layer (R, or Reb)",
-            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000 and Hypercaps at xe200M." },
+            body() { return "More numbers to achieve. Focus on getting the first milestone! Rebirth Points (RP) also boost Point Fragments (PF). Softcaps ^0.35 at xe1500 (exponent can be increased). Supercaps a further ^0.4 at xe100,000 and Hypercaps at xe200e6." },
             unlocked() { return (hasUpgrade('basic', 34))}
         },
         ext: {
@@ -180,7 +234,7 @@ addLayer("i", {
         },
         pres: {
             title: "Prestige Layer (P, or Pres)",
-            body() { return "In here, you can get numbers up to e1,500! For now, choose whether you want to buy the upgrade. Prestige effect softcaps at xe6,500 and supercaps at xe1M." },
+            body() { return "In here, you can get numbers up to e1,500! For now, choose whether you want to buy the upgrade. Prestige effect softcaps at xe6,500 and supercaps at xe1e6." },
             unlocked() { return player.prestige.points.gte(new Decimal("1"))}
         },
         mega: {

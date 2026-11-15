@@ -25,7 +25,7 @@ addLayer("sac", {
                 "prestige-button",
                 "blank",
                 "blank",
-                ["milestones", [200,199,198,197,196,195,194,193,192,191,190,189,188,187,186,185,184,183,182,181,180,179,178,177,176,175,174,173,172,171,170,169,168,167,166,165,164,163,162,161,160,159,158,157,156,155,154,153,152,151,150,149,148,147,146,145,144,143,142,141,140,139,138,137,136,135,134,133,132,131,130,129,128,127,126,125,124,123,122,121,120,119,118,117,116,115,114,113,112,111,110,109,108,107,106,105,104,103,102,101,100,99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]],
+                ["milestones", Array.from({length: 200}, (_, index) => 200 - index)],
             ],
         },
         "Dimensional Shift": {
@@ -154,6 +154,7 @@ addLayer("sac", {
         let buyMaxSac = false
         if (hasMilestone("sac", 35)) buyMaxSac = true
         if (inChallenge('m', 11)) buyMaxSac = true
+        if (hasChallenge('m', 11)) buyMaxSac = true
         if (hasAchievement('a', 182)) buyMaxSac = true
        return buyMaxSac
      },
@@ -189,7 +190,7 @@ addLayer("sac", {
         },
         6: {
             requirementDescription: "Sacrifice 6",
-            effectDescription: "Mega Upgrade 14 is stronger. Also... x1e1,000 points... and 1 more mega upgrade.",
+            effectDescription: "Mega Upgrade 14 is stronger. Also... x1e1000 points... and 1 more mega upgrade.",
             unlocked() {return player["sac"].points.gte(5)},
             done() { return player["sac"].points.gte(6) }
         },
@@ -231,25 +232,29 @@ addLayer("sac", {
         },
         13: {
             requirementDescription: "Sacrifice 13",
-            effectDescription: "More Prestige Upgrades, ^1.005 PF, x25 Energy, Keep first 2 rows of energy upgrades on sac.",
+            effectDescription: "More Prestige Upgrades, ^1.005 PF, x25 Energy, Keep first 2 rows of energy upgrades on sac. ^1.5 PF if in MC1.",
             unlocked() {return player["sac"].points.gte(12)},
             done() { return player["sac"].points.gte(13) }
         },
         14: {
             requirementDescription: "Sacrifice 14",
-            effectDescription: "^1.005 PF, x1,000 Energy, x1e10K PF and Autobuy Mega Buyable 2, extend rebirth upgrades. Keep Row 4 Mega Upgs and Keep RU41 and 42",
+            effectDescription: "^1.005 PF, x1000 Energy, x1e10e3 PF and Autobuy Mega Buyable 2, extend rebirth upgrades. Keep Row 4 Mega Upgs and Keep RU41 and 42",
             unlocked() {return player["sac"].points.gte(13)},
             done() { return player["sac"].points.gte(14) }
         },
         15: {
             requirementDescription: "Sacrifice 15",
-            effectDescription: "^1.005 PF, x10,000 Energy, x1e15K PF, UNLOCK DIMENSIONAL SHIFT. Keep PU41 and 42",
+            effectDescription() {
+                let desc = "^1.005 PF, x10000 Energy, x1e15e3 PF, UNLOCK DIMENSIONAL SHIFT. Keep PU41 and 42"
+                if (inChallenge("m", 11)) desc += `<br><p style="color: gold;">[MC1-Specific] Multiply Mastery Points by Sacrifices (directly)`
+                return desc
+            },
             unlocked() {return player["sac"].points.gte(14)},
             done() { return player["sac"].points.gte(15) }
         },
         16: {
             requirementDescription: "Sacrifice 16",
-            effectDescription: "Rebirth softcap is weaker, x1e20K PF, Energy Upg 8 is stronger. Keep Row 5 mega upgs",
+            effectDescription: "Rebirth softcap is weaker, x1e20e3 PF, Energy Upg 8 is stronger. Keep Row 5 mega upgs",
             unlocked() {return player["sac"].points.gte(15)},
             done() { return player["sac"].points.gte(16) }
         },
@@ -273,7 +278,7 @@ addLayer("sac", {
         },
         20: {
             requirementDescription: "Sacrifice 20",
-            effectDescription: "Unlock Challenge tab, More Mega Upgrades, x2,000 Energy. Keep Energy Milestones.",
+            effectDescription: "Unlock Challenge tab, More Mega Upgrades, x2000 Energy. Keep Energy Milestones.",
             unlocked() {return player["sac"].points.gte(19)},
             done() { return player["sac"].points.gte(20) }
         },
@@ -285,7 +290,7 @@ addLayer("sac", {
         },
         22: {
             requirementDescription: "Sacrifice 22",
-            effectDescription: "More Prestige Upgrades, Keep Row 4 energy upgrades. xe40K PF. Also Keep Row 6 mega upgs",
+            effectDescription: "More Prestige Upgrades, Keep Row 4 energy upgrades. xe40e3 PF. Also Keep Row 6 mega upgs",
             unlocked() {return player["sac"].points.gte(21)},
             done() { return player["sac"].points.gte(22) }
         },
@@ -297,7 +302,7 @@ addLayer("sac", {
         },
         24: {
             requirementDescription: "Sacrifice 24",
-            effectDescription: "xe10K PP. ^1.01 PF.",
+            effectDescription: "xe10e3 PP. ^1.01 PF.",
             unlocked() {return player["sac"].points.gte(23)},
             done() { return player["sac"].points.gte(24) }
         },
@@ -333,7 +338,7 @@ addLayer("sac", {
         },
         30: {
             requirementDescription: "Sacrifice 30",
-            effectDescription: "xe300K PF, ^1.01 PF, add 1 more row of Pres Upgs and 2 Secret Achievements.",
+            effectDescription: "xe300e3 PF, ^1.01 PF, add 1 more row of Pres Upgs and 2 Secret Achievements.",
             unlocked() {return player["sac"].points.gte(29)},
             done() { return player["sac"].points.gte(30) }
         },
@@ -393,7 +398,7 @@ addLayer("sac", {
         },
         40: {
             requirementDescription: "Sacrifice 64",
-            effectDescription: "xe10M PF, Unlock many milestones, including 2 Secret Achievements.",
+            effectDescription: "xe10e6 PF, Unlock many milestones, including 2 Secret Achievements.",
             unlocked() {return player["sac"].points.gte(62)},
             done() { return player["sac"].points.gte(64) }
         },
@@ -411,13 +416,13 @@ addLayer("sac", {
         },
         43: {
             requirementDescription: "Sacrifice 75",
-            effectDescription: "xe17.5M PF",
+            effectDescription: "xe17.5e6 PF",
             unlocked() {return player["sac"].points.gte(71)},
             done() { return player["sac"].points.gte(75) }
         },
         44: {
             requirementDescription: "Sacrifice 79",
-            effectDescription: "xe22.5M PF",
+            effectDescription: "xe22.5e6 PF",
             unlocked() {return player["sac"].points.gte(75)},
             done() { return player["sac"].points.gte(79) }
         },
@@ -447,13 +452,13 @@ addLayer("sac", {
         },
         49: {
             requirementDescription: "Sacrifice 100!!!",
-            effectDescription: "xe100M PF",
+            effectDescription: "xe100e6 PF",
             unlocked() {return player["sac"].points.gte(96)},
             done() { return player["sac"].points.gte(100) }
         },
         50: {
             requirementDescription: "Sacrifice 106",
-            effectDescription: "xe106 SP, Automate Supreme Buyable 2",
+            effectDescription: "xe106 SP",
             unlocked() {return player["sac"].points.gte(102)},
             done() { return player["sac"].points.gte(106) }
         },
@@ -465,7 +470,7 @@ addLayer("sac", {
         },
         52: {
             requirementDescription: "Sacrifice 113",
-            effectDescription: "Keep DS4 upgs, Supreme Buyable 3 costs nothing",
+            effectDescription: "Keep DS4 upgs, Supreme Buyable 3 costs nothing, Automate Supreme Buyable 2",
             unlocked() {return player["sac"].points.gte(111)},
             done() { return player["sac"].points.gte(113) }
         },
@@ -483,7 +488,7 @@ addLayer("sac", {
         },
         55: {
             requirementDescription: "Sacrifice 124",
-            effectDescription: "Keep Prestige Row 6 Upgrades on sac, Autobuy Supreme Buyable 3",
+            effectDescription: "Keep Prestige Row 6 Upgrades on sac",
             unlocked() {return player["sac"].points.gte(120)},
             done() { return player["sac"].points.gte(124) }
         },
@@ -502,20 +507,20 @@ addLayer("sac", {
         58: {
             requirementDescription: "Sacrifice 140",
             effectDescription:  function(){
-				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000] **After 750 sacs, softcaps, and has a hardcap of 2,500 sacs. Also, unlock more Water Upgrades.";
+				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms58eff)+". Formula: 1 + [Sacrifices / 10000] **After 750 sacs, softcaps, and has a hardcap of 2500 sacs. Also, unlock more Water Upgrades and Autobuy Supreme Buyable 3.";
 			},
             unlocked() {return player["sac"].points.gte(135)},
             done() { return player["sac"].points.gte(140) },
         },
         59: {
             requirementDescription: "Sacrifice 150",
-            effectDescription: "^1.015 PF, xe500M PF, Unlock DS5",
+            effectDescription: "^1.015 PF, xe500e6 PF, Unlock DS5",
             unlocked() {return player["sac"].points.gte(140)},
             done() { return player["sac"].points.gte(150) }
         },
         60: {
             requirementDescription: "Sacrifice 160",
-            effectDescription: "^1.016 PF, Keep Mega Buyables on Sac",
+            effectDescription: "^1.016 PF",
             unlocked() {return player["sac"].points.gte(150)},
             done() { return player["sac"].points.gte(160) }
         },
@@ -533,7 +538,7 @@ addLayer("sac", {
         },
         63: {
             requirementDescription: "Sacrifice 200!!",
-            effectDescription: "^1.02 PF, xe500M PF, x13.5 SP, Unlock Supreme Milestone 7",
+            effectDescription: "^1.02 PF, xe500e6 PF, x13.5 SP, Unlock Supreme Milestone 7, Keep Mega Buyables on Sac",
             unlocked() {return player["sac"].points.gte(195)},
             done() { return player["sac"].points.gte(200) }
         },
@@ -545,51 +550,51 @@ addLayer("sac", {
         },
         65: {
             requirementDescription: "Sacrifice 240",
-            effectDescription: "xe650M PF, Keep Basic Upgrades on Reset, Unlock EM21",
+            effectDescription: "xe650e6 PF, Keep Basic Upgrades on Reset, Unlock EM21",
             unlocked() {return player["sac"].points.gte(225)},
             done() { return player["sac"].points.gte(240) }
         },
         66: {
             requirementDescription: "Sacrifice 250",
-            effectDescription: "xe1B PF... [NEW STAGE UNLOCKED]",
+            effectDescription: "xe1e9 PF... [NEW STAGE UNLOCKED]",
             unlocked() {return player["sac"].points.gte(240)},
             done() { return player["sac"].points.gte(250) }
         },
         67: {
             requirementDescription: "Sacrifice 280",
-            effectDescription: "xe1B PF...",
+            effectDescription: "xe1e9 PF...",
             unlocked() {return player["sac"].points.gte(260)},
             done() { return player["sac"].points.gte(280) }
         },
         68: {
             requirementDescription: "Sacrifice 335",
-            effectDescription: "xe2.023B PF... and unlock a basic milestone",
+            effectDescription: "xe2.023e9 PF... and unlock a basic milestone",
             unlocked() {return player["sac"].points.gte(300)},
             done() { return player["sac"].points.gte(335) }
         },
         69: {
             requirementDescription: "Sacrifice 360 [1 full round]",
-            effectDescription: "xe360M PP, Energy Row 10 Upgs are automated",
+            effectDescription: "xe360e6 PP, Energy Row 10 Upgs are automated",
             unlocked() {return player["sac"].points.gte(345)},
             done() { return player["sac"].points.gte(360) }
         },
         70: {
             requirementDescription: "Sacrifice 450",
-            effectDescription: "xe2.5B PF",
+            effectDescription: "xe2.5e9 PF",
             unlocked() {return player["sac"].points.gte(400)},
             done() { return player["sac"].points.gte(450) }
         },
         71: {
             requirementDescription: "Sacrifice 515",
-            effectDescription: "Sacrifices reset nothing, ^1.008 PF, unlock a MP Extension.",
+            effectDescription: "^1.008 PF, unlock a MP Extension.",
             unlocked() {return player["sac"].points.gte(475)},
             done() { return player["sac"].points.gte(515) }
         },
         72: {
-            requirementDescription: "Sacrifice 680",
+            requirementDescription: "Sacrifice 682",
             effectDescription: "Autobuy Mega Buyable 4, ^1.004 PF",
             unlocked() {return player["sac"].points.gte(600)},
-            done() { return player["sac"].points.gte(680) }
+            done() { return player["sac"].points.gte(682) }
         },
         73: {
             requirementDescription: "Sacrifice 761",
@@ -599,13 +604,13 @@ addLayer("sac", {
         },
         74: {
             requirementDescription: "Sacrifice 835",
-            effectDescription: "xe40,000,000,000 Point Fragments",
+            effectDescription: "xe40000000000 Point Fragments",
             unlocked() {return player["sac"].points.gte(800)},
             done() { return player["sac"].points.gte(835) }
         },
         75: {
             requirementDescription: "Sacrifice 945",
-            effectDescription: "xe234B PF",
+            effectDescription: "xe234e9 PF",
             unlocked() {return player["sac"].points.gte(900)},
             done() { return player["sac"].points.gte(945) }
         },
@@ -617,7 +622,7 @@ addLayer("sac", {
         },
         77: {
             requirementDescription: "Sacrifice 1200",
-            effectDescription: "+^0.01 to SB5 cap",
+            effectDescription: "Unlock Auto-Sacrifice, +^0.01 to SB5 cap",
             unlocked() {return player["sac"].points.gte(1111)},
             done() { return player["sac"].points.gte(1200) }
         },
@@ -640,37 +645,37 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(1594) }
         },
         81: {
-            requirementDescription: "Sacrifice 1,800",
-            effectDescription: "xe1T PF",
+            requirementDescription: "Sacrifice 1800",
+            effectDescription: "xe1e12 PF",
             unlocked() {return player["sac"].points.gte(1700)},
             done() { return player["sac"].points.gte(1800) }
         },
         82: {
-            requirementDescription: "Sacrifice 2,000",
+            requirementDescription: "Sacrifice 2000",
             effectDescription: "Sac scaling is slightly weaker",
             unlocked() {return player["sac"].points.gte(1900)},
             done() { return player["sac"].points.gte(2000) }
         },
         83: {
-            requirementDescription: "Sacrifice 2,250",
+            requirementDescription: "Sacrifice 2250",
             effectDescription: "Sac scaling is slightly weaker",
             unlocked() {return player["sac"].points.gte(2125)},
             done() { return player["sac"].points.gte(2250) }
         },
         84: {
-            requirementDescription: "Sacrifice 2,500",
+            requirementDescription: "Sacrifice 2500",
             effectDescription: "+^0.002 SB5 HC, x25 Era Crystals",
             unlocked() {return player["sac"].points.gte(2400)},
             done() { return player["sac"].points.gte(2500) }
         },
         85: {
-            requirementDescription: "Sacrifice 3,000",
+            requirementDescription: "Sacrifice 3000",
             effectDescription: "+^0.007 SB5 HC, x30 Era Crystals",
             unlocked() {return player["sac"].points.gte(2997)},
             done() { return player["sac"].points.gte(3000) }
         },
         86: {
-            requirementDescription: "Sacrifice 3,250",
+            requirementDescription: "Sacrifice 3250",
             effectDescription:  function(){
 				return "PF is raised by your sacrifices. Currently: ^"+(tmp.sac.sacms86eff)+". Formula: 1 + (log2.5(Best Sac / 2500) / 400)";
 			},
@@ -678,44 +683,44 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(3250) },
         },
         87: {
-            requirementDescription: "Sacrifice 4,000",
-            effectDescription: "UNLOCK DS6, ^1.014 PF!, xe4T PF",
+            requirementDescription: "Sacrifice 4000",
+            effectDescription: "UNLOCK DS6, ^1.014 PF!, xe4e12 PF",
             unlocked() {return player["sac"].points.gte(3600)},
             done() { return player["sac"].points.gte(4000) }
         },
         88: {
-            requirementDescription: "Sacrifice 4,500",
-            effectDescription: "xe20T PF",
+            requirementDescription: "Sacrifice 4500",
+            effectDescription: "xe20e12 PF",
             unlocked() {return player["sac"].points.gte(4444)},
             done() { return player["sac"].points.gte(4500) }
         },
         89: {
-            requirementDescription: "Sacrifice 5,000",
-            effectDescription: "Autobuy Era Buyable 1, it also costs no EC.",
+            requirementDescription: "Sacrifice 5000",
+            effectDescription: "Era Buyable 1 costs no EC.",
             unlocked() {return player["sac"].points.gte(4700)},
             done() { return player["sac"].points.gte(5000) }
         },
         90: {
-            requirementDescription: "Sacrifice 6,000",
+            requirementDescription: "Sacrifice 6000",
             effectDescription: "^1.006 PF",
             unlocked() {return player["sac"].points.gte(5200)},
             done() { return player["sac"].points.gte(6000) }
         },
         91: {
-            requirementDescription: "Sacrifice 9,000",
-            effectDescription: "xe90T PF. Era Buyable 2 costs no EC.",
+            requirementDescription: "Sacrifice 9000",
+            effectDescription: "xe90e12 PF. Era Buyable 2 costs no EC.",
             unlocked() {return player["sac"].points.gte(8000)},
             done() { return player["sac"].points.gte(9000) }
         },
         92: {
             requirementDescription: "Sacrifice 10K",
-            effectDescription: "xe100T PF, ^1.01 PF, x100 EC, Autobuy Era Buyable 2",
+            effectDescription: "xe100e12 PF, ^1.01 PF, x100 EC.",
             unlocked() {return player["sac"].points.gte(9000)},
             done() { return player["sac"].points.gte(10000) }
         },
         93: {
             requirementDescription: "Sacrifice 15K",
-            effectDescription: "x15 EC, SB5 HC +^0.05, xe10 Mastery Points",
+            effectDescription: "x15 EC, SB5 HC +^0.05, xe10 Mastery Points. Also autobuy Era Buyable 1.",
             unlocked() {return player["sac"].points.gte(12500)},
             done() { return player["sac"].points.gte(15000) }
         },
@@ -739,7 +744,7 @@ addLayer("sac", {
         },
         97: {
             requirementDescription: "Sacrifice 28K",
-            effectDescription: "x280 EC, xe2e15 PF",
+            effectDescription: "x280 EC, xe2e15 PF. Autobuy Era Buyable 2.",
             unlocked() {return player["sac"].points.gte(26500)},
             done() { return player["sac"].points.gte(28000) }
         },
@@ -762,7 +767,7 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(50000) }
         },
         101: {
-            requirementDescription: "Sacrifice 66,666",
+            requirementDescription: "Sacrifice 66666",
             effectDescription: "Feeling Devilish, huh? xe1.66e16 PF.",
             unlocked() {return player["sac"].points.gte(60000)},
             done() { return player["sac"].points.gte(66666) }
@@ -774,146 +779,146 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(80000) }
         },
         103: {
-            requirementDescription: "Sacrifice 120,000",
+            requirementDescription: "Sacrifice 120000",
             effectDescription: "x12 EC, Reduce Sac Scaling",
             unlocked() {return player["sac"].points.gte(100000)},
             done() { return player["sac"].points.gte(120000) }
         },
         104: {
-            requirementDescription: "Sacrifice 175,000",
+            requirementDescription: "Sacrifice 175000",
             effectDescription: "+^0.01 SB5 HC",
             unlocked() {return player["sac"].points.gte(140000)},
             done() { return player["sac"].points.gte(175000) }
         },
         105: {
-            requirementDescription: "Sacrifice 250,000",
+            requirementDescription: "Sacrifice 250000",
             effectDescription: "Autobuy Era Buyable 3, it also costs nothing.",
             unlocked() {return player["sac"].points.gte(200000)},
             done() { return player["sac"].points.gte(250000) }
         },
         106: {
-            requirementDescription: "Sacrifice 333,333",
-            effectDescription: "xe3.33e18 Basic Points",
+            requirementDescription: "Sacrifice 333333",
+            effectDescription: "Multiply Basic Point gain by xe3.33e18.",
             unlocked() {return player["sac"].points.gte(275000)},
             done() { return player["sac"].points.gte(333333) }
         },
         107: {
-            requirementDescription: "Sacrifice 400,000",
+            requirementDescription: "Sacrifice 400000",
             effectDescription: "x4 EC",
             unlocked() {return player["sac"].points.gte(377777)},
             done() { return player["sac"].points.gte(400000) }
         },
         108: {
-            requirementDescription: "Sacrifice 500,000",
+            requirementDescription: "Sacrifice 500000",
             effectDescription: "x10 EC",
             unlocked() {return player["sac"].points.gte(444444)},
             done() { return player["sac"].points.gte(500000) }
         },
         109: {
-            requirementDescription: "Sacrifice 640,000",
+            requirementDescription: "Sacrifice 640000",
             effectDescription: "+^0.0064 to SB5 HC",
             unlocked() {return player["sac"].points.gte(555555)},
             done() { return player["sac"].points.gte(640000) }
         },
         110: {
-            requirementDescription: "Sacrifice 689,000",
+            requirementDescription: "Sacrifice 695000",
             effectDescription: "Unlock a NEW LAYER! Era Buyable 4 costs nothing.",
             unlocked() {return player["sac"].points.gte(670000)},
-            done() { return player["sac"].points.gte(689000) }
+            done() { return player["sac"].points.gte(695000) }
         },
         111: {
-            requirementDescription: "Sacrifice 750,000",
+            requirementDescription: "Sacrifice 750000",
             effectDescription: "Automate Era Buyable 4, xe2.5e18 PF",
             unlocked() {return player["sac"].points.gte(720000)},
             done() { return player["sac"].points.gte(750000) }
         },
         112: {
-            requirementDescription: "Sacrifice 850,000",
+            requirementDescription: "Sacrifice 850000",
             effectDescription: "/1.5 Cell Replication Rate, x3 cells, x9 EC",
             unlocked() {return player["sac"].points.gte(800000)},
             done() { return player["sac"].points.gte(850000) }
         },
         113: {
-            requirementDescription: "Sacrifice 1,000,000",
+            requirementDescription: "Sacrifice 1000000",
             effectDescription: "x10 delayed cell softcap start, xee19 PF, x100 EC",
             unlocked() {return player["sac"].points.gte(900000)},
             done() { return player["sac"].points.gte(1000000) }
         },
         114: {
-            requirementDescription: "Sacrifice 1,250,000",
+            requirementDescription: "Sacrifice 1250000",
             effectDescription: "x12.5 EC, xe5e13 Water",
             unlocked() {return player["sac"].points.gte(1100000)},
             done() { return player["sac"].points.gte(1250000) }
         },
         115: {
-            requirementDescription: "Sacrifice 1,500,000",
+            requirementDescription: "Sacrifice 1500000",
             effectDescription: "SB5 HC is increased by a tiny bit.",
             unlocked() {return player["sac"].points.gte(1300000)},
             done() { return player["sac"].points.gte(1500000) }
         },
         116: {
-            requirementDescription: "Sacrifice 1,600,000",
+            requirementDescription: "Sacrifice 1600000",
             effectDescription: "SB6's effect is increased by a tiny bit.",
             unlocked() {return player["sac"].points.gte(1500000)},
             done() { return player["sac"].points.gte(1600000) }
         },
         117: {
-            requirementDescription: "Sacrifice 1,700,000",
+            requirementDescription: "Sacrifice 1700000",
             effectDescription: "+^0.017 MP",
             unlocked() {return player["sac"].points.gte(1600000)},
             done() { return player["sac"].points.gte(1700000) }
         },
         118: {
-            requirementDescription: "Sacrifice 1,900,000",
+            requirementDescription: "Sacrifice 1900000",
             effectDescription: "x1.19 EF after nerf",
             unlocked() {return player["sac"].points.gte(1750000)},
             done() { return player["sac"].points.gte(1900000) }
         },
         119: {
-            requirementDescription: "Sacrifice 2,000,000",
+            requirementDescription: "Sacrifice 2000000",
             effectDescription: "Unlock a new Era Fragment Milestone. Every single Sacrifice Milestone increases Everything Power by 0.0001",
             unlocked() {return player["sac"].points.gte(1965000)},
             done() { return player["sac"].points.gte(2000000) }
         },
         120: {
-            requirementDescription: "Sacrifice 2,390,000",
+            requirementDescription: "Sacrifice 2390000",
             effectDescription: "'Basic Boost 3' is stronger.",
             unlocked() {return player["sac"].points.gte(2.2e6)},
             done() { return player["sac"].points.gte(2.39e6) }
         },
         121: {
-            requirementDescription: "Sacrifice 2,558,558",
+            requirementDescription: "Sacrifice 2557557",
             effectDescription: "Unlock DS7. xe1.2558e20 PF.",
             unlocked() {return player["sac"].points.gte(2.5e6)},
-            done() { return player["sac"].points.gte(2558558) }
+            done() { return player["sac"].points.gte(2557557) }
         },
         122: {
-            requirementDescription: "Sacrifice 2,896,000",
+            requirementDescription: "Sacrifice 2896000",
             effectDescription: "+0.002896 to SB5 HC",
             unlocked() {return player["sac"].points.gte(2.7e6)},
             done() { return player["sac"].points.gte(2896000) }
         },
         123: {
-            requirementDescription: "Sacrifice 3,134,234",
+            requirementDescription: "Sacrifice 3134234",
             effectDescription: "x3134234 EC, Cell Softcap Delay",
             unlocked() {return player["sac"].points.gte(3e6)},
             done() { return player["sac"].points.gte(3134234) }
         },
         124: {
-            requirementDescription: "Sacrifice 3,849,800",
-            effectDescription: "Well, it's been over 700,000 Sacrifices without a Sacrifice Milestone. xee20 PF, -0.00775 Sacrifice Scaling, -0.060177 Era Scaling.",
-            unlocked() {return player["sac"].points.gte(3e6)},
+            requirementDescription: "Sacrifice 3849800",
+            effectDescription: "Well, it's been over 700000 Sacrifices without a Sacrifice Milestone. xee20 PF, -0.00775 Sacrifice Scaling, -0.060177 Era Scaling.",
+            unlocked() {return player["sac"].points.gte(3.5e6)},
             done() { return player["sac"].points.gte(3849800) }
         },
         125: {
-            requirementDescription: "Sacrifice 4,312,213",
+            requirementDescription: "Sacrifice 4312213",
             effectDescription: "Surprising how this is the second time that a MaP boost is placed. xSac^2 MaP. Also, ERA BUYABLE 6 BOOST IS NOT ENOUGH ARGH",
             unlocked() {return player["sac"].points.gte(4e6)},
             done() { return player["sac"].points.gte(4312213) }
         },
         126: {
-            requirementDescription: "Sacrifice 5,677,027",
-            effectDescription: "Increase ALOT timecap to 1,050s, +^0.005677 to SB5 HC.",
+            requirementDescription: "Sacrifice 5677027",
+            effectDescription: "Increase ALOT timecap to 1050s, +^0.005677 to SB5 HC.",
             unlocked() {return player["sac"].points.gte(4.8e6)},
             done() { return player["sac"].points.gte(5677027) }
         },
@@ -928,7 +933,7 @@ addLayer("sac", {
             effectDescription() {
                 let desc = "x3.41 Mega Points" 
                 if (player["sac"].points.gte(5e6)) {
-                    desc = desc + " (RD82: It means 3.41 double factorial -> 6,959,880 Sacrifice). This milestone only makes Era Buyable 6 and 7 cost nothing, screw the multiplier"
+                    desc = desc + " (RD82: It means 3.41 double factorial -> 6959880 Sacrifice). This milestone only makes Era Buyable 6 and 7 cost nothing, screw the multiplier"
                 } else if (player["sac"].points.gte(1000)) {
                     desc = desc + " (I swear this milestone is not achieveable...) - yes it is ~RD82"
                 } else if (player["sac"].points.gte(3.41)) {
@@ -940,19 +945,19 @@ addLayer("sac", {
             done() { return player["sac"].points.gte(6.95988e6) }
         },
         129: {
-            requirementDescription: "Sacrifice 7,565,250",
+            requirementDescription: "Sacrifice 7565250",
             effectDescription: "Prestige Insanitycap nerf is weakened. Furthermore, Sacrifice directly multiplies EC gain and also x1.1 EF gain after nerf.",
             unlocked() {return player["sac"].points.gte(7e6)},
             done() { return player["sac"].points.gte(7565250) }
         },
         130: {
-            requirementDescription: "Sacrifice 8,541,750",
-            effectDescription: "Small boost of x8 Cell Base Mult, but more importantly, power PF based on Cells (Max effect when Cells >= 1e1,000)",
+            requirementDescription: "Sacrifice 8542750",
+            effectDescription: "Small boost of x8 Cell Base Mult, but more importantly, power PF based on Cells (Max effect when Cells >= 1e1000)",
             unlocked() {return (player["sac"].points.gte(8e6) && hasUpgrade("bacteria", 43))},
-            done() { return (player["sac"].points.gte(8541750) && hasUpgrade("bacteria", 43)) }
+            done() { return (player["sac"].points.gte(8542750) && hasUpgrade("bacteria", 43)) }
         },
         150: {
-            requirementDescription: "Sacrifice 50,000,000",
+            requirementDescription: "Sacrifice 50000000",
             effectDescription: "Unlock another layer.",
             unlocked() {return player["era"].points.gte(4)},
             done() { return player["sac"].points.gte(1e100) }
@@ -1059,31 +1064,31 @@ addLayer("sac", {
         11: {
             name: "Sac Challenge 1",
             challengeDescription: "^0.5 Point Fragments",
-            canComplete: function() {return player.points.gte("e516500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
-            goalDescription: "Get e516.5K PF.",
-            rewardDescription: "x10B Energy and xe25K PF",
+            canComplete: function() {return player.points.gte("e517500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
+            goalDescription: "Get e517.5e3 PF.",
+            rewardDescription: "x10B Energy and xe25e3 PF",
         },
         12: {
             name: "Sac Challenge 2",
             challengeDescription: "Basic Upgrades 8,10 gives no boost.",
             canComplete: function() {return player.points.gte("e1552500") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
-            goalDescription: "Get e1,552,500 PF.",
-            rewardDescription: "xe75K PF",
+            goalDescription: "Get e1552500 PF.",
+            rewardDescription: "xe75e3 PF",
             unlocked() { return hasChallenge("sac", 11) },
         },
         13: {
             name: "Sac Challenge 3",
             challengeDescription: "^0.1 PF.",
             canComplete: function() {return player.points.gte("e191200") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))},
-            goalDescription: "Get e191,200 PF.",
-            rewardDescription: "xe400K PF",
+            goalDescription: "Get e191200 PF.",
+            rewardDescription: "xe400e3 PF",
             unlocked() { return hasChallenge("sac", 12) },
         },
         14: {
             name: "Sac Challenge 4",
             challengeDescription: "All layers ^0.5.",
-            canComplete: function() {return player.points.gte("e3153153") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))}, 
-            goalDescription: "Get e3,153,153 PF.", 
+            canComplete: function() {return player.points.gte("e3411711") && (!(hasChallenge("m", 12))) && (!(inChallenge("m", 12)))}, 
+            goalDescription: "Get e3411711 PF.", 
             rewardDescription: "^1.015 PF, xe20 Energy",
             unlocked() { return hasChallenge("sac", 13) },
         },
@@ -1249,14 +1254,16 @@ addLayer("sac", {
     baseAmount() {return player.mega.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     resetsNothing: function() {
-        if (hasMilestone('sac', 71)) return true
         if (hasMilestone("era", 1)) return true
+        if (hasUpgrade("mega", 92)) return true
         return false
     },
     exponent() {
         let exp = new Decimal(3.6)
         if (player.sac.points.eq(8)) exp = exp.add(0.014)
+        if (player.sac.points.eq(18)) exp = exp.add(0.021)
         if (player.sac.points.eq(11)) exp = exp.sub(0.0002)
+        if (player.sac.points.eq(46)) exp = exp.sub(0.000056)
         if (inChallenge('m', 12)) {
             exp = new Decimal(7)
             if (hasMilestone('mega', 21)) exp = new Decimal(6.5)
@@ -1268,6 +1275,10 @@ addLayer("sac", {
         }
         if ((hasChallenge('m', 12)) && (!(hasMilestone("era", 2)))) exp = new Decimal(3.5)
         if (hasUpgrade('mega', 92)) exp = new Decimal(3.6)
+        if (inChallenge("m", 11) && (!(hasChallenge("m", 11)))) {
+            if (hasUpgrade("m", 1003)) exp = new Decimal(3.1745)
+            if (hasUpgrade("m", 1005)) exp = new Decimal(3.1341)
+        }
         if (hasAchievement("a", 195)) exp = exp.sub(0.01)
         if (hasUpgrade('prestige', 74)) exp = exp.sub(0.01)
         if (hasUpgrade("era", 113)) exp = exp.sub(0.008)
@@ -1298,6 +1309,7 @@ addLayer("sac", {
         if (hasUpgrade("era", 414)) exp = exp.sub(0.01)
         if (hasMilestone("sac", 124)) exp = exp.sub(0.00775)
         if (player.points.gte("e100e9") && inChallenge("m", 12)) exp = new Decimal(100)
+        if (player.sac.points.eq(681)) exp = exp.sub(0.0000008)
         return exp
     },  // Balance is needed. Balanced to SAC 3. Have to balance to sac 4 // Prestige currency exponent
     gainMult() { // Prestige multiplier
@@ -1309,7 +1321,8 @@ addLayer("sac", {
         return exp
     },
     autoPrestige() {
-        if (hasMilestone("era", 1)) return true
+        if (hasMilestone("era", 2)) return true
+        if (hasMilestone("sac", 77)) return true
         else return false
     },
     row: 5, // Row the layer is in on the tree (0 is the first row)
@@ -1321,6 +1334,11 @@ addLayer("sac", {
         player.sac.additionalsacstrength = new Decimal(0)
         if (hasUpgrade("bacteria", 42)) {
             player.sac.additionalsacstrength = player.sac.additionalsacstrength.add(1)
+        }
+        if (inChallenge("m", 11)) {
+            if (hasUpgrade("m", 1015)) {
+                player.sac.additionalsacstrength = player.sac.additionalsacstrength.add(0.88)
+            }
         }
     }
 })

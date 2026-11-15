@@ -257,10 +257,10 @@ addLayer("c", {
             done() { return player.c.points.gte(new Decimal(6e16)) },
         },
         3: {
-            requirementDescription: "Cell Milestone 3 (5e25 Cells: Tier 1.25)",
+            requirementDescription: "Cell Milestone 3 (1e26 Cells: Tier 1.25)",
             effectDescription: "Reduce cell softcap",
             unlocked() { return hasMilestone("c", 2)},
-            done() { return player.c.points.gte(new Decimal(5e25)) },
+            done() { return player.c.points.gte(new Decimal(1e26)) },
         },
         4: {
             requirementDescription: "Cell Milestone 4 (3.2e32 Cells: Tier 1.33)",
@@ -275,10 +275,10 @@ addLayer("c", {
             done() { return player.c.points.gte(new Decimal(1e42)) },
         },
         6: {
-            requirementDescription: "Cell Milestone 6 (1.5e70 Cells: Tier 1.7)",
+            requirementDescription: "Cell Milestone 6 (7e69 Cells: Tier 1.7)",
             effectDescription: "Cell softcap starts (Cells^0.05)x later",
             unlocked() { return hasMilestone("c", 5)},
-            done() { return player.c.points.gte(new Decimal(1.5e70)) },
+            done() { return player.c.points.gte(new Decimal(7e69)) },
         },
         7: {
             requirementDescription: "Cell Milestone 7 (1e135 Cells: Tier 2!)",
@@ -287,22 +287,22 @@ addLayer("c", {
             done() { return player.c.points.gte(new Decimal(1e135)) },
         },
         8: {
-            requirementDescription: "Cell Milestone 8 (1.73e237 Cells: Tier 2.3)",
-            effectDescription: "Multiply Era Crystals by 1e50 and Era Fragments by 1.8 after nerf. Points boost Cell Base Mult.",
+            requirementDescription: "Cell Milestone 8 (1e236 Cells: Tier 2.3)",
+            effectDescription: "x1e50 Era Crystals, x1.8 Era Fragments (after nerf). Points boost Cell Base Mult.",
             unlocked() { return hasMilestone("c", 7)},
-            done() { return player.c.points.gte(new Decimal(1.73e237)) },
+            done() { return player.c.points.gte(new Decimal(1e236)) },
         },
         9: {
             requirementDescription: "Cell Milestone 9 (1e330 Cells: Tier 2.5)",
-            effectDescription: "Boost Cell Base Mult by 1.5^(amount of Era Milestones gotten).",
+            effectDescription: "Cell Base Multiplier: x1.5^(Era Milestones earned).",
             unlocked() { return hasMilestone("c", 8)},
             done() { return player.c.points.gte(new Decimal("1e330")) },
         },
         10: {
-            requirementDescription: "Cell Milestone 10 (4.67e467 Cells: Tier 2.7)",
+            requirementDescription: "Cell Milestone 10 (1e467 Cells: Tier 2.7)",
             effectDescription: "Cell Buyable 1 scaling is weaker.",
             unlocked() { return hasMilestone("c", 9)},
-            done() { return player.c.points.gte(new Decimal("4.67e467")) },
+            done() { return player.c.points.gte(new Decimal("1e467")) },
         },
         1001: {
             requirementDescription: "First Cell Boost before the next layer (When you unlock this milestones section)",
@@ -311,22 +311,22 @@ addLayer("c", {
             done() { return hasUpgrade("c", 74) },
         },
         1002: {
-            requirementDescription: "Second Cell Boost before the next layer (2.63e263 Cells)",
+            requirementDescription: "Second Cell Boost before the next layer - 4e261 Cells",
             effectDescription: "Cell Base Multiplier is multiplied based off of Era Crystals",
             unlocked() { return hasMilestone("c", 1001)},
-            done() { return player.c.points.gte(new Decimal(2.63e263)) },
+            done() { return player.c.points.gte(new Decimal(4e261)) },
         },
         1003: {
-            requirementDescription: "Third Cell Boost before the next layer (3e271 Cells)",
+            requirementDescription: "Third Cell Boost before the next layer - 7e271 Cells",
             effectDescription: "Cell Softcap Scaling is weaker.",
             unlocked() { return hasMilestone("c", 1002)},
-            done() { return player.c.points.gte(new Decimal(3e271)) },
+            done() { return player.c.points.gte(new Decimal(7e271)) },
         },
         1004: {
-            requirementDescription: "Fourth Cell Boost before the next layer (31 Cell Buyable 2 bought)",
+            requirementDescription: "Fourth Cell Boost before the next layer - 2.78e278 Cells",
             effectDescription: "Cell Buyable 2 is much stronger, and reduce the price of Cell Buyable 3 by e10 Cells.",
             unlocked() { return hasMilestone("c", 1003)},
-            done() { return getBuyableAmount("c", "12").gte(31) },
+            done() { return player.c.points.gte(new Decimal(2.78e278)) },
         },
         1005: {
             requirementDescription: "Final Cell Boost before the next layer (50 Cell Buyable 3 bought)",
@@ -339,19 +339,19 @@ addLayer("c", {
         11: {
             title: "Cytoplasm",
             description: "Increase base multiplier by 1.5.",
-            cost: new Decimal(1600),
+            cost: new Decimal(1400),
             unlocked() { return true },
         },
         12: {
             title: "Plasma Membrane",
             description: "Decrease softcap scaling",
-            cost: new Decimal(3000),
+            cost: new Decimal(2600),
             unlocked() { return (hasUpgrade("c", 11)) },
         },
         13: {
             title: "Ribosome",
             description: "SPEEEED: /1.25 replicate speed",
-            cost: new Decimal(7000),
+            cost: new Decimal(6000),
             unlocked() { return (hasUpgrade("c", 12)) },
         },
         14: {
@@ -369,91 +369,91 @@ addLayer("c", {
         22: {
             title: "Centrosome",
             description: "Sonic Cell: /1.3 replicate speed",
-            cost: new Decimal(12500000),
+            cost: new Decimal(1e9),
             unlocked() { return (hasUpgrade("c", 21)) },
         },
         23: {
             title: "Golgi Apparatus",
             description: "Cell Buyable 2's effect is stronger and scaling is weaker",
-            cost: new Decimal(30000000),
+            cost: new Decimal(15e9),
             unlocked() { return (hasUpgrade("c", 22)) },
         },
         24: {
             title: "Nucleus",
             description: "Less softcap scaling, less replicate speed, more base multiplier",
-            cost: new Decimal(100000000),
+            cost: new Decimal(200e9),
             unlocked() { return (hasUpgrade("c", 23)) },
         },
         31: {
             title: "Vacuole",
             description: "Softcap starts x5 later",
-            cost: new Decimal(700000000),
+            cost: new Decimal(1e13),
             unlocked() { return (hasUpgrade("c", 24)) },
         },
         32: {
             title: "Spindle Fiber",
             description: "/1.1 cell replication speed, Cell buyable 1's effect is stronger",
-            cost: new Decimal(5e9),
+            cost: new Decimal(1e14),
             unlocked() { return (hasUpgrade("c", 31)) },
         },
         33: {
             title: "ATP Synthesis",
             description: "x1.3 Cell Base Multiplier",
-            cost: new Decimal(1.5e11),
+            cost: new Decimal(6e14),
             unlocked() { return (hasUpgrade("c", 32)) },
         },
         34: {
             title: "Metabolic Cascade",
             description: "Less softcap scaling, less replicate speed, more base multiplier, delayed softcap start",
-            cost: new Decimal(1e13),
+            cost: new Decimal(7.5e15),
             unlocked() { return (hasUpgrade("c", 33)) },
         },
         41: {
             title: "Metabolic SURGE",
             description: "x2 Cell Base Multiplier",
-            cost: new Decimal(4.1e14),
+            cost: new Decimal(1e18),
             unlocked() { return (hasUpgrade("c", 34)) },
         },
         42: {
             title: "Improved Vacuole",
             description: "Softcap starts x5 later again",
-            cost: new Decimal(2e18),
+            cost: new Decimal(1e21),
             unlocked() { return (hasUpgrade("c", 41)) },
         },
         43: {
             title: "Overclocked Nucleus",
             description: "x1.5 Cell Base Multiplier, Softcap starts x2.5 later",
-            cost: new Decimal(4e21),
+            cost: new Decimal(8e22),
             unlocked() { return (hasUpgrade("c", 42)) },
         },
         44: {
             title: "Budgeted Expression",
             description: "Reduce the scaling of Cell Buyables 2,3 and Era Buyable 3",
-            cost: new Decimal(3e23),
+            cost: new Decimal(3e24),
             unlocked() { return (hasUpgrade("c", 43)) },
         },
         51: {
             title: "Expression Amplifier",
             description: "Increase the effect of Cell Buyable 3",
-            cost: new Decimal(1e27),
+            cost: new Decimal(2e27),
             unlocked() { return (hasUpgrade("c", 44)) },
         },
         52: {
             title: "Cellular Mastery",
             description: "x2 Cell Base Multiplier",
-            cost: new Decimal(5e28),
+            cost: new Decimal(1e29),
             unlocked() { return (hasUpgrade("c", 51)) },
         },
         53: {
             title: "Expression Amplifier 2",
             description: "Increase the effect of Cell Buyable 2 and Mega Buyable 2",
-            cost: new Decimal(3.03e30),
+            cost: new Decimal(5e30),
             unlocked() { return (hasUpgrade("c", 52)) },
         },
         54: {
             title: "Metabolic Hyper-Surge",
             description: "Cells boost Era Crystals, Reduced Sacrifice Scaling, very slightly reduce Era Buyable 6 scaling and increase its effect",
-            cost: new Decimal(3.33e33),
+            cost: new Decimal(5e34),
             effect() {
                 if (hasMilestone("c", 7)) return player.c.points.pow(0.05)
                 if (hasUpgrade("w", 93)) {
@@ -511,7 +511,7 @@ addLayer("c", {
         63: {
             title: "Cellular Procrastination",
             description: "For every cell upgrade bought, x1.5 Cell Softcap delay (x2.25 nett due to ^2 boost).",
-            cost: new Decimal(1.5e79),
+            cost: new Decimal(2.5e78),
             effect() {
                 csdb = new Decimal(1.5)
                 if (hasUpgrade("era", 313)) csdb = new Decimal(2)
@@ -529,7 +529,7 @@ addLayer("c", {
         64: {
             title: "Cellular Finality",
             description: "For every cell upgrade bought, +0.0002 EP.",
-            cost: new Decimal(1e100),
+            cost: new Decimal(2e99),
             effect() {
                 xtranett = 0
                 if (hasUpgrade("era", 313)) xtranett = 1
@@ -553,13 +553,13 @@ addLayer("c", {
         72: {
             title: "New repeated stuff!",
             description: "Unlock the tenth Era Buyable and the fourth Cell Buyable.",
-            cost: new Decimal(1e221),
+            cost: new Decimal(8e221),
             unlocked() { return (hasUpgrade("c", 71)) },
         },
         73: {
             title: "Cellular Fragmentation",
             description: "Boosts Era Fragments by Cells (before nerf). At 100,000,000 EF, x2 EF gain (after nerf). This also applies to at 250,000,000 EF.",
-            cost: new Decimal(5e233),
+            cost: new Decimal(3e232),
             effect() {
                 return new Decimal(Math.max(player.c.points.add(1).slog(),1)).pow(1.7)
             },
@@ -575,14 +575,14 @@ addLayer("c", {
         74: {
             title: "New layer?",
             description: "Unlock a temporary Pre-nextLayer milestones tab, which provides a slew of new boosts to unlock the next layer. Also reveals the next layer.",
-            cost: new Decimal(4e242),
+            cost: new Decimal(5e240),
             unlocked() { return (hasUpgrade("c", 73)) },
         },
         // Extension
         15: {
             title: "Descale",
             description: "Cell softcap scaling is weaker.",
-            cost: new Decimal("2e421"),
+            cost: new Decimal("1e432"),
             unlocked() { return ((hasUpgrade("c", 14)&&hasUpgrade("bacteria",43))) },
         },
         25: {

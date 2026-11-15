@@ -6,6 +6,22 @@ addLayer("basic", {
         unlocked: true,
 		points: new Decimal(0),
     }},
+    pointFragmentEffectSoftcapInfo() {
+        let exponent = 0.35
+        if (hasUpgrade("basic", 62)) exponent = 0.3575
+        if (hasMilestone("rebirth", 13) || hasUpgrade("era", 103)) exponent = 0.365
+        if (inChallenge("m", 11)) exponent = 0
+        return {
+            formula: `(Basic Points + 1)^${exponent}`,
+            exponent,
+            target: "Point Fragments",
+            stages: [
+                { label: "Softcap", start: "1e50000000", power: 0.5 },
+                { label: "Supercap", start: "e1.25e12", power: 0.4 },
+                { label: "Hypercap", start: "e2.5e20", power: 0.3 },
+            ],
+        }
+    },
     doReset(basic) {
         // Stage 1, almost always needed, makes resetting this layer not delete your progress
         if (layers[basic].row <= this.row) return;
@@ -57,7 +73,6 @@ addLayer("basic", {
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
         if (hasMilestone("sac", 41)) keep.push("milestones");
-        if (hasMilestone("rebirth", 9)) keep.push("milestones");
         if (hasMilestone("era", 3)) keep.push("upgrades");
         if (hasMilestone("era", 3)) keep.push("milestones");
     
@@ -79,10 +94,8 @@ addLayer("basic", {
             description: "Basic points boost point fragments.",
             cost: new Decimal(3),
             main() {
-                expu2 = 0.35
-                if (hasUpgrade("basic", 62)) expu2 = 0.3575
-                if (hasMilestone("rebirth", 13)) expu2 = 0.365
-                if (hasUpgrade("era", 103)) expu2 = 0.365
+                const info = layers.basic.pointFragmentEffectSoftcapInfo()
+                expu2 = info.exponent
                 softcapDescription12 = ""
                 sdsc = ""
                 scpow = 0.5
@@ -91,7 +104,7 @@ addLayer("basic", {
                 upgEffect12 = upgradeEffect(this.layer, this.id)
                 if (upgEffect12.gte(new Decimal("e50000000")) ) {
                     softcapDescription12 = " (Softcapped)"
-                    sdsc = ". Softcaps ^" + scpow + " at e50M"
+                    sdsc = ". Softcaps ^" + scpow + " at e50e6"
                 }
                 if (upgEffect12.gte(new Decimal("e1.25e12")) ) {
                     softcapDescription12 = " (Supercapped)"
@@ -103,11 +116,9 @@ addLayer("basic", {
                 }
             },
             effect() {
-                let eff = player[this.layer].points.add(1).pow(expu2)
-                eff = softcap(eff, new Decimal("1e50000000"), scpow)
-                eff = softcap(eff, new Decimal("e1.25e12"), sppow)
-                eff = softcap(eff, new Decimal("e2.5e20"), hcpow)
-                return eff
+                const info = layers.basic.pointFragmentEffectSoftcapInfo()
+                const eff = player[this.layer].points.add(1).pow(info.exponent)
+                return applyEffectSoftcaps(eff, info.stages)
             },
             tooltip() {
                 return "Formula: Basic Points^"  + expu2 + sdsc
@@ -125,6 +136,7 @@ addLayer("basic", {
             main() {
                 expu3 = 0.16
                 if (hasMilestone("rebirth", 13)) expu3 = 0.161616
+                if (inChallenge('m', 11)) expu3 = 0
                 softcapDescription13 = ""
                 sdsc = ""
                 scpow = 0.5
@@ -132,7 +144,7 @@ addLayer("basic", {
                 upgEffect13 = upgradeEffect(this.layer, this.id)
                 if (upgEffect13.gte(new Decimal("e5e6")) ) {
                     softcapDescription13 = " (Softcapped)"
-                    sdsc = ". Softcaps ^" + scpow + " at e5M"
+                    sdsc = ". Softcaps ^" + scpow + " at e5e6"
                 }
                 if (upgEffect13.gte(new Decimal("e25e6")) ) {
                     softcapDescription13 = " (Supercapped)"
@@ -178,7 +190,7 @@ addLayer("basic", {
                 hcpow = 0.3
                 if (upgEffect21.gte(new Decimal("e5e6")) ) {
                     softcapDescription21 = " (Softcapped)"
-                    sdsc = ". Softcaps ^" + scpow + " at e5M"
+                    sdsc = ". Softcaps ^" + scpow + " at e5e6"
                 }
                 if (upgEffect21.gte(new Decimal("e1e12")) ) {
                     softcapDescription21 = " (Supercapped)"
@@ -224,6 +236,7 @@ addLayer("basic", {
                 expu8 = 0.1625
                 if (hasUpgrade("basic", 122)) expu8 = 0.1725
                 if (inChallenge("sac", 12)) expu8 = 0
+                if (inChallenge('m', 11)) expu8 = 0
                 upgEffect24 = upgradeEffect(this.layer, this.id)
                 softcapDescription24 = ""
                 sdsc = ""
@@ -232,11 +245,11 @@ addLayer("basic", {
                 hycpow = 0.5
                 if (upgEffect24.gte(new Decimal("e40e6")) ) {
                     softcapDescription24 = " (Softcapped)"
-                    sdsc = ". Softcaps ^" + scpow + " at e40M"
+                    sdsc = ". Softcaps ^" + scpow + " at e40e6"
                 }
                 if (upgEffect24.gte(new Decimal("e200e6")) ) {
                     softcapDescription24 = " (Supercapped)"
-                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e200M"
+                    sdsc = sdsc + ", Supercaps ^" + sppow + " at e200e6"
                 }
                 if (upgEffect24.gte(new Decimal("e15e12")) ) {
                     softcapDescription24 = " (Hypercapped)"
@@ -274,6 +287,7 @@ addLayer("basic", {
                 if (hasUpgrade('prestige', 32)) expu10 = 0.09
                 if (hasUpgrade("era", 515)) expu10 = 0.1
                 if (inChallenge("sac", 12)) expu10 = 0
+                if (inChallenge('m', 11)) expu10 = 0
                 upgEffect32 = upgradeEffect(this.layer, this.id)
                 softcapDescription32 = ""
                 sdsc = ""
@@ -283,7 +297,7 @@ addLayer("basic", {
                 hcpow = 0.375
                 if (upgEffect32.gte(new Decimal("e100e6")) ) {
                     softcapDescription32 = " (Softcapped)"
-                    sdsc = ". Softcaps ^" + scpow + " at e100M"
+                    sdsc = ". Softcaps ^" + scpow + " at e100e6"
                 }
                 if (upgEffect32.gte(new Decimal("e2.5e9")) ) {
                     softcapDescription32 = " (Supercapped)"
@@ -353,25 +367,25 @@ addLayer("basic", {
         },
         52: {
             title: "Tri-boost III",
-            description: "PF X100, RP X2.5, BP X10",
+            description: "x100 PF, x2.5 RP, x10 BP",
             cost: new Decimal(1e75),
             unlocked() { return hasUpgrade("basic", 51) },
         },
         53: {
             title: "Exponent II",
-            description: "PF X10K, BP +^0.02, RP +^0.005",
+            description: "x10e3 PF, BP +^0.02, RP +^0.005",
             cost: new Decimal(1e85),
             unlocked() { return hasUpgrade("basic", 52) },
         },
         54: {
             title: "MEGA INSANE UPGRADE",
-            description: "PF X1K, PF^1.04, BP X100, BP+^0.02, RP X5, RP+^0.005",
+            description: "x1e3 PF, PF^1.04, x100 BP, BP+^0.02, x5 RP, RP+^0.005",
             cost: new Decimal(2.5e106),
             unlocked() { return hasUpgrade("basic", 53) },
         },
         61: {
             title: "Already a lot",
-            description: "Multiply point fragments by...1e25...",
+            description: "Multiply point fragments by 1e25 ...",
             cost: new Decimal("e3960"),
             unlocked() { return hasMilestone("mega", 3) && hasUpgrade("basic", 54) },
         },
@@ -450,7 +464,7 @@ addLayer("basic", {
         82: {
             title: "Basic Boost 2.",
             description: "Basic Points boosts Prestige Points, by very little",
-            cost: new Decimal("e13842250"),
+            cost: new Decimal("e13842500"),
             main() {
                 bb2exp = 0.0004
                 if (hasUpgrade('basic', 85)) bb2exp = 0.0006
@@ -504,7 +518,7 @@ addLayer("basic", {
         84: {
             title: "Basic Boost 4.",
             description: "Basic Points boosts Energy, by insanely little",
-            cost: new Decimal("e14151000"),
+            cost: new Decimal("e14151151"),
             main() {
                 bb4exp = 0.0000007
                 if (hasUpgrade('basic', 85)) bb4exp = 0.00000088
@@ -538,7 +552,7 @@ addLayer("basic", {
         },
         91: {
             title: "How OP can the 9TH ROW GET??",
-            description: "xe9.99M PF, xe999.99K RP, xe99.99 Energy, x99.99 SP",
+            description: "xe9.99e6 PF, xe9.9999e5 RP, xe99.99 Energy, x99.99 SP",
             cost: new Decimal("e279004000"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 85) },
         },
@@ -556,7 +570,7 @@ addLayer("basic", {
         },
         94: {
             title: "Multiplicative BP",
-            description: "xe10M BP",
+            description: "xe1e7 BP",
             cost: new Decimal("e316648000"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 93) },
         },
@@ -567,37 +581,37 @@ addLayer("basic", {
         15: {
             title: "Row 5 of the basic upgrades / BU:Supreme",
             description: "Woah, a new column! x1e10,000 PF",
-            cost: new Decimal("e2578500"),
+            cost: new Decimal("e2577777"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 74) },
         },
         25: {
             title: "Again",
             description: "x1e10,000 Basic Points",
-            cost: new Decimal("e2700750"),
+            cost: new Decimal("e2700400"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 15) },
         },
         35: {
             title: "Softcap change",
             description: "Rebirth Softcap is much weaker, but Prestige softcap is slightly stronger",
-            cost: new Decimal("e3094500"),
+            cost: new Decimal("e3094244"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 25) },
         },
         45: {
             title: "Sussy Upgrade",
             description: "Sussy Upgrade",
-            cost: new Decimal("e3628500"),
+            cost: new Decimal("e3628000"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 35) },
         },
         55: {
             title: "Many many things",
-            description: "Rebirth Softcap is much weaker, x1e30K PF, Energy effect stronger, but -^0.03 Basic Exponent",
-            cost: new Decimal("e4261500"),
+            description: "Rebirth Softcap is much weaker, x1e30e3 PF, Energy effect stronger, but -^0.03 Basic Exponent",
+            cost: new Decimal("e4260500"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 45) },
         },
         65: {
             title: "Softcap Change II",
             description: "Rebirth Supercap is much weaker, but Prestige softcap is much stronger",
-            cost: new Decimal("e4727500"),
+            cost: new Decimal("e4722500"),
             unlocked() { return hasMilestone("sac", 15) && hasUpgrade("basic", 55) },
         },
         75: {
@@ -614,7 +628,7 @@ addLayer("basic", {
         },
         95: {
             title: "Biggest PF BOOST!!",
-            description: "xe18.2M PF",
+            description: "xe1.82e7 PF",
             cost: new Decimal("e322159400"),
             unlocked() { return hasMilestone("sac", 38) && hasUpgrade("basic", 94) },
         },
@@ -630,7 +644,7 @@ addLayer("basic", {
         102: {
             title: "5 Types of Upgrades. Type 2: Currency boost Currency",
             description: "Basic Points boost Supreme Points",
-            cost: new Decimal("e39155400e3"),
+            cost: new Decimal("e39155370e3"),
             main() {
                 bb5exp = 0.0000000045
                 upgEffect102 = upgradeEffect(this.layer, this.id)
@@ -658,7 +672,7 @@ addLayer("basic", {
         104: {
             title: "5 Types of Upgrades. Type 4: Stronger Buyable Effect / Buyable Scaling is weaker",
             description: "All Supreme Buyable's effects are stronger.",
-            cost: new Decimal("e53484400e3"),
+            cost: new Decimal("e53484340e3"),
             unlocked() { return hasMilestone("sac", 61) && hasUpgrade("basic", 103) },
         },
         105: {
@@ -670,7 +684,7 @@ addLayer("basic", {
         111: {
             title: "Influx of Water",
             description: "Basic Points boosts Water",
-            cost: new Decimal("e2.1969443645e16"),
+            cost: new Decimal("e2.4342430105e16"),
             main() {
                 bb6exp = 0.00000000045
                 upgEffect111 = upgradeEffect(this.layer, this.id)
@@ -692,36 +706,36 @@ addLayer("basic", {
         112: {
             title: "Quest to remove the hardcap",
             description: "SB5 HC +^0.0055",
-            cost: new Decimal("e2.220597791e16"),
+            cost: new Decimal("e2.46335214e16"),
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 111) },
         },
         113: {
             title: "Mega-Energy ties, WITH A CATCH",
             description: "Energy effect is weaker, but EU24 is MUCH STRONGER",
-            cost: new Decimal("e2.3431523695e16"),
+            cost: new Decimal("e2.6141093775e16"),
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 112) },
         },
         114: {
             title: "Quantum Prestige Surge",
             description: "+^0.09 PP",
-            cost: new Decimal("e2.71634918275e16"),
+            cost: new Decimal("e3.0845045919e16"),
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 113) },
         },
         115: {
             title: "Hyperflux Enhancement!",
-            description: "xe250T PF, x115 EC",
-            cost: new Decimal("e3.351154668e16"),
+            description: "xe2.5e14 PF, x115 EC",
+            cost: new Decimal("e3.925350178e16"),
             unlocked() { return hasUpgrade("era", 231) && hasUpgrade("basic", 114) },
         },
         121: {
             title: "Welp, we've come a long way...",
-            description: "Well, you still enjoying The Point Tree even up to this day? Well, I am too ~Randim, Coded on 15 October 2025, 13:13GMT",
+            description: "Well, you still enjoying The Point Tree even up to this day? Well, I am too ~Randim, Coded on 15 October 2025, 13:13GMT. Increase the max ALOT time to 265s.",
             cost: new Decimal("e69.61e21"),
             unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 115) },
         },
         122: {
             title: "Wait! Before you go...",
-            description: "Woah, that Achievement, and Mastery Up. was insanely powerful... Row 12 upgrades (and the 2 other Mastery ups) is the limiter for Era 4, boost MaU153 timecap and another boost",
+            description: "Woah, that Achievement, and Mastery Up. was insanely powerful... Row 12 upgrades (and the 2 other Mastery ups) is the limiter for Era 4, boost MaU153 timecap and another boost. Increase the max ALOT time to 510s.",
             cost: new Decimal("e72.7935e21"),
             unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 121) },
         },
@@ -733,71 +747,45 @@ addLayer("basic", {
         },
         124: {
             title: "Preparing to enter a new phase.",
-            description: "Every 4 Mega Buyable 5, get 1 effective Era Buyable 3.",
+            description: "Every 4 Mega Buyable 5, get 1 effective Era Buyable 3. Increase the max ALOT time to 967s.",
             cost: new Decimal("e83.4925e21"),
             unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 122) },
         },
         125: {
             title: "Imminent.",
-            description: "You could already imagine getting to Era 4, do you? ^1.01 PF, and Era Buyable 4 is WAY stronger.",
+            description: "You could already imagine getting to Era 4, do you? ^1.01 PF, and Era Buyable 4 is WAY stronger. Increase the max ALOT time to 1,700s.",
             cost: new Decimal("e89.1589e21"),
             unlocked() { return hasUpgrade("m", 153) && hasUpgrade("basic", 122) },
         },
     },
     milestones: {
         1: {
-            requirementDescription: "It's never too late to have milestones. (BM1: e421,662,500 BP)",
+            requirementDescription: "It's never too late to have milestones. (BM1: e421,661,200 BP)",
             effectDescription: "^1.025 PF, +^0.025 BP",
-            done() { return player["basic"].points.gte("e421662500") },
+            done() { return player["basic"].points.gte("e421661200") },
             unlocked() {return player["sac"].points.gte(64) || hasMilestone("basic", 7)},
         },
         2: {
             requirementDescription: "Wait... A new currency? (BM2: e1,886,230,000 PF)",
-            effectDescription: "^1.02 PF, xe20M PF",
+            effectDescription: "^1.02 PF, xe20e6 PF",
             done() { return player.points.gte("e1886230000") },
             unlocked() {return player["sac"].points.gte(64) || hasMilestone("basic", 7)},
         },
         3: {
             requirementDescription: "Godly-Tier PF Mult (BM3: e2,282,415,000 PF)",
-            effectDescription: "xe30M PF",
+            effectDescription: "xe30e6 PF",
             done() { return player.points.gte("e2282415000") },
             unlocked() {return hasMilestone("basic", 2) || hasMilestone("basic", 7)},
         },
-        4: {
-            requirementDescription: "How do I even get this? [Mastery-Challenge-Specific] (Need e9081178 PF)",
-            effectDescription: "^1.05 PF",
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (player.points.gte("e9081178")) {
-                        return true
-                    }
-                }
-            },
-            unlocked() {return inChallenge("m", 11)},
-        },
-        5: {
-            requirementDescription: "More PF power [Mastery-Challenge-Specific] (Need e11.78M PF)",
-            effectDescription: "^1.15 PF, x1K Energy",
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (hasMilestone("sac", 10)) {
-                        if (player.points.gte("e11780000")) {
-                            return true
-                        }
-                    }
-                }
-            },
-            unlocked() {return inChallenge("m", 11) && hasMilestone("basic", 5)},
-        },
         6: {
-            requirementDescription: "That's a lot (Req e50B PF)",
-            effectDescription: "xe250M PF",
+            requirementDescription: "That's a lot (Req e50e9 PF)",
+            effectDescription: "xe250e6 PF",
             done() { return player.points.gte("e50e9") },
             unlocked() {return player["sac"].points.gte(132) || hasMilestone("basic", 7)},
         },
         7: {
             requirementDescription: "MC2S (Basic I) - e7,963,340,000 Basic Points",
-            effectDescription: "xe250M PF, Sacrifice Scaling weaker, Basic Milestone 1-4 is visible.",
+            effectDescription: "xe250e6 PF, Sacrifice Scaling weaker, Basic Milestone 1-4 is visible.",
             done() {
                 if (inChallenge("m", 12)) {
                     if (player["basic"].points.gte("e7963340000")) {
@@ -808,14 +796,14 @@ addLayer("basic", {
             unlocked() {return inChallenge("m", 12)},
         },
         8: {
-            requirementDescription: "That's too much (Req e250B BP)",
-            effectDescription: "xe2B PF",
+            requirementDescription: "That's too much (Req e250e9 BP)",
+            effectDescription: "xe2e9 PF",
             done() { return player["basic"].points.gte("e250e9") },
             unlocked() {return player["sac"].points.gte(335)},
         },
         9: {
             requirementDescription: "Woah, a lot (Req e1e15 BP)",
-            effectDescription: "xe25T PF",
+            effectDescription: "xe25e12 PF",
             done() { return player["basic"].points.gte("e1e15") },
             unlocked() {return hasUpgrade("era", 161)},
         },
@@ -941,7 +929,8 @@ addLayer("basic", {
         if (hasUpgrade("era", 434)) exp = exp.add(0.014)
         if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
         if (hasUpgrade("c", 25)) exp = exp.add(0.01)
-        if (inChallenge('m', 11)) exp = exp.mul(0.2)
+        let expinmc1 = new Decimal(0.3)
+        if (inChallenge("m", 11)) exp = exp.mul(expinmc1)
         if (hasUpgrade("e", 213)) exp = exp.add(0.075)
         return exp
     },
@@ -956,8 +945,9 @@ addLayer("basic", {
             player.a.hyper = player.a.ultra.pow(new Decimal(1).div(new Decimal(9).add(Decimal.max(player.mega.points.add(1).slog().mul(2), 1))))
             player.a.omega = Decimal.max(player.s.points.div(1e20), 0).pow(new Decimal(1).div(new Decimal(3).add(Decimal.max(player.s.points.add(1).slog().mul(2).mul(player.mega.points.add(1).slog()).mul(player.points.add(1).slog()), 1))))
             player.a.ultimate = Decimal.max(player.a.omega.div(1e10), 0).pow(new Decimal(1).div(Decimal.max((player.points.add(1).add(1).slog().mul(5)).pow(player.a.omega.add(1).slog()), 1)))
-            player.a.penultimate = Decimal.max(player.a.ultimate.div(1e100), 0).pow(new Decimal(1).div(Decimal.max(new Decimal(10).pow(player.a.ultimate.add(1).slog().mul(2)), 1)))
+            player.a.penultimate = Decimal.max(player.a.ultimate.div(1e100), 0).pow(new Decimal(1).div(Decimal.max(new Decimal(25).pow(player.a.ultimate.add(1).slog()), 1)))
             player.a.godlike = Decimal.max(player.a.penultimate.div(1e308), 0).pow(new Decimal(1).div(Decimal.max(new Decimal(777).mul(player.a.penultimate.add(1).slog()), 1)))
             player.a.level = player.a.point.add(1).slog().pow(player.a.point.add(1).slog()).pow(player.points.add(1).slog()).pow(player.points.add(1).slog())
+            player.a.heavenly = Decimal.max(player.a.godlike.div(1e10), 0).pow(new Decimal(1).div(new Decimal(222).pow(Decimal.max(player.a.godlike.add(1).slog().sub(2.2).mul(2), 1)).pow(Decimal.max(player.m.points.add(1).slog().sub(2.2).mul(2), 1)).pow(Decimal.max(player.points.add(1).slog().sub(2.2).mul(2), 1)).pow(Decimal.max(player.a.level.add(1).slog().sub(2.2).mul(2), 1))))
     }
 })

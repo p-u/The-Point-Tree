@@ -51,7 +51,7 @@ addLayer("mega", {
         // Stage 3, track which main features you want to keep - milestones
         let keep = [];
         if ((hasMilestone('sac', 3)) || hasMilestone("era", 2)) keep.push("milestones");
-        if ((hasMilestone('sac', 60)) || hasMilestone("era", 2)) keep.push("buyables");
+        if ((hasMilestone('sac', 63)) || hasMilestone("era", 2)) keep.push("buyables");
         if (hasMilestone("era", 3)) keep.push("upgrades");
     
         // Stage 4, do the actual data reset
@@ -192,7 +192,7 @@ addLayer("mega", {
         },
         24: {
             title: "'To' upgrades",
-            description: "x1 Qi Rebirth Points to Point Fragments",
+            description: "x1e15 Point Fragments, Basic Points and Rebirth Points",
             cost: new Decimal(1.2e12),
             unlocked() { return hasUpgrade("mega", 23) },
         },
@@ -208,9 +208,6 @@ addLayer("mega", {
                 if (hasUpgrade('m', 31)) mu9exp = 22.5
                 if (hasUpgrade('m', 62)) mu9exp = 33.75
                 if (hasUpgrade('era', 265)) mu9exp = 44.5
-                if (inChallenge("m", 11)) {
-                    if (hasMilestone('mega', 19)) mu9exp = 5750
-                }
                 softcapDescriptionm31 = ""
                 sdsc = ""
                 scpow = 0.5
@@ -341,37 +338,37 @@ addLayer("mega", {
         },
         54: {
             title: "MASSIVE BOOST",
-            description: "x1e40K PF",
-            cost: new Decimal("1.11e11007"),
+            description: "x1e40e3 PF",
+            cost: new Decimal("1.11e11011"),
             unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 53) },
         },
         61: {
             title: "Mega Rep Upgrade 1",
-            description: "Each Rep Upgrade gives xe4K to PF",
+            description: "Each Rep Upgrade gives xe4e3 to PF",
             cost: new Decimal("1e11985"),
             unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 54) },
         },
         62: {
             title: "Mega Rep Upgrade 2",
-            description: "Each Rep Upgrade gives xe4K to PF",
+            description: "Each Rep Upgrade gives xe4e3 to PF",
             cost: new Decimal("1e12090"),
             unlocked() { return hasMilestone("sac", 19) && hasUpgrade("mega", 61) },
         },
         63: {
             title: "Mega Rep Upgrade 3",
-            description: "Each Rep Upgrade gives xe4K to PF",
+            description: "Each Rep Upgrade gives xe4e3 to PF",
             cost: new Decimal("1e12300"),
             unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 62) },
         },
         64: {
             title: "Mega Rep Upgrade 4",
-            description: "Each Rep Upgrade gives xe4K to PF",
+            description: "Each Rep Upgrade gives xe4e3 to PF",
             cost: new Decimal("1e12400"),
             unlocked() { return hasMilestone("sac", 20) && hasUpgrade("mega", 63) },
         },
         71: {
             title: "HYPER MASSIVE BOOST",
-            description: "x1e180K PF",
+            description: "x1e180e3 PF",
             cost: new Decimal("2.5e32835"),
             unlocked() { return hasUpgrade("mega", 64) },
         },
@@ -384,7 +381,7 @@ addLayer("mega", {
         73: {
             title: "Prestigating",
             description: "Mega Upgrade 71 boosts prestige by ^0.015925 (about there) of the PF boost.",
-            cost: new Decimal("1e33509"),
+            cost: new Decimal("1e34048"),
             unlocked() { return hasMilestone("mega", 15) && hasUpgrade("mega", 72) },
         },
         74: {
@@ -396,19 +393,19 @@ addLayer("mega", {
         81: {
             title: "Oh, extension, huh?",
             description: "Mega softcap is weaker",
-            cost: new Decimal("e134408"),
+            cost: new Decimal("2e134407"),
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 74) },
         },
         82: {
             title: "Buyables are way better",
             description: "All buyables are much better",
-            cost: new Decimal("e136435"),
+            cost: new Decimal("4e136434"),
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 81) },
         },
         83: {
             title: "Some improvement",
             description: "^1.02 PP and MP, MP Softcap weaker",
-            cost: new Decimal("e140393"),
+            cost: new Decimal("2e140392"),
             unlocked() { return hasMilestone("sac", 33) && hasUpgrade("mega", 82) },
         },
         84: {
@@ -449,14 +446,14 @@ addLayer("mega", {
         },
         91: {
             title: "Ayy!! Extension!",
-            description: "+^0.05 MP",
-            cost: new Decimal("e1257288e3"),
+            description: "+^0.05 MP.",
+            cost: new Decimal("e1257287e3"),
             unlocked() { return (hasMilestone("sac", 71) && hasUpgrade("mega", 85)) },
         },
         92: {
             title: "The Ultima-Tradeoff",
-            description: "Sacrifice scaling is WEAKER - Ensure that you have 638 Sacs, but xe4B PF",
-            cost: new Decimal("e1973207e3"),
+            description: "Sacrifice scaling is WEAKER - Ensure that you have 638 Sacs, but xe4e9 PF. Sacrifices also reset NOTHING.",
+            cost: new Decimal("e1973200e3"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 91)  },
         },
         93: {
@@ -476,14 +473,14 @@ addLayer("mega", {
 
         15: {
             title: "DS4 upgrades come with Dimensional boosts.",
-            description: "xe50M PF, xe25M BP, xe10M RP",
+            description: "xe50e6 PF, xe25e6 BP, xe10e6 RP",
             cost: new Decimal("e3568310"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 14) },
         },
         25: {
             title: "Mega Points boosts Prestige Points.",
             description: "more!",
-            cost: new Decimal("e3698678"),
+            cost: new Decimal("e3698688"),
             main() {
                 ds4u2exp = 1
                 softcapDescriptionm25 = ""
@@ -511,7 +508,7 @@ addLayer("mega", {
         45: {
             title: "Softcap? No, I want big number!",
             description: "Softcap 'Compounding V' is way weaker (^0.4 to ^0.68)",
-            cost: new Decimal("e4218400"),
+            cost: new Decimal("e4218388"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 44) && hasUpgrade("mega", 35) },
         },
         55: {
@@ -523,25 +520,25 @@ addLayer("mega", {
         65: {
             title: "Rep Overdrive",
             description: "^5000 Rep Upg Boosts (now up to e20Mx)",
-            cost: new Decimal("e5127520"),
+            cost: new Decimal("e5127517"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 64) && hasUpgrade("mega", 55) },
         },
         75: {
             title: "Hyper Boost",
-            description: "^200 MU71 Boost (now up to e97.2Mx, Pres xe1.548Mx)",
-            cost: new Decimal("e5363530"),
+            description: "Multiply Point Fragments by xe9.6714e7 and Prestige Points by xe1.54026e6",
+            cost: new Decimal("e5363522"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 74) && hasUpgrade("mega", 65) },
         },
         85: {
             title: "A new record!",
-            description: "xe200M PF",
+            description: "xe200e6 PF",
             cost: new Decimal("e5810581"),
             unlocked() { return hasMilestone("sac", 47) && hasUpgrade("mega", 84) && hasUpgrade("mega", 75) },
         },
         95: {
             title: "Astronomical Amount [Tier 10]",
-            description: "xe15B PF",
-            cost: new Decimal("e3196800e3"),
+            description: "xe15e9 PF",
+            cost: new Decimal("e3.5214559e9"),
             unlocked() { return hasMilestone("sac", 71) && hasUpgrade("mega", 94) && hasUpgrade("mega", 85) },
         },
 
@@ -550,32 +547,32 @@ addLayer("mega", {
 
         101: {
             title: "Currency Boost [In order] 01: PF",
-            description: "xe5 Qd PF",
-            cost: new Decimal("e619538393038500"),
+            description: "xe5e15 PF",
+            cost: new Decimal("e619538393036800"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 95)},
         },
         102: {
             title: "Currency Boost [In order] 02: BP, RP",
-            description: "xe20 Qd RP, xe50 Qd BP",
-            cost: new Decimal("e728939884744444"),
+            description: "xe2e16 RP, xe5e16 BP",
+            cost: new Decimal("e728939884741500"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 101) },
         },
         103: {
             title: "Currency Boost [In order] 03: PP, MP",
-            description: "xe500T PP, xe50T MP",
-            cost: new Decimal("e854370842820e3"),
+            description: "xe500e12 PP, xe50e12 MP",
+            cost: new Decimal("e854370842816e3"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 102) },
         },
         104: {
             title: "Currency Boost [In order] 04: Energy, Sacs",
             description: "Sacs have lower scaling, xe100,000,000,000 Energy",
-            cost: new Decimal("e1.132047146993e15"),
+            cost: new Decimal("e1.132047146991e15"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 103) },
         },
         105: {
             title: "Currency Boost [In order] 05: Supreme, Water",
-            description: "xe50B Supreme, xe10B Water",
-            cost: new Decimal("e1.15989956146e15"),
+            description: "xe50e9 Supreme, xe10e9 Water",
+            cost: new Decimal("e1.159899561455e15"),
             unlocked() { return hasAchievement("a", 226) && hasUpgrade("mega", 104) },
         },
     },
@@ -634,7 +631,9 @@ addLayer("mega", {
             done() { return player["mega"].points.gte(1e43) }
         },
         10: {
-            requirementDescription: "4e44 MP",
+            requirementDescription() {
+                return notationChooser(new Decimal(4e44)) + " MP"
+            },
             effectDescription: "Extend Prestige Upgrades.",
             unlocked() { return hasMilestone("mega", 7)},
             done() { return player["mega"].points.gte(4e44) }
@@ -676,41 +675,37 @@ addLayer("mega", {
             done() { return player["mega"].points.gte("1e40000") }
         },
         17: {
-            requirementDescription: "1e200K MP",
+            requirementDescription: "1e200e3 MP",
             effectDescription: "Keep 8th row of mega upgrades!",
             unlocked() {return player["sac"].points.gte(38)},
             done() { return player["mega"].points.gte("1e200000") }
         },
         18: {
             requirementDescription: "e1105.39e3 MP",
-            effectDescription: "+^0.07 MP, ^1.011 PF, xe11.0539M PF",
+            effectDescription: "+^0.07 MP, ^1.011 PF, xe11.0539e6 PF",
             unlocked() {return player["sac"].points.gte(64)},
             done() { return player["mega"].points.gte("e1105390") }
         },
         19: {
-            requirementDescription: "mu31 [MCS Upg] - 9.78e978 MP [Req Sac 10]",
-            effectDescription: "MU31 is insanely strong!",
-            unlocked() {return inChallenge("m", 11)  && hasMilestone("sac", 10)},
+            requirementDescription: "Mastery Challenge 1 Specific - MaP compounds! (1e1409 MP and >0 sacrifices)",
+            effectDescription: "Increase MaP based on Orders of Magnitude of MaP (1.2x per)",
+            unlocked() {return inChallenge("m", 11)},
             done() {
                 if (inChallenge("m", 11)) {
-                    if (hasMilestone("sac", 10)) {
-                        if (player["mega"].points.gte("9.78e978")) {
-                            return true
-                        }
+                    if (player["mega"].points.gte("1e1409") && player.sac.points.gt(0)) {
+                        return true
                     }
                 }
             },
         },
         20: {
-            requirementDescription: "[MCS] e1210 MP [Req Sac 10]",
-            effectDescription: "+^0.3 MP",
-            unlocked() {return inChallenge("m", 11) && hasMilestone("sac", 10) && hasMilestone("mega", 19)},
+            requirementDescription: "Mastery Challenge 1 Specific - what (5e3110 MP)",
+            effectDescription: "OVERLOAD! Multiply MaP by 3,110...what.",
+            unlocked() {return inChallenge("m", 11)},
             done() {
                 if (inChallenge("m", 11)) {
-                    if (hasMilestone("sac", 10)) {
-                            if (player["mega"].points.gte("e1210")) {
-                            return true
-                        }
+                    if (player["mega"].points.gte("5e3110")) {
+                        return true
                     }
                 }
             },
@@ -741,7 +736,7 @@ addLayer("mega", {
         },
         23: {
             requirementDescription: "e10e12 MP",
-            effectDescription: "xe60T PF",
+            effectDescription: "xe60e12 PF",
             unlocked() {return hasUpgrade("era", 161)},
             done() { return player["mega"].points.gte("e10e12") }
         },
@@ -991,9 +986,6 @@ addLayer("mega", {
         if (hasUpgrade('mega', 44)) mult = mult.times(0.0075)
         if (hasUpgrade('e', 13)) mult = mult.times(1e25)
         if (hasUpgrade('e', 24)) mult = mult.times(1e40)
-        if (inChallenge("m", 11)) {
-            if (hasUpgrade('e', 24)) mult = mult.times("1e460")
-        }
         if (hasAchievement('a', 83)) mult = mult.times(1e81)
         if (hasUpgrade('e', 52)) mult = mult.div(1e50)
         if (hasUpgrade('basic', 45)) mult = mult.times(11.85)
@@ -1027,7 +1019,7 @@ addLayer("mega", {
         if (hasUpgrade('era', 471)) mult = mult.times("e3e17")
         if (hasUpgrade('era', 1022)) mult = mult.times("e2.5e17")
         if (hasUpgrade('w', 95)) mult = mult.times("ee19")
-        if (hasUpgrade("era", 296) && player.era.buyables[19].gte(27)) mult = mult.times("ee18")
+        if (hasUpgrade("era", 296) && player.era.buyables[19].gte(28)) mult = mult.times("ee18")
         // secret achievement
         if (hasAchievement('sa', 23)) mult = mult.times(1.2)
         if (hasAchievement('sa', 196)) mult = mult.times(100)
@@ -1051,10 +1043,6 @@ addLayer("mega", {
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         if (hasMilestone('mega', 18)) exp = exp.add(0.07)
         if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
-        if (inChallenge("m", 11)) {
-            if (hasMilestone('rebirth', 10)) exp = exp.add(0.25)
-            if (hasMilestone('mega', 20)) exp = exp.add(0.3)
-        }
         if (hasUpgrade('w', 63)) exp = exp.add(0.05)
         if (hasMilestone('e', 20)) exp = exp.add(0.05)
             if (inChallenge("m", 12)) {
@@ -1081,17 +1069,13 @@ addLayer("mega", {
         if (hasMilestone('sac', 117)) exp = exp.add(0.017)
         if (hasUpgrade("era", 512)) exp = exp.add(0.01)
         if (hasUpgrade('era', 391)) exp = exp.add(upgradeEffect('era', 391))
-        if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade("e", 211)) exp = exp.add(0.04)
         if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
-        if (inChallenge('m', 11)) exp = exp.mul(0.2)
+        let expinmc1 = new Decimal(0.3)
+        if (inChallenge("m", 11)) exp = exp.mul(expinmc1)
         return exp
     },
-    effect(){
-        let effectBoost = 1
-        if (hasUpgrade("basic", 101)) effectBoost = 3
-        if (hasUpgrade("era", 81)) effectBoost = 3.5
-        let eff = player.mega.points.add(1).pow(effectBoost)
+    effectSoftcapInfo() {
         let cap = 0.3
         let sprcap = 0.5
         let hypcap = 0.4
@@ -1099,11 +1083,23 @@ addLayer("mega", {
         if (hasUpgrade('mega', 83)) cap = 0.6125
         if (hasUpgrade('m', 91)) cap = 0.825
         if (hasUpgrade("basic", 121)) cap = 0.9025
-        softcappedEffect = softcap(eff, new Decimal("e30000"), new Decimal(cap))
         if (hasUpgrade('era', 264)) sprcap = 0.565
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e500e9"), new Decimal(sprcap))
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e5e17"), new Decimal(hypcap))
-        return softcappedEffect
+        const effectBoost = hasUpgrade("era", 81) ? 3.5 : hasUpgrade("basic", 101) ? 3 : 1
+        return {
+            formula: `(Mega Points + 1)^${effectBoost}`,
+            exponent: effectBoost,
+            target: "all previous currencies",
+            stages: [
+                { label: "Softcap", start: "e30000", power: cap },
+                { label: "Supercap", start: "e500e9", power: sprcap },
+                { label: "Hypercap", start: "e5e17", power: hypcap },
+            ],
+        }
+    },
+    effect(){
+        const info = this.effectSoftcapInfo()
+        const eff = player.mega.points.add(1).pow(info.exponent)
+        return applyEffectSoftcaps(eff, info.stages)
        },
         effectDescription() {
             let softcapDescription = ""

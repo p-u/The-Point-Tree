@@ -943,7 +943,7 @@ addLayer("rng", {
             player.rng.luck = player.rng.luck.pow(1.2)
         }
         if (hasChallenge("m", 13)) {
-            player.rng.rngptmult = player.rng.rngptmult.mul(2)
+            player.rng.rngptmult = player.rng.rngptmult.mul(3)
         }
         player.rng.rngptmult = player.rng.rngptmult.mul(minigameRNGPointMult)
 

@@ -3,7 +3,7 @@ let modInfo = {
 	id: "ThepointTreeRD82",
 	author: "randim82",
 	pointsName: "Point Fragments",
-	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js", "bacteria.js"],
+	modFiles: ["basic.js", "rebirth.js", "prestige.js", "mega.js", "sacrifice.js", "energy.js", "achievements.js", "infobox.js", "supreme.js", "water.js", "secretAchievement.js", "mastery.js", "tree.js", "era.js", "cells.js", "rng.js", "bacteria.js", "functions.js"],
 
 	discordName: "Point Tree Discord",
 	discordLink: "https://discord.com/invite/RRK9Dwzf6P",
@@ -14,11 +14,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "4.1",
-	name: "New Reset, Skill Tree and more!",
+	num: "4.1R",
+	name: "Rebalancing everything",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+<h2>v4.1R: The major rebalance </h2><br>
+Rebalanced the whole game. Full changelog in the Discord server. <br>
 <h2>v4.1: New Reset, Skill Tree and more! </h2><br>
 Content <br>
 Added a new layer, which is an extension of Cells. Added Skill Points, and 13 [New Layer] Upgrades. It also has the ability to replicate. <br>
@@ -124,7 +126,7 @@ Fixed some more bugs <br>
 
 <h4>v3.5.51: Bug Fixes </h2><br>
 Added 100K event to v3.5.5 changelog <br>
-Fixed a bug with Minigame Part 6 regarding the ^e500K button not showing <br>
+Fixed a bug with Minigame Part 6 regarding the ^e500e3 button not showing <br>
 Added boosts to MA86 and 96 <br>
 Nerfed the 100K event <br>
 
@@ -160,7 +162,7 @@ Changed version number <br>
 <h3>v3.4.X </h3><br>
 Added Minigame Part 5! <br>
 Featuring a new sub-currency, 4 new buttons and 6 new achievements <br>
-Added 15 new minigame number titles to bridge the gap from ee10 to ee150K <br>
+Added 15 new minigame number titles to bridge the gap from ee10 to ee150e3 <br>
 Changed Minigame Number format <br>
 
 <h3>v3.4.5.2 </h3><br>
@@ -849,7 +851,7 @@ function getPointGen() {
 	if (hasUpgrade('prestige', 31)) gain = gain.times(1e20)
 	if (hasUpgrade('prestige', 33)) gain = gain.times(1e300)
 	if (hasUpgrade('prestige', 34)) gain = gain.times("6.66e666")
-	if (hasUpgrade('prestige', 51)) gain = gain.times("e600000")
+	if (hasUpgrade('prestige', 52)) gain = gain.times("e600000")
 	if (hasUpgrade('prestige', 55)) gain = gain.times("e2.8e6")
 	if (hasUpgrade('prestige', 61)) gain = gain.times("e20e6")
 	if (hasUpgrade('prestige', 62)) gain = gain.times("e40e6")
@@ -1181,17 +1183,6 @@ function getPointGen() {
 	let expinmc1 = new Decimal(0.1)
 	if (hasUpgrade("m", 1123)) expinmc1 = new Decimal(0.111)
 	if (hasUpgrade("m", 1133)) expinmc1 = new Decimal(0.12)
-	if (inChallenge('m', 11)) gain = gain.pow(expinmc1)
-	if (inChallenge("m", 11)) {
-		if (hasMilestone("basic", 4)) gain = gain.pow(1.05)
-		if (hasMilestone("sac", 10)) gain = gain.pow(1.05)
-		if (hasMilestone("rebirth", 10)) gain = gain.pow(1.25)
-		if (hasMilestone("basic", 5)) gain = gain.pow(1.15)
-		if (hasMilestone("e", 17)) gain = gain.pow(1.2)
-		if (hasMilestone("prestige", 9)) gain = gain.pow(1.2)
-		if (hasMilestone("e", 18)) gain = gain.pow(1.3)
-		if (hasUpgrade("m", 1112)) gain = gain.pow(1.05)
-	}
 	if (hasChallenge("m", 11)) gain = gain.pow(1.12)
 	if (hasMilestone('sac', 45)) gain = gain.pow(1.0081)
 	if (hasUpgrade('w', 54)) gain = gain.pow(1.011)
@@ -1259,9 +1250,6 @@ function getPointGen() {
 	if (hasMilestone('sac', 102)) gain = gain.pow(1.008)
 	if (hasUpgrade("prestige", 85)) gain = gain.pow(0.99)
 	if (hasUpgrade("s", 125)) gain = gain.pow(1.01)
-	if ((hasUpgrade('m', 1134)) && inChallenge("m", 11)) gain = gain.pow(1.038)
-	if ((hasUpgrade('m', 1135)) && inChallenge("m", 11)) gain = gain.pow(1.11)
-	if (inChallenge("m", 11)) gain = gain.pow(buyableEffect('era', 111))
 	if (challengeCompletions("m", 11) == 2) gain = gain.pow(1.0333)
 	if (hasUpgrade("m", 135)) gain = gain.pow(1.015)
 	if (hasUpgrade("era", 363)) gain = gain.pow(1.008)
@@ -1285,6 +1273,15 @@ function getPointGen() {
 		if (hasUpgrade("e", 203)) gain = gain.pow(1.01)
 	}
 	if (hasChallenge("m", 13)) gain = gain.pow(1.01)
+	if (inChallenge('m', 11)){
+		gain = gain.pow(0.07)
+		let mrankcap = 2
+		if (hasUpgrade("m", 1011)) mrankcap = 3
+        if (hasUpgrade("m", 1022)) mrankcap = 5
+        if (hasUpgrade("m", 1025)) mrankcap = 6
+		if (hasMilestone("sac", 13)) gain = gain.pow(1.5)
+		if (player.m.ranks.rid >= 3) gain = gain.pow(getBuyableAmount("m", 11).mul(0.01).add(0.98).min(mrankcap))
+	}
 	if (player.points.gte("ee25")) gain = gain.pow(new Decimal(100).sub(Decimal.log10(Decimal.log10(player.points.add(1)))).div(75))
 	return gain
 }
@@ -1343,7 +1340,7 @@ var displayThings = [
 			display = display + "If you write 1 number per second, writing down your point amount will need " + formatTime(player.points.add(1).log10()) + "."
 		}
 		if ((player.points.gte("e70e9")) && (player.points.lte("e1e12"))) {
-			display = display + "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years. You will need to start in " + format(Math.floor((player.points.add(1).log10().div(31536000)).sub(2024))) + " BCE to complete it by this year (2024)."
+			display = display + "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years. You will need to start in " + format(Math.floor((player.points.add(1).log10().div(31536000)).sub(2026))) + " BCE to complete it by this year (2026)."
 		}
 		if ((player.points.gte("e1e12")) && (player.points.lte("e434250720000000000"))) {
 			display = display + "If you write 1 number per second, writing down your point amount will need " + notationChooser(player.points.add(1).log10().div(31536000)) + " years."

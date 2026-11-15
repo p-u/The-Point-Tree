@@ -7,18 +7,43 @@ function exponentialFormat(num, precision, mantissa = true) {
        m = decimalOne
        e = e.add(1)
    }
+   let mantissaText = m.toStringWithDecimalPlaces(precision)
+   if (Number(mantissaText) === 1) mantissaText = "1"
+   else mantissaText = mantissaText.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "")
    if (options.notation === 'mixed scientific' || options.notation === 'default') {
-       e = (e.gte(1e9) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+       if (e.gte(1e4)) {
+           let exponentMagnitude = e.log10().floor()
+           let exponentMantissa = e.div(Decimal.pow(10, exponentMagnitude))
+           let exponentMantissaText = exponentMantissa.toStringWithDecimalPlaces(7)
+           exponentMantissaText = exponentMantissaText.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "")
+           const exponentSeparator = options.notation === 'scientific2' ? "x10^" : "e"
+           e = exponentMantissaText + exponentSeparator + exponentMagnitude.toStringWithDecimalPlaces(0)
+       } else {
+           e = e.toStringWithDecimalPlaces(0)
+       }
    } else {
-       e = (e.gte(1e12) ? format(e, 7) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
+       if (e.gte(1e4)) {
+           let exponentMagnitude = e.log10().floor()
+           let exponentMantissa = e.div(Decimal.pow(10, exponentMagnitude))
+           let exponentMantissaText = exponentMantissa.toStringWithDecimalPlaces(7)
+           exponentMantissaText = exponentMantissaText.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "")
+           const exponentSeparator = options.notation === 'scientific2' ? "x10^" : "e"
+           e = exponentMantissaText + exponentSeparator + exponentMagnitude.toStringWithDecimalPlaces(0)
+       } else {
+           e = e.toStringWithDecimalPlaces(0)
+       }
+   }
+   if (options.notation === 'mixed scientific' || options.notation === 'default') {
+       if (mantissa && mantissaText !== "1") return mantissaText + "e" + e
+       return "e" + e
    }
    if (options.notation === 'scientific2'){
-       if (mantissa)
-           return m.toStringWithDecimalPlaces(precision) + "x10^" + e
+       if (mantissa && mantissaText !== "1")
+           return mantissaText + "x10^" + e
        else return "10^" + e
    } else {
-       if (mantissa)
-           return m.toStringWithDecimalPlaces(precision) + "e" +e
+       if (mantissa && mantissaText !== "1")
+           return mantissaText + "e" +e
        else return "e" + e
    }
 }
@@ -33,7 +58,7 @@ function standardFormat(num, precision = 3) {
    const STANDARD_SUFFIXES = [
        "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No",
        "De", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod",
-       "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg", "Novg"
+       "Vg", "UVg", "DVg", "TVg", "QaVg", "QiVg", "SxVg", "SpVg", "OcVg", "NoVg"
    ];
 
 
@@ -156,33 +181,19 @@ function fixValue(x, y = 0) {
 
 function formatBAN(decimal, precision) {
    decimal = new Decimal(decimal);
-   // Small Numbers - Show it manually.
-   if (decimal.layer === 0 && decimal.mag < 1e9) {
-       return format(decimal, precision=0);
-   }
-
-
-   // 2. Two index -> {10, X}
+   if (decimal.lt(1)) return regularFormat(decimal, precision);
+   if (decimal.eq(1)) return "{10, 0}";
+   const entry = value => format(value, precision).replace(/,/g, "");
    if (decimal.layer === 0 || (decimal.layer === 1 && decimal.mag < 1e9)) {
-   // Calculate the total log10 to get the 'X' in 10^X
-       let exponent = decimal.log10();
-       return `{10, ${format(exponent, precision)}}`;
+       return `{10, ${entry(decimal.log10())}}`;
    }
 
-
-   // 3. Tetration -> {10, height, 2}
+   // Tetration:{10, height, 2}.
    let slog = decimal.slog();
+   if (slog.lt(1e12)) return `{10, ${entry(slog)}, 2}`;
 
-
-   // 3a: Small (<1e12) layer
-   if (slog.lt(1e12)) {
-       return `{10, ${format(slog, precision)}, 2}`;
-   }
-  
-   // 3b: If the tower height itself is huge (e.g., F1e100), we need to format the height using BAN too.
-   else {
-       return `{10, ${formatBAN(slog, precision)}, 2}`;
-   }
+   // If the tower height is huge, format the height recursively.
+   return `{10, ${formatBAN(slog, precision)}, 2}`;
 }
 
 
@@ -194,21 +205,60 @@ function sumValues(x) {
 
 
 function notationChooser(decimal, precision=3) {
-   if (options.notation === 'infinity') {
-       return infinityFormat(decimal)
-   } else if (options.notation === 'scientific'){
-       return format(decimal, precision)
-   } else if (options.notation === 'scientific2'){
-       return format(decimal, precision)
-   } else if (options.notation === 'birds array'){
-       return formatBAN(decimal, precision=4)
-   } else if (options.notation === 'blind'){
-       return ""
-   } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
-       return format(decimal, precision)
-   } else {
-       return standardFormat(decimal, precision)
+   decimal = new Decimal(decimal)
+   if (decimal.abs().lt(1)) {
+       if (decimal.eq(0)) return regularFormat(decimal, precision)
+       const smallPrecision = Math.max(precision, Math.ceil(-decimal.abs().log10().toNumber()) + 1)
+       return decimal.toStringWithDecimalPlaces(Math.min(smallPrecision, 100))
    }
+   let formatted
+   if (options.notation === 'infinity') {
+       formatted = infinityFormat(decimal)
+   } else if (options.notation === 'scientific'){
+       formatted = format(decimal, precision)
+   } else if (options.notation === 'scientific2'){
+       formatted = format(decimal, precision)
+   } else if (options.notation === 'birds array'){
+       formatted = formatBAN(decimal, precision=4)
+   } else if (options.notation === 'blind'){
+       formatted = ""
+   } else if (options.notation === 'mixed scientific' || options.notation === 'default'){
+       formatted = format(decimal, precision)
+   } else {
+       formatted = standardFormat(decimal, precision)
+   }
+   return formatted
+}
+
+function notationChooserText(text) {
+   if (typeof text !== "string") return text
+
+   const formatLiteral = literal => {
+       try {
+           let value = literal.replace(/[,\s]/g, "")
+           const suffixPowers = { K: 3, M: 6, B: 9, T: 12, Qd: 15, Qa: 15, Qi: 18, Qn: 18, Sx: 21, Sp: 24, Oc: 27, No: 30, De: 33, Ud: 36, Dd: 39, Td: 42, Qad: 45, Qid: 48, Sxd: 51, Spd: 54, Ocd: 57, Nod: 60, Vg: 63, UVg: 66, DVg: 69, TVg: 72, QaVg: 75, QiVg: 78, SxVg: 81, SpVg: 84, OcVg: 87, NoVg: 90 }
+           const shorthand = value.match(/^(e)?([\d.]+)(QaVg|QiVg|SxVg|SpVg|OcVg|NoVg|Qad|Qid|Sxd|Spd|Ocd|Nod|Qd|Qn|Qa|Qi|Sx|Sp|Oc|No|De|Ud|Dd|Td|UVg|DVg|TVg|Vg|[KMBT])$/i)
+           if (shorthand) {
+               const prefix = shorthand[1]
+               const suffixKey = Object.keys(suffixPowers).find(key => key.toUpperCase() === shorthand[3].toUpperCase())
+               const power = suffixPowers[suffixKey]
+               const amount = new Decimal(shorthand[2]).times(Decimal.pow(10, power))
+               value = prefix ? "e" + amount.toString() : amount.toString()
+           }
+           return notationChooser(new Decimal(value))
+       } catch (error) {
+           return literal
+       }
+   }
+
+   let formatted = text.replace(/(?<![A-WYZa-wyz0-9.])(?:e{1,2}[+-]?[\d,]+(?:\.\d+)?|\d[\d,]*(?:\.\d+)?)(?:e{1,2}[+-]?[\d,]+(?:\.\d+)?)*(?:\s*(?:QaVg|QiVg|SxVg|SpVg|OcVg|NoVg|Qad|Qid|Sxd|Spd|Ocd|Nod|Qd|Qn|Qa|Qi|Sx|Sp|Oc|No|De|Ud|Dd|Td|UVg|DVg|TVg|Vg|[KMBT]))?(?![A-Za-z0-9.])/gi, (literal, offset, whole) => {
+       const before = whole.slice(Math.max(0, offset - 1), offset)
+       const after = whole.slice(offset + literal.length, offset + literal.length + 1)
+       const isValue = /[xe+\-^]/i.test(before) || /[xe]/i.test(after) || /Sacrifice\s*$/i.test(whole.slice(0, offset)) || /\s*(?:PF|BP|RP|PP|MP|SP|EP|EC|Cells?|Water|Energy|Era|Mega|Supreme|Rebirth|Prestige|Basic|Mastery|Luck|RNG|Void|Sac(?:rifices?)?|Points?|Watts?|Crystals?)\b/i.test(whole.slice(offset + literal.length))
+       return isValue ? formatLiteral(literal) : literal
+   })
+
+   return formatted
 }
 
 
@@ -257,18 +307,19 @@ function format(decimal, precision = 3, small) {
    }
    if (decimal.sign < 0) return "-" + format(decimal.neg(), precision, small)
    if (decimal.mag == Number.POSITIVE_INFINITY) return "Infinity"
-   if (options.notation === 'mixed scientific' || options.notation === 'default'){
-       if (decimal.lte("e100") && decimal.gte(1e9)) {
-           return standardFormat(decimal, precision)
-       }
+   if (options.notation === 'mixed scientific' || options.notation === 'default') {
+       if (decimal.lte("e100") && decimal.gte(1e9)) return standardFormat(decimal, precision)
    }
    if (decimal.gte("eeee1000")) {
        var slog = decimal.slog()
        if (slog.gte(1e6)) return "F" + format(slog.floor())
        else return Decimal.pow(10, slog.sub(slog.floor())).toStringWithDecimalPlaces(3) + "F" + commaFormat(slog.floor(), 0)
    }
-   else if (decimal.gte("1e1000000")) return exponentialFormat(decimal, 0, false)
-   else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
+   else if ((options.notation === 'mixed scientific' || options.notation === 'default') && decimal.gte("1e1000000")) return exponentialFormat(decimal, 0, false)
+   else if ((options.notation === 'mixed scientific' || options.notation === 'default') && decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
+   else if (decimal.gte("1e1e9")) return exponentialFormat(decimal, 0, false)
+   else if (decimal.gte("1e1e6")) return exponentialFormat(decimal, 0)
+   else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 1)
    else if (decimal.gte(1e9)) return exponentialFormat(decimal, precision)
    else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
    else if (decimal.gte(1)) {

@@ -26,12 +26,6 @@ addLayer("rebirth", {
                 "upgrades"
             ],
         },
-        "NOTE [ONLY FOR MASTERY CHALLENGE]": {
-            content: [
-                ["infobox", "info"],
-            ],
-            unlocked() {return inChallenge("m", 11)}
-        },
     },
     upgrades: {
         11: {
@@ -126,7 +120,7 @@ addLayer("rebirth", {
         44: {
             title: "Rebirth Extension 4: End",
             description: "Rebirth Supercap is less",
-            cost: new Decimal("e312600"),
+            cost: new Decimal("e329299"),
             unlocked() { return hasMilestone("sac", 14) && hasUpgrade("rebirth", 43) },
         },
         51: {
@@ -155,25 +149,25 @@ addLayer("rebirth", {
         },
         61: {
             title: "Rebirthingation",
-            description: "xe596.85750K RP",
+            description: "xe596.85750e3 RP",
             cost: new Decimal("e59685750"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 54) },
         },
         62: {
             title: "Sixty Seventy",
-            description: "+^0.0060 RP, xe700K RP",
+            description: "+^0.0060 RP, xe700e3 RP",
             cost: new Decimal("e60070000"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 61) },
         },
         63: {
             title: "Rebirth Fragments",
-            description: "xe8M PF",
-            cost: new Decimal("e61016900"),
+            description: "xe8e6 PF",
+            cost: new Decimal("e61016670"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 62) },
         },
         64: {
             title: "1111Quad PLUS",
-            description: "xe1.11M RP, xe111.11K PP, xe11.111K MP, x111.11 SP",
+            description: "xe1.11e6 RP, xe111.11e3 PP, xe11.111e3 MP, x111.11 SP",
             cost: new Decimal("e64250000"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 63) },
         },
@@ -203,26 +197,26 @@ addLayer("rebirth", {
         },
         81: {
             title: "Rebirth Rep Upgrades MK. 2",
-            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe600B)",
-            cost: new Decimal("e31778268250e3"),
+            description: "Starting at xe600e9 PF, ^1.6 the effect every upgrade. (Current: xe600e9)",
+            cost: new Decimal("e3177826833e3"),
             unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 75) },
         },
         82: {
             title: "Rebirth Rep Upgrades MK. 2 - 2",
-            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe960B)",
-            cost: new Decimal("e32996054475e3"),
+            description: "Starting at xe600e9 PF, ^1.6 the effect every upgrade. (Current: xe960e9)",
+            cost: new Decimal("e3299605450e3"),
             unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 81) },
         },
         83: {
             title: "Rebirth Rep Upgrades MK. 2 - 3",
-            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe1.536T)",
-            cost: new Decimal("e34947700575e3"),
+            description: "Starting at xe600e9 PF, ^1.6 the effect every upgrade. (Current: xe1.536e12)",
+            cost: new Decimal("e3494770053e3"),
             unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 82) },
         },
         84: {
             title: "Rebirth Rep Upgrades MK. 2 - 4",
-            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe2.4576T)",
-            cost: new Decimal("e38868729750e3"),
+            description: "Starting at xe600e9 PF, ^1.6 the effect every upgrade. (Current: xe2.4576e12)",
+            cost: new Decimal("e3886872970e3"),
             unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 83) },
         },
 
@@ -248,61 +242,61 @@ addLayer("rebirth", {
         45: {
             title: "Most Insane Boost",
             description: "Rebirth Upgrade 'Booster' (Upgrade 21) is ^100,001 stronger!!",
-            cost: new Decimal("e6547000"),
+            cost: new Decimal("e6576276"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 35) },
         },
         55: {
-            title: "Mega Back Again!",
-            description: "Mega Points +^0.05",
-            cost: new Decimal("e6815150"),
+            title: "pls get this before sac 28",
+            description: "dont skip this",
+            cost: new Decimal("e6864684"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 45) },
         },
         65: {
             title: "Ending it off with a BANG of PF!",
-            description: "PF xe12.5M, PF ^1.01",
+            description: "xe12.5e6 PF, PF ^1.01",
             cost: new Decimal("e65263850"),
             unlocked() { return hasMilestone("sac", 37) && hasUpgrade("rebirth", 64) },
         },
         75: {
             title: "New Tier unlocked: Extreme [T11]",
-            description: "PF xe500M, PF ^1.025 [Hidden Effect: x3.77 Water]",
+            description: "xe500e6 PF, PF ^1.025 [Hidden Effect: x3.77 Water]",
             cost: new Decimal("e3425150e3"),
             unlocked() { return hasMilestone("sac", 27) && hasUpgrade("rebirth", 74) },
         },
         85: {
             title: "Rebirth Rep Upgrades MK. 2 - 5",
-            description: "Starting at xe600B PF, ^1.6 the effect every upgrade. (Current: xe3.93216T) [Secret Effect: x18 Era Crystals, unlock more Era Upgrades]",
-            cost: new Decimal("e43816900550e3"),
+            description: "Starting at xe600e9 PF, ^1.6 the effect every upgrade. (Current: xe3.93216e12) [Secret Effect: x18 Era Crystals, unlock more Era Upgrades]",
+            cost: new Decimal("e43816900440e3"),
             unlocked() { return hasUpgrade("era", 141) && hasUpgrade("rebirth", 84) },
         },
         91: {
             title: "REvamp upgrades",
             description: "Every upgrade in this row gives x10 EC. U1: xe2.2e12 Water",
-            cost: new Decimal("e1.030228e20"),
+            cost: new Decimal("e1.0775555555555e20"),
             unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 85) },
         },
         92: {
             title: "REvamp upgrades [2]",
             description: "U2: xe1.9e19 Basic Points",
-            cost: new Decimal("e1.035342e20"),
+            cost: new Decimal("e1.083485e20"),
             unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 91) },
         },
         93: {
             title: "REvamp upgrades [3]",
             description: "U3: xe2.7e17 Prestige Points",
-            cost: new Decimal("e1.276746e20"),
+            cost: new Decimal("e1.323313333e20"),
             unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 92) },
         },
         94: {
             title: "REvamp upgrades [4]",
             description: "U4: xe8e18 Rebirth Points",
-            cost: new Decimal("e1.32064e20"),
+            cost: new Decimal("e1.410752e20"),
             unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 93) },
         },
         95: {
             title: "REvamp upgrades [5]",
             description: "U5: Reduce rebirth hypercap",
-            cost: new Decimal("e1.44027e20"),
+            cost: new Decimal("e1.49066e20"),
             unlocked() { return hasMilestone("rebirth", 14) && hasUpgrade("rebirth", 94) },
         },
     },
@@ -329,69 +323,49 @@ addLayer("rebirth", {
             done() { return player["rebirth"].points.gte(7000) }
         },
         5: {
-            requirementDescription: "5M RP",
+            requirementDescription: "5e6 RP",
             effectDescription: "Generate 10,000% of Basic Points a sec",
             unlocked() { return hasMilestone("rebirth", 3)},
             done() { return player["rebirth"].points.gte(5000000) }
         },
         6: {
-            requirementDescription: "10B RP",
+            requirementDescription: "1e10 RP",
             effectDescription: "4 MOAR BP Upgrades",
             unlocked() { return hasMilestone("rebirth", 5)},
             done() { return player["rebirth"].points.gte(10000000000) }
         },
         7: {
-            requirementDescription: "THE ELUSIVE 7TH MILESTONE [E88.88M RP]",
+            requirementDescription() { return "THE ELUSIVE 7TH MILESTONE [" + notationChooser(new Decimal("e8.888e7")) + " RP]" },
             effectDescription: "Keep Row 6 Rebirth Upgs",
             unlocked() {return hasMilestone("sac", 38)},
             done() { return player["rebirth"].points.gte("e88.88e6") }
         },
         8: {
-            requirementDescription: "Further expanding effect of PU24 (e116,292,900 RP)",
-            effectDescription: "PU24 softcap starts at e2.5M instead of e1.111M.",
+            requirementDescription() { return "Further expanding effect of PU24 (" + notationChooser(new Decimal("e1.162926e8")) + " RP)" },
+            effectDescription: "PU24 softcap starts at e2.5e6 instead of e1.111e6.",
             unlocked() {return hasMilestone("sac", 40)},
-            done() { return player["rebirth"].points.gte("e116292900") }
+            done() { return player["rebirth"].points.gte("e116292600") }
         },
         9: {
-            requirementDescription: "Keep Basic Milestones [MCS] - e600K RP",
-            effectDescription: "",
+            requirementDescription: "The First Mastery Challenge Milestone! (e386,990 RP, Mastery Rank 3)",
+            effectDescription: "x2.1 Mastery Points! That's pretty good, right?",
             unlocked() {return inChallenge("m", 11)},
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (player["rebirth"].points.gte("e600000")) {
-                        return true
-                    }
-                }
-            },
-        },
-        10: {
-            requirementDescription: "Power Up Plus [MCS] - e242024 PF [Req Sac 10]",
-            effectDescription: "^1.25 PF, +^0.25 MP",
-            unlocked() {return hasMilestone("rebirth", 9) && inChallenge("m", 11) && hasMilestone("sac", 10)},
-            done() {
-                if (inChallenge("m", 11)) {
-                    if (hasMilestone("sac", 10)) {
-                        if (player["rebirth"].points.gte("2.4e242024")) {
-                            return true
-                        }
-                    }
-                }
-            },
+            done() { return (player["rebirth"].points.gte("e386990") && inChallenge("m", 11) && player.m.ranks.rid >= 3) }
         },
         11: {
-            requirementDescription: "Another Milestone [E5B RP]",
+            requirementDescription: "Another Milestone [e5e9 RP]",
             effectDescription: "Keep Row 7 Rebirth Upgs",
             unlocked() {return hasMilestone("sac", 57)},
             done() { return player["rebirth"].points.gte("e5e9") }
         },
         12: {
-            requirementDescription: "Even More OP Milestone [E16,101M RP]",
+            requirementDescription: "Even More OP Milestone [E1.6101e10 RP]",
             effectDescription: "Rebirth Softcap is reduced",
             unlocked() {return hasMilestone("sac", 62)},
             done() { return player["rebirth"].points.gte("e16101e6") }
         },
         13: {
-            requirementDescription: "MC2S (Rebirth I) - e1,634,937,700 Rebirth Points",
+            requirementDescription: "MC2S (Rebirth I) - e1634937700 Rebirth Points",
             effectDescription: "Back to basics - Basic Upgrade 2 and 3 is stronger. Yes. 2. 3.",
             done() {
                 if (inChallenge("m", 12)) {
@@ -556,9 +530,6 @@ addLayer("rebirth", {
         if (hasMilestone('sac', 37)) exp = exp.add(0.02)
         if (hasUpgrade('rebirth', 62)) exp = exp.add(0.0060)
         if (hasUpgrade('rebirth', 73)) exp = exp.add(0.005)
-        if (inChallenge("m", 11)) {
-            if (hasMilestone('e', 15)) exp = exp.add(0.15)
-        }
         if (hasUpgrade('mega', 94)) exp = exp.add(0.005)
         if (hasUpgrade('era', 183)) exp = exp.add(0.07)
         if (hasUpgrade('m', 104)) exp = exp.add(0.04)
@@ -566,18 +537,16 @@ addLayer("rebirth", {
         if (hasUpgrade('prestige', 84)) exp = exp.add(0.11)
         if (hasUpgrade('m', 134)) exp = exp.add(0.03)
         if (hasUpgrade('era', 371)) exp = exp.add(0.02)
-        if ((hasUpgrade('m', 1131)) && inChallenge("m", 11)) exp = exp.add(0.05)
         if (hasUpgrade("era", 462)) exp = exp.add(0.02)
         if (hasUpgrade("era", 493)) exp = exp.add(0.01)
         if (hasUpgrade("e", 205)) exp = exp.add(0.1)
         if (hasUpgrade("era", 423)) exp = exp.add(player.era.everythingpower)
-        if (inChallenge('m', 11)) exp = exp.mul(0.2)
+        let expinmc1 = new Decimal(0.5)
+        if (inChallenge("m", 11)) exp = exp.mul(expinmc1)
         return exp
     },
-    effect(){
-        let effectBoost = 1.57
-        if (hasUpgrade("rebirth", 74)) effectBoost = 1.7
-        let eff = player.rebirth.points.add(1).pow(effectBoost)
+    effectSoftcapInfo() {
+        const effectBoost = hasUpgrade("rebirth", 74) ? 1.7 : 1.57
         let sc = 0.35
         if (hasUpgrade('rebirth', 33)) sc = 0.375
         if (hasAchievement('a', 56)) sc = 0.4
@@ -596,22 +565,32 @@ addLayer("rebirth", {
         if (hasUpgrade('rebirth', 15)) sc = 0.8
         if (hasUpgrade('s', 92)) sc = 0.865
         if (hasMilestone('rebirth', 12)) sc = 0.915
-        softcappedEffect = softcap(eff, new Decimal("e1500"), new Decimal(sc))
         let sprcap = 0.4
         if (hasUpgrade('rebirth', 44)) sprcap = 0.45
         if (hasUpgrade('basic', 65)) sprcap = 0.5
         if (hasUpgrade('rebirth', 35)) sprcap = 0.725
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e100000"), new Decimal(sprcap))
         let hyprcap = 0.3
         if (hasUpgrade('rebirth', 71)) hyprcap = 0.375
         if (hasUpgrade("rebirth", 95)) hyprcap = 0.44
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e200000000"), new Decimal(hyprcap))
         let inscap = 0.2
         if (hasUpgrade("era", 404)) inscap = 0.23
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e5e15"), new Decimal(inscap))
-        let omegacap = 0.25
-        softcappedEffect = softcap(softcappedEffect, new Decimal("e1.5e22"), new Decimal(omegacap))
-        return softcappedEffect
+        return {
+            formula: `(Rebirth Points + 1)^${effectBoost}`,
+            exponent: effectBoost,
+            target: "Point Fragments",
+            stages: [
+                { label: "Softcap", start: "e1500", power: sc },
+                { label: "Supercap", start: "e100000", power: sprcap },
+                { label: "Hypercap", start: "e200000000", power: hyprcap },
+                { label: "Insanecap", start: "e5e15", power: inscap },
+                { label: "Omegacap", start: "e1.5e22", power: 0.25 },
+            ],
+        }
+    },
+    effect(){
+        const info = this.effectSoftcapInfo()
+        const eff = player.rebirth.points.add(1).pow(info.exponent)
+        return applyEffectSoftcaps(eff, info.stages)
        },
         effectDescription() {
             let softcapDescription = ""

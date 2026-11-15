@@ -47,18 +47,18 @@ addLayer("bacteria", {
                 ["display-text",
                     function(){
                         if (!player.bacteria.hint) return ""
-                        let a = "Reset quickly to gain more bacteria and more Skill Points!"
+                        let a = "Reset quickly to gain more bacteria and more Skill Points! Buy the Bacteria 1 and 2 upgrades."
                         if (player.bacteria.maxsp.gte(3)) {
-                            a = "Hint: You might need to wait abit to gain more bacteria, through Cell Milestone 9 and the Cell buyables, and respec your upgrades."
+                            a = "Hint: You might need to wait abit to gain more bacteria, through Cell Milestone 9 and the Cell buyables, and respec your upgrades (Bacteria 1 and 3, instead of 1 and 2 for 3 Skill Points, then get Bacteria 2 at 4 SP)."
                         }
-                        if (player.bacteria.maxsp.eq(5)) {
-                            a = "Potential stuck point. Hint: You need to get the next achievement, through first getting 34 Era Buyable 9s, then investing in PF upgrades (Bacteria 6 and 7) to gain enough PF. This will give you a major boost to Cells and Bacteria. Do a Cell push to get the 6th SP."
+                        if (player.bacteria.maxsp.gte(5)) {
+                            a = "Potential stuck point. Hint: You need to get the next achievement, through first getting 34 Era Buyable 9s, then investing in PF upgrades (Bacteria 6 and 7) to gain enough PF. This will give you a major boost to Cells and Bacteria. Do a Cell push to get the 6th and 7th SP. NOTE: ALWAYS USE THE RESPEC BUTTON IF YOU ARE NOT WANTING TO GET BACTERIA MAINLY, SINCE THE EF AMOUNTS ARE KEPT. You are NOT ADVISED to buy EB10x10, since you need enough EF to get the Achievement (about 900M). SP6 costs 1000 and SP7 costs 2200, hence it may be possible to jump from SP5 to SP7 immediately."
                         }
                         if (player.bacteria.maxsp.eq(7)) {
-                            a = "Get the Era Fragment Upgrade (Get EF-boosting ups) and purchase the first extended Cell Upgrade. Then, once you reach 10K Bacteria, buy Bacteria 6."
+                            a = "Get the Era Fragment Upgrade [costs 1.25B EF] (Get EF-boosting ups) and EB10x10 and purchase the first extended Cell Upgrade. Then, once you reach 10K Bacteria, buy Bacteria 6."
                         }
                         if (player.bacteria.maxsp.gte(8)) {
-                            a = "Get about 1B EF from EF-boosting ups. For your 9th SP, push for PF using Bacteria 1,2,3,6,7 Ups. Afterwards, push for Cells/Bacteria/PF by using the loadout for 7->8SP but also add Bacteria 4 and 6. Get extended Cell Upgrades 1 and 2, and the Sacrifice Milestone, then wait abit and you can get the 10th SP [Cost: 275,000 Bacteria]. Respec and buy Bacteria 11 now."
+                            a = "Get about 1B EF from EF-boosting ups. For your 9th SP, push for PF using Bacteria 1 2 3 6 7 Ups. grind fast bacteria reset, get 1B EF, then Afterwards, push for Cells/Bacteria/PF by using buying Bacteria 1 2 3 6 8 9 (leave 1 Skill Point unused). Get extended Cell Upgrades 1 and 2, and the Sacrifice Milestone, then wait abit and you can get the 10th SP [Cost: 500,000 Bacteria]. Respec and buy Bacteria 11 now."
                         }
                         if (player.bacteria.maxsp.eq(10)) {
                             a = "Get back your EF (1.5B). You should be able to get the first 2 new Cell Upgrades quite quickly with Bacteria 11. Get the third one, and the Sacrifice Milestone to get the 11th SP [v4.1 Endgame]"
@@ -363,7 +363,7 @@ addLayer("bacteria", {
         11: {
             title: "Gain Skill Points via Bacteria",
             cost(x) {
-                let pricing = [1, 2, 4, 10, 200, 800, 2500, 10000, 275000, 5e6, 1e8, 2e9, 5e10, 1e12, 2e15, 1e50, 1e100]
+                let pricing = [1, 2, 4, 8, 200, 1000, 2200, 10000, 500000, 5e6, 7.5e7, 1.5e9, 5e10, 1e12, 2e15, 1e50, 1e100]
                 return new Decimal(pricing[(getBuyableAmount("bacteria",11).toNumber())])
             },
             display() {
