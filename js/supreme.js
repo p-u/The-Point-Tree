@@ -580,7 +580,7 @@ addLayer("s", {
         111: {
             title: "I want XTra Mult!",
             description: "xe25e9 PF, xe100e9 BP, xe35e9 RP, xe3e9 PP, xe250e6 MP",
-            cost: new Decimal("8e1333141"),
+            cost: new Decimal("1.5e1331626"),
             unlocked() { return hasUpgrade("s", 104) && hasUpgrade("era", 52) },
         },
         112: {
