@@ -508,7 +508,7 @@ function loadVue() {
 		computed: {
 			key() {return this.$vnode.key}
 		},
-		template: `<div>
+		template: `<div style="padding-top: 50px">
 		<span class="upgRow" v-for="(row, r) in data"><table>
 			<span v-for="(node, id) in row" style = "{width: 0px}">
 				<tree-node :layer='node' :prev='layer' :abb='tmp[node].symbol' :key="key + '-' + r + '-' + id"></tree-node>

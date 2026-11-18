@@ -45,7 +45,7 @@
     transition: opacity 0.5s;
   
     position: absolute;
-    z-index: 20000;
+    z-index: 200000;
   
     background-color: var(--background_tooltip);
     color: var(--points);
